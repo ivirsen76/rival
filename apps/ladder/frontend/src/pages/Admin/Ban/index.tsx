@@ -9,6 +9,7 @@ import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.s
 import confirmation from '@/utils/confirmation';
 import { formatDate } from '@/utils/dayjs';
 import { Link } from 'react-router-dom';
+import showLoader from '@/utils/showLoader';
 
 const Ban = props => {
     const queryClient = useQueryClient();
@@ -31,12 +32,10 @@ const Ban = props => {
             return;
         }
 
-        // don't wait. It's optimistic delete
-        axios.put(`/api/users/${user.id}`, { action: 'removeBan' });
-        queryClient.setQueryData(
-            'getBanUsers',
-            list.filter(item => item.id !== user.id)
-        );
+        await showLoader(async () => {
+            await axios.put(`/api/users/${user.id}`, { action: 'removeBan' });
+            await queryClient.invalidateQueries(`getBanUsers`);
+        });
     };
 
     if (isLoading) {
