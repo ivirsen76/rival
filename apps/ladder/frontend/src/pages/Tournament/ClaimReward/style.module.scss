@@ -8,7 +8,7 @@
     }
     .trophy {
         margin: 0 4rem 0 2rem;
-        background-image: url('src/assets/trophy.png');
+        background-image: url('@/assets/trophy.png');
         background-size: 100% 100%;
         grid-area: 1 / 1 / 3 / 2;
         align-self: end;
