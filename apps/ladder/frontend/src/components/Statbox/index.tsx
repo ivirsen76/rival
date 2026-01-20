@@ -4,7 +4,7 @@ import useAppearance from '@/utils/useAppearance';
 import { Squircle } from 'corner-smoothing';
 import style from './style.module.scss';
 
-export const Title = props => {
+export const Title = (props) => {
     const { colorHue, colorLightness, children, className } = props;
     const appearance = useAppearance();
 
@@ -36,7 +36,7 @@ Title.defaultProps = {
     colorLightness: 40,
 };
 
-const StatBox = props => {
+const StatBox = (props) => {
     const { text, label, image, colorHue, colorLightness, even, className, isLight, children } = props;
 
     return (

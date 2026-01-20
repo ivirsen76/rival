@@ -1,6 +1,6 @@
 import useConfig from '@/utils/useConfig';
 
-const TermsAndConditions = props => {
+const TermsAndConditions = (props) => {
     const config = useConfig();
     let number = 1;
 

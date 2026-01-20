@@ -8,12 +8,12 @@ import HiddenText from '@/components/HiddenText';
 import reasonOptions from '@rival/ladder.backend/src/services/complaints/reasonOptions';
 import reasonDescriptions from './reasonDescriptions';
 
-const adjustedReasonOptions = reasonOptions.map(item => ({
+const adjustedReasonOptions = reasonOptions.map((item) => ({
     ...item,
     description: reasonDescriptions[item.value],
 }));
 
-const ComplaintForm = props => {
+const ComplaintForm = (props) => {
     const { user, onSubmit } = props;
 
     return (

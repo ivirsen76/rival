@@ -18,7 +18,7 @@ export default (config, { userName, userEmail, userPhone, profileLink, comeFromI
       duplicates.length > 0
           ? `<mj-text><b>Duplicates:</b></mj-text>
   <mj-text><ul style="margin-top: 0; margin-bottom: 0;">${duplicates
-      .map(user => `<li><a href="${TL_URL}/player/${user.slug}">${getPlayerName(user)}</a></li>`)
+      .map((user) => `<li><a href="${TL_URL}/player/${user.slug}">${getPlayerName(user)}</a></li>`)
       .join('')}</ul></mj-text>`
           : ''
   }

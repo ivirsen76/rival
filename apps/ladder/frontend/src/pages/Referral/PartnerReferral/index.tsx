@@ -15,9 +15,9 @@ import axios from '@/utils/axios';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
-const PartnerReferral = props => {
+const PartnerReferral = (props) => {
     const { showShareLinkInstruction } = props;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const config = useConfig();
 
     const { data, isLoading } = useQuery('getPartnerReferrals', async () => {
@@ -50,7 +50,7 @@ const PartnerReferral = props => {
         {
             name: 'createdAt',
             label: 'Registered',
-            render: value => (
+            render: (value) => (
                 <span data-playwright-placeholder="middle">{formatDate(value, 'MMM\xa0D, YYYY, h:mm A')}</span>
             ),
         },
@@ -72,7 +72,7 @@ const PartnerReferral = props => {
                             renderTrigger={({ show }) => (
                                 <a
                                     href=""
-                                    onClick={e => {
+                                    onClick={(e) => {
                                         e.preventDefault();
                                         show();
                                     }}
@@ -104,7 +104,7 @@ const PartnerReferral = props => {
             name: 'createdAt',
             label: 'Date',
             className: 'text-nowrap',
-            render: value => (
+            render: (value) => (
                 <span data-playwright-placeholder="middle">{formatDate(value, 'MMM\xa0D, YYYY, h:mm A')}</span>
             ),
         },

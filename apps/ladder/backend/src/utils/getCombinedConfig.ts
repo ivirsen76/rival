@@ -12,7 +12,7 @@ const connectionConfig = {
 const connection = mysql.createConnection(connectionConfig);
 connection.connect();
 
-const runQuery = async query => {
+const runQuery = async (query) => {
     return new Promise((resolve, reject) => {
         connection.query(query, (error, results) => {
             if (error) {

@@ -18,9 +18,9 @@ import hasAnyRole from '@/utils/hasAnyRole';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
-const Tournament = props => {
+const Tournament = (props) => {
     const { path, url } = useRouteMatch();
-    const user = useSelector(state => state.auth.user);
+    const user = useSelector((state) => state.auth.user);
     const config = useConfig();
 
     if (!hasAnyRole(user, ['admin', 'manager'])) {
@@ -56,8 +56,8 @@ const Tournament = props => {
                     }
                 >
                     {links
-                        .filter(link => hasAnyRole(user, link.roles))
-                        .map(link => (
+                        .filter((link) => hasAnyRole(user, link.roles))
+                        .map((link) => (
                             <li key={link.url} className="nav-item">
                                 <NavLink
                                     exact

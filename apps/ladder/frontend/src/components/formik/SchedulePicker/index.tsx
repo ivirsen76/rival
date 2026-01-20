@@ -18,7 +18,7 @@ const MIN_DURATION = 2;
 const MIN_BETWEEN = 1;
 const MAX_TIME_TO_CLICK = 500; // in ms. Otherwise it treats as dragging
 
-const Block = props => {
+const Block = (props) => {
     const { wrapperRef, onChange, onDelete, showError, point, setSelectedBlock, isSelected, field } = props;
     const [dragging, setDragging] = useState(null);
     const [position, setPosition] = useState(null);
@@ -73,7 +73,7 @@ const Block = props => {
         setDragging('new');
     }, [point]);
 
-    const updatePosition = e => {
+    const updatePosition = (e) => {
         const rect = wrapperRef.current.getBoundingClientRect();
         setPosition({
             x: e.clientX - rect.left,
@@ -94,12 +94,12 @@ const Block = props => {
         updatePosition(e);
     };
 
-    const onPointerMove = e => {
+    const onPointerMove = (e) => {
         if (!dragging) return;
         updatePosition(e);
     };
 
-    const onPointerUp = e => {
+    const onPointerUp = (e) => {
         if (!dragging) {
             return;
         }
@@ -141,10 +141,10 @@ const Block = props => {
                     top: `${y1}px`,
                     height: `${y2 - y1}px`,
                 }}
-                onPointerDown={e => onPointerDown('body', e)}
+                onPointerDown={(e) => onPointerDown('body', e)}
                 onPointerMove={onPointerMove}
                 onPointerUp={onPointerUp}
-                onClick={e => {
+                onClick={(e) => {
                     e.stopPropagation();
                     const duration = Date.now() - clickedTime.current;
                     if (duration < MAX_TIME_TO_CLICK) {
@@ -152,13 +152,13 @@ const Block = props => {
                     }
                 }}
             >
-                <div className={style.topAnchor} onPointerDown={e => onPointerDown('top', e)} />
-                <div className={style.bottomAnchor} onPointerDown={e => onPointerDown('bottom', e)} />
+                <div className={style.topAnchor} onPointerDown={(e) => onPointerDown('top', e)} />
+                <div className={style.bottomAnchor} onPointerDown={(e) => onPointerDown('bottom', e)} />
                 {isSelected && (
                     <button
                         type="button"
                         className={classnames('btn btn-danger', style.deleteButton, isLastDay && style.last)}
-                        onPointerDown={e => e.stopPropagation()}
+                        onPointerDown={(e) => e.stopPropagation()}
                         onClick={() => {
                             onDelete(newId);
                         }}
@@ -189,7 +189,7 @@ Block.defaultProps = {
     setSelectedBlock: () => {},
 };
 
-const SchedulePicker = props => {
+const SchedulePicker = (props) => {
     const { field, form, days } = props;
     const [placeholderProps, setPlaceholderProps] = useState(null);
     const [selectedBlock, setSelectedBlock] = useState();
@@ -222,7 +222,7 @@ const SchedulePicker = props => {
         // remove prev value
         {
             const [index, from, to] = prev.split('-').map(Number);
-            newValue[index] = newValue[index].filter(item => item[0] !== from || item[1] !== to);
+            newValue[index] = newValue[index].filter((item) => item[0] !== from || item[1] !== to);
         }
 
         // add next value
@@ -247,16 +247,16 @@ const SchedulePicker = props => {
         form.setFieldValue(field.name, newValue);
     };
 
-    const deleteBlock = id => {
+    const deleteBlock = (id) => {
         const newValue = _cloneDeep(field.value);
 
         const [index, from, to] = id.split('-').map(Number);
-        newValue[index] = newValue[index].filter(item => item[0] !== from || item[1] !== to);
+        newValue[index] = newValue[index].filter((item) => item[0] !== from || item[1] !== to);
 
         form.setFieldValue(field.name, newValue);
     };
 
-    const onPointerDown = e => {
+    const onPointerDown = (e) => {
         setSelectedBlock();
 
         const rect = wrapperRef.current.getBoundingClientRect();
@@ -284,7 +284,7 @@ const SchedulePicker = props => {
             index,
             times: field.value[index],
         }))
-        .filter(item => item.times?.length > 0)
+        .filter((item) => item.times?.length > 0)
         .reduce((arr, item) => {
             for (const [from, to] of item.times) {
                 arr.push({
@@ -303,7 +303,7 @@ const SchedulePicker = props => {
         <FieldWrapper {...props}>
             <div className={style.schedule}>
                 <div className={style.days}>
-                    {days.map(day => (
+                    {days.map((day) => (
                         <div key={day} className={style.day}>
                             {day}
                         </div>
@@ -347,7 +347,7 @@ const SchedulePicker = props => {
                                     {...placeholderProps}
                                 />
                             ) : null}
-                            {availableBlocks.map(block => (
+                            {availableBlocks.map((block) => (
                                 <Block
                                     key={block.key}
                                     wrapperRef={wrapperRef}

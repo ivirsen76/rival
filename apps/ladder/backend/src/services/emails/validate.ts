@@ -1,7 +1,7 @@
 import yup from '../../packages/yup';
 import { getSchemaErrors } from '../../helpers';
 
-export default values => {
+export default (values) => {
     const schema = yup.object().shape({
         from: yup.object().shape({
             name: yup.string().max(50),

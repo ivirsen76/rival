@@ -1,4 +1,4 @@
-const Medal = props => {
+const Medal = (props) => {
     return (
         <g transform="translate(0, -3)">
             <g transform="matrix(0.244395, 0, 0, 0.244395, 71.408806, 212.633987)">

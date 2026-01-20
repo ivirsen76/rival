@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import _round from 'lodash/round';
 
-const LastMatchesElo = props => {
+const LastMatchesElo = (props) => {
     const { data } = props;
     const padding = 20;
     const step = 11;

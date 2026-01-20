@@ -3,7 +3,7 @@ import { Formik, Field, Form } from '@/components/formik';
 import PasswordInput from '@/components/formik/PasswordInput';
 import Button from '@/components/Button';
 
-const ChangePasswordForm = props => {
+const ChangePasswordForm = (props) => {
     return (
         <Formik
             initialValues={{

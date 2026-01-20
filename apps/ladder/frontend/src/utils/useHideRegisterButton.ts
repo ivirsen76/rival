@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export default hide => {
+export default (hide) => {
     useEffect(() => {
         if (!hide) {
             return;

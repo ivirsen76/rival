@@ -37,14 +37,14 @@ import useConfig from '@/utils/useConfig';
 import notification from '@/components/notification';
 import style from './style.module.scss';
 
-const formatDate = date => formatCustom(date, 'MMM\xa0D, YYYY, h:mm A');
+const formatDate = (date) => formatCustom(date, 'MMM\xa0D, YYYY, h:mm A');
 
 let commentIdCounter = 90000;
 let reactionIdCounter = 90000;
 const TENNIS_BALL_EMOJI_CODE = '1f3be';
 const REM_SIZE = 14;
 
-const Gallery = props => {
+const Gallery = (props) => {
     const { photos, albumProps, onPhotoDelete } = props;
     const lightboxInstance = useRef();
     const settings = useRef({ showComments: false });
@@ -55,7 +55,7 @@ const Gallery = props => {
     const [showComments, setShowComments] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(-1);
     const [currentPage, setCurrentPage] = useState(1);
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const size = useBreakpoints();
     const commentsDragControls = useDragControls();
     const emojiData = useEmojiData();
@@ -71,10 +71,10 @@ const Gallery = props => {
             return [[], []];
         }
 
-        const getAttributes = item => ({
+        const getAttributes = (item) => ({
             key: item.id,
             src: item.url400,
-            srcSet: [400, 800, 1200].map(width => ({
+            srcSet: [400, 800, 1200].map((width) => ({
                 src: item[`url${width}`],
                 width,
                 height: Math.round((width / item.width) * item.height),
@@ -99,18 +99,18 @@ const Gallery = props => {
             },
         });
 
-        const approved = photos.filter(item => item.isApproved);
+        const approved = photos.filter((item) => item.isApproved);
 
         return {
             approvedPhotos: approved
                 .slice((currentPage - 1) * config.photosPerPage, currentPage * config.photosPerPage)
                 .map(getAttributes),
-            underReviewPhotos: photos.filter(item => !item.isApproved).map(getAttributes),
+            underReviewPhotos: photos.filter((item) => !item.isApproved).map(getAttributes),
             totalPages: Math.ceil(approved.length / config.photosPerPage),
         };
     }, [photos, currentPage, config]);
 
-    const onBeforeOpen = useCallback(instance => {
+    const onBeforeOpen = useCallback((instance) => {
         lightboxInstance.current = instance;
         setIsOpen(true);
 
@@ -139,7 +139,7 @@ const Gallery = props => {
         doubleTapAction: false,
         bgOpacity: 1,
         loop: false,
-        paddingFn: viewportSize => {
+        paddingFn: (viewportSize) => {
             const scrollbarSize = window.innerWidth - viewportSize.x;
 
             return {
@@ -149,8 +149,8 @@ const Gallery = props => {
                 right: isSmall
                     ? 0
                     : settings.current.showComments
-                    ? REM_SIZE * 27 - scrollbarSize
-                    : REM_SIZE - scrollbarSize,
+                      ? REM_SIZE * 27 - scrollbarSize
+                      : REM_SIZE - scrollbarSize,
             };
         },
     };
@@ -229,7 +229,7 @@ const Gallery = props => {
         const queryKey = `getReactionsAndComments${currentSlide.meta.id}`;
 
         // optimistic update
-        queryClient.setQueryData(queryKey, prev => {
+        queryClient.setQueryData(queryKey, (prev) => {
             return {
                 ...prev,
                 comments: [
@@ -252,7 +252,7 @@ const Gallery = props => {
         await dispatch(setCurrentUser({ user: { totalCommentsToday: currentUser.totalCommentsToday + 1 } }));
 
         // allow react to render new item in the list
-        await new Promise(resolve => setTimeout(resolve, 0));
+        await new Promise((resolve) => setTimeout(resolve, 0));
 
         // TODO: scroll to the last comment
 
@@ -260,14 +260,14 @@ const Gallery = props => {
         await queryClient.invalidateQueries(queryKey);
     };
 
-    const deleteComment = async id => {
+    const deleteComment = async (id) => {
         const queryKey = `getReactionsAndComments${currentSlide.meta.id}`;
 
         // optimistic update
-        queryClient.setQueryData(queryKey, prev => {
+        queryClient.setQueryData(queryKey, (prev) => {
             return {
                 ...prev,
-                comments: prev.comments.filter(item => item.id !== id),
+                comments: prev.comments.filter((item) => item.id !== id),
             };
         });
 
@@ -282,17 +282,17 @@ const Gallery = props => {
 
         const queryKey = `getReactionsAndComments${currentSlide.meta.id}`;
 
-        const sameReaction = reactions.find(item => item.userId === currentUser.id && item.code === code);
+        const sameReaction = reactions.find((item) => item.userId === currentUser.id && item.code === code);
         if (!isToggle && sameReaction) {
             return;
         }
 
         // optimistic update
-        queryClient.setQueryData(queryKey, prev => {
+        queryClient.setQueryData(queryKey, (prev) => {
             return {
                 ...prev,
                 reactions: sameReaction
-                    ? prev.reactions.filter(item => item.id !== sameReaction.id)
+                    ? prev.reactions.filter((item) => item.id !== sameReaction.id)
                     : [...prev.reactions, { id: reactionIdCounter++, code, userId: currentUser.id }],
                 users: {
                     ...prev.users,
@@ -305,7 +305,7 @@ const Gallery = props => {
         await queryClient.invalidateQueries(queryKey);
     };
 
-    const toggleComments = e => {
+    const toggleComments = (e) => {
         e?.preventDefault();
         const newValue = !showComments;
         settings.current.showComments = newValue;
@@ -318,12 +318,12 @@ const Gallery = props => {
         lightboxInstance.current.refreshSlideContent(currIndex + 1);
     };
 
-    const toggleLike = e => {
+    const toggleLike = (e) => {
         e.preventDefault();
         addReaction(TENNIS_BALL_EMOJI_CODE, true);
     };
 
-    const closeLightbox = e => {
+    const closeLightbox = (e) => {
         e?.preventDefault();
 
         if (lightboxInstance.current) {
@@ -331,7 +331,7 @@ const Gallery = props => {
         }
     };
 
-    const goNext = e => {
+    const goNext = (e) => {
         e.preventDefault();
 
         if (lightboxInstance.current) {
@@ -339,7 +339,7 @@ const Gallery = props => {
         }
     };
 
-    const goPrev = e => {
+    const goPrev = (e) => {
         e.preventDefault();
 
         if (lightboxInstance.current) {
@@ -347,7 +347,7 @@ const Gallery = props => {
         }
     };
 
-    const deletePhoto = async photoId => {
+    const deletePhoto = async (photoId) => {
         const confirm = await confirmation({
             message: (
                 <div>
@@ -369,7 +369,7 @@ const Gallery = props => {
     };
 
     const isClicked =
-        currentUser && reactions.some(item => item.code === TENNIS_BALL_EMOJI_CODE && item.userId === currentUser.id);
+        currentUser && reactions.some((item) => item.code === TENNIS_BALL_EMOJI_CODE && item.userId === currentUser.id);
     const isAuthor = currentUser && currentUser.id === currentSlide?.meta?.author?.id;
 
     const actions = [];
@@ -423,7 +423,7 @@ const Gallery = props => {
                                                 <a
                                                     href=""
                                                     className="ms-2 me-2 pt-2 pb-2"
-                                                    onClick={e => {
+                                                    onClick={(e) => {
                                                         e.preventDefault();
                                                         show();
                                                     }}
@@ -469,7 +469,7 @@ const Gallery = props => {
                                                 {actions}
                                             </div>
                                         }
-                                        onShow={instance => {
+                                        onShow={(instance) => {
                                             tooltipRef.current = instance;
                                         }}
                                     >

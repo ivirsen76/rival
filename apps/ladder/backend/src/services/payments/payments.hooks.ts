@@ -6,7 +6,7 @@ import { getSchemaErrors, throwValidationErrors } from '../../helpers';
 import yup from '../../packages/yup';
 import _isEmpty from 'lodash/isEmpty';
 
-const getPayments = options => async context => {
+const getPayments = (options) => async (context) => {
     const currentUser = context.params.user;
     const userId = Number(context.id);
 
@@ -32,7 +32,7 @@ const getPayments = options => async context => {
     );
 
     context.result = {
-        data: rows.map(row => ({
+        data: rows.map((row) => ({
             ...row,
             orderPayload: row.orderPayload && JSON.parse(row.orderPayload),
         })),
@@ -41,7 +41,7 @@ const getPayments = options => async context => {
     return context;
 };
 
-const addTransaction = options => async context => {
+const addTransaction = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -79,7 +79,7 @@ const addTransaction = options => async context => {
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

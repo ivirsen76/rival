@@ -11,10 +11,10 @@ import getRegisterNotificationProps from '@/utils/getRegisterNotificationProps';
 import { useHistory } from 'react-router-dom';
 import { loadCurrentUser } from '@/reducers/auth';
 
-const JoinDoubles = props => {
+const JoinDoubles = (props) => {
     const [data, setData] = useState();
     const [error, setError] = useState();
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const history = useHistory();
     const dispatch = useDispatch();
 

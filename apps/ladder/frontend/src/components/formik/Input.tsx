@@ -3,7 +3,7 @@ import FieldWrapper from './FieldWrapper';
 import _omit from 'lodash/omit';
 import classnames from 'classnames';
 
-const Input = props => {
+const Input = (props) => {
     const { field, form } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
     const passingProps = _omit(props, [

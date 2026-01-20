@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import _omit from 'lodash/omit';
 
-const ModalComponent = props => {
+const ModalComponent = (props) => {
     const [visible, setVisible] = useState(false);
 
     const show = () => setVisible(true);

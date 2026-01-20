@@ -1,4 +1,4 @@
-export default str => {
+export default (str) => {
     if (!str || !/^\d\d?\/\d\d?\/(\d\d|\d\d\d\d)$/.test(str)) {
         return str;
     }

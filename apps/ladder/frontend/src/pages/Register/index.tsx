@@ -18,7 +18,7 @@ import style from './style.module.scss';
 import hasAnyRole from '@/utils/hasAnyRole';
 import axios from '@/utils/axios';
 
-const format = date => dayjs.tz(date).format('MMM D');
+const format = (date) => dayjs.tz(date).format('MMM D');
 
 const stages = [
     {
@@ -46,7 +46,7 @@ const stages = [
                         <a
                             href=""
                             className="ms-1"
-                            onClick={e => {
+                            onClick={(e) => {
                                 e.preventDefault();
                                 setStage('season');
                             }}
@@ -73,13 +73,13 @@ const stages = [
                     <div className={style.title}>Ladders</div>
                     <div>
                         {selectedSeason.tournaments
-                            .filter(item => settings.list.includes(item.tournamentId))
-                            .map(item => item.levelName)
+                            .filter((item) => settings.list.includes(item.tournamentId))
+                            .map((item) => item.levelName)
                             .join(', ')}{' '}
                         <a
                             href=""
                             className="ms-1"
-                            onClick={e => {
+                            onClick={(e) => {
                                 e.preventDefault();
                                 setStage('tournaments');
                             }}
@@ -94,8 +94,8 @@ const stages = [
     { value: 'payment', label: 'Payment', component: Payment },
 ];
 
-const Register = props => {
-    const user = useSelector(state => state.auth.user);
+const Register = (props) => {
+    const user = useSelector((state) => state.auth.user);
     const config = useConfig();
     const { data: seasons, isLoading } = useQuery(`getSeasonsToRegister`, async () => {
         const response = await axios.put('/api/seasons/0', { action: 'getSeasonsToRegister' });
@@ -138,7 +138,7 @@ const Register = props => {
     }
 
     const stageInfo = {
-        ...stages.find(item => item.value === stage),
+        ...stages.find((item) => item.value === stage),
         settings: info[stage],
     };
 
@@ -152,13 +152,13 @@ const Register = props => {
     }
 
     const goToNextStage = () => {
-        const index = stages.findIndex(item => item.value === stage);
+        const index = stages.findIndex((item) => item.value === stage);
         if (index + 1 < stages.length) {
             setStage(stages[index + 1].value);
         }
     };
 
-    const updateStageInfo = values => {
+    const updateStageInfo = (values) => {
         setInfo({
             ...info,
             [stage]: {
@@ -168,7 +168,7 @@ const Register = props => {
         });
     };
 
-    const selectedSeason = seasons.find(item => item.id === info.season.id);
+    const selectedSeason = seasons.find((item) => item.id === info.season.id);
 
     return (
         <div data-register-area className="tl-panel">
@@ -191,8 +191,8 @@ const Register = props => {
                 {prevStages.length > 0 && (
                     <div className="mb-6">
                         {prevStages
-                            .filter(item => item.renderButton && (!item.showButton || item.showButton({ seasons })))
-                            .map(item => (
+                            .filter((item) => item.renderButton && (!item.showButton || item.showButton({ seasons })))
+                            .map((item) => (
                                 <div key={item.value} {...{ [`data-stage-${item.value}`]: true }}>
                                     {item.renderButton({
                                         settings: info[item.value],

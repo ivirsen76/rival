@@ -17,8 +17,8 @@ import useBreakpoints from '@/utils/useBreakpoints';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const PlayerReferral = props => {
-    const currentUser = useSelector(state => state.auth.user);
+const PlayerReferral = (props) => {
+    const currentUser = useSelector((state) => state.auth.user);
     const config = useConfig();
     const size = useBreakpoints();
 
@@ -95,7 +95,7 @@ const PlayerReferral = props => {
                   {
                       name: 'createdAt',
                       label: 'Registered',
-                      render: value => (
+                      render: (value) => (
                           <span data-playwright-placeholder="middle">
                               {formatCustom(value, 'MMM\xa0D, YYYY, h:mm A')}
                           </span>
@@ -105,7 +105,7 @@ const PlayerReferral = props => {
                       name: 'playedMatch',
                       label: 'Played a Match',
                       className: 'text-center',
-                      render: value =>
+                      render: (value) =>
                           value ? (
                               <span className="text-success fw-semibold">Yes</span>
                           ) : (
@@ -116,7 +116,7 @@ const PlayerReferral = props => {
                       name: 'madePayment',
                       label: 'Made a Payment',
                       className: 'text-center',
-                      render: value =>
+                      render: (value) =>
                           value ? (
                               <span className="text-success fw-semibold">Yes</span>
                           ) : (

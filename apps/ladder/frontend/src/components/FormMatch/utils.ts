@@ -1,10 +1,10 @@
 import { isFullSetScoreCorrect, isFastSetScoreCorrect } from '@rival/ladder.backend/src/services/matches/helpers';
 
-export const isInjuryFullSetScoreIncomplete = values => {
+export const isInjuryFullSetScoreIncomplete = (values) => {
     return !isFullSetScoreCorrect(values);
 };
 
-export const isInjuryFastSetScoreIncomplete = values => {
+export const isInjuryFastSetScoreIncomplete = (values) => {
     return !isFastSetScoreCorrect(values);
 };
 
@@ -12,7 +12,7 @@ export const getAvailableSets = (score, isFast4 = false, wonByInjury = false) =>
     const isSetScoreCorrect = isFast4 ? isFastSetScoreCorrect : isFullSetScoreCorrect;
 
     const firstIncorrectSet = score.findIndex(
-        item =>
+        (item) =>
             !isSetScoreCorrect({
                 challengerPoints: item[0],
                 acceptorPoints: item[1],
@@ -32,7 +32,7 @@ export const getAvailableSets = (score, isFast4 = false, wonByInjury = false) =>
         return [1, 2];
     }
 
-    const result = [1, 2, 3].filter(num => firstIncorrectSet === -1 || num <= firstIncorrectSet + 1);
+    const result = [1, 2, 3].filter((num) => firstIncorrectSet === -1 || num <= firstIncorrectSet + 1);
 
     // remove third set for fast4 and injury
     if (isFast4 && wonByInjury && result.length === 3) {

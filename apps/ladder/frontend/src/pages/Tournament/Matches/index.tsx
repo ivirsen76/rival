@@ -13,12 +13,12 @@ import { getUpcomingMatches } from '../Overview';
 import checkUserReady from '@/utils/checkUserReady';
 import style from './style.module.scss';
 
-const Matches = props => {
+const Matches = (props) => {
     const { tournament, reloadTournament } = props;
     const { players } = tournament;
     const [matchFilter, setMatchFilter] = useState('played');
     const { selected, playerFilter } = usePlayerFilter({ players });
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const isDoubles = tournament.levelType === 'doubles';
     const isDoublesTeam = tournament.levelType === 'doubles-team';
 
@@ -30,14 +30,14 @@ const Matches = props => {
 
     const matches = useMemo(() => {
         return tournament.matches.filter(
-            match =>
+            (match) =>
                 match.type === 'regular' &&
                 !match.unavailable &&
                 match.acceptorId &&
                 match.playedAt &&
                 (matchFilter === 'played' ? match.score : !match.score) &&
                 (selected.length === 0 ||
-                    selected.some(playerId =>
+                    selected.some((playerId) =>
                         [match.challengerId, match.challenger2Id, match.acceptorId, match.acceptor2Id].includes(
                             playerId
                         )
@@ -47,9 +47,9 @@ const Matches = props => {
 
     const isMyTournament = Boolean(
         currentUser &&
-            currentUser.tournaments[tournament.id]?.isActive &&
-            !currentUser.tournaments[tournament.id]?.needPartner &&
-            !currentUser.tournaments[tournament.id]?.partnerId
+        currentUser.tournaments[tournament.id]?.isActive &&
+        !currentUser.tournaments[tournament.id]?.needPartner &&
+        !currentUser.tournaments[tournament.id]?.partnerId
     );
     const ActualFormNewMatch = isDoubles ? FormNewDoublesMatch : FormNewMatch;
 
@@ -119,7 +119,7 @@ const Matches = props => {
                     </div>
 
                     {matches.length === 0 && <div>No matches found.</div>}
-                    {matches.map(match => (
+                    {matches.map((match) => (
                         <LazyLoad key={match.id} height={100} once>
                             <Match
                                 match={match}

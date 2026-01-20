@@ -7,11 +7,11 @@ import Tooltip from '@/components/Tooltip';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const DoublesName = props => {
+const DoublesName = (props) => {
     const { player1, player2, rank1, isLink, highlight, showContactBadge } = props;
     const captain = player1.partners[0];
 
-    const partners = (player2 ? [player1, player2] : player1.partners).map(item => _omit(item, ['partners']));
+    const partners = (player2 ? [player1, player2] : player1.partners).map((item) => _omit(item, ['partners']));
 
     if (!isLink) {
         return (
@@ -42,7 +42,7 @@ const DoublesName = props => {
             }
         >
             <span>
-                <a className={highlight ? 'fw-semibold' : ''} href="" onClick={e => e.preventDefault()}>
+                <a className={highlight ? 'fw-semibold' : ''} href="" onClick={(e) => e.preventDefault()}>
                     {captain.teamName}
                 </a>
                 {rank1 && rank1 > 0 ? <span className={style.badge}>{rank1}</span> : null}
@@ -60,7 +60,7 @@ DoublesName.propTypes = {
     showContactBadge: PropTypes.bool,
 };
 
-const PlayerName = props => {
+const PlayerName = (props) => {
     if (props.showTeamName && props.player1.partners?.length > 1) {
         return <DoublesName {...props} />;
     }
@@ -74,7 +74,7 @@ const PlayerName = props => {
     }
     const { player1, player2, player3, player4, className, isLink, isShort, rank1, rank2, elo1 } = adjustedProps;
 
-    const getInitial = str => str.slice(0, 1).toUpperCase() + '.';
+    const getInitial = (str) => str.slice(0, 1).toUpperCase() + '.';
 
     const getName = (player, isInitial) => {
         if (!player.firstName && !player.lastName) {

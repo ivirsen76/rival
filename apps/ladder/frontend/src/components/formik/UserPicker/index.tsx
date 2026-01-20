@@ -18,7 +18,7 @@ const getSearchResult = _debounce(async (query, setSearchResult, setLoading) => 
     setLoading(false);
 }, 500);
 
-const UserPicker = props => {
+const UserPicker = (props) => {
     const { field, form, autoFocus, getDisabledUsers, multiple, renderUser } = props;
     const [search, setSearch] = useState('');
     const [searchResult, setSearchResult] = useState([]);
@@ -35,7 +35,7 @@ const UserPicker = props => {
         setLoading(false);
     };
 
-    const pickUser = user => {
+    const pickUser = (user) => {
         if (multiple) {
             form.setFieldValue(field.name, [...field.value, user]);
             searchRef.current && searchRef.current.focus();
@@ -46,10 +46,10 @@ const UserPicker = props => {
         resetState();
     };
 
-    const removeUser = userId => {
+    const removeUser = (userId) => {
         form.setFieldValue(
             field.name,
-            field.value.filter(user => user.id !== userId)
+            field.value.filter((user) => user.id !== userId)
         );
     };
 
@@ -57,12 +57,12 @@ const UserPicker = props => {
     if (getDisabledUsers) {
         disabledUsers = getDisabledUsers(field.value, searchResult);
     } else if (multiple) {
-        disabledUsers = new Set([...field.value.map(user => user.id)]);
+        disabledUsers = new Set([...field.value.map((user) => user.id)]);
     }
 
     const enabledSearchIndexes = searchResult
         .map((user, index) => (disabledUsers.has(user.id) ? null : index))
-        .filter(index => index !== null);
+        .filter((index) => index !== null);
 
     useEffect(() => {
         if (selected === null) {
@@ -126,7 +126,7 @@ const UserPicker = props => {
         }
     }, [pressed]);
 
-    const onKeyDown = useCallback(e => {
+    const onKeyDown = useCallback((e) => {
         if (['Enter', 'ArrowUp', 'ArrowDown', 'Escape'].includes(e.key)) {
             e.preventDefault();
             e.stopPropagation();
@@ -163,7 +163,7 @@ const UserPicker = props => {
                         searchRef.current && searchRef.current.focus();
                         document.addEventListener('keydown', onKeyDown);
                     }}
-                    onCreate={instance => {
+                    onCreate={(instance) => {
                         tooltipRef.current = instance;
                     }}
                     onHide={() => {
@@ -182,7 +182,7 @@ const UserPicker = props => {
                                     autoComplete="off"
                                     name="search"
                                     value={search}
-                                    onChange={e => {
+                                    onChange={(e) => {
                                         setSearch(e.target.value);
                                         if (e.target.value.length < 3) {
                                             setSearchResult([]);
@@ -289,11 +289,11 @@ const UserPicker = props => {
                                     if (field.value.length === 0) {
                                         return placeholder;
                                     }
-                                    return field.value.map(user => (
+                                    return field.value.map((user) => (
                                         <div className={style.user} key={user.id}>
                                             <span
                                                 className="svg-icon svg-icon-3 me-1"
-                                                onClick={e => {
+                                                onClick={(e) => {
                                                     e.stopPropagation();
                                                     removeUser(user.id);
                                                     searchRef.current && searchRef.current.focus();

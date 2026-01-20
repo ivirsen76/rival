@@ -13,7 +13,7 @@ import axios from '@/utils/axios';
 
 const currentYear = Number(dayjs.tz().format('YYYY'));
 
-const SeasonForm = props => {
+const SeasonForm = (props) => {
     const { initialValues, onSubmit, isCurrentSeason } = props;
     const { settings } = useSettings();
     const { levels } = settings;
@@ -31,7 +31,7 @@ const SeasonForm = props => {
         { placeholderData: {} }
     );
 
-    const levelOptions = levels.map(level => ({
+    const levelOptions = levels.map((level) => ({
         value: level.id,
         label: (
             <span>
@@ -44,7 +44,7 @@ const SeasonForm = props => {
         disabled: level.id in playingLevels,
     }));
 
-    const getEndDateInfo = values => {
+    const getEndDateInfo = (values) => {
         if (!values.startDate || !values.weeks) {
             return null;
         }

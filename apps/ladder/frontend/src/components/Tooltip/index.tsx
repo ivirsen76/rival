@@ -4,7 +4,7 @@ import './light.scss';
 import './danger.scss';
 import './none.scss';
 
-const Tooltip = props => {
+const Tooltip = (props) => {
     return <Tippy animation="shift-away-subtle" {...props} />;
 };
 

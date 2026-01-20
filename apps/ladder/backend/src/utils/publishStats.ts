@@ -8,7 +8,7 @@ import { getPlayerName, comeFromOptions } from '../services/users/helpers';
 import { getStatsMatches } from './sqlConditions';
 import getCombinedConfig from './getCombinedConfig';
 
-export default async app => {
+export default async (app) => {
     const sequelize = app.get('sequelizeClient');
 
     const { TL_STORE_TOKEN, TL_STORE_URL } = process.env;
@@ -65,7 +65,7 @@ export default async app => {
                    users AS u
              WHERE p.userId=u.id AND
                    p.deletedAt IS NULL`);
-        const existingUrls = new Set(photos.map(item => item.url400));
+        const existingUrls = new Set(photos.map((item) => item.url400));
         for (const photo of photos) {
             const existingPhoto = uploadedPhotos[photo.url400];
 
@@ -111,7 +111,9 @@ export default async app => {
         }
 
         // delete photos
-        const photosToBeDeleted = Object.values(uploadedPhotos).filter(item => !existingUrls.has(item.attributes.url));
+        const photosToBeDeleted = Object.values(uploadedPhotos).filter(
+            (item) => !existingUrls.has(item.attributes.url)
+        );
         for (const photo of photosToBeDeleted) {
             await axios.delete(`${TL_STORE_URL}/api/photos/${photo.id}`, credentials);
         }
@@ -180,7 +182,7 @@ export default async app => {
           WHERE isVerified=1 AND
                 roles="player"`);
 
-        stats.users = users.map(user => ({
+        stats.users = users.map((user) => ({
             ..._pick(user, [
                 'dominantHand',
                 'forehandStyle',
@@ -219,7 +221,7 @@ export default async app => {
            FROM complaints AS c
            JOIN users AS u ON c.userId=u.id
            JOIN users AS o ON c.opponentId=o.id`);
-        stats.complaints = complaints.map(item => ({
+        stats.complaints = complaints.map((item) => ({
             complainer: `${item.userFirstName} ${item.userLastName}`,
             complainee: `${item.opponentFirstName} ${item.opponentLastName}`,
             ..._pick(item, ['reason', 'description', 'createdAt']),
@@ -262,7 +264,7 @@ export default async app => {
             { replacements: { dateYearAgo: dateYearAgo.format('YYYY-MM-DD HH:mm:ss') } }
         );
 
-        const weeks = new Array(totalWeeks).fill(0).map(_ => new Set());
+        const weeks = new Array(totalWeeks).fill(0).map((_) => new Set());
 
         for (const match of matches) {
             const playedAt = dayjs(match.playedAt);
@@ -277,7 +279,7 @@ export default async app => {
             }
         }
 
-        stats.activePlayersHistory = weeks.map(week => week.size);
+        stats.activePlayersHistory = weeks.map((week) => week.size);
     }
 
     // get payments stats for the last year
@@ -311,7 +313,7 @@ export default async app => {
         }
 
         // get only 30% for Raleigh;
-        stats.paymentsHistory = config.isRaleigh ? weeks.map(num => Math.floor(num * 0.3)) : weeks;
+        stats.paymentsHistory = config.isRaleigh ? weeks.map((num) => Math.floor(num * 0.3)) : weeks;
     }
 
     // get payment amount stats for the last 5 seasons
@@ -373,7 +375,7 @@ export default async app => {
                     currentSeason.sum += config.isRaleigh ? payment.amount * 0.3 : payment.amount;
                 }
 
-                stats.income = seasons.map(item => _pick(item, ['year', 'season', 'sum']));
+                stats.income = seasons.map((item) => _pick(item, ['year', 'season', 'sum']));
             }
         }
     }
@@ -412,7 +414,7 @@ export default async app => {
             const playersWithMatches = doublesMatches.reduce((obj, item) => {
                 [item.challengerId, item.challenger2Id, item.acceptorId, item.acceptor2Id]
                     .filter(Boolean)
-                    .forEach(id => {
+                    .forEach((id) => {
                         obj[id] ||= 0;
                         obj[id]++;
                     });
@@ -471,7 +473,7 @@ export default async app => {
             stats.championships = championships.length;
             stats.trophies = championships.length * 2; // it's not 100% accurate, as Doubles could have 3 trophies
             stats.awards =
-                championships.filter(item => item.type !== 'doubles-team').length * (pastSeason.isFree ? 25 : 75);
+                championships.filter((item) => item.type !== 'doubles-team').length * (pastSeason.isFree ? 25 : 75);
 
             const [matches] = await sequelize.query(
                 `
@@ -520,18 +522,18 @@ export default async app => {
                     const list = [
                         ...(!match.score || isChallengerWinner ? [match.challengerId] : []),
                         ...(!match.score || isAcceptorWinner ? [match.acceptorId] : []),
-                    ].filter(playerId => playerId && !processedIds.has(playerId));
+                    ].filter((playerId) => playerId && !processedIds.has(playerId));
 
                     for (const playerId of list) {
                         const captainPlayerId = partnersObj[playerId].partnerId || partnersObj[playerId].id;
                         const captain = partnersObj[captainPlayerId];
                         partners
                             .filter(
-                                item =>
+                                (item) =>
                                     (item.id === captainPlayerId || item.partnerId === captainPlayerId) &&
                                     item.id in playersWithMatches
                             )
-                            .forEach(item => {
+                            .forEach((item) => {
                                 const partner = partnersObj[item.id];
 
                                 stats.finalists.push({
@@ -560,8 +562,8 @@ export default async app => {
                     for (const playerId of [match.challengerId, match.acceptorId]) {
                         const captainPlayerId = partnersObj[playerId].partnerId || partnersObj[playerId].id;
                         partners
-                            .filter(item => item.id === captainPlayerId || item.partnerId === captainPlayerId)
-                            .forEach(item => {
+                            .filter((item) => item.id === captainPlayerId || item.partnerId === captainPlayerId)
+                            .forEach((item) => {
                                 processedIds.add(item.id);
                             });
                     }
@@ -707,7 +709,7 @@ export default async app => {
                     WHERE ${getStatsMatches('m')} AND
                         m.playedAt>:from AND
                         m.playedAt<:to`;
-                const getTotalPlayers = list =>
+                const getTotalPlayers = (list) =>
                     list.reduce((set, row) => {
                         set.add(row.challengerUserId);
                         set.add(row.acceptorUserId);
@@ -752,7 +754,7 @@ export default async app => {
                 const [playersPrevYear] = await sequelize.query(query, {
                     replacements: { from: dateTwoYearsAgo, to: from },
                 });
-                const retainedPlayers = playersPrevYear.filter(item => playersThisYear.has(item.userId));
+                const retainedPlayers = playersPrevYear.filter((item) => playersThisYear.has(item.userId));
 
                 yearStats.playersPaidLastYear = playersPrevYear.length;
                 yearStats.playersPaidThisYearAgain = retainedPlayers.length;

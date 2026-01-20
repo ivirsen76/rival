@@ -12,7 +12,7 @@ import { limitedPromiseAll } from '../helpers';
 
 const ACTION_NAME = 'generateBadges';
 
-const getBadgeCode = badge => {
+const getBadgeCode = (badge) => {
     const parts = badge.code.split(':');
 
     if (!/^level/.test(badge.code)) {
@@ -76,7 +76,7 @@ export const getUsersStats = async ({
 
     store.dispatch({
         type: 'LOAD_USERS',
-        payload: users.map(user => ({
+        payload: users.map((user) => ({
             ...user,
             stats: user.stats ? JSON.parse(user.stats) : null,
             badges: badges[user.id] || new Set(),
@@ -100,7 +100,7 @@ export const getUsersStats = async ({
             { replacements: { startDate, endDate } }
         );
         actions.push(
-            ...rows.map(item => ({
+            ...rows.map((item) => ({
                 type: 'ADD_AVATAR',
                 payload: item,
             }))
@@ -121,7 +121,7 @@ export const getUsersStats = async ({
             { replacements: { startDate, endDate } }
         );
         actions.push(
-            ...rows.map(item => ({
+            ...rows.map((item) => ({
                 type: 'PROFILE_COMPLETE',
                 payload: item,
             }))
@@ -186,7 +186,7 @@ export const getUsersStats = async ({
                    m.playedAt<=:endDate`,
             { replacements: { startDate, endDate } }
         );
-        actions.push(...rows.map(item => ({ type: 'ADD_MATCH', payload: item })));
+        actions.push(...rows.map((item) => ({ type: 'ADD_MATCH', payload: item })));
     }
 
     // Proposals created
@@ -210,7 +210,7 @@ export const getUsersStats = async ({
             { replacements: { startDate, endDate } }
         );
         actions.push(
-            ...rows.map(item => ({
+            ...rows.map((item) => ({
                 type: 'ADD_PROPOSAL',
                 payload: item,
             }))
@@ -240,7 +240,7 @@ export const getUsersStats = async ({
             { replacements: { startDate, endDate } }
         );
         actions.push(
-            ...rows.map(item => ({
+            ...rows.map((item) => ({
                 type: 'ACCEPT_PROPOSAL',
                 payload: item,
             }))
@@ -261,7 +261,7 @@ export const getUsersStats = async ({
             { replacements: { startDate, endDate } }
         );
         actions.push(
-            ...rows.map(item => ({
+            ...rows.map((item) => ({
                 type: 'ADD_FEEDBACK',
                 payload: item,
             }))
@@ -285,14 +285,14 @@ export const getUsersStats = async ({
         const processed = new Set();
         actions.push(
             ...rows
-                .filter(item => {
+                .filter((item) => {
                     if (processed.has(item.userId)) {
                         return false;
                     }
                     processed.add(item.userId);
                     return true;
                 })
-                .map(item => ({
+                .map((item) => ({
                     type: 'ADD_PHOTO',
                     payload: item,
                 }))
@@ -314,7 +314,7 @@ export const getUsersStats = async ({
             { replacements: { startDate, endDate } }
         );
         actions.push(
-            ...rows.map(item => ({
+            ...rows.map((item) => ({
                 type: 'REGISTER_USER',
                 payload: item,
             }))
@@ -340,7 +340,7 @@ export const getUsersStats = async ({
             { replacements: { startDate, endDate, bracketBotId: BRACKET_BOT_ID } }
         );
         actions.push(
-            ...rows.map(item => ({
+            ...rows.map((item) => ({
                 type: 'ADD_PREDICTION_WINNER',
                 payload: item,
             }))
@@ -471,11 +471,11 @@ export const applyNewBadges = async (sequelize, forceRecalculation) => {
         return;
     }
 
-    const updatedUsers = (await getUsersStats({ sequelize, startDate, endDate })).filter(user => user.updatedAt);
+    const updatedUsers = (await getUsersStats({ sequelize, startDate, endDate })).filter((user) => user.updatedAt);
 
     await limitedPromiseAll(
         updatedUsers,
-        async user => {
+        async (user) => {
             await sequelize.query('UPDATE users SET badgesStats=:badgesStats WHERE id=:userId', {
                 replacements: { userId: user.id, badgesStats: JSON.stringify(user.stats) },
             });

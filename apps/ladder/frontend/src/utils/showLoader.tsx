@@ -5,7 +5,7 @@ import Loader from '@/components/Loader';
 const wrapper = document.createElement('div');
 document.body.appendChild(wrapper);
 
-export default async func => {
+export default async (func) => {
     const root = createRoot(wrapper);
     root.render(<Loader loading />);
 

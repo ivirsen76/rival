@@ -10,8 +10,8 @@ module.exports = {
             .stdout.toString()
             .trim()
             .split('\n')
-            .filter(file => /\.jsx?$/.test(file))
-            .filter(file => fs.existsSync(currentDir + '/' + file))
-            .filter(file => !filter || filter(file));
+            .filter((file) => /\.jsx?$/.test(file))
+            .filter((file) => fs.existsSync(currentDir + '/' + file))
+            .filter((file) => !filter || filter(file));
     },
 };

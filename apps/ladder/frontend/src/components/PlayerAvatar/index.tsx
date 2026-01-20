@@ -33,7 +33,7 @@ SingleAvatar.propTypes = {
     isWinner: PropTypes.bool,
 };
 
-const PlayerAvatar = props => {
+const PlayerAvatar = (props) => {
     const isTeamAvatar = props.player1.partners && (props.showTeamAvatar || !props.player2);
 
     const adjustedProps = { ...props };

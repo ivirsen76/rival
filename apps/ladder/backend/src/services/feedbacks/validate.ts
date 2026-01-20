@@ -1,7 +1,7 @@
 import yup from '../../packages/yup';
 import { getSchemaErrors } from '../../helpers';
 
-export default values => {
+export default (values) => {
     const schema = yup.object().shape({
         type: yup.string().required().oneOf(['question', 'general', 'bug', 'feature']),
         description: yup.string().required('Text is required.').max(4000),

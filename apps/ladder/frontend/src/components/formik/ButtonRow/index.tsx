@@ -4,13 +4,13 @@ import classnames from 'classnames';
 import _xor from 'lodash/xor';
 import style from './style.module.scss';
 
-const ButtonRow = props => {
+const ButtonRow = (props) => {
     const { field, form, options } = props;
 
     return (
         <FieldWrapper {...props}>
             <div className={style.buttons}>
-                {options.map(option => (
+                {options.map((option) => (
                     <div
                         key={option.value}
                         data-button-in-row={option.value}

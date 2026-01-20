@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import style from './style.module.scss';
 
-const Bracket = props => {
+const Bracket = (props) => {
     const [top, setTop] = useState('-9999px');
     const [middle, setMiddle] = useState('-9999px');
     const [height, setHeight] = useState('0px');

@@ -11,16 +11,16 @@ import { BYE_ID } from '@rival/ladder.backend/src/constants';
 import notification from '@/components/notification';
 import style from './style.module.scss';
 
-const isByeMatch = match => match.challengerId === BYE_ID || match.acceptorId === BYE_ID;
+const isByeMatch = (match) => match.challengerId === BYE_ID || match.acceptorId === BYE_ID;
 
-const Bet = props => {
+const Bet = (props) => {
     const { players, tournament, matches, onSubmit } = props;
-    const finalMatches = matches.filter(match => match.type === 'final' && !match.battleId);
+    const finalMatches = matches.filter((match) => match.type === 'final' && !match.battleId);
 
-    const [currentSpot, setCurrentSpot] = useState(() => Math.max(...finalMatches.map(item => item.finalSpot)));
+    const [currentSpot, setCurrentSpot] = useState(() => Math.max(...finalMatches.map((item) => item.finalSpot)));
     const [position, setPosition] = useState({ left: 0, top: 0 });
     const [prediction, setPrediction] = useState(() => getInitialPrediction(finalMatches));
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const currentPlayerId = currentUser?.tournaments[tournament.id]?.playerId;
 
     useEffect(() => {
@@ -40,18 +40,18 @@ const Bet = props => {
     }, [currentSpot]);
 
     const total = useMemo(() => {
-        const maxFinalSpot = Math.max(...finalMatches.map(item => item.finalSpot));
+        const maxFinalSpot = Math.max(...finalMatches.map((item) => item.finalSpot));
         return maxFinalSpot === 15 ? 15 : maxFinalSpot === 14 ? 11 : maxFinalSpot === 7 ? 7 : 3;
     }, [matches]);
 
     const completed = Object.values(prediction).filter(
-        item => item.challengerId && item.acceptorId && item.winner
+        (item) => item.challengerId && item.acceptorId && item.winner
     ).length;
 
     const setPredictionAndProceed = async (finalSpot, winner, sets) => {
         setPrediction(setWinner(prediction, finalSpot, winner, sets));
 
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
 
         let nextSpot = currentSpot - 1;
         while (nextSpot > 0 && (!prediction[nextSpot] || isByeMatch(prediction[nextSpot]))) {
@@ -76,7 +76,7 @@ const Bet = props => {
         });
     };
 
-    const renderMatch = finalSpot => {
+    const renderMatch = (finalSpot) => {
         const match = prediction[finalSpot];
         let challenger;
         let acceptor;

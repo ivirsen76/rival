@@ -1,12 +1,12 @@
 import { SEASON_OPTIONS } from '../../constants';
 
-export const getSeasonName = data => {
-    const seasonName = SEASON_OPTIONS.find(option => option.value === data.season).label;
+export const getSeasonName = (data) => {
+    const seasonName = SEASON_OPTIONS.find((option) => option.value === data.season).label;
     return `${data.year} ${seasonName}`;
 };
 
-export const getShortSeasonName = data => {
-    const seasonName = SEASON_OPTIONS.find(option => option.value === data.season).label;
+export const getShortSeasonName = (data) => {
+    const seasonName = SEASON_OPTIONS.find((option) => option.value === data.season).label;
     return seasonName;
 };
 
@@ -62,17 +62,17 @@ export const getSeasonTournaments = async ({ seasonId, sequelize, config }) => {
 
         levels
             .filter(
-                level =>
+                (level) =>
                     level.playersCount >= config.minPlayersForActiveLadder &&
                     levelMatchesObj[level.id] &&
                     levelMatchesObj[level.id] >= config.minMatchesForActiveLadder
             )
-            .forEach(level => {
+            .forEach((level) => {
                 activeLevels.add(level.id);
             });
     }
 
-    return tournaments.map(item => ({
+    return tournaments.map((item) => ({
         ...item,
         isActivePlay: activeLevels.has(item.levelId),
         gender: /^Men/i.test(item.levelName) ? 'male' : /^Women/i.test(item.levelName) ? 'female' : 'mixed',

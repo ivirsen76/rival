@@ -1,7 +1,7 @@
 import Badge from '@/components/Badge';
 import style from './style.module.scss';
 
-const BadgeImage = props => {
+const BadgeImage = (props) => {
     const searchParams = new URLSearchParams(window.location.search);
     const badgeProps = JSON.parse(searchParams.get('props'));
 

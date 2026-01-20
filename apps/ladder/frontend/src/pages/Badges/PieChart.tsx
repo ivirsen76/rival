@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import Chart from '@/components/Chart';
 import style from './style.module.scss';
 
-const PieChart = props => {
+const PieChart = (props) => {
     const { data } = props;
 
     const chartInit = ({ am4core, am4charts, instance }) => {

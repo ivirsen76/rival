@@ -3,10 +3,10 @@ import FieldWrapper from './FieldWrapper';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const SelectButtons = props => {
+const SelectButtons = (props) => {
     const { field, form, options, allowUnset } = props;
 
-    const selectOption = value => {
+    const selectOption = (value) => {
         if (allowUnset) {
             form.setFieldValue(field.name, field.value === value ? '' : value);
         } else {
@@ -18,7 +18,7 @@ const SelectButtons = props => {
         <FieldWrapper {...props}>
             <div>
                 <div className="btn-group">
-                    {options.map(option => (
+                    {options.map((option) => (
                         <button
                             key={option.value}
                             type="button"

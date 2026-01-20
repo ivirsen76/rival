@@ -7,7 +7,7 @@ import Spot from './Spot';
 import Bracket from './Bracket';
 import { relationsUp } from '@rival/ladder.backend/src/services/matches/relations';
 
-const BracketImage = props => {
+const BracketImage = (props) => {
     const searchParams = new URLSearchParams(window.location.search);
     const tournamentId = searchParams.get('tournamentId');
 
@@ -26,7 +26,7 @@ const BracketImage = props => {
         return obj;
     }, {});
 
-    const renderMatch = finalSpot => {
+    const renderMatch = (finalSpot) => {
         let match = matchesObject[finalSpot];
         const relation = relationsUp[finalSpot];
         const relatedMatch = matchesObject[relation?.finalSpot];

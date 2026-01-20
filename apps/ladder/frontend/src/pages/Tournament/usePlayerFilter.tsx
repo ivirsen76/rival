@@ -10,7 +10,7 @@ export default ({ players }) => {
     const size = useBreakpoints();
 
     const playerList = Object.values(players)
-        .filter(item => {
+        .filter((item) => {
             if (item.hidden) {
                 return false;
             }
@@ -21,7 +21,7 @@ export default ({ players }) => {
         })
         .sort(compareFields('teamName', 'firstName', 'lastName'));
 
-    const togglePlayer = id => {
+    const togglePlayer = (id) => {
         if (selected.includes(id)) {
             setSelected([]);
         } else {
@@ -36,9 +36,9 @@ export default ({ players }) => {
         <>
             <h3>Players</h3>
             {isSmall ? (
-                <select className={'form-select ' + style.select} onChange={e => togglePlayer(+e.target.value)}>
+                <select className={'form-select ' + style.select} onChange={(e) => togglePlayer(+e.target.value)}>
                     <option value="0">All players</option>
-                    {playerList.map(player => (
+                    {playerList.map((player) => (
                         <option key={player.id} value={player.id} selected={selected.includes(player.id)}>
                             <PlayerName player1={player} />
                         </option>
@@ -58,7 +58,7 @@ export default ({ players }) => {
                             All players
                         </button>
                     </div>
-                    {playerList.map(player => (
+                    {playerList.map((player) => (
                         <button
                             key={player.id}
                             type="button"

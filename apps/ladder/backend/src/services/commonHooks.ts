@@ -12,7 +12,7 @@ import { encrypt } from '../utils/crypt';
 import { getPlayerName, getEmailContact } from './users/helpers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 
-export const hasAnyRole = roles => context => {
+export const hasAnyRole = (roles) => (context) => {
     roles = typeof roles === 'string' ? [roles] : roles;
 
     const userRoles = context.params.user.roles.split(',');
@@ -25,7 +25,7 @@ export const hasAnyRole = roles => context => {
 
 export const populateSlug =
     (fieldName, slugName = 'slug') =>
-    context => {
+    (context) => {
         if (context.data[fieldName]) {
             context.data[slugName] = getSlug(context.data[fieldName]);
         }
@@ -35,7 +35,7 @@ export const populateSlug =
 
 export const trim =
     (...fields) =>
-    context => {
+    (context) => {
         for (const field of fields) {
             if (context.data[field] && typeof context.data[field] === 'string') {
                 context.data[field] = context.data[field].trim();
@@ -47,7 +47,7 @@ export const trim =
 
 export const logEvent =
     (message, type = 'info') =>
-    context => {
+    (context) => {
         const { user } = context.params;
         if (user) {
             message += ` (${getPlayerName(user)} [${user.id}])`;
@@ -60,7 +60,7 @@ export const logEvent =
 
 export const purgeTournamentCache =
     (options = {}) =>
-    async context => {
+    async (context) => {
         if (!TL_ENABLE_REDIS) {
             return context;
         }
@@ -85,7 +85,7 @@ export const purgeTournamentCache =
         return context;
     };
 
-export const purgeUserCache = options => async context => {
+export const purgeUserCache = (options) => async (context) => {
     if (!TL_ENABLE_REDIS) {
         return context;
     }
@@ -114,7 +114,7 @@ export const purgeUserCache = options => async context => {
     return context;
 };
 
-export const purgeSeasonCache = options => async context => {
+export const purgeSeasonCache = (options) => async (context) => {
     if (!TL_ENABLE_REDIS) {
         return context;
     }
@@ -143,7 +143,7 @@ export const purgeSeasonCache = options => async context => {
     return context;
 };
 
-export const purgeMatchCache = options => async context => {
+export const purgeMatchCache = (options) => async (context) => {
     if (!TL_ENABLE_REDIS) {
         return context;
     }
@@ -161,7 +161,7 @@ export const purgeMatchCache = options => async context => {
     const otherMatchIds = match.same
         .split(',')
         .map(Number)
-        .filter(id => id !== matchId);
+        .filter((id) => id !== matchId);
     for (const id of [matchId, ...otherMatchIds]) {
         const [result] = await sequelize.query(
             `SELECT p.tournamentId
@@ -181,7 +181,7 @@ export const purgeMatchCache = options => async context => {
 
 export const sendWelcomeEmail =
     ({ userId }) =>
-    async context => {
+    async (context) => {
         const sequelize = context.app.get('sequelizeClient');
         const { users } = sequelize.models;
 
@@ -259,7 +259,7 @@ export const sendWelcomeEmail =
         return context;
     };
 
-export const generateBadges = () => async context => {
+export const generateBadges = () => async (context) => {
     const currentUser = context.params.user;
 
     await updateCurrentWeekUserBadges(context.app, currentUser.id);
@@ -267,7 +267,7 @@ export const generateBadges = () => async context => {
     return context;
 };
 
-export const populateSalt = options => async context => {
+export const populateSalt = (options) => async (context) => {
     const { data } = context;
 
     if (data.password) {
@@ -277,7 +277,7 @@ export const populateSalt = options => async context => {
     return context;
 };
 
-export const optionalAuthenticate = options => async context => {
+export const optionalAuthenticate = (options) => async (context) => {
     try {
         await authenticate('jwt')(context);
     } catch (e) {

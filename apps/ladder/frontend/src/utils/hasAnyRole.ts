@@ -5,5 +5,5 @@ export default function hasAnyRole(user, desiredRoles) {
 
     const userRoles = user.roles.split(',');
 
-    return userRoles.some(role => desiredRoles.includes(role));
+    return userRoles.some((role) => desiredRoles.includes(role));
 }

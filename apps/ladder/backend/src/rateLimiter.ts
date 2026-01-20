@@ -3,7 +3,7 @@ import _get from 'lodash/get';
 import logger from '@rival-tennis-ladder/logger';
 import jwt from 'jsonwebtoken';
 
-const getClientIp = req => {
+const getClientIp = (req) => {
     const ip = req.headers['x-real-ip'];
     if (!ip || /^127.0.0/.test(ip)) {
         return Number(Date.now()).toString();
@@ -12,7 +12,7 @@ const getClientIp = req => {
     return ip;
 };
 
-export default app => {
+export default (app) => {
     if (process.env.NODE_ENV === 'test' || process.env.CI) {
         return;
     }
@@ -23,7 +23,7 @@ export default app => {
         skip: (req, response) => {
             return !_get(req, 'body.email');
         },
-        keyGenerator: req => {
+        keyGenerator: (req) => {
             return getClientIp(req);
         },
         handler: (req, response, next, options) => {
@@ -34,7 +34,7 @@ export default app => {
 
     const apiLimiter = rateLimit({
         windowMs: 60 * 1000, // 1 minute
-        max: req => {
+        max: (req) => {
             const token = _get(req, 'headers.authorization');
             if (token) {
                 const decoded = jwt.decode(token);
@@ -67,7 +67,7 @@ export default app => {
 
             return false;
         },
-        keyGenerator: req => {
+        keyGenerator: (req) => {
             const ip = getClientIp(req);
 
             try {

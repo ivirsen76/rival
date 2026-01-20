@@ -90,7 +90,7 @@ const checkPhoneVerified = async () => {
 
 // function, which will check if user has all necessary data,
 // and if not, it will ask user to provide it
-export default func => {
+export default (func) => {
     return async () => {
         if (!(await checkForBirthday())) {
             return;

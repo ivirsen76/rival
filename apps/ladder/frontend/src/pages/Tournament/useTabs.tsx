@@ -4,7 +4,7 @@ import classnames from 'classnames';
 export default ({ key, options, initial, className }) => {
     const initialState = initial || options[0].value;
     const [value, setValue] = useState(initialState);
-    const currentValue = options.some(item => item.value === value) ? value : options[0].value;
+    const currentValue = options.some((item) => item.value === value) ? value : options[0].value;
 
     useEffect(() => {
         if (value !== initialState) {
@@ -19,7 +19,7 @@ export default ({ key, options, initial, className }) => {
                 className
             )}
         >
-            {options.map(option => (
+            {options.map((option) => (
                 <li key={option.value} className="nav-item ms-n2">
                     <a
                         className={classnames('nav-link text-active-primary', {
@@ -27,7 +27,7 @@ export default ({ key, options, initial, className }) => {
                         })}
                         data-tab-link={option.value}
                         href=""
-                        onClick={e => {
+                        onClick={(e) => {
                             e.preventDefault();
                             setValue(option.value);
                         }}

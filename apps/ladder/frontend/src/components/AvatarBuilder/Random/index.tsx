@@ -7,7 +7,7 @@ import style from '../PiecePicker/style.module.scss';
 let counter = 0;
 
 const generateRandom = (total = 12) => {
-    const getRandomItem = array => {
+    const getRandomItem = (array) => {
         const len = array.reduce((sum, obj) => sum + (obj.weight || 1), 0);
         const num = Math.floor(Math.random() * len);
         let count = 0;
@@ -21,7 +21,7 @@ const generateRandom = (total = 12) => {
         return array[0].value;
     };
 
-    return new Array(total).fill(0).map(_ => {
+    return new Array(total).fill(0).map((_) => {
         const item = {};
         for (const [type, settings] of Object.entries(pieces)) {
             item[type] = getRandomItem(settings.options);
@@ -31,7 +31,7 @@ const generateRandom = (total = 12) => {
     });
 };
 
-const PiecePicker = props => {
+const PiecePicker = (props) => {
     const { setValues } = props;
     const [list, setList] = useState(() => generateRandom());
 

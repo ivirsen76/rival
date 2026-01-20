@@ -5,7 +5,7 @@ export default (possibleMatches, currentPlayerId, currentDate = dayjs.tz().forma
 
     return [...possibleMatches]
         .sort((a, b) => b.playedAt.localeCompare(a.playedAt))
-        .filter(match => {
+        .filter((match) => {
             if (match.challengerId !== currentPlayerId && match.acceptorId !== currentPlayerId) {
                 return false;
             }

@@ -4,11 +4,11 @@ import { updateCurrentUser } from '@/reducers/auth';
 import Form from './Form';
 import _pick from 'lodash/pick';
 
-const SubscriptionsForm = props => {
-    const user = useSelector(state => state.auth.user);
+const SubscriptionsForm = (props) => {
+    const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
-    const onSubmit = async values => {
+    const onSubmit = async (values) => {
         await dispatch(updateCurrentUser(values));
         props.onSubmit && props.onSubmit();
     };

@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import dayjs from '@/utils/dayjs';
 import style from './style.module.scss';
 
-const SeasonPicker = props => {
+const SeasonPicker = (props) => {
     const { settings, updateSettings, onSubmit, seasons } = props;
 
     useEffect(() => {
@@ -19,7 +19,7 @@ const SeasonPicker = props => {
     const seasonOptions = useMemo(() => {
         const currentDate = dayjs.tz();
 
-        return seasons.map(season => {
+        return seasons.map((season) => {
             const startDate = dayjs.tz(season.startDate);
             const endDate = dayjs.tz(season.endDate).subtract(1, 'minute');
             const time = currentDate.isBefore(season.startDate)

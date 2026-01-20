@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import _omit from 'lodash/omit';
 import style from './style.module.scss';
 
-const Checkbox = props => {
+const Checkbox = (props) => {
     const { field, form, label, description, className } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
 

@@ -11,14 +11,14 @@ import useConfig from '@/utils/useConfig';
 import useLazyImages from '@/utils/useLazyImages';
 import Header from '@/components/Header';
 
-const Changelog = props => {
+const Changelog = (props) => {
     const dispatch = useDispatch();
     const config = useConfig();
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const [changelogSeenAt] = useState(currentUser ? currentUser.changelogSeenAt : null);
     const [lazyClass] = useLazyImages();
 
-    const list = getData({ config, lazyClass }).map(item => ({
+    const list = getData({ config, lazyClass }).map((item) => ({
         ...item,
         isNew: currentUser && (!changelogSeenAt || item.date > changelogSeenAt),
     }));
@@ -42,7 +42,7 @@ const Changelog = props => {
             <h2 className="text-white mt-4">What&apos;s New on Rival&nbsp;Tennis&nbsp;Ladder</h2>
             <Card>
                 <div className={style.wrapper}>
-                    {list.map(item => (
+                    {list.map((item) => (
                         <div key={item.date}>
                             <div className={style.header}>
                                 <h3 className="m-0">{item.title}</h3>

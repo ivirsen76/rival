@@ -12,13 +12,13 @@ import useBreakpoints from '@/utils/useBreakpoints';
 import { BRACKET_BOT_ID } from '@rival/ladder.backend/src/constants';
 import style from './style.module.scss';
 
-const BetContest = props => {
+const BetContest = (props) => {
     const { tournament, players, matches } = props;
     const size = useBreakpoints();
     const isSmall = ['xs'].includes(size);
 
     const data = useMemo(() => {
-        const result = Object.values(players).filter(item => item.prediction);
+        const result = Object.values(players).filter((item) => item.prediction);
 
         if (tournament.botPrediction) {
             result.push({

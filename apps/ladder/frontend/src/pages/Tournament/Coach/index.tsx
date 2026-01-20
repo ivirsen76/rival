@@ -3,12 +3,12 @@ import Profile from './Profile';
 import Modal from '@/components/Modal';
 import style from './style.module.scss';
 
-const Coach = props => {
+const Coach = (props) => {
     const { list } = props;
 
     return (
         <div className={style.wrapper}>
-            {list.map(coach => (
+            {list.map((coach) => (
                 <div className={style.block} key={coach.id}>
                     <div className={style.photo} style={{ backgroundImage: `url(${coach.photo})` }} />
                     <div>

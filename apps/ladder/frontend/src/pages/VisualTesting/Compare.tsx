@@ -10,15 +10,15 @@ const types = [
     { value: 'diff', label: 'Diff', key: '3' },
 ];
 
-const Compare = props => {
+const Compare = (props) => {
     const { file, percent, size, onAccept } = props;
     const [type, setType] = useState('diff');
 
     const src = `/screenshots/${type}/${file}`;
 
     useEffect(() => {
-        const onKeyDown = event => {
-            const foundType = types.find(item => item.key === event.key);
+        const onKeyDown = (event) => {
+            const foundType = types.find((item) => item.key === event.key);
             if (foundType) {
                 setType(foundType.value);
             }
@@ -40,7 +40,7 @@ const Compare = props => {
         <div className={style.info}>
             <div className="d-flex justify-content-between align-items-start mb-6">
                 <div className={style.buttons}>
-                    {types.map(item => (
+                    {types.map((item) => (
                         <button
                             key={item.value}
                             className={classnames('btn', type === item.value ? 'btn-primary' : 'btn-secondary')}

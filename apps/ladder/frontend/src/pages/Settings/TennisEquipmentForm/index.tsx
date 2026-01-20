@@ -6,14 +6,14 @@ import { updateCurrentUser } from '@/reducers/auth';
 import Button from '@/components/Button';
 import _pick from 'lodash/pick';
 
-const TennisEquipmentForm = props => {
-    const user = useSelector(state => state.auth.user);
+const TennisEquipmentForm = (props) => {
+    const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
     return (
         <Formik
             initialValues={_pick(user, ['racquet', 'strings', 'overgrip', 'shoes', 'bag', 'brand', 'balls'])}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await dispatch(updateCurrentUser(values));
                 props.onSubmit && props.onSubmit();
             }}

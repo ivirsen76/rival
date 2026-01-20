@@ -1,7 +1,7 @@
 import yup from '../../packages/yup';
 import { getSchemaErrors } from '../../helpers';
 
-const checkEmailList = list => {
+const checkEmailList = (list) => {
     if (!list) {
         return true;
     }
@@ -13,7 +13,7 @@ const checkEmailList = list => {
     try {
         list.replace(/\s+/g, '')
             .split(';')
-            .forEach(email => {
+            .forEach((email) => {
                 schema.validateSync({ email });
             });
     } catch (err) {
@@ -23,7 +23,7 @@ const checkEmailList = list => {
     return true;
 };
 
-export default values => {
+export default (values) => {
     const schema = yup.object().shape({
         signUpNotification: yup.string().max(200),
         changeLevelNotification: yup.string().max(200),

@@ -2,7 +2,7 @@ import Card from '@/components/Card';
 import TermsAndConditions from '@/components/TermsAndConditions';
 import ScrollToTop from '@/components/ScrollToTop';
 
-const Terms = props => {
+const Terms = (props) => {
     return (
         <div className="tl-front">
             <h2 className="text-white mt-4">Terms & Conditions</h2>

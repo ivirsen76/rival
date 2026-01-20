@@ -10,7 +10,7 @@ import { formatMiddle } from '@/utils/dayjs';
 import useConfig from '@/utils/useConfig';
 import parseScore from '@/components/Match/parseScore';
 
-const Match = props => {
+const Match = (props) => {
     const { challenger, acceptor, challenger2, acceptor2, match, extraData } = props;
     const config = useConfig();
 

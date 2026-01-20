@@ -16,10 +16,10 @@ import Modal from '@/components/Modal';
 import FormDeleteDoublesProposal from '@/components/FormDeleteDoublesProposal';
 import WeatherAtTime from '../WeatherForecast/WeatherAtTime';
 
-const ProposalDoubles = props => {
+const ProposalDoubles = (props) => {
     const { match, onStatusUpdate, showActions, tournament, showWeather } = props;
     const { players } = tournament;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const { confirm, confirmMessage } = useConfirmation();
     const nowLocal = dayjs.tz();
     const challenger = players[match.challengerId];

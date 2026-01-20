@@ -25,10 +25,10 @@ test.beforeEach(async ({ page, login }) => {
         await match.scoreButton.click();
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickAcceptorPoints(2);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await page.getByRole('button', { name: 'Gary Mill' }).click();
         await expect(common.modal).toContainText('+21');
@@ -82,10 +82,10 @@ test.beforeEach(async ({ page, login }) => {
         await match.scoreButton.click();
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickAcceptorPoints(2);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.fullSetButton.click();
         await match.pickChallengerPoints(1);
@@ -117,7 +117,7 @@ test.beforeEach(async ({ page, login }) => {
         await expect(match.matchFormatSelect).toHaveValue('2');
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(2);
         await expect(common.modal).toContainText('+9');
@@ -159,10 +159,10 @@ test.beforeEach(async ({ page, login }) => {
         await match.scoreButton.click();
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickAcceptorPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await expect(common.modal).toContainText('Who won the tiebreak?');
         await expect(common.modal).not.toContainText('Full set');
@@ -199,7 +199,7 @@ test.beforeEach(async ({ page, login }) => {
         await match.scoreButton.click();
 
         await match.pickAcceptorPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickMatchResult('Player retired');
         await common.modal.locator('button').getByText('Ben Done').click();
@@ -243,11 +243,11 @@ test.beforeEach(async ({ page, login }) => {
 
         await match.pickChallengerPoints(4);
         await match.pickAcceptorPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(2);
         await match.pickAcceptorPoints(4);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await expect(match.getSetLink(3)).toHaveClass(/disabled/);
         await expect(match.getSetLink(2)).toHaveClass(/active/);
@@ -264,10 +264,10 @@ test.beforeEach(async ({ page, login }) => {
 
         await match.matchFormatSelect.selectOption('Fast4');
         await match.pickAcceptorPoints(2);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await page.getByRole('button', { name: 'Ben Done' }).click();
         await expect(common.modal).toContainText('+9');
@@ -310,10 +310,10 @@ test.beforeEach(async ({ page, login }) => {
         await expect(match.matchFormatSelect).toHaveValue('0');
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickAcceptorPoints(2);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(2);
         await expect(common.modal).toContainText('+14');
@@ -344,7 +344,7 @@ test.beforeEach(async ({ page, login }) => {
         await match.scoreButton.click();
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(4);
         await expect(common.modal).toContainText('+11');
@@ -356,7 +356,7 @@ test.beforeEach(async ({ page, login }) => {
         await expect(match.getSetLink(3)).toHaveClass(/disabled/);
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(2);
         await expect(common.modal).toContainText('+9');
@@ -388,7 +388,7 @@ test.beforeEach(async ({ page, login }) => {
         await expect(common.body).toContainText('The score is incorrect');
 
         await match.pickChallengerPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(3);
         await expect(match.getBadgeWithPoints('+8')).toBeVisible();
@@ -399,7 +399,7 @@ test.beforeEach(async ({ page, login }) => {
         await expect(common.body).toContainText('Retirement score should be incomplete.');
 
         await match.pickChallengerPoints(7);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await expect(match.getBadgeWithPoints('+12')).toBeVisible();
         await expect(match.getBadgeWithPoints('+17')).toBeVisible();
 
@@ -414,7 +414,7 @@ test.beforeEach(async ({ page, login }) => {
         await match.scoreButton.click();
 
         await match.pickChallengerPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickMatchResult('Player retired');
         await common.modalSubmitButton.click();
@@ -428,7 +428,7 @@ test.beforeEach(async ({ page, login }) => {
         await match.scoreButton.click();
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(3);
         await match.pickMatchResult('Player defaulted');
@@ -459,7 +459,7 @@ test.beforeEach(async ({ page, login }) => {
         await match.scoreButton.click();
 
         await match.pickAcceptorPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickMatchResult('Player retired');
         await common.modal.locator('button').getByText('Ben Done').click();
@@ -531,7 +531,7 @@ test.beforeEach(async ({ page, login }) => {
 
         await match.pickChallengerPoints(6);
         await match.pickAcceptorPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(6);
         await match.pickAcceptorPoints(1);
@@ -635,7 +635,7 @@ test.beforeEach(async ({ page, login }) => {
 
         await match.pickChallengerPoints(6);
         await match.pickAcceptorPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(6);
         await match.pickAcceptorPoints(1);
@@ -668,7 +668,7 @@ test.beforeEach(async ({ page, login }) => {
 
         await match.pickChallengerPoints(6);
         await match.pickAcceptorPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(6);
         await match.pickAcceptorPoints(1);
@@ -697,10 +697,10 @@ test.beforeEach(async ({ page, login }) => {
         await runQuery(`UPDATE players SET tournamentId=8 WHERE id=4`);
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await common.modalSubmitButton.click();
         await expect(common.alert).toContainText('All players should be from the same tournament.');
@@ -714,10 +714,10 @@ test.beforeEach(async ({ page, login }) => {
         await match.nextButton.click();
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await common.modalSubmitButton.click();
         await expect(common.body).toContainText('Duplicated match?');
@@ -734,10 +734,10 @@ test.beforeEach(async ({ page, login }) => {
         await runQuery(`UPDATE players SET userId=4 WHERE userId=1`);
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await common.modalSubmitButton.click();
         await expect(common.alert).toContainText('You did not play in this match.');
@@ -953,7 +953,7 @@ test.beforeEach(async ({ page, login }) => {
         await match.scoreButton.click();
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(2);
         await common.modalSubmitButton.click();
@@ -1018,7 +1018,7 @@ test.beforeEach(async ({ page, login }) => {
 
         await match.pickChallengerPoints(7);
         await match.pickAcceptorPoints(6);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(7);
         await match.pickAcceptorPoints(6);
@@ -1048,7 +1048,7 @@ test.beforeEach(async ({ page, login }) => {
         await match.scoreButton.click();
 
         await match.pickChallengerPoints(0);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(0);
 
@@ -1072,7 +1072,7 @@ test.beforeEach(async ({ page, login }) => {
         await common.modal.locator('button').getByText('Report match').click();
 
         await expect(common.alert).toContainText('has been reported');
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        await new Promise((resolve) => setTimeout(resolve, 3000));
 
         expect(await getNumRecords('emails', { subject: "You've Established Your TLR!" })).toBe(1);
     });
@@ -1089,7 +1089,7 @@ test.beforeEach(async ({ page, login }) => {
         await match.scoreButton.click();
 
         await match.pickAcceptorPoints(0);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickAcceptorPoints(0);
 
@@ -1120,7 +1120,7 @@ test.beforeEach(async ({ page, login }) => {
         await match.scoreButton.click();
 
         await match.pickAcceptorPoints(0);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickAcceptorPoints(0);
 
@@ -1150,7 +1150,7 @@ test.beforeEach(async ({ page, login }) => {
 
         await match.pickChallengerPoints(6);
         await match.pickAcceptorPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(6);
         await match.pickAcceptorPoints(1);
@@ -1177,7 +1177,7 @@ test.beforeEach(async ({ page, login }) => {
 
         await match.pickChallengerPoints(6);
         await match.pickAcceptorPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(6);
         await match.pickAcceptorPoints(1);
@@ -1207,7 +1207,7 @@ test.beforeEach(async ({ page, login }) => {
 
         await match.pickChallengerPoints(6);
         await match.pickAcceptorPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(6);
         await match.pickAcceptorPoints(1);
@@ -1224,7 +1224,7 @@ test.beforeEach(async ({ page, login }) => {
         await page.locator('[data-edit-match="1"]').click();
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await common.modal.locator('a').getByText('Set 2').click();
 
         await match.pickChallengerPoints(4);
@@ -1318,7 +1318,7 @@ test.beforeEach(async ({ page, login }) => {
         await expect(page.locator('[data-match-actions="9"]')).toBeHidden();
 
         // Check that the message has been sent
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         const emailSent = await getRecord('emails', { recipientEmail: 'player2@gmail.com' });
         expect(emailSent.subject).toContain('Ben Done unaccepted the proposal for');
         expect(emailSent.html).toContain('Ben Done</a></b> unaccepted the proposal for a match in Men 3.5');
@@ -1341,7 +1341,7 @@ test.beforeEach(async ({ page, login }) => {
         await expect(page.locator('[data-match-actions="9"]')).toBeHidden();
 
         // Check that the message has been sent
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         const emailSent = await getRecord('emails', { recipientEmail: 'player2@gmail.com' });
         expect(emailSent.subject).toContain('Ben Done deleted the proposal for');
         expect(emailSent.html).toContain('Ben Done</a></b> deleted the proposal for a match in Men 3.5.');
@@ -1518,7 +1518,7 @@ test.beforeEach(async ({ page, login }) => {
 
         await page.locator('[data-final-tournament-area]').locator('a').getByText('Score').click();
         await match.pickAcceptorPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickAcceptorPoints(2);
 
         // change createdAt dates
@@ -1550,7 +1550,7 @@ test.beforeEach(async ({ page, login }) => {
 
         await page.locator('[data-final-tournament-area]').locator('a').getByText('Score').click();
         await match.pickAcceptorPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickAcceptorPoints(2);
         await common.modalSubmitButton.click();
         await expectRecordToExist('matches', { finalSpot: 1, score: '6-3 6-2' });
@@ -1563,7 +1563,7 @@ test.beforeEach(async ({ page, login }) => {
         await expect(page.locator('button[data-delete-match]')).toBeHidden();
         await page.locator('[data-final-tournament-area]').locator('button[data-edit-match]').click();
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await page.locator('a').getByText('Set 2').click();
         await match.pickChallengerPoints(3);
         await common.modalSubmitButton.click();
@@ -1689,10 +1689,10 @@ test.beforeEach(async ({ page, login }) => {
         await expect(common.modal).toContainText('0 / 3');
         await expect(common.modal).not.toContainText('Submit');
         await page.locator('[data-match-bet="3"]').locator('[data-challenger-bet="3"]').click();
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
 
         await page.locator('[data-match-bet="2"]').locator('[data-challenger-bet="2"]').click();
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
 
         await page.locator('[data-match-bet="1"]').locator('[data-challenger-bet="3"]').click();
         await expect(common.modal).toContainText('3 / 3');
@@ -1853,7 +1853,7 @@ test.beforeEach(async ({ page, login }) => {
         await common.modalSubmitButton.click();
         await expect(common.alert).toContainText('The match has been reported');
 
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         expect(await getNumRecords('emails', { subject: byeSubject })).toBe(0);
     });
 
@@ -1958,7 +1958,7 @@ test.beforeEach(async ({ page, login }) => {
 
         await overview.streetField.fill('908 Sutter Gate Ln');
         await page.waitForResponse(
-            response => response.url().includes('api.addresszen.com') && response.request().method() === 'GET'
+            (response) => response.url().includes('api.addresszen.com') && response.request().method() === 'GET'
         );
         await overview.cityField.fill('Morrisville');
         await overview.zipField.fill('27560');
@@ -2045,7 +2045,7 @@ test.beforeEach(async ({ page, login }) => {
 
         await page.locator('[data-final-tournament-area]').locator('a').getByText('Score').click();
         await match.pickAcceptorPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickAcceptorPoints(3);
         await common.modalSubmitButton.click();
 
@@ -2138,7 +2138,7 @@ test.beforeEach(async ({ page, login }) => {
 
         await page.locator('[data-final-tournament-area]').locator('a').getByText('Score').click();
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickChallengerPoints(3);
         await common.modalSubmitButton.click();
 
@@ -2193,7 +2193,7 @@ test.beforeEach(async ({ page, login }) => {
 
         await page.locator('[data-final-tournament-area]').locator('a').getByText('Score').click();
         await match.pickAcceptorPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickAcceptorPoints(3);
         await common.modalSubmitButton.click();
 
@@ -2280,7 +2280,7 @@ test.beforeEach(async ({ page, login }) => {
 
         await page.locator('[data-final-tournament-area]').locator('a').getByText('Score').click();
         await match.pickAcceptorPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickAcceptorPoints(3);
         await common.modalSubmitButton.click();
 
@@ -2321,7 +2321,7 @@ test.beforeEach(async ({ page, login }) => {
         await page.goto('/season/2021/spring/men-35');
         await page.locator('[data-final-tournament-area]').locator('a').getByText('Score').click();
         await match.pickAcceptorPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickAcceptorPoints(2);
         await common.modalSubmitButton.click();
         await expect(common.alert).toContainText('The match has been reported');
@@ -2335,7 +2335,7 @@ test.beforeEach(async ({ page, login }) => {
         await page.locator('[data-final-tournament-area]').locator('button[data-match-actions]').click();
         await page.locator('[data-final-tournament-area]').locator('button[data-edit-match]').click();
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await page.locator('a').getByText('Set 2').click();
         await match.pickChallengerPoints(3);
 

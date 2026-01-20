@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import _debounce from 'lodash/debounce';
 import sizes from './useBreakpoints.module.scss';
 
-Object.keys(sizes).forEach(key => {
+Object.keys(sizes).forEach((key) => {
     sizes[key] = parseInt(sizes[key], 10);
 });
 
@@ -13,7 +13,7 @@ export const SIZE_LG = 'lg';
 export const SIZE_XL = 'xl';
 export const SIZE_XXL = 'xxl';
 
-const resolveBreakpoint = width => {
+const resolveBreakpoint = (width) => {
     if (width < sizes.sm) {
         return SIZE_XS;
     }

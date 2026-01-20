@@ -25,7 +25,7 @@ test('Should cancel providing the birthday', async ({ page, common, login, overv
     await common.modal.locator('button').getByText('Cancel').click();
     await expect(common.modal).toBeHidden();
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await overview.clickOtherAction('Schedule match');
     await expect(common.modal).toContainText('Birth Date');

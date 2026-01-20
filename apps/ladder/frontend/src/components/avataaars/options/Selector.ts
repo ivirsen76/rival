@@ -47,7 +47,7 @@ export default class Selector extends React.Component {
         let result = null;
         const { option, children } = this.props;
         const value = this.optionContext.getValue(option.key);
-        React.Children.forEach(children, child => {
+        React.Children.forEach(children, (child) => {
             if (getComponentOptionValue(child.type) === value) {
                 result = child;
             }
@@ -63,7 +63,7 @@ export default class Selector extends React.Component {
         const values = React.Children.map(
             children,
             // TODO: also validate and throw error if we don't see optionValue
-            child => getComponentOptionValue(child.type)
+            (child) => getComponentOptionValue(child.type)
         );
         if (new Set(values).size !== values.length) {
             throw new Error('Duplicate values');

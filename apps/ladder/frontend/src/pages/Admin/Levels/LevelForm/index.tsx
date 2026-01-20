@@ -10,7 +10,7 @@ const typeOptions = [
     { value: 'doubles-team', label: 'Doubles Team' },
 ];
 
-const LevelForm = props => {
+const LevelForm = (props) => {
     const { initialValues, onSubmit, hideType } = props;
 
     return (

@@ -83,7 +83,7 @@ const sendProposalEmails = async (app, forceSending = false) => {
         }
 
         // Don't send recent groups yet
-        const groupsToProcess = Object.values(groups).filter(item => item[0].createdAt < maxDate || forceSending);
+        const groupsToProcess = Object.values(groups).filter((item) => item[0].createdAt < maxDate || forceSending);
         if (groupsToProcess.length === 0) {
             return;
         }
@@ -132,7 +132,7 @@ const sendProposalEmails = async (app, forceSending = false) => {
 
         const establishedEloAllUsers = await getEstablishedEloAllUsers({ config, sequelize });
 
-        const getEmails = async proposal => {
+        const getEmails = async (proposal) => {
             const proposerAge = proposal.birthday ? getAge(proposal.birthday) : 9999;
             const proposalWeekDay = dayjs.tz(proposal.playedAt).isoWeekday();
             const proposalPlayFormat = proposal.practiceType !== 0 ? 99 : proposal.matchFormat;
@@ -179,7 +179,7 @@ const sendProposalEmails = async (app, forceSending = false) => {
             const captainId = proposal.partnerId || proposal.challengerId;
 
             const emails = users
-                .filter(user => {
+                .filter((user) => {
                     if (user.subscribeForProposals !== 1) {
                         return false;
                     }
@@ -268,7 +268,7 @@ const sendProposalEmails = async (app, forceSending = false) => {
             return emails;
         };
 
-        const getCurrentUser = proposal => ({
+        const getCurrentUser = (proposal) => ({
             id: proposal.challengerUserId,
             firstName: proposal.firstName,
             lastName: proposal.lastName,

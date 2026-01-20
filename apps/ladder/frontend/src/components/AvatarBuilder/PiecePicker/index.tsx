@@ -7,7 +7,7 @@ import style from './style.module.scss';
 
 const EmptyIcon = () => <div />;
 
-const PiecePicker = props => {
+const PiecePicker = (props) => {
     const { field, form, colors, colorField } = props;
     const piece = pieces[field.name];
     const Icon = pieces[field.name].icon || EmptyIcon;
@@ -37,7 +37,7 @@ const PiecePicker = props => {
                     {colors && (
                         <div>
                             <div className={style.colorWrapper}>
-                                {pieces[colorField].options.map(option => (
+                                {pieces[colorField].options.map((option) => (
                                     <div
                                         key={option.value}
                                         className={classnames(style.color, {
@@ -54,7 +54,7 @@ const PiecePicker = props => {
                     )}
 
                     <div className={style.wrapper}>
-                        {pieceOptions.map(option => (
+                        {pieceOptions.map((option) => (
                             <div
                                 key={option.value}
                                 data-piece-option={option.value}

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import Card from '@/components/Card';
 import { Link } from 'react-router-dom';
 
-const Error = props => {
+const Error = (props) => {
     const { title, message, description } = props;
 
     return (

@@ -15,7 +15,7 @@ import axios from '@/utils/axios';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import style from './style.module.scss';
 
-const JustForm = props => {
+const JustForm = (props) => {
     const { formikProps, tournament } = props;
     const { isSubmitting, values, setFieldValue } = formikProps;
 
@@ -24,19 +24,19 @@ const JustForm = props => {
     const players = useMemo(() => {
         return Object.values(tournament.players)
             .sort(compareFields('firstName', 'lastName'))
-            .filter(item => item.isActive && item.id !== values.challengerId)
-            .map(item => ({
+            .filter((item) => item.isActive && item.id !== values.challengerId)
+            .map((item) => ({
                 value: item.id,
                 label: `${item.firstName} ${item.lastName}`,
             }));
     }, [tournament.players, values.challengerId]);
 
-    const getPlayerPicker = name => () => {
+    const getPlayerPicker = (name) => () => {
         if (!values[name]) {
             return;
         }
 
-        ['challenger2Id', 'acceptorId', 'acceptor2Id'].forEach(field => {
+        ['challenger2Id', 'acceptorId', 'acceptor2Id'].forEach((field) => {
             if (field === name) {
                 return;
             }
@@ -80,11 +80,11 @@ const JustForm = props => {
                 </select>
                 <select
                     className={style.select + ' form-select form-select-solid'}
-                    onChange={event => setFieldValue(name, Number(event.target.value))}
+                    onChange={(event) => setFieldValue(name, Number(event.target.value))}
                     {...{ [`data-${name.toLowerCase()}`]: true }}
                 >
                     <option value={0}>Pick {label}</option>
-                    {players.map(player => (
+                    {players.map((player) => (
                         <option key={player.value} value={player.value}>
                             {player.label}
                         </option>
@@ -147,14 +147,14 @@ JustForm.propTypes = {
     tournament: PropTypes.object,
 };
 
-const FormDoublesProposal = props => {
+const FormDoublesProposal = (props) => {
     const [confirmed, setConfirmed] = useState(false);
     const { initialValues, onSubmit, tournament } = props;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
 
     const challengerId = currentUser.tournaments[tournament.id].playerId;
 
-    const handleSubmit = async values => {
+    const handleSubmit = async (values) => {
         let confirm = true;
         if (!confirmed && values.playedAt) {
             const playedAt = dayjs.tz(values.playedAt);
@@ -199,7 +199,7 @@ const FormDoublesProposal = props => {
             }}
             onSubmit={handleSubmit}
         >
-            {formikProps => <JustForm formikProps={formikProps} tournament={tournament} />}
+            {(formikProps) => <JustForm formikProps={formikProps} tournament={tournament} />}
         </Formik>
     );
 };

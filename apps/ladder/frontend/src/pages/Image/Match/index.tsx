@@ -11,7 +11,7 @@ const MatchImage = () => {
     // populate partners if partnerIds is present
     for (const player of Object.values(players)) {
         if (player.partnerIds) {
-            player.partners = player.partnerIds.map(playerId => _omit(players[playerId], ['partnerIds', 'partners']));
+            player.partners = player.partnerIds.map((playerId) => _omit(players[playerId], ['partnerIds', 'partners']));
         }
     }
 

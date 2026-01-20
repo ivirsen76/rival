@@ -38,7 +38,7 @@ const dumpPath = path.join(TL_TMP_FOLDER, 'dump.sql');
 const productionDumpPath = path.join(__dirname, 'production.sql');
 const envPath = path.join(__dirname, '..', '..', '.env');
 
-const throwError = msg => {
+const throwError = (msg) => {
     console.info(colors.red(msg));
     process.exit(1);
 };
@@ -49,7 +49,7 @@ const checkPermissions = () => {
     }
 };
 
-const getStringConditions = conditions =>
+const getStringConditions = (conditions) =>
     _map(conditions, (item, key) => {
         if (key === 'sql') {
             return item;
@@ -108,7 +108,7 @@ const needNewDump = () => {
         return true;
     }
 
-    const getMaxModifiedTime = dir =>
+    const getMaxModifiedTime = (dir) =>
         fs.readdirSync(dir).reduce((max, file) => {
             const name = path.join(dir, file);
 
@@ -232,7 +232,7 @@ export const getNumRecords = (table, conditions?) => {
     });
 };
 
-export const runQuery = query => {
+export const runQuery = (query) => {
     checkPermissions();
 
     return new Promise((resolve, reject) => {
@@ -293,7 +293,7 @@ export const expectRecordToExist = async (table, conditions, data?) => {
             }
 
             // wait a bit
-            await new Promise(resolve => setTimeout(resolve, retryingPause));
+            await new Promise((resolve) => setTimeout(resolve, retryingPause));
         }
     }
 };
@@ -318,11 +318,11 @@ export const expectNumRecords = async (table, conditions, num) => {
             }
 
             // wait a bit
-            await new Promise(resolve => setTimeout(resolve, retryingPause));
+            await new Promise((resolve) => setTimeout(resolve, retryingPause));
         }
     }
 };
 
-export const overrideConfig = async values => {
+export const overrideConfig = async (values) => {
     await runQuery(`UPDATE config SET override='${JSON.stringify(values)}'`);
 };

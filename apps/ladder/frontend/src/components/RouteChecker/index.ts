@@ -3,8 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addHistoryEventAndSave } from '@/reducers/auth';
 import { useLocation } from 'react-router-dom';
 
-const RouteChecker = props => {
-    const currentUser = useSelector(state => state.auth.user);
+const RouteChecker = (props) => {
+    const currentUser = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
     const location = useLocation();
 

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import style from './style.module.scss';
 
-const CancelMessage = props => {
+const CancelMessage = (props) => {
     const { cancelFinalTournamentReason, isFreeSeason, level } = props.tournament;
     const message =
         typeof cancelFinalTournamentReason === 'string' ? [cancelFinalTournamentReason] : cancelFinalTournamentReason;

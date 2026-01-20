@@ -74,8 +74,8 @@ const emailOptions = [
         id: 5,
         name: 'Image with ladder overview',
         params: {
-            getSubject: config => `Want More Tennis Around ${config.city}?`,
-            getImage: config =>
+            getSubject: (config) => `Want More Tennis Around ${config.city}?`,
+            getImage: (config) =>
                 `<mj-image src="https://rival-tennis-ladder-images.s3.us-east-2.amazonaws.com/images/45087d640879140d68b00207371d05ad028a805dcff3411897fd8394ad28d74f.png" alt="Overview" href="https://${config.url}.tennis-ladder.com/?utm_source=newsletter&utm_medium=email&utm_campaign=second-image-overview" />`,
         },
     },
@@ -83,8 +83,8 @@ const emailOptions = [
         id: 6,
         name: 'Image with photo collage',
         params: {
-            getSubject: config => `Want More Tennis Around ${config.city}? 🎾`,
-            getImage: config =>
+            getSubject: (config) => `Want More Tennis Around ${config.city}? 🎾`,
+            getImage: (config) =>
                 `<mj-image src="https://rival-tennis-ladder-images.s3.us-east-2.amazonaws.com/images/photo-collage-1.jpg" alt="Players" href="https://${config.url}.tennis-ladder.com/?utm_source=newsletter&utm_medium=email&utm_campaign=second-image-photos" />`,
         },
     },
@@ -92,7 +92,7 @@ const emailOptions = [
         id: 7,
         name: 'With no image',
         params: {
-            getSubject: config => `🎾 Want More Tennis Around ${config.city}?`,
+            getSubject: (config) => `🎾 Want More Tennis Around ${config.city}?`,
         },
     },
 ];
@@ -200,7 +200,7 @@ const sendGeneralMessage = async (app, candidates) => {
     );
 
     let [userEmails] = await sequelize.query(`SELECT email FROM users`);
-    userEmails = new Set(userEmails.map(item => item.email.toLowerCase()));
+    userEmails = new Set(userEmails.map((item) => item.email.toLowerCase()));
 
     if (!candidates) {
         [candidates] = await sequelize.query(`
@@ -217,7 +217,7 @@ const sendGeneralMessage = async (app, candidates) => {
 
     const registeredCandidates = [];
     candidates = candidates
-        .filter(item => {
+        .filter((item) => {
             const email = decrypt(item.address).toLowerCase().trim();
             if (userEmails.has(email)) {
                 registeredCandidates.push(item.id);
@@ -293,7 +293,7 @@ const sendGeneralMessage = async (app, candidates) => {
     logger.info(`Roster message sent to ${candidates.length} candidates`);
 };
 
-const processAtlanta = async app => {
+const processAtlanta = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
     const CATEGORY = 'Men';
@@ -323,7 +323,7 @@ const processAtlanta = async app => {
     await sendGeneralMessage(app, candidates);
 };
 
-const processAustin = async app => {
+const processAustin = async (app) => {
     const sequelize = app.get('sequelizeClient');
     const dateTwoMonthsAgo = dayjs.tz().subtract(2, 'month').format('YYYY-MM-DD HH:mm:ss');
 

@@ -5,7 +5,7 @@ import style from './style.module.scss';
 
 const transitionTime = 600;
 
-const Alert = props => {
+const Alert = (props) => {
     const { header, message, type, duration, onClose } = props;
 
     const [loaded, setLoaded] = useState(false);
@@ -32,7 +32,7 @@ const Alert = props => {
 
         return () => {
             onClose();
-            timeouts.current.forEach(timeout => clearTimeout(timeout));
+            timeouts.current.forEach((timeout) => clearTimeout(timeout));
         };
     }, []);
 

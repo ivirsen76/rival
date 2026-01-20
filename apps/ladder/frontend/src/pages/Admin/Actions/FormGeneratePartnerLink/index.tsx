@@ -20,8 +20,8 @@ const yearsOptions = [
     { value: 5, label: '5 years' },
 ];
 
-const FormGeneratePartnerLink = props => {
-    const handleSubmit = async values => {
+const FormGeneratePartnerLink = (props) => {
+    const handleSubmit = async (values) => {
         const result = await axios.put('/api/utils/0', { action: 'generatePartnerLink', ...values });
         const link = result.data.link;
 

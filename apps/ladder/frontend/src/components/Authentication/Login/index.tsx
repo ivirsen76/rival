@@ -12,7 +12,7 @@ import notification from '@/components/notification';
 import VerifyEmail from '@/components/VerifyEmail';
 import EmailIcon from '@rival/packages/metronic/icons/duotone/Communication/Mail-at.svg?react';
 
-const Login = props => {
+const Login = (props) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -25,7 +25,7 @@ const Login = props => {
     return (
         <Formik
             initialValues={{ email: '', password: '' }}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 const user = await dispatch(authenticate(values.email, values.password));
                 if (props.onSubmit) {
                     props.onSubmit(user);
@@ -41,7 +41,7 @@ const Login = props => {
                             <a
                                 href=""
                                 className="link-primary fw-bold"
-                                onClick={e => {
+                                onClick={(e) => {
                                     e.preventDefault();
                                     goToRegister();
                                 }}
@@ -57,13 +57,13 @@ const Login = props => {
                         type="email"
                         component={Input}
                         autoFocus
-                        renderError={error =>
+                        renderError={(error) =>
                             error.includes('verified') ? (
                                 <div>
                                     Your email is not verified.{' '}
                                     <a
                                         href=""
-                                        onClick={e => {
+                                        onClick={(e) => {
                                             e.preventDefault();
                                             notification({
                                                 inModal: true,

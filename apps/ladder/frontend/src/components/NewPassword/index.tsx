@@ -10,7 +10,7 @@ import axios from '@/utils/axios';
 import { logout } from '@/reducers/auth';
 import { useDispatch } from 'react-redux';
 
-const NewPassword = props => {
+const NewPassword = (props) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -25,7 +25,7 @@ const NewPassword = props => {
                     password: '',
                     action: props.payload,
                 }}
-                onSubmit={async values => {
+                onSubmit={async (values) => {
                     await axios.put('/api/passwords/0', values);
                     notification({
                         inModal: true,

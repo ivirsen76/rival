@@ -17,12 +17,12 @@ const reorder = (list, startIndex, endIndex) => {
     return result;
 };
 
-const Levels = props => {
+const Levels = (props) => {
     const queryClient = useQueryClient();
     const { settings } = useSettings();
     const { levels } = settings;
 
-    const addLevel = async values => {
+    const addLevel = async (values) => {
         await axios.post('/api/levels', values);
         await queryClient.invalidateQueries();
     };
@@ -32,7 +32,7 @@ const Levels = props => {
         await queryClient.invalidateQueries();
     };
 
-    const onDragEnd = async result => {
+    const onDragEnd = async (result) => {
         if (!result.destination || result.source.index === result.destination.index) {
             return;
         }
@@ -56,7 +56,7 @@ const Levels = props => {
                 )}
                 renderBody={({ hide }) => (
                     <LevelForm
-                        onSubmit={async values => {
+                        onSubmit={async (values) => {
                             await addLevel(values);
                             hide();
                             notification({
@@ -71,7 +71,7 @@ const Levels = props => {
             <DragDropContext onDragEnd={onDragEnd}>
                 <table className="table table-sm align-middle w-auto mt-8 mb-0">
                     <Droppable droppableId="droppable">
-                        {provided => (
+                        {(provided) => (
                             <tbody ref={provided.innerRef} {...provided.droppableProps} data-level-list>
                                 {levels.map((level, index) => (
                                     <Draggable key={level.id} draggableId={level.id.toString()} index={index}>
@@ -117,7 +117,7 @@ const Levels = props => {
                                                             <a
                                                                 href=""
                                                                 id={`tl-edit-level-${level.id}`}
-                                                                onClick={e => {
+                                                                onClick={(e) => {
                                                                     e.preventDefault();
                                                                     show();
                                                                 }}
@@ -129,7 +129,7 @@ const Levels = props => {
                                                             <LevelForm
                                                                 initialValues={level}
                                                                 hideType
-                                                                onSubmit={async values => {
+                                                                onSubmit={async (values) => {
                                                                     await updateLevel(level.id, values);
                                                                     hide();
                                                                     notification({

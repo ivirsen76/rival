@@ -9,12 +9,12 @@ import TeamNamePicker, { getValidateTeamName } from '@/components/formik/TeamNam
 import { useSelector } from 'react-redux';
 import useConfig from '@/utils/useConfig';
 
-const PopulatePartnerName = props => {
+const PopulatePartnerName = (props) => {
     const { poolPlayers } = props;
     const { values, setFieldValue } = useFormikContext();
 
     useEffect(() => {
-        const player = poolPlayers.find(item => item.id === values.partnerId);
+        const player = poolPlayers.find((item) => item.id === values.partnerId);
         if (player) {
             setFieldValue('partnerName', `${player.firstName} ${player.lastName}`);
         }
@@ -27,13 +27,13 @@ PopulatePartnerName.propTypes = {
     poolPlayers: PropTypes.array,
 };
 
-const TeammateForm = props => {
+const TeammateForm = (props) => {
     const { tournamentId, tournaments, onSubmit, hide } = props;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const config = useConfig();
 
     const validate = useCallback(
-        values => {
+        (values) => {
             const errors = {};
 
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -66,7 +66,7 @@ const TeammateForm = props => {
     );
 
     const poolPlayers = useMemo(() => {
-        const tournament = tournaments.find(item => item.tournamentId === tournamentId);
+        const tournament = tournaments.find((item) => item.tournamentId === tournamentId);
         return tournament.poolPlayers;
     }, [tournamentId, tournaments]);
 
@@ -92,12 +92,12 @@ const TeammateForm = props => {
         },
     ];
 
-    const playerOptions = poolPlayers.map(item => ({
+    const playerOptions = poolPlayers.map((item) => ({
         value: item.id,
         label: (
             <div>
                 <PlayerName player1={item} /> (
-                <a href={`/player/${item.slug}`} target="_blank" rel="noreferrer" onClick={e => e.stopPropagation()}>
+                <a href={`/player/${item.slug}`} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>
                     Profile
                 </a>
                 )

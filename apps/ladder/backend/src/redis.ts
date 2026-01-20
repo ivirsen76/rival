@@ -15,7 +15,7 @@ export default function (app) {
     try {
         const client = redis.createClient(config);
 
-        const getKey = key => `${process.env.TL_REDIS_PREFIX}-${key}`;
+        const getKey = (key) => `${process.env.TL_REDIS_PREFIX}-${key}`;
         const clientWrapper = {
             get: (key, ...rest) => {
                 return client.get(getKey(key), ...rest);

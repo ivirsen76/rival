@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import useUniqueId from '@/utils/useUniqueId';
 import useAppearance from '@/utils/useAppearance';
 
-const Badge = props => {
+const Badge = (props) => {
     const { type, label, shape, colorHue, disabled, percent, text, largeText, completed } = props;
     const appearance = useAppearance();
     const isDarkTheme = appearance === 'dark';
@@ -23,8 +23,8 @@ const Badge = props => {
     const progress1 = useUniqueId();
 
     const stars = useMemo(() => {
-        const rand = num => (Math.random() - 0.5) * 50 + num;
-        const randSize = num => Math.random() * 8 + num;
+        const rand = (num) => (Math.random() - 0.5) * 50 + num;
+        const randSize = (num) => Math.random() * 8 + num;
 
         if (disabled) {
             return null;
@@ -45,7 +45,7 @@ const Badge = props => {
         );
     }, [disabled]);
 
-    const renderText = str => (
+    const renderText = (str) => (
         <g>
             <text
                 textAnchor="middle"
@@ -61,7 +61,7 @@ const Badge = props => {
         </g>
     );
 
-    const renderLargeText = str => (
+    const renderLargeText = (str) => (
         <g>
             <text
                 textAnchor="middle"

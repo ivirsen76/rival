@@ -1,4 +1,4 @@
-export default number => {
+export default (number) => {
     if (number < 1000) {
         return Math.floor(number / 50) * 50;
     }

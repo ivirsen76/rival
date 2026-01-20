@@ -21,7 +21,7 @@ function getCacheKey(context) {
 
 const load =
     (options = {}) =>
-    context => {
+    (context) => {
         if (!TL_ENABLE_REDIS) {
             return context;
         }
@@ -30,7 +30,7 @@ const load =
             return context;
         }
 
-        return new Promise(resolve => {
+        return new Promise((resolve) => {
             const client = context.app.get('redisClient');
             if (!client) {
                 return resolve(context);
@@ -62,7 +62,7 @@ const load =
 
 const save =
     (options = {}) =>
-    context => {
+    (context) => {
         if (!TL_ENABLE_REDIS || context.params.$skipRedisSaveHook) {
             return context;
         }

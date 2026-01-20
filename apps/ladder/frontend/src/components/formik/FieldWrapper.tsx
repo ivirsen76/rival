@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useDebounce } from 'use-debounce';
 import style from './style.module.scss';
 
-const FieldWrapper = props => {
+const FieldWrapper = (props) => {
     const { field, form, label, description, renderError, wrapperClassName } = props;
     const error = form.errors[field.name];
     const [debouncedError] = useDebounce(error, 100);

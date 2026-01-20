@@ -1,8 +1,8 @@
 import { Formik, Field, Form } from '@/components/formik';
 import SchedulePicker from '@/components/formik/SchedulePicker';
 
-const FormWeeklySchedule = props => {
-    const handleSubmit = async values => {
+const FormWeeklySchedule = (props) => {
+    const handleSubmit = async (values) => {
         // do nothing
     };
 

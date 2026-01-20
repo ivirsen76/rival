@@ -9,11 +9,11 @@ function toCSVValue(val) {
     return v;
 }
 
-export const toCSV = data => {
+export const toCSV = (data) => {
     const headers = Object.keys(data[0]);
     const rows = [
         headers.map(toCSVValue).join(','),
-        ...data.map(row => headers.map(h => toCSVValue(row[h])).join(',')),
+        ...data.map((row) => headers.map((h) => toCSVValue(row[h])).join(',')),
     ];
     return rows.join('\n');
 };

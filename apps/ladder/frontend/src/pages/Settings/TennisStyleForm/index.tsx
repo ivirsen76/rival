@@ -42,14 +42,14 @@ export const shotOptions = [
     { value: 'tweener', label: 'Tweener' },
 ];
 
-const TennisStyleForm = props => {
-    const user = useSelector(state => state.auth.user);
+const TennisStyleForm = (props) => {
+    const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
     return (
         <Formik
             initialValues={_pick(user, ['dominantHand', 'forehandStyle', 'backhandStyle', 'playerType', 'shot'])}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await dispatch(updateCurrentUser(values));
                 props.onSubmit && props.onSubmit();
             }}

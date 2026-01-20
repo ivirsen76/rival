@@ -21,7 +21,7 @@ const colors = {
     winter: '#6fbce9',
 };
 
-const getPeriodByWeekNumber = num => {
+const getPeriodByWeekNumber = (num) => {
     const year = Math.floor(num / 10000);
     const month = Math.floor((num % 10000) / 100);
     const day = Math.floor(num % 100);
@@ -38,8 +38,8 @@ const showMatches =
             return null;
         }
 
-        const getList = list =>
-            list.map(match => (
+        const getList = (list) =>
+            list.map((match) => (
                 <InlineMatch
                     key={match.id}
                     match={match}
@@ -52,7 +52,7 @@ const showMatches =
                 />
             ));
 
-        const hasExtraColumn = state.payload.matches.some(match => match.extraColumn);
+        const hasExtraColumn = state.payload.matches.some((match) => match.extraColumn);
 
         return (
             <div className={classnames(style.inlineMatches, hasExtraColumn && style.extraColumn)}>
@@ -91,7 +91,7 @@ export default {
                     <>
                         <Title>Related Matches</Title>
                         <div className={style.inlineMatches}>
-                            {state.payload.matches.map(match => (
+                            {state.payload.matches.map((match) => (
                                 <InlineMatch
                                     key={match.id}
                                     match={match}
@@ -108,7 +108,7 @@ export default {
                     <>
                         <Title className={classnames(state.payload.matches.length > 0 && 'mt-8')}>So Close!</Title>
                         <div className={style.inlineMatches}>
-                            {state.payload.close.map(match => (
+                            {state.payload.close.map((match) => (
                                 <InlineMatch
                                     key={match.id}
                                     match={match}
@@ -134,7 +134,7 @@ export default {
                     <>
                         <Title className="mb-2">Latest Rivalries</Title>
                         <div className={style.latestRivalries}>
-                            {state.payload.recent.map(item => {
+                            {state.payload.recent.map((item) => {
                                 const opponent = opponents[item.opponentUserId];
                                 return (
                                     <Fragment key={item.date}>
@@ -162,7 +162,7 @@ export default {
                             Just one match away to estabslish a new rivalry with these players:
                         </div>
                         <div className={'mt-2 ' + style.rivalryCandidates}>
-                            {state.payload.candidates.map(userId => {
+                            {state.payload.candidates.map((userId) => {
                                 const opponent = opponents[userId];
                                 return (
                                     <Fragment key={userId}>
@@ -201,7 +201,7 @@ export default {
                     <div>Initial TLR</div>
                     <div>-</div>
                     <div className="fw-bold">{formatElo(startingTlr)}</div>
-                    {levels.map(level => (
+                    {levels.map((level) => (
                         <Fragment key={level}>
                             <div>+{formatElo(level)}</div>
                             <div>-</div>
@@ -225,7 +225,7 @@ export default {
                     <>
                         <Title className="mb-2">Revenge Matches</Title>
                         <div className={classnames(style.inlineMatches, style.extraColumn)}>
-                            {state.payload.players.map(item => {
+                            {state.payload.players.map((item) => {
                                 const { match, lostBefore } = item;
 
                                 return (
@@ -248,7 +248,7 @@ export default {
                         <Title className="mt-8 mb-2">Candidates</Title>
                         <div className="text-center">A losing streak of five or more matches to these players:</div>
                         <div className={'mt-2 ' + style.revengeCandidates}>
-                            {candidates.map(item => {
+                            {candidates.map((item) => {
                                 const opponent = opponents[item.opponentUserId];
                                 return (
                                     <Fragment key={item.opponentUserId}>
@@ -310,7 +310,7 @@ export default {
 
         return (
             <div className={classnames(style.inlineMatches, style.extraColumn)}>
-                {state.payload.matches.map(match => {
+                {state.payload.matches.map((match) => {
                     const challenger = opponents[match.challengerUserId];
                     const acceptor = opponents[match.acceptorUserId];
                     const matchStat = (
@@ -322,7 +322,7 @@ export default {
                                 <a
                                     href="#"
                                     className="btn btn-link btn-active-icon-primary p-0"
-                                    onClick={async e => {
+                                    onClick={async (e) => {
                                         e.preventDefault();
                                         show();
                                     }}
@@ -361,7 +361,7 @@ export default {
 
         return (
             <div className={'mt-2 ' + style.dedicatedWeeks}>
-                {weeks.map(item => (
+                {weeks.map((item) => (
                     <Fragment key={item.week}>
                         <div>{getPeriodByWeekNumber(item.week)}</div>
                         <div>-</div>
@@ -377,12 +377,12 @@ export default {
         }
 
         const data = ['spring', 'summer', 'fall', 'winter']
-            .map(item => ({
+            .map((item) => ({
                 label: _capitalize(item),
                 value: Object.keys(state.payload.seasonsPlayed[item].seasons).length,
                 color: colors[item],
             }))
-            .filter(item => item.value > 0)
+            .filter((item) => item.value > 0)
             .sort((a, b) => b.value - a.value);
         return <PieChart data={data} />;
     },
@@ -392,22 +392,22 @@ export default {
         }
 
         const data = ['spring', 'summer', 'fall', 'winter']
-            .map(item => ({
+            .map((item) => ({
                 label: _capitalize(item),
                 value: state.payload[item].matches,
                 color: colors[item],
             }))
-            .filter(item => item.value > 0)
+            .filter((item) => item.value > 0)
             .sort((a, b) => b.value - a.value);
 
         return <PieChart data={data} />;
     },
     twoWinsOneDay: ({ state, opponents }) => {
         const matches = Object.values(state.payload)
-            .filter(item => item.length > 1)
+            .filter((item) => item.length > 1)
             .reduce((arr, item, index) => {
                 arr.push({ ...item[0], isFirst: index > 0 });
-                arr.push(...item.slice(1).map(obj => ({ ...obj, playedAt: '' })));
+                arr.push(...item.slice(1).map((obj) => ({ ...obj, playedAt: '' })));
                 return arr;
             }, []);
 
@@ -417,7 +417,7 @@ export default {
 
         return (
             <div className={style.inlineMatches}>
-                {matches.map(match => (
+                {matches.map((match) => (
                     <InlineMatch
                         columnClassName={classnames(match.isFirst && 'mt-4')}
                         key={match.id}
@@ -445,7 +445,7 @@ export default {
 
         return (
             <div className={'mt-2 ' + style.seasons}>
-                {mostPointsSeasons.map(item => (
+                {mostPointsSeasons.map((item) => (
                     <Fragment key={item.seasonId}>
                         <div>{seasons[item.seasonId]}</div>
                         <div>-</div>
@@ -464,7 +464,7 @@ export default {
 
         return (
             <div className={'mt-2 ' + style.seasons}>
-                {state.payload.map(item => (
+                {state.payload.map((item) => (
                     <Fragment key={item.id}>
                         <div>{formatDate(item.playedAt)}</div>
                         <div>-</div>
@@ -483,7 +483,7 @@ export default {
 
         return (
             <div className={'mt-2 ' + style.proposalsAccepted}>
-                {state.payload.map(item => {
+                {state.payload.map((item) => {
                     const opponent = opponents[item.challengerUserId];
 
                     return (
@@ -511,7 +511,7 @@ export default {
 
         return (
             <div className="mt-2">
-                {state.payload.map(item => (
+                {state.payload.map((item) => (
                     <div key={`${item.seasonId}-${item.levelId}`}>
                         {seasons[item.seasonId]} - {levels[item.levelId]}
                     </div>

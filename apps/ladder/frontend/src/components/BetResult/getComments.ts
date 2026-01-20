@@ -5,21 +5,21 @@ export default (matches, prediction, players) => {
     const matchesArray = Object.values(matches);
     const sortedPrediction = [...prediction].sort((a, b) => b.finalSpot - a.finalSpot);
 
-    const getPlayerName = id => `${players[id].firstName} ${players[id].lastName}`;
-    const revertScore = score =>
+    const getPlayerName = (id) => `${players[id].firstName} ${players[id].lastName}`;
+    const revertScore = (score) =>
         score
             .split(' ')
-            .map(set => set.replace(/(\d+)-(\d+)/, '$2-$1'))
+            .map((set) => set.replace(/(\d+)-(\d+)/, '$2-$1'))
             .join(' ');
     const findLostMatch = (finalSpot, playerId) =>
         matchesArray.find(
-            item =>
+            (item) =>
                 item.winner &&
                 (item.winner === item.challengerId ? item.acceptorId === playerId : item.challengerId === playerId)
         );
-    const findFirstRound = playerId =>
+    const findFirstRound = (playerId) =>
         sortedPrediction.find(
-            item =>
+            (item) =>
                 (item.challengerId === playerId || item.acceptorId === playerId) &&
                 item.challengerId !== BYE_ID &&
                 item.acceptorId !== BYE_ID
@@ -67,10 +67,10 @@ export default (matches, prediction, players) => {
                     match.finalSpot > 7
                         ? 'Round of 16'
                         : match.finalSpot > 3
-                        ? 'Quarterfinal'
-                        : match.finalSpot > 1
-                        ? 'Semifinal'
-                        : 'Final';
+                          ? 'Quarterfinal'
+                          : match.finalSpot > 1
+                            ? 'Semifinal'
+                            : 'Final';
 
                 result[finalSpot] = `${getPlayerName(winner)} lost in the ${stage}.`;
                 continue;

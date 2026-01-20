@@ -26,7 +26,7 @@ export default class Paginator extends React.Component {
         onPageChange() {},
     };
 
-    changePage = page => {
+    changePage = (page) => {
         if (page < 1 || page > this.props.total) {
             return;
         }

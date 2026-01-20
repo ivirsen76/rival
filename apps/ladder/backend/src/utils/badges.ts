@@ -2,7 +2,7 @@ import formatElo from './formatElo';
 
 export const getSeriesState = (code, levels, value) => {
     const len = levels.length;
-    const index = levels.findIndex(item => item > value);
+    const index = levels.findIndex((item) => item > value);
     const nextValue = levels[index];
     const percent = index === -1 ? 100 : (100 / len) * index;
     const label = levels[index === -1 ? len - 1 : index === 0 ? 0 : index - 1];
@@ -18,7 +18,7 @@ export const getSeriesState = (code, levels, value) => {
                 completed,
             },
             completed,
-            completedBadges: levels.filter((_, idx) => idx < index || completed).map(v => `${code}:${v}`),
+            completedBadges: levels.filter((_, idx) => idx < index || completed).map((v) => `${code}:${v}`),
             lastStep: nextValue === levels[levels.length - 1],
             value,
             nextDiff: completed ? 0 : nextValue - value,
@@ -136,7 +136,7 @@ export const badges = {
         title: 'Rising TLR',
         description: 'Improve your initial TLR.',
         levels: [20, 40, 60, 80, 100],
-        getLabel: value => formatElo(value),
+        getLabel: (value) => formatElo(value),
         getState({ stats }) {
             const value = stats.tlrGain;
             const { state } = getSeriesState(this.code, this.levels, value);
@@ -236,7 +236,7 @@ export const badges = {
         getState({ stats }) {
             const value = stats.tournamentResult;
             const len = this.levels.length;
-            const index = this.levels.findIndex(item => item === value);
+            const index = this.levels.findIndex((item) => item === value);
             const percent = index === -1 ? 0 : (100 / len) * (index + 1);
             const label = this.getLabel(value);
             const disabled = !value;
@@ -255,7 +255,7 @@ export const badges = {
                 completed,
                 completedBadges: this.levels
                     .filter((_, idx) => idx <= index || completed)
-                    .map(v => `level${stats.id}:${this.code}:${v}`),
+                    .map((v) => `level${stats.id}:${this.code}:${v}`),
             };
         },
     },
@@ -349,7 +349,7 @@ export const badges = {
         description: 'Play at least one match during each season.',
         getState({ stats }) {
             const value = stats.seasonsPlayed;
-            const completed = Object.values(value).every(item => item.matches > 0);
+            const completed = Object.values(value).every((item) => item.matches > 0);
 
             return {
                 props: {
@@ -497,7 +497,7 @@ export const badges = {
                     completed,
                 },
                 payload: {
-                    matches: (stats.payload.beatMuchStrongerPlayer || []).map(match => ({
+                    matches: (stats.payload.beatMuchStrongerPlayer || []).map((match) => ({
                         ...match,
                         extraColumn: `${formatElo(
                             Math.abs(

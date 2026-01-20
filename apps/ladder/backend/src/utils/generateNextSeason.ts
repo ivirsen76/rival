@@ -1,7 +1,7 @@
 import dayjs from './dayjs';
 import getCombinedConfig from './getCombinedConfig';
 
-export default async app => {
+export default async (app) => {
     const sequelize = app.get('sequelizeClient');
 
     // Check config to see if it's not Raleigh
@@ -63,10 +63,10 @@ export default async app => {
                WHERE seasonId=:seasonId`,
             { replacements: { seasonId: latestSeason.id } }
         );
-        levels = rows.map(row => row.id);
+        levels = rows.map((row) => row.id);
     } else {
         const [rows] = await sequelize.query(`SELECT id FROM levels`);
-        levels = rows.map(row => row.id);
+        levels = rows.map((row) => row.id);
     }
 
     // creating next season

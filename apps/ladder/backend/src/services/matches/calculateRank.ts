@@ -14,11 +14,11 @@ const connectionConfig = {
 
 const getAverageRank = (rank1, rank2) => Math.floor((rank1 + rank2) / 2);
 
-const calculateRank = async tournamentId => {
+const calculateRank = async (tournamentId) => {
     const connection = mysql.createConnection(connectionConfig);
     connection.connect();
 
-    const getQueryResult = query => {
+    const getQueryResult = (query) => {
         return new Promise((resolve, reject) => {
             connection.query(query, (error, results) => {
                 if (error) {

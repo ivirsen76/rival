@@ -37,7 +37,7 @@ const authSlice = createSlice({
                 ...action.payload.user,
             };
         },
-        unsetCurrentUser: state => {
+        unsetCurrentUser: (state) => {
             state.user = null;
         },
         setShowAllPlayers: (state, action) => {
@@ -73,7 +73,7 @@ export const logout = () => async (dispatch, getState) => {
     }
 };
 
-export const addHistoryEventAndSave = payload => async (dispatch, getState) => {
+export const addHistoryEventAndSave = (payload) => async (dispatch, getState) => {
     const { user } = getState().auth;
     if (user) {
         return;

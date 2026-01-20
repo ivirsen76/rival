@@ -7,13 +7,13 @@ import classnames from 'classnames';
 import { formatDate } from '@/utils/dayjs';
 import useBreakpoints from '@/utils/useBreakpoints';
 
-const reverseScore = score =>
+const reverseScore = (score) =>
     score
         .split(' ')
-        .map(set => set.replace(/^(\d+)-(\d+)$/, '$2-$1'))
+        .map((set) => set.replace(/^(\d+)-(\d+)$/, '$2-$1'))
         .join(' ');
 
-const InlineMatch = props => {
+const InlineMatch = (props) => {
     const { challenger, acceptor, challenger2, acceptor2, match, columnClassName, extraColumn } = props;
     const size = useBreakpoints();
     const isSmall = ['xs', 'sm', 'md'].includes(size);

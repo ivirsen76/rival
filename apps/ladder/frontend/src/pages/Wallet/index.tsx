@@ -4,8 +4,8 @@ import Wallet from '@/components/Wallet';
 import Card from '@/components/Card';
 import Header from '@/components/Header';
 
-const Payments = props => {
-    const currentUser = useSelector(state => state.auth.user);
+const Payments = (props) => {
+    const currentUser = useSelector((state) => state.auth.user);
 
     if (!currentUser) {
         return <NotFound />;

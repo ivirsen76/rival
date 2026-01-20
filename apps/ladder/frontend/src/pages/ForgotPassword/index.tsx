@@ -6,14 +6,14 @@ import Card from '@/components/Card';
 import { useHistory } from 'react-router-dom';
 import axios from '@/utils/axios';
 
-const Logout = props => {
+const Logout = (props) => {
     const history = useHistory();
 
     return (
         <Card className="w-lg-500px mx-auto">
             <Formik
                 initialValues={{ email: '' }}
-                onSubmit={async values => {
+                onSubmit={async (values) => {
                     await axios.post('/api/passwords', { email: values.email });
                     notification({
                         inModal: true,

@@ -8,7 +8,7 @@ import { loadCurrentUser } from '@/reducers/auth';
 import getRegisterNotificationProps from '@/utils/getRegisterNotificationProps';
 import { useHistory } from 'react-router-dom';
 
-const RegisterSuccess = props => {
+const RegisterSuccess = (props) => {
     const { sessionId } = props.match.params;
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();

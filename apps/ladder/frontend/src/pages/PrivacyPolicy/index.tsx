@@ -1,7 +1,7 @@
 import Card from '@/components/Card';
 import ScrollToTop from '@/components/ScrollToTop';
 
-const Terms = props => {
+const Terms = (props) => {
     let number = 1;
 
     return (

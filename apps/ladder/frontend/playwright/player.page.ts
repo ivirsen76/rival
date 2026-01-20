@@ -575,7 +575,7 @@ test('Should change readyForFinal status', async ({ page, common, login }) => {
     await expect(common.modal).not.toContainText('$sunday');
 
     await page.locator('.btn-close').click();
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     await page.locator('button').getByText('I am going').click();
     await common.modal.locator('button').getByText('I am going').click();

@@ -17,10 +17,10 @@ export const banDurationOptions = [
     { value: 9999, label: 'Forever' },
 ];
 
-const BanForm = props => {
+const BanForm = (props) => {
     const { onSubmit, list } = props;
 
-    const getDisabledUsers = value => {
+    const getDisabledUsers = (value) => {
         const result = new Set();
         for (const player of list) {
             result.add(player.id);

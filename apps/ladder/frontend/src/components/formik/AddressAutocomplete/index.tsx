@@ -9,7 +9,7 @@ import style from './style.module.scss';
 
 let lastUpdatedAt = '';
 
-const AddressAutocomplete = props => {
+const AddressAutocomplete = (props) => {
     const { field, form, onAutocomplete } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
     const passingProps = _omit(props, ['field', 'form', 'label', 'description', 'onAutocomplete']);
@@ -49,7 +49,7 @@ const AddressAutocomplete = props => {
                 if (date > lastUpdatedAt) {
                     lastUpdatedAt = date;
                     const newSuggestions = response.data?.result?.hits
-                        ? response.data.result.hits.map(item => ({ id: item.id, value: item.suggestion }))
+                        ? response.data.result.hits.map((item) => ({ id: item.id, value: item.suggestion }))
                         : [];
                     setSelected(0);
                     setSuggestions(newSuggestions);
@@ -78,7 +78,7 @@ const AddressAutocomplete = props => {
         }
     }, [suggestions, selected]);
 
-    const pickSuggestion = id => {
+    const pickSuggestion = (id) => {
         if (!id) {
             return;
         }
@@ -87,7 +87,7 @@ const AddressAutocomplete = props => {
             .get(`https://api.addresszen.com/v1/autocomplete/addresses/${id}/usa`, {
                 params: { api_key: config.addressZenKey },
             })
-            .then(response => {
+            .then((response) => {
                 const address = response.data.result;
 
                 setResult(address.line_1);
@@ -96,7 +96,7 @@ const AddressAutocomplete = props => {
             });
     };
 
-    const onKeyDown = e => {
+    const onKeyDown = (e) => {
         if (!['Enter', 'ArrowUp', 'ArrowDown', 'Escape'].includes(e.key)) {
             return;
         }
@@ -114,10 +114,10 @@ const AddressAutocomplete = props => {
             reset();
         }
         if (e.key === 'ArrowUp') {
-            setSelected(prev => (prev + suggestions.length - 1) % suggestions.length);
+            setSelected((prev) => (prev + suggestions.length - 1) % suggestions.length);
         }
         if (e.key === 'ArrowDown') {
-            setSelected(prev => (prev + 1) % suggestions.length);
+            setSelected((prev) => (prev + 1) % suggestions.length);
         }
     };
 
@@ -141,7 +141,7 @@ const AddressAutocomplete = props => {
                             <div
                                 key={item.id}
                                 className={classnames(style.suggestion, selected === index && style.selected)}
-                                onMouseDown={e => {
+                                onMouseDown={(e) => {
                                     // we need this to prevent onBlur event for the <input> field
                                     e.preventDefault();
                                 }}

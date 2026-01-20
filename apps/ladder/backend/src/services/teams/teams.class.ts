@@ -17,7 +17,7 @@ export const Teams = class Teams {
 
     async create(data, params) {
         if (Array.isArray(data)) {
-            return Promise.all(data.map(current => this.create(current, params)));
+            return Promise.all(data.map((current) => this.create(current, params)));
         }
 
         return data;

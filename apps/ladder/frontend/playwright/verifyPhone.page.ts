@@ -29,7 +29,7 @@ test('Should cancel verification', async ({ page, common, login, overview }) => 
     await common.modal.locator('button').getByText('Cancel').click();
     await expect(common.modal).toBeHidden();
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await overview.clickOtherAction('Schedule match');
     await expect(common.modal).toContainText('Verify phone');
@@ -87,7 +87,7 @@ test('Should check that we need verify phone in all cases', async ({ page, commo
     const checkVerifyModal = async () => {
         await expect(common.modal).toContainText('Verify phone');
         await common.modal.locator('button').getByText('Cancel').click();
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
     };
 
     await login.loginAsPlayer1();

@@ -4,7 +4,7 @@ import { Unprocessable } from '@feathersjs/errors';
 import dayjs from '../../utils/dayjs';
 import md5 from 'md5';
 
-const getCalendar = options => async context => {
+const getCalendar = (options) => async (context) => {
     const referralCode = context.id;
 
     const sequelize = context.app.get('sequelizeClient');
@@ -77,7 +77,7 @@ const getCalendar = options => async context => {
         { replacements: { userId, startDate, currentDate } }
     );
 
-    const removeDuplicates = match => {
+    const removeDuplicates = (match) => {
         if (match.acceptedAt || match.same === '') {
             return true;
         }
@@ -85,7 +85,7 @@ const getCalendar = options => async context => {
         return match.same.startsWith(`${match.id},`);
     };
 
-    const getEventFromMatch = match => {
+    const getEventFromMatch = (match) => {
         const start = dayjs.tz(match.playedAt);
         const players = [
             { id: match.challengerId, name: `${match.challengerFirstName} ${match.challengerLastName}` },
@@ -98,8 +98,8 @@ const getCalendar = options => async context => {
             // TODO: show doubles team name instead of individual players for Doubles match
 
             const opponents = players
-                .filter(player => player.id && player.id !== userId)
-                .map(player => player.name)
+                .filter((player) => player.id && player.id !== userId)
+                .map((player) => player.name)
                 .join(', ');
 
             const entity = match.practiceType ? 'Practice' : 'Match';

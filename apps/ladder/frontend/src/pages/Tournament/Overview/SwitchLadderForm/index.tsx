@@ -9,9 +9,9 @@ import axios from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 
-const SwitchLadderForm = props => {
+const SwitchLadderForm = (props) => {
     const { tournament, onSubmit } = props;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const { changedCount, joinForFree } = currentUser.tournaments[tournament.id];
 
     const { data: levels, isLoading } = useQuery('getPossibleTournaments', async () => {
@@ -30,7 +30,7 @@ const SwitchLadderForm = props => {
         const _hasSuitableTournament =
             currentUser.establishedElo &&
             levels.some(
-                item =>
+                (item) =>
                     item.baseTlr &&
                     item.isActivePlay &&
                     item.gender === currentUser.gender &&
@@ -38,7 +38,7 @@ const SwitchLadderForm = props => {
             );
 
         const _levelOptions = levels
-            .filter(item => {
+            .filter((item) => {
                 if (!currentUser.isPlayingForFree && item.type !== tournament.levelType) {
                     return false;
                 }
@@ -57,7 +57,7 @@ const SwitchLadderForm = props => {
 
                 return Math.abs(item.baseTlr - currentUser.establishedElo) <= 50;
             })
-            .map(item => {
+            .map((item) => {
                 const disabled = Boolean(item.playerId);
 
                 return {
@@ -100,14 +100,14 @@ const SwitchLadderForm = props => {
     return (
         <Formik
             initialValues={{ to: 0 }}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await axios.put('/api/players/0', {
                     action: 'switchTournament',
                     from: tournament.id,
                     to: values.to,
                 });
 
-                const levelTo = levels.find(level => level.id === values.to);
+                const levelTo = levels.find((level) => level.id === values.to);
                 onSubmit &&
                     onSubmit({
                         levelName: levelTo.name,

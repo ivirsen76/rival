@@ -28,7 +28,7 @@ const renderer = {
 };
 marked.use({ renderer });
 
-const getHtml = value => {
+const getHtml = (value) => {
     // make margin-top=0 for the first heading
     return marked
         .parse(value)
@@ -42,7 +42,7 @@ const getHtml = value => {
         });
 };
 
-export const validate = values => {
+export const validate = (values) => {
     const errors = {};
 
     if (!values.subject.trim()) {
@@ -54,8 +54,8 @@ export const validate = values => {
     if (values.additionalRecipients) {
         const incorrectEmails = values.additionalRecipients
             .split(';')
-            .map(email => email.trim())
-            .filter(email => email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+            .map((email) => email.trim())
+            .filter((email) => email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
 
         if (incorrectEmails.length > 0) {
             errors.additionalRecipients = `These emails are incorrect: ${incorrectEmails.join(', ')}`;
@@ -70,9 +70,9 @@ const previewModeOptions = [
     { value: 'mobile', label: 'Mobile', dialogClassName: style.mobile },
 ];
 
-const Email = props => {
+const Email = (props) => {
     const [previewMode, setPreviewMode] = useState(previewModeOptions[0].value);
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const isSuperAdmin = hasAnyRole(currentUser, ['superadmin']);
 
     const { data, isLoading } = useQuery('getPlayersFromLastSeasons', async () => {
@@ -85,9 +85,9 @@ const Email = props => {
     }
 
     const { seasons, all } = data;
-    const currentPreviewMode = previewModeOptions.find(item => item.value === previewMode);
+    const currentPreviewMode = previewModeOptions.find((item) => item.value === previewMode);
 
-    const getRecipientsEmails = recipients => {
+    const getRecipientsEmails = (recipients) => {
         const emails = [];
         for (const season of seasons) {
             for (const level of season.levels) {
@@ -108,7 +108,7 @@ const Email = props => {
         return <Card>No players yet</Card>;
     }
 
-    const copyEmails = values => {
+    const copyEmails = (values) => {
         const emails = getRecipientsEmails(values.recipients).sort((a, b) => a.localeCompare(b));
         copy(emails.join('; '));
         notification({
@@ -117,15 +117,15 @@ const Email = props => {
         });
     };
 
-    const sendMessage = async values => {
+    const sendMessage = async (values) => {
         const recipientsEmails = getRecipientsEmails(values.recipients);
-        const emails = recipientsEmails.map(email => ({ email }));
+        const emails = recipientsEmails.map((email) => ({ email }));
         if (values.additionalRecipients) {
             values.additionalRecipients
                 .split(';')
-                .map(email => email.trim())
-                .filter(email => email && !recipientsEmails.includes(email))
-                .forEach(email => {
+                .map((email) => email.trim())
+                .filter((email) => email && !recipientsEmails.includes(email))
+                .forEach((email) => {
                     emails.push({ email });
                 });
         }
@@ -178,13 +178,13 @@ const Email = props => {
                                 name="recipients"
                                 render={({ field, form }) => (
                                     <>
-                                        {seasons.map(season => (
+                                        {seasons.map((season) => (
                                             <div key={season.id}>
                                                 <h4>{season.name}</h4>
                                                 <CheckboxArray
                                                     field={field}
                                                     form={form}
-                                                    options={season.levels.map(level => ({
+                                                    options={season.levels.map((level) => ({
                                                         value: `${season.id}-${level.id}`,
                                                         label: (
                                                             <span>
@@ -238,7 +238,7 @@ const Email = props => {
                                                 <div className="d-flex gap-4 align-items-center">
                                                     <div>Preview</div>
                                                     <div className="btn-group">
-                                                        {previewModeOptions.map(mode => (
+                                                        {previewModeOptions.map((mode) => (
                                                             <button
                                                                 key={mode.value}
                                                                 type="button"

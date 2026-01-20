@@ -10,7 +10,7 @@ import { purgeTournamentCache, logEvent } from '../commonHooks';
 import compareFields from '../../utils/compareFields';
 
 // These are just helpers
-const getPoints = score => {
+const getPoints = (score) => {
     const positions = [
         [0, 0, 0],
         [0, 1, 1],
@@ -18,14 +18,14 @@ const getPoints = score => {
         [1, 1, 0],
     ];
 
-    return positions.map(position =>
+    return positions.map((position) =>
         score.reduce((sum, pair, index) => {
             return sum + (pair[position[index]] || 0);
         }, 0)
     );
 };
 
-const isAdmin = user => {
+const isAdmin = (user) => {
     const roles = user.roles.split(',');
 
     return roles.includes('admin') || roles.includes('manager');
@@ -99,7 +99,7 @@ const populateNextFinalMatch = async (context, prevMatch) => {
                 'lastName'
             )
         );
-    const prevMatchPlayerIds = positions.map(player => player.id);
+    const prevMatchPlayerIds = positions.map((player) => player.id);
 
     const [result] = await sequelize.query(
         `SELECT dm.*
@@ -130,7 +130,7 @@ const populateNextFinalMatch = async (context, prevMatch) => {
         }
 
         const hasOtherPlayers = ['player1', 'player2', 'player3', 'player4'].some(
-            player => nextMatch[`${player}Id`] && !prevMatchPlayerIds.includes(nextMatch[`${player}Id`])
+            (player) => nextMatch[`${player}Id`] && !prevMatchPlayerIds.includes(nextMatch[`${player}Id`])
         );
 
         await sequelize.query(`DELETE FROM doublesmatches WHERE id=${nextMatch.id}`);
@@ -156,7 +156,7 @@ const populateNextFinalMatch = async (context, prevMatch) => {
     }
 };
 
-const setScore = options => async context => {
+const setScore = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const errors = validate(context.data);
@@ -187,7 +187,7 @@ const setScore = options => async context => {
               FROM players
              WHERE id IN (${playerIds.join(',')})`;
         const [rows] = await sequelize.query(query);
-        userIds = rows.map(obj => obj.userId);
+        userIds = rows.map((obj) => obj.userId);
         tournamentId = rows[0].tournamentId;
     }
 
@@ -296,7 +296,7 @@ const setScore = options => async context => {
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

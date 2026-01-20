@@ -5,7 +5,7 @@ import WarningIcon from '@rival/packages/metronic/icons/duotone/Code/Warning-2.s
 import notification from '@/components/notification';
 import style from './style.module.scss';
 
-const VerifyEmail = props => {
+const VerifyEmail = (props) => {
     const { sendOnMount, email, password, onSuccess, render, allowResend, verifyCodeCustom } = props;
     const [code, setCode] = useState('');
     const [error, setError] = useState();
@@ -32,7 +32,7 @@ const VerifyEmail = props => {
 
             // Just to show loading state to the user
             // Otherwise the process is too sudden
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
 
             try {
                 if (verifyCodeCustom) {
@@ -74,7 +74,7 @@ const VerifyEmail = props => {
                     className="form-control form-control-lg"
                     maxLength={6}
                     value={code}
-                    onChange={e => setCode(e.target.value.replace(/[^\d]+/g, ''))}
+                    onChange={(e) => setCode(e.target.value.replace(/[^\d]+/g, ''))}
                     ref={inputRef}
                     inputMode="numeric"
                 />
@@ -98,7 +98,7 @@ const VerifyEmail = props => {
                     Didn&apos;t receive the confirmation code?{' '}
                     <a
                         href=""
-                        onClick={e => {
+                        onClick={(e) => {
                             e.preventDefault();
                             notification("We've sent you another email with the confirmation code");
                             // do not wait for the result

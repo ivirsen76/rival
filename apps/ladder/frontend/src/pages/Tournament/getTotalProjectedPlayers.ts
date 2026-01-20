@@ -1,5 +1,5 @@
-export default tournament => {
-    const getTotal = tlr => {
+export default (tournament) => {
+    const getTotal = (tlr) => {
         const a = 0.8;
         const b = 3.5;
         const pi = 3.1415926;

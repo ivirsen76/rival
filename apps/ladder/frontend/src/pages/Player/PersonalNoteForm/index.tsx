@@ -6,12 +6,12 @@ import Textarea from '@/components/formik/Textarea';
 import { useQueryClient } from 'react-query';
 import axios from '@/utils/axios';
 
-const PersonalNoteForm = props => {
+const PersonalNoteForm = (props) => {
     const { user, hideDescription } = props;
     const queryClient = useQueryClient();
 
     const save = useCallback(
-        async values => {
+        async (values) => {
             await axios.put('/api/users/0', { action: 'addPersonalNote', ...values });
             await queryClient.invalidateQueries(`/api/users/${user.slug}`);
         },

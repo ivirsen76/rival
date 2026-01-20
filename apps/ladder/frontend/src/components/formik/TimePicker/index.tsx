@@ -11,7 +11,7 @@ import style from './style.module.scss';
 
 const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-const TimePicker = props => {
+const TimePicker = (props) => {
     const { field, form, options } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
     const appearance = useAppearance();
@@ -22,12 +22,12 @@ const TimePicker = props => {
     const stringValue = field.value ? valueAsDate.format('ddd D, h:mm A') : <span>&nbsp;</span>;
     const am = hours >= 12 ? 'PM' : 'AM';
 
-    const addHoursToValue = h => {
+    const addHoursToValue = (h) => {
         const newHours = (((hours % 12) + h + 12) % 12) + (am === 'AM' ? 0 : 12);
         form.setFieldValue(field.name, valueAsDate.hour(newHours).format('YYYY-MM-DD HH:mm:ss'));
     };
 
-    const addMinutesToValue = m => {
+    const addMinutesToValue = (m) => {
         const newMinutes = (minutes + m + 60) % 60;
         form.setFieldValue(field.name, valueAsDate.minute(newMinutes).format('YYYY-MM-DD HH:mm:ss'));
     };

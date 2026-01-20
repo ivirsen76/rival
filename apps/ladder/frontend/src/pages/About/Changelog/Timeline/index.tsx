@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Timeline = props => {
+const Timeline = (props) => {
     const isRoundOf16 = props.totalPlayers >= 50;
     const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S'];
 

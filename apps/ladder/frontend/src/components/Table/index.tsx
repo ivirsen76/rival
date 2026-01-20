@@ -7,7 +7,7 @@ import classnames from 'classnames';
 import _xor from 'lodash/xor';
 import style from './style.module.scss';
 
-const Table = props => {
+const Table = (props) => {
     const {
         columns,
         showRowNumber,
@@ -35,7 +35,7 @@ const Table = props => {
     const showCheckboxes = rowActions.length > 0;
     const isAllSelected = props.data.length > 0 && props.data.length === selectedRows.length;
 
-    const toggleRow = id => {
+    const toggleRow = (id) => {
         setSelectedRows(_xor(selectedRows, [id]));
     };
 
@@ -44,17 +44,17 @@ const Table = props => {
     };
 
     const selectAll = () => {
-        setSelectedRows(props.data.map(row => row.id));
+        setSelectedRows(props.data.map((row) => row.id));
     };
 
     const actualData = useMemo(() => {
         const keys = Object.keys(actualFilterObj).filter(Boolean);
         let result = (
             actualFilter && getFilteredData
-                ? props.data.filter(item => getFilteredData(item, actualFilter))
+                ? props.data.filter((item) => getFilteredData(item, actualFilter))
                 : props.data
-        ).filter(item => {
-            return keys.every(key => item[key].toLowerCase().includes(actualFilterObj[key]));
+        ).filter((item) => {
+            return keys.every((key) => item[key].toLowerCase().includes(actualFilterObj[key]));
         });
 
         if (orderBy) {
@@ -83,7 +83,7 @@ const Table = props => {
             return null;
         }
 
-        return <Paginator total={total} currentPage={currentPage} onPageChange={page => setCurrentPage(page)} />;
+        return <Paginator total={total} currentPage={currentPage} onPageChange={(page) => setCurrentPage(page)} />;
     };
 
     const renderSearch = () => {
@@ -98,7 +98,7 @@ const Table = props => {
                     autoComplete="off"
                     value={filter}
                     placeholder="Search..."
-                    onChange={e => setFilter(e.target.value)}
+                    onChange={(e) => setFilter(e.target.value)}
                 />
 
                 <div className="position-absolute translate-middle-y top-50 end-0 me-3">
@@ -115,11 +115,11 @@ const Table = props => {
     };
 
     const renderFilter = () => {
-        if (!columns.some(column => column.filter)) {
+        if (!columns.some((column) => column.filter)) {
             return null;
         }
 
-        const list = columns.map(column => {
+        const list = columns.map((column) => {
             if (!column.filter) {
                 return <th key={column.name} />;
             }
@@ -131,7 +131,7 @@ const Table = props => {
                             type="text"
                             className="form-control form-control-sm"
                             value={filterObj[column.name] || ''}
-                            onChange={e => {
+                            onChange={(e) => {
                                 setColumnFilter(column.name, e.target.value);
                             }}
                         />
@@ -152,7 +152,7 @@ const Table = props => {
     };
 
     const renderThead = () => {
-        const list = columns.map(column => (
+        const list = columns.map((column) => (
             <th key={column.name} className={column.className}>
                 <div
                     className={classnames({
@@ -229,7 +229,7 @@ const Table = props => {
         return (
             <tbody>
                 {pageRows.map((row, index) => {
-                    const list = columns.map(column => (
+                    const list = columns.map((column) => (
                         <td key={column.name} className={column.className}>
                             {column.render ? column.render(row[column.name], row) : row[column.name]}
                         </td>
@@ -280,7 +280,7 @@ const Table = props => {
         <div>
             {rowActions.length > 0 && (
                 <div className={'mb-6 ' + style.rowActionsWrapper}>
-                    {rowActions.map(action => (
+                    {rowActions.map((action) => (
                         <action.component key={action.name} selectedRows={selectedRows} data={props.data} />
                     ))}
                 </div>

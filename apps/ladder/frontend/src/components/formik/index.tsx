@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Formik as OriginalFormik } from 'formik';
 
-export const Formik = props => {
+export const Formik = (props) => {
     const onSubmit = async (values, actions) => {
         try {
             await props.onSubmit(values, actions);

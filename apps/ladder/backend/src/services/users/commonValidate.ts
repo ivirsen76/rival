@@ -5,7 +5,7 @@ import { getAge } from '../../utils/helpers';
 
 const nameRegex = /^[a-zA-Z-.' ]+$/;
 
-export default values => {
+export default (values) => {
     const schema = yup.object().shape({
         firstName: yup
             .string()

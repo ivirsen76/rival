@@ -1,7 +1,7 @@
 import Stats from '@/components/Match/Stats';
 import style from './style.module.scss';
 
-const MatchStat = props => {
+const MatchStat = (props) => {
     const searchParams = new URLSearchParams(window.location.search);
     const statProps = JSON.parse(searchParams.get('props'));
 

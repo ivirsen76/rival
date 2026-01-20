@@ -15,7 +15,7 @@ import { Menubar } from 'primereact/menubar';
 import classnames from 'classnames';
 import './primereact.scss';
 
-const regularLink = item => {
+const regularLink = (item) => {
     if (!item.url || !item.label) {
         throw new Error('url and label are required');
     }
@@ -27,7 +27,7 @@ const regularLink = item => {
     );
 };
 
-const iconLink = item => {
+const iconLink = (item) => {
     return (
         <Link
             className="p-menuitem-link p-no-bullet d-flex align-items-center"
@@ -42,7 +42,7 @@ const iconLink = item => {
 
 function TopMenu(props) {
     const { years } = props;
-    const user = useSelector(state => state.auth.user);
+    const user = useSelector((state) => state.auth.user);
 
     const isPartner = hasAnyRole(user, ['partner']);
 
@@ -59,11 +59,11 @@ function TopMenu(props) {
         },
         {
             label: 'Seasons',
-            items: years.map(year => ({
+            items: years.map((year) => ({
                 label: year.year,
-                items: year.seasons.map(season => ({
+                items: year.seasons.map((season) => ({
                     label: _capitalize(season.name),
-                    items: season.levels.map(level => ({
+                    items: season.levels.map((level) => ({
                         label: level.name,
                         url: `/season/${year.year}/${season.name}/${level.slug}`,
                         template: regularLink,

@@ -10,7 +10,7 @@ import FormRosterMessage from './FormRosterMessage';
 import FormWeeklySchedule from './FormWeeklySchedule';
 import style from './style.module.scss';
 
-const Actions = props => {
+const Actions = (props) => {
     const publish = async () => {
         const confirm = await confirmation({ message: 'Do you really want to publish updates?' });
         if (!confirm) {

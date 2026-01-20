@@ -66,7 +66,7 @@ const stateOptions = [
     { value: 'WY', label: 'WY' },
 ];
 
-const FormItself = props => {
+const FormItself = (props) => {
     const {
         setFieldValue,
         isSubmitting,
@@ -79,12 +79,12 @@ const FormItself = props => {
     } = props;
 
     const config = useConfig();
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const { playerId } = currentUser.tournaments[tournament.id];
     const currentPlayer = tournament.players[playerId];
     const isDoublesTeam = tournament.levelType === 'doubles-team';
 
-    const onAddressAutocomplete = address => {
+    const onAddressAutocomplete = (address) => {
         setFieldValue('locationPrimary', address.line_1);
         setFieldValue('locationExtra', address.line_2);
         setFieldValue('regionLocal', address.city);
@@ -95,8 +95,8 @@ const FormItself = props => {
     const title = isDoublesTeam
         ? `Congratulations, ${currentPlayer.partners?.[0].teamName}!`
         : isChampion
-        ? 'Congratulations, Champion!'
-        : 'Congratulations, Runner-Up!';
+          ? 'Congratulations, Champion!'
+          : 'Congratulations, Runner-Up!';
 
     const rewardTypeOptions = [
         {
@@ -180,7 +180,7 @@ const FormItself = props => {
                             <div className="mb-4">
                                 <label className="form-label">Choose your preferred award:</label>
                                 <div>
-                                    {rewardTypeOptions.map(item => (
+                                    {rewardTypeOptions.map((item) => (
                                         <div key={item.value} className="form-check form-check-solid mb-2">
                                             <label className="form-check-label">
                                                 <input
@@ -242,9 +242,9 @@ FormItself.propTypes = {
     trophyAvailabilityDate: PropTypes.string,
 };
 
-const ClaimReward = props => {
+const ClaimReward = (props) => {
     const { isChampion, tournament, reloadTournament } = props;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const { playerId } = currentUser.tournaments[tournament.id];
     const config = useConfig();
 
@@ -263,7 +263,7 @@ const ClaimReward = props => {
     const prizeAsCredit = prize + config.creditRewardBonus / 100;
     const trophyAvailabilityDate = dayjs.tz(tournament.endDate).add(16.5, 'day').format('MMMM D');
 
-    const onSubmit = async values => {
+    const onSubmit = async (values) => {
         await axios.put(`/api/players/${playerId}`, {
             action: 'claimReward',
             address: config.isRaleigh
@@ -274,7 +274,7 @@ const ClaimReward = props => {
                       values.sectorCode,
                       values.regionIndex,
                   ]
-                      .map(item => item.replace(/,/g, '').trim())
+                      .map((item) => item.replace(/,/g, '').trim())
                       .join(', ')
                       .replace(/\s+/g, ' '),
             rewardType: values.rewardType,
@@ -337,7 +337,7 @@ const ClaimReward = props => {
         });
     };
 
-    const validate = values => {
+    const validate = (values) => {
         const errors = {};
 
         if (!config.isRaleigh) {

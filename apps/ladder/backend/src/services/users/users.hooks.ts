@@ -95,7 +95,7 @@ const getUserBadgesStats = async (user, context) => {
             return obj;
         }, {});
 
-        const collectUser = id => {
+        const collectUser = (id) => {
             if (!id || opponents[id]) {
                 return;
             }
@@ -129,7 +129,7 @@ const getUserBadgesStats = async (user, context) => {
     return {
         stats,
         achievedBadges: _uniqWith([...badgesHistory, ...achievedBadges], (a, b) => a.code === b.code)
-            .filter(badge => !isObsoleteBadge(badge.code))
+            .filter((badge) => !isObsoleteBadge(badge.code))
             .sort((a, b) => b.achievedAt.localeCompare(a.achievedAt)),
         opponents,
     };
@@ -140,7 +140,7 @@ const getSequelizeData = async (sequelize, ...params) => {
     return result;
 };
 
-const validateCreate = options => async context => {
+const validateCreate = (options) => async (context) => {
     const errors = commonValidate(context.data);
 
     if (!errors.password) {
@@ -169,7 +169,7 @@ const validateCreate = options => async context => {
 
 const capitalize =
     (...fields) =>
-    context => {
+    (context) => {
         for (const field of fields) {
             if (context.data[field] && typeof context.data[field] === 'string') {
                 context.data[field] = formatUserName(context.data[field]);
@@ -179,7 +179,7 @@ const capitalize =
         return context;
     };
 
-const validatePatch = options => async context => {
+const validatePatch = (options) => async (context) => {
     const currentUser = context.params.user;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
@@ -214,7 +214,7 @@ const validatePatch = options => async context => {
     return context;
 };
 
-const registerNewEmail = options => async context => {
+const registerNewEmail = (options) => async (context) => {
     const currentUser = context.params.user;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
@@ -244,7 +244,7 @@ const registerNewEmail = options => async context => {
     return context;
 };
 
-const populateUser = options => async context => {
+const populateUser = (options) => async (context) => {
     const userSlug = context.data.slug;
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
@@ -361,7 +361,7 @@ const populateUser = options => async context => {
                 );
 
                 if (doublesTeamTournaments.length > 0) {
-                    const doublesTeamTournamentIds = doublesTeamTournaments.map(item => item.id);
+                    const doublesTeamTournamentIds = doublesTeamTournaments.map((item) => item.id);
                     const players = await getSequelizeData(
                         sequelize,
                         `SELECT id, partnerId, tournamentId
@@ -389,7 +389,7 @@ const populateUser = options => async context => {
                                 `SELECT id, userId FROM players WHERE partnerId=:partnerId`,
                                 { replacements: { partnerId: player.id } }
                             );
-                            if (teammates.find(teammate => teammate.userId === data.id)) {
+                            if (teammates.find((teammate) => teammate.userId === data.id)) {
                                 return false;
                             }
                             // If NOT a full team then check pool players as well
@@ -458,8 +458,8 @@ const populateUser = options => async context => {
 
             // Check open singles and doubles proposals
             const singleTournamentIds = tournaments
-                .filter(item => ['single', 'doubles-team'].includes(item.levelType))
-                .map(item => item.id);
+                .filter((item) => ['single', 'doubles-team'].includes(item.levelType))
+                .map((item) => item.id);
             if (singleTournamentIds.length > 0) {
                 const proposals = await getSequelizeData(
                     sequelize,
@@ -488,7 +488,9 @@ const populateUser = options => async context => {
             }
 
             // Check open doubles proposals
-            const doublesTournamentIds = tournaments.filter(item => item.levelType === 'doubles').map(item => item.id);
+            const doublesTournamentIds = tournaments
+                .filter((item) => item.levelType === 'doubles')
+                .map((item) => item.id);
             if (doublesTournamentIds.length > 0) {
                 const proposals = await getSequelizeData(
                     sequelize,
@@ -637,9 +639,9 @@ const populateUser = options => async context => {
         );
 
         const sizes = [400, 800, 1200, 1600, 2400];
-        context.result.data.photos = photos.map(item => ({
+        context.result.data.photos = photos.map((item) => ({
             ...item,
-            srcset: sizes.map(width => `${item[`url${width}`]} ${width}w`).join(', '),
+            srcset: sizes.map((width) => `${item[`url${width}`]} ${width}w`).join(', '),
         }));
     }
 
@@ -666,7 +668,7 @@ const populateUser = options => async context => {
                 { replacements: { userId, seasonId: currentSeason.id } }
             );
 
-            context.result.data.currentTournaments = currentTournaments.map(item => item.id);
+            context.result.data.currentTournaments = currentTournaments.map((item) => item.id);
         }
     }
 
@@ -867,8 +869,8 @@ const populateUser = options => async context => {
         matches.sort(compareFields('playedAt-desc', 'id-desc'));
 
         const eloHistory = matches
-            .filter(match => match.baseTlr && match.levelType === 'single')
-            .map(match => (match.challengerUserId === userId ? match.challengerElo : match.acceptorElo))
+            .filter((match) => match.baseTlr && match.levelType === 'single')
+            .map((match) => (match.challengerUserId === userId ? match.challengerElo : match.acceptorElo))
             .reverse()
             .slice(config.minMatchesToEstablishTlr - 1);
 
@@ -1054,9 +1056,9 @@ const populateUser = options => async context => {
             stat[match.levelId].stages[stage].add(match.seasonId);
         }
 
-        rivalries = Object.values(rivalries).filter(rivalry => rivalry.total >= 3);
+        rivalries = Object.values(rivalries).filter((rivalry) => rivalry.total >= 3);
 
-        const opponentUserIds = rivalries.map(rivalry => rivalry.opponentUserId);
+        const opponentUserIds = rivalries.map((rivalry) => rivalry.opponentUserId);
         if (opponentUserIds.length > 0) {
             const [opponentsResult] = await sequelize.query(`
                 SELECT id,
@@ -1081,9 +1083,9 @@ const populateUser = options => async context => {
 
         context.result.data.stat = Object.values(stat)
             .sort((a, b) => a.levelPosition - b.levelPosition)
-            .map(item => {
+            .map((item) => {
                 item.seasonsTotal = item.seasons.size;
-                ['quarterfinal', 'semifinal', 'final', 'champion'].forEach(stage => {
+                ['quarterfinal', 'semifinal', 'final', 'champion'].forEach((stage) => {
                     item.stages[stage] = item.stages[stage].size;
                 });
                 delete item.seasons;
@@ -1099,7 +1101,7 @@ const populateUser = options => async context => {
     return context;
 };
 
-const populateAvatar = options => async context => {
+const populateAvatar = (options) => async (context) => {
     const { data } = context;
     const currentUser = context.params.user;
 
@@ -1120,7 +1122,7 @@ const populateAvatar = options => async context => {
     return context;
 };
 
-const populateProfileCompletedAt = options => async context => {
+const populateProfileCompletedAt = (options) => async (context) => {
     const { data } = context;
     const currentUser = context.params.user;
 
@@ -1141,11 +1143,11 @@ const populateProfileCompletedAt = options => async context => {
     return context;
 };
 
-const populateSlug = options => async context => {
+const populateSlug = (options) => async (context) => {
     const { data } = context;
     const sequelize = context.app.get('sequelizeClient');
 
-    const getSlug = str => {
+    const getSlug = (str) => {
         return str
             .replace(/[^\w-\s]+/g, '')
             .replace(/^\W+/, '')
@@ -1192,7 +1194,7 @@ const populateSlug = options => async context => {
     return context;
 };
 
-const stringifyInformation = options => async context => {
+const stringifyInformation = (options) => async (context) => {
     const { data } = context;
 
     if (data.information) {
@@ -1202,7 +1204,7 @@ const stringifyInformation = options => async context => {
     return context;
 };
 
-const populateRegisterHistory = options => async context => {
+const populateRegisterHistory = (options) => async (context) => {
     const { data } = context;
 
     try {
@@ -1214,7 +1216,7 @@ const populateRegisterHistory = options => async context => {
     return context;
 };
 
-const populateShowAge = options => async context => {
+const populateShowAge = (options) => async (context) => {
     if ('showAge' in context.data) {
         context.data.showAge = Boolean(context.data.showAge);
     }
@@ -1222,7 +1224,7 @@ const populateShowAge = options => async context => {
     return context;
 };
 
-const populateHistory = options => async context => {
+const populateHistory = (options) => async (context) => {
     const { data } = context;
     const currentUser = context.params.user;
 
@@ -1253,7 +1255,7 @@ const populateHistory = options => async context => {
     return context;
 };
 
-const populateReferral = options => async context => {
+const populateReferral = (options) => async (context) => {
     const { data } = context;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
@@ -1293,13 +1295,13 @@ const populateReferral = options => async context => {
     return context;
 };
 
-const populateChangelogSeenAt = options => async context => {
+const populateChangelogSeenAt = (options) => async (context) => {
     context.data.changelogSeenAt = dayjs.tz().format('YYYY-MM-DD HH:mm:ss+00:00');
 
     return context;
 };
 
-const generateVerificationCode = options => async context => {
+const generateVerificationCode = (options) => async (context) => {
     context.data.verificationCode = getVerificationCode();
 
     return context;
@@ -1307,7 +1309,7 @@ const generateVerificationCode = options => async context => {
 
 const sendVerificationEmail =
     (options = {}) =>
-    async context => {
+    async (context) => {
         const sequelize = context.app.get('sequelizeClient');
         const user = options.user || context.result;
 
@@ -1327,7 +1329,7 @@ const sendVerificationEmail =
         return context;
     };
 
-const verifyEmail = options => async context => {
+const verifyEmail = (options) => async (context) => {
     const { TL_URL } = process.env;
     const { email, verificationCode } = context.data;
     const sequelize = context.app.get('sequelizeClient');
@@ -1378,7 +1380,7 @@ const verifyEmail = options => async context => {
                     }
                 );
 
-                duplicates = candidates.filter(candidate => {
+                duplicates = candidates.filter((candidate) => {
                     if (candidate.isVerified !== 1) {
                         return false;
                     }
@@ -1394,18 +1396,18 @@ const verifyEmail = options => async context => {
 
                     const information = populateInformation(candidate.information);
                     const categories = [
-                        { value: 'phone', check: value => user.phone === value },
-                        { value: 'email', check: value => user.email === value },
-                        { value: 'name', check: value => getPlayerName(user) === value },
+                        { value: 'phone', check: (value) => user.phone === value },
+                        { value: 'email', check: (value) => user.email === value },
+                        { value: 'name', check: (value) => getPlayerName(user) === value },
                     ];
 
-                    return categories.some(category => {
+                    return categories.some((category) => {
                         const array = information?.history?.[category.value];
                         if (!array) {
                             return false;
                         }
 
-                        return array.find(obj => category.check(obj.value));
+                        return array.find((obj) => category.check(obj.value));
                     });
                 });
             }
@@ -1419,7 +1421,7 @@ const verifyEmail = options => async context => {
             })();
 
             context.app.service('api/emails').create({
-                to: emails.map(item => ({ email: item })),
+                to: emails.map((item) => ({ email: item })),
                 subject: `${fullName}${duplicates.length > 0 ? ' (duplicate)' : ''} signed up to the system`,
                 html: signUpNotificationTemplate(context.params.config, {
                     userName: fullName,
@@ -1454,7 +1456,7 @@ const verifyEmail = options => async context => {
     return context;
 };
 
-const verifyNewEmail = options => async context => {
+const verifyNewEmail = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -1513,7 +1515,7 @@ const verifyNewEmail = options => async context => {
     return context;
 };
 
-const resendVerificationCode = options => async context => {
+const resendVerificationCode = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const [rows] = await sequelize.query(
@@ -1538,7 +1540,7 @@ const resendVerificationCode = options => async context => {
     return context;
 };
 
-const sendPhoneVerificationCode = options => async context => {
+const sendPhoneVerificationCode = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -1571,7 +1573,7 @@ const sendPhoneVerificationCode = options => async context => {
     return context;
 };
 
-const verifyPhone = options => async context => {
+const verifyPhone = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const { phone, code } = context.data;
@@ -1637,7 +1639,7 @@ const verifyPhone = options => async context => {
 
 const validatePhone =
     ({ isExistingUser = true } = {}) =>
-    async context => {
+    async (context) => {
         // Validate data
         {
             const schema = yup.object().shape({
@@ -1682,7 +1684,7 @@ const validatePhone =
         return context;
     };
 
-const getManagers = options => async context => {
+const getManagers = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -1701,7 +1703,7 @@ const getManagers = options => async context => {
     return context;
 };
 
-const searchUser = options => async context => {
+const searchUser = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -1728,7 +1730,7 @@ const searchUser = options => async context => {
     return context;
 };
 
-const assignManagerRole = options => async context => {
+const assignManagerRole = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -1761,7 +1763,7 @@ const assignManagerRole = options => async context => {
     return context;
 };
 
-const revokeManagerRole = options => async context => {
+const revokeManagerRole = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -1776,7 +1778,7 @@ const revokeManagerRole = options => async context => {
 
     const newRoles = user.roles
         .split(',')
-        .filter(role => role !== 'manager')
+        .filter((role) => role !== 'manager')
         .join(',');
     await sequelize.query(
         `
@@ -1793,7 +1795,7 @@ const revokeManagerRole = options => async context => {
     return context;
 };
 
-const getBanUsers = options => async context => {
+const getBanUsers = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -1816,7 +1818,7 @@ const getBanUsers = options => async context => {
     return context;
 };
 
-const addBan = options => async context => {
+const addBan = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -1862,7 +1864,7 @@ const addBan = options => async context => {
     return context;
 };
 
-const removeBan = options => async context => {
+const removeBan = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -1892,7 +1894,7 @@ const removeBan = options => async context => {
     return context;
 };
 
-const changePassword = options => async context => {
+const changePassword = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const { user } = context.params;
@@ -1928,7 +1930,7 @@ const changePassword = options => async context => {
     return context;
 };
 
-const changeUserPassword = options => async context => {
+const changeUserPassword = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -1956,7 +1958,7 @@ const changeUserPassword = options => async context => {
     return context;
 };
 
-const getAllUsers = options => async context => {
+const getAllUsers = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -2002,7 +2004,7 @@ const getAllUsers = options => async context => {
     return context;
 };
 
-const getDuplicatedUsers = options => async context => {
+const getDuplicatedUsers = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -2014,8 +2016,8 @@ const getDuplicatedUsers = options => async context => {
         phone: { data: {}, getConfidence: () => 0.9 },
         name: {
             data: {},
-            getConfidence: value => {
-                const minWordLength = Math.min(...value.split(' ').map(item => item.length));
+            getConfidence: (value) => {
+                const minWordLength = Math.min(...value.split(' ').map((item) => item.length));
                 return minWordLength < 3 ? 0.8 : 0.9;
             },
         },
@@ -2032,7 +2034,7 @@ const getDuplicatedUsers = options => async context => {
     };
 
     let [ignoredDuplicates] = await sequelize.query(`SELECT payload FROM actions WHERE name="ignoreDuplicates"`);
-    ignoredDuplicates = new Set(ignoredDuplicates.map(item => JSON.parse(item.payload).join('-')));
+    ignoredDuplicates = new Set(ignoredDuplicates.map((item) => JSON.parse(item.payload).join('-')));
 
     const [users] = await sequelize.query(
         `SELECT id,
@@ -2122,9 +2124,9 @@ const getDuplicatedUsers = options => async context => {
     }
 
     duplicates = Object.values(duplicates)
-        .filter(item => item.confidence > 0.5)
+        .filter((item) => item.confidence > 0.5)
         .sort((a, b) => b.confidence - a.confidence)
-        .map(item => ({
+        .map((item) => ({
             ...item,
             metrics: [...item.metrics],
             ignored: ignoredDuplicates.has(item.key),
@@ -2180,7 +2182,7 @@ const getDuplicatedUsers = options => async context => {
                     s.endDate>:date`,
             { replacements: { date: dayjs.tz().format('YYYY-MM-DD HH:mm:ss') } }
         );
-        currentPlayers = new Set(currentPlayers.map(item => item.id));
+        currentPlayers = new Set(currentPlayers.map((item) => item.id));
 
         for (const duplicate of duplicates) {
             const first = duplicate.users[0];
@@ -2198,7 +2200,7 @@ const getDuplicatedUsers = options => async context => {
     return context;
 };
 
-const mergeUsers = options => async context => {
+const mergeUsers = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -2324,7 +2326,7 @@ const mergeUsers = options => async context => {
                 let [userRelationsFromIds] = await sequelize.query(
                     `SELECT opponentId AS id FROM userrelations WHERE userId=${userIdTo}`
                 );
-                userRelationsFromIds = userRelationsFromIds.map(item => item.id);
+                userRelationsFromIds = userRelationsFromIds.map((item) => item.id);
                 if (userRelationsFromIds.length > 0) {
                     await sequelize.query(
                         `DELETE FROM userrelations
@@ -2336,7 +2338,7 @@ const mergeUsers = options => async context => {
                 let [userRelationsToIds] = await sequelize.query(
                     `SELECT userId AS id FROM userrelations WHERE opponentId=${userIdTo}`
                 );
-                userRelationsToIds = userRelationsToIds.map(item => item.id);
+                userRelationsToIds = userRelationsToIds.map((item) => item.id);
                 if (userRelationsToIds.length > 0) {
                     await sequelize.query(
                         `DELETE FROM userrelations
@@ -2457,8 +2459,8 @@ const mergeUsers = options => async context => {
 
     const referrerUserId =
         [userTo, userFrom]
-            .map(user => user.referrerUserId)
-            .find(userId => userId > 0 && !allUserIds.includes(userId)) || 0;
+            .map((user) => user.referrerUserId)
+            .find((userId) => userId > 0 && !allUserIds.includes(userId)) || 0;
 
     const avatar = [userTo, userFrom].reduce((result, user) => result || user.avatar, null);
     const avatarObject = [userTo, userFrom].reduce((result, user) => result || user.avatarObject, null);
@@ -2596,7 +2598,7 @@ ${h2('Hey, #firstName#!', 'padding-top="10px"')}
     return context;
 };
 
-const updateChangelogSeenAt = options => async context => {
+const updateChangelogSeenAt = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -2611,7 +2613,7 @@ const updateChangelogSeenAt = options => async context => {
     return context;
 };
 
-const getRecentEmails = options => async context => {
+const getRecentEmails = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -2628,7 +2630,7 @@ const getRecentEmails = options => async context => {
     );
 
     // replace variables
-    emails = emails.map(item => {
+    emails = emails.map((item) => {
         const result = _omit(item, ['variables']);
 
         if (!item.variables) {
@@ -2654,7 +2656,7 @@ const getRecentEmails = options => async context => {
     return context;
 };
 
-const getRegisterHistory = options => async context => {
+const getRegisterHistory = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -2671,7 +2673,7 @@ const getRegisterHistory = options => async context => {
     return context;
 };
 
-const getReferrals = options => async context => {
+const getReferrals = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -2687,7 +2689,7 @@ const getReferrals = options => async context => {
     );
 
     if (users.length > 0) {
-        const userIds = users.map(user => user.id);
+        const userIds = users.map((user) => user.id);
         const [matches] = await sequelize.query(
             `
                 SELECT DISTINCT p.userId
@@ -2696,7 +2698,7 @@ const getReferrals = options => async context => {
                  WHERE ${getStatsMatches('m')} AND
                        p.userId IN (${userIds.join(',')})`
         );
-        const usersWithMatch = new Set(matches.map(row => row.userId));
+        const usersWithMatch = new Set(matches.map((row) => row.userId));
 
         const [payments] = await sequelize.query(
             `
@@ -2705,7 +2707,7 @@ const getReferrals = options => async context => {
                  WHERE type="payment" AND
                        userId IN (${userIds.join(',')})`
         );
-        const usersWithPayment = new Set(payments.map(row => row.userId));
+        const usersWithPayment = new Set(payments.map((row) => row.userId));
 
         for (const user of users) {
             if (usersWithMatch.has(user.id)) {
@@ -2722,7 +2724,7 @@ const getReferrals = options => async context => {
     return context;
 };
 
-const getPartnerReferrals = options => async context => {
+const getPartnerReferrals = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -2742,7 +2744,7 @@ const getPartnerReferrals = options => async context => {
     );
 
     if (users.length > 0) {
-        const userIds = users.map(user => user.id);
+        const userIds = users.map((user) => user.id);
         const [payments] = await sequelize.query(
             `
                 SELECT userId,
@@ -2776,7 +2778,7 @@ const getPartnerReferrals = options => async context => {
     return context;
 };
 
-const getUserSubscriptions = options => async context => {
+const getUserSubscriptions = (options) => async (context) => {
     let action;
     try {
         action = decodeAction(context.data.payload);
@@ -2812,7 +2814,7 @@ const getUserSubscriptions = options => async context => {
     return context;
 };
 
-const updateUserSubscriptions = options => async context => {
+const updateUserSubscriptions = (options) => async (context) => {
     // check validation errors
     {
         const schema = yup.object().shape({
@@ -2867,7 +2869,7 @@ const updateUserSubscriptions = options => async context => {
     return context;
 };
 
-const unsubscribe = options => async context => {
+const unsubscribe = (options) => async (context) => {
     // check validation errors
     {
         const schema = yup.object().shape({
@@ -2922,7 +2924,7 @@ const unsubscribe = options => async context => {
     return context;
 };
 
-const getMyBadgesStats = options => async context => {
+const getMyBadgesStats = (options) => async (context) => {
     await authenticate('jwt')(context);
     await limitToUser(context);
 
@@ -2935,7 +2937,7 @@ const getMyBadgesStats = options => async context => {
     return context;
 };
 
-const getReferrer = options => async context => {
+const getReferrer = (options) => async (context) => {
     // check validation errors
     {
         const schema = yup.object().shape({
@@ -2980,7 +2982,7 @@ const getReferrer = options => async context => {
     return context;
 };
 
-const addPersonalNote = options => async context => {
+const addPersonalNote = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     {
@@ -3031,7 +3033,7 @@ const addPersonalNote = options => async context => {
     return context;
 };
 
-const disableUser = options => async context => {
+const disableUser = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -3053,7 +3055,7 @@ const disableUser = options => async context => {
     return context;
 };
 
-const restoreUser = options => async context => {
+const restoreUser = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -3075,7 +3077,7 @@ const restoreUser = options => async context => {
     return context;
 };
 
-const getPhotos = options => async context => {
+const getPhotos = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const sequelize = context.app.get('sequelizeClient');
@@ -3110,18 +3112,18 @@ const getPhotos = options => async context => {
 
     const sizes = [400, 800, 1200, 1600, 2400];
     context.result = {
-        data: photos.map(item => ({
+        data: photos.map((item) => ({
             ...item,
             reactions: item.reactions || 0,
             comments: item.comments || 0,
-            srcset: sizes.map(width => `${item[`url${width}`]} ${width}w`).join(', '),
+            srcset: sizes.map((width) => `${item[`url${width}`]} ${width}w`).join(', '),
         })),
     };
 
     return context;
 };
 
-const avoidPlayers = options => async context => {
+const avoidPlayers = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     {
@@ -3143,9 +3145,9 @@ const avoidPlayers = options => async context => {
         `SELECT opponentId FROM userrelations WHERE userId=:userId AND avoidedOnce=1`,
         { replacements: { userId: currentUser.id } }
     );
-    const avoidedOnceUsers = new Set(rows.map(item => item.opponentId));
+    const avoidedOnceUsers = new Set(rows.map((item) => item.opponentId));
 
-    if (!avoidedUsers.every(id => avoidedOnceUsers.has(id))) {
+    if (!avoidedUsers.every((id) => avoidedOnceUsers.has(id))) {
         throw new Unprocessable('Wrong player list.');
     }
 
@@ -3184,7 +3186,7 @@ const avoidPlayers = options => async context => {
     return context;
 };
 
-const registerPartner = options => async context => {
+const registerPartner = (options) => async (context) => {
     let action;
     try {
         action = decodeAction(context.data.payload);
@@ -3250,7 +3252,7 @@ const registerPartner = options => async context => {
     return context;
 };
 
-const getUserMatches = options => async context => {
+const getUserMatches = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const userId = Number(context.id);
 
@@ -3291,7 +3293,7 @@ const getUserMatches = options => async context => {
     );
 
     const matchesUserIds = matches.reduce((set, match) => {
-        [match.challengerUserId, match.acceptorUserId, match.challenger2UserId, match.acceptor2UserId].forEach(id => {
+        [match.challengerUserId, match.acceptorUserId, match.challenger2UserId, match.acceptor2UserId].forEach((id) => {
             if (id) {
                 set.add(id);
             }
@@ -3325,7 +3327,7 @@ const getUserMatches = options => async context => {
     return context;
 };
 
-const savePaw = options => async context => {
+const savePaw = (options) => async (context) => {
     try {
         await authenticate('jwt')(context);
     } catch (e) {
@@ -3385,7 +3387,7 @@ const savePaw = options => async context => {
     return context;
 };
 
-const saveIdentification = options => async context => {
+const saveIdentification = (options) => async (context) => {
     try {
         await authenticate('jwt')(context);
     } catch (e) {
@@ -3424,7 +3426,7 @@ const saveIdentification = options => async context => {
     return context;
 };
 
-const ignoreDuplicatedUsers = options => async context => {
+const ignoreDuplicatedUsers = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -3470,12 +3472,12 @@ const ignoreDuplicatedUsers = options => async context => {
     return context;
 };
 
-const parseInformation = options => async context => {
+const parseInformation = (options) => async (context) => {
     context.result.information = populateInformation(context.result.information);
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

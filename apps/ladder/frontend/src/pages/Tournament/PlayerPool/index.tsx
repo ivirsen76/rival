@@ -13,20 +13,20 @@ import notification from '@/components/notification';
 import JoinPlayerPoolForm from './JoinPlayerPoolForm';
 import CreateTeamForm from './CreateTeamForm';
 
-const PlayerPool = props => {
+const PlayerPool = (props) => {
     const { tournament, onSubmit } = props;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const currentPlayerId = currentUser?.tournaments[tournament.id]?.playerId;
     const currentPlayer = tournament.players[currentPlayerId];
     const isAloneDoublesTeamCaptain = currentPlayer?.isDoublesTeamCaptain && currentPlayer?.partnerIds.length === 1;
 
     const players = useMemo(() => {
         return Object.values(tournament.players)
-            .filter(item => item.isDoublesTeamPlayerPool)
+            .filter((item) => item.isDoublesTeamPlayerPool)
             .sort(compareFields('firstName', 'lastName'));
     }, [tournament]);
 
-    const removeFromPool = async playerId => {
+    const removeFromPool = async (playerId) => {
         const confirm = await confirmation({
             message: <div>Are you sure you want to remove yourself from the Player Pool and the ladder?</div>,
         });
@@ -43,7 +43,7 @@ const PlayerPool = props => {
             });
         });
     };
-    const acceptToTheTeam = async playerId => {
+    const acceptToTheTeam = async (playerId) => {
         const player = tournament.players[playerId];
         const fullName = `${player.firstName} ${player.lastName}`;
 
@@ -76,7 +76,7 @@ const PlayerPool = props => {
                 <div>No players available</div>
             ) : (
                 <div className={style.players}>
-                    {players.map(player => {
+                    {players.map((player) => {
                         const isMe = currentPlayerId === player.id;
                         const canAcceptToTheTeam = Boolean(
                             !isMe && currentPlayerId && !currentPlayer.isDoublesTeamPlayerPool
@@ -110,7 +110,7 @@ const PlayerPool = props => {
                                                         <JoinPlayerPoolForm
                                                             initialValues={{ partnerInfo: player.partnerInfo }}
                                                             showWarning={false}
-                                                            onSubmit={async values => {
+                                                            onSubmit={async (values) => {
                                                                 await axios.put(`/api/players/${currentPlayerId}`, {
                                                                     action: 'moveToPlayerPool',
                                                                     partnerInfo: values.partnerInfo,
@@ -160,7 +160,7 @@ const PlayerPool = props => {
                                                     <CreateTeamForm
                                                         tournament={tournament}
                                                         player={player}
-                                                        onSubmit={async values => {
+                                                        onSubmit={async (values) => {
                                                             await axios.put(`/api/players/${player.id}`, {
                                                                 action: 'acceptPlayerFromPool',
                                                                 ...values,
@@ -196,7 +196,7 @@ const PlayerPool = props => {
                         )}
                         renderBody={({ hide }) => (
                             <JoinPlayerPoolForm
-                                onSubmit={async values => {
+                                onSubmit={async (values) => {
                                     await axios.put(`/api/players/${currentPlayerId}`, {
                                         action: 'moveToPlayerPool',
                                         partnerInfo: values.partnerInfo,

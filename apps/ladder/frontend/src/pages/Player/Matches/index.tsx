@@ -13,9 +13,9 @@ import classnames from 'classnames';
 import ArrowIcon from './arrow.svg?react';
 import style from './style.module.scss';
 
-const customDateFormat = date => dayjs.tz(date).format('MMM D, YYYY');
+const customDateFormat = (date) => dayjs.tz(date).format('MMM D, YYYY');
 
-const Matches = props => {
+const Matches = (props) => {
     const { user } = props;
     const [search, setSearch] = useState('');
     const [atBottom, setAtBottom] = useState(false);
@@ -53,7 +53,7 @@ const Matches = props => {
         userIds.delete(user.id);
 
         return data.matches.filter(
-            item =>
+            (item) =>
                 userIds.has(item.challengerUserId) ||
                 userIds.has(item.challenger2UserId) ||
                 userIds.has(item.acceptorUserId) ||
@@ -75,7 +75,7 @@ const Matches = props => {
                     className="form-control form-control-solid pe-12"
                     placeholder="Search player..."
                     value={search}
-                    onChange={e => setSearch(e.target.value)}
+                    onChange={(e) => setSearch(e.target.value)}
                 />
                 <div className="position-absolute translate-middle-y top-50 end-0 me-3">
                     <span className="svg-icon svg-icon-1">
@@ -106,8 +106,8 @@ const Matches = props => {
                         ref={virtuoso}
                         style={{ height: '100%' }}
                         totalCount={filteredMatches.length}
-                        atBottomStateChange={value => setAtBottom(value)}
-                        itemContent={index => {
+                        atBottomStateChange={(value) => setAtBottom(value)}
+                        itemContent={(index) => {
                             const match = filteredMatches[index];
 
                             return (

@@ -6,7 +6,7 @@ import populateInformation from './services/users/populateInformation';
 
 // reset changelogSeenAt if user didn't log in for 3 months
 // we don't want to overwhelm him with new updates
-const resetChangelogSeenAt = options => async context => {
+const resetChangelogSeenAt = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { id, loggedAt } = context.result.user;
 
@@ -24,7 +24,7 @@ const resetChangelogSeenAt = options => async context => {
     return context;
 };
 
-const populateTournaments = options => async context => {
+const populateTournaments = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const userId = context.result.user.id;
     const { config } = context.params;
@@ -85,7 +85,7 @@ const populateTournaments = options => async context => {
 
         const currentDate = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
         const currentTournaments = result
-            .filter(item => item.isActive && item.endDate > currentDate)
+            .filter((item) => item.isActive && item.endDate > currentDate)
             .sort((a, b) =>
                 a.endDate === b.endDate ? a.levelPosition - b.levelPosition : a.endDate.localeCompare(b.endDate)
             );
@@ -292,7 +292,7 @@ const populateTournaments = options => async context => {
     return context;
 };
 
-const checkIfVerified = options => async context => {
+const checkIfVerified = (options) => async (context) => {
     const { user } = context.result;
 
     if (user.deletedAt) {
@@ -316,7 +316,7 @@ const checkIfVerified = options => async context => {
     return context;
 };
 
-const updateLoggedAt = options => async context => {
+const updateLoggedAt = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const userId = context.result.user.id;
     const currentDate = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
@@ -329,7 +329,7 @@ const updateLoggedAt = options => async context => {
     return context;
 };
 
-const errorHandler = options => context => {
+const errorHandler = (options) => (context) => {
     if (context.error) {
         if (context.data.strategy === 'local') {
             logger.info(`Invalid login with email "${context.data.email}"`);

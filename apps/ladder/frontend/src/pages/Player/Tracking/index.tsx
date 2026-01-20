@@ -6,7 +6,7 @@ import formatDuration from '@/utils/formatDuration';
 import { useQuery } from 'react-query';
 import dayjs, { formatCustom } from '@/utils/dayjs';
 
-const Tracking = props => {
+const Tracking = (props) => {
     const { user } = props;
 
     const { data: list, isLoading } = useQuery(`/api/users/tracking/${user.id}`, async () => {

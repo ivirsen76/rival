@@ -13,10 +13,10 @@ const typeOptions = [
     { value: 'product', label: 'Product' },
 ];
 
-const AddTransactionForm = props => {
+const AddTransactionForm = (props) => {
     const { user } = props;
 
-    const onSubmit = async values => {
+    const onSubmit = async (values) => {
         await axios.put(`/api/payments/${user.id}`, { action: 'addTransaction', ...values });
         await props.onSubmit();
 

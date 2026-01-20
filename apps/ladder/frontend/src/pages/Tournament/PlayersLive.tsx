@@ -13,9 +13,9 @@ import useBreakpoints from '@/utils/useBreakpoints';
 const firstPlayers = 10;
 const tooManyPlayers = 20;
 
-const PlayersLive = props => {
+const PlayersLive = (props) => {
     const { tournament, showDoublesPlayers } = props;
-    const showAllPlayersForTournaments = useSelector(state => state.auth.ui.showAllPlayersForTournaments);
+    const showAllPlayersForTournaments = useSelector((state) => state.auth.ui.showAllPlayersForTournaments);
     const size = useBreakpoints();
     const dispatch = useDispatch();
 
@@ -26,7 +26,7 @@ const PlayersLive = props => {
     const sortedPlayers = useMemo(
         () =>
             Object.values(tournament.players)
-                .filter(player => !player.hidden)
+                .filter((player) => !player.hidden)
                 .sort(
                     compareFields(
                         'stats.live.rank',
@@ -50,20 +50,20 @@ const PlayersLive = props => {
     );
 
     const totalPlayers = isDoublesTeam
-        ? sortedPlayers.filter(item => item.partners.length > 1).length
+        ? sortedPlayers.filter((item) => item.partners.length > 1).length
         : sortedPlayers.length;
     const isLarge = ['xl', 'xxl', 'lg'].includes(size);
     const showAllPlayers =
         showAllPlayersForTournaments.includes(tournament.id) || isLarge || totalPlayers <= tooManyPlayers;
     const visiblePlayers = showAllPlayers ? sortedPlayers : sortedPlayers.slice(0, firstPlayers);
 
-    const list = visiblePlayers.map(player => ({
+    const list = visiblePlayers.map((player) => ({
         ...player,
         ...player.stats.live,
     }));
 
     const lastFinalPlayer = visiblePlayers
-        .filter(player => player.readyForFinal === 1)
+        .filter((player) => player.readyForFinal === 1)
         .slice(tournament.totalFinalPlayers - 1);
     const lineAfterId = lastFinalPlayer.length > 0 ? lastFinalPlayer[0].id : 0;
     const lineLabel = (
@@ -98,7 +98,7 @@ const PlayersLive = props => {
                 <div className="mt-4">
                     <a
                         href=""
-                        onClick={e => {
+                        onClick={(e) => {
                             e.preventDefault();
                             dispatch(setShowAllPlayers(tournament.id));
                         }}

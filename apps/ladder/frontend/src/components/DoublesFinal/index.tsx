@@ -8,7 +8,7 @@ import Bracket from '../Final/Bracket';
 import { BYE_ID } from '@rival/ladder.backend/src/constants';
 import style from './style.module.scss';
 
-const DoublesFinal = props => {
+const DoublesFinal = (props) => {
     const { players, tournament, reloadTournament, showTournamentText, isReport } = props;
     const matches = props.matches.reduce((obj, match) => {
         obj[match.finalSpot] = match;
@@ -31,7 +31,7 @@ const DoublesFinal = props => {
         return list;
     }, new Set()).size;
 
-    const renderMatch = finalSpot => {
+    const renderMatch = (finalSpot) => {
         const relationsUp = {
             3: { finalSpot: 1 },
             2: { finalSpot: 1 },
@@ -70,9 +70,9 @@ const DoublesFinal = props => {
             const relation = relationsUp[finalSpot];
             const relatedMatch = matches[relation.finalSpot];
             if (relatedMatch) {
-                const currentPlayerIds = [1, 2, 3, 4].map(i => match[`player${i}Id`]).filter(Boolean);
+                const currentPlayerIds = [1, 2, 3, 4].map((i) => match[`player${i}Id`]).filter(Boolean);
                 winnerCount = [1, 2, 3, 4].filter(
-                    i => !relatedMatch[`player${i}Id`] || currentPlayerIds.includes(relatedMatch[`player${i}Id`])
+                    (i) => !relatedMatch[`player${i}Id`] || currentPlayerIds.includes(relatedMatch[`player${i}Id`])
                 ).length;
 
                 if (winnerCount === 4) {
@@ -102,7 +102,7 @@ const DoublesFinal = props => {
         if (!match) {
             match = { id: 0 };
         }
-        [1, 2, 3, 4].forEach(i => {
+        [1, 2, 3, 4].forEach((i) => {
             if (!matchPlayers[i]) {
                 matchPlayers[i] = { id: 0 };
             }

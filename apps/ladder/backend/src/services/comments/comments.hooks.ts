@@ -6,7 +6,7 @@ import { throwValidationErrors, getSchemaErrors } from '../../helpers';
 import _isEmpty from 'lodash/isEmpty';
 import { logEvent } from '../commonHooks';
 
-const populateComment = options => async context => {
+const populateComment = (options) => async (context) => {
     // Validate data
     {
         const schema = yup.object().shape({
@@ -33,7 +33,7 @@ const populateComment = options => async context => {
     return context;
 };
 
-const validateDelete = options => async context => {
+const validateDelete = (options) => async (context) => {
     const commentId = Number(context.id);
     const currentUser = context.params.user;
 
@@ -53,7 +53,7 @@ const validateDelete = options => async context => {
     return context;
 };
 
-const validatePatch = options => async context => {
+const validatePatch = (options) => async (context) => {
     const commentId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { comments } = sequelize.models;

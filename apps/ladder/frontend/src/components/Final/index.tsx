@@ -24,10 +24,10 @@ import notification from '@/components/notification';
 import BotIcon from '@/assets/bot.svg?react';
 import style from './style.module.scss';
 
-const Final = props => {
+const Final = (props) => {
     const { players, reloadTournament, showTournamentText, tournament, isReport } = props;
     const matches = props.matches
-        .filter(match => match.type === 'final' && !match.battleId)
+        .filter((match) => match.type === 'final' && !match.battleId)
         .reduce((obj, match) => {
             obj[match.finalSpot] = match;
             return obj;
@@ -39,11 +39,11 @@ const Final = props => {
 
     const addPredictionDeadline = useMemo(() => dayjs.tz(tournament.endDate).add(18, 'hour'), []);
     const allowAddPrediction = tournament.hasPredictionContest && dayjs.tz().isBefore(addPredictionDeadline);
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const currentPlayerId = currentUser?.tournaments[tournament.id]?.playerId;
     const currentPlayer = players[currentPlayerId];
 
-    const scoreModalInterceptor = show => {
+    const scoreModalInterceptor = (show) => {
         if (!allowAddPrediction) {
             return show();
         }
@@ -65,7 +65,7 @@ const Final = props => {
         });
     };
 
-    const renderMatch = finalSpot => {
+    const renderMatch = (finalSpot) => {
         let match = matches[finalSpot];
         let challenger;
         let acceptor;
@@ -205,8 +205,8 @@ const Final = props => {
         return isTop16
             ? getSinglesTournament16Text(entity)
             : isTop12
-            ? getSinglesTournament12Text(entity)
-            : getSinglesTournament8Text(entity);
+              ? getSinglesTournament12Text(entity)
+              : getSinglesTournament8Text(entity);
     })();
 
     let tournamentRules;
@@ -220,7 +220,7 @@ const Final = props => {
                     renderTrigger={({ show }) => (
                         <a
                             href=""
-                            onClick={e => {
+                            onClick={(e) => {
                                 e.preventDefault();
                                 show();
                             }}
@@ -371,7 +371,7 @@ const Final = props => {
                             renderTrigger={({ show }) => (
                                 <a
                                     href=""
-                                    onClick={e => {
+                                    onClick={(e) => {
                                         e.preventDefault();
                                         show();
                                     }}

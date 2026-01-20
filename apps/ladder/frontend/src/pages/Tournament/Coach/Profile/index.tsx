@@ -8,7 +8,7 @@ import axios from '@/utils/axios';
 import notification from '@/components/notification';
 import style from './style.module.scss';
 
-const validate = values => {
+const validate = (values) => {
     const errors = {};
 
     if (!values.message) {
@@ -18,14 +18,14 @@ const validate = values => {
     return errors;
 };
 
-const Profile = props => {
+const Profile = (props) => {
     const { coach, hide } = props;
 
     useEffect(() => {
         log({ tableId: coach.id, code: 'browseCoachProfile' });
     }, []);
 
-    const requestCoachLesson = async values => {
+    const requestCoachLesson = async (values) => {
         await axios.put(`/api/utils/${coach.id}`, { action: 'requestCoachLesson', ...values });
         notification({
             inModal: true,
@@ -84,8 +84,8 @@ const Profile = props => {
                 <div className={style.map}>
                     <img src={coach.locationImage} alt="Map" />
                     {coach.locationAddress
-                        .filter(item => item.top && item.left)
-                        .map(item => (
+                        .filter((item) => item.top && item.left)
+                        .map((item) => (
                             <div
                                 key={item.name}
                                 className={style.mark}

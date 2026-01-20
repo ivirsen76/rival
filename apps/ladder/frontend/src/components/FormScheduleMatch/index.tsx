@@ -9,7 +9,7 @@ import axios from '@/utils/axios';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
-const FormScheduleMatch = props => {
+const FormScheduleMatch = (props) => {
     const { match, tournament, onSubmit } = props;
     const config = useConfig();
     const [step, setStep] = useState(() => {
@@ -31,7 +31,7 @@ const FormScheduleMatch = props => {
         return dayjs.min(sundayNextWeek, endOfTournament);
     })();
 
-    const handleSubmit = async values => {
+    const handleSubmit = async (values) => {
         await axios.put(`/api/matches/${match.id}`, { action: 'scheduleMatch', ...values });
         await onSubmit(values);
     };

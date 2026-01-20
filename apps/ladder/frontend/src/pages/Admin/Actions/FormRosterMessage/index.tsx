@@ -5,7 +5,7 @@ import Input from '@/components/formik/Input';
 import axios from '@/utils/axios';
 import notification from '@/components/notification';
 
-const validate = values => {
+const validate = (values) => {
     const errors = {};
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -19,8 +19,8 @@ const validate = values => {
     return errors;
 };
 
-const FormRosterMessage = props => {
-    const handleSubmit = async values => {
+const FormRosterMessage = (props) => {
+    const handleSubmit = async (values) => {
         await axios.put('/api/utils/0', { action: 'sendOneRosterMessage', ...values });
 
         props.hide();

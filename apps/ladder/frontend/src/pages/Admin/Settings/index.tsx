@@ -8,7 +8,7 @@ import Button from '@/components/Button';
 import notification from '@/components/notification';
 import useConfig from '@/utils/useConfig';
 
-const Settings = props => {
+const Settings = (props) => {
     const queryClient = useQueryClient();
     const config = useConfig();
 
@@ -17,7 +17,7 @@ const Settings = props => {
         return response.data;
     });
 
-    const updateSettings = async values => {
+    const updateSettings = async (values) => {
         await axios.patch('/api/settings/1', values);
         await queryClient.invalidateQueries('/api/settings/1');
         notification({

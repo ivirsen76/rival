@@ -1,4 +1,4 @@
-const orderByDate = options => context => {
+const orderByDate = (options) => (context) => {
     context.params.sequelize = {
         order: [['date', 'DESC']],
         raw: false,

@@ -5,14 +5,14 @@ import Button from '@/components/Button';
 import { useQueryClient } from 'react-query';
 import axios from 'axios';
 
-const EditCommentForm = props => {
+const EditCommentForm = (props) => {
     const { commentId, slide, initialValues, onSubmit } = props;
     const queryClient = useQueryClient();
 
     return (
         <Formik
             initialValues={initialValues}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await axios.patch(`/api/comments/${commentId}`, values);
                 await queryClient.invalidateQueries(`getReactionsAndComments${slide.meta.id}`);
                 await onSubmit();
@@ -24,8 +24,8 @@ const EditCommentForm = props => {
                         name="message"
                         component={Textarea}
                         rows="1"
-                        onFocus={e => e.stopPropagation()}
-                        onKeyDown={e => {
+                        onFocus={(e) => e.stopPropagation()}
+                        onKeyDown={(e) => {
                             if (e.which === 13) {
                                 e.preventDefault();
                                 handleSubmit();

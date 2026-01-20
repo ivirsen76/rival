@@ -48,7 +48,7 @@ test('Should see all badges state', async ({ page, common, login }) => {
     await page.goto('/player/igor-eremeev');
 
     // wait for indexes done
-    await new Promise(resolve => setTimeout(resolve, 10_000));
+    await new Promise((resolve) => setTimeout(resolve, 10_000));
 
     await page.goto('/player/igor-eremeev');
     await page.locator('[data-recent-badges]').click();

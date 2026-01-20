@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 
-export default score => {
+export default (score) => {
     const prevScore = useRef(score);
 
     if (!prevScore.current && score) {

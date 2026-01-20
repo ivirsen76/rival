@@ -8,8 +8,8 @@ import notification from '@/components/notification';
 import { useSelector } from 'react-redux';
 import NotFound from '@/pages/NotFound';
 
-const PasswordForm = props => {
-    const currentUser = useSelector(state => state.auth.user);
+const PasswordForm = (props) => {
+    const currentUser = useSelector((state) => state.auth.user);
 
     if (!currentUser) {
         return <NotFound />;
@@ -18,7 +18,7 @@ const PasswordForm = props => {
     return (
         <Formik
             initialValues={{ oldPassword: '', password: '' }}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await axios.put('/api/users/0', { action: 'changePassword', ...values });
 
                 notification({

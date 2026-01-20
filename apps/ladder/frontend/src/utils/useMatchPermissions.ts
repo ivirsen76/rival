@@ -30,7 +30,7 @@ export const getPermissions = ({
     }
 
     if (!match) {
-        match = tournament.matches.find(item => item.id === matchId);
+        match = tournament.matches.find((item) => item.id === matchId);
 
         if (!match) {
             return {};
@@ -69,8 +69,8 @@ export const getPermissions = ({
     });
 };
 
-export default params => {
-    const currentUser = useSelector(state => state.auth.user);
+export default (params) => {
+    const currentUser = useSelector((state) => state.auth.user);
     const config = useConfig();
 
     return getPermissions({ ...params, currentUser, config });

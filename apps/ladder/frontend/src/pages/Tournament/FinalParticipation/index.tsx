@@ -21,10 +21,10 @@ const GO_MESSAGE = 'You are registered for the tournament!';
 const SKIP_MESSAGE = "You've decided to skip the tournament.";
 const WAITING_MESSAGE = 'The Team Captain can change participation status.';
 
-const FinalParticipation = props => {
+const FinalParticipation = (props) => {
     const { tournament, onStatusUpdate, allowUpdate } = props;
     const dispatch = useDispatch();
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const [loading, setLoading] = useState(false);
 
     const { playerId, readyForFinal, seasonId } = currentUser.tournaments[tournament.id];
@@ -35,7 +35,7 @@ const FinalParticipation = props => {
     const currentPlayer = tournament.players[playerId];
 
     const anotherTournament = Object.values(currentUser.tournaments).find(
-        item =>
+        (item) =>
             item.isActive &&
             item.seasonId === seasonId &&
             item.readyForFinal === 1 &&
@@ -51,7 +51,7 @@ const FinalParticipation = props => {
         return currentPlayer.stats.live.matches;
     })();
 
-    const changeStatus = async value => {
+    const changeStatus = async (value) => {
         setLoading(value);
         await axios.patch(`/api/players/${playerId}`, { readyForFinal: value });
         await onStatusUpdate();
@@ -73,10 +73,10 @@ const FinalParticipation = props => {
         return isDoubles
             ? getDoublesTournamentText(entity)
             : isTop16
-            ? getSinglesTournament16Text(entity)
-            : isTop12
-            ? getSinglesTournament12Text(entity)
-            : getSinglesTournament8Text(entity);
+              ? getSinglesTournament16Text(entity)
+              : isTop12
+                ? getSinglesTournament12Text(entity)
+                : getSinglesTournament8Text(entity);
     })();
 
     let tournamentRules;
@@ -90,7 +90,7 @@ const FinalParticipation = props => {
                     renderTrigger={({ show }) => (
                         <a
                             href=""
-                            onClick={e => {
+                            onClick={(e) => {
                                 e.preventDefault();
                                 show();
                             }}
@@ -120,8 +120,8 @@ const FinalParticipation = props => {
                                 {readyForFinal === 0
                                     ? WAITING_MESSAGE
                                     : readyForFinal === 1
-                                    ? GO_MESSAGE
-                                    : SKIP_MESSAGE}
+                                      ? GO_MESSAGE
+                                      : SKIP_MESSAGE}
                             </div>
                         </>
                     );
@@ -241,7 +241,7 @@ const FinalParticipation = props => {
                         {readyForFinal === 1 ? GO_MESSAGE : SKIP_MESSAGE}{' '}
                         <a
                             href=""
-                            onClick={e => {
+                            onClick={(e) => {
                                 e.preventDefault();
                                 changeStatus(0);
                             }}

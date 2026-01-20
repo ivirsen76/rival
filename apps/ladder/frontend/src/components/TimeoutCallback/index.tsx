@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import formatDuration from '@/utils/formatDuration';
 
-const TimeoutCallback = props => {
+const TimeoutCallback = (props) => {
     const { render, onTimeout, deadline } = props;
 
     const [secondsLeft, setSecondsLeft] = useState();

@@ -26,7 +26,7 @@ import useAppearance from '@/utils/useAppearance';
 import useOutsideClick from '@/utils/useOutsideClick';
 import style from './style.module.scss';
 
-const formatDate = date => formatCustom(date, 'MMM\xa0D, YYYY, h:mm A');
+const formatDate = (date) => formatCustom(date, 'MMM\xa0D, YYYY, h:mm A');
 const TIME_TO_DELETE_COMMENT = 3600;
 const TENNIS_BALL_EMOJI_CODE = '1f3be';
 
@@ -35,7 +35,7 @@ const insertAtCursor = (input, textToInsert) => {
     document.execCommand('insertText', false, textToInsert);
 };
 
-const Comments = props => {
+const Comments = (props) => {
     const {
         slide,
         photo,
@@ -49,7 +49,7 @@ const Comments = props => {
         emojiData,
     } = props;
     const tooltipRef = useRef();
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const size = useBreakpoints();
     const appearance = useAppearance();
     const [showReactionEmoji, setShowReactionEmoji] = useState(false);
@@ -69,7 +69,7 @@ const Comments = props => {
     const combinedReactions = useMemo(() => {
         const arr = [];
         const obj = {};
-        reactions.forEach(item => {
+        reactions.forEach((item) => {
             if (!obj[item.code]) {
                 obj[item.code] = {
                     code: item.code,
@@ -101,15 +101,15 @@ const Comments = props => {
 
     const isDisabled = !slide.meta.allowComments;
 
-    const toggleShowReactionEmoji = e => {
+    const toggleShowReactionEmoji = (e) => {
         e.stopPropagation();
-        setShowReactionEmoji(prev => !prev);
+        setShowReactionEmoji((prev) => !prev);
         setShowCommentEmoji(false);
     };
 
-    const toggleShowCommentEmoji = e => {
+    const toggleShowCommentEmoji = (e) => {
         e.stopPropagation();
-        setShowCommentEmoji(prev => !prev);
+        setShowCommentEmoji((prev) => !prev);
         setShowReactionEmoji(false);
     };
 
@@ -120,7 +120,7 @@ const Comments = props => {
     return (
         <div className={style.wrapper} data-photo-comments={slide.meta.id}>
             <div className={style.comments}>
-                <div className={style.authorSection} onPointerDown={e => dragControls.start(e)}>
+                <div className={style.authorSection} onPointerDown={(e) => dragControls.start(e)}>
                     <div className={style.mobileHandle} />
                     <div className="d-flex gap-3">
                         <div className={style.avatar}>
@@ -138,7 +138,7 @@ const Comments = props => {
                     </div>
                 </div>
                 <div className={style.reactions}>
-                    {combinedReactions.map(item => (
+                    {combinedReactions.map((item) => (
                         <Squircle
                             key={item.code}
                             className={classnames(
@@ -162,14 +162,14 @@ const Comments = props => {
                                 opacity: showReactionEmoji ? 1 : 0,
                             }}
                             className={style.emojiWrapper}
-                            onFocus={e => e.stopPropagation()}
+                            onFocus={(e) => e.stopPropagation()}
                             ref={reactionEmojiRef}
                         >
                             <Picker
                                 data={emojiData}
                                 previewPosition="none"
                                 maxFrequentRows={1}
-                                onEmojiSelect={emoji => {
+                                onEmojiSelect={(emoji) => {
                                     addReaction(emoji.unified);
                                     setShowReactionEmoji(false);
                                 }}
@@ -187,7 +187,7 @@ const Comments = props => {
                     {isDisabled && <div className="text-muted">Comments are disabled.</div>}
                     {!isDisabled && comments.length === 0 && <div className="text-muted">No comments here yet...</div>}
                     {!isDisabled &&
-                        comments.map(item => {
+                        comments.map((item) => {
                             const user = users[item.userId];
 
                             const actions = [];
@@ -279,7 +279,7 @@ const Comments = props => {
                                                             {actions}
                                                         </div>
                                                     }
-                                                    onShow={instance => {
+                                                    onShow={(instance) => {
                                                         tooltipRef.current = instance;
                                                     }}
                                                 >
@@ -315,14 +315,14 @@ const Comments = props => {
                                                         height: showCommentEmoji ? 'auto' : 0,
                                                         opacity: showCommentEmoji ? 1 : 0,
                                                     }}
-                                                    onFocus={e => e.stopPropagation()}
+                                                    onFocus={(e) => e.stopPropagation()}
                                                     ref={commentEmojiRef}
                                                 >
                                                     <Picker
                                                         data={emojiData}
                                                         previewPosition="none"
                                                         maxFrequentRows={1}
-                                                        onEmojiSelect={emoji => {
+                                                        onEmojiSelect={(emoji) => {
                                                             const field = document.getElementById('messageWithEmoji');
                                                             if (field) {
                                                                 insertAtCursor(field, emoji.native);
@@ -347,8 +347,8 @@ const Comments = props => {
                                                 wrapperClassName=""
                                                 rows="1"
                                                 id="messageWithEmoji"
-                                                onFocus={e => e.stopPropagation()}
-                                                onKeyDown={e => {
+                                                onFocus={(e) => e.stopPropagation()}
+                                                onKeyDown={(e) => {
                                                     if (e.which === 13) {
                                                         e.preventDefault();
                                                         handleSubmit();

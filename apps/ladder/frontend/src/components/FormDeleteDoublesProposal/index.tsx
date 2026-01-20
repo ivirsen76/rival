@@ -6,10 +6,10 @@ import axios from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import notification from '@/components/notification';
 
-const FormDeleteDoublesProposal = props => {
+const FormDeleteDoublesProposal = (props) => {
     const { match, tournament } = props;
     const { players } = tournament;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const challenger = players[match.challengerId];
     const challenger2 = match.challenger2Id ? players[match.challenger2Id] : null;
     const acceptor = match.acceptorId ? players[match.acceptorId] : null;
@@ -17,7 +17,7 @@ const FormDeleteDoublesProposal = props => {
 
     const isChallenger = currentUser.id === challenger.userId;
 
-    const onSubmit = async values => {
+    const onSubmit = async (values) => {
         await axios.put(`/api/proposals/${match.id}`, { action: 'removeDoublesProposal', reason: values.reason });
         await props.onSubmit();
 
@@ -28,8 +28,8 @@ const FormDeleteDoublesProposal = props => {
     };
 
     let acceptors = [challenger2, acceptor, acceptor2]
-        .filter(player => player)
-        .map(player => `${player.firstName} ${player.lastName}`);
+        .filter((player) => player)
+        .map((player) => `${player.firstName} ${player.lastName}`);
     acceptors = acceptors.join(', ').replace(/,([^,]+)$/, acceptors.length > 2 ? ', and$1' : ' and$1');
 
     return (

@@ -10,14 +10,14 @@ import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import Button from '@/components/Button';
 import axios from '@/utils/axios';
 
-const AvoidedPlayersForm = props => {
-    const user = useSelector(state => state.auth.user);
+const AvoidedPlayersForm = (props) => {
+    const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
     const possiblePlayers = useMemo(() => {
         return Object.values(user.complainedUsers)
             .sort(compareFields('firstName', 'lastName'))
-            .map(item => ({
+            .map((item) => ({
                 value: item.id,
                 label: <PlayerName player1={item} />,
                 ...item,
@@ -25,9 +25,9 @@ const AvoidedPlayersForm = props => {
     }, []);
 
     const initialValues = {
-        avoidedUsers: possiblePlayers.filter(item => item.avoid).map(item => item.id),
+        avoidedUsers: possiblePlayers.filter((item) => item.avoid).map((item) => item.id),
     };
-    const onSubmit = async values => {
+    const onSubmit = async (values) => {
         await axios.put('/api/users/0', { action: 'avoidPlayers', ...values });
         await dispatch(loadCurrentUser());
         props.onSubmit && props.onSubmit();

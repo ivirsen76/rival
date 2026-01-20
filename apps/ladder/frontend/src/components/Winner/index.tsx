@@ -4,7 +4,7 @@ import PlayerName from '@/components/PlayerName';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Winner = props => {
+const Winner = (props) => {
     const { player } = props;
     const isDoublesTeam = player.partners?.length > 1;
 

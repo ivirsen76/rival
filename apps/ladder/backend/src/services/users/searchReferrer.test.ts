@@ -117,7 +117,7 @@ describe('searchReferrer()', () => {
 
         it(`Should return right search for "${search}"`, () => {
             const result = searchReferrer(list, search);
-            expect(result.map(item => item.id)).toEqual(ids);
+            expect(result.map((item) => item.id)).toEqual(ids);
         });
     }
 });

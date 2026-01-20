@@ -17,7 +17,7 @@ import moderatePhotoNotificationTemplate from '../../emailTemplates/moderatePhot
 import { getActionLink, decodeAction } from '../../utils/action';
 import { getPlayerName, getEmailContact } from '../users/helpers';
 
-const getPresignedUrlForPhotosUpload = options => async context => {
+const getPresignedUrlForPhotosUpload = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -65,7 +65,7 @@ const getPresignedUrlForPhotosUpload = options => async context => {
         }
     );
 
-    const getPresignedUrl = async file => {
+    const getPresignedUrl = async (file) => {
         const extension = file.name.replace(/^.*\./, '').toLowerCase();
         const hash = md5(`${config.city.toLowerCase()}-${currentUser.id}-${file.name}-${file.size}`).slice(0, 20);
         const key = `photos/original/${config.city.toLowerCase()}/${currentUser.id}/${hash}.${extension}`;
@@ -95,7 +95,7 @@ const getPresignedUrlForPhotosUpload = options => async context => {
     context.result = await Promise.all(files.map(getPresignedUrl));
 };
 
-const batchProcess = options => async context => {
+const batchProcess = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -134,7 +134,7 @@ const batchProcess = options => async context => {
         return set;
     }, new Set());
 
-    const processPhoto = async file => {
+    const processPhoto = async (file) => {
         if (existingKeys.has(file.key)) {
             return { status: 'error', id: file.id, name: file.name, reason: 'Duplicated photo' };
         }
@@ -172,7 +172,7 @@ const batchProcess = options => async context => {
 
                         context.app.service('api/emails').create({
                             replyTo: getEmailContact(currentUser),
-                            to: emails.map(item => ({ email: item })),
+                            to: emails.map((item) => ({ email: item })),
                             subject: 'Photo is not approved',
 
                             html: moderatePhotoNotificationTemplate(config, {
@@ -201,7 +201,7 @@ const batchProcess = options => async context => {
     await generateBadges()(context);
 };
 
-const getReactionsAndComments = options => async context => {
+const getReactionsAndComments = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const photoId = Number(context.id);
 
@@ -255,8 +255,8 @@ const getReactionsAndComments = options => async context => {
         status: 'success',
         data: {
             photo,
-            reactions: reactions.map(item => _pick(item, ['id', 'code', 'userId', 'createdAt'])),
-            comments: comments.map(item => _pick(item, ['id', 'message', 'userId', 'createdAt'])),
+            reactions: reactions.map((item) => _pick(item, ['id', 'code', 'userId', 'createdAt'])),
+            comments: comments.map((item) => _pick(item, ['id', 'message', 'userId', 'createdAt'])),
             users,
         },
     };
@@ -264,7 +264,7 @@ const getReactionsAndComments = options => async context => {
     return context;
 };
 
-const addView = options => async context => {
+const addView = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const sequelize = context.app.get('sequelizeClient');
@@ -290,7 +290,7 @@ const addView = options => async context => {
     return context;
 };
 
-const validatePatch = options => async context => {
+const validatePatch = (options) => async (context) => {
     const photoId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { photos } = sequelize.models;
@@ -320,7 +320,7 @@ const validatePatch = options => async context => {
     return context;
 };
 
-const validateDelete = options => async context => {
+const validateDelete = (options) => async (context) => {
     const id = Number(context.id);
     const currentUser = context.params.user;
 
@@ -343,7 +343,7 @@ const validateDelete = options => async context => {
     return context;
 };
 
-const changePermissions = options => async context => {
+const changePermissions = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -391,7 +391,7 @@ const changePermissions = options => async context => {
     return context;
 };
 
-const approvePhoto = options => async context => {
+const approvePhoto = (options) => async (context) => {
     let action;
     try {
         action = decodeAction(context.data.payload);
@@ -425,7 +425,7 @@ const approvePhoto = options => async context => {
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

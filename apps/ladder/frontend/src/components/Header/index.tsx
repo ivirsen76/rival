@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import useConfig from '@/utils/useConfig';
 
-const Header = props => {
+const Header = (props) => {
     const config = useConfig();
 
     if (!config?.city) {

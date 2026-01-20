@@ -3,13 +3,13 @@ import FieldWrapper from './FieldWrapper';
 import _xor from 'lodash/xor';
 import classnames from 'classnames';
 
-const CheckboxArray = props => {
+const CheckboxArray = (props) => {
     const { field, form, options, orientation, isBlockDescription } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
 
     return (
         <FieldWrapper {...props}>
-            {options.map(option => (
+            {options.map((option) => (
                 <div
                     key={option.value}
                     className={classnames('form-check form-check-solid mb-2', {

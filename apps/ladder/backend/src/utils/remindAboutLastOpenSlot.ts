@@ -5,7 +5,7 @@ import getCombinedConfig from './getCombinedConfig';
 import { getEmailContact, getPlayerName } from '../services/users/helpers';
 
 // Helpers
-const getConfig = async sequelize => {
+const getConfig = async (sequelize) => {
     const config = await getCombinedConfig();
     return { ...staticConfig, ...config };
 };
@@ -76,7 +76,7 @@ export default async (app, settings = {}) => {
 
     for (const match of matches) {
         const total = ['challengerUserId', 'challenger2UserId', 'acceptorUserId', 'acceptor2UserId'].filter(
-            field => match[field]
+            (field) => match[field]
         ).length;
 
         if (total !== 3) {
@@ -100,7 +100,7 @@ export default async (app, settings = {}) => {
         const playedAt = dayjs.tz(match.playedAt).format('ddd, MMM D, h:mm A');
         const emails = users
             .filter(
-                user =>
+                (user) =>
                     user.subscribeForProposals &&
                     ![
                         match.challengerUserId,
@@ -112,8 +112,8 @@ export default async (app, settings = {}) => {
             .map(getEmailContact);
 
         const teamDetails = (() => {
-            const getName = userId => {
-                const user = users.find(item => item.id === userId);
+            const getName = (userId) => {
+                const user = users.find((item) => item.id === userId);
                 return user ? `<b>${getPlayerName(user)}</b>` : '<span class="open">open</span>';
             };
 

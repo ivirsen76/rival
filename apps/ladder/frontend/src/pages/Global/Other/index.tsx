@@ -2,8 +2,8 @@ import Card from '@/components/Card';
 import axios from '@/utils/axios';
 import showLoader from '@/utils/showLoader';
 
-const Other = props => {
-    const downloadExcel = async e => {
+const Other = (props) => {
+    const downloadExcel = async (e) => {
         e.preventDefault();
 
         await showLoader(async () => {

@@ -70,7 +70,7 @@ test.beforeEach(async ({ login }) => {
         await common.confirmation.locator('button').getByText('Cancel').click();
 
         // wait for animation is gone
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await common.modal.locator('button').getByText('Propose match').click();
         await common.confirmation.locator('button').getByText('Yes').click();
@@ -116,7 +116,7 @@ test.beforeEach(async ({ login }) => {
         await expect(overview.upcomingMatchesArea).toContainText('Cristopher');
 
         // Check that an email is sent
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         const emailSent = await getRecord('emails', { recipientEmail: 'player3@gmail.com' });
         expect(emailSent.replyTo).toContain('Ben Done');
         expect(emailSent.replyTo).toContain('player1@gmail.com');
@@ -145,7 +145,7 @@ test.beforeEach(async ({ login }) => {
         await expect(common.alert).toContainText('has been accepted');
 
         // Check that an email is not sent
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         const emailSent = await getRecord('emails', { recipientEmail: 'player3@gmail.com' });
         expect(emailSent).toBeFalsy();
     });
@@ -161,7 +161,7 @@ test.beforeEach(async ({ login }) => {
         await expect(common.alert).toContainText('has been accepted');
 
         // Check that an email is not sent
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         const emailSent = await getRecord('emails', { recipientEmail: 'player3@gmail.com' });
         expect(emailSent).toBeFalsy();
     });
@@ -888,7 +888,7 @@ test.beforeEach(async ({ login }) => {
         await expect(Proposal).toBeHidden();
 
         // Check that we didn't send any messages
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         expect(await getNumRecords('emails')).toBe(0);
     });
 
@@ -908,7 +908,7 @@ test.beforeEach(async ({ login }) => {
         await expect(page.locator('[data-match-actions="9"]')).toBeHidden();
 
         // Check that the message has been sent
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         const emailSent = await getRecord('emails', { recipientEmail: 'player2@gmail.com' });
         expect(emailSent.subject).toContain('Ben Done deleted the proposal for');
         expect(emailSent.html).toContain('Ben Done');
@@ -942,7 +942,7 @@ test.beforeEach(async ({ login }) => {
         await expect(Proposal).not.toContainText('Accepted by');
 
         // Check that the message has been sent
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         const emailSent = await getRecord('emails', { recipientEmail: 'player2@gmail.com' });
         expect(emailSent.subject).toContain('Ben Done unaccepted the proposal for');
         expect(emailSent.html).toContain('Ben Done');
@@ -1015,7 +1015,7 @@ test.beforeEach(async ({ login }) => {
 
         await expect(common.alert).toContainText('has been added');
 
-        await new Promise(resolve => setTimeout(resolve, 500)); // to save emails in DB
+        await new Promise((resolve) => setTimeout(resolve, 500)); // to save emails in DB
         const emailSent = await getRecord('emails');
         expect(emailSent.to).toContain('player2@gmail.com');
         expect(emailSent.subject).toContain('Ben Done proposed a new friendly match');
@@ -1051,7 +1051,7 @@ test.beforeEach(async ({ login }) => {
         await expect(Proposal).toBeHidden();
 
         // Check that email is sent
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         const emailSent = await getRecord('emails', { recipientEmail: 'player3@gmail.com' });
         expect(emailSent.subject).toContain('Ben Done accepted the match proposal for');
         expect(emailSent.html).toContain('Ben Done</a></b> accepted the proposal for a match in Men 3.5.');

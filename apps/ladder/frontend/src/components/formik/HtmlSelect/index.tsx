@@ -5,13 +5,13 @@ import Tooltip from '@/components/Tooltip';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const HtmlSelect = props => {
+const HtmlSelect = (props) => {
     const { field, form, options } = props;
     const tooltipRef = useRef();
 
-    const selectedOption = options.find(option => option.value === field.value) || options[0];
+    const selectedOption = options.find((option) => option.value === field.value) || options[0];
 
-    const onChange = value => {
+    const onChange = (value) => {
         if (props.onChange) {
             props.onChange(value);
         } else {
@@ -29,7 +29,7 @@ const HtmlSelect = props => {
                         }}
                         data-html-select={field.value}
                     >
-                        {options.map(option => (
+                        {options.map((option) => (
                             <div
                                 key={option.value}
                                 data-option={option.value}
@@ -47,7 +47,7 @@ const HtmlSelect = props => {
                 arrow={false}
                 offset={[0, 8]}
                 theme="light"
-                onShow={instance => {
+                onShow={(instance) => {
                     tooltipRef.current = instance;
                 }}
             >

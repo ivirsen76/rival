@@ -2,7 +2,7 @@ import _upperFirst from 'lodash/upperFirst';
 import dayjs from '../../utils/dayjs';
 import { getStatsMatches } from '../../utils/sqlConditions';
 
-export const formatPhone = str => {
+export const formatPhone = (str) => {
     if (!str) {
         return '';
     }
@@ -14,11 +14,11 @@ export const hidePhone = () => {
     return 'XXX-XXX-XXXX';
 };
 
-export const formatUserName = str => {
+export const formatUserName = (str) => {
     return str
         .split(' ')
         .filter(Boolean)
-        .map(part => {
+        .map((part) => {
             if (!/^\w+$/.test(part)) {
                 return part;
             }
@@ -38,10 +38,10 @@ export const getPlayerName = (players, withLink = false) => {
     const arr = Array.isArray(players) ? players : [players];
 
     const useInitials = arr.length > 1;
-    const getInitials = player => player.lastName.slice(0, 1).toUpperCase() + '.';
+    const getInitials = (player) => player.lastName.slice(0, 1).toUpperCase() + '.';
 
     return arr
-        .map(player => {
+        .map((player) => {
             const name = [player.firstName, useInitials ? getInitials(player) : player.lastName].join(' ');
 
             if (withLink) {
@@ -53,25 +53,25 @@ export const getPlayerName = (players, withLink = false) => {
         .join(' / ');
 };
 
-export const getEmailLink = user => {
+export const getEmailLink = (user) => {
     return `<a href="mailto:${user.email}">${user.email}</a>`;
 };
 
-export const getPhoneLink = user => {
+export const getPhoneLink = (user) => {
     return `<a href="sms:${user.phone}">${formatPhone(user.phone)}</a>`;
 };
 
-export const getEmailContact = user => {
+export const getEmailContact = (user) => {
     return { name: getPlayerName(user), email: user.email };
 };
 
-export const hideEmail = str => {
+export const hideEmail = (str) => {
     if (!str) {
         return 'a***@*****.com';
     }
 
     return str
-        .replace(/^(.*)@/, s => s.slice(0, 1) + '*'.repeat(s.length - 2) + '@')
+        .replace(/^(.*)@/, (s) => s.slice(0, 1) + '*'.repeat(s.length - 2) + '@')
         .replace(/@(.*)(\.[^.]+)$/, (_, domain, com) => '@' + '*'.repeat(domain.length) + com);
 };
 
@@ -80,7 +80,7 @@ export const getVerificationCode = () =>
         .toString()
         .slice(0, 6);
 
-export const getWeekNumber = str => {
+export const getWeekNumber = (str) => {
     // Split date and time, take only the date part
     const [datePart] = str.split(' ');
     const [year, month, day] = datePart.split('-').map(Number);
@@ -104,7 +104,7 @@ export const getWeekNumber = str => {
     return Number(`${yyyy}${mm}${dd}`);
 };
 
-export const getDateByWeekNumber = num => {
+export const getDateByWeekNumber = (num) => {
     const year = Math.floor(num / 10000);
     const month = Math.floor((num % 10000) / 100);
     const day = Math.floor(num % 100);
@@ -112,7 +112,7 @@ export const getDateByWeekNumber = num => {
     return dayjs.tz(`${year}-${month}-${day} 00:00:00`).isoWeekday(1).format('YYYY-MM-DD HH:mm:ss');
 };
 
-export const getTbStats = match => {
+export const getTbStats = (match) => {
     const { score, wonByInjury } = match;
     let won = 0;
     let lost = 0;

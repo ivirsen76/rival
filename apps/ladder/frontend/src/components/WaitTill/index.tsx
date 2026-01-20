@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import dayjs from '@/utils/dayjs';
 import formatInterval from './formatInterval';
 
-const WaitTill = props => {
+const WaitTill = (props) => {
     const { children, duration } = props;
     const [seconds, setSeconds] = useState(0);
     const [date] = useState(() => dayjs.tz().add(duration, 'second'));

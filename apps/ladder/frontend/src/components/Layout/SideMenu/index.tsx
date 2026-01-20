@@ -20,16 +20,16 @@ import hasAnyRole from '@/utils/hasAnyRole';
 import style from './style.module.scss';
 import './aside.scss';
 
-const SideMenu = props => {
+const SideMenu = (props) => {
     const { years } = props;
 
     const [show, setShow] = useState(false);
-    const user = useSelector(state => state.auth.user);
+    const user = useSelector((state) => state.auth.user);
     const history = useHistory();
 
     const isPartner = hasAnyRole(user, ['partner']);
 
-    const goTo = url => {
+    const goTo = (url) => {
         history.push(url);
         setShow(false);
     };
@@ -50,7 +50,7 @@ const SideMenu = props => {
         );
     };
 
-    const menuItem = item => {
+    const menuItem = (item) => {
         return (
             <div className={classnames('side-menu-item', style.item, item.expanded && style.expanded)}>
                 {item.icon && <span className="svg-icon svg-icon-2 me-3">{item.icon}</span>}
@@ -146,13 +146,13 @@ const SideMenu = props => {
         {
             label: 'Seasons',
             template: menuHeader,
-            items: years.map(year => ({
+            items: years.map((year) => ({
                 label: year.year,
                 template: menuItem,
-                items: year.seasons.map(season => ({
+                items: year.seasons.map((season) => ({
                     label: _capitalize(season.name),
                     template: menuItem,
-                    items: season.levels.map(level => ({
+                    items: season.levels.map((level) => ({
                         label: level.name,
                         template: menuItem,
                         command: () => goTo(`/season/${year.year}/${season.name}/${level.slug}`),

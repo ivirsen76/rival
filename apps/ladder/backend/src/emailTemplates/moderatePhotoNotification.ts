@@ -10,7 +10,7 @@ export default (config, { userName, profileLink, photoSrc, moderationInfo, appro
   <mj-text padding-bottom="0px">Moderation info:</mj-text>
   <mj-text>
     <ul style="margin: 0 !important; padding-top: 0px; padding-bottom: 0px;">
-        ${moderationInfo.map(item => `<li>${item.label}: <b>${item.percent}%</b></li>`).join('')}
+        ${moderationInfo.map((item) => `<li>${item.label}: <b>${item.percent}%</b></li>`).join('')}
     </ul>
   </mj-text>
  

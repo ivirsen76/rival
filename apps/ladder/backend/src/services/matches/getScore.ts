@@ -1,6 +1,6 @@
 import { Unprocessable } from '@feathersjs/errors';
 
-const getScore = points => {
+const getScore = (points) => {
     const isGameOver = ([num1, num2]) => {
         const max = Math.max(num1, num2);
         const diff = Math.abs(num1 - num2);
@@ -74,7 +74,7 @@ const getScore = points => {
         throw new Unprocessable('Invalid request', { errors: { link: 'The score from this link is incorrect.' } });
     }
 
-    return score.map(item => item.join('-')).join(' ');
+    return score.map((item) => item.join('-')).join(' ');
 };
 
 export default getScore;

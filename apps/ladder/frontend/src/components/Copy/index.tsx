@@ -4,11 +4,11 @@ import copy from 'clipboard-copy';
 import Tooltip from '@/components/Tooltip';
 import classnames from 'classnames';
 
-const Copy = props => {
+const Copy = (props) => {
     const { label, buttonLabel, buttonClassName, stringToCopy, onClick } = props;
     const [showCopied, setShowCopied] = useState(false);
 
-    const copyLink = async values => {
+    const copyLink = async (values) => {
         if (showCopied) {
             return;
         }
@@ -19,9 +19,9 @@ const Copy = props => {
             onClick();
         }
 
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise((resolve) => setTimeout(resolve, 100));
         setShowCopied(true);
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
         setShowCopied(false);
     };
 

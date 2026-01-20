@@ -129,7 +129,7 @@ const matchesChartInit =
     };
 
 const ageChartInit =
-    colorIndex =>
+    (colorIndex) =>
     ({ am4charts, instance }) => {
         const ageAxis = instance.xAxes.push(new am4charts.CategoryAxis());
         ageAxis.dataFields.category = 'label';
@@ -166,7 +166,7 @@ const ageChartInit =
         bullet.label.text = '{values.valueY.workingValue}%';
     };
 
-const Stats = props => {
+const Stats = (props) => {
     const { data: stat, isLoading } = useQuery('getSeasonStats', async () => {
         const response = await axios.put('/api/seasons/0', { action: 'getSeasonStats' });
         return response.data.data;

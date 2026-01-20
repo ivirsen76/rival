@@ -69,7 +69,7 @@ export default (config, { prevSeason, nextSeason, stats, players }) => {
             title: 'Most Improved',
             description: 'Greatest TLR Progress',
             points: 'TLR points gained',
-            formatNumber: num => formatElo(num),
+            formatNumber: (num) => formatElo(num),
         })}
         ${renderPlayer({
             player: players.planner,

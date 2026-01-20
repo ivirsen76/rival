@@ -6,7 +6,7 @@ import { throwValidationErrors } from '../../helpers';
 import allBananas from '../../bananas';
 import dayjs from '../../utils/dayjs';
 
-const validatePatch = options => context => {
+const validatePatch = (options) => (context) => {
     const errors = validate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -16,7 +16,7 @@ const validatePatch = options => context => {
     return context;
 };
 
-const populateConstants = options => async context => {
+const populateConstants = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
     const { seasons, levels } = sequelize.models;
@@ -51,7 +51,7 @@ const populateConstants = options => async context => {
         };
     });
 
-    const encode = obj => Buffer.from(JSON.stringify(obj)).toString('base64').split('').reverse().join('');
+    const encode = (obj) => Buffer.from(JSON.stringify(obj)).toString('base64').split('').reverse().join('');
 
     const bananas = (() => {
         // change banana every 1.3 hours (weird number just to rotate through nights)
@@ -59,7 +59,7 @@ const populateConstants = options => async context => {
         const currentDay = dayjs.tz().format('YYYY-MM-DD');
 
         const groups = allBananas
-            .filter(item => {
+            .filter((item) => {
                 if (item.from && item.from > currentDay) {
                     return false;
                 }
@@ -71,7 +71,7 @@ const populateConstants = options => async context => {
                 }
                 return true;
             })
-            .map(item => ({
+            .map((item) => ({
                 ...item,
                 link: item.partner === 'tw' ? item.link + '?from=rival' : item.link,
             }))
@@ -81,7 +81,7 @@ const populateConstants = options => async context => {
                 return obj;
             }, {});
 
-        return Object.values(groups).map(list => {
+        return Object.values(groups).map((list) => {
             const total = list.length;
             const index = timesSinceUnixEpoch % total;
             return list[index];

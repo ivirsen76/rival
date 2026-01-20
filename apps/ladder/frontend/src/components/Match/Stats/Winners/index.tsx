@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Bar = props => {
+const Bar = (props) => {
     const { label, num, total, isBetter } = props;
 
     return (
@@ -26,7 +26,7 @@ Bar.propTypes = {
     isBetter: PropTypes.bool,
 };
 
-const Winners = props => {
+const Winners = (props) => {
     const { title, data, isGrowing } = props;
 
     const totals = data.reduce(
@@ -42,14 +42,14 @@ const Winners = props => {
         <div className={style.wrapper}>
             <div className={style.title}>{title}</div>
             <div>
-                {[0, 1].map(index => {
+                {[0, 1].map((index) => {
                     const isBetter = isGrowing ? totals[index] > totals[1 - index] : totals[index] < totals[1 - index];
 
                     return (
                         <div className={style.block} key={index}>
                             <div className={classnames(style.total, { [style.better]: isBetter })}>{totals[index]}</div>
                             <div className={style.parts}>
-                                {data.map(item => (
+                                {data.map((item) => (
                                     <Bar
                                         key={item.label}
                                         label={item.label}

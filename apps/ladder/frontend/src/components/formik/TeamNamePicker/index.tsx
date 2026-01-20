@@ -6,7 +6,7 @@ import axios from '@/utils/axios';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
-export const getValidateTeamName = config => value => {
+export const getValidateTeamName = (config) => (value) => {
     const teamName = value.trim();
     let error;
 
@@ -21,7 +21,7 @@ export const getValidateTeamName = config => value => {
     return error;
 };
 
-const TeamNamePicker = props => {
+const TeamNamePicker = (props) => {
     const { field, form, tournamentId, wrapperClassName } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
     const config = useConfig();
@@ -56,7 +56,7 @@ const TeamNamePicker = props => {
                 <div className="spinner-border spinner-border-sm text-secondary mt-3" />
             ) : (
                 <div className={classnames(style.suggestedNames, 'mt-3')}>
-                    {suggestedTeamNames.map(name => (
+                    {suggestedTeamNames.map((name) => (
                         <div
                             key={name}
                             type="button"

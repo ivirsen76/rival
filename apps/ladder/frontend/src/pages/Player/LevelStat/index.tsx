@@ -9,7 +9,7 @@ import Modal from '@/components/Modal';
 import { Squircle } from 'corner-smoothing';
 import style from './style.module.scss';
 
-const LevelStat = props => {
+const LevelStat = (props) => {
     const [expanded, setExpanded] = useState(false);
 
     const { user } = props;

@@ -3,7 +3,7 @@ import Alert from './Alert';
 import Modal from './Modal';
 import style from './style.module.scss';
 
-export default async options => {
+export default async (options) => {
     if (typeof options === 'string') {
         options = {
             message: options,

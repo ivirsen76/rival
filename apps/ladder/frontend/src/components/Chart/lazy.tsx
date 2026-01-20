@@ -4,7 +4,7 @@ import { useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import useUniqueId from './useUniqueId';
 
-const Chart = props => {
+const Chart = (props) => {
     const { chartType, data, getData, height } = props;
     const chart = useRef(null);
     const chartId = useUniqueId();

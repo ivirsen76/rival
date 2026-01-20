@@ -1,7 +1,7 @@
 import dayjs from '../../utils/dayjs';
 import _round from 'lodash/round';
 
-export const isDateThisWeek = dateAsUtcString => {
+export const isDateThisWeek = (dateAsUtcString) => {
     if (!dateAsUtcString) {
         return false;
     }
@@ -12,7 +12,7 @@ export const isDateThisWeek = dateAsUtcString => {
     return date.isValid() && date.isSame(currentDate, 'isoWeek');
 };
 
-export const getLocalDateThisWeek = desiredDateAsUtcString => {
+export const getLocalDateThisWeek = (desiredDateAsUtcString) => {
     const currentDate = dayjs.tz();
     const minutes = Math.floor(currentDate.minute() / 15) * 15;
     const closestDate = currentDate.minute(minutes).second(0).format('YYYY-MM-DD HH:mm:ss');
@@ -24,14 +24,14 @@ export const getLocalDateThisWeek = desiredDateAsUtcString => {
     return closestDate < desiredDateAsUtcString ? closestDate : desiredDateAsUtcString;
 };
 
-export const revertScore = score => {
+export const revertScore = (score) => {
     return score
         .split(' ')
-        .map(set => set.replace(/(\d+)-(\d+)/, '$2-$1'))
+        .map((set) => set.replace(/(\d+)-(\d+)/, '$2-$1'))
         .join(' ');
 };
 
-export const isFullSetScoreCorrect = values => {
+export const isFullSetScoreCorrect = (values) => {
     if (values.challengerPoints === null || values.acceptorPoints === null) {
         return false;
     }
@@ -63,7 +63,7 @@ export const isFullSetScoreCorrect = values => {
     return true;
 };
 
-export const isFastSetScoreCorrect = values => {
+export const isFastSetScoreCorrect = (values) => {
     if (values.challengerPoints === null || values.acceptorPoints === null) {
         return false;
     }
@@ -87,7 +87,7 @@ export const isFastSetScoreCorrect = values => {
     return true;
 };
 
-export const isInjuryFullSetScoreCorrect = values => {
+export const isInjuryFullSetScoreCorrect = (values) => {
     if (values.challengerPoints === null || values.acceptorPoints === null) {
         return false;
     }
@@ -111,7 +111,7 @@ export const isInjuryFullSetScoreCorrect = values => {
     return true;
 };
 
-export const isInjuryFastSetScoreCorrect = values => {
+export const isInjuryFastSetScoreCorrect = (values) => {
     if (values.challengerPoints === null || values.acceptorPoints === null) {
         return false;
     }
@@ -138,7 +138,7 @@ export const completeInjuryFullScore = (score, isFirstWinner = true) => {
             : score
                   .replace(/(\s0-0)+$/, '')
                   .split(' ')
-                  .map(set => set.split('-').map(Number));
+                  .map((set) => set.split('-').map(Number));
 
     const result = [];
     let won = 0;
@@ -169,7 +169,7 @@ export const completeInjuryFullScore = (score, isFirstWinner = true) => {
         }
     }
 
-    return result.map(item => item.join('-')).join(' ');
+    return result.map((item) => item.join('-')).join(' ');
 };
 
 export const completeInjuryFastScore = (score, isFirstWinner = true) => {
@@ -180,7 +180,7 @@ export const completeInjuryFastScore = (score, isFirstWinner = true) => {
             : score
                   .replace(/(\s0-0)+$/, '')
                   .split(' ')
-                  .map(set => set.split('-').map(Number));
+                  .map((set) => set.split('-').map(Number));
 
     const result = [];
     let won = 0;
@@ -208,13 +208,13 @@ export const completeInjuryFastScore = (score, isFirstWinner = true) => {
         }
     }
 
-    return result.map(item => item.join('-')).join(' ');
+    return result.map((item) => item.join('-')).join(' ');
 };
 
 export const isFullScoreCorrect = (score, allowMatchTieBreak = true) => {
-    const sets = score.split(' ').map(set => set.split('-').map(Number));
+    const sets = score.split(' ').map((set) => set.split('-').map(Number));
 
-    const won = sets.map(nums => nums[0] > nums[1]);
+    const won = sets.map((nums) => nums[0] > nums[1]);
 
     if (sets.length !== 2 && sets.length !== 3) {
         return false;
@@ -263,10 +263,10 @@ export const isFullScoreCorrect = (score, allowMatchTieBreak = true) => {
     });
 };
 
-export const isFastScoreCorrect = score => {
-    const sets = score.split(' ').map(set => set.split('-').map(Number));
+export const isFastScoreCorrect = (score) => {
+    const sets = score.split(' ').map((set) => set.split('-').map(Number));
 
-    const won = sets.map(nums => nums[0] > nums[1]);
+    const won = sets.map((nums) => nums[0] > nums[1]);
 
     if (sets.length !== 2 && sets.length !== 3) {
         return false;
@@ -307,7 +307,7 @@ export const isFastScoreCorrect = score => {
     });
 };
 
-export const getPoints = match => {
+export const getPoints = (match) => {
     const MAX_POINTS = 40;
     const PARTICIPATION_POINTS = 2;
     const CHALLENGER_POINTS = 2;
@@ -330,9 +330,9 @@ export const getPoints = match => {
     const scoreArray = score
         .replace(/\(\d+\)/g, '')
         .split(' ')
-        .map(item => item.split('-').map(num => +num));
+        .map((item) => item.split('-').map((num) => +num));
 
-    const isChallengerWon = scoreArray.filter(nums => nums[0] > nums[1]).length > 1;
+    const isChallengerWon = scoreArray.filter((nums) => nums[0] > nums[1]).length > 1;
     const winnerRankDiff = Math.min(
         isChallengerWon ? challengerRank - acceptorRank : acceptorRank - challengerRank,
         10
@@ -381,7 +381,7 @@ export const getPoints = match => {
     };
 };
 
-export const getOutcome = score => {
+export const getOutcome = (score) => {
     const winSetPoints = 0.09;
     const winGamePoints = 0.03;
     const setPoints = {
@@ -405,7 +405,7 @@ export const getOutcome = score => {
     const result = _round(
         score
             .split(' ')
-            .map(set => {
+            .map((set) => {
                 let [first, second] = set.split('-').map(Number);
                 let sign = 1;
                 if (first < second) {

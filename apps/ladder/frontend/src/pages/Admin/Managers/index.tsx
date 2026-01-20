@@ -9,7 +9,7 @@ import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.s
 import confirmation from '@/utils/confirmation';
 import { Link } from 'react-router-dom';
 
-const Managers = props => {
+const Managers = (props) => {
     const queryClient = useQueryClient();
 
     const { data: list, isLoading } = useQuery(`getManagerList`, async () => {
@@ -17,7 +17,7 @@ const Managers = props => {
         return response.data.data;
     });
 
-    const removeManager = async user => {
+    const removeManager = async (user) => {
         const confirm = await confirmation({
             message: (
                 <div>
@@ -34,7 +34,7 @@ const Managers = props => {
         axios.put('/api/users/0', { action: 'revokeManagerRole', userId: user.id });
         queryClient.setQueryData(
             'getManagerList',
-            list.filter(item => item.id !== user.id)
+            list.filter((item) => item.id !== user.id)
         );
     };
 
@@ -55,7 +55,7 @@ const Managers = props => {
                 renderBody={({ hide }) => (
                     <ManagerForm
                         list={list}
-                        onSubmit={async values => {
+                        onSubmit={async (values) => {
                             await axios.put('/api/users/0', { action: 'assignManagerRole', userId: values.user.id });
                             await queryClient.invalidateQueries('getManagerList');
                             hide();
@@ -78,7 +78,7 @@ const Managers = props => {
                         </tr>
                     </thead>
                     <tbody>
-                        {list.map(user => (
+                        {list.map((user) => (
                             <tr key={user.id}>
                                 <td className="pe-0">
                                     <button

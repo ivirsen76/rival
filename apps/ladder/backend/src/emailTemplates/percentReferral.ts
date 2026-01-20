@@ -2,7 +2,7 @@ import { normal, h2, signature } from './normal';
 
 const { TL_URL } = process.env;
 
-export default config => {
+export default (config) => {
     const { city } = config;
     const refLink = `${TL_URL}/ref/#referralCode#`;
 

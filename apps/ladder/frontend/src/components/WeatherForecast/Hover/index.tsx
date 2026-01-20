@@ -15,7 +15,7 @@ const courtConditions = {
     wet: 'Courts are wet.',
 };
 
-const Hover = props => {
+const Hover = (props) => {
     const { weather, courtDryness } = props;
     const [position, setPosition] = useState(null);
     const [ready, setReady] = useState(false);
@@ -24,7 +24,7 @@ const Hover = props => {
     const totalDays = weather.days.length;
 
     const changePosition = useCallback(
-        _throttle(event => {
+        _throttle((event) => {
             const wrapper = wrapperRef.current;
             if (!wrapper) {
                 return;
@@ -36,7 +36,7 @@ const Hover = props => {
         }, 16)
     );
 
-    const handleMousePosition = useCallback(event => {
+    const handleMousePosition = useCallback((event) => {
         event.preventDefault();
         event.stopPropagation();
         changePosition(event);

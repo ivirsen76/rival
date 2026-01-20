@@ -6,7 +6,7 @@ import Stat from './Stat';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-const Badges = props => {
+const Badges = (props) => {
     const { data, isLoading } = useQuery(
         '/api/users/0',
         async () => {
@@ -29,8 +29,8 @@ const Badges = props => {
     );
 };
 
-const Wrapper = props => {
-    const currentUser = useSelector(state => state.auth.user);
+const Wrapper = (props) => {
+    const currentUser = useSelector((state) => state.auth.user);
 
     if (!currentUser) {
         return <Redirect to={{ pathname: '/login', search: '?redirectAfterLogin=/user/badges' }} />;

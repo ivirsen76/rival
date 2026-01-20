@@ -5,7 +5,7 @@ import _omit from 'lodash/omit';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Textarea = props => {
+const Textarea = (props) => {
     const { field, form } = props;
     const textareaRef = useRef();
     const showError = form.errors[field.name] && form.submitCount > 0;

@@ -77,7 +77,7 @@ test('Do not show inactive user matches', async ({ page, common, login, overview
         await page.locator('button').getByText('Got it!').click();
         await expect(common.body).not.toContainText(reminderText);
 
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await page.locator('[data-logo]').click();
         await homepage.checkVisible();
@@ -321,7 +321,7 @@ test('Do not show actions for not my tournament', async ({ page, common, login, 
         await page.locator('[data-logo]').click();
 
         // Just to save the note
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await page.goto('/player/gary-mill');
         await expect(page.locator('textarea[name=note]')).toHaveValue('Nice guy');
@@ -335,7 +335,7 @@ test('Do not show actions for not my tournament', async ({ page, common, login, 
         await page.locator('textarea[name=note]').fill('Nice guy ');
 
         // Wait for autosave
-        await new Promise(resolve => setTimeout(resolve, 4000));
+        await new Promise((resolve) => setTimeout(resolve, 4000));
 
         await expect(page.locator('textarea[name=note]')).toHaveValue('Nice guy ');
 
@@ -709,7 +709,7 @@ test('Do not show actions for not my tournament', async ({ page, common, login, 
         await expectRecordToExist('players', { id: 2 }, { readyForFinal: 0 });
 
         // Check notification
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         const notificationSent = await getRecord('emails', { recipientEmail: 'admin@gmail.com' });
         expect(notificationSent.subject).toContain('Ben Done switched level from Men 3.5 to Men 4.0');
         expect(notificationSent.html).toContain('Ben Done');

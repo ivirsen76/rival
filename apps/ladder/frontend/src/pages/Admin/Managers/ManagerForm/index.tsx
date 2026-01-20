@@ -3,10 +3,10 @@ import { Formik, Field, Form } from '@/components/formik';
 import UserPicker from '@/components/formik/UserPicker';
 import Button from '@/components/Button';
 
-const ManagerForm = props => {
+const ManagerForm = (props) => {
     const { onSubmit, list } = props;
 
-    const getDisabledUsers = value => {
+    const getDisabledUsers = (value) => {
         const result = new Set();
         for (const player of list) {
             result.add(player.id);

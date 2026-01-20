@@ -17,14 +17,14 @@ export const genderOptions = [
     { value: 'female', label: 'Female' },
 ];
 
-const PersonalInfoForm = props => {
-    const user = useSelector(state => state.auth.user);
+const PersonalInfoForm = (props) => {
+    const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
     return (
         <Formik
             initialValues={_pick(user, ['firstName', 'lastName', 'gender', 'birthday', 'showAge', 'personalInfo'])}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await dispatch(
                     updateCurrentUser({
                         ...values,

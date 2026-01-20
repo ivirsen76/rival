@@ -35,11 +35,11 @@ const sendAcceptedDoublesProposalEmail = ({ context, players, match }) => {
     const acceptor2 = players[match.acceptor2Id || context.data.acceptor2Id];
 
     const playedAt = dayjs.tz(match.playedAt).format('ddd, MMM D, h:mm A');
-    const getName = player => `${player.firstName} ${player.lastName.slice(0, 1)}.`;
+    const getName = (player) => `${player.firstName} ${player.lastName.slice(0, 1)}.`;
 
     // We don't have to wait for the email sent
     context.app.service('api/emails').create({
-        to: [challenger, challenger2, acceptor, acceptor2].map(item => ({
+        to: [challenger, challenger2, acceptor, acceptor2].map((item) => ({
             name: getPlayerName(item),
             email: item.email,
         })),
@@ -59,7 +59,7 @@ const sendAcceptedDoublesProposalEmail = ({ context, players, match }) => {
     });
 };
 
-const validateCreate = options => context => {
+const validateCreate = (options) => (context) => {
     const errors = commonValidate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -69,12 +69,12 @@ const validateCreate = options => context => {
     return context;
 };
 
-const completePlayedAt = options => context => {
+const completePlayedAt = (options) => (context) => {
     context.data.playedAt += '+00:00';
     return context;
 };
 
-const populateChallengerId = options => async context => {
+const populateChallengerId = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { players } = context.app.get('sequelizeClient').models;
     const userId = context.params.user.id;
@@ -181,7 +181,7 @@ const populateChallengerId = options => async context => {
     return context;
 };
 
-const populateAcceptorData = options => async context => {
+const populateAcceptorData = (options) => async (context) => {
     const matchId = Number(context.id);
     const userId = context.params.user.id;
 
@@ -296,7 +296,7 @@ const populateAcceptorData = options => async context => {
     return context;
 };
 
-const sendAcceptedProposalEmail = options => async context => {
+const sendAcceptedProposalEmail = (options) => async (context) => {
     const { app } = context;
     const matchId = Number(context.id);
     const { matches } = context.app.get('sequelizeClient').models;
@@ -332,7 +332,7 @@ const sendAcceptedProposalEmail = options => async context => {
     return context;
 };
 
-const createProposal = options => async context => {
+const createProposal = (options) => async (context) => {
     const { data } = context;
     const { challengerIds } = context.params;
     const { matches } = context.app.get('sequelizeClient').models;
@@ -364,7 +364,7 @@ const createProposal = options => async context => {
     return context;
 };
 
-const acceptProposal = options => async context => {
+const acceptProposal = (options) => async (context) => {
     await populateAcceptorData()(context);
 
     const matchId = Number(context.id);
@@ -385,7 +385,7 @@ const acceptProposal = options => async context => {
     return context;
 };
 
-const addDoublesProposal = options => async context => {
+const addDoublesProposal = (options) => async (context) => {
     const { TL_URL } = process.env;
     const currentUser = context.params.user;
     const sequelize = context.app.get('sequelizeClient');
@@ -474,7 +474,7 @@ const addDoublesProposal = options => async context => {
         return obj;
     }, {});
 
-    allPlayersIds.forEach(playerId => {
+    allPlayersIds.forEach((playerId) => {
         if (!players[playerId]) {
             throw new Unprocessable('Player is not in the tournament.');
         }
@@ -544,7 +544,7 @@ const addDoublesProposal = options => async context => {
         const proposalPlayer = getPlayerName(info);
         const emails = users
             .filter(
-                user =>
+                (user) =>
                     user.subscribeForProposals &&
                     ![
                         context.data.challengerId,
@@ -556,8 +556,8 @@ const addDoublesProposal = options => async context => {
             .map(getEmailContact);
 
         const teamDetails = (() => {
-            const getName = playerId => {
-                const player = users.find(user => user.playerId === playerId);
+            const getName = (playerId) => {
+                const player = users.find((user) => user.playerId === playerId);
                 return player ? `<b>${getPlayerName(player)}</b>` : '<span class="open">open</span>';
             };
 
@@ -588,7 +588,7 @@ const addDoublesProposal = options => async context => {
     return context;
 };
 
-const acceptDoublesProposal = options => async context => {
+const acceptDoublesProposal = (options) => async (context) => {
     const currentUser = context.params.user;
     const matchId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
@@ -655,18 +655,18 @@ const acceptDoublesProposal = options => async context => {
 
     if (
         ['challengerId', 'challenger2Id', 'acceptorId', 'acceptor2Id'].some(
-            field => match[field] && context.data[field]
+            (field) => match[field] && context.data[field]
         )
     ) {
         throw new Unprocessable('Open slots are already taken.');
     }
 
     const existingIds = ['challengerId', 'challenger2Id', 'acceptorId', 'acceptor2Id']
-        .map(field => match[field])
+        .map((field) => match[field])
         .filter(Boolean);
     const newIds = ['challenger2Id', 'acceptorId', 'acceptor2Id']
-        .filter(field => !match[field] && context.data[field])
-        .map(field => context.data[field]);
+        .filter((field) => !match[field] && context.data[field])
+        .map((field) => context.data[field]);
 
     if (newIds.length === 0) {
         throw new Unprocessable('You have to include at least one new player.');
@@ -696,13 +696,13 @@ const acceptDoublesProposal = options => async context => {
         return obj;
     }, {});
 
-    if (newIds.some(playerId => !players[playerId])) {
+    if (newIds.some((playerId) => !players[playerId])) {
         throw new Unprocessable('Some new players are from another tournament.');
     }
-    if (newIds.some(playerId => !players[playerId].isActive)) {
+    if (newIds.some((playerId) => !players[playerId].isActive)) {
         throw new Unprocessable('Some new players are not active.');
     }
-    if (!newIds.some(playerId => players[playerId].userId === currentUser.id)) {
+    if (!newIds.some((playerId) => players[playerId].userId === currentUser.id)) {
         throw new Unprocessable('You have to be one of the acceptors.');
     }
 
@@ -731,7 +731,7 @@ const acceptDoublesProposal = options => async context => {
     return context;
 };
 
-const removeProposal = options => async context => {
+const removeProposal = (options) => async (context) => {
     const { app } = context;
     const sequelize = context.app.get('sequelizeClient');
     const matchId = Number(context.id);
@@ -830,7 +830,7 @@ ${context.data.reason ? `<mj-text><b>Reason:</b> ${context.data.reason}.</mj-tex
     return context;
 };
 
-const removeDoublesProposal = options => async context => {
+const removeDoublesProposal = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const matchId = Number(context.id);
     const currentUser = context.params.user;
@@ -883,7 +883,7 @@ const removeDoublesProposal = options => async context => {
     const acceptor = match.acceptorId ? await players.findByPk(match.acceptorId) : null;
     const acceptor2 = match.acceptor2Id ? await players.findByPk(match.acceptor2Id) : null;
 
-    const allUserIds = [challenger, challenger2, acceptor, acceptor2].filter(Boolean).map(player => player.userId);
+    const allUserIds = [challenger, challenger2, acceptor, acceptor2].filter(Boolean).map((player) => player.userId);
 
     if (!allUserIds.includes(userId)) {
         throw new Unprocessable('You cannot delete this proposal.');
@@ -918,7 +918,7 @@ const removeDoublesProposal = options => async context => {
 
             // We don't have to wait for the email sent
             context.app.service('api/emails').create({
-                to: [match.challenger2Id, match.acceptorId, match.acceptor2Id].filter(Boolean).map(playerId => {
+                to: [match.challenger2Id, match.acceptorId, match.acceptor2Id].filter(Boolean).map((playerId) => {
                     return getEmailContact(users[playerId]);
                 }),
                 subject: `${challengerName} deleted the proposal for ${playedAt}`,
@@ -966,8 +966,8 @@ const removeDoublesProposal = options => async context => {
             // We don't have to wait for the email sent
             context.app.service('api/emails').create({
                 to: [match.challengerId, match.challenger2Id, match.acceptorId, match.acceptor2Id]
-                    .filter(playerId => Boolean(playerId) && playerId !== match[columnName])
-                    .map(playerId => {
+                    .filter((playerId) => Boolean(playerId) && playerId !== match[columnName])
+                    .map((playerId) => {
                         const user = users[playerId];
 
                         return {
@@ -993,7 +993,7 @@ const removeDoublesProposal = options => async context => {
     return context;
 };
 
-const getVisibleStats = options => async context => {
+const getVisibleStats = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
     const { config } = context.params;
@@ -1045,7 +1045,7 @@ const getVisibleStats = options => async context => {
                 p.tournamentId IN (:tournamentIds) AND
                 p.userId!=:userId AND
                 p.isActive=1`,
-        { replacements: { tournamentIds: tournaments.map(item => item.id), userId: currentUser.id } }
+        { replacements: { tournamentIds: tournaments.map((item) => item.id), userId: currentUser.id } }
     );
 
     for (const player of players) {
@@ -1071,13 +1071,13 @@ const getVisibleStats = options => async context => {
     return context;
 };
 
-const sendNewProposalEmail = options => async context => {
+const sendNewProposalEmail = (options) => async (context) => {
     if (process.env.TL_ENV !== 'production') {
         await sendProposalEmails(context.app, true);
     }
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

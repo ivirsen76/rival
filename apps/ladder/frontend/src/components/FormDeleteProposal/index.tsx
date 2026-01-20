@@ -9,7 +9,7 @@ import notification from '@/components/notification';
 import dayjs from '@/utils/dayjs';
 import useMatchPermissions from '@/utils/useMatchPermissions';
 
-const FormDeleteProposal = props => {
+const FormDeleteProposal = (props) => {
     const { tournament, match, renderDeletedProposal } = props;
     const { isPartOfChallengers } = useMatchPermissions({ tournament, match });
 
@@ -17,7 +17,7 @@ const FormDeleteProposal = props => {
     const acceptor2 = tournament.players[match.acceptor2Id];
     const isAccepted = Boolean(acceptor || acceptor2);
 
-    const onSubmit = async values => {
+    const onSubmit = async (values) => {
         await axios.put(`/api/proposals/${match.id}`, { action: 'removeProposal', reason: values.reason });
         await props.onSubmit();
 

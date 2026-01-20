@@ -1,6 +1,6 @@
 /* eslint-disable prefer-const */
 
-export default str => {
+export default (str) => {
     try {
         let [h, s, l] = str.match(/\d+/g).map(Number);
 

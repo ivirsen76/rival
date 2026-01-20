@@ -2,7 +2,7 @@ import axios from 'axios';
 import logger from '@rival-tennis-ladder/logger';
 import getCombinedConfig from './getCombinedConfig';
 
-export default async app => {
+export default async (app) => {
     const sequelize = app.get('sequelizeClient');
 
     const { TL_STORE_TOKEN, TL_STORE_URL } = process.env;
@@ -14,7 +14,7 @@ export default async app => {
     });
 
     const myCity = response.data.data.find(
-        item => item.attributes.name === config.city && item.attributes.state.data.attributes.short === config.state
+        (item) => item.attributes.name === config.city && item.attributes.state.data.attributes.short === config.state
     );
 
     if (!myCity) {
@@ -25,8 +25,8 @@ export default async app => {
         (city1.attributes.left - city2.attributes.left) ** 2 + (city1.attributes.top - city2.attributes.top) ** 2;
 
     const citiesNearby = response.data.data
-        .filter(item => item.id !== myCity.id && item.attributes.published)
-        .map(item => ({
+        .filter((item) => item.id !== myCity.id && item.attributes.published)
+        .map((item) => ({
             name: item.attributes.name,
             slug: item.attributes.slug,
             state: item.attributes.state.data.attributes.short,

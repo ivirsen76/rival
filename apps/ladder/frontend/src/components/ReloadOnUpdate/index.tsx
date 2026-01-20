@@ -16,7 +16,7 @@ const reload = async () => {
     const root = createRoot(div);
     root.render(<Loader loading />);
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     window.location.reload();
 };
 

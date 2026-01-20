@@ -3,7 +3,7 @@ import FieldWrapper from './FieldWrapper';
 import _omit from 'lodash/omit';
 import classnames from 'classnames';
 
-const Select = props => {
+const Select = (props) => {
     const { field, form, options, onChange } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
     const passingProps = _omit(props, [
@@ -25,7 +25,7 @@ const Select = props => {
                 {...field}
                 {...passingProps}
                 value={field.value || ''}
-                onChange={e => {
+                onChange={(e) => {
                     const value = isNumberValue ? Number(e.target.value) : e.target.value;
                     if (onChange) {
                         onChange(value);
@@ -34,7 +34,7 @@ const Select = props => {
                     }
                 }}
             >
-                {options.map(option => (
+                {options.map((option) => (
                     <option key={option.value} value={option.value} disabled={option.disabled}>
                         {option.label}
                     </option>

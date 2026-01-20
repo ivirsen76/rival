@@ -4,7 +4,7 @@ import authenticationHooks from './authentication.hooks';
 import CustomAuthenticationService from './CustomAuthenticationService';
 import CustomJWTStrategy from './CustomJWTStrategy';
 
-export default app => {
+export default (app) => {
     const authentication = new CustomAuthenticationService(app);
 
     authentication.register('jwt', new CustomJWTStrategy());

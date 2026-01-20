@@ -10,7 +10,7 @@ import newComplaintTemplate from '../../emailTemplates/newComplaint';
 import { hasAnyRole } from '../commonHooks';
 import { getEmailContact } from '../users/helpers';
 
-const populateComplaint = options => async context => {
+const populateComplaint = (options) => async (context) => {
     // Validate data
     {
         const schema = yup.object().shape({
@@ -30,7 +30,7 @@ const populateComplaint = options => async context => {
     const { data } = context;
     data.userId = context.params.user.id;
 
-    const reason = reasonOptions.find(item => item.value === data.reason);
+    const reason = reasonOptions.find((item) => item.value === data.reason);
     if (!reason) {
         throw new Unprocessable('Invalid request', { errors: { reason: 'The reason is wrong.' } });
     }
@@ -52,7 +52,7 @@ const populateComplaint = options => async context => {
     return context;
 };
 
-const sendNewComplaintNotification = options => async context => {
+const sendNewComplaintNotification = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const [[settings]] = await sequelize.query(`SELECT newComplaintNotification FROM settings WHERE id=1`);
 
@@ -62,11 +62,11 @@ const sendNewComplaintNotification = options => async context => {
 
     const emails = getEmailsFromList(settings.newComplaintNotification);
     if (emails.length > 0) {
-        const reason = reasonOptions.find(item => item.value === context.data.reason);
+        const reason = reasonOptions.find((item) => item.value === context.data.reason);
 
         context.app.service('api/emails').create({
             replyTo: getEmailContact(currentUser),
-            to: emails.map(item => ({ email: item })),
+            to: emails.map((item) => ({ email: item })),
             subject: `New Complaint About Player (${config.city})`,
 
             html: newComplaintTemplate(context.params.config, {
@@ -82,7 +82,7 @@ const sendNewComplaintNotification = options => async context => {
     return context;
 };
 
-const avoidPlayer = options => async context => {
+const avoidPlayer = (options) => async (context) => {
     const { avoid } = context.data;
 
     if (!avoid) {
@@ -112,7 +112,7 @@ const avoidPlayer = options => async context => {
     return context;
 };
 
-const getAllComplaints = options => async context => {
+const getAllComplaints = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -143,7 +143,7 @@ const getAllComplaints = options => async context => {
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

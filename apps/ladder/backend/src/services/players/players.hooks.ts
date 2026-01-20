@@ -34,7 +34,7 @@ import { POOL_PARTNER_ID } from '../../constants';
 import seedrandom from 'seedrandom';
 import axios from 'axios';
 
-const validatePatch = options => context => {
+const validatePatch = (options) => (context) => {
     const errors = validate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -44,7 +44,7 @@ const validatePatch = options => context => {
     return context;
 };
 
-const checkIfCurrentUser = options => async context => {
+const checkIfCurrentUser = (options) => async (context) => {
     const currentUser = context.params.user;
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
@@ -106,13 +106,13 @@ const checkIfCurrentUser = options => async context => {
     return context;
 };
 
-const populateEloHistory = options => async context => {
+const populateEloHistory = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const userId = Number(context.params.query.userId);
     const { config } = context.params;
 
     const getBeatTooltip = ({ currentElo, currentEloChange, winner, looser, score, levelName }) => {
-        const signed = num => (num >= 0 ? `+${formatElo(num)}` : `-${formatElo(-num)}`);
+        const signed = (num) => (num >= 0 ? `+${formatElo(num)}` : `-${formatElo(-num)}`);
 
         return `
 <p class="mb-2"><b>${formatElo(currentElo)}</b> (${signed(currentEloChange)})</p>
@@ -234,7 +234,7 @@ ${score}
 
 const sendFirstDayEmail =
     ({ userIds }) =>
-    async context => {
+    async (context) => {
         const sequelize = context.app.get('sequelizeClient');
         const { config } = context.params;
 
@@ -266,8 +266,8 @@ const sendFirstDayEmail =
             { replacements: { seasonId: currentSeason.id } }
         );
 
-        const multiLadderUserIds = multiLadderUsers.map(item => item.id);
-        const sendUserIds = userIds.filter(id => !multiLadderUserIds.includes(id));
+        const multiLadderUserIds = multiLadderUsers.map((item) => item.id);
+        const sendUserIds = userIds.filter((id) => !multiLadderUserIds.includes(id));
 
         if (sendUserIds.length === 0) {
             return;
@@ -294,7 +294,7 @@ const sendFirstDayEmail =
         return context;
     };
 
-const batchAddPlayers = options => async context => {
+const batchAddPlayers = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -388,7 +388,7 @@ const batchAddPlayers = options => async context => {
     return context;
 };
 
-const registerForFree = options => async context => {
+const registerForFree = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -417,8 +417,8 @@ const registerForFree = options => async context => {
     const [userTournaments] = await sequelize.query(`SELECT tournamentId AS id FROM players WHERE userId=:userId`, {
         replacements: { userId: currentUser.id },
     });
-    const userTournamentIds = userTournaments.map(item => item.id);
-    const newTournamentIds = tournaments.filter(id => !userTournamentIds.includes(id));
+    const userTournamentIds = userTournaments.map((item) => item.id);
+    const newTournamentIds = tournaments.filter((id) => !userTournamentIds.includes(id));
 
     // get seasonId
     let season;
@@ -460,13 +460,13 @@ const registerForFree = options => async context => {
             { replacements: { seasonId: season.id } }
         );
         newDoublesTeamTournamentIds = rows
-            .filter(row => newTournamentIds.includes(row.id) && row.levelType === 'doubles-team')
-            .map(row => row.id);
-        seasonTournamentIds = rows.map(row => row.id);
+            .filter((row) => newTournamentIds.includes(row.id) && row.levelType === 'doubles-team')
+            .map((row) => row.id);
+        seasonTournamentIds = rows.map((row) => row.id);
     }
 
     // check if all tournaments are from the season
-    if (tournaments.some(id => !seasonTournamentIds.includes(id))) {
+    if (tournaments.some((id) => !seasonTournamentIds.includes(id))) {
         throw new Unprocessable('Ladders are not from the same season');
     }
 
@@ -520,7 +520,7 @@ const registerForFree = options => async context => {
         }
     }
 
-    const isUserFirstSeason = userTournamentIds.every(id => seasonTournamentIds.includes(id));
+    const isUserFirstSeason = userTournamentIds.every((id) => seasonTournamentIds.includes(id));
     if (!season.isFree && !isUserFirstSeason) {
         // checking if the user played matches before
         const [rows] = await sequelize.query(
@@ -586,7 +586,7 @@ const registerForFree = options => async context => {
             );
 
             context.app.service('api/emails').create({
-                to: emails.map(email => ({ email })),
+                to: emails.map((email) => ({ email })),
                 subject: `The player joined wrong ladder because of special reason`,
                 html: specialReasonNotificationTemplate(config, {
                     userName: getPlayerName(currentUser),
@@ -606,7 +606,7 @@ const registerForFree = options => async context => {
     return context;
 };
 
-const getPossibleTournaments = options => async context => {
+const getPossibleTournaments = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const { user, config } = context.params;
@@ -632,8 +632,8 @@ const getPossibleTournaments = options => async context => {
         );
 
         levels
-            .filter(level => level.playersCount >= config.minPlayersForActiveLadder)
-            .forEach(level => {
+            .filter((level) => level.playersCount >= config.minPlayersForActiveLadder)
+            .forEach((level) => {
                 activeLevels.add(level.id);
             });
     }
@@ -656,7 +656,7 @@ const getPossibleTournaments = options => async context => {
         { replacements: { userId: user.id, seasonId } }
     );
 
-    const tournaments = rows.map(item => ({
+    const tournaments = rows.map((item) => ({
         ...item,
         isActivePlay: activeLevels.has(item.levelId),
         gender: /^Men/i.test(item.name) ? 'male' : /^Women/i.test(item.name) ? 'female' : 'mixed',
@@ -667,7 +667,7 @@ const getPossibleTournaments = options => async context => {
     return context;
 };
 
-const switchTournament = options => async context => {
+const switchTournament = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     // Validate the data
@@ -820,7 +820,7 @@ const switchTournament = options => async context => {
         const emails = getEmailsFromList(settings.changeLevelNotification);
         if (emails.length > 0) {
             context.app.service('api/emails').create({
-                to: emails.map(item => ({ email: item })),
+                to: emails.map((item) => ({ email: item })),
                 subject: `${fullName} switched level from ${levelFrom} to ${levelTo}`,
                 html: changeLevelNotificationTemplate(context.params.config, {
                     userName: fullName,
@@ -836,7 +836,7 @@ const switchTournament = options => async context => {
     return context;
 };
 
-const validateRemove = options => async context => {
+const validateRemove = (options) => async (context) => {
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
@@ -884,7 +884,7 @@ const validateRemove = options => async context => {
     return context;
 };
 
-const claimReward = options => async context => {
+const claimReward = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -1080,7 +1080,7 @@ const claimReward = options => async context => {
 
         const captainName = getPlayerName(currentUser);
         const emails = partners
-            .filter(partner => partner.id !== playerId && playersWithMatches.has(partner.id))
+            .filter((partner) => partner.id !== playerId && playersWithMatches.has(partner.id))
             .map(getEmailContact);
         // Do not wait for it
         context.app.service('api/emails').create({
@@ -1124,7 +1124,7 @@ ${h2('Congratulations, #firstName#!', 'padding-top="10px"')}
     return context;
 };
 
-const purgeRelatedTournaments = options => async context => {
+const purgeRelatedTournaments = (options) => async (context) => {
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
 
@@ -1152,7 +1152,7 @@ const purgeRelatedTournaments = options => async context => {
     return context;
 };
 
-const activatePlayer = options => async context => {
+const activatePlayer = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -1193,7 +1193,7 @@ const activatePlayer = options => async context => {
     return context;
 };
 
-const deactivatePlayer = options => async context => {
+const deactivatePlayer = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -1231,7 +1231,7 @@ const deactivatePlayer = options => async context => {
     return context;
 };
 
-const quitTournament = options => async context => {
+const quitTournament = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -1297,7 +1297,7 @@ const quitTournament = options => async context => {
     return context;
 };
 
-const setPrediction = options => async context => {
+const setPrediction = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -1356,7 +1356,7 @@ const setPrediction = options => async context => {
     return context;
 };
 
-const joinDoublesTeam = options => async context => {
+const joinDoublesTeam = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -1479,7 +1479,7 @@ const joinDoublesTeam = options => async context => {
     return context;
 };
 
-const acceptPlayerFromPool = options => async context => {
+const acceptPlayerFromPool = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -1551,7 +1551,7 @@ const acceptPlayerFromPool = options => async context => {
     return context;
 };
 
-const removeFromPlayerPool = options => async context => {
+const removeFromPlayerPool = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -1577,7 +1577,7 @@ const removeFromPlayerPool = options => async context => {
     return context;
 };
 
-const moveToPlayerPool = options => async context => {
+const moveToPlayerPool = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -1623,7 +1623,7 @@ const moveToPlayerPool = options => async context => {
     return context;
 };
 
-const getSuggestedTeamNames = options => async context => {
+const getSuggestedTeamNames = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     // Validate the data
@@ -1651,7 +1651,7 @@ const getSuggestedTeamNames = options => async context => {
                 replacements: { tournamentId },
             }
         );
-        existingTeamNames = new Set(rows.map(item => item.teamName));
+        existingTeamNames = new Set(rows.map((item) => item.teamName));
     }
 
     // get user previous team names
@@ -1666,7 +1666,7 @@ const getSuggestedTeamNames = options => async context => {
           ORDER BY createdAt DESC`,
             { replacements: { tournamentId } }
         );
-        prevTeamName = rows.map(item => item.teamName).filter(name => !existingTeamNames.has(name))[0];
+        prevTeamName = rows.map((item) => item.teamName).filter((name) => !existingTeamNames.has(name))[0];
     }
 
     const random = seedrandom(currentUser.id + 1);
@@ -1675,7 +1675,7 @@ const getSuggestedTeamNames = options => async context => {
     const TOTAL_SUGGESTED_TEAM_NAMES = 8;
     const suggestedTeamNames = [...teamNames, ...teamNames]
         .slice(startingIndex)
-        .filter(name => !existingTeamNames.has(name) && name !== prevTeamName)
+        .filter((name) => !existingTeamNames.has(name) && name !== prevTeamName)
         .slice(0, TOTAL_SUGGESTED_TEAM_NAMES);
     if (prevTeamName) {
         suggestedTeamNames.unshift(prevTeamName);
@@ -1687,7 +1687,7 @@ const getSuggestedTeamNames = options => async context => {
     return context;
 };
 
-const changeTeamName = options => async context => {
+const changeTeamName = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const playerId = Number(context.id);
@@ -1745,7 +1745,7 @@ const changeTeamName = options => async context => {
     return context;
 };
 
-const replaceCaptain = options => async context => {
+const replaceCaptain = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const playerId = Number(context.id);
@@ -1818,7 +1818,7 @@ const replaceCaptain = options => async context => {
     return context;
 };
 
-const leaveTeam = options => async context => {
+const leaveTeam = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const playerId = Number(context.id);
@@ -1886,7 +1886,7 @@ ${h2('Hello, #firstName#!', 'padding-top="10px"')}
     return context;
 };
 
-const createTeamFromPool = options => async context => {
+const createTeamFromPool = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -1908,7 +1908,7 @@ const createTeamFromPool = options => async context => {
     }
 
     const playerInfo = await Promise.all(
-        context.data.players.map(async playerId => {
+        context.data.players.map(async (playerId) => {
             const player = await players.findByPk(playerId);
             if (player) {
                 player.user = await users.findByPk(player.userId);
@@ -1916,16 +1916,16 @@ const createTeamFromPool = options => async context => {
             return player;
         })
     );
-    if (playerInfo.some(player => !player)) {
+    if (playerInfo.some((player) => !player)) {
         throw new Unprocessable('There is no player.');
     }
-    if (playerInfo.some(player => player.partnerId !== POOL_PARTNER_ID)) {
+    if (playerInfo.some((player) => player.partnerId !== POOL_PARTNER_ID)) {
         throw new Unprocessable('Player is not from player pool.');
     }
 
     const captain = playerInfo[0];
     const partners = playerInfo.slice(1);
-    if (partners.some(partner => partner.tournamentId !== captain.tournamentId)) {
+    if (partners.some((partner) => partner.tournamentId !== captain.tournamentId)) {
         throw new Unprocessable('Players are not from the same tournament.');
     }
 
@@ -1951,7 +1951,7 @@ ${h2('Hello, #firstName#!', 'padding-top="10px"')}
                     }</b>.</mj-text>
 <mj-text>${captainText} Here are your teammates:</mj-text>
 ${playerInfo.map(
-    player => `<mj-text>
+    (player) => `<mj-text>
     <h3 style="margin-bottom: 5px;">${getPlayerName(player.user)}</h3>
     <b>Email:</b> ${getEmailLink(player.user)}<br>
     <b>Phone:</b> ${getPhoneLink(player.user)}
@@ -1964,7 +1964,7 @@ ${playerInfo.map(
             });
         };
 
-        const list = playerInfo.map(player => player.user).map(getEmailContact);
+        const list = playerInfo.map((player) => player.user).map(getEmailContact);
         await sendEmail(list.slice(0, 1), 'You will be the Team Captain this season.');
         await sendEmail(list.slice(1), `<b>${list[0].name}</b> will be your Team Captain this season.`);
     }
@@ -1972,7 +1972,7 @@ ${playerInfo.map(
     return context;
 };
 
-const movePartner = options => async context => {
+const movePartner = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -2022,7 +2022,7 @@ const movePartner = options => async context => {
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

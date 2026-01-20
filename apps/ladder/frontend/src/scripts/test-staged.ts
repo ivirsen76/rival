@@ -6,7 +6,7 @@ import { getStagedJsFiles } from './utils.js';
 const vitest = require.resolve('../../node_modules/vitest/vitest.mjs');
 
 const stagedFiles = getStagedJsFiles({
-    filter: file =>
+    filter: (file) =>
         !file.includes('src/server/test/service.test.js') && !file.includes('src/server/src/bananas.test.js'),
 });
 if (stagedFiles.length === 0) {

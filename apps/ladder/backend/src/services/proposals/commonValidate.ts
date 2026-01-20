@@ -5,7 +5,7 @@ import practiceTypeOptions from './practiceTypeOptions';
 import matchFormatOptions from './matchFormatOptions';
 import durationOptions from './durationOptions';
 
-export default values => {
+export default (values) => {
     const schema = yup.object().shape({
         challengers: yup.array(yup.number().integer()).min(2).max(2),
         place: yup.string().required('Location is required.').max(100),
@@ -20,15 +20,15 @@ export default values => {
         practiceType: yup
             .number()
             .integer()
-            .oneOf(practiceTypeOptions.map(item => item.value)),
+            .oneOf(practiceTypeOptions.map((item) => item.value)),
         matchFormat: yup
             .number()
             .integer()
-            .oneOf(matchFormatOptions.map(item => item.value)),
+            .oneOf(matchFormatOptions.map((item) => item.value)),
         duration: yup
             .number()
             .integer()
-            .oneOf(durationOptions.map(item => item.value)),
+            .oneOf(durationOptions.map((item) => item.value)),
     });
 
     const errors = getSchemaErrors(schema, values);

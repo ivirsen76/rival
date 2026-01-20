@@ -192,8 +192,8 @@ export const getSeeds = (players, isShuffle = false) => {
     return [];
 };
 
-const getSeasonName = data => {
-    const seasonName = SEASON_OPTIONS.find(option => option.value === data['season.season']).label;
+const getSeasonName = (data) => {
+    const seasonName = SEASON_OPTIONS.find((option) => option.value === data['season.season']).label;
     return `${data['season.year']} ${seasonName}`;
 };
 
@@ -206,7 +206,7 @@ const getEloTrend = (data, config) => {
         .format('YYYY-MM-DD HH:mm:ss');
     const tournamentId = data.id;
 
-    const addUser = id => {
+    const addUser = (id) => {
         if (!all[id]) {
             all[id] = {
                 elo: null,
@@ -341,7 +341,7 @@ const getHighTlrRestrictions = (data, config) => {
 };
 
 export const getPlayerPoints = (data, currentDate) => {
-    const matches = data.matches.filter(match => match.score && match.type === 'regular' && match.unavailable === 0);
+    const matches = data.matches.filter((match) => match.score && match.type === 'regular' && match.unavailable === 0);
     const seasonEnd = dayjs.tz(data['season.endDate']);
     const currentDateString = dayjs.tz(currentDate).format('YYYY-MM-DD HH:mm:ss');
     const isLive = seasonEnd.format('YYYY-MM-DD HH:mm:ss') > currentDateString;
@@ -381,7 +381,7 @@ export const getPlayerPoints = (data, currentDate) => {
         return obj;
     }, {});
 
-    const getResult = playerId => result[captains[playerId] || playerId];
+    const getResult = (playerId) => result[captains[playerId] || playerId];
 
     const addActivityData = (playerId, match) => {
         if (!playerId || !getResult(playerId)) {
@@ -436,7 +436,7 @@ export const getPlayerPoints = (data, currentDate) => {
         }
 
         const sorted = Object.values(result)
-            .filter(item => !isDoublesTeam || captainsWithTeam.has(item.id))
+            .filter((item) => !isDoublesTeam || captainsWithTeam.has(item.id))
             .sort((a, b) => b.live.points - a.live.points);
         let prevRank = 0;
         for (let i = 0; i < sorted.length; i++) {
@@ -499,7 +499,7 @@ export const getPlayerPoints = (data, currentDate) => {
         }
 
         const sorted = Object.values(result)
-            .filter(item => !isDoublesTeam || captainsWithTeam.has(item.id))
+            .filter((item) => !isDoublesTeam || captainsWithTeam.has(item.id))
             .sort((a, b) => b.points - a.points);
         let prevRank = 0;
         for (let i = 0; i < sorted.length; i++) {
@@ -536,14 +536,14 @@ export const getPlayerPoints = (data, currentDate) => {
 };
 
 const getTopUpsetMatches = (data, config) => {
-    const getEloDifference = match => {
+    const getEloDifference = (match) => {
         const diff = match.challengerElo - match.challengerEloChange - (match.acceptorElo - match.acceptorEloChange);
         return match.winner === match.challengerId ? diff : -diff;
     };
 
     return data.matches
         .filter(
-            match =>
+            (match) =>
                 match.score &&
                 !match.wonByDefault &&
                 !match.wonByInjury &&
@@ -565,7 +565,7 @@ const getMostProgress = (data, config) => {
     }, {});
 
     const playersWithMatches = data.matches
-        .filter(match => match.score && !match.wonByDefault)
+        .filter((match) => match.score && !match.wonByDefault)
         .reduce((set, match) => {
             set.add(match.challengerId);
             set.add(match.challenger2Id);
@@ -585,8 +585,8 @@ const getMostProgress = (data, config) => {
     };
 
     data.eloMatches
-        .filter(match => match.seasonId === data.seasonId)
-        .forEach(match => {
+        .filter((match) => match.seasonId === data.seasonId)
+        .forEach((match) => {
             if (userToPlayerId[match.challengerUserId] && match.challengerMatches > config.minMatchesToEstablishTlr) {
                 add(match.challengerUserId, match.challengerElo - match.challengerEloChange, match.challengerElo);
             }
@@ -597,13 +597,13 @@ const getMostProgress = (data, config) => {
         });
 
     return Object.values(progress)
-        .map(obj => ({ id: obj.playerId, progress: obj.last - obj.first, elo: obj.last }))
-        .filter(obj => obj.progress > 0 && playersWithMatches.has(obj.id))
+        .map((obj) => ({ id: obj.playerId, progress: obj.last - obj.first, elo: obj.last }))
+        .filter((obj) => obj.progress > 0 && playersWithMatches.has(obj.id))
         .sort((a, b) => (b.progress === a.progress ? b.id - a.id : b.progress - a.progress))
         .slice(0, STAT_COUNT);
 };
 
-const getMostMatches = data => {
+const getMostMatches = (data) => {
     const isDoublesTeam = data['level.type'] === 'doubles-team';
     const progress = {};
 
@@ -612,7 +612,7 @@ const getMostMatches = data => {
         return obj;
     }, {});
 
-    const add = id => {
+    const add = (id) => {
         if (!id) {
             return;
         }
@@ -624,8 +624,8 @@ const getMostMatches = data => {
     };
 
     data.matches
-        .filter(match => match.score && !match.wonByDefault)
-        .forEach(match => {
+        .filter((match) => match.score && !match.wonByDefault)
+        .forEach((match) => {
             add(match.challengerId);
             add(match.acceptorId);
 
@@ -685,13 +685,13 @@ const getTopForm = (data, config) => {
     }
 
     return Object.values(list)
-        .filter(obj => obj.maxElo > 0 && obj.maxSeasonElo > obj.maxElo)
-        .map(obj => ({ id: obj.playerId, elo: obj.maxSeasonElo, diff: obj.maxSeasonElo - obj.maxElo }));
+        .filter((obj) => obj.maxElo > 0 && obj.maxSeasonElo > obj.maxElo)
+        .map((obj) => ({ id: obj.playerId, elo: obj.maxSeasonElo, diff: obj.maxSeasonElo - obj.maxElo }));
 };
 
-const getPlayingAnotherFinal = data => {
+const getPlayingAnotherFinal = (data) => {
     const levelType = data['level.type'];
-    const userIds = new Set(data.users.map(user => user.id));
+    const userIds = new Set(data.users.map((user) => user.id));
 
     return data.playingAnotherFinal.reduce((obj, row) => {
         if (userIds.has(row.userId) && row.levelType === levelType) {
@@ -702,7 +702,7 @@ const getPlayingAnotherFinal = data => {
     }, {});
 };
 
-const getTournamentLinks = tournament => {
+const getTournamentLinks = (tournament) => {
     if (!tournament) {
         return;
     }
@@ -718,30 +718,30 @@ const getTournamentLinks = tournament => {
     };
 };
 
-const getWinner = data => {
+const getWinner = (data) => {
     const isDoubles = data['level.type'] === 'doubles';
 
     if (isDoubles) {
-        const finalMatch = data.doublesMatches.findLast(match => match.finalSpot === 1);
+        const finalMatch = data.doublesMatches.findLast((match) => match.finalSpot === 1);
         return finalMatch ? finalMatch.winner : 0;
     }
 
     const lastMatch = data.matches.find(
-        match => match.type === 'final' && !match.battleId && match.finalSpot === 1 && match.score
+        (match) => match.type === 'final' && !match.battleId && match.finalSpot === 1 && match.score
     );
     return lastMatch ? lastMatch.winner : 0;
 };
 
-const getBattles = data => {
-    const teamMatches = data.matches.filter(match => match.initial === 5 && match.score);
+const getBattles = (data) => {
+    const teamMatches = data.matches.filter((match) => match.initial === 5 && match.score);
 
-    return data.battles.map(battle => {
+    return data.battles.map((battle) => {
         let matches1 = 0;
         let matches2 = 0;
         let points1 = 0;
         let points2 = 0;
 
-        const battleMatches = teamMatches.filter(match => match.battleId === battle.id);
+        const battleMatches = teamMatches.filter((match) => match.battleId === battle.id);
         for (const match of battleMatches) {
             const isThreeSets = match.score.split(' ').length === 3;
 
@@ -788,7 +788,7 @@ const getTeams = (data, players) => {
     }, {});
 
     const teamPoints = data.matches
-        .filter(match => match.initial === 5 && match.score)
+        .filter((match) => match.initial === 5 && match.score)
         .reduce((obj, match) => {
             const { team1, team2, type } = battlesObj[match.battleId];
             if (type !== 'regular') {
@@ -848,13 +848,13 @@ const getTeams = (data, players) => {
             teamPoints[team2].bye;
     }
 
-    return data.teams.map(team => {
+    return data.teams.map((team) => {
         const minPlayers = process.env.NODE_ENV === 'test' ? 2 : 3;
         const isReady = team.players.length >= minPlayers;
         const averageTlr = isReady
             ? Math.floor(
                   team.players
-                      .map(player => players[player.id].weekTlr)
+                      .map((player) => players[player.id].weekTlr)
                       .sort((a, b) => b - a)
                       .slice(0, 3)
                       .reduce((sum, item) => sum + item) / 3
@@ -876,11 +876,11 @@ const getCancelTournamentStatus = ({ data, config, isOver, isBreak, isStarted })
     const deadline = dayjs.tz(data['season.endDate']).subtract(config.tournamentReminderWeeks, 'week');
     const deadlineStr = deadline.format('YYYY-MM-DD HH:mm:ss');
     const matchesBeforeDeadline = data.matches.filter(
-        match => match.score && match.unavailable === 0 && match.playedAt < deadlineStr
+        (match) => match.score && match.unavailable === 0 && match.playedAt < deadlineStr
     ).length;
 
-    const captainPlayerIds = new Set(data.users.map(user => user.players.partnerId));
-    const playersBeforeDeadline = data.users.filter(user => {
+    const captainPlayerIds = new Set(data.users.map((user) => user.players.partnerId));
+    const playersBeforeDeadline = data.users.filter((user) => {
         if (user.players.createdAt >= deadlineStr) {
             return false;
         }
@@ -915,7 +915,7 @@ const getCancelTournamentStatus = ({ data, config, isOver, isBreak, isStarted })
 
         if (isOver) {
             const readyUsersCount = data.users.filter(
-                user => user?.players.isActive && user?.players.readyForFinal === 1
+                (user) => user?.players.isActive && user?.players.readyForFinal === 1
             ).length;
             const minPlayers = isDoubles ? 4 : config.minPlayersToRunTournament;
             if (readyUsersCount < minPlayers) {
@@ -951,7 +951,7 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
     const battles = getBattles(data);
     const highTlrRestrictions = getHighTlrRestrictions(data, config);
 
-    const pickMatchFields = match => ({
+    const pickMatchFields = (match) => ({
         ..._pick(match, [
             'id',
             'initial',
@@ -1017,14 +1017,14 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
     const isBreak = isOver && (!data.nextSeason || currentDate.isBefore(dayjs.tz(data.nextSeason.startDate)));
     const isFinalTournament = isDoubles
         ? data.doublesMatches.length > 0
-        : data.matches.some(match => match.type === 'final' && !match.battleId);
-    const finalMatches = data.matches.filter(match => match.type === 'final' && !match.battleId);
+        : data.matches.some((match) => match.type === 'final' && !match.battleId);
+    const finalMatches = data.matches.filter((match) => match.type === 'final' && !match.battleId);
 
     const partnerIds = isDoublesTeam
         ? getPartners(
               data.users
-                  .filter(user => user.players.partnerId !== POOL_PARTNER_ID)
-                  .map(user => [user.players.id, user.players.partnerId])
+                  .filter((user) => user.players.partnerId !== POOL_PARTNER_ID)
+                  .map((user) => [user.players.id, user.players.partnerId])
           )
         : {};
 
@@ -1104,7 +1104,7 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
 
     // populate joinDoublesLink for team captains
     if (isDoublesTeam) {
-        await limitedPromiseAll(Object.values(players), async player => {
+        await limitedPromiseAll(Object.values(players), async (player) => {
             if (player.isDoublesTeamCaptain) {
                 player.joinDoublesLink = await getJoinDoublesLink(player.id, app);
             }
@@ -1161,7 +1161,7 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
         ...getCancelTournamentStatus({ data, config, isOver, isBreak, isStarted }),
         playingAnotherFinal,
         matches: data.matches
-            .filter(match => {
+            .filter((match) => {
                 if (match.score) {
                     return true;
                 }

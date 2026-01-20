@@ -21,7 +21,7 @@ import { optionalAuthenticate } from '../commonHooks';
 const cache = new NodeCache({ useClones: false });
 const events = new Set();
 
-const setAgeCompatibleFlag = options => async context => {
+const setAgeCompatibleFlag = (options) => async (context) => {
     const { config } = context.params;
     const sequelize = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
@@ -30,12 +30,12 @@ const setAgeCompatibleFlag = options => async context => {
     }
 
     const players = Object.values(context.result.data.players);
-    const isTournamentPlayer = players.find(item => item.userId === currentUser.id);
+    const isTournamentPlayer = players.find((item) => item.userId === currentUser.id);
     if (!isTournamentPlayer) {
         return context;
     }
 
-    const userIds = players.map(item => item.userId);
+    const userIds = players.map((item) => item.userId);
     const [rows] = await sequelize.query(
         `SELECT id, birthday FROM users WHERE birthday IS NOT NULL AND id IN (${userIds.join(',')})`
     );
@@ -55,7 +55,7 @@ const setAgeCompatibleFlag = options => async context => {
     return context;
 };
 
-const populateTournament = options => async context => {
+const populateTournament = (options) => async (context) => {
     if (context.result) {
         return context;
     }
@@ -98,7 +98,7 @@ const populateTournament = options => async context => {
         result.data.sort((a, b) => a['season.startDate'].localeCompare(b['season.startDate']));
 
         const index = result.data.findIndex(
-            item => item['season.year'] === Number(year) && item['season.season'] === season
+            (item) => item['season.year'] === Number(year) && item['season.season'] === season
         );
 
         if (index === -1) {
@@ -322,7 +322,7 @@ const populateTournament = options => async context => {
         if (!cache.has(key)) {
             const dateMonthAgo = dayjs.tz().subtract(1, 'month').format('YYYY-MM-DD HH:mm:ss');
             cache.set(key, {
-                oldMatches: tournamentInfo.eloMatches.filter(match => match.playedAt <= dateMonthAgo),
+                oldMatches: tournamentInfo.eloMatches.filter((match) => match.playedAt <= dateMonthAgo),
                 startDate: dateMonthAgo,
             });
         }
@@ -337,7 +337,7 @@ const populateTournament = options => async context => {
                  (activeTill IS NULL OR activeTill>:currentDate)`,
             { replacements: { currentDate: dayjs.tz().format('YYYY-MM-DD HH:mm:ss') } }
         );
-        tournamentInfo.coaches = result.map(coach => ({
+        tournamentInfo.coaches = result.map((coach) => ({
             ...coach,
             bullets: coach.bullets ? JSON.parse(coach.bullets) : [],
             locationAddress: coach.locationAddress ? JSON.parse(coach.locationAddress) : [],
@@ -347,7 +347,7 @@ const populateTournament = options => async context => {
     // get warnings about high TLR
     {
         const [result] = await sequelize.query('SELECT tableId FROM actions WHERE name="highProjectedTlrWarning"');
-        tournamentInfo.playersWithHighTlrWarning = result.map(item => item.tableId);
+        tournamentInfo.playersWithHighTlrWarning = result.map((item) => item.tableId);
     }
 
     const data = await getTournament({
@@ -373,14 +373,14 @@ const populateTournament = options => async context => {
         let shouldPopulateTournament = false;
         let hasBracketContest = false;
 
-        const hasFinalMatches = tournamentInfo.matches.some(match => match.type === 'final' && !match.battleId);
+        const hasFinalMatches = tournamentInfo.matches.some((match) => match.type === 'final' && !match.battleId);
         if (!hasFinalMatches) {
             const allPlayers = Object.values(data.players);
             const finalSize = data.playersBeforeDeadline >= 75 ? 16 : data.playersBeforeDeadline >= 50 ? 12 : 8;
             const seedSize = finalSize === 12 ? 8 : finalSize / 2;
 
             const finalPlayers = allPlayers
-                .filter(player => {
+                .filter((player) => {
                     return player.isActive && player.readyForFinal === 1 && player.partnerId === null;
                 })
                 .sort(
@@ -496,7 +496,7 @@ const isCacheStale = (data, context) => {
     return !dayjs.tz().isSame(dayjs.tz(data.createdAt), 'day');
 };
 
-const getFinalMatches = options => async context => {
+const getFinalMatches = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const tournamentId = Number(context.id);
 
@@ -536,7 +536,7 @@ const getFinalMatches = options => async context => {
     return context;
 };
 
-const getDoublesInfo = options => async context => {
+const getDoublesInfo = (options) => async (context) => {
     let action;
     try {
         action = decodeAction(context.data.payload);
@@ -605,7 +605,7 @@ const getDoublesInfo = options => async context => {
 
     context.result = {
         status: 'success',
-        userIds: allPlayers.map(item => item.userId),
+        userIds: allPlayers.map((item) => item.userId),
         partnerName: getPlayerName(player),
         levelName: player.levelName,
         ladderUrl: `/season/${player.year}/${player.season}/${player.levelSlug}`,
@@ -615,7 +615,7 @@ const getDoublesInfo = options => async context => {
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

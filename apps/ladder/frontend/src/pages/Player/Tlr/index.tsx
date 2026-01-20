@@ -5,7 +5,7 @@ import Modal from '@/components/Modal';
 import Loader from '@/components/Loader';
 import axios from '@/utils/axios';
 
-const Tlr = props => {
+const Tlr = (props) => {
     const { user, renderTrigger, tournament } = props;
 
     const [currentEloHistory, setCurrentEloHistory] = useState([]);

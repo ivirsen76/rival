@@ -30,10 +30,10 @@ test('Should add match result and it should be reported in two ladders', async (
     await page.locator('a').getByText('Score').click();
 
     await match.pickChallengerPoints(3);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await match.pickChallengerPoints(2);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await expect(common.modal).toContainText('+19');
     await expect(common.modal).toContainText('+9');
@@ -98,10 +98,10 @@ test('Should edit multi-ladder match', async ({ page, common, login, match }) =>
     await page.locator('a').getByText('Score').click();
 
     await match.pickChallengerPoints(5);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await match.pickChallengerPoints(5);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await expect(common.modal).toContainText('+14');
     await expect(common.modal).toContainText('+16');
@@ -117,10 +117,10 @@ test('Should edit multi-ladder match', async ({ page, common, login, match }) =>
     await page.locator(`[data-edit-match="9"]`).click();
 
     await match.pickChallengerPoints(0);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await match.pickChallengerPoints(0);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     // delete all emails just to see another one later
     await runQuery(`DELETE FROM emails`);
@@ -166,10 +166,10 @@ test('Should edit multi-ladder match in another ladder', async ({ page, common, 
     await page.locator('a').getByText('Score').click();
 
     await match.pickChallengerPoints(5);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await match.pickChallengerPoints(5);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await common.modal.locator('button').getByText('Report match').click();
     await checkTwoLadderReportMessage(common);
@@ -183,10 +183,10 @@ test('Should edit multi-ladder match in another ladder', async ({ page, common, 
     await page.locator(`[data-edit-match="${originalAnotherMatch.id}"]`).click();
 
     await match.pickChallengerPoints(0);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await match.pickChallengerPoints(0);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await common.modal.locator('button').getByText('Report match').click();
     await expect(common.alert).toContainText('The match has been reported.');
@@ -227,10 +227,10 @@ test('Should delete multi-ladder match in another ladder', async ({ page, common
     await page.locator('a').getByText('Score').click();
 
     await match.pickChallengerPoints(5);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await match.pickChallengerPoints(5);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await common.modal.locator('button').getByText('Report match').click();
     await checkTwoLadderReportMessage(common);
@@ -265,10 +265,10 @@ test('Should add match result and remove initial match', async ({ page, common, 
     await page.locator('a').getByText('Score').click();
 
     await match.pickChallengerPoints(3);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await match.pickChallengerPoints(2);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await expect(common.modal).toContainText('+19');
     await expect(common.modal).toContainText('+9');
@@ -315,10 +315,10 @@ test('Add match result from scratch', async ({ page, common, login, match }) => 
     await page.locator('button').getByText('Next').click();
 
     await match.pickChallengerPoints(3);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await match.pickChallengerPoints(2);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await expect(common.modal).toContainText('+19');
     await expect(common.modal).toContainText('+9');
@@ -356,10 +356,10 @@ test('Should not duplicate stats', async ({ page, common, login, match, overview
     await page.locator('a').getByText('Score').click();
 
     await match.pickChallengerPoints(3);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await match.pickChallengerPoints(2);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await common.modal.locator('button').getByText('Report match').click();
     await checkTwoLadderReportMessage(common);

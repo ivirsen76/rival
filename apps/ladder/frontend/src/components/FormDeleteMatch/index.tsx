@@ -5,10 +5,10 @@ import Button from '@/components/Button';
 import axios from '@/utils/axios';
 import notification from '@/components/notification';
 
-const FormDeleteMatch = props => {
+const FormDeleteMatch = (props) => {
     const { match } = props;
 
-    const onSubmit = async values => {
+    const onSubmit = async (values) => {
         if (match.score) {
             await axios.put(`/api/matches/${match.id}`, { action: 'removeMatch', ...values });
         } else {

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import style from './style.module.scss';
 
-const EmojiMultiplierCalculator = props => {
+const EmojiMultiplierCalculator = (props) => {
     const emojiRef = useRef();
     const textRef = useRef();
 
@@ -10,7 +10,7 @@ const EmojiMultiplierCalculator = props => {
             return;
         }
 
-        const getNodeWidth = node => {
+        const getNodeWidth = (node) => {
             const { width } = node.getBoundingClientRect();
             return width;
         };

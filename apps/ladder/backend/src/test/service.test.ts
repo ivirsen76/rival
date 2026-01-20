@@ -34,7 +34,7 @@ let count = 0;
 beforeAll(() => {
     server = app.listen(4999);
     request = supertest(server);
-    return new Promise(resolve => server.on('listening', resolve));
+    return new Promise((resolve) => server.on('listening', resolve));
 });
 
 afterAll(() => {
@@ -43,17 +43,17 @@ afterAll(() => {
 
 beforeEach(async () => {
     // wait to finish indexing
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     restoreDb();
 
     // wait to finish indexing
-    await new Promise(resolve => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     // stop server after a while otherwise we get timeout error
     count++;
     if (count % 5 === 0) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
     }
 }, 10000);
 
@@ -334,7 +334,7 @@ describe('user', () => {
                 .set('Authorization', token)
                 .send({ action: 'mergeUsers', userIdFrom: 2, userIdTo: 2, decision: 'nothing' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The ids are the same');
                 });
         });
@@ -346,7 +346,7 @@ describe('user', () => {
                 .set('Authorization', token)
                 .send({ action: 'mergeUsers', userIdFrom: 2929, userIdTo: 2, decision: 'nothing' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Users are not found');
                 });
         });
@@ -358,7 +358,7 @@ describe('user', () => {
                 .set('Authorization', token)
                 .send({ action: 'mergeUsers', userIdFrom: 2, userIdTo: 1, decision: 'nothing' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Users have the same active ladders');
                 });
         });
@@ -382,7 +382,7 @@ describe('user', () => {
                 .put('/api/users/1')
                 .send({ action: 'unsubscribe', date: 'wrong', hash: 'sdjfksjd' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Invalid request');
                 });
         });
@@ -396,7 +396,7 @@ describe('user', () => {
                     hash: 'wrong',
                 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The request is broken');
                 });
         });
@@ -410,7 +410,7 @@ describe('user', () => {
                     hash: '8e6bfe6b21',
                 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The request is expired');
                 });
         });
@@ -958,7 +958,7 @@ describe('order', () => {
 
             const newResult = await request.get(url).expect(200);
             const { players } = newResult.body.data;
-            expect(Object.values(players).some(item => item.userSlug === 'ben-done')).toBe(true);
+            expect(Object.values(players).some((item) => item.userSlug === 'ben-done')).toBe(true);
         });
 
         it('Should throw a validation error when sessionId is wrong', async () => {
@@ -967,7 +967,7 @@ describe('order', () => {
                 .put('/api/orders/0')
                 .send({ action: 'processStripeSession', sessionId: 'wrong' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Payment session is not found');
                 });
         });
@@ -980,7 +980,7 @@ describe('order', () => {
                 .put('/api/orders/0')
                 .send({ action: 'processStripeSession', sessionId })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Wrong session');
                 });
         });
@@ -990,7 +990,7 @@ describe('order', () => {
                 .put('/api/orders/0')
                 .send({ action: 'processStripeSession', sessionId })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Order is not found');
                 });
         });
@@ -1000,7 +1000,7 @@ describe('order', () => {
                 .put('/api/orders/0')
                 .send({ action: 'processStripeSession', sessionId: incompleteSessionId })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Session is not complete');
                 });
         });
@@ -1013,7 +1013,7 @@ describe('order', () => {
                 .put('/api/orders/0')
                 .send({ action: 'processStripeSession', sessionId })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Wrong amount');
                 });
         });
@@ -1026,7 +1026,7 @@ describe('order', () => {
                 .put('/api/orders/0')
                 .send({ action: 'processStripeSession', sessionId })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('This order is already processed');
                 });
         });
@@ -1276,7 +1276,7 @@ describe('match', () => {
                 .set('Authorization', token)
                 .send({ challengerId: 1, acceptorId: 2, score: '6-1 6-1', playedAt: date + ' 00:01:00' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe("You're not in this tournament.");
                 });
         });
@@ -1324,7 +1324,7 @@ describe('match', () => {
                     wonByDefault: true,
                 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The score for default match is wrong');
                 });
         });
@@ -1343,7 +1343,7 @@ describe('match', () => {
                     wonByInjury: true,
                 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Too many checkboxes');
                 });
         });
@@ -1418,7 +1418,7 @@ describe('match', () => {
                 .set('Authorization', token)
                 .send({ score: '6-1 6-1', playedAt: date + ' 00:01:00' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You did not play in this match.');
                 });
         });
@@ -1439,7 +1439,7 @@ describe('match', () => {
                 .set('Authorization', token)
                 .send({ score: '6-1 6-1', playedAt: date + ' 01:40:00', wonByDefault: true })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The score for default match is wrong');
                 });
         });
@@ -1451,7 +1451,7 @@ describe('match', () => {
                 .set('Authorization', token)
                 .send({ score: '6-0 6-0', playedAt: date + ' 01:40:00', wonByDefault: true, wonByInjury: true })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Too many checkboxes');
                 });
         });
@@ -1500,7 +1500,7 @@ describe('match', () => {
                 .set('Authorization', token)
                 .send({ action: 'removeMatch', reason: 'I am tired' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You cannot delete this match.');
                 });
         });
@@ -1512,7 +1512,7 @@ describe('match', () => {
                 .set('Authorization', token)
                 .send({ action: 'removeMatch', reason: 'I am tired' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe("Match doesn't exist.");
                 });
         });
@@ -1524,7 +1524,7 @@ describe('match', () => {
                 .set('Authorization', token)
                 .send({ action: 'removeMatch', reason: 'I am tired' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You cannot delete this match.');
                 });
         });
@@ -1536,7 +1536,7 @@ describe('match', () => {
                 .set('Authorization', token)
                 .send({ action: 'removeMatch', reason: 'I am tired' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You cannot delete this match.');
                 });
         });
@@ -1550,7 +1550,7 @@ describe('match', () => {
                 .set('Authorization', token)
                 .send({ action: 'removeMatch', reason: 'I am tired' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You cannot delete this match.');
                 });
         });
@@ -1562,7 +1562,7 @@ describe('match', () => {
                 .set('Authorization', token)
                 .send({ action: 'removeMatch', reason: 'I am tired' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You cannot delete this match.');
                 });
         });
@@ -1574,7 +1574,7 @@ describe('match', () => {
                 .set('Authorization', token)
                 .send({ action: 'removeMatch', reason: 'I am tired' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You cannot delete this match.');
                 });
         });
@@ -1611,7 +1611,7 @@ describe('proposal', () => {
                 .set('Authorization', token)
                 .send({ place: 'Something', tournaments: 2, playedAt: 'wrong 01:40:00' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Invalid request');
                 });
         });
@@ -1627,7 +1627,7 @@ describe('proposal', () => {
                     playedAt: dayjs().add(2, 'day').format('YYYY-MM-DD 01:40:00'),
                 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe("You're not in this tournament.");
                 });
         });
@@ -1643,7 +1643,7 @@ describe('proposal', () => {
                 .set('Authorization', token)
                 .send({ place: 'Something', tournaments: [2], playedAt: proposalDate + ' 01:40:00' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The season has already ended.');
                 });
         });
@@ -1659,7 +1659,7 @@ describe('proposal', () => {
                 .set('Authorization', token)
                 .send({ place: 'Something', tournaments: [2], playedAt: proposalDate + ' 01:40:00' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The season has already ended.');
                 });
         });
@@ -1675,7 +1675,7 @@ describe('proposal', () => {
                     playedAt: dayjs().add(2, 'day').format('YYYY-MM-DD 01:40:00'),
                 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The player is no longer available for matches.');
                 });
         });
@@ -1829,7 +1829,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, playedAt: 'wrong' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Invalid request');
                 });
         });
@@ -1841,7 +1841,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, challengerId: 'wrong' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Invalid request');
                 });
         });
@@ -1853,7 +1853,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, tournaments: [2] })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('It should be a doubles level.');
                 });
         });
@@ -1869,7 +1869,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, playedAt: proposalDate })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The date is out of season.');
                 });
         });
@@ -1881,7 +1881,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, challengerId: 11, challenger2Id: 11 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Player should not be duplicated.');
                 });
         });
@@ -1893,7 +1893,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, challengerId: 1 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Player is not in the tournament.');
                 });
         });
@@ -1907,7 +1907,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send(correctData)
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Player is not active.');
                 });
         });
@@ -1922,7 +1922,7 @@ describe('doubles proposal', () => {
                     acceptorId: 11,
                 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('There is no challenger.');
                 });
         });
@@ -1937,7 +1937,7 @@ describe('doubles proposal', () => {
                     challengerId: 13,
                 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You are supposed to be a challenger.');
                 });
         });
@@ -1976,7 +1976,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, acceptorId: 'wrong' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Invalid request');
                 });
         });
@@ -1988,7 +1988,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send(correctData)
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('It should be a doubles level.');
                 });
         });
@@ -2003,7 +2003,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send(correctData)
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The proposal is expired.');
                 });
         });
@@ -2017,7 +2017,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, challenger2Id: 13 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Open slots are already taken.');
                 });
         });
@@ -2029,7 +2029,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send(_omit(correctData, ['acceptorId']))
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You have to include at least one new player.');
                 });
         });
@@ -2041,7 +2041,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, acceptorId: 12, challenger2Id: 12 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You cannot include duplicated players.');
                 });
         });
@@ -2053,7 +2053,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, acceptorId: 11 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You cannot duplicate players.');
                 });
         });
@@ -2065,7 +2065,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, acceptorId: 1 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Some new players are from another tournament.');
                 });
         });
@@ -2079,7 +2079,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, acceptorId: 12 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Some new players are not active.');
                 });
         });
@@ -2093,7 +2093,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, acceptorId: 13, challenger2Id: 14 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You have to be one of the acceptors.');
                 });
         });
@@ -2127,7 +2127,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, reason: null })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Invalid request');
                 });
         });
@@ -2139,7 +2139,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send(correctData)
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The proposal does not exist.');
                 });
         });
@@ -2153,7 +2153,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send(correctData)
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The proposal does not exist.');
                 });
         });
@@ -2165,7 +2165,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send(correctData)
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You cannot remove a match with score.');
                 });
         });
@@ -2177,7 +2177,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send(correctData)
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('It should be a doubles level.');
                 });
         });
@@ -2189,7 +2189,7 @@ describe('doubles proposal', () => {
                 .set('Authorization', token)
                 .send(correctData)
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You cannot delete this proposal.');
                 });
         });
@@ -2232,7 +2232,7 @@ describe('doubles match proposal', () => {
                 .set('Authorization', token)
                 .send({ ...correctData, score: '5-5' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Invalid request');
                 });
         });
@@ -2245,7 +2245,7 @@ describe('doubles match proposal', () => {
                 .set('Authorization', token)
                 .send(correctData)
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The match does not exist.');
                 });
         });
@@ -2258,7 +2258,7 @@ describe('doubles match proposal', () => {
                 .set('Authorization', token)
                 .send(correctData)
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You are not the part of the match.');
                 });
         });
@@ -2274,7 +2274,7 @@ describe('doubles match proposal', () => {
                 .set('Authorization', token)
                 .send(correctData)
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('It is too late to change the score.');
                 });
         });
@@ -2312,7 +2312,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({})
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Invalid request');
                 });
         });
@@ -2324,7 +2324,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ tournamentId: 999, player1: 2, player2: 1 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The tournament is wrong.');
                 });
         });
@@ -2336,7 +2336,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ tournamentId: 2, player1: 2, player2: 1 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('There is no setup week for the teams.');
                 });
         });
@@ -2350,7 +2350,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ tournamentId: 2, player1: 2, player2: 1 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Some players are not eligible to play in Teams.');
                 });
         });
@@ -2365,7 +2365,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ tournamentId: 2, player1: 2, player2: 3 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Some players are playing in another team.');
                 });
         });
@@ -2380,7 +2380,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ tournamentId: 2, player1: 1, player2: 2 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You have to be a captain.');
                 });
         });
@@ -2395,7 +2395,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ tournamentId: 2, player1: 2, player2: 1, name: 999 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Name is required.');
                 });
         });
@@ -2426,7 +2426,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'joinAnyTeam' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Invalid request');
                 });
         });
@@ -2441,7 +2441,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'joinAnyTeam', tournamentId: 2 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You cannot join the Player Pool.');
                 });
         });
@@ -2457,7 +2457,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'joinAnyTeam', tournamentId: 2 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You have already sent join request.');
                 });
         });
@@ -2486,7 +2486,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'askToJoin' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The team is wrong.');
                 });
         });
@@ -2501,7 +2501,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'askToJoin' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You cannot send a join request.');
                 });
         });
@@ -2518,7 +2518,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'askToJoin' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You have already sent a join request to this team.');
                 });
         });
@@ -2547,7 +2547,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'updateTeam', player2: 'sss' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Invalid request');
                 });
         });
@@ -2562,7 +2562,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'updateTeam', player2: 1, player3: 2, name: 15 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The team is wrong.');
                 });
         });
@@ -2577,7 +2577,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'updateTeam', player2: 1, player3: 2, name: 15 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You are not a captain.');
                 });
         });
@@ -2592,7 +2592,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'updateTeam', player2: 4, player3: 6, name: 15 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Some players are not available to join.');
                 });
         });
@@ -2607,7 +2607,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'updateTeam', player2: 4, name: 999 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Name is required.');
                 });
         });
@@ -2636,7 +2636,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'disbandTeam', reason: 123 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Invalid request');
                 });
         });
@@ -2651,7 +2651,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'disbandTeam' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The team is wrong.');
                 });
         });
@@ -2666,7 +2666,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'disbandTeam' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You are not a captain.');
                 });
         });
@@ -2694,7 +2694,7 @@ describe('teams', () => {
                 .put('/api/teams/999')
                 .set('Authorization', token)
                 .send({ action: 'leaveTeam', reason: 123 })
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Invalid request');
                 });
         });
@@ -2708,7 +2708,7 @@ describe('teams', () => {
                 .put('/api/teams/999')
                 .set('Authorization', token)
                 .send({ action: 'leaveTeam' })
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The team is wrong.');
                 });
         });
@@ -2723,7 +2723,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'leaveTeam' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You cannot leave as a captain.');
                 });
         });
@@ -2738,7 +2738,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'leaveTeam' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You are not a member of the team.');
                 });
         });
@@ -2767,7 +2767,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'acceptMember', playerId: 1 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The team is wrong.');
                 });
         });
@@ -2782,7 +2782,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'acceptMember', playerId: 1 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You are not a captain.');
                 });
         });
@@ -2797,7 +2797,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'acceptMember', playerId: 999 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('This user is not available.');
                 });
         });
@@ -2827,7 +2827,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'deleteCandidate', playerId: 555 })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The user is wrong.');
                 });
         });
@@ -2856,7 +2856,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'invitePlayers', players: [1] })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The team is wrong.');
                 });
         });
@@ -2871,7 +2871,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'invitePlayers', players: [1] })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You are not a captain.');
                 });
         });
@@ -2886,7 +2886,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'invitePlayers', players: [4] })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Some players are not available to join.');
                 });
         });
@@ -2901,7 +2901,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'invitePlayers', players: [999] })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Some players are not available to join.');
                 });
         });
@@ -2916,7 +2916,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'invitePlayers', players: [1, 2, 3, 4] })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Just three players could be invited.');
                 });
         });
@@ -2936,7 +2936,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'invitePlayers', players: [1] })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You already invited some of these players.');
                 });
         });
@@ -2956,7 +2956,7 @@ describe('teams', () => {
                 .set('Authorization', token)
                 .send({ action: 'invitePlayers', players: [2] })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You already invited players today.');
                 });
         });
@@ -2978,7 +2978,7 @@ describe('calendars', () => {
             .expect(200)
             .expect('Content-Type', 'text/calendar; charset=utf-8')
             .expect('Content-Disposition', 'attachment; filename="calendar.ics"')
-            .expect(res => {
+            .expect((res) => {
                 expect(res.text).toContain('SUMMARY:Practice vs Ben Done');
                 expect(res.text).toContain('SUMMARY:Match vs Ben Done');
                 expect(res.text).toContain('LOCATION:Winston');
@@ -3029,7 +3029,7 @@ describe('messages', () => {
                 .set('Authorization', token)
                 .send({ recipientId: 'wrong' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('Invalid request');
                     expect(res.body.errors.message).toBeDefined();
                 });
@@ -3046,7 +3046,7 @@ describe('messages', () => {
                 .set('Authorization', token)
                 .send({ recipientId: 9999, message: 'Hello' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The user does not exist.');
                 });
         });
@@ -3058,7 +3058,7 @@ describe('messages', () => {
                 .set('Authorization', token)
                 .send({ recipientId: 1, message: 'Hello' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('The users are the same.');
                 });
         });
@@ -3070,7 +3070,7 @@ describe('messages', () => {
                 .set('Authorization', token)
                 .send({ recipientId: 2, message: 'Hello' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe(
                         'You are allowed to send messages only after playing at least 10 matches.'
                     );
@@ -3091,7 +3091,7 @@ describe('messages', () => {
                 .set('Authorization', token)
                 .send({ recipientId: 2, message: 'Hello' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You are allowed to send only 3 messages per week.');
                 });
         });
@@ -3106,7 +3106,7 @@ describe('messages', () => {
                 .set('Authorization', token)
                 .send({ recipientId: 2, message: 'Hello' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You can only send messages to players on your current ladders.');
                 });
         });
@@ -3121,7 +3121,7 @@ describe('messages', () => {
                 .set('Authorization', token)
                 .send({ recipientId: 2, message: 'Hello' })
                 .expect(422)
-                .expect(res => {
+                .expect((res) => {
                     expect(res.body.message).toBe('You can only send messages to players on your current ladders.');
                 });
         });
@@ -3178,7 +3178,7 @@ describe('Final tournament', () => {
         expect(email.html).toContain('Hello, #firstName#!');
         expect(email.html).not.toContain('<html');
 
-        await new Promise(resolve => setTimeout(resolve, 3000));
+        await new Promise((resolve) => setTimeout(resolve, 3000));
 
         await expectNumRecords('emails', { subject: "You're in the Semifinals of the Men 3.5 Final Tournament!" }, 4);
     }, 20000);
@@ -3188,7 +3188,7 @@ describe('cron jobs', () => {
     describe('runActions', () => {
         it('Should not send any reminders', async () => {
             await runActions(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(0);
         });
     });
@@ -3224,7 +3224,7 @@ describe('cron jobs', () => {
             await runQuery(`UPDATE players SET createdAt='${dateFourWeeksAgo}' WHERE id=16`);
 
             await runActions.remindForActivity(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
 
             expect(await getNumRecords('emails')).toBe(1);
             const record = await getRecord('emails', { recipientEmail: 'player9@gmail.com' });
@@ -3234,7 +3234,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending reminder once again
             await runActions.remindForActivity(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
     });
@@ -3246,7 +3246,7 @@ describe('cron jobs', () => {
             await overrideConfig({ minMatchesToPlanTournament: 1 });
 
             await runActions.remindForTournament(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
 
             expect(await getNumRecords('emails')).toBe(1);
             const record = await getRecord('emails', { id: 1 });
@@ -3256,7 +3256,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending reminder once again
             await runActions.remindForTournament(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
     });
@@ -3268,7 +3268,7 @@ describe('cron jobs', () => {
             await overrideConfig({ minMatchesToPlanTournament: 2 });
 
             await runActions.lastDayRemindForTournament(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
 
             expect(await getNumRecords('emails')).toBe(1);
             const record = await getRecord('emails', { id: 1 });
@@ -3280,7 +3280,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending reminder once again
             await runActions.lastDayRemindForTournament(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
 
@@ -3291,7 +3291,7 @@ describe('cron jobs', () => {
             await overrideConfig({ minMatchesToPlanTournament: 2 });
 
             await runActions.lastDayRemindForTournament(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
 
             expect(await getNumRecords('emails')).toBe(2);
             const record = await getRecord('emails', { recipientEmail: 'player2@gmail.com' });
@@ -3308,7 +3308,7 @@ describe('cron jobs', () => {
             await runQuery(`UPDATE seasons SET startDate='${dateDayAgo}' WHERE id=1`);
 
             await runActions.remindForFirstDay(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
 
             expect(await getNumRecords('emails')).toBe(1);
             const record = await getRecord('emails', { id: 1 });
@@ -3318,7 +3318,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending reminder once again
             await runActions.remindForFirstDay(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
     });
@@ -3330,7 +3330,7 @@ describe('cron jobs', () => {
             await runQuery(`UPDATE users SET isVerified=0 WHERE id=3`);
 
             await runActions.remindForChoosingLadder(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
 
             expect(await getNumRecords('emails')).toBe(1);
             const record = await getRecord('emails', { recipientEmail: 'playerDuplicated@gmail.com' });
@@ -3340,7 +3340,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending reminder twice
             await runActions.remindForChoosingLadder(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
     });
@@ -3366,7 +3366,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending summary twice
             await runActions.seasonIsOver(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 25000);
     });
@@ -3393,7 +3393,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending summary twice
             await runActions.joinNextSeason(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
 
@@ -3408,7 +3408,7 @@ describe('cron jobs', () => {
             await overrideConfig({ minMatchesToPay: 4 });
 
             await runActions.joinNextSeason(app);
-            await new Promise(resolve => setTimeout(resolve, 5000));
+            await new Promise((resolve) => setTimeout(resolve, 5000));
 
             const email1 = await expectRecordToExist('emails', {
                 subject: 'Rejoin the Raleigh Tennis Ladder for Free!',
@@ -3426,7 +3426,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending summary twice
             await runActions.joinNextSeason(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(2);
         }, 10000);
 
@@ -3463,7 +3463,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending email twice
             await runActions.remindForClaimingReward(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(2);
         }, 10000);
 
@@ -3497,7 +3497,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending email twice
             await runActions.remindForClaimingReward(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(2);
         }, 10000);
 
@@ -3512,7 +3512,7 @@ describe('cron jobs', () => {
                 recipientEmail: 'player1@gmail.com',
             });
 
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
 
@@ -3547,12 +3547,12 @@ describe('cron jobs', () => {
             );
             expect(email.html).toContain('$15 credit');
             expect(email.html).toContain('Champion Trophy');
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             await expectNumRecords('emails', { subject: 'Claim Your Reward!' }, 1);
 
             // Check that we are not sending email twice
             await runActions.remindForClaimingReward(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             await expectNumRecords('emails', { subject: 'Claim Your Reward!' }, 1);
         }, 10000);
     });
@@ -3580,7 +3580,7 @@ describe('cron jobs', () => {
 
             await runActions.sendFinalScheduleReminder(app);
 
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await new Promise((resolve) => setTimeout(resolve, 2000));
             expect(await getNumRecords('emails')).toBe(0);
         }, 10000);
     });
@@ -3618,7 +3618,7 @@ describe('cron jobs', () => {
 
             // Check that we are not issuing refund twice
             await refundForCanceledTournaments(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('payments')).toBe(2);
         }, 10000);
     });
@@ -3654,7 +3654,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending the email twice
             await remindAboutLastOpenSlot(app, { ignoreNightTime: true });
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
     });
@@ -3666,7 +3666,7 @@ describe('cron jobs', () => {
 
             await runActions.requestFeedbackForNoJoin(app);
 
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await new Promise((resolve) => setTimeout(resolve, 2000));
             expect(await getNumRecords('emails')).toBe(1);
 
             // Check that email notification is sent
@@ -3684,7 +3684,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending the email twice
             await runActions.requestFeedbackForNoJoin(app);
-            await new Promise(resolve => setTimeout(resolve, 2000));
+            await new Promise((resolve) => setTimeout(resolve, 2000));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
     });
@@ -3694,12 +3694,12 @@ describe('cron jobs', () => {
             const dateTwoDaysAgo = dayjs.tz().subtract(2, 'day').format('YYYY-MM-DD HH:mm:ss');
 
             await runActions.switchToPercentReferral(app);
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
             expect(await getNumRecords('emails')).toBe(0);
 
             await runQuery(`UPDATE seasons SET isFree=1`);
             await runActions.switchToPercentReferral(app);
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
             expect(await getNumRecords('emails')).toBe(0);
 
             await runQuery(`UPDATE config SET url="richmond"`);
@@ -3707,7 +3707,7 @@ describe('cron jobs', () => {
             await runQuery(`UPDATE users SET createdAt='${dateTwoDaysAgo}', refPercent=55 WHERE id=2`);
             await runActions.switchToPercentReferral(app);
 
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
             expect(await getNumRecords('emails')).toBe(1);
 
             // Check that email notification is sent
@@ -3723,7 +3723,7 @@ describe('cron jobs', () => {
 
             // check that we are not sending twice
             await runActions.switchToPercentReferral(app);
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
             expect(await getNumRecords('emails')).toBe(1);
 
             await expectRecordToExist('users', { id: 1 }, { refPercent: 30, refYears: 3 });
@@ -3758,7 +3758,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending the email twice
             await runActions.sendMissingTeammateReminder(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 20000);
     });
@@ -3782,7 +3782,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending the email twice
             await runActions.sendMissingTeammateReminder(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         });
 
@@ -3804,7 +3804,7 @@ describe('cron jobs', () => {
 
             // Check that we are not sending the email twice
             await runActions.sendMissingTeammateReminder(app);
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         });
     });

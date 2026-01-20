@@ -53,11 +53,11 @@ import { Squircle } from 'corner-smoothing';
 import useBreakpoints from '@/utils/useBreakpoints';
 import style from './style.module.scss';
 
-const Player = props => {
+const Player = (props) => {
     const slug = props.match.params.slug;
 
     const dispatch = useDispatch();
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const config = useConfig();
     const isAdmin = hasAnyRole(currentUser, ['admin']);
     const size = useBreakpoints();
@@ -120,7 +120,7 @@ const Player = props => {
                 {
                     value: 'comeFrom',
                     label: 'Came from:',
-                    getValue: obj => {
+                    getValue: (obj) => {
                         if (!obj.comeFrom) {
                             return null;
                         }
@@ -130,7 +130,7 @@ const Player = props => {
                         }
 
                         return (
-                            (comeFromOptions.find(item => item.value === obj.comeFrom) || {}).label +
+                            (comeFromOptions.find((item) => item.value === obj.comeFrom) || {}).label +
                             (obj.comeFromOther ? ` (${obj.comeFromOther})` : '')
                         );
                     },
@@ -138,17 +138,17 @@ const Player = props => {
                 {
                     value: 'createdAt',
                     label: 'Registered at:',
-                    getValue: obj => obj.createdAt && formatCustom(obj.createdAt, 'MM/DD/YYYY, h:mm A'),
+                    getValue: (obj) => obj.createdAt && formatCustom(obj.createdAt, 'MM/DD/YYYY, h:mm A'),
                 },
                 {
                     value: 'loggedAt',
                     label: 'Last logged at:',
-                    getValue: obj => obj.loggedAt && formatCustom(obj.loggedAt, 'MM/DD/YYYY, h:mm A'),
+                    getValue: (obj) => obj.loggedAt && formatCustom(obj.loggedAt, 'MM/DD/YYYY, h:mm A'),
                 },
                 {
                     value: 'emails',
                     label: 'More:',
-                    getValue: obj => (
+                    getValue: (obj) => (
                         <div className="d-flex flex-wrap" style={{ gap: '0.5rem' }}>
                             <Modal
                                 title={
@@ -228,15 +228,15 @@ const Player = props => {
     ];
 
     const visibleSettings = settings
-        .map(group => ({
+        .map((group) => ({
             ...group,
             list: group.list
-                .map(item => {
+                .map((item) => {
                     let userValue;
                     if (item.getValue) {
                         userValue = item.getValue(user);
                     } else if (item.options) {
-                        const option = item.options.find(o => o.value === user[item.value]);
+                        const option = item.options.find((o) => o.value === user[item.value]);
                         if (option) {
                             userValue = option.label;
                         }
@@ -246,9 +246,9 @@ const Player = props => {
 
                     return { ...item, userValue };
                 })
-                .filter(item => item.userValue),
+                .filter((item) => item.userValue),
         }))
-        .filter(group => {
+        .filter((group) => {
             if (group.list.length === 0) {
                 return false;
             }
@@ -375,11 +375,11 @@ const Player = props => {
                             )}
                         </div>
                     </div>
-                    {visibleSettings.map(group => (
+                    {visibleSettings.map((group) => (
                         <Fragment key={group.code}>
                             <h3>{group.title}</h3>
                             <div className={style.settings}>
-                                {group.list.map(item => (
+                                {group.list.map((item) => (
                                     <Fragment key={item.value}>
                                         <div>{item.label}</div>
                                         <div>{item.userValue}</div>
@@ -412,7 +412,7 @@ const Player = props => {
                                 renderBody={({ hide }) => (
                                     <ComplaintForm
                                         user={user}
-                                        onSubmit={async values => {
+                                        onSubmit={async (values) => {
                                             await axios.post('/api/complaints', values);
                                             await dispatch(loadCurrentUser());
                                             notification({
@@ -437,7 +437,7 @@ const Player = props => {
                                 renderBody={({ hide }) => (
                                     <MessageForm
                                         user={user}
-                                        onSubmit={async values => {
+                                        onSubmit={async (values) => {
                                             hide();
                                             notification({
                                                 inModal: true,
@@ -532,7 +532,7 @@ const Player = props => {
 
                 {user.stat.length > 0 && (
                     <div className={style.levels}>
-                        {user.stat.map(obj => (
+                        {user.stat.map((obj) => (
                             <Card key={obj.levelId}>
                                 <LevelStat user={user} data={obj} />
                             </Card>
@@ -594,7 +594,7 @@ const Player = props => {
                                                 renderTrigger={({ show }) => (
                                                     <a
                                                         href=""
-                                                        onClick={e => {
+                                                        onClick={(e) => {
                                                             e.preventDefault();
                                                             show();
                                                         }}

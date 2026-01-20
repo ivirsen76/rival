@@ -97,7 +97,7 @@ const getMatchInfo = async ({ app, currentUser, matchId, match }) => {
             });
 
             teamPlayerIds.push(captainId);
-            teamPlayerIds.push(...teammates.map(item => item.id));
+            teamPlayerIds.push(...teammates.map((item) => item.id));
         }
     }
 
@@ -106,7 +106,7 @@ const getMatchInfo = async ({ app, currentUser, matchId, match }) => {
         { replacements: { tournamentId: info.tournamentId } }
     );
     const teamNames = allPlayers
-        .filter(item => item.teamName)
+        .filter((item) => item.teamName)
         .reduce((obj, item) => {
             obj[item.id] = item.teamName;
             return obj;
@@ -136,30 +136,30 @@ const getMatchInfo = async ({ app, currentUser, matchId, match }) => {
             user.teamName = teamName;
         }
     }
-    const emails = users.map(user => ({
+    const emails = users.map((user) => ({
         id: user.id,
         ...getEmailContact(user),
     }));
-    const emailsWithoutCurrentUser = currentUser ? emails.filter(user => user.id !== currentUser.id) : emails;
+    const emailsWithoutCurrentUser = currentUser ? emails.filter((user) => user.id !== currentUser.id) : emails;
 
-    if (users.some(user => user.tournamentId !== info.tournamentId)) {
+    if (users.some((user) => user.tournamentId !== info.tournamentId)) {
         throw new Unprocessable('Players are not from the same ladder.');
     }
 
-    const challengers = users.filter(user => challengerPlayerIds.includes(user.playerId));
-    const acceptors = users.filter(user => acceptorPlayerIds.includes(user.playerId));
+    const challengers = users.filter((user) => challengerPlayerIds.includes(user.playerId));
+    const acceptors = users.filter((user) => acceptorPlayerIds.includes(user.playerId));
 
-    const challengerEmails = challengers.map(user => ({ id: user.id, ...getEmailContact(user) }));
-    const acceptorEmails = acceptors.map(user => ({ id: user.id, ...getEmailContact(user) }));
+    const challengerEmails = challengers.map((user) => ({ id: user.id, ...getEmailContact(user) }));
+    const acceptorEmails = acceptors.map((user) => ({ id: user.id, ...getEmailContact(user) }));
 
     // populate partnerIds for doubles
     if (challengerPlayerIds.length > 1) {
-        challengers.forEach(user => {
+        challengers.forEach((user) => {
             user.partnerIds = challengerPlayerIds;
         });
     }
     if (acceptorPlayerIds.length > 1) {
-        acceptors.forEach(user => {
+        acceptors.forEach((user) => {
             user.partnerIds = acceptorPlayerIds;
         });
     }
@@ -199,7 +199,7 @@ const getMatchInfo = async ({ app, currentUser, matchId, match }) => {
     const sameMatchIds = (match.same || '')
         .split(',')
         .map(Number)
-        .filter(id => id && id !== matchId);
+        .filter((id) => id && id !== matchId);
 
     const hasPlayers = (() => {
         if (!match.challengerId || !match.acceptorId) {
@@ -285,8 +285,8 @@ const getMatchInfo = async ({ app, currentUser, matchId, match }) => {
         winnerName: match.winner === match.challengerId ? challengerName : acceptorName,
         looserName: match.winner === match.acceptorId ? challengerName : acceptorName,
         winnerScore: match.winner === match.challengerId || !match.score ? match.score : reverseScore(match.score),
-        isChallengerActive: challengers.every(user => user.isActive),
-        isAcceptorActive: acceptors.every(user => user.isActive),
+        isChallengerActive: challengers.every((user) => user.isActive),
+        isAcceptorActive: acceptors.every((user) => user.isActive),
         formattedPlayedAt,
         sameMatchIds,
         imageProps,

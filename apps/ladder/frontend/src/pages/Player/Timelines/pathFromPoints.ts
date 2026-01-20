@@ -61,7 +61,7 @@ const bezierCommand = (point, i, a) => {
 // Render the svg <path> element
 // I:  - points (array): points coordinates
 // O:  - (string): a Svg <path> element
-export default points => {
+export default (points) => {
     // build the d attributes by looping over the points
     const d = points.reduce(
         (acc, point, i, a) => (i === 0 ? `M ${point[0]},${point[1]}` : `${acc} ${bezierCommand(point, i, a)}`),

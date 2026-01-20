@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import dayjs from '@/utils/dayjs';
 import style from './style.module.scss';
 
-const Timeline = props => {
+const Timeline = (props) => {
     const { tournament } = props;
     const startDate = dayjs(tournament.endDate).add(12, 'hour');
 

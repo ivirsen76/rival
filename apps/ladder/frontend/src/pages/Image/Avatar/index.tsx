@@ -2,7 +2,7 @@ import AvatarComponent from '@/components/avataaars';
 import UserIcon from '@/assets/user.svg?react';
 import style from './style.module.scss';
 
-const Avatar = props => {
+const Avatar = (props) => {
     const search = window.location.search;
 
     if (!search) {

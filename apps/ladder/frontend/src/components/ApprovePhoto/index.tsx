@@ -5,7 +5,7 @@ import notification from '@/components/notification';
 import axios from '@/utils/axios';
 import style from './style.module.scss';
 
-const ApprovePhoto = props => {
+const ApprovePhoto = (props) => {
     const { payload } = props;
     const [loading, setLoading] = useState(true);
 

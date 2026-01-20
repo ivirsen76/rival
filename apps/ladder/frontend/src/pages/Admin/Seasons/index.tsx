@@ -11,12 +11,12 @@ import { useQueryClient } from 'react-query';
 import dayjs from '@/utils/dayjs';
 import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
 
-const Seasons = props => {
+const Seasons = (props) => {
     const queryClient = useQueryClient();
     const { settings } = useSettings();
     const { seasons } = settings;
 
-    const addSeason = async values => {
+    const addSeason = async (values) => {
         await axios.post('/api/seasons', values);
         await queryClient.invalidateQueries();
     };
@@ -31,10 +31,10 @@ const Seasons = props => {
         await queryClient.invalidateQueries();
     };
 
-    const format = date => dayjs.tz(date).format('MMM D');
+    const format = (date) => dayjs.tz(date).format('MMM D');
     const currentDate = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
 
-    const getStatus = season => {
+    const getStatus = (season) => {
         if (season.endDate < currentDate) {
             return <span className="badge badge-secondary">Finished</span>;
         }
@@ -58,8 +58,8 @@ const Seasons = props => {
                 )}
                 renderBody={({ hide }) => (
                     <SeasonForm
-                        initialValues={lastSeason ? { levels: lastSeason.levels.map(level => level.id) } : {}}
-                        onSubmit={async values => {
+                        initialValues={lastSeason ? { levels: lastSeason.levels.map((level) => level.id) } : {}}
+                        onSubmit={async (values) => {
                             await addSeason(values);
                             hide();
                             notification({
@@ -81,7 +81,7 @@ const Seasons = props => {
                     </tr>
                 </thead>
                 <tbody>
-                    {seasons.map(season => (
+                    {seasons.map((season) => (
                         <tr key={season.id} data-season-id={season.id}>
                             <td className="fw-semibold text-nowrap">
                                 {currentDate < season.endDate ? (
@@ -90,7 +90,7 @@ const Seasons = props => {
                                         renderTrigger={({ show }) => (
                                             <a
                                                 href=""
-                                                onClick={e => {
+                                                onClick={(e) => {
                                                     e.preventDefault();
                                                     show();
                                                 }}
@@ -110,10 +110,10 @@ const Seasons = props => {
                                                             true
                                                         )
                                                     ),
-                                                    levels: season.levels.map(level => level.id),
+                                                    levels: season.levels.map((level) => level.id),
                                                 }}
                                                 isCurrentSeason={currentDate > season.startDate}
-                                                onSubmit={async values => {
+                                                onSubmit={async (values) => {
                                                     await updateSeason(season.id, values);
                                                     hide();
                                                     notification({
@@ -152,7 +152,7 @@ const Seasons = props => {
                                         )}
                                         renderBody={({ hide }) => (
                                             <CloseSeasonForm
-                                                onSubmit={async values => {
+                                                onSubmit={async (values) => {
                                                     await closeSeason(season.id, values);
                                                     hide();
                                                     notification({
@@ -165,7 +165,7 @@ const Seasons = props => {
                                     />
                                 )}
                             </td>
-                            <td className="text-muted">{season.levels.map(level => level.name).join(', ')}</td>
+                            <td className="text-muted">{season.levels.map((level) => level.name).join(', ')}</td>
                         </tr>
                     ))}
                 </tbody>

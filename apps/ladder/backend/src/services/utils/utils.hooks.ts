@@ -36,7 +36,7 @@ import rabbits from './rabbits.json';
 import { faker } from '@faker-js/faker';
 import writeXlsxFile from 'write-excel-file/node';
 
-const generateBadges = options => async context => {
+const generateBadges = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -50,13 +50,13 @@ const generateBadges = options => async context => {
     return context;
 };
 
-const generateRabbits = options => async context => {
+const generateRabbits = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
-    const doIt = percent => Math.random() * 100 < percent;
+    const doIt = (percent) => Math.random() * 100 < percent;
 
-    const getRandomItemFromArray = arr => {
+    const getRandomItemFromArray = (arr) => {
         const max = arr[arr.length - 1][1];
         const num = Math.random() * max;
 
@@ -111,7 +111,7 @@ const generateRabbits = options => async context => {
         const relatedDoublesTournament = isDoubles
             ? undefined
             : tournaments.find(
-                  item =>
+                  (item) =>
                       item.levelType === 'doubles' &&
                       item.levelName.includes(isWomen ? 'Women' : 'Men') &&
                       item.levelName.includes(nums)
@@ -186,7 +186,7 @@ const generateRabbits = options => async context => {
     return context;
 };
 
-const publishUpdates = options => async context => {
+const publishUpdates = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -199,7 +199,7 @@ const publishUpdates = options => async context => {
     return context;
 };
 
-const runActionsHook = options => async context => {
+const runActionsHook = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -210,7 +210,7 @@ const runActionsHook = options => async context => {
     return context;
 };
 
-const getGlobalStats = options => async context => {
+const getGlobalStats = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -223,7 +223,7 @@ const getGlobalStats = options => async context => {
     const data = {};
     const currentDate = dayjs();
 
-    const actualData = response.data.data.filter(city => city.attributes.stats && city.attributes.published);
+    const actualData = response.data.data.filter((city) => city.attributes.stats && city.attributes.published);
 
     data.championships = 0;
     data.trophies = 0;
@@ -239,7 +239,7 @@ const getGlobalStats = options => async context => {
         .reduce((arr, city) => {
             if (city.attributes.stats.finalists) {
                 arr.push(
-                    ...city.attributes.stats.finalists.map(item => ({
+                    ...city.attributes.stats.finalists.map((item) => ({
                         ...item,
                         state: city.attributes.state.data.attributes.short,
                     }))
@@ -337,7 +337,7 @@ const getGlobalStats = options => async context => {
     return context;
 };
 
-const syncGlobalState = options => async context => {
+const syncGlobalState = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -349,7 +349,7 @@ const syncGlobalState = options => async context => {
     return context;
 };
 
-const getGlobalPhotos = options => async context => {
+const getGlobalPhotos = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -362,7 +362,7 @@ const getGlobalPhotos = options => async context => {
     context.result = {
         status: 'success',
         data: response.data.data
-            .map(item => ({
+            .map((item) => ({
                 id: item.id,
                 ..._omit(item.attributes, ['city']),
                 citySlug: item.attributes.city.data.attributes.slug,
@@ -373,7 +373,7 @@ const getGlobalPhotos = options => async context => {
     return context;
 };
 
-const getActivityStats = options => async context => {
+const getActivityStats = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const dateYearAgo = dayjs.tz().subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
@@ -417,7 +417,7 @@ const getActivityStats = options => async context => {
     return context;
 };
 
-const getMotivationStats = options => async context => {
+const getMotivationStats = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const [[row]] = await sequelize.query(`SELECT count(*) AS cnt FROM users WHERE isVerified=1`);
@@ -441,7 +441,7 @@ const getMotivationStats = options => async context => {
     return context;
 };
 
-const addLog = options => async context => {
+const addLog = (options) => async (context) => {
     // Validate
     {
         const schema = yup.object().shape({
@@ -481,7 +481,7 @@ const addLog = options => async context => {
     return context;
 };
 
-const requestCoachLesson = options => async context => {
+const requestCoachLesson = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     // Validate
@@ -530,16 +530,16 @@ const requestCoachLesson = options => async context => {
     return context;
 };
 
-const getVisualTestingResult = options => async context => {
+const getVisualTestingResult = (options) => async (context) => {
     // todo: restrict for production use somehow
 
     const screenshotFolder = path.resolve(__dirname, '..', '..', '..', '..', '..', 'screenshots');
 
-    const getFolderFiles = folder => {
-        return fs.readdirSync(folder).filter(file => /^vrt-/.test(file));
+    const getFolderFiles = (folder) => {
+        return fs.readdirSync(folder).filter((file) => /^vrt-/.test(file));
     };
 
-    const getSizes = async files => {
+    const getSizes = async (files) => {
         const result = {};
 
         for (const file of files) {
@@ -585,7 +585,7 @@ const getVisualTestingResult = options => async context => {
     return context;
 };
 
-const acceptVisualChanges = options => async context => {
+const acceptVisualChanges = (options) => async (context) => {
     // todo: restrict for production use somehow
 
     // Validate
@@ -629,7 +629,7 @@ const acceptVisualChanges = options => async context => {
     return context;
 };
 
-const getHealthInfo = options => async context => {
+const getHealthInfo = (options) => async (context) => {
     const health = {
         weather: true,
     };
@@ -665,7 +665,7 @@ const getHealthInfo = options => async context => {
     return context;
 };
 
-const getCustomInfo = options => async context => {
+const getCustomInfo = (options) => async (context) => {
     const code = context.id;
 
     if (code === 'health') {
@@ -679,7 +679,7 @@ const getCustomInfo = options => async context => {
     }
 };
 
-const recalculateElo = options => async context => {
+const recalculateElo = (options) => async (context) => {
     await calculateElo();
 
     if (!context.result) {
@@ -687,7 +687,7 @@ const recalculateElo = options => async context => {
     }
 };
 
-const getExcelFile = options => async context => {
+const getExcelFile = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -697,12 +697,12 @@ const getExcelFile = options => async context => {
         headers: { Authorization: `Bearer ${TL_STORE_TOKEN}` },
     });
 
-    const data = response.data.data.filter(city => city.attributes.stats && city.attributes.published);
+    const data = response.data.data.filter((city) => city.attributes.stats && city.attributes.published);
 
     // Users
     const userRows = data
         .reduce((arr, item) => {
-            (item.attributes.stats.users || []).forEach(user => {
+            (item.attributes.stats.users || []).forEach((user) => {
                 arr.push({ city: item.attributes.name, ...user });
             });
 
@@ -712,14 +712,14 @@ const getExcelFile = options => async context => {
     const userFirstColumns = ['city', 'name'];
     const userHeader = [
         ...userFirstColumns,
-        ...Object.keys(userRows[0]).filter(item => !userFirstColumns.includes(item)),
-    ].map(item => ({ value: item }));
-    const users = [userHeader, ...userRows.map(row => userHeader.map(column => ({ value: row[column.value] })))];
+        ...Object.keys(userRows[0]).filter((item) => !userFirstColumns.includes(item)),
+    ].map((item) => ({ value: item }));
+    const users = [userHeader, ...userRows.map((row) => userHeader.map((column) => ({ value: row[column.value] })))];
 
     // Complaints
     const complaintRows = data
         .reduce((arr, item) => {
-            (item.attributes.stats.complaints || []).forEach(complaint => {
+            (item.attributes.stats.complaints || []).forEach((complaint) => {
                 arr.push({ city: item.attributes.name, ...complaint });
             });
 
@@ -729,11 +729,11 @@ const getExcelFile = options => async context => {
     const complaintFirstColumns = ['city', 'complainer', 'complainee', 'createdAt'];
     const complaintHeader = [
         ...complaintFirstColumns,
-        ...Object.keys(complaintRows[0]).filter(item => !complaintFirstColumns.includes(item)),
-    ].map(item => ({ value: item }));
+        ...Object.keys(complaintRows[0]).filter((item) => !complaintFirstColumns.includes(item)),
+    ].map((item) => ({ value: item }));
     const complaints = [
         complaintHeader,
-        ...complaintRows.map(row => complaintHeader.map(column => ({ value: row[column.value] }))),
+        ...complaintRows.map((row) => complaintHeader.map((column) => ({ value: row[column.value] }))),
     ];
 
     const content = await writeXlsxFile([users, complaints], {
@@ -753,7 +753,7 @@ const getExcelFile = options => async context => {
     };
 };
 
-const generatePartnerLink = options => async context => {
+const generatePartnerLink = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -774,7 +774,7 @@ const generatePartnerLink = options => async context => {
     };
 };
 
-const loginAsPlayer = options => async context => {
+const loginAsPlayer = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -812,7 +812,7 @@ const loginAsPlayer = options => async context => {
     };
 };
 
-const uploadRosters = options => async context => {
+const uploadRosters = (options) => async (context) => {
     const { TL_SECURE_KEY } = process.env;
     if (!TL_SECURE_KEY) {
         throw new Error('The secure key is missing');
@@ -861,7 +861,7 @@ const uploadRosters = options => async context => {
     context.result = { status: 'success', finished, failed };
 };
 
-const uploadCandidates = options => async context => {
+const uploadCandidates = (options) => async (context) => {
     const { TL_SECURE_KEY } = process.env;
     if (!TL_SECURE_KEY) {
         throw new Error('The secure key is missing');
@@ -910,7 +910,7 @@ const uploadCandidates = options => async context => {
                 `SELECT rosterId FROM candidateroster WHERE candidateId=:candidateId`,
                 { replacements: { candidateId } }
             );
-            const rosterIds = new Set(rosters.map(item => item.rosterId));
+            const rosterIds = new Set(rosters.map((item) => item.rosterId));
 
             for (const rosterId of player.rosters) {
                 if (rosterIds.has(rosterId)) {
@@ -964,7 +964,7 @@ const uploadCandidates = options => async context => {
     context.result = { status: 'success', finished, failed };
 };
 
-const processRostersHook = options => async context => {
+const processRostersHook = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -975,7 +975,7 @@ const processRostersHook = options => async context => {
     return context;
 };
 
-const sendOneRosterMessage = options => async context => {
+const sendOneRosterMessage = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -987,7 +987,7 @@ const sendOneRosterMessage = options => async context => {
     return context;
 };
 
-const getTrackingStats = options => async context => {
+const getTrackingStats = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -1028,7 +1028,7 @@ const getTrackingStats = options => async context => {
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

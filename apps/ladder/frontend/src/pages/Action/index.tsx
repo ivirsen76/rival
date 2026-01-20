@@ -22,7 +22,7 @@ const availableActions = {
     registerPartner: { component: RegisterPartner },
 };
 
-const Action = props => {
+const Action = (props) => {
     const { payload } = props.match.params;
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();

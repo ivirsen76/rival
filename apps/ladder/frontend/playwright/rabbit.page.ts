@@ -28,6 +28,6 @@ test("Check that we don't send any messages to rabbits", async ({ page, common, 
     await expect(common.modal).toContainText('Your message has been sent successfully.');
 
     // Check that email is not sent
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     expect(await getNumRecords('emails')).toBe(0);
 });

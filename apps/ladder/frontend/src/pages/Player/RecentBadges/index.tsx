@@ -10,16 +10,16 @@ import style from './style.module.scss';
 
 const SHOW_BADGES = 5;
 
-const RecentBadges = props => {
+const RecentBadges = (props) => {
     const { user } = props;
     const { stats, achievedBadges } = user.badges;
 
     const recentBadges = useMemo(() => {
-        const badgesSet = new Set(achievedBadges.slice(0, SHOW_BADGES).map(item => item.code));
+        const badgesSet = new Set(achievedBadges.slice(0, SHOW_BADGES).map((item) => item.code));
 
         const result = {};
 
-        allBadges.oneTime.forEach(item => {
+        allBadges.oneTime.forEach((item) => {
             if (!badgesSet.has(item.code)) {
                 return;
             }
@@ -32,7 +32,7 @@ const RecentBadges = props => {
             };
         });
 
-        allBadges.series.forEach(item => {
+        allBadges.series.forEach((item) => {
             const state = item.getState({ stats });
 
             for (const value of item.levels) {
@@ -52,7 +52,7 @@ const RecentBadges = props => {
         });
 
         for (const level of Object.values(stats.levels)) {
-            allBadges.levels.forEach(item => {
+            allBadges.levels.forEach((item) => {
                 const state = item.getState({ stats: level });
 
                 for (const value of item.levels) {
@@ -72,7 +72,7 @@ const RecentBadges = props => {
             });
         }
 
-        return achievedBadges.slice(0, SHOW_BADGES).map(item => ({
+        return achievedBadges.slice(0, SHOW_BADGES).map((item) => ({
             ...item,
             ...result[item.code],
         }));
@@ -91,7 +91,7 @@ const RecentBadges = props => {
                 <div className={style.trigger} onClick={show} data-recent-badges>
                     <Statbox>
                         <div className={style.wrapper}>
-                            {recentBadges.map(item => (
+                            {recentBadges.map((item) => (
                                 <div className={style.badge} key={item.code}>
                                     <div className={style.date} data-playwright-placeholder="short">
                                         {formatDate(item.achievedAt)}

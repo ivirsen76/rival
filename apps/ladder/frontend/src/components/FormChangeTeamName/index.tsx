@@ -5,14 +5,14 @@ import axios from '@/utils/axios';
 import TeamNamePicker, { getValidateTeamName } from '@/components/formik/TeamNamePicker';
 import useConfig from '@/utils/useConfig';
 
-const FormChangeTeamName = props => {
+const FormChangeTeamName = (props) => {
     const { playerId, tournament, initialValues, onSubmit } = props;
     const config = useConfig();
 
     return (
         <Formik
             initialValues={initialValues}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await axios.put(`/api/players/${playerId}`, {
                     action: 'changeTeamName',
                     teamName: values.teamName,

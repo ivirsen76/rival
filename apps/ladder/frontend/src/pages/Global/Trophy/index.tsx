@@ -29,12 +29,12 @@ function saveFile(content, filename) {
     URL.revokeObjectURL(link.href);
 }
 
-const TrophyReport = props => {
+const TrophyReport = (props) => {
     const { selectedRows, data } = props;
 
     const generateSvg = () => {
         const rows = data
-            .filter(row => selectedRows.includes(row.id))
+            .filter((row) => selectedRows.includes(row.id))
             .reduce((arr, item) => {
                 if (item.result) {
                     arr.push(item);
@@ -77,8 +77,8 @@ const TrophyReport = props => {
                 const translateX = PLATE_WIDTH * (index % 5);
                 const translateY = PLATE_HEIGHT * Math.floor(index / 5);
 
-                const getX = x => x + translateX;
-                const getY = y => y + translateY;
+                const getX = (x) => x + translateX;
+                const getY = (y) => y + translateY;
 
                 const nameLength = getRelativeStringLength(row.name);
                 const nameFontSize = Math.floor(Math.min((NAME_FONT_SIZE * 17) / nameLength, NAME_FONT_SIZE));
@@ -163,11 +163,11 @@ TrophyReport.propTypes = {
     data: PropTypes.array,
 };
 
-const EmailCopy = props => {
+const EmailCopy = (props) => {
     const { selectedRows, data } = props;
 
     const copyEmails = () => {
-        const emails = data.filter(row => selectedRows.includes(row.id)).map(row => row.email);
+        const emails = data.filter((row) => selectedRows.includes(row.id)).map((row) => row.email);
         copy(emails.join('; '));
         notification({
             header: 'Success',
@@ -191,7 +191,7 @@ EmailCopy.propTypes = {
     data: PropTypes.array,
 };
 
-const UspsSpreadsheet = props => {
+const UspsSpreadsheet = (props) => {
     const { selectedRows, data } = props;
 
     const downloadSpreadsheet = () => {
@@ -211,9 +211,9 @@ const UspsSpreadsheet = props => {
         }
 
         const rows = data
-            .filter(row => row.address && row.address.length > 10 && selectedRows.includes(row.id))
-            .map(row => {
-                const addressParts = row.address.split(',').map(item => item.trim());
+            .filter((row) => row.address && row.address.length > 10 && selectedRows.includes(row.id))
+            .map((row) => {
+                const addressParts = row.address.split(',').map((item) => item.trim());
                 const [citySlug, playerId] = row.id.split('_');
                 const orderId = `${cityToNumber(citySlug)}${playerId}`;
 
@@ -235,8 +235,8 @@ const UspsSpreadsheet = props => {
                     Comment: !row.addressVerification
                         ? 'Address is not verified.'
                         : row.addressVerification.confidence !== 1
-                        ? `Confidence: ${row.addressVerification.confidence}. ${row.addressVerification.result}`
-                        : '',
+                          ? `Confidence: ${row.addressVerification.confidence}. ${row.addressVerification.result}`
+                          : '',
                     Email: row.email,
                 };
             });
@@ -268,7 +268,7 @@ UspsSpreadsheet.propTypes = {
     data: PropTypes.array,
 };
 
-const Global = props => {
+const Global = (props) => {
     const { data, isLoading, isSuccess } = useQuery(
         `global`,
         async () => {

@@ -24,10 +24,10 @@ const decisionOptions = [
     // { value: 'foreverBan', label: 'Ban user forever' },
 ];
 
-const FormMerge = props => {
+const FormMerge = (props) => {
     const { duplicates, userIdTo, userIdFrom, hide } = props;
-    const userTo = duplicates.find(item => item.id === userIdTo);
-    const userFrom = duplicates.find(item => item.id === userIdFrom);
+    const userTo = duplicates.find((item) => item.id === userIdTo);
+    const userFrom = duplicates.find((item) => item.id === userIdFrom);
 
     const cheatingAttempts = userTo.cheatingAttempts + userFrom.cheatingAttempts;
     const initialDecision = (() => {
@@ -41,10 +41,10 @@ const FormMerge = props => {
             return 'nothing';
         }
 
-        return decisionOptions.find(item => totalCheatingAttempts <= item.maxCheatingAttempts).value;
+        return decisionOptions.find((item) => totalCheatingAttempts <= item.maxCheatingAttempts).value;
     })();
 
-    const handleSubmit = async values => {
+    const handleSubmit = async (values) => {
         await axios.put('/api/users/0', { action: 'mergeUsers', userIdTo, userIdFrom, ...values });
         await props.onSubmit(values);
 

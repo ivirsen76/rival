@@ -14,7 +14,7 @@ import VerifyEmail from '@/components/VerifyEmail';
 import EmailIcon from '@rival/packages/metronic/icons/duotone/Communication/Mail-at.svg?react';
 import axios from '@/utils/axios';
 
-const Player = props => {
+const Player = (props) => {
     const { settings, updateSettings, onSubmit } = props;
 
     const dispatch = useDispatch();
@@ -36,7 +36,7 @@ const Player = props => {
             {settings.step === 'login' && (
                 <Formik
                     initialValues={getLoginInitialValues()}
-                    onSubmit={async values => {
+                    onSubmit={async (values) => {
                         await dispatch(authenticate(values.email, values.password));
                         onSubmit();
                     }}
@@ -50,7 +50,7 @@ const Player = props => {
                                     <a
                                         href=""
                                         className="link-primary fw-bold"
-                                        onClick={e => {
+                                        onClick={(e) => {
                                             e.preventDefault();
                                             updateSettings({ step: 'new' });
                                         }}
@@ -82,7 +82,7 @@ const Player = props => {
             )}
             {settings.step === 'new' && (
                 <Register
-                    onSubmit={async values => {
+                    onSubmit={async (values) => {
                         await axios.post('/api/users', values);
 
                         notification({

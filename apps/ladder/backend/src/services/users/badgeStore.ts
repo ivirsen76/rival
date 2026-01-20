@@ -85,10 +85,10 @@ const initialState = {
     users: {},
 };
 
-const applyBadges = user => {
+const applyBadges = (user) => {
     let isNew = false;
 
-    const addBadge = code => {
+    const addBadge = (code) => {
         if (user.badges.has(code)) {
             return;
         }
@@ -191,7 +191,7 @@ export const reducer = (state = initialState, action) => {
             const isFast4 = match.matchFormat === 2;
             const isScoreCorrect = isFast4 ? isFastScoreCorrect : isFullScoreCorrect;
 
-            const processUser = userId => {
+            const processUser = (userId) => {
                 if (!userId) {
                     return;
                 }
@@ -369,7 +369,7 @@ export const reducer = (state = initialState, action) => {
                     }
 
                     if (isCorrect) {
-                        const sets = match.score.split(' ').map(item => {
+                        const sets = match.score.split(' ').map((item) => {
                             const games = item.split('-').map(Number);
                             return games[0] - games[1];
                         });
@@ -429,7 +429,7 @@ export const reducer = (state = initialState, action) => {
 
                             // remove from candidates
                             stats.payload.rivalries.candidates = stats.payload.rivalries.candidates.filter(
-                                id => id !== opponentUserId
+                                (id) => id !== opponentUserId
                             );
 
                             stats.payload.rivalries.recent.unshift({ opponentUserId, date: match.playedAt });

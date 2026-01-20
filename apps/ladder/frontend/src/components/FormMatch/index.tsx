@@ -42,7 +42,7 @@ const matchFormatOptions = [
     { value: 2, label: 'Fast4' },
 ];
 
-export const validate = values => {
+export const validate = (values) => {
     const errors = {};
 
     const score = values.score.slice(0, values.currentSetNumber);
@@ -57,7 +57,7 @@ export const validate = values => {
     }
 
     if (values.wonByInjury) {
-        const scoreStr = score.map(item => item.join('-')).join(' ');
+        const scoreStr = score.map((item) => item.join('-')).join(' ');
 
         if (isScoreCorrect(scoreStr, false)) {
             errors.score = 'Retirement score should be incomplete.';
@@ -77,11 +77,11 @@ export const validate = values => {
     return errors;
 };
 
-const FormMatch = props => {
+const FormMatch = (props) => {
     const { tournament, onUpdate } = props;
     const { players } = tournament;
     const [swipeDirection, setSwipeDirection] = useState('right');
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const [match, setMatch] = useState(() => ({ ...props.match }));
 
     const challenger = players[match.challengerId];
@@ -103,7 +103,7 @@ const FormMatch = props => {
         { value: 3, label: 'Set 3' },
     ];
 
-    const updateMatch = async values => {
+    const updateMatch = async (values) => {
         const score = getScoreAsString(values);
         let result;
 
@@ -279,7 +279,7 @@ const FormMatch = props => {
                             challenger={challenger}
                             acceptor={acceptor}
                             injuredPlayerId={challenger.userId === currentUser.id ? acceptor.id : challenger.id}
-                            onSubmit={playerId => {
+                            onSubmit={(playerId) => {
                                 hide();
                                 setValues({
                                     ...newValues,
@@ -354,7 +354,7 @@ const FormMatch = props => {
             <FormPickDoublesPlayers
                 match={match}
                 players={players}
-                onSubmit={values => {
+                onSubmit={(values) => {
                     setMatch({ ...match, ...values });
                 }}
             />
@@ -441,7 +441,7 @@ const FormMatch = props => {
                                 options={matchFormatOptions}
                                 component={Select}
                                 wrapperClassName="mb-6 flex-grow-1"
-                                onChange={value => {
+                                onChange={(value) => {
                                     onChangeMatchFormat(value, values, setValues);
                                 }}
                                 disabled={Boolean(values.wonByDefault)}
@@ -452,7 +452,7 @@ const FormMatch = props => {
                             name="result"
                             options={resultOptions}
                             component={HtmlSelect}
-                            onChange={value => {
+                            onChange={(value) => {
                                 onChangeMatchResult(value, values, setValues);
                             }}
                         />
@@ -506,7 +506,7 @@ const FormMatch = props => {
                                 <>
                                     <div className="d-flex align-items-center justify-content-between mb-6">
                                         <ul className="nav nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold">
-                                            {sets.map(set => {
+                                            {sets.map((set) => {
                                                 const isDisabled = !availableSets.includes(set.value);
 
                                                 return (
@@ -520,7 +520,7 @@ const FormMatch = props => {
                                                                     disabled: isDisabled,
                                                                 }
                                                             )}
-                                                            onClick={e => {
+                                                            onClick={(e) => {
                                                                 e.preventDefault();
 
                                                                 if (!isDisabled) {

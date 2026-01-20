@@ -1,6 +1,6 @@
 import { normal } from './normal';
 
-const getName = player => `${player.firstName.slice(0, 1)}. ${player.lastName}`;
+const getName = (player) => `${player.firstName.slice(0, 1)}. ${player.lastName}`;
 
 export default (
     config,

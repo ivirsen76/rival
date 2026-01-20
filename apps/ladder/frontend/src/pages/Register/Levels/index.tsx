@@ -66,7 +66,7 @@ const renderTeammateDescription = (tournamentId, values) => {
     );
 };
 
-const Levels = props => {
+const Levels = (props) => {
     const { settings, selectedSeason, updateSettings, onSubmit, user } = props;
     const config = useConfig();
     const dispatch = useDispatch();
@@ -80,7 +80,7 @@ const Levels = props => {
     const [savedUser] = useState(user);
 
     const previousTournaments = Object.values(savedUser.tournaments).filter(
-        item => item.seasonId !== selectedSeason.id
+        (item) => item.seasonId !== selectedSeason.id
     );
     const isNewPlayer = previousTournaments.length === 0;
     const matchesPlayedBefore = previousTournaments.reduce((sum, item) => sum + item.regularMatchesPlayed, 0);
@@ -97,9 +97,9 @@ const Levels = props => {
     } = useMemo(() => {
         const _userTournaments = _intersection(
             Object.values(savedUser.tournaments)
-                .filter(item => item.isActive)
-                .map(item => item.tournamentId),
-            selectedSeason.tournaments.map(t => t.tournamentId)
+                .filter((item) => item.isActive)
+                .map((item) => item.tournamentId),
+            selectedSeason.tournaments.map((t) => t.tournamentId)
         );
 
         const { all, suitable, free, text } = (() => {
@@ -109,7 +109,7 @@ const Levels = props => {
                     suitable: [],
                     free: registerForFree
                         ? []
-                        : selectedSeason.tournaments.filter(item => item.isFree).map(item => item.tournamentId),
+                        : selectedSeason.tournaments.filter((item) => item.isFree).map((item) => item.tournamentId),
                     text: '',
                 };
             }
@@ -126,7 +126,7 @@ const Levels = props => {
         const _hasSuitableTournament = suitable.length > 0;
 
         const _tournamentOptions = selectedSeason.tournaments
-            .filter(item => {
+            .filter((item) => {
                 if (!savedUser.establishedElo) {
                     return true;
                 }
@@ -145,7 +145,7 @@ const Levels = props => {
 
                 return false;
             })
-            .map(item => {
+            .map((item) => {
                 const alreadyRegistered = _userTournaments.includes(item.tournamentId);
                 const isFree = (() => {
                     if (alreadyRegistered || registerForFree) {
@@ -181,8 +181,8 @@ const Levels = props => {
             suggestionText: text.replace(/\[/g, '<span class="text-body">').replace(/\]/g, '</span>'),
             userTournaments: _userTournaments,
             tournamentOptions: _tournamentOptions,
-            tournamentSinglesOptions: _tournamentOptions.filter(item => item.type === 'single'),
-            tournamentDoublesOptions: _tournamentOptions.filter(item =>
+            tournamentSinglesOptions: _tournamentOptions.filter((item) => item.type === 'single'),
+            tournamentDoublesOptions: _tournamentOptions.filter((item) =>
                 ['doubles-team', 'doubles'].includes(item.type)
             ),
             hasSuitableTournament: _hasSuitableTournament,
@@ -190,19 +190,19 @@ const Levels = props => {
     }, [savedUser, selectedSeason, reasonToJoinAnotherLadder, registerForFree]);
 
     const initialTournaments = (() => {
-        const availableTournaments = selectedSeason.tournaments.map(item => item.tournamentId);
+        const availableTournaments = selectedSeason.tournaments.map((item) => item.tournamentId);
         return _intersection(_union(settings.list, userTournaments), availableTournaments);
     })();
 
     const initialPartners = tournamentOptions
-        .filter(item => item.type === 'doubles-team')
+        .filter((item) => item.type === 'doubles-team')
         .reduce((obj, item) => {
             const key = `partner-${item.value}`;
             obj[key] = settings.partners?.[key] || {};
             return obj;
         }, {});
 
-    const validate = values => {
+    const validate = (values) => {
         const errors = {};
 
         if (!values.agree) {
@@ -215,10 +215,10 @@ const Levels = props => {
             errors.tournaments = 'You have to pick at least one ladder to play.';
         } else if (registerForFree) {
             // Singles
-            const hasNewSinglesTournament = newTournaments.some(id =>
-                tournamentSinglesOptions.find(item => item.value === id)
+            const hasNewSinglesTournament = newTournaments.some((id) =>
+                tournamentSinglesOptions.find((item) => item.value === id)
             );
-            const totalSinglesSelected = tournamentSinglesOptions.filter(item =>
+            const totalSinglesSelected = tournamentSinglesOptions.filter((item) =>
                 values.tournaments.includes(item.value)
             ).length;
             if (totalSinglesSelected > 1 && hasNewSinglesTournament) {
@@ -226,10 +226,10 @@ const Levels = props => {
             }
 
             // Doubles
-            const hasNewDoublesTournament = newTournaments.some(id =>
-                tournamentDoublesOptions.find(item => item.value === id)
+            const hasNewDoublesTournament = newTournaments.some((id) =>
+                tournamentDoublesOptions.find((item) => item.value === id)
             );
-            const totalDoublesSelected = tournamentDoublesOptions.filter(item =>
+            const totalDoublesSelected = tournamentDoublesOptions.filter((item) =>
                 values.tournaments.includes(item.value)
             ).length;
             if (totalDoublesSelected > 1 && hasNewDoublesTournament) {
@@ -242,7 +242,7 @@ const Levels = props => {
         return errors;
     };
 
-    const isTooHighTlr = option => {
+    const isTooHighTlr = (option) => {
         if (option.type !== 'single') {
             return false;
         }
@@ -255,7 +255,7 @@ const Levels = props => {
 
         return savedUser.establishedElo > option.maxTlr;
     };
-    const isTooHighTlrDiscount = option => {
+    const isTooHighTlrDiscount = (option) => {
         if (!isTooHighTlr(option)) {
             return false;
         }
@@ -269,7 +269,7 @@ const Levels = props => {
         return true;
     };
 
-    const renderTlrWarning = option => {
+    const renderTlrWarning = (option) => {
         if (!isTooHighTlr(option)) {
             return null;
         }
@@ -333,7 +333,7 @@ const Levels = props => {
                             renderTrigger={({ show }) => (
                                 <a
                                     href=""
-                                    onClick={e => {
+                                    onClick={(e) => {
                                         e.preventDefault();
                                         show();
                                     }}
@@ -344,7 +344,7 @@ const Levels = props => {
                             renderBody={({ hide }) => (
                                 <JoinAnotherLadder
                                     initialReason={reasonToJoinAnotherLadder}
-                                    onSubmit={reason => {
+                                    onSubmit={(reason) => {
                                         setReasonToJoinAnotherLadder(reason);
                                         hide();
                                     }}
@@ -365,7 +365,7 @@ const Levels = props => {
         <Formik
             initialValues={{ tournaments: initialTournaments, partners: initialPartners }}
             validate={validate}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 if (registerForFree) {
                     await axios.put('/api/players/0', {
                         action: 'registerForFree',
@@ -377,7 +377,7 @@ const Levels = props => {
                     await queryClient.invalidateQueries();
 
                     const selectedLevel = selectedSeason.tournaments.find(
-                        item =>
+                        (item) =>
                             values.tournaments.includes(item.tournamentId) &&
                             !userTournaments.includes(item.tournamentId)
                     );
@@ -400,8 +400,8 @@ const Levels = props => {
                     updateSettings({
                         list,
                         joinForFree: tournamentOptions
-                            .filter(item => item.isFree && list.includes(item.value))
-                            .map(item => item.value),
+                            .filter((item) => item.isFree && list.includes(item.value))
+                            .map((item) => item.value),
                         joinReason: reasonToJoinAnotherLadder,
                         partners: values.partners,
                     });
@@ -418,7 +418,7 @@ const Levels = props => {
                                 tournamentId={tournamentId}
                                 tournaments={selectedSeason.tournaments}
                                 hide={hide}
-                                onSubmit={data => {
+                                onSubmit={(data) => {
                                     hide();
                                     setFieldValue('tournaments', _xor(values.tournaments, [tournamentId]));
                                     setFieldValue(`partners.partner-${tournamentId}`, data);
@@ -483,7 +483,7 @@ const Levels = props => {
                                                     <div className="form-label">
                                                         Pick one Singles ladder (or skip for now)
                                                     </div>
-                                                    {tournamentSinglesOptions.map(option =>
+                                                    {tournamentSinglesOptions.map((option) =>
                                                         renderTournamentOption({ field, form, values, option })
                                                     )}
                                                     {form.submitCount > 0 && errors.singlesTournaments ? (
@@ -496,7 +496,7 @@ const Levels = props => {
                                                     <div className="form-label">
                                                         Pick one Doubles ladder (or skip for now)
                                                     </div>
-                                                    {tournamentDoublesOptions.map(option =>
+                                                    {tournamentDoublesOptions.map((option) =>
                                                         renderTournamentOption({ field, form, values, option })
                                                     )}
                                                     {form.submitCount > 0 && errors.doublesTournaments ? (
@@ -518,7 +518,7 @@ const Levels = props => {
                                     form={form}
                                     description={guidanceText}
                                 >
-                                    {tournamentOptions.map(option =>
+                                    {tournamentOptions.map((option) =>
                                         renderTournamentOption({ field, form, values, option })
                                     )}
                                 </FieldWrapper>
@@ -537,7 +537,7 @@ const Levels = props => {
                                     renderTrigger={({ show }) => (
                                         <a
                                             href=""
-                                            onClick={e => {
+                                            onClick={(e) => {
                                                 e.preventDefault();
                                                 show();
                                             }}

@@ -3,7 +3,7 @@ import Arc from './Arc';
 import { defaultColors } from '../config';
 import style from './style.module.scss';
 
-const Graph = props => {
+const Graph = (props) => {
     const list = props.list.map((item, index) => ({ color: defaultColors[index], ...item }));
 
     return (

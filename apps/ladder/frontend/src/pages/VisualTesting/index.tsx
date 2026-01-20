@@ -5,7 +5,7 @@ import Compare from './Compare';
 import axios from '@/utils/axios';
 import style from './style.module.scss';
 
-const VisualTesting = props => {
+const VisualTesting = (props) => {
     const queryClient = useQueryClient();
 
     const { data, isLoading } = useQuery(

@@ -2,7 +2,7 @@ import AvatarComponent from '@/components/avataaars';
 import UserIcon from '@/assets/user.svg?react';
 import style from './style.module.scss';
 
-const Rivalry = props => {
+const Rivalry = (props) => {
     const searchParams = new URLSearchParams(window.location.search);
     const { avatar1, avatar2 } = JSON.parse(searchParams.get('props'));
 

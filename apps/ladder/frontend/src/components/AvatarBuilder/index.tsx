@@ -11,7 +11,7 @@ import { colors as hairColors } from '@/components/avataaars/avatar/top/HairColo
 import { colors as beardColors } from '@/components/avataaars/avatar/top/facialHair/Colors';
 import { colors as clothColors } from '@/components/avataaars/avatar/clothes/Colors';
 
-const AvatarBuilder = props => {
+const AvatarBuilder = (props) => {
     const avatar = useRef();
 
     const initialValues = {
@@ -28,7 +28,7 @@ const AvatarBuilder = props => {
         ...props.initialValues,
     };
 
-    const onSubmit = async values => {
+    const onSubmit = async (values) => {
         await props.onSubmit({
             avatarObject: JSON.stringify(values),
             avatar: avatar.current.firstChild.outerHTML,
@@ -95,7 +95,7 @@ const AvatarBuilder = props => {
                                 )}
                                 renderBody={({ hide }) => (
                                     <Random
-                                        setValues={obj => {
+                                        setValues={(obj) => {
                                             setValues(obj);
                                             hide();
                                         }}

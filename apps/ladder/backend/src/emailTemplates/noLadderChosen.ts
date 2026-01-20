@@ -1,6 +1,6 @@
 import { normal, h2, getImageUrl, signature } from './normal';
 
-export default config =>
+export default (config) =>
     normal(
         `
 ${h2('Hello, #firstName#!', 'padding-top="10px"')}

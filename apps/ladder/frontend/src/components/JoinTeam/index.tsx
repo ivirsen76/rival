@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import notification from '@/components/notification';
 import axios from '@/utils/axios';
 
-const AcceptTeamMember = props => {
+const AcceptTeamMember = (props) => {
     const history = useHistory();
 
     useEffect(() => {

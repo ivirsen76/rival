@@ -1,204 +1,204 @@
-import {DataUtil, getUniqueIdWithPrefix, EventHandlerUtil} from '../_utils/index'
+import { DataUtil, getUniqueIdWithPrefix, EventHandlerUtil } from '../_utils/index';
 // Helpers
-import {CookieComponent} from './_CookieComponent'
+import { CookieComponent } from './_CookieComponent';
 
 export interface ToggleOptions {
-  saveState: boolean
-  targetState?: string
-  toggleState?: string
-  targetToggleMode?: string
+    saveState: boolean;
+    targetState?: string;
+    toggleState?: string;
+    targetToggleMode?: string;
 }
 
 const defaultToggleOptions: ToggleOptions = {
-  saveState: false,
-}
+    saveState: false,
+};
 
 class ToggleComponent {
-  element: HTMLElement
-  instanceUid: string
-  options: ToggleOptions
-  state: string = ''
-  target: HTMLElement | null = null
-  attribute: string = ''
+    element: HTMLElement;
+    instanceUid: string;
+    options: ToggleOptions;
+    state: string = '';
+    target: HTMLElement | null = null;
+    attribute: string = '';
 
-  constructor(_element: HTMLElement, options: ToggleOptions) {
-    this.options = Object.assign(defaultToggleOptions, options)
-    this.instanceUid = getUniqueIdWithPrefix('toggle')
-    this.element = _element
+    constructor(_element: HTMLElement, options: ToggleOptions) {
+        this.options = Object.assign(defaultToggleOptions, options);
+        this.instanceUid = getUniqueIdWithPrefix('toggle');
+        this.element = _element;
 
-    const elementTargetAttr = this.element.getAttribute('data-kt-toggle-target')
-    if (elementTargetAttr) {
-      this.target = document.querySelector(elementTargetAttr)
-    }
-    const elementToggleAttr = this.element.getAttribute('data-kt-toggle-state')
-    this.state = elementToggleAttr || ''
-    this.attribute = 'data-kt-' + this.element.getAttribute('data-kt-toggle-name')
+        const elementTargetAttr = this.element.getAttribute('data-kt-toggle-target');
+        if (elementTargetAttr) {
+            this.target = document.querySelector(elementTargetAttr);
+        }
+        const elementToggleAttr = this.element.getAttribute('data-kt-toggle-state');
+        this.state = elementToggleAttr || '';
+        this.attribute = 'data-kt-' + this.element.getAttribute('data-kt-toggle-name');
 
-    // Event Handlers
-    this._handlers()
+        // Event Handlers
+        this._handlers();
 
-    // Update Instance
-    // Bind Instance
-    DataUtil.set(this.element, 'toggle', this)
-  }
-
-  private _handlers = () => {
-    this.element.addEventListener('click', (e: Event) => {
-      e.preventDefault()
-      this._toggle()
-    })
-  }
-
-  // Event handlers
-  private _toggle = () => {
-    // Trigger "after.toggle" event
-    EventHandlerUtil.trigger(this.element, 'kt.toggle.change')
-
-    if (this._isEnabled()) {
-      this._disable()
-    } else {
-      this._enable()
+        // Update Instance
+        // Bind Instance
+        DataUtil.set(this.element, 'toggle', this);
     }
 
-    // Trigger "before.toggle" event
-    EventHandlerUtil.trigger(this.element, 'kt.toggle.changed')
-    return this
-  }
+    private _handlers = () => {
+        this.element.addEventListener('click', (e: Event) => {
+            e.preventDefault();
+            this._toggle();
+        });
+    };
 
-  private _enable = () => {
-    if (this._isEnabled()) {
-      return
-    }
+    // Event handlers
+    private _toggle = () => {
+        // Trigger "after.toggle" event
+        EventHandlerUtil.trigger(this.element, 'kt.toggle.change');
 
-    EventHandlerUtil.trigger(this.element, 'kt.toggle.enable')
-    this.target?.setAttribute(this.attribute, 'on')
-    if (this.state.length > 0) {
-      this.element.classList.add(this.state)
-    }
+        if (this._isEnabled()) {
+            this._disable();
+        } else {
+            this._enable();
+        }
 
-    if (this.options.saveState) {
-      CookieComponent.set(this.attribute, 'on', {})
-    }
+        // Trigger "before.toggle" event
+        EventHandlerUtil.trigger(this.element, 'kt.toggle.changed');
+        return this;
+    };
 
-    EventHandlerUtil.trigger(this.element, 'kt.toggle.enabled')
-    return this
-  }
+    private _enable = () => {
+        if (this._isEnabled()) {
+            return;
+        }
 
-  private _disable = () => {
-    if (!this._isEnabled()) {
-      return false
-    }
+        EventHandlerUtil.trigger(this.element, 'kt.toggle.enable');
+        this.target?.setAttribute(this.attribute, 'on');
+        if (this.state.length > 0) {
+            this.element.classList.add(this.state);
+        }
 
-    EventHandlerUtil.trigger(this.element, 'kt.toggle.disable')
-    this.target?.removeAttribute(this.attribute)
+        if (this.options.saveState) {
+            CookieComponent.set(this.attribute, 'on', {});
+        }
 
-    if (this.state.length > 0) {
-      this.element.classList.remove(this.state)
-    }
+        EventHandlerUtil.trigger(this.element, 'kt.toggle.enabled');
+        return this;
+    };
 
-    if (this.options.saveState) {
-      CookieComponent.delete(this.attribute)
-    }
+    private _disable = () => {
+        if (!this._isEnabled()) {
+            return false;
+        }
 
-    EventHandlerUtil.trigger(this.element, 'kt.toggle.disabled')
-    return this
-  }
+        EventHandlerUtil.trigger(this.element, 'kt.toggle.disable');
+        this.target?.removeAttribute(this.attribute);
 
-  private _isEnabled = () => {
-    if (!this.target) {
-      return false
-    }
+        if (this.state.length > 0) {
+            this.element.classList.remove(this.state);
+        }
 
-    return String(this.target.getAttribute(this.attribute)).toLowerCase() === 'on'
-  }
+        if (this.options.saveState) {
+            CookieComponent.delete(this.attribute);
+        }
 
-  ///////////////////////
-  // ** Public API  ** //
-  ///////////////////////
+        EventHandlerUtil.trigger(this.element, 'kt.toggle.disabled');
+        return this;
+    };
 
-  // Plugin API
-  // Plugin API
-  public toggle = () => {
-    return this._toggle()
-  }
+    private _isEnabled = () => {
+        if (!this.target) {
+            return false;
+        }
 
-  public enable = () => {
-    return this._enable()
-  }
+        return String(this.target.getAttribute(this.attribute)).toLowerCase() === 'on';
+    };
 
-  public disable = () => {
-    return this._disable()
-  }
+    ///////////////////////
+    // ** Public API  ** //
+    ///////////////////////
 
-  public isEnabled = () => {
-    return this._isEnabled()
-  }
+    // Plugin API
+    // Plugin API
+    public toggle = () => {
+        return this._toggle();
+    };
 
-  public goElement = () => {
-    return this.element
-  }
+    public enable = () => {
+        return this._enable();
+    };
 
-  // Event API
-  public on = (name: string, handler: Function) => {
-    return EventHandlerUtil.on(this.element, name, handler)
-  }
+    public disable = () => {
+        return this._disable();
+    };
 
-  public one = (name: string, handler: Function) => {
-    return EventHandlerUtil.one(this.element, name, handler)
-  }
+    public isEnabled = () => {
+        return this._isEnabled();
+    };
 
-  public off = (name: string) => {
-    return EventHandlerUtil.off(this.element, name)
-  }
+    public goElement = () => {
+        return this.element;
+    };
 
-  public trigger = (name: string, event?: Event) => {
-    return EventHandlerUtil.trigger(this.element, name, event)
-  }
+    // Event API
+    public on = (name: string, handler: Function) => {
+        return EventHandlerUtil.on(this.element, name, handler);
+    };
 
-  // Static methods
-  public static getInstance = (el: HTMLElement) => {
-    const toggleElement = DataUtil.get(el, 'toggle')
-    if (toggleElement) {
-      return toggleElement
-    }
+    public one = (name: string, handler: Function) => {
+        return EventHandlerUtil.one(this.element, name, handler);
+    };
 
-    return null
-  }
+    public off = (name: string) => {
+        return EventHandlerUtil.off(this.element, name);
+    };
 
-  public static createInstances = (selector: string) => {
-    const elements = document.body.querySelectorAll(selector)
-    elements.forEach((el) => {
-      const item = el as HTMLElement
-      let toggleElement = ToggleComponent.getInstance(item)
-      if (!toggleElement) {
-        toggleElement = new ToggleComponent(item, defaultToggleOptions)
-      }
-    })
-  }
+    public trigger = (name: string, event?: Event) => {
+        return EventHandlerUtil.trigger(this.element, name, event);
+    };
 
-  public static createInsance = (
-    selector: string,
-    options: ToggleOptions = defaultToggleOptions
-  ): ToggleComponent | undefined => {
-    const element = document.body.querySelector(selector)
-    if (!element) {
-      return
-    }
-    const item = element as HTMLElement
-    let toggle = ToggleComponent.getInstance(item)
-    if (!toggle) {
-      toggle = new ToggleComponent(item, options)
-    }
-    return toggle
-  }
+    // Static methods
+    public static getInstance = (el: HTMLElement) => {
+        const toggleElement = DataUtil.get(el, 'toggle');
+        if (toggleElement) {
+            return toggleElement;
+        }
 
-  public static reinitialization = () => {
-    ToggleComponent.createInstances('[data-kt-toggle]')
-  }
+        return null;
+    };
 
-  public static bootstrap = () => {
-    ToggleComponent.createInstances('[data-kt-toggle]')
-  }
+    public static createInstances = (selector: string) => {
+        const elements = document.body.querySelectorAll(selector);
+        elements.forEach((el) => {
+            const item = el as HTMLElement;
+            let toggleElement = ToggleComponent.getInstance(item);
+            if (!toggleElement) {
+                toggleElement = new ToggleComponent(item, defaultToggleOptions);
+            }
+        });
+    };
+
+    public static createInsance = (
+        selector: string,
+        options: ToggleOptions = defaultToggleOptions
+    ): ToggleComponent | undefined => {
+        const element = document.body.querySelector(selector);
+        if (!element) {
+            return;
+        }
+        const item = element as HTMLElement;
+        let toggle = ToggleComponent.getInstance(item);
+        if (!toggle) {
+            toggle = new ToggleComponent(item, options);
+        }
+        return toggle;
+    };
+
+    public static reinitialization = () => {
+        ToggleComponent.createInstances('[data-kt-toggle]');
+    };
+
+    public static bootstrap = () => {
+        ToggleComponent.createInstances('[data-kt-toggle]');
+    };
 }
 
-export {ToggleComponent, defaultToggleOptions}
+export { ToggleComponent, defaultToggleOptions };

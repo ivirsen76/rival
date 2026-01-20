@@ -22,14 +22,14 @@ import Tooltip from '@/components/Tooltip';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
-const Tournament = props => {
+const Tournament = (props) => {
     const { level, season, year } = props.match.params;
     const tournamentUrl = `/api/tournaments/1?year=${year}&season=${season}&level=${level}`;
 
     const levelTooltipRef = useRef();
     const { path, url } = useRouteMatch();
     const queryClient = useQueryClient();
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const config = useConfig();
 
     const { data, isPreviousData, isLoading, status, error } = useQuery(tournamentUrl, {
@@ -44,7 +44,7 @@ const Tournament = props => {
 
         for (const player of Object.values(data.players)) {
             if (player.partnerIds) {
-                player.partners = player.partnerIds.map(id => ({
+                player.partners = player.partnerIds.map((id) => ({
                     ..._pick(data.players[id], [
                         'id',
                         'firstName',
@@ -89,7 +89,7 @@ const Tournament = props => {
         },
     ];
 
-    const removeSinglesWord = str => str.replace(/\s+Singles$/, '');
+    const removeSinglesWord = (str) => str.replace(/\s+Singles$/, '');
 
     return (
         <div>
@@ -111,7 +111,7 @@ const Tournament = props => {
                                         levelTooltipRef.current && levelTooltipRef.current.hide();
                                     }}
                                 >
-                                    {tournament.allLevels.map(item => (
+                                    {tournament.allLevels.map((item) => (
                                         <Link
                                             key={item.slug}
                                             className={style.levelLink}
@@ -128,7 +128,7 @@ const Tournament = props => {
                             arrow={false}
                             offset={[0, 8]}
                             theme="light"
-                            onShow={instance => {
+                            onShow={(instance) => {
                                 levelTooltipRef.current = instance;
                             }}
                         >
@@ -172,8 +172,8 @@ const Tournament = props => {
                     data-tournament-navbar
                 >
                     {links
-                        .filter(link => link.show)
-                        .map(link => (
+                        .filter((link) => link.show)
+                        .map((link) => (
                             <li key={link.url} className="nav-item">
                                 <NavLink
                                     exact

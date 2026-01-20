@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
 
-const JoinPlayerPoolForm = props => {
+const JoinPlayerPoolForm = (props) => {
     const { onSubmit, initialValues, showWarning } = props;
 
     return (

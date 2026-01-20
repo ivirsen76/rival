@@ -5,7 +5,7 @@ import Tooltip from '@/components/Tooltip';
 import CaptainIcon from '@/assets/captain.svg?react';
 import style from './style.module.scss';
 
-const TeamInfo = props => {
+const TeamInfo = (props) => {
     const { captain, tournament } = props;
 
     const stats = (() => {
@@ -25,8 +25,8 @@ const TeamInfo = props => {
         };
 
         tournament.matches
-            .filter(match => match.score)
-            .forEach(match => {
+            .filter((match) => match.score)
+            .forEach((match) => {
                 processPlayer(match.challengerId, match.challengerId === match.winner);
                 processPlayer(match.challenger2Id, match.challengerId === match.winner);
                 processPlayer(match.acceptorId, match.acceptorId === match.winner);

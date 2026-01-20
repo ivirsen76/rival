@@ -3,13 +3,13 @@ import _pick from 'lodash/pick';
 import { relationsUp } from '@rival/ladder.backend/src/services/matches/relations';
 import { BYE_ID } from '@rival/ladder.backend/src/constants';
 
-export const getInitialPrediction = matches => {
+export const getInitialPrediction = (matches) => {
     const spots = matches.reduce((obj, match) => {
         obj[match.finalSpot] = match;
         return obj;
     }, {});
 
-    let total = Math.max(...matches.map(item => item.finalSpot));
+    let total = Math.max(...matches.map((item) => item.finalSpot));
     total = total > 7 ? 15 : total > 3 ? 7 : 3;
 
     return new Array(total)
@@ -90,9 +90,9 @@ export const setWinner = (prediction, finalSpot, winner, sets) => {
     return result;
 };
 
-export const preparePredictionToSave = prediction => {
+export const preparePredictionToSave = (prediction) => {
     return Object.values(prediction)
-        .map(item => ({
+        .map((item) => ({
             ..._pick(item, ['finalSpot', 'challengerId', 'acceptorId']),
             ...(item.winner ? { winner: item.winner } : {}),
             ...(item.sets ? { sets: item.sets } : {}),

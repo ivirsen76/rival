@@ -6,12 +6,12 @@ import { useSelector } from 'react-redux';
 import useConfig from '@/utils/useConfig';
 import axios from '@/utils/axios';
 
-const MessageForm = props => {
+const MessageForm = (props) => {
     const { user } = props;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const config = useConfig();
 
-    const onSubmit = async values => {
+    const onSubmit = async (values) => {
         await axios.post('/api/messages', values);
 
         if (props.onSubmit) {
@@ -38,10 +38,10 @@ const MessageForm = props => {
 
     {
         const currentUserTournaments = Object.values(currentUser.tournaments)
-            .filter(item => item.isActive)
-            .map(item => item.tournamentId);
+            .filter((item) => item.isActive)
+            .map((item) => item.tournamentId);
 
-        if (!currentUserTournaments.some(id => user.currentTournaments.includes(id))) {
+        if (!currentUserTournaments.some((id) => user.currentTournaments.includes(id))) {
             return (
                 <div className="alert alert-danger m-0">
                     You can only send messages to players on your current ladders.

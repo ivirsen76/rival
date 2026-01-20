@@ -6,7 +6,7 @@ import Flatpickr from 'react-flatpickr';
 import dayjs from '@/utils/dayjs';
 import CalendarIcon from '@rival/packages/metronic/icons/duotone/Interface/Calendar.svg?react';
 
-const DatePicker = props => {
+const DatePicker = (props) => {
     const { field, form } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
     const passingProps = _omit(props, ['field', 'form', 'children', 'label', 'description']);
@@ -21,7 +21,7 @@ const DatePicker = props => {
                 <Flatpickr
                     className={classnames('form-control', 'form-control-solid', 'ps-12', { 'is-invalid': showError })}
                     value={field.value}
-                    onChange={value => {
+                    onChange={(value) => {
                         // we need to add some hours because defaultHour seems to be 0 all the time,
                         // and for timezones west from NC it picks the wrong date
                         form.setFieldValue(field.name, dayjs.tz(value[0]).add(9, 'hour').format('YYYY-MM-DD'));

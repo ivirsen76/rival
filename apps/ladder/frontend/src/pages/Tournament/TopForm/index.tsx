@@ -4,11 +4,11 @@ import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 import style from './style.module.scss';
 
-const MostProgress = props => {
+const MostProgress = (props) => {
     const { topForm, players } = props.tournament;
 
     const sortedTopForm = topForm
-        .map(obj => ({
+        .map((obj) => ({
             ...obj,
             player: players[obj.id],
         }))
@@ -27,7 +27,7 @@ const MostProgress = props => {
                     </thead>
 
                     <tbody>
-                        {sortedTopForm.map(obj => (
+                        {sortedTopForm.map((obj) => (
                             <tr key={obj.id}>
                                 <td>
                                     <PlayerAvatar player1={obj.player} />

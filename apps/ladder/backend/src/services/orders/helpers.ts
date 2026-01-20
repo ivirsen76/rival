@@ -1,7 +1,7 @@
 /* eslint-disable no-loop-func */
 import _capitalize from 'lodash/capitalize';
 
-export const calculateNextOrder = settings => {
+export const calculateNextOrder = (settings) => {
     const {
         payments,
         allTournaments,
@@ -18,8 +18,8 @@ export const calculateNextOrder = settings => {
         establishedElo,
     } = settings;
 
-    const paidTournamentsIds = payments.map(item => item.tournamentId).filter(Boolean);
-    let paidTournamentsThisSeason = allTournaments.filter(item => paidTournamentsIds.includes(item.id)).length;
+    const paidTournamentsIds = payments.map((item) => item.tournamentId).filter(Boolean);
+    let paidTournamentsThisSeason = allTournaments.filter((item) => paidTournamentsIds.includes(item.id)).length;
     const result = [];
     for (const tournament of tournaments) {
         const discounts = [];
@@ -97,7 +97,7 @@ export const calculateNextOrder = settings => {
 
     return {
         payload,
-        total: transactions.filter(item => item.type !== 'info').reduce((sum, item) => sum - item.cost, 0),
+        total: transactions.filter((item) => item.type !== 'info').reduce((sum, item) => sum - item.cost, 0),
         prevBalance,
         newBalance,
     };

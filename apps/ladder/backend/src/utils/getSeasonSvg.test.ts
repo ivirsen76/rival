@@ -29,7 +29,7 @@ describe('getSeasonSvg()', () => {
 
                 return arr;
             }, [])
-            .map(item => ({ title: item.title, description: item.description.join(' | ') }));
+            .map((item) => ({ title: item.title, description: item.description.join(' | ') }));
 
         expect(blocks).toEqual(expectedBlocks);
     };

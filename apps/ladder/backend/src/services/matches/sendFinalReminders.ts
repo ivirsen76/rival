@@ -74,7 +74,7 @@ const sendFinalReminders = async (context, tournamentId) => {
 
     const dateThreeWeeksAgo = currentDate.subtract(3, 'week').format('YYYY-MM-DD HH:mm:ss');
     const decidedMatches = matches.filter(
-        item =>
+        (item) =>
             item.challengerId &&
             item.acceptorId &&
             item.score === null &&
@@ -82,19 +82,19 @@ const sendFinalReminders = async (context, tournamentId) => {
             item.updatedAt > dateThreeWeeksAgo
     );
 
-    const byeMatches = matches.filter(match => {
+    const byeMatches = matches.filter((match) => {
         if (match.challengerId && match.acceptorId) {
             return false;
         }
 
         const isBye =
-            (relationsDown[match.finalSpot] || []).filter(finalSpot => finalSpotMatch[finalSpot]).length === 1;
+            (relationsDown[match.finalSpot] || []).filter((finalSpot) => finalSpotMatch[finalSpot]).length === 1;
 
         return isBye;
     });
 
     const seasonName = getSeasonName(currentSeason);
-    const roundsTotal = Math.max(...matches.map(item => item.finalSpot)) > 7 ? 4 : 3;
+    const roundsTotal = Math.max(...matches.map((item) => item.finalSpot)) > 7 ? 4 : 3;
 
     // Decided matches
     {
@@ -222,7 +222,7 @@ const sendFinalReminders = async (context, tournamentId) => {
 
             const playerSeed = match.challengerId ? match.challengerSeed : match.acceptorSeed;
 
-            const relatedFinalSpot = relationsDown[match.finalSpot].find(finalSpot => finalSpotMatch[finalSpot]);
+            const relatedFinalSpot = relationsDown[match.finalSpot].find((finalSpot) => finalSpotMatch[finalSpot]);
             const relatedMatch = finalSpotMatch[relatedFinalSpot];
             const opponent1 = isDoublesTeam
                 ? relatedMatch.challengerTeamName

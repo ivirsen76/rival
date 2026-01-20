@@ -10,7 +10,7 @@ import Input from '@/components/formik/Input';
 import PasswordInput from '@/components/formik/PasswordInput';
 import Button from '@/components/Button';
 
-const RegisterPartner = props => {
+const RegisterPartner = (props) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ const RegisterPartner = props => {
                     password: '',
                     birthday: '1970-01-01',
                 }}
-                onSubmit={async values => {
+                onSubmit={async (values) => {
                     await axios.put('/api/users/0', { ...values, action: 'registerPartner', payload: props.payload });
                     await dispatch(authenticate(values.email, values.password));
 

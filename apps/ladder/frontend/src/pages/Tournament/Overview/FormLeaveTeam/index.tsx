@@ -7,27 +7,27 @@ import { loadCurrentUser } from '@/reducers/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import dayjs from '@/utils/dayjs';
 
-const FormLeaveTeam = props => {
+const FormLeaveTeam = (props) => {
     const { tournament, onSubmit } = props;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const currentPlayerId = currentUser.tournaments[tournament.id].playerId;
     const dispatch = useDispatch();
     const currentDateStr = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
 
     const hasOpenProposals = tournament.matches.some(
-        match =>
+        (match) =>
             !match.score &&
             !match.acceptedAt &&
             match.playedAt > currentDateStr &&
             [match.challengerId, match.challenger2Id].includes(currentPlayerId)
     );
     const hasMatchPlayed = tournament.matches.some(
-        match =>
+        (match) =>
             match.score &&
             [match.challengerId, match.challenger2Id, match.acceptorId, match.acceptor2Id].includes(currentPlayerId)
     );
     const hasUpcomingMatch = tournament.matches.some(
-        match =>
+        (match) =>
             match.acceptedAt &&
             !match.score &&
             match.playedAt > currentDateStr &&
@@ -50,7 +50,7 @@ const FormLeaveTeam = props => {
     return (
         <Formik
             initialValues={{ reason: '' }}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await axios.put(`/api/players/${currentPlayerId}`, {
                     action: 'leaveTeam',
                     reason: values.reason,

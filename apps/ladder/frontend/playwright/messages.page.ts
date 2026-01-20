@@ -10,8 +10,8 @@ const generateMatches = async (challengerId?: number, acceptorId?: number) => {
     for (let i = 0; i < 10; i++) {
         await runQuery(`INSERT INTO matches (initial, challengerId, acceptorId, winner, score, playedAt)
             VALUES (1, ${challengerId || match.challengerId}, ${acceptorId || match.acceptorId}, ${match.winner}, "${
-            match.score
-        }", "2020-10-10 10:10:10")`);
+                match.score
+            }", "2020-10-10 10:10:10")`);
     }
     await runQuery('UPDATE matches SET challengerMatches=10, acceptorMatches=10');
 };

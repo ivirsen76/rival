@@ -19,9 +19,9 @@ export default (matches, prediction) => {
     let points = 0;
     let possiblePoints = 0;
     prediction
-        .filter(item => item.challengerId !== BYE_ID && item.acceptorId !== BYE_ID)
+        .filter((item) => item.challengerId !== BYE_ID && item.acceptorId !== BYE_ID)
         .sort((a, b) => b.finalSpot - a.finalSpot)
-        .forEach(matchPrediction => {
+        .forEach((matchPrediction) => {
             const match = matchesObj[matchPrediction.finalSpot];
 
             if (!match?.score) {

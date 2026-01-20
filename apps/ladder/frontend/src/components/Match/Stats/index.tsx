@@ -8,7 +8,7 @@ import ScaleToFit from '@/components/ScaleToFit';
 import { defaultColors } from './config';
 import style from './style.module.scss';
 
-const Stats = props => {
+const Stats = (props) => {
     const { match, challenger, acceptor, scaleToFit } = props;
     const { stat } = match;
 

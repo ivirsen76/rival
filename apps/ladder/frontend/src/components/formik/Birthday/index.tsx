@@ -8,7 +8,7 @@ import convertDate from '@/utils/convertDate';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Birthday = props => {
+const Birthday = (props) => {
     const { field, form } = props;
     const [mm, setMM] = useState(() => (field.value ? field.value.slice(5, 7) : ''));
     const [dd, setDD] = useState(() => (field.value ? field.value.slice(8, 10) : ''));
@@ -62,7 +62,7 @@ const Birthday = props => {
         }
     }, [dd]);
 
-    const focusField = fieldRef => {
+    const focusField = (fieldRef) => {
         const el = fieldRef.current;
         const length = el.value.length;
         // Move caret to the end
@@ -83,8 +83,8 @@ const Birthday = props => {
                     className={classnames('form-control', 'form-control-solid', { 'is-invalid': showError })}
                     autoComplete="off"
                     value={mm}
-                    onChange={e => setMM(e.target.value.replace(/\D/g, ''))}
-                    onClick={e => {
+                    onChange={(e) => setMM(e.target.value.replace(/\D/g, ''))}
+                    onClick={(e) => {
                         e.preventDefault();
                         focusField(mmRef);
                     }}
@@ -98,14 +98,14 @@ const Birthday = props => {
                     className={classnames('form-control', 'form-control-solid', { 'is-invalid': showError })}
                     autoComplete="off"
                     value={dd}
-                    onChange={e => setDD(e.target.value.replace(/\D/g, ''))}
-                    onKeyDown={e => {
+                    onChange={(e) => setDD(e.target.value.replace(/\D/g, ''))}
+                    onKeyDown={(e) => {
                         if (e.key === 'Backspace' && !e.target.value) {
                             e.preventDefault();
                             focusField(mmRef);
                         }
                     }}
-                    onClick={e => {
+                    onClick={(e) => {
                         e.preventDefault();
                         focusField(ddRef);
                     }}
@@ -118,14 +118,14 @@ const Birthday = props => {
                     className={classnames('form-control', 'form-control-solid', { 'is-invalid': showError })}
                     autoComplete="off"
                     value={yyyy}
-                    onChange={e => setYYYY(e.target.value.replace(/\D/g, ''))}
-                    onKeyDown={e => {
+                    onChange={(e) => setYYYY(e.target.value.replace(/\D/g, ''))}
+                    onKeyDown={(e) => {
                         if (e.key === 'Backspace' && !e.target.value) {
                             e.preventDefault();
                             focusField(ddRef);
                         }
                     }}
-                    onClick={e => {
+                    onClick={(e) => {
                         e.preventDefault();
                         focusField(yyyyRef);
                     }}

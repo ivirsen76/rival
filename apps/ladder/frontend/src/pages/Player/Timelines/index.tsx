@@ -16,7 +16,7 @@ const stages = {
     champion: { color: '#00ff00', render: 'C' },
 };
 
-const Calendar = props => {
+const Calendar = (props) => {
     const { levelSlug, levelType } = props;
 
     const years = [];
@@ -130,7 +130,7 @@ const Calendar = props => {
                     </tr>
                 </thead>
                 <tbody>
-                    {seasons.map(season => (
+                    {seasons.map((season) => (
                         <tr key={season.value}>
                             <td>{season.label}</td>
                             {chartData.map((item, index) => {
@@ -165,7 +165,7 @@ const Calendar = props => {
                             </tr>
                             <tr>
                                 <td>Match Win %</td>
-                                <td>{renderTheOnlyValue('matchWinPercent', value => `${value}%`)}</td>
+                                <td>{renderTheOnlyValue('matchWinPercent', (value) => `${value}%`)}</td>
                             </tr>
                             <tr>
                                 <td>Tiebreaks Played</td>
@@ -173,7 +173,7 @@ const Calendar = props => {
                             </tr>
                             <tr>
                                 <td>Tiebreak Win %</td>
-                                <td>{renderTheOnlyValue('tbWinPercent', value => `${value}%`)}</td>
+                                <td>{renderTheOnlyValue('tbWinPercent', (value) => `${value}%`)}</td>
                             </tr>
                         </>
                     ) : (
@@ -200,7 +200,7 @@ const Calendar = props => {
                                             <PerformanceChart
                                                 data={chartData}
                                                 dataKey="matchWinPercent"
-                                                renderLabel={value => `${value}%`}
+                                                renderLabel={(value) => `${value}%`}
                                                 color="#ca472f"
                                             />
                                         </div>
@@ -229,7 +229,7 @@ const Calendar = props => {
                                             <PerformanceChart
                                                 data={chartData}
                                                 dataKey="tbWinPercent"
-                                                renderLabel={value => `${value}%`}
+                                                renderLabel={(value) => `${value}%`}
                                                 color="#0b84a5"
                                             />
                                         </div>

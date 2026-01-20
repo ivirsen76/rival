@@ -1,4 +1,4 @@
-export default bytes => {
+export default (bytes) => {
     if (bytes === 0) return '0 B';
 
     const k = 1024;

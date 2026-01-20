@@ -7,7 +7,7 @@ import Loader from '@/components/Loader';
 import FirstSeasonFree from './free-first-season.svg?react';
 import style from './style.module.scss';
 
-const Pricing = props => {
+const Pricing = (props) => {
     const { data, isLoading } = useQuery('/api/seasons/0');
     const config = useConfig();
 

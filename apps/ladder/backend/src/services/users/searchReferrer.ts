@@ -5,16 +5,16 @@ export default (list, search) => {
 
     if (search.includes('@')) {
         const sanitizedSearch = search.trim().toLowerCase();
-        result = list.filter(user => user.email.toLowerCase() === sanitizedSearch);
+        result = list.filter((user) => user.email.toLowerCase() === sanitizedSearch);
     } else if (/^[\d\w]{5}$/.test(search.trim())) {
         const sanitizedSearch = search.trim().toLowerCase();
-        result = list.filter(user => user.referralCode === sanitizedSearch);
+        result = list.filter((user) => user.referralCode === sanitizedSearch);
     } else if (/^[\d\s\-()]+$/.test(search)) {
         const sanitizedSearch = search.replace(/[^\d]+/g, '');
-        result = list.filter(user => user.phone === sanitizedSearch);
+        result = list.filter((user) => user.phone === sanitizedSearch);
     } else {
         const sanitizedSearch = search.trim().replace(/\s+/g, ' ').toLowerCase();
-        result = list.filter(user => getPlayerName(user).toLowerCase() === sanitizedSearch);
+        result = list.filter((user) => getPlayerName(user).toLowerCase() === sanitizedSearch);
     }
 
     return result;

@@ -16,7 +16,7 @@ export default () => {
         resolve.current(false);
     };
 
-    const confirm = params => {
+    const confirm = (params) => {
         setProps({
             title: 'Are you sure?',
             confirmButtonTitle: 'Yes',

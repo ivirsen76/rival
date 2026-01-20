@@ -4,11 +4,11 @@ import FieldWrapper from './FieldWrapper';
 import _omit from 'lodash/omit';
 import classnames from 'classnames';
 
-const PasswordInput = props => {
+const PasswordInput = (props) => {
     const { field, form } = props;
     const [show, setShow] = useState(false);
 
-    const toggleShow = e => {
+    const toggleShow = (e) => {
         e && e.preventDefault();
         setShow(!show);
     };

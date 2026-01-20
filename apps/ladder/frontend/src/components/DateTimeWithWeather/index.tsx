@@ -6,7 +6,7 @@ import WeatherAtTime from '@/components/WeatherForecast/WeatherAtTime';
 import WeatherForecast from '@/components/WeatherForecast';
 import style from './style.module.scss';
 
-const DateTimeWithWeather = props => {
+const DateTimeWithWeather = (props) => {
     const { minDate, maxDate } = props;
     const { values } = useFormikContext();
 

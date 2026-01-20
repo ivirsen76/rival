@@ -187,7 +187,7 @@ const finalTournamentStructure = (
     </div>
 );
 
-const limitingLadderLevels = season => (
+const limitingLadderLevels = (season) => (
     <div>
         <p>
             Starting with the {season} Season, we will limit the Singles ladders players can join based on their
@@ -264,7 +264,7 @@ const referralProgramContent = (config, lazyClass) => (
     </div>
 );
 
-const tournamentEligibilityContent = config => (
+const tournamentEligibilityContent = (config) => (
     <div>
         <p>
             In our ongoing efforts to create a more balanced and competitive ladder, we added these new eligibility
@@ -906,7 +906,7 @@ const getData = ({ config, lazyClass = '' } = {}) => [
                 <h4 className="mt-12">One-Time Badges</h4>
                 <div className={classnames(style.badgesWrapper, 'mb-4')}>
                     <div className={style.badges}>
-                        {allBadges.oneTime.map(item => {
+                        {allBadges.oneTime.map((item) => {
                             const badgeState = item.getState({ stats: badgeStats });
 
                             return (
@@ -926,7 +926,7 @@ const getData = ({ config, lazyClass = '' } = {}) => [
                 <h4 className="mt-12">Series Badges</h4>
                 <div className={classnames(style.badgesWrapper, 'w-100', 'mb-4')}>
                     <div className={style.badges}>
-                        {allBadges.series.map(item => {
+                        {allBadges.series.map((item) => {
                             const badgeState = item.getState({ stats: badgeStats });
 
                             return (
@@ -946,7 +946,7 @@ const getData = ({ config, lazyClass = '' } = {}) => [
                 <h4 className="mt-12">Ladder Badges</h4>
                 <div className={classnames(style.badgesWrapper, 'mb-4')}>
                     <div className={style.badges}>
-                        {allBadges.levels.map(item => {
+                        {allBadges.levels.map((item) => {
                             const badgeState = item.getState({ stats: badgeStats.levels[3] });
 
                             return (

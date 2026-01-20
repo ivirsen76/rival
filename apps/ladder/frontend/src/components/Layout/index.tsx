@@ -21,11 +21,11 @@ import useAppearance from '@/utils/useAppearance';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Layout = props => {
+const Layout = (props) => {
     const { TopBlock, topBlockClassname } = props;
     const { settings } = useSettings();
     const { seasons, config } = settings;
-    const user = useSelector(state => state.auth.user);
+    const user = useSelector((state) => state.auth.user);
     const size = useBreakpoints();
     const currentDateStr = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
     const appearance = useAppearance();
@@ -35,15 +35,15 @@ const Layout = props => {
 
     const years = [];
     seasons
-        .filter(season => season.startDate < currentDateStr)
-        .forEach(season => {
+        .filter((season) => season.startDate < currentDateStr)
+        .forEach((season) => {
             if (years.length === 0 || years[years.length - 1].year !== season.year) {
                 years.push({ year: season.year, seasons: [] });
             }
 
             years[years.length - 1].seasons.unshift({
                 name: season.season,
-                levels: season.levels.map(level => ({
+                levels: season.levels.map((level) => ({
                     id: level.id,
                     name: level.name,
                     slug: level.slug,
@@ -54,17 +54,17 @@ const Layout = props => {
     const citiesNearby = (settings.settings.global?.citiesNearby || []).slice(0, 5);
     const otherCities = (config.otherCities || '')
         .split(',')
-        .map(name => name.trim())
+        .map((name) => name.trim())
         .filter(Boolean);
 
     const reloadPage = async () => {
         // small delay just to see the spinner
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
 
         window.location.reload();
 
         // long delay to still see the spinner until refresh
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        await new Promise((resolve) => setTimeout(resolve, 5000));
     };
 
     const spinner = (
@@ -203,7 +203,7 @@ const Layout = props => {
                     {citiesNearby.length > 0 && (
                         <div className={style.cities}>
                             <div className="fw-bold mb-2 fs-3">Cities Nearby</div>
-                            {citiesNearby.map(city => (
+                            {citiesNearby.map((city) => (
                                 <div key={city.slug}>
                                     <a href={`https://${city.slug}.tennis-ladder.com`} target="_blank" rel="noreferrer">
                                         {city.name}, {city.state}

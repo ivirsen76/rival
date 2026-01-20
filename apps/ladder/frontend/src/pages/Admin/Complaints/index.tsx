@@ -13,14 +13,14 @@ const reasonOptionsMatch = reasonOptions.reduce((obj, item) => {
     return obj;
 }, []);
 
-const Complaints = props => {
+const Complaints = (props) => {
     const { data: users, isLoading } = useQuery('getAllComplaints', async () => {
         const response = await axios.put('/api/complaints/0', { action: 'getAllComplaints' });
 
         const userCount = {};
         const opponentCount = {};
 
-        return response.data.data.map(row => {
+        return response.data.data.map((row) => {
             userCount[row.userId] = userCount[row.userId] ? userCount[row.userId] + 1 : 1;
             opponentCount[row.opponentId] = opponentCount[row.opponentId] ? opponentCount[row.opponentId] + 1 : 1;
 
@@ -42,7 +42,7 @@ const Complaints = props => {
         {
             name: 'createdAt',
             label: 'Date',
-            render: value => formatDate(value),
+            render: (value) => formatDate(value),
             className: 'text-nowrap',
         },
         {

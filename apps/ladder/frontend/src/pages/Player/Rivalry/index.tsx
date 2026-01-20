@@ -3,7 +3,7 @@ import { formatDate } from '@/utils/dayjs';
 import classnames from 'classnames';
 import Chart from '@/components/Chart';
 
-const Rivalry = props => {
+const Rivalry = (props) => {
     const { rivalry, user } = props;
 
     const stat = (() => {
@@ -20,7 +20,7 @@ const Rivalry = props => {
     const chartInit = ({ am4core, am4charts, instance }) => {
         const dateAxis = instance.xAxes.push(new am4charts.CategoryAxis());
         dateAxis.dataFields.category = 'date';
-        dateAxis.renderer.labels.template.adapter.add('textOutput', text => text && text.replace(/\(\d+\)/, ''));
+        dateAxis.renderer.labels.template.adapter.add('textOutput', (text) => text && text.replace(/\(\d+\)/, ''));
 
         const valueAxis = instance.yAxes.push(new am4charts.ValueAxis());
         valueAxis.tooltip.disabled = true;
@@ -73,7 +73,7 @@ const Rivalry = props => {
                     </tr>
                 </thead>
                 <tbody>
-                    {rivalry.matches.map(match => {
+                    {rivalry.matches.map((match) => {
                         const winner = match.isWinner
                             ? `${user.firstName} ${user.lastName}`
                             : `${rivalry.opponent.firstName} ${rivalry.opponent.lastName}`;

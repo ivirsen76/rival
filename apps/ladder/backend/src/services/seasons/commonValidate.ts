@@ -3,7 +3,7 @@ import yup from '../../packages/yup';
 import { getSchemaErrors } from '../../helpers';
 import dayjs from '../../utils/dayjs';
 
-export default values => {
+export default (values) => {
     const currentYear = new Date().getFullYear();
 
     const schema = yup.object().shape({
@@ -15,8 +15,8 @@ export default values => {
         season: yup
             .string()
             .required('Season is required.')
-            .test('fromConstant', 'The season is wrong.', value =>
-                SEASON_OPTIONS.some(season => season.value === value)
+            .test('fromConstant', 'The season is wrong.', (value) =>
+                SEASON_OPTIONS.some((season) => season.value === value)
             ),
         startDate: yup.string().required('Start date is required.').isValidDate(),
         weeks: yup.number().required().integer().min(1).max(20),

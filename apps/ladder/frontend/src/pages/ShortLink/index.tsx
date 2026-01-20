@@ -5,7 +5,7 @@ import Error from '@/components/Error';
 import axios from '@/utils/axios';
 import { useHistory } from 'react-router-dom';
 
-const ShortLink = props => {
+const ShortLink = (props) => {
     const { name, code } = props.match.params;
     const [error, setError] = useState();
     const history = useHistory();

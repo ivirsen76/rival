@@ -66,7 +66,7 @@ const tooManyProposals = 8;
 const sortByDate = (a, b) =>
     !a.playedAt || !b.playedAt || a.playedAt === b.playedAt ? a.id - b.id : a.playedAt.localeCompare(b.playedAt);
 
-const getEloDifference = match => {
+const getEloDifference = (match) => {
     const diff = match.challengerElo - match.challengerEloChange - (match.acceptorElo - match.acceptorEloChange);
     return formatElo(match.winner === match.challengerId ? -diff : diff);
 };
@@ -83,7 +83,7 @@ export const getUpcomingMatches = ({ tournament, currentUser }) => {
     const partners = players[currentPlayerId]?.partners;
 
     return tournament.matches
-        .filter(match => {
+        .filter((match) => {
             if (!currentPlayerId) {
                 return false;
             }
@@ -99,7 +99,7 @@ export const getUpcomingMatches = ({ tournament, currentUser }) => {
 
             const playerIds = [match.challengerId, match.acceptorId, match.challenger2Id, match.acceptor2Id];
             if (partners) {
-                if (!partners.some(item => playerIds.includes(item.id))) {
+                if (!partners.some((item) => playerIds.includes(item.id))) {
                     return false;
                 }
             } else if (!playerIds.includes(currentPlayerId)) {
@@ -118,12 +118,12 @@ export const getUpcomingMatches = ({ tournament, currentUser }) => {
         .sort(sortByDate);
 };
 
-const Overview = props => {
+const Overview = (props) => {
     const { tournament, reloadTournament } = props;
     const { players, winner, topUpsetMatches, isStarted, isOver, isBreak, isFinalTournament, cancelFinalTournament } =
         tournament;
     const [showAll, setShowAll] = useState(false);
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const [learnedTheRules, setLearnedTheRules] = useState(Boolean(currentUser?.learnedTheRules));
     const size = useBreakpoints();
     const { settings } = useSettings();
@@ -177,14 +177,14 @@ const Overview = props => {
             .tz(tournament.endDate)
             .subtract(settings.config.tournamentReminderWeeks, 'week')
             .format('YYYY-MM-DD HH:mm:ss');
-        const finalMatchesLocal = tournament.matches.filter(match => match.type === 'final' && !match.battleId);
-        const finalMatch = finalMatchesLocal.find(match => match.finalSpot === 1);
+        const finalMatchesLocal = tournament.matches.filter((match) => match.type === 'final' && !match.battleId);
+        const finalMatch = finalMatchesLocal.find((match) => match.finalSpot === 1);
         const doublesFinalMatch =
-            tournament.doublesMatches && tournament.doublesMatches.find(match => match.finalSpot === 1);
+            tournament.doublesMatches && tournament.doublesMatches.find((match) => match.finalSpot === 1);
 
         const currentMatches = tournament.matches
             .filter(
-                match =>
+                (match) =>
                     match.type === 'regular' &&
                     !match.unavailable &&
                     match.acceptedAt &&
@@ -218,7 +218,7 @@ const Overview = props => {
 
                 return true;
             })(),
-            playedMatches: tournament.matches.filter(match => match.score && !match.wonByDefault),
+            playedMatches: tournament.matches.filter((match) => match.score && !match.wonByDefault),
             finalMatches: finalMatchesLocal,
             isChampion: (() => {
                 if (isDoublesTeam) {
@@ -244,22 +244,22 @@ const Overview = props => {
                 );
             })(),
             isFinalWonDefault: Boolean(finalMatch?.wonByDefault),
-            todayMatches: currentMatches.filter(match => dayjs.tz(match.playedAt).isSame(currentDate, 'day')),
-            yesterdayMatches: currentMatches.filter(match => dayjs.tz(match.playedAt).isSame(yesterdayDate, 'day')),
-            tomorrowMatches: currentMatches.filter(match => dayjs.tz(match.playedAt).isSame(tomorrowDate, 'day')),
+            todayMatches: currentMatches.filter((match) => dayjs.tz(match.playedAt).isSame(currentDate, 'day')),
+            yesterdayMatches: currentMatches.filter((match) => dayjs.tz(match.playedAt).isSame(yesterdayDate, 'day')),
+            tomorrowMatches: currentMatches.filter((match) => dayjs.tz(match.playedAt).isSame(tomorrowDate, 'day')),
             proposals: tournament.matches
-                .filter(match => {
+                .filter((match) => {
                     if (match.initial !== 1 || match.acceptedAt || match.playedAt <= currentDateString) {
                         return false;
                     }
 
                     const proposer = players[match.challengerId];
                     const userIds = [match.challengerId, match.acceptorId, match.challenger2Id, match.acceptor2Id].map(
-                        id => players[id]?.userId
+                        (id) => players[id]?.userId
                     );
 
                     if (currentUser && !userIds.includes(currentUser.id)) {
-                        if (userIds.some(id => currentUser.avoidedUsers.includes(id))) {
+                        if (userIds.some((id) => currentUser.avoidedUsers.includes(id))) {
                             return false;
                         }
                         if (currentUser.isSoftBan && !proposer.elo.isEloEstablished) {
@@ -299,7 +299,7 @@ const Overview = props => {
                 })
                 .sort(sortByDate),
             upcomingMatches: currentUser ? getUpcomingMatches({ tournament, currentUser }) : [],
-            totalPlayers: Object.values(players).filter(player => {
+            totalPlayers: Object.values(players).filter((player) => {
                 if (player.hidden) {
                     return false;
                 }
@@ -357,7 +357,7 @@ const Overview = props => {
     const isXs = size === 'xs';
     const isMobile = ['xs', 'sm', 'md'].includes(size);
     const isLarge = ['xl', 'xxl'].includes(size);
-    const isFinalFor16 = Math.max(...finalMatches.map(item => item.finalSpot)) > 7;
+    const isFinalFor16 = Math.max(...finalMatches.map((item) => item.finalSpot)) > 7;
     const dayMatches =
         matchesDay === 'yesterday' ? yesterdayMatches : matchesDay === 'tomorrow' ? tomorrowMatches : todayMatches;
 
@@ -468,7 +468,7 @@ const Overview = props => {
                     renderBody={({ hide }) => (
                         <ActualFormProposal
                             tournament={tournament}
-                            onSubmit={async values => {
+                            onSubmit={async (values) => {
                                 await reloadTournament();
                                 hide();
                             }}
@@ -647,7 +647,7 @@ const Overview = props => {
                     renderBody={({ hide }) => (
                         <SwitchLadderForm
                             tournament={tournament}
-                            onSubmit={values => {
+                            onSubmit={(values) => {
                                 hide();
                                 notification({
                                     inModal: true,
@@ -762,7 +762,7 @@ const Overview = props => {
                             {otherActions}
                         </div>
                     }
-                    onShow={instance => {
+                    onShow={(instance) => {
                         otherActionsTooltipRef.current = instance;
                     }}
                 >
@@ -785,7 +785,7 @@ const Overview = props => {
                 <>
                     <h3>{isDoublesTeam ? "Your Team's Upcoming Matches" : 'Your Upcoming Sessions'}</h3>
                     <div className={style.matchWrapper} data-your-upcoming-matches>
-                        {upcomingMatches.map(match => {
+                        {upcomingMatches.map((match) => {
                             if (match.practiceType) {
                                 return (
                                     <Proposal
@@ -1045,7 +1045,7 @@ const Overview = props => {
                     <div className="mt-4">
                         <a
                             href=""
-                            onClick={e => {
+                            onClick={(e) => {
                                 e.preventDefault();
                                 setShowAll(true);
                             }}
@@ -1089,7 +1089,7 @@ const Overview = props => {
         </div>
     );
 
-    const bananas = settings.bananas.filter(item => item.images.square);
+    const bananas = settings.bananas.filter((item) => item.images.square);
 
     return (
         <div className="position-relative d-grid gap-6" key={tournament.id}>
@@ -1234,7 +1234,7 @@ const Overview = props => {
                             <div data-today-matches>
                                 {dayMatches.length > 0 ? (
                                     <div className={style.matchWrapper}>
-                                        {dayMatches.map(match => (
+                                        {dayMatches.map((match) => (
                                             <Match
                                                 key={match.id}
                                                 match={match}
@@ -1263,7 +1263,7 @@ const Overview = props => {
                         <Card>
                             <h3>Our Partner{bananas.length > 1 ? 's' : ''}</h3>
                             <div className="d-grid gap-6">
-                                {bananas.map(banana => (
+                                {bananas.map((banana) => (
                                     <a
                                         key={banana.name}
                                         href={banana.link}

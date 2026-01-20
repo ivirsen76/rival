@@ -93,7 +93,7 @@ test.beforeEach(async ({ page }) => {
         await common.confirmation.locator('button').getByText('Cancel').click();
 
         // wait for animation is gone
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await common.modal.locator('button').getByText('Propose match').click();
         await common.confirmation.locator('button').getByText('Yes').click();
@@ -140,7 +140,7 @@ test.beforeEach(async ({ page }) => {
         await expect(page.locator(`[data-proposal="${row.id}"]`)).toContainText('Gary M.');
         await expect(page.locator(`[data-proposal="${row.id}"]`)).toContainText('Doubles P.');
 
-        await new Promise(resolve => setTimeout(resolve, 500)); // to save emails in DB
+        await new Promise((resolve) => setTimeout(resolve, 500)); // to save emails in DB
         expect(await getNumRecords('emails')).toBe(1);
 
         const emailSent = await getRecord('emails');
@@ -205,7 +205,7 @@ test.beforeEach(async ({ page }) => {
         await expect(Match).toContainText('Cristopher H.');
         await expect(Match).toContainText('Gary M.');
 
-        await new Promise(resolve => setTimeout(resolve, 500)); // to save emails in DB
+        await new Promise((resolve) => setTimeout(resolve, 500)); // to save emails in DB
         expect(await getNumRecords('emails')).toBe(1);
 
         const emailSent = await getRecord('emails');
@@ -306,7 +306,7 @@ test.beforeEach(async ({ page }) => {
         expect(await overview.upcomingMatchesArea.locator('[data-match]').count()).toBe(2);
 
         // Check that an email is sent
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         const emailSent = await getRecord('emails');
         expect(emailSent.subject).toContain('Your upcoming match on');
         expect(emailSent.html).toContain('Raleigh, Men Doubles, Pullen, Ben D./Cristopher H. vs Matthew B./Gary M.');
@@ -336,7 +336,7 @@ test.beforeEach(async ({ page }) => {
         await expect(Proposal).not.toContainText('Mill');
 
         // Check that email is not sent
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         expect(await getNumRecords('emails')).toBe(0);
     });
 
@@ -452,7 +452,7 @@ test.beforeEach(async ({ page }) => {
         await common.modal.locator('button').getByText('Propose match').click();
         await expect(common.alert).toContainText('has been added');
 
-        await new Promise(resolve => setTimeout(resolve, 500)); // to save emails in DB
+        await new Promise((resolve) => setTimeout(resolve, 500)); // to save emails in DB
         expect(await getNumRecords('emails')).toBe(1);
 
         const emailSent = await getRecord('emails');
@@ -498,7 +498,7 @@ test.beforeEach(async ({ page }) => {
         await expect(Proposal).toBeHidden();
 
         // Check that email is sent
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         const emailSent = await getRecord('emails');
         expect(emailSent.subject).toContain('Your upcoming match');
         expect(emailSent.html).toContain('Four players agreed to play the match in Men Doubles');
@@ -514,7 +514,7 @@ test.beforeEach(async ({ page }) => {
         await overview.upcomingMatchesArea.locator('a').getByText('Score').click();
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(2);
 
@@ -534,7 +534,7 @@ test.beforeEach(async ({ page }) => {
         await overview.upcomingMatchesArea.locator('a').getByText('Score').click();
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(3);
         await match.pickMatchResult('Player defaulted');
@@ -579,7 +579,7 @@ test.beforeEach(async ({ page }) => {
         await page.locator('button').getByText('Next').click();
 
         await match.pickAcceptorPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickAcceptorPoints(0);
         await expect(common.modal).toContainText('+30');
@@ -612,7 +612,7 @@ test.beforeEach(async ({ page }) => {
         await page.locator('button').getByText('Next').click();
 
         await match.pickAcceptorPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickAcceptorPoints(0);
         await expect(common.modal).toContainText('+30');
@@ -657,7 +657,7 @@ test.beforeEach(async ({ page }) => {
         await common.tooltip.locator('button').getByText('Edit').click();
 
         await match.pickAcceptorPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await common.modal.locator('button').getByText('Report match').click();
 
         await expect(common.body).toContainText('+26');
@@ -710,7 +710,7 @@ test.beforeEach(async ({ page }) => {
         await expect(common.modal).toContainText('The match will have three');
 
         await page.locator('.btn-close').click();
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
 
         await page.locator('button').getByText('I am going').click();
         await expect(common.body).toContainText('You are registered for the tournament');

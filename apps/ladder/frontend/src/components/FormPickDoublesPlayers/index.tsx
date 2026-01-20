@@ -6,13 +6,13 @@ import { Formik, Form } from '@/components/formik';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const PickPlayersForm = props => {
+const PickPlayersForm = (props) => {
     const { match, players, isScheduling } = props;
 
     const challenger = players[match.challengerId];
     const acceptor = players[match.acceptorId];
 
-    const onSubmit = values => {
+    const onSubmit = (values) => {
         const challengers = values.challengers.filter(Boolean);
         const acceptors = values.acceptors.filter(Boolean);
 
@@ -45,7 +45,7 @@ const PickPlayersForm = props => {
         return values;
     };
 
-    const isValuesValid = values => {
+    const isValuesValid = (values) => {
         return values.challengers.filter(Boolean).length === 2 && values.acceptors.filter(Boolean).length === 2;
     };
 

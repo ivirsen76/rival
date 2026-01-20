@@ -5,7 +5,7 @@ import { hasAnyRole, populateSlug } from '../commonHooks';
 import { throwValidationErrors } from '../../helpers';
 import { keep, disallow } from 'feathers-hooks-common';
 
-const validateCreate = options => context => {
+const validateCreate = (options) => (context) => {
     const errors = commonValidate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -15,7 +15,7 @@ const validateCreate = options => context => {
     return context;
 };
 
-const populatePosition = options => async context => {
+const populatePosition = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const [result] = await sequelize.query('SELECT MAX(position) AS max FROM levels');
     const max = result[0].max;
@@ -24,13 +24,13 @@ const populatePosition = options => async context => {
     return context;
 };
 
-const orderByPosition = options => async context => {
+const orderByPosition = (options) => async (context) => {
     context.params.query.$sort = { position: 1 };
 
     return context;
 };
 
-const reorder = options => async context => {
+const reorder = (options) => async (context) => {
     const sourceId = context.id;
     const destinationId = context.data.destinationId;
     const { levels } = context.app.get('sequelizeClient').models;

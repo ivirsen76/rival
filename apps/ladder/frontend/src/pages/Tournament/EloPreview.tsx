@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import _omit from 'lodash/omit';
 import useAppearance from '@/utils/useAppearance';
 
-const EloPreview = props => {
+const EloPreview = (props) => {
     const { height, width, data } = props;
     const padding = 4;
     const minGap = 30;

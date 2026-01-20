@@ -1,4 +1,4 @@
-const getRelativeStringLength = str => {
+const getRelativeStringLength = (str) => {
     const sizes = {
         B: 0.9,
         C: 1.1,

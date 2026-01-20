@@ -10,7 +10,7 @@ function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
     };
 }
 
-const Arc = props => {
+const Arc = (props) => {
     const { list, width } = props;
 
     const circleRadius = 100 - width * list.length + width / 2;

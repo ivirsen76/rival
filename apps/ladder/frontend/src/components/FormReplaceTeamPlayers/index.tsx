@@ -6,12 +6,12 @@ import DoublesPlayersPicker from '@/components/formik/DoublesPlayersPicker';
 import { useSelector } from 'react-redux';
 import axios from '@/utils/axios';
 
-const FormReplaceTeamPlayers = props => {
+const FormReplaceTeamPlayers = (props) => {
     const { match, players, onSubmit } = props;
-    const currentUser = useSelector(state => state.auth.user);
-    const currentPlayer = Object.values(players).find(item => item.userId === currentUser.id);
+    const currentUser = useSelector((state) => state.auth.user);
+    const currentPlayer = Object.values(players).find((item) => item.userId === currentUser.id);
 
-    const handleSubmit = async values => {
+    const handleSubmit = async (values) => {
         await axios.put(`/api/matches/${match.id}`, { action: 'replaceTeammates', ...values });
         notification('Players have been replaced.');
         await onSubmit();

@@ -1,4 +1,4 @@
-const processStat = stat => {
+const processStat = (stat) => {
     const fill = (player, anotherPlayer) => {
         player.firstServeInPercent = Math.round((player.firstServeIn / player.serveTotal) * 100);
         player.firstServeWonPercent = Math.round((player.firstServeWon / player.firstServeIn) * 100);

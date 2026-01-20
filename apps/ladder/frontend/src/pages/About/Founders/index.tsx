@@ -5,7 +5,7 @@ import ScrollToTop from '@/components/ScrollToTop';
 import Header from '@/components/Header';
 import style from './style.module.scss';
 
-const Founders = props => {
+const Founders = (props) => {
     return (
         <div className="tl-front">
             <Header

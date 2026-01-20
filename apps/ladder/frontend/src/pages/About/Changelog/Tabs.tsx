@@ -2,7 +2,7 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-const Tabs = props => {
+const Tabs = (props) => {
     const { list } = props;
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
@@ -16,7 +16,7 @@ const Tabs = props => {
                         <a
                             href=""
                             className={classnames('nav-link', index === currentTabIndex && 'active')}
-                            onClick={e => {
+                            onClick={(e) => {
                                 e.preventDefault();
                                 setCurrentTabIndex(index);
                             }}

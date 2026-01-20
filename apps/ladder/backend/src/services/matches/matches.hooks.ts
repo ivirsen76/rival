@@ -37,13 +37,13 @@ import { getStatsMatches } from '../../utils/sqlConditions';
 import getMatchInfo from './getMatchInfo';
 import { getPlayerName, getEmailContact, getEmailLink, getPhoneLink } from '../users/helpers';
 
-const isAdmin = user => {
+const isAdmin = (user) => {
     const roles = user.roles.split(',');
 
     return roles.includes('admin') || roles.includes('manager');
 };
 
-const validateCreate = options => context => {
+const validateCreate = (options) => (context) => {
     const errors = validate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -53,7 +53,7 @@ const validateCreate = options => context => {
     return context;
 };
 
-const validatePatch = options => context => {
+const validatePatch = (options) => (context) => {
     const errors = validate({ ...context.data, challengerId: 1, acceptorId: 1 });
 
     if (!_isEmpty(errors)) {
@@ -63,12 +63,12 @@ const validatePatch = options => context => {
     return context;
 };
 
-const completePlayedAt = options => async context => {
+const completePlayedAt = (options) => async (context) => {
     context.data.playedAt += '+00:00';
     return context;
 };
 
-const populateWinner = options => async context => {
+const populateWinner = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { data } = context;
     const userId = context.params.user.id;
@@ -118,14 +118,14 @@ const populateWinner = options => async context => {
     }
 
     const tournamentId = challenger.tournamentId;
-    if ([challenger2, acceptor, acceptor2].some(item => item && item.tournamentId !== tournamentId)) {
+    if ([challenger2, acceptor, acceptor2].some((item) => item && item.tournamentId !== tournamentId)) {
         throw new Unprocessable('All players should be from the same tournament.');
     }
 
     context.params.tournamentId = tournamentId;
 
     if (!isAdmin(context.params.user)) {
-        if ([challenger, acceptor, challenger2, acceptor2].some(item => item && !item.isActive)) {
+        if ([challenger, acceptor, challenger2, acceptor2].some((item) => item && !item.isActive)) {
             throw new Unprocessable('The player is no longer available for matches.');
         }
 
@@ -174,7 +174,7 @@ const populateWinner = options => async context => {
     return context;
 };
 
-const sendReferralCredit = options => async context => {
+const sendReferralCredit = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { payments, users, players, matches } = sequelize.models;
     const { config } = context.params;
@@ -219,7 +219,7 @@ const sendReferralCredit = options => async context => {
         }
 
         const userFullName = getPlayerName(user);
-        await sequelize.transaction(async t => {
+        await sequelize.transaction(async (t) => {
             await payments.create(
                 {
                     userId: referrerUser.id,
@@ -249,7 +249,7 @@ const sendReferralCredit = options => async context => {
     return context;
 };
 
-const sendEstablishedEloNotification = options => async context => {
+const sendEstablishedEloNotification = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { users, players, matches } = sequelize.models;
     const { config } = context.params;
@@ -325,13 +325,13 @@ const sendEstablishedEloNotification = options => async context => {
 
             // Recommend the same gender level, which baseTlr is within SUITABLE_DIFF and close to the current level
             [suggestedLevel] = levels
-                .map(item => ({
+                .map((item) => ({
                     ...item,
                     tlrDiff: Math.abs(item.baseTlr - elo),
                     currentLevelTlrDiff: Math.abs(item.baseTlr - currentLevel.baseTlr),
                 }))
                 .filter(
-                    item =>
+                    (item) =>
                         item.slug !== currentLevel.slug && item.tlrDiff <= SUITABLE_DIFF && genderRegex.test(item.name)
                 )
                 .sort((a, b) => a.currentLevelTlrDiff - b.currentLevelTlrDiff);
@@ -451,7 +451,7 @@ const populateNextFinalMatch = async (context, prevMatch) => {
     }
 };
 
-const populateWinnerForPatch = options => async context => {
+const populateWinnerForPatch = (options) => async (context) => {
     const { data } = context;
     const matchId = Number(context.id);
 
@@ -505,7 +505,7 @@ const populateWinnerForPatch = options => async context => {
     }
 
     const tournamentId = challenger.tournamentId;
-    if ([challenger2, acceptor, acceptor2].some(item => item && item.tournamentId !== tournamentId)) {
+    if ([challenger2, acceptor, acceptor2].some((item) => item && item.tournamentId !== tournamentId)) {
         throw new Unprocessable('All players should be from the same tournament.');
     }
 
@@ -533,7 +533,7 @@ const populateWinnerForPatch = options => async context => {
     return context;
 };
 
-const updateEloAndRank = options => async context => {
+const updateEloAndRank = (options) => async (context) => {
     const { players, tournaments } = context.app.get('sequelizeClient').models;
 
     const challenger = await players.findOne({
@@ -549,7 +549,7 @@ const updateEloAndRank = options => async context => {
     return context;
 };
 
-const checkDuplicatedMatch = options => async context => {
+const checkDuplicatedMatch = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const { challengerUserId, acceptorUserId, playedAt } = context.data;
@@ -587,7 +587,7 @@ const checkDuplicatedMatch = options => async context => {
     );
 
     const duplicatedMatch = rows.find(
-        row =>
+        (row) =>
             (row.challengerUserId === challengerUserId && row.acceptorUserId === acceptorUserId) ||
             (row.challengerUserId === acceptorUserId && row.acceptorUserId === challengerUserId)
     );
@@ -599,7 +599,7 @@ const checkDuplicatedMatch = options => async context => {
     return context;
 };
 
-const replacePlayers = options => async context => {
+const replacePlayers = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -637,7 +637,7 @@ const replacePlayers = options => async context => {
         `SELECT id FROM players WHERE tournamentId=:tournamentId AND isActive=1`,
         { replacements: { tournamentId } }
     );
-    const playerIds = new Set(allPlayers.map(item => item.id));
+    const playerIds = new Set(allPlayers.map((item) => item.id));
     if (challengerId && !playerIds.has(challengerId)) {
         throw new Unprocessable('Challenger is not from this tournament');
     }
@@ -652,7 +652,7 @@ const replacePlayers = options => async context => {
                 (p.id IN (SELECT challengerId FROM matches WHERE type="final") || p.id IN (SELECT acceptorId FROM matches WHERE type="final"))`,
         { replacements: { tournamentId } }
     );
-    const playingPlayersSet = new Set(playingPlayers.map(item => item.id));
+    const playingPlayersSet = new Set(playingPlayers.map((item) => item.id));
     playingPlayersSet.delete(match.challengerId);
     playingPlayersSet.delete(match.acceptorId);
 
@@ -685,7 +685,7 @@ const replacePlayers = options => async context => {
     return context;
 };
 
-const scheduleMatch = options => async context => {
+const scheduleMatch = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -804,7 +804,7 @@ const scheduleMatch = options => async context => {
     return context;
 };
 
-const clearResult = options => async context => {
+const clearResult = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const matchId = Number(context.id);
@@ -864,7 +864,7 @@ const clearResult = options => async context => {
     return context;
 };
 
-const addStats = options => async context => {
+const addStats = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -1058,7 +1058,7 @@ const addStats = options => async context => {
     return context;
 };
 
-const sendMatchNotification = options => async context => {
+const sendMatchNotification = (options) => async (context) => {
     // Don't wait for this function to run just to not let user to wait
     (async () => {
         const { TL_URL } = process.env;
@@ -1101,7 +1101,7 @@ const sendMatchNotification = options => async context => {
     return context;
 };
 
-const sendNewRivalryNotification = options => async context => {
+const sendNewRivalryNotification = (options) => async (context) => {
     // Don't wait for this function to run just to not let user to wait
     (async () => {
         const { TL_URL } = process.env;
@@ -1208,7 +1208,7 @@ const sendNewRivalryNotification = options => async context => {
                     [0, 0]
                 );
 
-                const history = matches.map(item => {
+                const history = matches.map((item) => {
                     const isWinner =
                         (item.challengerId === item.winner && item.challengerUserId === user.id) ||
                         (item.acceptorId === item.winner && item.acceptorUserId === user.id);
@@ -1251,7 +1251,7 @@ const sendNewRivalryNotification = options => async context => {
     return context;
 };
 
-const setPredictionWinner = options => async context => {
+const setPredictionWinner = (options) => async (context) => {
     const match = context.result;
 
     if (match.type !== 'final' || match.finalSpot !== 1 || !match.score) {
@@ -1284,7 +1284,7 @@ const setPredictionWinner = options => async context => {
         return context;
     }
 
-    const predictions = Object.values(tournamentInfo.data.players).filter(player => player.predictionPoints);
+    const predictions = Object.values(tournamentInfo.data.players).filter((player) => player.predictionPoints);
     if (tournamentInfo.data.botPrediction) {
         predictions.push({
             id: BRACKET_BOT_ID,
@@ -1333,7 +1333,7 @@ const setPredictionWinner = options => async context => {
     return context;
 };
 
-const removeScheduledMatch = options => async context => {
+const removeScheduledMatch = (options) => async (context) => {
     const { app } = context;
     const sequelize = context.app.get('sequelizeClient');
     const matchId = Number(context.id);
@@ -1389,7 +1389,7 @@ const removeScheduledMatch = options => async context => {
     return context;
 };
 
-const generateMatchBadges = options => async context => {
+const generateMatchBadges = (options) => async (context) => {
     const { app } = context;
     const { players } = app.get('sequelizeClient').models;
 
@@ -1412,7 +1412,7 @@ const generateMatchBadges = options => async context => {
     return context;
 };
 
-const populateMultipleLadderMatch = options => async context => {
+const populateMultipleLadderMatch = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { players, tournaments, matches } = sequelize.models;
 
@@ -1463,7 +1463,7 @@ const populateMultipleLadderMatch = options => async context => {
             obj[item.tournamentId].users[item.userId] = item.id;
             return obj;
         }, {})
-    ).filter(item => Object.values(item.users).length === 2);
+    ).filter((item) => Object.values(item.users).length === 2);
 
     if (sameTournaments.length === 0) {
         return context;
@@ -1500,7 +1500,7 @@ const populateMultipleLadderMatch = options => async context => {
                   WHERE t.levelId=l.id AND t.id IN (${ladders.join(',')})
                ORDER BY l.position`
         );
-        context.result.multiLadderMatch = levels.map(item => item.name);
+        context.result.multiLadderMatch = levels.map((item) => item.name);
 
         if (currentUser.id === challenger.userId || currentUser.id === acceptor.userId) {
             const ACTION_NAME = 'multiLadderMatchAlert';
@@ -1520,7 +1520,7 @@ const populateMultipleLadderMatch = options => async context => {
     return context;
 };
 
-const populatePartners = options => async context => {
+const populatePartners = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { players, matches } = sequelize.models;
 
@@ -1565,7 +1565,7 @@ const populatePartners = options => async context => {
     return context;
 };
 
-const removeSameMatches = options => async context => {
+const removeSameMatches = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { id, sameAs } = context.result;
     const { matches } = sequelize.models;
@@ -1591,7 +1591,7 @@ const removeSameMatches = options => async context => {
     return context;
 };
 
-const removeMatch = options => async context => {
+const removeMatch = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
     const { config } = context.params;
@@ -1651,7 +1651,7 @@ const removeMatch = options => async context => {
     return context;
 };
 
-const replaceTeammates = options => async context => {
+const replaceTeammates = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
     const { matches } = sequelize.models;
@@ -1678,7 +1678,7 @@ const replaceTeammates = options => async context => {
         throw new Unprocessable('You cannot do this task.');
     }
 
-    if (players.every(id => matchInfo.challengerTeamPlayerIds.includes(id))) {
+    if (players.every((id) => matchInfo.challengerTeamPlayerIds.includes(id))) {
         await matches.update(
             {
                 challengerId: players[0],
@@ -1686,7 +1686,7 @@ const replaceTeammates = options => async context => {
             },
             { where: { id: matchId } }
         );
-    } else if (players.every(id => matchInfo.acceptorTeamPlayerIds.includes(id))) {
+    } else if (players.every((id) => matchInfo.acceptorTeamPlayerIds.includes(id))) {
         await matches.update(
             {
                 acceptorId: players[0],
@@ -1704,7 +1704,7 @@ const replaceTeammates = options => async context => {
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

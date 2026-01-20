@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import style from './style.module.scss';
 
-const LoaderWithProgress = props => {
+const LoaderWithProgress = (props) => {
     const { loading, message, percent } = props;
 
     if (!loading) {

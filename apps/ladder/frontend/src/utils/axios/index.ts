@@ -5,7 +5,7 @@ import _set from 'lodash/set';
 import notification from '@/components/notification';
 import reload from '@/components/ReloadOnUpdate';
 
-axios.interceptors.response.use(response => {
+axios.interceptors.response.use((response) => {
     const serverHash = response.headers['rival-hash'];
     if (serverHash) {
         const clientHash = window.tl?.hash;
@@ -19,7 +19,7 @@ axios.interceptors.response.use(response => {
     return response;
 }, null);
 
-axios.interceptors.request.use(config => {
+axios.interceptors.request.use((config) => {
     // add JWT from local storage
     const token = localStorage.getItem('tokenLoginAs') || localStorage.getItem('token');
     if (token) {
@@ -29,7 +29,7 @@ axios.interceptors.request.use(config => {
     return config;
 }, null);
 
-axios.interceptors.response.use(null, error => {
+axios.interceptors.response.use(null, (error) => {
     if (error && error.response) {
         switch (error.response.status) {
             // Validation errors

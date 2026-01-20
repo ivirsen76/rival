@@ -17,7 +17,7 @@ import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import { BYE_ID } from '@rival/ladder.backend/src/constants';
 import style from './style.module.scss';
 
-export const getPoints = score => {
+export const getPoints = (score) => {
     const positions = [
         [0, 0, 0],
         [0, 1, 1],
@@ -25,14 +25,14 @@ export const getPoints = score => {
         [1, 1, 0],
     ];
 
-    return positions.map(position =>
+    return positions.map((position) =>
         score.reduce((sum, pair, index) => {
             return sum + (pair[position[index]] || 0);
         }, 0)
     );
 };
 
-const RoundRobin = props => {
+const RoundRobin = (props) => {
     const { match, player1, player2, player3, player4 } = props;
 
     const options = [
@@ -43,7 +43,7 @@ const RoundRobin = props => {
 
     const renderPart = (pair, score, setFieldValue) => {
         const list = [player1, player2, player3, player4];
-        const getPlayer = num => list[options[pair][num - 1]];
+        const getPlayer = (num) => list[options[pair][num - 1]];
 
         const changeScore = async (index, value) => {
             const scorePair = Math.floor(index / 2);
@@ -65,7 +65,7 @@ const RoundRobin = props => {
                             <PlayerName player1={getPlayer(1)} player2={getPlayer(2)} />
                         </td>
                         <td className="ps-4" data-number-picker={pair * 2}>
-                            <NumberPicker value={score[pair][0]} onChange={num => changeScore(pair * 2, num)} />
+                            <NumberPicker value={score[pair][0]} onChange={(num) => changeScore(pair * 2, num)} />
                         </td>
                     </tr>
                     <tr>
@@ -76,7 +76,7 @@ const RoundRobin = props => {
                             <PlayerName player1={getPlayer(3)} player2={getPlayer(4)} />
                         </td>
                         <td className="ps-4" data-number-picker={pair * 2 + 1}>
-                            <NumberPicker value={score[pair][1]} onChange={num => changeScore(pair * 2 + 1, num)} />
+                            <NumberPicker value={score[pair][1]} onChange={(num) => changeScore(pair * 2 + 1, num)} />
                         </td>
                     </tr>
                 </tbody>
@@ -84,7 +84,7 @@ const RoundRobin = props => {
         );
     };
 
-    const onSubmit = async values => {
+    const onSubmit = async (values) => {
         await axios.put(`/api/doublesmatches/${match.id}`, {
             action: 'setScore',
             score: values.score,
@@ -141,17 +141,17 @@ RoundRobin.propTypes = {
     onChange: PropTypes.func,
 };
 
-const Result = props => {
-    const currentUser = useSelector(state => state.auth.user);
+const Result = (props) => {
+    const currentUser = useSelector((state) => state.auth.user);
     const { match, player1, player2, player3, player4, finalSpot, winnerCount, readOnly } = props;
     const tooltipRef = useRef();
 
     const arr = [player1, player2, player3, player4];
-    const userIds = arr.map(player => player?.userId);
+    const userIds = arr.map((player) => player?.userId);
     const isMyMatch = currentUser && userIds.includes(currentUser.id);
     const isAdmin = hasAnyRole(currentUser, ['admin', 'manager']);
     const hasAllPlayers = userIds.every(Boolean);
-    const hasBye = arr.some(player => player.id === BYE_ID);
+    const hasBye = arr.some((player) => player.id === BYE_ID);
     const isPlayed = Boolean(match.score1);
     const points = getPoints([
         match.score1 ? match.score1.split('-').map(Number) : [],
@@ -162,7 +162,7 @@ const Result = props => {
     const hasScore = points.reduce((sum, num) => sum + num, 0) === 48;
     const winners = (() => {
         if (hasBye) {
-            return arr.map(player => player.id).filter(id => id && id !== BYE_ID);
+            return arr.map((player) => player.id).filter((id) => id && id !== BYE_ID);
         }
 
         if (!hasScore) {
@@ -181,7 +181,7 @@ const Result = props => {
                     'lastName'
                 )
             )
-            .map(player => player.id)
+            .map((player) => player.id)
             .slice(0, finalSpot === 1 ? 1 : winnerCount);
     })();
 
@@ -226,7 +226,7 @@ const Result = props => {
                                     className="btn btn-success btn-xs"
                                     style={{ marginBottom: '-0.2rem' }}
                                     data-order-of-play={finalSpot}
-                                    onClick={async e => {
+                                    onClick={async (e) => {
                                         e.preventDefault();
                                         show();
                                     }}
@@ -267,7 +267,7 @@ const Result = props => {
                                     {actions}
                                 </div>
                             }
-                            onShow={instance => {
+                            onShow={(instance) => {
                                 tooltipRef.current = instance;
                             }}
                         >

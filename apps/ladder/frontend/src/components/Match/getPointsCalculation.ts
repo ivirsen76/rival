@@ -1,10 +1,10 @@
-export default props => {
+export default (props) => {
     const { challengerRank, acceptorRank, score } = props;
 
     const result = { participationBonus: 2, challengerBonus: 2 };
 
     const MAX_POINTS = 40;
-    const sets = score.split(' ').map(item => item.split('-').map(Number));
+    const sets = score.split(' ').map((item) => item.split('-').map(Number));
     const lastSet = sets[sets.length - 1];
     const isChallengerWon = lastSet[0] > lastSet[1];
     const winnerRankDiff = isChallengerWon ? challengerRank - acceptorRank : acceptorRank - challengerRank;
@@ -28,7 +28,7 @@ export default props => {
     }
 
     result.gamesDiff = sets
-        .map(item => item[0] - item[1])
+        .map((item) => item[0] - item[1])
         .reduce((sum, item) => sum + (isChallengerWon ? item : -item), 0);
     if (result.gamesDiff < 2) {
         result.gamesDiff = 2;

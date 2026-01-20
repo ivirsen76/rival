@@ -15,7 +15,7 @@ import getRegisterNotificationProps from '@/utils/getRegisterNotificationProps';
 import { useHistory } from 'react-router-dom';
 import style from './style.module.scss';
 
-const Payment = props => {
+const Payment = (props) => {
     const { fullSettings } = props;
     const [order, setOrder] = useState(null);
     const dispatch = useDispatch();
@@ -42,7 +42,7 @@ const Payment = props => {
     return (
         <Formik
             initialValues={{}}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 const { data } = await axios.post('/api/orders', {
                     seasonId: fullSettings.season.id,
                     tournaments: fullSettings.tournaments.list,

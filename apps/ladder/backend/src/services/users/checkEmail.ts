@@ -1,7 +1,7 @@
 import axios from 'axios';
 import logger from '@rival-tennis-ladder/logger';
 
-const checkEmail = async email => {
+const checkEmail = async (email) => {
     const { TL_SERVICE_URL, TL_SECRET_KEY } = process.env;
 
     const result = {

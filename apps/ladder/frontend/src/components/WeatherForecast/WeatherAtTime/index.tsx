@@ -4,12 +4,12 @@ import useSettings from '@/utils/useSettings';
 import dayjs from '@/utils/dayjs';
 import style from './style.module.scss';
 
-const WeatherAtTime = props => {
+const WeatherAtTime = (props) => {
     const { settings } = useSettings();
     const hours = settings.settings.weather?.hours || [];
     const time = dayjs.tz(props.time);
     const timeAsString = time.format('YYYY-MM-DD HH:mm:ss');
-    const index = hours.findIndex(item => item.datetime > timeAsString);
+    const index = hours.findIndex((item) => item.datetime > timeAsString);
 
     if (index === -1) {
         return null;

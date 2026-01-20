@@ -5,9 +5,9 @@ import axios from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import DoublesPlayersPicker from '@/components/formik/DoublesPlayersPicker';
 
-const FormReplaceCaptain = props => {
+const FormReplaceCaptain = (props) => {
     const { tournament, hide, onSubmit } = props;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const currentPlayerId = currentUser.tournaments[tournament.id].playerId;
     const currentPlayer = tournament.players[currentPlayerId];
 
@@ -17,7 +17,7 @@ const FormReplaceCaptain = props => {
     return (
         <Formik
             initialValues={{ players: needPickPlayer ? [currentPlayerId] : currentPlayer.partnerIds }}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await axios.put(`/api/players/${currentPlayerId}`, {
                     action: 'replaceCaptain',
                     captainId: values.players[1],

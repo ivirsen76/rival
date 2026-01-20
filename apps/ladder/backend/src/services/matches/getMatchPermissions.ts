@@ -4,7 +4,7 @@ function hasAnyRole(user, desiredRoles) {
     if (!user) {
         return false;
     }
-    return user.roles.split(',').some(role => desiredRoles.includes(role));
+    return user.roles.split(',').some((role) => desiredRoles.includes(role));
 }
 
 const getMatchPermissions = ({
@@ -59,7 +59,7 @@ const getMatchPermissions = ({
         isDoublesTeam &&
         currentPlayer &&
         !currentPlayer.partnerId &&
-        !players.some(item => item.partnerId === currentPlayer.id);
+        !players.some((item) => item.partnerId === currentPlayer.id);
     const isPoolPlayer = isDoublesTeam && currentPlayer && currentPlayer.partnerId === POOL_PARTNER_ID;
     const isTeammate = isDoublesTeam && currentPlayer && !isAloneCaptain && !isPoolPlayer;
     const isCurrentUserMatch = (() => {

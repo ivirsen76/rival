@@ -46,7 +46,7 @@ export const TopBlock = () => {
 
     const cities = (config.otherCities || '')
         .split(',')
-        .map(name => name.trim())
+        .map((name) => name.trim())
         .filter(Boolean);
 
     return (
@@ -114,7 +114,7 @@ export const TopBlock = () => {
                         <div className={style.cities}>
                             <div>Serving these communities:</div>
                             <div className={style.list}>
-                                {cities.map(city => (
+                                {cities.map((city) => (
                                     <div key={city}>
                                         <MarkerIcon />
                                         {city}
@@ -131,7 +131,7 @@ export const TopBlock = () => {
 
 export const topBlockClassname = style.topBlock;
 
-const Home = props => {
+const Home = (props) => {
     const { data, isLoading } = useQuery('/api/seasons/0', {
         keepPreviousData: true,
         staleTime: 0,
@@ -145,7 +145,7 @@ const Home = props => {
     const size = useBreakpoints();
     const config = useConfig();
     const { settings } = useSettings();
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
 
     const hasWordcloud = useMemo(() => {
         return (
@@ -164,8 +164,8 @@ const Home = props => {
         return <Loader loading />;
     }
 
-    const format = date => dayjs.tz(date).format('MMM D');
-    const getFinalTournamentDates = tournament => {
+    const format = (date) => dayjs.tz(date).format('MMM D');
+    const getFinalTournamentDates = (tournament) => {
         return `Starting ${format(dayjs.tz(tournament.endDate).isoWeekday(1))}`;
     };
 
@@ -211,7 +211,7 @@ const Home = props => {
     };
 
     const isLarge = ['xl', 'xxl', 'lg'].includes(size);
-    const getFreeMessage = season => {
+    const getFreeMessage = (season) => {
         if (!season.isFree) {
             return null;
         }
@@ -224,7 +224,7 @@ const Home = props => {
         );
     };
 
-    const getLevelGroups = levels => {
+    const getLevelGroups = (levels) => {
         const result = levels.reduce((obj, level) => {
             let key = 'men';
             if (['doubles', 'doubles-team'].includes(level.levelType)) {
@@ -245,7 +245,7 @@ const Home = props => {
         ];
     };
 
-    const addLineBreak = text => {
+    const addLineBreak = (text) => {
         if (!/\sDBLS/.test(text)) {
             return text;
         }
@@ -260,8 +260,8 @@ const Home = props => {
         );
     };
 
-    const otherCities = config.otherCities ? config.otherCities.split(',').map(item => item.trim()) : [];
-    const bananas = settings.bananas.filter(item => item.images.normal);
+    const otherCities = config.otherCities ? config.otherCities.split(',').map((item) => item.trim()) : [];
+    const bananas = settings.bananas.filter((item) => item.images.normal);
 
     return (
         <div>
@@ -274,7 +274,7 @@ const Home = props => {
                     logo: 'https://utl.nyc3.digitaloceanspaces.com/images/logo.svg',
                     url: `https://${config.url}.tennis-ladder.com`,
                     legalName: 'Rival Tennis Ladder, LLC',
-                    areaServed: otherCities.map(city => ({
+                    areaServed: otherCities.map((city) => ({
                         '@type': 'City',
                         name: city,
                     })),
@@ -304,9 +304,9 @@ const Home = props => {
                                         {(() => {
                                             const levelGroups = getLevelGroups(data.nextTournament.levels);
 
-                                            return levelGroups.map(group => (
+                                            return levelGroups.map((group) => (
                                                 <div key={group.slug} className={style.levelWrapper}>
-                                                    {group.list.map(level => (
+                                                    {group.list.map((level) => (
                                                         <Link
                                                             key={level.levelSlug}
                                                             to={`/season/${data.nextTournament.season.year}/${data.nextTournament.season.season}/${level.levelSlug}`}
@@ -353,9 +353,9 @@ const Home = props => {
 
                                         return (
                                             <div>
-                                                {levelGroups.map(group => (
+                                                {levelGroups.map((group) => (
                                                     <div key={group.slug} className={style.levelWrapper}>
-                                                        {group.list.map(level => (
+                                                        {group.list.map((level) => (
                                                             <Link
                                                                 key={level.levelSlug}
                                                                 to={`/season/${data.latestTournament.season.year}/${data.latestTournament.season.season}/${level.levelSlug}`}
@@ -401,7 +401,7 @@ const Home = props => {
                             <Card className={isLarge ? style.newsCard : ''}>
                                 <h1>News</h1>
                                 <div className={style.newsWrapper}>
-                                    {(news || []).slice(0, 10).map(item => (
+                                    {(news || []).slice(0, 10).map((item) => (
                                         <div key={item.id}>
                                             <div className="text-gray-500 fw-bold mb-1">
                                                 <span className="svg-icon svg-icon-2 svg-icon-primary me-2">
@@ -524,7 +524,7 @@ const Home = props => {
                 <div className={style.partner}>
                     <div className={style.label}>Our Partner{bananas.length > 1 ? 's' : ''}</div>
                     <div className="d-grid gap-8">
-                        {bananas.map(banana => (
+                        {bananas.map((banana) => (
                             <a
                                 key={banana.name}
                                 href={banana.link}

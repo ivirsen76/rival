@@ -10,15 +10,15 @@ import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.s
 import hasAnyRole from '@/utils/hasAnyRole';
 import style from './style.module.scss';
 
-const JustForm = props => {
+const JustForm = (props) => {
     const { values, players, playerOptions, setFieldValue, isAdmin } = props;
 
-    const getPlayerPicker = name => () => {
+    const getPlayerPicker = (name) => () => {
         if (!values[name]) {
             return;
         }
 
-        ['challengerId', 'challenger2Id', 'acceptorId', 'acceptor2Id'].forEach(field => {
+        ['challengerId', 'challenger2Id', 'acceptorId', 'acceptor2Id'].forEach((field) => {
             if (field === name) {
                 return;
             }
@@ -58,12 +58,12 @@ const JustForm = props => {
                 </select>
                 <select
                     className={style.select + ' form-select form-select-solid'}
-                    onChange={event => setFieldValue(name, Number(event.target.value))}
+                    onChange={(event) => setFieldValue(name, Number(event.target.value))}
                     name={name}
                     {...{ [`data-${name.toLowerCase()}`]: true }}
                 >
                     <option value={0}>Pick {label}</option>
-                    {playerOptions.map(player => (
+                    {playerOptions.map((player) => (
                         <option key={player.value} value={player.value}>
                             {player.label}
                         </option>
@@ -109,13 +109,13 @@ JustForm.propTypes = {
     isAdmin: PropTypes.bool,
 };
 
-const FormNewMatch = props => {
+const FormNewMatch = (props) => {
     const { tournament, onAdd } = props;
 
     const [matchValues, setMatchValues] = useState();
     const [playedAt, setPlayedAt] = useState();
 
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const isAdmin = hasAnyRole(currentUser, ['admin', 'manager']);
 
     const currentPlayerId = useMemo(() => {
@@ -123,19 +123,19 @@ const FormNewMatch = props => {
             return 0;
         }
 
-        return Object.values(tournament.players).find(item => item.userId === currentUser.id).id;
+        return Object.values(tournament.players).find((item) => item.userId === currentUser.id).id;
     }, [tournament.players, currentUser]);
 
     const playerOptions = useMemo(() => {
         return [
             ...Object.values(tournament.players)
-                .filter(item => item.isActive)
-                .map(item => ({ value: item.id, label: `${item.firstName} ${item.lastName}` }))
+                .filter((item) => item.isActive)
+                .map((item) => ({ value: item.id, label: `${item.firstName} ${item.lastName}` }))
                 .sort((a, b) => a.label.localeCompare(b.label)),
         ];
     }, [tournament.players]);
 
-    const onSubmit = values => {
+    const onSubmit = (values) => {
         setMatchValues(values);
         setPlayedAt('2021-05-03 17:50:47');
     };

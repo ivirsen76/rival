@@ -4,7 +4,7 @@ import fs from 'fs';
 import dayjs from './dayjs';
 import getCombinedConfig from './getCombinedConfig';
 
-export default async app => {
+export default async (app) => {
     const sequelize = app.get('sequelizeClient');
     const { TL_WEATHER_TEAM_ID, TL_WEATHER_KEY_ID, TL_WEATHER_AUTH_KEY_PATH } = process.env;
 
@@ -26,7 +26,7 @@ export default async app => {
         const prevWeather = JSON.parse(rows[0].weather);
         const prevDate = dayjs.tz().subtract(1, 'day').format('YYYY-MM-DD');
 
-        const result = prevWeather.hours.filter(item => item.datetime.startsWith(prevDate));
+        const result = prevWeather.hours.filter((item) => item.datetime.startsWith(prevDate));
         if (result.length === 24) {
             return result;
         }
@@ -72,7 +72,7 @@ export default async app => {
 
     const firstDay = dayjs.tz().hour(0).minute(0).second(0);
     const weather = {
-        days: response.data.forecastDaily.days.map(day => ({
+        days: response.data.forecastDaily.days.map((day) => ({
             datetime: day.forecastStart.slice(0, 10),
             condition: day.daytimeForecast.conditionCode,
             precip: day.precipitationAmount / 25.4,

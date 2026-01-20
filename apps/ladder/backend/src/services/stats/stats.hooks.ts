@@ -8,7 +8,7 @@ import isObsoleteBadge from '../users/isObsoleteBadge';
 import { getStatsMatches } from '../../utils/sqlConditions';
 
 // not hook, just a helper
-const getCurrentSeasonUsers = async context => {
+const getCurrentSeasonUsers = async (context) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentDate = dayjs.tz();
@@ -35,11 +35,11 @@ const getCurrentSeasonUsers = async context => {
         { replacements: { seasonId: currentSeason.id } }
     );
 
-    return new Set(userIds.map(item => item.userId));
+    return new Set(userIds.map((item) => item.userId));
 };
 
 // not hook, just a helper
-const getAllUsers = async context => {
+const getAllUsers = async (context) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const [users] = await sequelize.query(`
@@ -56,7 +56,7 @@ const getAllUsers = async context => {
     }, {});
 };
 
-const getMostMatchesStat = options => async context => {
+const getMostMatchesStat = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -108,7 +108,7 @@ const getMostMatchesStat = options => async context => {
     const allUsers = await getAllUsers(context);
     const MIN_MATCHES = 50;
     const list = Object.values(users)
-        .filter(item => item.matches >= MIN_MATCHES)
+        .filter((item) => item.matches >= MIN_MATCHES)
         .sort((a, b) => b.matches - a.matches)
         .map((u, i) => ({ ...u, ...allUsers[u.id] }));
 
@@ -117,7 +117,7 @@ const getMostMatchesStat = options => async context => {
     return context;
 };
 
-const getMostSeasonsStat = options => async context => {
+const getMostSeasonsStat = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -159,8 +159,8 @@ const getMostSeasonsStat = options => async context => {
     const allUsers = await getAllUsers(context);
     const MIN_SEASONS = 5;
     const list = Object.values(users)
-        .map(u => ({ ...u, seasons: u.seasons.size, ...allUsers[u.id] }))
-        .filter(item => item.seasons >= MIN_SEASONS)
+        .map((u) => ({ ...u, seasons: u.seasons.size, ...allUsers[u.id] }))
+        .filter((item) => item.seasons >= MIN_SEASONS)
         .sort((a, b) => b.seasons - a.seasons);
 
     context.result = { data: list };
@@ -168,7 +168,7 @@ const getMostSeasonsStat = options => async context => {
     return context;
 };
 
-const getHighestTlrStats = options => async context => {
+const getHighestTlrStats = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -216,16 +216,16 @@ const getHighestTlrStats = options => async context => {
     const allUsers = await getAllUsers(context);
     const MIN_ELO = 350;
     const list = Object.values(users)
-        .filter(item => item.elo >= MIN_ELO)
+        .filter((item) => item.elo >= MIN_ELO)
         .sort(compareFields('elo-desc', 'date'))
-        .map(u => ({ ...u, ...allUsers[u.id] }));
+        .map((u) => ({ ...u, ...allUsers[u.id] }));
 
     context.result = { data: list };
 
     return context;
 };
 
-const getMostProgress = options => async context => {
+const getMostProgress = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -274,7 +274,7 @@ const getMostProgress = options => async context => {
     const allUsers = await getAllUsers(context);
     const MIN_PROGRESS = 50;
     const list = Object.values(users)
-        .filter(item => item.diffElo >= MIN_PROGRESS)
+        .filter((item) => item.diffElo >= MIN_PROGRESS)
         .sort((a, b) => b.diffElo - a.diffElo)
         .map((u, i) => ({ ...u, ...allUsers[u.id] }));
 
@@ -283,7 +283,7 @@ const getMostProgress = options => async context => {
     return context;
 };
 
-const getMostRivalries = options => async context => {
+const getMostRivalries = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -321,12 +321,12 @@ const getMostRivalries = options => async context => {
     const allUsers = await getAllUsers(context);
     const MIN_RIVALRIES = 5;
     const list = Object.values(users)
-        .map(u => ({
+        .map((u) => ({
             ...u,
-            rivalries: Object.values(u.rivalries).filter(num => num >= 3).length,
+            rivalries: Object.values(u.rivalries).filter((num) => num >= 3).length,
             ...allUsers[u.id],
         }))
-        .filter(item => item.rivalries >= MIN_RIVALRIES)
+        .filter((item) => item.rivalries >= MIN_RIVALRIES)
         .sort((a, b) => b.rivalries - a.rivalries);
 
     context.result = { data: list };
@@ -334,7 +334,7 @@ const getMostRivalries = options => async context => {
     return context;
 };
 
-const getMostComebacks = options => async context => {
+const getMostComebacks = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -358,7 +358,7 @@ const getMostComebacks = options => async context => {
          WHERE ${getStatsMatches('m')}`);
 
     const users = {};
-    const addUser = id => {
+    const addUser = (id) => {
         if (!id) {
             return;
         }
@@ -397,11 +397,11 @@ const getMostComebacks = options => async context => {
     const allUsers = await getAllUsers(context);
     const MIN_COMEBACKS = 5;
     const list = Object.values(users)
-        .map(u => ({
+        .map((u) => ({
             ...u,
             ...allUsers[u.id],
         }))
-        .filter(item => item.comebacks >= MIN_COMEBACKS)
+        .filter((item) => item.comebacks >= MIN_COMEBACKS)
         .sort((a, b) => b.comebacks - a.comebacks);
 
     context.result = { data: list };
@@ -409,7 +409,7 @@ const getMostComebacks = options => async context => {
     return context;
 };
 
-const getLongestRivalries = options => async context => {
+const getLongestRivalries = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -465,8 +465,8 @@ const getLongestRivalries = options => async context => {
     const allUsers = await getAllUsers(context);
     const MIN_MATCHES = 10;
     const list = Object.values(rivalries)
-        .filter(item => item.matches >= MIN_MATCHES)
-        .map(u => ({
+        .filter((item) => item.matches >= MIN_MATCHES)
+        .map((u) => ({
             ...u,
             firstUser: allUsers[u.firstUserId],
             secondUser: allUsers[u.secondUserId],
@@ -482,7 +482,7 @@ const getLongestRivalries = options => async context => {
     return context;
 };
 
-const getMostBadges = options => async context => {
+const getMostBadges = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -517,11 +517,11 @@ const getMostBadges = options => async context => {
     const allUsers = await getAllUsers(context);
     const MIN_BADGES = 25;
     const list = Object.values(users)
-        .map(u => ({
+        .map((u) => ({
             ...u,
             ...allUsers[u.id],
         }))
-        .filter(item => item.badges >= MIN_BADGES)
+        .filter((item) => item.badges >= MIN_BADGES)
         .sort(compareFields('badges-desc', 'lastAchievedAt'));
 
     context.result = { data: list };
@@ -529,7 +529,7 @@ const getMostBadges = options => async context => {
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

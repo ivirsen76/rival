@@ -5,13 +5,13 @@ import Button from '@/components/Button';
 import notification from '@/components/notification';
 import axios from 'axios';
 
-const ReportCommentForm = props => {
+const ReportCommentForm = (props) => {
     const { commentId, onSubmit } = props;
 
     return (
         <Formik
             initialValues={{ message: '' }}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await axios.put(`/api/reports/${commentId}`, { action: 'reportAboutComment', ...values });
                 await onSubmit();
 
@@ -29,8 +29,8 @@ const ReportCommentForm = props => {
                         name="message"
                         label="Let us know what's wrong with this comment."
                         component={Textarea}
-                        onFocus={e => e.stopPropagation()}
-                        onKeyDown={e => e.stopPropagation()}
+                        onFocus={(e) => e.stopPropagation()}
+                        onKeyDown={(e) => e.stopPropagation()}
                         autoFocus
                     />
                     <Button isSubmitting={isSubmitting}>Submit</Button>

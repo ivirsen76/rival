@@ -17,7 +17,7 @@ import showLoader from '@/utils/showLoader';
 import useTabs from '../../Tournament/useTabs';
 import style from './style.module.scss';
 
-const Merge = props => {
+const Merge = (props) => {
     const queryClient = useQueryClient();
     const { data, isLoading } = useQuery('getDuplicatedUsers', async () => {
         const response = await axios.put('/api/users/0', { action: 'getDuplicatedUsers' });
@@ -37,7 +37,7 @@ const Merge = props => {
         }
 
         return data
-            .filter(item => (duplicatedMode === 'new' ? !item.ignored : item.ignored))
+            .filter((item) => (duplicatedMode === 'new' ? !item.ignored : item.ignored))
             .reduce((arr, item) => {
                 for (let i = 0; i < item.users.length; i++) {
                     const user = item.users[i];
@@ -209,10 +209,10 @@ const Merge = props => {
             name: 'metrics',
             label: 'Duplicates',
             className: 'text-center',
-            render: value =>
+            render: (value) =>
                 value ? (
                     <div className="d-flex flex-column gap-1 align-items-center">
-                        {value.map(metric => (
+                        {value.map((metric) => (
                             <div
                                 key={metric}
                                 className={classnames(
@@ -237,7 +237,7 @@ const Merge = props => {
             <div className="mb-8 ms-2">{duplicatedModeTabs}</div>
             <Table
                 showRowNumber={false}
-                getKey={row => row.key}
+                getKey={(row) => row.key}
                 className={'table tl-table ' + style.table}
                 getRowClassName={(row, index) => (index === 0 ? style.topPair : row.metrics ? style.pair : '')}
                 columns={columns}

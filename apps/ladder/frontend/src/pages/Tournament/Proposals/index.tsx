@@ -15,12 +15,12 @@ import checkUserReady from '@/utils/checkUserReady';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
-const Proposals = props => {
+const Proposals = (props) => {
     const { reloadTournament, tournament } = props;
     const { matches, players } = tournament;
     const [matchFilter, setMatchFilter] = useState('all');
     const { selected, playerFilter } = usePlayerFilter({ players });
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const config = useConfig();
     const currentPlayerId = currentUser?.tournaments[tournament.id]?.playerId;
     const currentPlayer = players[currentPlayerId];
@@ -31,21 +31,21 @@ const Proposals = props => {
         forceCheck();
     }, [selected, matchFilter]);
 
-    const proposals = matches.filter(match => {
+    const proposals = matches.filter((match) => {
         if (match.initial !== 1) {
             return false;
         }
 
         const playerIds = [match.challengerId, match.challenger2Id, match.acceptorId, match.acceptor2Id];
-        if (selected.length > 0 && !playerIds.some(playerId => selected.includes(playerId))) {
+        if (selected.length > 0 && !playerIds.some((playerId) => selected.includes(playerId))) {
             return false;
         }
 
         const proposer = players[match.challengerId];
-        const userIds = playerIds.map(id => players[id]?.userId);
+        const userIds = playerIds.map((id) => players[id]?.userId);
 
         if (currentUser && !userIds.includes(currentUser.id)) {
-            if (!match.acceptedAt && userIds.some(id => currentUser.avoidedUsers.includes(id))) {
+            if (!match.acceptedAt && userIds.some((id) => currentUser.avoidedUsers.includes(id))) {
                 return false;
             }
 
@@ -87,9 +87,9 @@ const Proposals = props => {
 
     const isMyTournament = Boolean(
         currentUser &&
-            currentUser.tournaments[tournament.id]?.isActive &&
-            !currentUser.tournaments[tournament.id]?.needPartner &&
-            !currentUser.tournaments[tournament.id]?.partnerId
+        currentUser.tournaments[tournament.id]?.isActive &&
+        !currentUser.tournaments[tournament.id]?.needPartner &&
+        !currentUser.tournaments[tournament.id]?.partnerId
     );
     const isDoubles = tournament.levelType === 'doubles';
     const ActualProposal = isDoubles ? ProposalDoubles : Proposal;
@@ -120,7 +120,7 @@ const Proposals = props => {
                                     renderBody={({ hide }) => (
                                         <ActualFormProposal
                                             tournament={tournament}
-                                            onSubmit={async values => {
+                                            onSubmit={async (values) => {
                                                 await reloadTournament();
                                                 hide();
                                             }}

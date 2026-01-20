@@ -145,7 +145,7 @@ const generateNews = async () => {
 
             winners = [...matches, ...doublesmatches]
                 .sort((a, b) => a.levelPosition - b.levelPosition)
-                .map(match => {
+                .map((match) => {
                     const winner = (() => {
                         if (match.levelType === 'doubles-team') {
                             const captainPlayerId = match.partnerId || match.id;

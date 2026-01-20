@@ -45,7 +45,7 @@ import style from './style.module.scss';
 
 const AvatarBuilder = loadable(() => import('@/components/AvatarBuilder'));
 
-const arrToObj = arr =>
+const arrToObj = (arr) =>
     arr.reduce((obj, item) => {
         obj[item.value] = item.label;
         return obj;
@@ -56,8 +56,8 @@ const appearanceOptions = [
     { value: 'dark', label: 'Dark', desktopImage: darkImage },
 ];
 
-const Settings = props => {
-    const user = useSelector(state => state.auth.user);
+const Settings = (props) => {
+    const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
     const size = useBreakpoints();
 
@@ -67,7 +67,7 @@ const Settings = props => {
         }
 
         return Object.values(user.complainedUsers)
-            .filter(item => item.avoid)
+            .filter((item) => item.avoid)
             .sort(compareFields('firstName', 'lastName'));
     }, [user]);
 
@@ -77,10 +77,10 @@ const Settings = props => {
 
     const isSmall = ['xs', 'sm', 'md'].includes(size);
     const isWoman =
-        Object.values(user.tournaments).some(t => t.levelName.includes('Women')) || user.gender === 'female';
+        Object.values(user.tournaments).some((t) => t.levelName.includes('Women')) || user.gender === 'female';
     const calendarUrl = `${window.location.origin}/api/calendars/${user.referralCode}`;
 
-    const updateAppearance = async value => {
+    const updateAppearance = async (value) => {
         await dispatch(updateCurrentUser({ appearance: value }, { optimisticUpdate: true }));
     };
 
@@ -178,7 +178,7 @@ const Settings = props => {
                 renderBody={({ hide }) => (
                     <AvatarBuilder
                         initialValues={user.avatarObject ? JSON.parse(user.avatarObject) : {}}
-                        onSubmit={async values => {
+                        onSubmit={async (values) => {
                             await dispatch(updateCurrentUser(values));
                             hide();
                         }}
@@ -200,7 +200,7 @@ const Settings = props => {
                         renderTrigger={({ show }) => (
                             <a
                                 href=""
-                                onClick={e => {
+                                onClick={(e) => {
                                     e.preventDefault();
                                     show();
                                 }}
@@ -294,7 +294,7 @@ const Settings = props => {
                         renderTrigger={({ show }) => (
                             <a
                                 href=""
-                                onClick={e => {
+                                onClick={(e) => {
                                     e.preventDefault();
                                     show();
                                 }}
@@ -336,7 +336,7 @@ const Settings = props => {
                         renderTrigger={({ show }) => (
                             <a
                                 href=""
-                                onClick={e => {
+                                onClick={(e) => {
                                     e.preventDefault();
                                     show();
                                 }}
@@ -378,7 +378,7 @@ const Settings = props => {
         <Card>
             <h2>Appearance</h2>
             <div data-appearance-area className={style.appearance}>
-                {appearanceOptions.map(item => (
+                {appearanceOptions.map((item) => (
                     <div
                         key={item.value}
                         className={classnames(style.appearanceOption, item.value === user.appearance && style.selected)}
@@ -405,7 +405,7 @@ const Settings = props => {
                         renderTrigger={({ show }) => (
                             <a
                                 href=""
-                                onClick={e => {
+                                onClick={(e) => {
                                     e.preventDefault();
                                     show();
                                 }}
@@ -438,7 +438,7 @@ const Settings = props => {
                         renderTrigger={({ show }) => (
                             <a
                                 href=""
-                                onClick={e => {
+                                onClick={(e) => {
                                     e.preventDefault();
                                     show();
                                 }}
@@ -455,7 +455,7 @@ const Settings = props => {
             <div data-avoided-users-area>
                 {avoidedUsers.length > 0 ? (
                     <div className="d-grid gap-1">
-                        {avoidedUsers.map(item => (
+                        {avoidedUsers.map((item) => (
                             <div key={item.id} className="d-flex gap-2 align-items-center">
                                 <PlayerAvatar player1={item} /> <PlayerName player1={item} isLink />
                             </div>

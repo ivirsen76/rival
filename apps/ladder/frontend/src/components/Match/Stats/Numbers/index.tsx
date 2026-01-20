@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { defaultColors } from '../config';
 import style from './style.module.scss';
 
-const Numbers = props => {
+const Numbers = (props) => {
     const { match, challengerName, acceptorName } = props;
     const { stat } = match;
 

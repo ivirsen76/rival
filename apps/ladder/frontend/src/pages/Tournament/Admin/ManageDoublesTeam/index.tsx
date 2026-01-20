@@ -15,7 +15,7 @@ import movePartner from './movePartner';
 import _omit from 'lodash/omit';
 import style from './style.module.scss';
 
-const ManageDoublesTeam = props => {
+const ManageDoublesTeam = (props) => {
     const { tournament, reloadTournament } = props;
     const [draggedPlayerId, setDraggedPlayerId] = useState(null);
     const [cachedTournament, setCachedTournament] = useState(tournament);
@@ -25,11 +25,11 @@ const ManageDoublesTeam = props => {
 
         return {
             captains: players
-                .filter(player => player.isDoublesTeamCaptain)
+                .filter((player) => player.isDoublesTeamCaptain)
                 .sort((a, b) => (a.teamName || '').localeCompare(b.teamName || '')),
-            poolPlayers: players.filter(player => player.isDoublesTeamPlayerPool),
+            poolPlayers: players.filter((player) => player.isDoublesTeamPlayerPool),
             playersWithMatches: cachedTournament.matches
-                .filter(match => match.score)
+                .filter((match) => match.score)
                 .reduce((set, match) => {
                     set.add(match.challengerId);
                     set.add(match.challenger2Id);
@@ -44,11 +44,11 @@ const ManageDoublesTeam = props => {
         setCachedTournament(tournament);
     }, [tournament]);
 
-    const onDragStart = useCallback(async result => {
+    const onDragStart = useCallback(async (result) => {
         setDraggedPlayerId(Number(result.draggableId));
     });
 
-    const onDragEnd = useCallback(async result => {
+    const onDragEnd = useCallback(async (result) => {
         setDraggedPlayerId(null);
 
         if (!result.destination) {
@@ -94,7 +94,7 @@ const ManageDoublesTeam = props => {
 
     const isPoolDropDisabled = Boolean(
         draggedPlayerId &&
-            (poolPlayers.some(item => item.id === draggedPlayerId) || playersWithMatches.has(draggedPlayerId))
+        (poolPlayers.some((item) => item.id === draggedPlayerId) || playersWithMatches.has(draggedPlayerId))
     );
 
     return (
@@ -111,7 +111,7 @@ const ManageDoublesTeam = props => {
                 renderBody={({ hide }) => (
                     <CreateTeamFromPoolForm
                         tournament={tournament}
-                        onSubmit={async values => {
+                        onSubmit={async (values) => {
                             await reloadTournament();
                             hide();
                             notification({
@@ -134,7 +134,7 @@ const ManageDoublesTeam = props => {
 
             <DragDropContext onDragStart={onDragStart} onDragEnd={onDragEnd}>
                 <div className={style.teams}>
-                    {captains.map(captain => {
+                    {captains.map((captain) => {
                         const isDropDisabled = (() => {
                             const fromDifferentTeam = !captain.partnerIds.includes(draggedPlayerId);
 
@@ -172,7 +172,7 @@ const ManageDoublesTeam = props => {
                                                 playerId={captain.id}
                                                 tournament={tournament}
                                                 initialValues={{ teamName: captain.teamName || '' }}
-                                                onSubmit={async values => {
+                                                onSubmit={async (values) => {
                                                     await reloadTournament();
                                                     hide();
                                                 }}
@@ -181,7 +181,7 @@ const ManageDoublesTeam = props => {
                                     />
                                 </div>
                                 <Droppable droppableId={captain.id.toString()} isDropDisabled={isDropDisabled}>
-                                    {provided => (
+                                    {(provided) => (
                                         <div
                                             ref={provided.innerRef}
                                             {...provided.droppableProps}
@@ -199,7 +199,7 @@ const ManageDoublesTeam = props => {
                                                         draggableId={partner.id.toString()}
                                                         index={index}
                                                     >
-                                                        {provided1 => (
+                                                        {(provided1) => (
                                                             <div
                                                                 ref={provided1.innerRef}
                                                                 {...provided1.draggableProps}
@@ -235,7 +235,7 @@ const ManageDoublesTeam = props => {
                     <div className={classnames(style.team, draggedPlayerId && !isPoolDropDisabled && style.droppable)}>
                         <div className={style.name}>Player pool</div>
                         <Droppable droppableId="999999" isDropDisabled={isPoolDropDisabled}>
-                            {provided => (
+                            {(provided) => (
                                 <div ref={provided.innerRef} {...provided.droppableProps} className={style.partners}>
                                     {poolPlayers.map((partner, index) => {
                                         partner = _omit(partner, ['partners', 'partnerIds']);
@@ -246,7 +246,7 @@ const ManageDoublesTeam = props => {
                                                 draggableId={partner.id.toString()}
                                                 index={index}
                                             >
-                                                {provided1 => (
+                                                {(provided1) => (
                                                     <div
                                                         ref={provided1.innerRef}
                                                         {...provided1.draggableProps}

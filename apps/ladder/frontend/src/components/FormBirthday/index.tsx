@@ -5,11 +5,11 @@ import { Formik, Field, Form } from '@/components/formik';
 import convertDate from '@/utils/convertDate';
 import { updateCurrentUser } from '@/reducers/auth';
 
-const FormBirthday = props => {
+const FormBirthday = (props) => {
     return (
         <Formik
             initialValues={{ birthday: '' }}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await window.tl.store.dispatch(updateCurrentUser({ birthday: convertDate(values.birthday) }));
                 await props.onSubmit();
             }}

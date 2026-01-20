@@ -162,7 +162,7 @@ describe('getSuitableTournaments()', () => {
     // no active ladders
     {
         it('Should return just a few tournaments for TLR 2.25 if there are no active one', () => {
-            const tournaments = [men30, men35, men40, men45, men3540].map(item => ({ ...item, isActivePlay: false }));
+            const tournaments = [men30, men35, men40, men45, men3540].map((item) => ({ ...item, isActivePlay: false }));
             const expectedResult = {
                 all: [30],
                 suitable: [30],
@@ -178,7 +178,7 @@ describe('getSuitableTournaments()', () => {
     // do not show free message when user already registered for free ladders
     {
         it('Should not show free message as user already registered for all free ladders', () => {
-            const tournaments = [men30, men35, men40, men45, men3540].map(item => ({ ...item, isActivePlay: false }));
+            const tournaments = [men30, men35, men40, men45, men3540].map((item) => ({ ...item, isActivePlay: false }));
             const expectedResult = {
                 all: [30],
                 suitable: [30],

@@ -18,8 +18,8 @@ for (const source of sources) {
         throw new Error('Wrong file');
     }
     data.split('\n')
-        .filter(line => line.trim())
-        .forEach(line => {
+        .filter((line) => line.trim())
+        .forEach((line) => {
             const [key, value] = line.split('=');
             if (!(key in env)) {
                 env[key] = value;

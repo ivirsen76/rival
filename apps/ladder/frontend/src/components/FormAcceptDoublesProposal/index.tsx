@@ -12,10 +12,10 @@ import axios from '@/utils/axios';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import style from './style.module.scss';
 
-const JustForm = props => {
+const JustForm = (props) => {
     const { params, players, match } = props;
     const { isSubmitting, values, setFieldValue } = params;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const currentUserPlayerId = currentUser.tournaments[match.tournamentId].playerId;
 
     const usedPlayerIds = [match.challengerId, match.challenger2Id, match.acceptorId, match.acceptor2Id].filter(
@@ -32,26 +32,26 @@ const JustForm = props => {
             return;
         }
 
-        const fieldName = ['challengerId', 'challenger2Id', 'acceptorId', 'acceptor2Id'].find(name => !match[name]);
+        const fieldName = ['challengerId', 'challenger2Id', 'acceptorId', 'acceptor2Id'].find((name) => !match[name]);
         setFieldValue(fieldName, currentUserPlayerId);
     }, []);
 
     const actualPlayers = useMemo(() => {
         return Object.values(players)
             .sort(compareFields('firstName', 'lastName'))
-            .filter(item => !usedPlayerIds.includes(item.id) && item.id !== currentUserPlayerId)
-            .map(item => ({
+            .filter((item) => !usedPlayerIds.includes(item.id) && item.id !== currentUserPlayerId)
+            .map((item) => ({
                 value: item.id,
                 label: `${item.firstName} ${item.lastName}`,
             }));
     }, [players, values.challengerId]);
 
-    const getPlayerPicker = name => () => {
+    const getPlayerPicker = (name) => () => {
         if (!values[name]) {
             return;
         }
 
-        ['challenger2Id', 'acceptorId', 'acceptor2Id'].forEach(field => {
+        ['challenger2Id', 'acceptorId', 'acceptor2Id'].forEach((field) => {
             if (field === name) {
                 return;
             }
@@ -109,11 +109,11 @@ const JustForm = props => {
                 </select>
                 <select
                     className={style.select + ' form-select form-select-solid'}
-                    onChange={event => setFieldValue(name, Number(event.target.value))}
+                    onChange={(event) => setFieldValue(name, Number(event.target.value))}
                     data-select-player={name}
                 >
                     <option value={0}>Pick {label}</option>
-                    {actualPlayers.map(player => (
+                    {actualPlayers.map((player) => (
                         <option key={player.value} value={player.value}>
                             {player.label}
                         </option>
@@ -172,10 +172,10 @@ JustForm.propTypes = {
     match: PropTypes.object,
 };
 
-const FormAcceptDoublesProposal = props => {
+const FormAcceptDoublesProposal = (props) => {
     const { match, onSubmit, players } = props;
 
-    const acceptProposal = async values => {
+    const acceptProposal = async (values) => {
         try {
             await showLoader(async () => {
                 await axios.put(`/api/proposals/${match.id}`, { action: 'acceptDoublesProposal', ...values });
@@ -196,7 +196,7 @@ const FormAcceptDoublesProposal = props => {
             initialValues={{ challengerId: 0, challenger2Id: 0, acceptorId: 0, acceptor2Id: 0 }}
             onSubmit={acceptProposal}
         >
-            {params => <JustForm params={params} players={players} match={match} />}
+            {(params) => <JustForm params={params} players={players} match={match} />}
         </Formik>
     );
 };

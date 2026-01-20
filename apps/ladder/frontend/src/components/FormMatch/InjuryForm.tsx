@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import PlayerName from '@/components/PlayerName';
 import style from './style.module.scss';
 
-const InjuryForm = props => {
+const InjuryForm = (props) => {
     const { challenger, acceptor, challenger2, acceptor2, onSubmit, hide } = props;
     const [playerId, setPlayerId] = useState(props.injuredPlayerId);
 

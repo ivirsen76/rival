@@ -30,16 +30,16 @@ const getFilteredData = (item, filter) => {
     );
 };
 
-const Players = props => {
+const Players = (props) => {
     const { data: users, isLoading } = useQuery(
         'getAllUsers',
         async () => {
             const response = await axios.put('/api/users/0', { action: 'getAllUsers' });
-            return response.data.data.map(user => ({ ...user, name: `${user.firstName} ${user.lastName}` }));
+            return response.data.data.map((user) => ({ ...user, name: `${user.firstName} ${user.lastName}` }));
         },
         { staleTime: 0 }
     );
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const isSuperAdmin = hasAnyRole(currentUser, ['superadmin']);
     const queryClient = useQueryClient();
 
@@ -47,7 +47,7 @@ const Players = props => {
         return <Loader loading />;
     }
 
-    const disableUser = async userId => {
+    const disableUser = async (userId) => {
         const confirm = await confirmation({
             message: (
                 <div className="alert alert-danger">
@@ -75,7 +75,7 @@ const Players = props => {
         });
     };
 
-    const restoreUser = async userId => {
+    const restoreUser = async (userId) => {
         const confirm = await confirmation({
             message: (
                 <div>
@@ -126,7 +126,7 @@ const Players = props => {
                         )}
                         renderBody={({ hide }) => (
                             <ChangePasswordForm
-                                onSubmit={async values => {
+                                onSubmit={async (values) => {
                                     await axios.put(`/api/users/${row.id}`, {
                                         action: 'changeUserPassword',
                                         ...values,
@@ -201,7 +201,7 @@ const Players = props => {
                     return '-';
                 }
 
-                const comeFromInfo = comeFromOptions.find(item => item.value === row.comeFrom);
+                const comeFromInfo = comeFromOptions.find((item) => item.value === row.comeFrom);
                 if (!comeFromInfo) {
                     return '-';
                 }
@@ -212,13 +212,13 @@ const Players = props => {
         {
             name: 'createdAt',
             label: <span className="text-nowrap">Registered at</span>,
-            render: value => formatDate(value),
+            render: (value) => formatDate(value),
             isSort: true,
         },
         {
             name: 'loggedAt',
             label: <span className="text-nowrap">Logged at</span>,
-            render: value => (value ? formatDate(value) : '-'),
+            render: (value) => (value ? formatDate(value) : '-'),
         },
     ];
 

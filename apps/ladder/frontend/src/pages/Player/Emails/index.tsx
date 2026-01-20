@@ -6,7 +6,7 @@ import { useQuery } from 'react-query';
 import { formatCustom } from '@/utils/dayjs';
 import style from './style.module.scss';
 
-const Emails = props => {
+const Emails = (props) => {
     const { user } = props;
 
     const { data: emails, isLoading } = useQuery(`/api/users/emails/${user.id}`, async () => {
@@ -22,7 +22,7 @@ const Emails = props => {
         {
             name: 'createdAt',
             label: 'Date',
-            render: value => formatCustom(value, 'MMM\xa0D, YYYY, h:mm A'),
+            render: (value) => formatCustom(value, 'MMM\xa0D, YYYY, h:mm A'),
             className: `${style.table} text-nowrap align-top`,
         },
         {

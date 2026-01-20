@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import axios from '@/utils/axios';
 
 export default () => {
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
 
     const { data: result } = useQuery(
         'getVisibleStats',

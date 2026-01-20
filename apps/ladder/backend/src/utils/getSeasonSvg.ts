@@ -6,11 +6,13 @@ const isRequired = () => {
     throw new Error('Param is required');
 };
 
-export const getLevelList = levels => {
-    const menSingles = levels.filter(level => level.levelType === 'single' && /^Men/i.test(level.levelName));
-    const womenSingles = levels.filter(level => level.levelType === 'single' && /^Women/i.test(level.levelName));
-    const menDoubles = levels.filter(level => level.levelType === 'doubles-team' && /^Men/i.test(level.levelName));
-    const womenDoubles = levels.filter(level => level.levelType === 'doubles-team' && /^Women/i.test(level.levelName));
+export const getLevelList = (levels) => {
+    const menSingles = levels.filter((level) => level.levelType === 'single' && /^Men/i.test(level.levelName));
+    const womenSingles = levels.filter((level) => level.levelType === 'single' && /^Women/i.test(level.levelName));
+    const menDoubles = levels.filter((level) => level.levelType === 'doubles-team' && /^Men/i.test(level.levelName));
+    const womenDoubles = levels.filter(
+        (level) => level.levelType === 'doubles-team' && /^Women/i.test(level.levelName)
+    );
 
     const result = [];
 
@@ -27,8 +29,8 @@ export const getLevelList = levels => {
     }
 
     const doubles = [menDoubles, womenDoubles]
-        .filter(list => list.length > 0)
-        .map(list => list[0].levelName.split(' ')[0])
+        .filter((list) => list.length > 0)
+        .map((list) => list[0].levelName.split(' ')[0])
         .join(' and ');
     if (doubles) {
         result.push(`${doubles} Doubles`);
@@ -177,7 +179,7 @@ const getSeasonSvg = ({
 
         const suitableLevels = getSuitableTournaments(levels, elo, gender)
             .all.slice(0, 3)
-            .map(id => levelObj[id].levelName);
+            .map((id) => levelObj[id].levelName);
 
         return suitableLevels;
     })();

@@ -71,7 +71,7 @@ const Route = ({ component: Component, layoutTopBlock, layoutTopBlockClassname, 
     return (
         <OriginalRoute
             {...rest}
-            render={props => (
+            render={(props) => (
                 <Layout {...props} TopBlock={layoutTopBlock} topBlockClassname={layoutTopBlockClassname}>
                     <Component {...props} />
                 </Layout>
@@ -81,11 +81,11 @@ const Route = ({ component: Component, layoutTopBlock, layoutTopBlockClassname, 
 };
 
 export default function App() {
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
     const [showUpdatesModal, setShowUpdatesModal] = useState(false);
     const { settings, isSettingsLoading } = useSettings();
-    const unseenUpdates = useSelector(state => getUnseenUpdates(state));
+    const unseenUpdates = useSelector((state) => getUnseenUpdates(state));
 
     const { isLoading } = useQuery('getCurrentUser', async () => {
         // load current user in useQuery instead of useEffect just to reload it automatically every 10 minutes (default stale time)
@@ -181,7 +181,7 @@ export default function App() {
                             <NewUpdatesImage />
                             <p>Check out the latest updates to the Rival system:</p>
                             <ul className={style.list}>
-                                {unseenUpdates.slice(0, maxCount).map(item => (
+                                {unseenUpdates.slice(0, maxCount).map((item) => (
                                     <li key={item.date} className="m-0">
                                         {item.title}
                                     </li>

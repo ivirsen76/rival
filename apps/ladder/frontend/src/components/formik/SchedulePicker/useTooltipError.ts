@@ -4,7 +4,7 @@ export default (duration = 3000) => {
     const [visible, setVisible] = useState(false);
     const [content, setContent] = useState(null);
 
-    const show = message => {
+    const show = (message) => {
         setContent(message);
         setVisible(true);
     };

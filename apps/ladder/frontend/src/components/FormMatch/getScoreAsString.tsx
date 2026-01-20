@@ -6,7 +6,7 @@ import {
     isInjuryFastSetScoreCorrect,
 } from '@rival/ladder.backend/src/services/matches/helpers';
 
-export default values => {
+export default (values) => {
     const isFast4 = values.matchFormat === 2;
     const isSetScoreCorrect = isFast4 ? isFastSetScoreCorrect : isFullSetScoreCorrect;
     const isInjurySetScoreCorrect = isFast4 ? isInjuryFastSetScoreCorrect : isInjuryFullSetScoreCorrect;
@@ -69,10 +69,10 @@ export default values => {
     if (
         values.wonByInjury &&
         result.length < 3 &&
-        result.every(item => isSetScoreCorrect({ challengerPoints: item[0], acceptorPoints: item[1] }))
+        result.every((item) => isSetScoreCorrect({ challengerPoints: item[0], acceptorPoints: item[1] }))
     ) {
         result.push([0, 0]);
     }
 
-    return result.map(item => item.join('-')).join(' ');
+    return result.map((item) => item.join('-')).join(' ');
 };

@@ -6,10 +6,10 @@ import HiddenText from '@/components/HiddenText';
 import axios from '@/utils/axios';
 import style from './style.module.scss';
 
-const FormAddStats = props => {
+const FormAddStats = (props) => {
     const { match } = props;
 
-    const onSubmit = async values => {
+    const onSubmit = async (values) => {
         const response = await axios.put(`/api/matches/${match.id}`, { action: 'addStats', link: values.link });
         await props.onSubmit(response.data.data);
     };

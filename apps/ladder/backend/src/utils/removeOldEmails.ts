@@ -1,7 +1,7 @@
 import dayjs from './dayjs';
 import logger from '@rival-tennis-ladder/logger';
 
-export default async app => {
+export default async (app) => {
     const sequelize = app.get('sequelizeClient');
     const dateMonthAgo = dayjs.tz().subtract(1, 'month').format('YYYY-MM-DD HH:mm:ss');
 

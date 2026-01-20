@@ -7,7 +7,7 @@ import classnames from 'classnames';
 import { BYE_ID } from '@rival/ladder.backend/src/constants';
 import style from './style.module.scss';
 
-const BetResult = props => {
+const BetResult = (props) => {
     const { players, prediction, predictionPoints, matches, showMaxPoints } = props;
     const predictionObject = prediction.reduce((obj, item) => {
         obj[item.finalSpot] = item;
@@ -17,7 +17,7 @@ const BetResult = props => {
     const comments = getComments(matches, prediction, players);
 
     const loosers = Object.values(matches)
-        .filter(match => match.score)
+        .filter((match) => match.score)
         .reduce((obj, match) => {
             obj[match.challengerId === match.winner ? match.acceptorId : match.challengerId] = match.finalSpot;
             return obj;
@@ -28,7 +28,7 @@ const BetResult = props => {
         return set;
     }, new Set());
 
-    const renderMatch = finalSpot => {
+    const renderMatch = (finalSpot) => {
         const match = predictionObject[finalSpot];
         let challenger;
         let acceptor;

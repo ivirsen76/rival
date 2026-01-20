@@ -6,7 +6,7 @@ import Tooltip from '@/components/Tooltip';
 import Mark from './Mark';
 import useAppearance from '@/utils/useAppearance';
 
-const EloHistory = props => {
+const EloHistory = (props) => {
     const { eloHistory, tournament } = props;
     const appearance = useAppearance();
 
@@ -16,14 +16,14 @@ const EloHistory = props => {
         ({ am4core, am4charts, instance }) => {
             const matches = eloHistory.length;
 
-            const removeMatchId = text => text && text.replace(/\(\d+\)/, '');
+            const removeMatchId = (text) => text && text.replace(/\(\d+\)/, '');
 
             // Get tournament selection
             let selectionStart;
             let selectionEnd;
             if (tournament) {
-                selectionStart = eloHistory.findIndex(point => point.seasonId === tournament.seasonId);
-                selectionEnd = _findLastIndex(eloHistory, point => point.seasonId === tournament.seasonId);
+                selectionStart = eloHistory.findIndex((point) => point.seasonId === tournament.seasonId);
+                selectionEnd = _findLastIndex(eloHistory, (point) => point.seasonId === tournament.seasonId);
                 if (selectionStart === -1) {
                     selectionStart = 0;
                 }
@@ -65,8 +65,8 @@ const EloHistory = props => {
 
             // Highlight current season
             if (tournament) {
-                const tournamentStart = eloHistory.findIndex(point => point.seasonId === tournament.seasonId);
-                const tournamentEnd = _findLastIndex(eloHistory, point => point.seasonId === tournament.seasonId);
+                const tournamentStart = eloHistory.findIndex((point) => point.seasonId === tournament.seasonId);
+                const tournamentEnd = _findLastIndex(eloHistory, (point) => point.seasonId === tournament.seasonId);
                 if (tournamentStart !== -1) {
                     const range = dateAxis.createSeriesRange(series);
                     range.category = eloHistory[tournamentStart].date;
@@ -82,7 +82,7 @@ const EloHistory = props => {
             }
 
             // Draw lines for levels
-            [2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5].forEach(value => {
+            [2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5].forEach((value) => {
                 const rangeLine = valueAxis.axisRanges.create();
                 rangeLine.value = value;
                 rangeLine.grid.stroke = am4core.color(isLight ? '#ccc' : '#666');

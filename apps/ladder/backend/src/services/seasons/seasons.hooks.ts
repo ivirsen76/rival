@@ -17,7 +17,7 @@ import getCustomEmail from '../../emailTemplates/getCustomEmail';
 
 const WEEK_SHIFT = 3; // The payments for last weeks we count as for the next season
 
-const validateCreate = options => async context => {
+const validateCreate = (options) => async (context) => {
     const errors = commonValidate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -52,7 +52,7 @@ const validateCreate = options => async context => {
     return context;
 };
 
-const populateDates = options => async context => {
+const populateDates = (options) => async (context) => {
     const { data } = context;
 
     data.startDate = dayjs.tz(data.startDate).hour(0).minute(0).second(0).format('YYYY-MM-DD HH:mm:ss+00:00');
@@ -61,7 +61,7 @@ const populateDates = options => async context => {
     return context;
 };
 
-const populateIsFree = options => async context => {
+const populateIsFree = (options) => async (context) => {
     const { data } = context;
     const sequelize = context.app.get('sequelizeClient');
 
@@ -71,7 +71,7 @@ const populateIsFree = options => async context => {
     return context;
 };
 
-const validatePatch = options => async context => {
+const validatePatch = (options) => async (context) => {
     const seasonId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { seasons } = sequelize.models;
@@ -101,11 +101,11 @@ const validatePatch = options => async context => {
                 t.levelId=l.id`,
         { replacements: { seasonId } }
     );
-    const deletedLevels = playingLevels.filter(level => !context.data.levels.includes(level.id));
+    const deletedLevels = playingLevels.filter((level) => !context.data.levels.includes(level.id));
     if (deletedLevels.length > 0) {
         throwValidationErrors({
             levels: `You cannot delete these levels as players are already playing: ${deletedLevels
-                .map(level => level.name)
+                .map((level) => level.name)
                 .join(', ')}`,
         });
     }
@@ -179,7 +179,7 @@ const validatePatch = options => async context => {
     return context;
 };
 
-const getLevels = options => context => {
+const getLevels = (options) => (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { levels } = sequelize.models;
     context.params.sequelize = {
@@ -193,7 +193,7 @@ const getLevels = options => context => {
     return context;
 };
 
-const getCurrentSeason = options => async context => {
+const getCurrentSeason = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
     const currentDate = dayjs.tz();
@@ -284,7 +284,7 @@ const getCurrentSeason = options => async context => {
             return obj;
         }, {});
 
-        levels.forEach(level => {
+        levels.forEach((level) => {
             const winnerInfo = winners[level.levelId];
             if (!winnerInfo) {
                 return;
@@ -366,7 +366,7 @@ const getCurrentSeason = options => async context => {
     return context;
 };
 
-const getSeasonsToRegister = options => async context => {
+const getSeasonsToRegister = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
     const currentDate = dayjs.tz();
@@ -450,7 +450,7 @@ const getSeasonsToRegister = options => async context => {
     return context;
 };
 
-const populateLevelsBasedOnPrevSeason = options => async context => {
+const populateLevelsBasedOnPrevSeason = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { tournaments } = sequelize.models;
 
@@ -485,7 +485,7 @@ const populateLevelsBasedOnPrevSeason = options => async context => {
     return context;
 };
 
-const sendNewSeasonNotification = options => async context => {
+const sendNewSeasonNotification = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
     const season = context.result;
@@ -496,7 +496,7 @@ const sendNewSeasonNotification = options => async context => {
     }
 
     const [[settings]] = await sequelize.query(`SELECT signUpNotification FROM settings WHERE id=1`);
-    const emails = getEmailsFromList(settings.signUpNotification).map(item => ({ email: item }));
+    const emails = getEmailsFromList(settings.signUpNotification).map((item) => ({ email: item }));
     const seasonName = getSeasonName(season);
 
     await context.app.service('api/emails').create({
@@ -511,7 +511,7 @@ const sendNewSeasonNotification = options => async context => {
     return context;
 };
 
-const updateLevels = options => async context => {
+const updateLevels = (options) => async (context) => {
     const levels = context.data.levels;
     const season = context.result;
     season.setLevels(levels);
@@ -519,7 +519,7 @@ const updateLevels = options => async context => {
     return context;
 };
 
-const getLevelsInfo = options => async context => {
+const getLevelsInfo = (options) => async (context) => {
     const seasonId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
 
@@ -545,7 +545,7 @@ const getLevelsInfo = options => async context => {
     return context;
 };
 
-const getPlayersFromLastSeasons = options => async context => {
+const getPlayersFromLastSeasons = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -589,7 +589,7 @@ const getPlayersFromLastSeasons = options => async context => {
                t.levelId=l.id AND
                s.id IN (:seasonList)
       ORDER BY s.startDate DESC`,
-        { replacements: { seasonList: seasons.map(season => season.id) } }
+        { replacements: { seasonList: seasons.map((season) => season.id) } }
     );
 
     const data = rows.reduce((obj, row) => {
@@ -647,7 +647,7 @@ const getPlayersFromLastSeasons = options => async context => {
             };
             const emails = data[season.id].levels[key].emails;
 
-            [row.challengerEmail, row.acceptorEmail].filter(Boolean).forEach(email => {
+            [row.challengerEmail, row.acceptorEmail].filter(Boolean).forEach((email) => {
                 if (!emails.includes(email)) {
                     emails.push(email);
                 }
@@ -657,11 +657,11 @@ const getPlayersFromLastSeasons = options => async context => {
 
     const seasonEmails = Object.values(data)
         .sort((a, b) => b.startDate.localeCompare(a.startDate))
-        .map(season => ({
+        .map((season) => ({
             ...season,
             levels: Object.values(season.levels)
                 .sort((a, b) => a.position - b.position)
-                .map(level => ({
+                .map((level) => ({
                     ...level,
                     emails: [...level.emails],
                 })),
@@ -671,12 +671,12 @@ const getPlayersFromLastSeasons = options => async context => {
         `SELECT email FROM users WHERE roles="player" AND subscribeForNews=1 AND loggedAt>"2022-01-01"`
     );
 
-    context.result = { seasons: seasonEmails, all: allUsers.map(item => item.email) };
+    context.result = { seasons: seasonEmails, all: allUsers.map((item) => item.email) };
 
     return context;
 };
 
-const closeSeason = options => async context => {
+const closeSeason = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -736,7 +736,7 @@ const closeSeason = options => async context => {
     return context;
 };
 
-const getSeasonStats = options => async context => {
+const getSeasonStats = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -787,7 +787,7 @@ const getSeasonStats = options => async context => {
        GROUP BY s.year
        ORDER BY s.year`
     );
-    yearStats.forEach(year => {
+    yearStats.forEach((year) => {
         year.name = `${year.name}`;
     });
 
@@ -847,7 +847,7 @@ const getSeasonStats = options => async context => {
         seasonObject[lastSeason.year].predictedPlayers = Math.floor(currentSeasonStats.players / averagePercent);
     }
 
-    const getAgeDistribution = arr => {
+    const getAgeDistribution = (arr) => {
         const ranges = [
             { label: '< 30', value: 0, limit: 30 },
             { label: '30-39', value: 0, limit: 40 },
@@ -868,14 +868,14 @@ const getSeasonStats = options => async context => {
             }
         }
 
-        return ranges.map(item => ({
+        return ranges.map((item) => ({
             label: item.label,
             value: item.value,
             percent: Math.round((item.value * 100) / arr.length),
         }));
     };
 
-    const getMedianAge = arr => {
+    const getMedianAge = (arr) => {
         const medianIndex = Math.floor(arr.length / 2);
         return arr[medianIndex] ? Math.floor(getAge(arr[medianIndex].birthday)) : 0;
     };
@@ -894,11 +894,11 @@ const getSeasonStats = options => async context => {
     const allAgeDistribution = getAgeDistribution(users);
     const allMedianAge = getMedianAge(users);
 
-    const males = users.filter(item => item.gender === 'male');
+    const males = users.filter((item) => item.gender === 'male');
     const malesAgeDistribution = getAgeDistribution(males);
     const malesMedianAge = getMedianAge(males);
 
-    const females = users.filter(item => item.gender === 'female');
+    const females = users.filter((item) => item.gender === 'female');
     const femalesAgeDistribution = getAgeDistribution(females);
     const femalesMedianAge = getMedianAge(females);
 
@@ -918,7 +918,7 @@ const getSeasonStats = options => async context => {
     return context;
 };
 
-const getSeasonIncomes = options => async context => {
+const getSeasonIncomes = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -934,7 +934,7 @@ const getSeasonIncomes = options => async context => {
         replacements: { startDate },
     });
 
-    seasons = seasons.map(item => ({
+    seasons = seasons.map((item) => ({
         ...item,
         endDate: dayjs.tz(item.endDate).subtract(WEEK_SHIFT, 'week').format('YYYY-MM-DD HH:mm:ss'),
     }));
@@ -967,7 +967,7 @@ const getSeasonIncomes = options => async context => {
 
     data = Object.values(data)
         .sort((a, b) => a.id - b.id)
-        .map(item => ({
+        .map((item) => ({
             id: item.id,
             name: getSeasonName(item),
             payments: item.payments,
@@ -979,7 +979,7 @@ const getSeasonIncomes = options => async context => {
     return context;
 };
 
-const getSeasonPayments = options => async context => {
+const getSeasonPayments = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -1015,7 +1015,7 @@ const getSeasonPayments = options => async context => {
         { replacements: { startDate, endDate } }
     );
 
-    const data = payments.map(item => ({
+    const data = payments.map((item) => ({
         id: item.id,
         createdAt: item.createdAt,
         firstName: item.firstName,
@@ -1030,7 +1030,7 @@ const getSeasonPayments = options => async context => {
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

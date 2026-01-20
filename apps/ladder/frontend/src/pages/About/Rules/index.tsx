@@ -1,11 +1,10 @@
-
 import Card from '@/components/Card';
 import ScrollToTop from '@/components/ScrollToTop';
 import Header from '@/components/Header';
 import useConfig from '@/utils/useConfig';
 import { Link } from 'react-router-dom';
 
-const Rules = props => {
+const Rules = (props) => {
     const config = useConfig();
 
     return (

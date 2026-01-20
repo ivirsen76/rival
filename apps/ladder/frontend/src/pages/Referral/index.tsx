@@ -3,8 +3,8 @@ import { Redirect } from 'react-router-dom';
 import PartnerReferral from './PartnerReferral';
 import PlayerReferral from './PlayerReferral';
 
-const Referral = props => {
-    const currentUser = useSelector(state => state.auth.user);
+const Referral = (props) => {
+    const currentUser = useSelector((state) => state.auth.user);
 
     if (!currentUser) {
         return <Redirect to={{ pathname: '/login', search: '?redirectAfterLogin=/user/referral' }} />;

@@ -5,7 +5,7 @@ export default () => {
     const { data: settings, isLoading: isSettingsLoading } = useQuery(
         'globalSettings',
         async () => {
-            const decode = str => JSON.parse(atob(str.split('').reverse().join('')));
+            const decode = (str) => JSON.parse(atob(str.split('').reverse().join('')));
 
             const response = await axios.post('/api/settings', {});
             return {

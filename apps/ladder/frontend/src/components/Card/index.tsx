@@ -4,7 +4,7 @@ import _pick from 'lodash/pick';
 import style from './style.module.scss';
 import Tooltip from '@/components/Tooltip';
 
-const Card = props => {
+const Card = (props) => {
     const passingProps = _pick(props, ['id', 'style']);
 
     return (

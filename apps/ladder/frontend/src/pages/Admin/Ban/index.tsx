@@ -11,7 +11,7 @@ import { formatDate } from '@/utils/dayjs';
 import { Link } from 'react-router-dom';
 import showLoader from '@/utils/showLoader';
 
-const Ban = props => {
+const Ban = (props) => {
     const queryClient = useQueryClient();
 
     const { data: list, isLoading } = useQuery(`getBanUsers`, async () => {
@@ -19,7 +19,7 @@ const Ban = props => {
         return response.data.data;
     });
 
-    const removeBan = async user => {
+    const removeBan = async (user) => {
         const confirm = await confirmation({
             message: (
                 <div>
@@ -54,7 +54,7 @@ const Ban = props => {
                 renderBody={({ hide }) => (
                     <BanForm
                         list={list}
-                        onSubmit={async values => {
+                        onSubmit={async (values) => {
                             await axios.put('/api/users/0', {
                                 action: 'addBan',
                                 userId: values.user && values.user.id,
@@ -83,7 +83,7 @@ const Ban = props => {
                         </tr>
                     </thead>
                     <tbody>
-                        {list.map(user => (
+                        {list.map((user) => (
                             <tr key={user.id}>
                                 <td className="pe-0">
                                     <button

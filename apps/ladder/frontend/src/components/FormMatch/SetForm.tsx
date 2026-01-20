@@ -11,7 +11,7 @@ import {
 } from '@rival/ladder.backend/src/services/matches/helpers';
 import style from './style.module.scss';
 
-const SetForm = props => {
+const SetForm = (props) => {
     const { values, setValues, errors, challengerName, acceptorName, goToNextSet } = props;
     const allowMatchTieBreak = !values.wonByInjury && values.currentSetNumber === 3;
 
@@ -52,7 +52,7 @@ const SetForm = props => {
         })();
     };
 
-    const updateChallengerPoints = num => {
+    const updateChallengerPoints = (num) => {
         const ap = (() => {
             if (values.wonByInjury) {
                 return acceptorPoints;
@@ -83,7 +83,7 @@ const SetForm = props => {
         updateCurrentSet(num, ap);
     };
 
-    const updateAcceptorPoints = num => {
+    const updateAcceptorPoints = (num) => {
         const cp = (() => {
             if (values.wonByInjury) {
                 return challengerPoints;
@@ -188,7 +188,7 @@ const SetForm = props => {
                             <GamePicker
                                 name="challengerPoints"
                                 value={challengerPoints}
-                                onChange={num => updateChallengerPoints(num)}
+                                onChange={(num) => updateChallengerPoints(num)}
                                 showErrors={showError}
                                 maxSetPoints={maxSetPoints}
                             />
@@ -198,7 +198,7 @@ const SetForm = props => {
                         <GamePicker
                             name="acceptorPoints"
                             value={acceptorPoints}
-                            onChange={num => updateAcceptorPoints(num)}
+                            onChange={(num) => updateAcceptorPoints(num)}
                             showErrors={showError}
                             maxSetPoints={maxSetPoints}
                         />

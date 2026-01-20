@@ -8,7 +8,7 @@ import WaitTill from '@/components/WaitTill';
 import formatPhone from '@/utils/formatPhone';
 import style from './style.module.scss';
 
-const VerifyPhone = props => {
+const VerifyPhone = (props) => {
     const { phone, onSuccess, render } = props;
     const [iteration, setIteration] = useState(0);
     const [code, setCode] = useState('');
@@ -20,7 +20,7 @@ const VerifyPhone = props => {
         (async () => {
             axios.put('/api/users/0', { action: 'sendPhoneVerificationCode', phone });
 
-            await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise((resolve) => setTimeout(resolve, 500));
             if (inputRef.current) {
                 inputRef.current.focus();
             }
@@ -33,7 +33,7 @@ const VerifyPhone = props => {
 
             // Just to show loading state to the user
             // Otherwise the process is too sudden
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
 
             try {
                 await axios.put('/api/users/0', {
@@ -54,7 +54,7 @@ const VerifyPhone = props => {
         }
     }, [code]);
 
-    const addIteration = () => setIteration(prev => prev + 1);
+    const addIteration = () => setIteration((prev) => prev + 1);
 
     const title = (
         <div className="mb-4">
@@ -79,7 +79,7 @@ const VerifyPhone = props => {
                     className="form-control form-control-lg"
                     maxLength={6}
                     value={code}
-                    onChange={e => setCode(e.target.value.replace(/[^\d]+/g, ''))}
+                    onChange={(e) => setCode(e.target.value.replace(/[^\d]+/g, ''))}
                     ref={inputRef}
                     autoComplete="off"
                     inputMode="numeric"
@@ -104,7 +104,7 @@ const VerifyPhone = props => {
                 <WaitTill key={iteration}>
                     <a
                         href=""
-                        onClick={e => {
+                        onClick={(e) => {
                             e.preventDefault();
                             notification("We've sent you another message with the confirmation code.");
                             addIteration();

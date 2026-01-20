@@ -12,15 +12,15 @@ import EmailIcon from '@rival/packages/metronic/icons/duotone/Communication/Mail
 import NotFound from '@/pages/NotFound';
 import { loadCurrentUser, updateCurrentUser } from '@/reducers/auth';
 
-const EmailForm = props => {
-    const currentUser = useSelector(state => state.auth.user);
+const EmailForm = (props) => {
+    const currentUser = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
     if (!currentUser) {
         return <NotFound />;
     }
 
-    const validate = values => {
+    const validate = (values) => {
         const errors = {};
 
         if (values.email === currentUser.email) {
@@ -34,7 +34,7 @@ const EmailForm = props => {
         <Formik
             initialValues={{ email: '' }}
             validate={validate}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await dispatch(updateCurrentUser(values));
 
                 props.onSubmit && props.onSubmit();

@@ -10,7 +10,7 @@ import _isInteger from 'lodash/isInteger';
 import parseScore from '@/components/Match/parseScore';
 import { isFullSetScoreCorrect, isFastSetScoreCorrect } from '@rival/ladder.backend/src/services/matches/helpers';
 
-const MatchPreview = props => {
+const MatchPreview = (props) => {
     const { tournament, match } = props;
     const { players } = tournament;
 

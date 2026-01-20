@@ -60,17 +60,17 @@ export const signature = ({ config = isRequired() } = {}) => {
      }</mj-text>`;
 };
 
-export const renderProposal = proposal => {
+export const renderProposal = (proposal) => {
     const proposalDate = dayjs.tz(proposal.playedAt).format('ddd, MMM D, h:mm A');
     const practiceType =
         proposal.practiceType && proposal.practiceType < 99
-            ? practiceTypeOptions.find(item => item.value === proposal.practiceType).label
+            ? practiceTypeOptions.find((item) => item.value === proposal.practiceType).label
             : null;
     const matchFormat =
         proposal.matchFormat && proposal.matchFormat > 0
-            ? matchFormatOptions.find(item => item.value === proposal.matchFormat).label
+            ? matchFormatOptions.find((item) => item.value === proposal.matchFormat).label
             : null;
-    const duration = proposal.duration ? durationOptions.find(item => item.value === proposal.duration).label : null;
+    const duration = proposal.duration ? durationOptions.find((item) => item.value === proposal.duration).label : null;
 
     return `
         <b>Date:</b> ${proposalDate}<br>
@@ -82,7 +82,7 @@ export const renderProposal = proposal => {
 };
 
 const imageUrlCache = {};
-export const getImageUrl = path => {
+export const getImageUrl = (path) => {
     if (imageUrlCache[path]) {
         return imageUrlCache[path];
     }
@@ -114,7 +114,7 @@ export const getImageUrl = path => {
     return src;
 };
 
-const renderPreviewText = text => {
+const renderPreviewText = (text) => {
     const style = 'display:none;max-height:0px;overflow:hidden;font-size:1px;line-height:1px;color:#ffffff;opacity:0;';
 
     return `
@@ -210,7 +210,7 @@ const getTemplate =
         ).html;
     };
 
-export const simple = content => {
+export const simple = (content) => {
     return mjml2html(
         `
   <mjml>

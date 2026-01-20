@@ -1,4 +1,4 @@
-export default seconds => {
+export default (seconds) => {
     const sec = seconds % 60;
     const minutes = Math.floor(seconds / 60);
 

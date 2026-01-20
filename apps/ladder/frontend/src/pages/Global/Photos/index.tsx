@@ -9,14 +9,14 @@ import Paginator from '@/components/Paginator';
 
 const PHOTOS_PER_PAGE = 25;
 
-const Photos = props => {
+const Photos = (props) => {
     const [currentPage, setCurrentPage] = useState(1);
 
     const { data: photos, isLoading } = useQuery(
         `globalPhotos`,
         async () => {
             const response = await axios.put('/api/utils/0', { action: 'getGlobalPhotos' });
-            return response.data.data.map(item => ({
+            return response.data.data.map((item) => ({
                 key: item.id,
                 src: item.url,
                 width: 400,

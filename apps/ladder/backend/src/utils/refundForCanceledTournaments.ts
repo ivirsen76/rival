@@ -6,7 +6,7 @@ import getCombinedConfig from './getCombinedConfig';
 import { getPlayerName } from '../services/users/helpers';
 
 // Helpers
-const getConfig = async sequelize => {
+const getConfig = async (sequelize) => {
     const config = await getCombinedConfig();
     return { ...staticConfig, ...config };
 };
@@ -24,7 +24,7 @@ const getSeasonLevels = async (sequelize, seasonId) => {
     return levels;
 };
 
-export default async app => {
+export default async (app) => {
     const sequelize = app.get('sequelizeClient');
     const { payments } = sequelize.models;
 

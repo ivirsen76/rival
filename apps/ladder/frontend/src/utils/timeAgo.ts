@@ -2,7 +2,7 @@ import dayjs from '@/utils/dayjs';
 
 const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
 
-export default date => {
+export default (date) => {
     const diff = dayjs.tz().diff(dayjs.tz(date), 'millisecond');
 
     const seconds = Math.round(Math.abs(diff) / 1000);

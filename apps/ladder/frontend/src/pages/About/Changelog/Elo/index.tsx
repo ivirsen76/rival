@@ -9,7 +9,7 @@ const marks = [
     ['5.00', '90%'],
 ];
 
-const Elo = props => {
+const Elo = (props) => {
     return (
         <div className={style.wrapper}>
             <div className="fw-bold">TLR</div>

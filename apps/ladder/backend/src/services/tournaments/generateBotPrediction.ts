@@ -2,7 +2,7 @@ import { relationsUp } from '../matches/relations';
 import { BYE_ID } from '../../constants';
 
 export default (matches, players) => {
-    let total = Math.max(...matches.map(item => item.finalSpot));
+    let total = Math.max(...matches.map((item) => item.finalSpot));
     total = total > 7 ? 15 : total > 3 ? 7 : 3;
 
     const matchesObj = matches.reduce((obj, item) => {
@@ -36,7 +36,7 @@ export default (matches, players) => {
             return obj;
         }, {});
 
-    const generateMatchPrediction = finalSpot => {
+    const generateMatchPrediction = (finalSpot) => {
         const prediction = result[finalSpot];
 
         if (!prediction) {

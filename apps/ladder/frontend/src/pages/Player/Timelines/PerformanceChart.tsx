@@ -5,7 +5,7 @@ import useUniqueId from '@/utils/useUniqueId';
 import pathFromPoints from './pathFromPoints';
 import style from './style.module.scss';
 
-const PerformanceChart = props => {
+const PerformanceChart = (props) => {
     const { dataKey, minDiff, color, renderLabel } = props;
     const step = 50;
     const strokeWidth = 2;
@@ -14,7 +14,7 @@ const PerformanceChart = props => {
     const topPadding = padding + 10;
     const gradientId = useUniqueId();
 
-    const values = props.data.map(item => item[dataKey]);
+    const values = props.data.map((item) => item[dataKey]);
 
     const data = useMemo(() => {
         const presentValues = values.filter(Number.isInteger);

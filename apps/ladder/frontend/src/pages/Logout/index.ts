@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { logout } from '@/reducers/auth';
 
-const Logout = props => {
+const Logout = (props) => {
     const history = useHistory();
     const dispatch = useDispatch();
 

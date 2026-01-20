@@ -19,7 +19,7 @@ import { getPlayerName } from '../users/helpers';
 import { base64EncodeEmail } from '../../utils/helpers';
 import { parse } from 'node-html-parser';
 
-const validateCreate = options => context => {
+const validateCreate = (options) => (context) => {
     const errors = validate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -29,7 +29,7 @@ const validateCreate = options => context => {
     return context;
 };
 
-const stripHeaderFooter = options => context => {
+const stripHeaderFooter = (options) => (context) => {
     const { data } = context;
 
     try {
@@ -45,7 +45,7 @@ const stripHeaderFooter = options => context => {
     return context;
 };
 
-const sendEmail = options => async context => {
+const sendEmail = (options) => async (context) => {
     const { TL_SERVICE_URL, TL_SECRET_KEY, TL_SMTP_HOST, TL_SMTP_PORT, TL_SMTP_USER, TL_SMTP_PASS } = process.env;
 
     const { to, subject, text, html, replyTo, priority, trackingCode } = context.data;
@@ -64,7 +64,7 @@ const sendEmail = options => async context => {
         }, {});
     }
 
-    const getEmailVariables = email => {
+    const getEmailVariables = (email) => {
         const user = allUsers[email];
         return user
             ? {
@@ -76,7 +76,7 @@ const sendEmail = options => async context => {
     };
 
     const currentDateString = dayjs.tz().format('YYYY-MM-DD');
-    const getUnsubscribeEmail = email => {
+    const getUnsubscribeEmail = (email) => {
         const user = allUsers[email];
         if (!user) {
             const encodedEmail = base64EncodeEmail(email);
@@ -98,13 +98,13 @@ const sendEmail = options => async context => {
                    deletedAt IS NOT NULL OR
                    (banDate IS NOT NULL AND banDate>"${dayjs.tz().format('YYYY-MM-DD HH:mm:ss')}") OR
                    (comeFrom=99 AND comeFromOther="Rabbit")`);
-        blockedEmails = new Set(rows.map(row => row.email));
+        blockedEmails = new Set(rows.map((row) => row.email));
     }
 
     const recipients = to
-        .filter(item => !blockedEmails.has(item.email))
+        .filter((item) => !blockedEmails.has(item.email))
         .sort((a, b) => a.email.localeCompare(b.email))
-        .map(item => ({
+        .map((item) => ({
             ..._omit(item, ['variables']),
             variables: {
                 ...item.variables,
@@ -118,7 +118,7 @@ const sendEmail = options => async context => {
     }
 
     // Populate unsubscribe link
-    await limitedPromiseAll(recipients, async user => {
+    await limitedPromiseAll(recipients, async (user) => {
         if (user.email in allUsers) {
             user.variables['#unsubscribeLink#'] = await getActionLink({
                 payload: { name: 'unsubscribe', email: user.email },
@@ -145,7 +145,7 @@ const sendEmail = options => async context => {
             return id;
         };
 
-        await limitedPromiseAll(recipients, async user => {
+        await limitedPromiseAll(recipients, async (user) => {
             user.trackingId = await getTrackingId();
             user.trackingUrl = process.env.TL_URL;
         });
@@ -204,7 +204,7 @@ const sendEmail = options => async context => {
         }
     }
 
-    context.data.recipientEmail = recipients.map(obj => obj.email).join(',');
+    context.data.recipientEmail = recipients.map((obj) => obj.email).join(',');
     context.data.variables = JSON.stringify(
         recipients.reduce((obj, item) => {
             obj[item.email] = item.variables;
@@ -212,7 +212,7 @@ const sendEmail = options => async context => {
         }, {})
     );
 
-    ['from', 'to', 'subject', 'text', 'html', 'replyTo'].forEach(field => {
+    ['from', 'to', 'subject', 'text', 'html', 'replyTo'].forEach((field) => {
         if (context.data[field] && typeof context.data[field] !== 'string') {
             context.data[field] = JSON.stringify(context.data[field]);
         }
@@ -221,7 +221,7 @@ const sendEmail = options => async context => {
     return context;
 };
 
-const sendMessage = options => async context => {
+const sendMessage = (options) => async (context) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -259,7 +259,7 @@ const sendMessage = options => async context => {
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

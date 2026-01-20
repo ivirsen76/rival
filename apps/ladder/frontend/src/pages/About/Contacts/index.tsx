@@ -4,7 +4,7 @@ import contacts from './contacts.jpg?w=1200;2400&format=jpeg&quality=60&as=metad
 import getImageSize from '@/utils/getImageSize';
 import style from './style.module.scss';
 
-const Contacts = props => {
+const Contacts = (props) => {
     const size = useBreakpoints();
 
     const isLarge = ['xl', 'xxl', 'lg'].includes(size);

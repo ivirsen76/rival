@@ -4,13 +4,13 @@ import classnames from 'classnames';
 import AnimateHeight from 'react-animate-height';
 import style from './style.module.scss';
 
-const RadioModern = props => {
+const RadioModern = (props) => {
     const { field, form, options, alwaysShowDescription, allowUnselect } = props;
 
     return (
         <FieldWrapper {...props}>
             <div className={classnames(style.wrapper, alwaysShowDescription && 'gap-4')}>
-                {options.map(item => {
+                {options.map((item) => {
                     const isSelected = item.value === field.value;
 
                     return (

@@ -9,12 +9,12 @@ import matchFormatOptions from '@rival/ladder.backend/src/services/proposals/mat
 import { useSelector } from 'react-redux';
 
 const formatOptions = [
-    ...matchFormatOptions.map(item => _pick(item, ['value', 'label'])),
+    ...matchFormatOptions.map((item) => _pick(item, ['value', 'label'])),
     { value: 99, label: 'Practice' },
 ];
 
-const JustForm = props => {
-    const user = useSelector(state => state.auth.user);
+const JustForm = (props) => {
+    const user = useSelector((state) => state.auth.user);
     const showCompetitiveProposalsCheckbox = Boolean(!user || user.establishedElo);
 
     return (

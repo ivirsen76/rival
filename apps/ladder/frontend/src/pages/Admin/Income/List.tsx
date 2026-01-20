@@ -7,7 +7,7 @@ import formatSum from '@/utils/formatSum';
 import { formatLong } from '@/utils/dayjs';
 import PropTypes from 'prop-types';
 
-const List = props => {
+const List = (props) => {
     const { seasonId } = props;
 
     const { data: payments, isLoading } = useQuery(`getSeasonPayments-${seasonId}`, async () => {
@@ -28,13 +28,13 @@ const List = props => {
         {
             name: 'createdAt',
             label: 'Date',
-            render: value => formatLong(value),
+            render: (value) => formatLong(value),
         },
         {
             name: 'amount',
             label: 'Sum',
             className: 'text-end',
-            render: value => {
+            render: (value) => {
                 return formatSum(value);
             },
         },
@@ -42,7 +42,7 @@ const List = props => {
             name: 'fee',
             label: 'Fee',
             className: 'text-end',
-            render: value => {
+            render: (value) => {
                 return formatSum(value);
             },
         },

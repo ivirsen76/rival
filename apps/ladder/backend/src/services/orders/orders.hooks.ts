@@ -12,7 +12,7 @@ import { getEmailsFromList } from '../settings/helpers';
 import { sendDoublesTeamInvitation, formatTeamName } from '../players/helpers';
 import { POOL_PARTNER_ID } from '../../constants';
 
-const getProcessedOrders = options => async context => {
+const getProcessedOrders = (options) => async (context) => {
     const userId = context.params.user.id;
 
     const sequelize = context.app.get('sequelizeClient');
@@ -105,7 +105,7 @@ const processOrder = async (order, context) => {
         throw new Unprocessable('Wrong user');
     }
 
-    await sequelize.transaction(async t => {
+    await sequelize.transaction(async (t) => {
         for (const item of transactions) {
             if (['balance', 'info'].includes(item.type)) {
                 continue;
@@ -163,7 +163,7 @@ const processOrder = async (order, context) => {
                         );
 
                         context.app.service('api/emails').create({
-                            to: emails.map(email => ({ email })),
+                            to: emails.map((email) => ({ email })),
                             subject: `The player joined wrong ladder because of special reason`,
                             html: specialReasonNotificationTemplate(config, {
                                 userName: getPlayerName(user),
@@ -208,7 +208,7 @@ const processOrder = async (order, context) => {
             { where: { id: order.id }, transaction: t }
         );
 
-        const firstTournament = transactions.find(item => item.type === 'product' && item.tournamentId);
+        const firstTournament = transactions.find((item) => item.type === 'product' && item.tournamentId);
         if (firstTournament) {
             const [[item]] = await sequelize.query(
                 `
@@ -241,13 +241,13 @@ const processOrder = async (order, context) => {
         await sendWelcomeEmail({ userId: user.id })(context);
     }
 
-    const tournamentIds = transactions.filter(item => item.type === 'product').map(item => item.tournamentId);
+    const tournamentIds = transactions.filter((item) => item.type === 'product').map((item) => item.tournamentId);
     await sendDoublesTeamInvitation(context, tournamentIds, partners);
 
     return result;
 };
 
-const populateOrder = options => async context => {
+const populateOrder = (options) => async (context) => {
     const sequelize = context.app.get('sequelizeClient');
     const { seasons } = sequelize.models;
     const { config, user } = context.params;
@@ -265,8 +265,8 @@ const populateOrder = options => async context => {
     let [seasonTournaments] = await sequelize.query('SELECT id FROM tournaments WHERE seasonId=:seasonId', {
         replacements: { seasonId: season.id },
     });
-    seasonTournaments = seasonTournaments.map(t => t.id);
-    if (!tournaments.every(id => seasonTournaments.includes(id))) {
+    seasonTournaments = seasonTournaments.map((t) => t.id);
+    if (!tournaments.every((id) => seasonTournaments.includes(id))) {
         throw new Unprocessable('Some tournaments are not from the current season');
     }
 
@@ -278,8 +278,8 @@ const populateOrder = options => async context => {
                userId=:userId`,
         { replacements: { userId: user.id } }
     );
-    userTournaments = userTournaments.map(t => t.id);
-    if (tournaments.some(id => userTournaments.includes(id))) {
+    userTournaments = userTournaments.map((t) => t.id);
+    if (tournaments.some((id) => userTournaments.includes(id))) {
         throw new Unprocessable('You are already registered for this ladder');
     }
 
@@ -313,7 +313,7 @@ const populateOrder = options => async context => {
     const nextOrder = calculateNextOrder({
         payments,
         allTournaments,
-        tournaments: allTournaments.filter(t => tournaments.includes(t.id)),
+        tournaments: allTournaments.filter((t) => tournaments.includes(t.id)),
         joinReason,
         joinForFree,
         singlesCost: config.singlesCost,
@@ -339,7 +339,7 @@ const populateOrder = options => async context => {
 
             context.result = await processOrder(order, context);
         } else {
-            await sequelize.transaction(async t => {
+            await sequelize.transaction(async (t) => {
                 const order = await sequelize.models.orders.create(
                     { userId: user.id, amount: nextOrder.total, payload: JSON.stringify(nextOrder.payload) },
                     { transaction: t }
@@ -357,8 +357,8 @@ const populateOrder = options => async context => {
                                 product_data: {
                                     name:
                                         nextOrder.payload.transactions
-                                            .filter(item => item.type === 'product')
-                                            .map(item => item.description)
+                                            .filter((item) => item.type === 'product')
+                                            .map((item) => item.description)
                                             .join(', ') || 'Registration fee',
                                 },
                                 unit_amount: nextOrder.total,
@@ -385,7 +385,7 @@ const populateOrder = options => async context => {
     return context;
 };
 
-const processStripeSession = options => async context => {
+const processStripeSession = (options) => async (context) => {
     const { orders } = context.app.get('sequelizeClient').models;
     const { sessionId } = context.data;
 
@@ -423,7 +423,7 @@ const processStripeSession = options => async context => {
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

@@ -3,7 +3,7 @@ import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import classnames from 'classnames';
 
-const MostMatches = props => {
+const MostMatches = (props) => {
     const { mostMatches, players } = props.tournament;
     const { isReport } = props;
 
@@ -19,7 +19,7 @@ const MostMatches = props => {
                 </thead>
 
                 <tbody>
-                    {mostMatches.map(obj => {
+                    {mostMatches.map((obj) => {
                         const player = players[obj.id];
 
                         return (

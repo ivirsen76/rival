@@ -5,7 +5,7 @@ import useBreakpoints from '@/utils/useBreakpoints';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const NotFound = props => {
+const NotFound = (props) => {
     const size = useBreakpoints();
     const isSmall = ['sm', 'xs'].includes(size);
 

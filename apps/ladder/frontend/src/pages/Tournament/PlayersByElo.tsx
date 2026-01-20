@@ -15,18 +15,20 @@ import useConfig from '@/utils/useConfig';
 import { useSelector } from 'react-redux';
 import style from './style.module.scss';
 
-const PlayersByElo = props => {
+const PlayersByElo = (props) => {
     const { tournament } = props;
     const appearance = useAppearance();
     const config = useConfig();
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
 
     const [eloPlayers, newPlayers] = useMemo(() => {
         const list = Object.values(tournament.players);
 
         return [
-            list.filter(item => item.elo.isEloEstablished).sort(compareFields('elo.elo-desc', 'firstName', 'lastName')),
-            list.filter(item => !item.elo.isEloEstablished).sort(compareFields('firstName', 'lastName')),
+            list
+                .filter((item) => item.elo.isEloEstablished)
+                .sort(compareFields('elo.elo-desc', 'firstName', 'lastName')),
+            list.filter((item) => !item.elo.isEloEstablished).sort(compareFields('firstName', 'lastName')),
         ];
     }, [tournament.players]);
 
@@ -73,8 +75,8 @@ const PlayersByElo = props => {
                                             {player.isStartingTlrTooHigh
                                                 ? '(TLR too high at season start)'
                                                 : player.isInitialTlrTooHigh
-                                                ? '(initial TLR too high)'
-                                                : null}
+                                                  ? '(initial TLR too high)'
+                                                  : null}
                                         </div>
                                     }
                                 >

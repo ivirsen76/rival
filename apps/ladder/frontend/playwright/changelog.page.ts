@@ -53,7 +53,7 @@ test("Cannot see modal with new features if user haven't logged in before", asyn
     await login.loginAsPlayer1();
     await homepage.checkVisible();
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await expect(common.modal).toBeHidden();
 });
 
@@ -70,7 +70,7 @@ test("Cannot see modal with new features if user haven't logged in more than 3 m
     await login.loginAsPlayer1();
     await homepage.checkVisible();
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await expect(common.modal).toBeHidden();
 });
 

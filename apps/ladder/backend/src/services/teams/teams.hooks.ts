@@ -68,7 +68,7 @@ const getTeamsStat = async (sequelize, tournamentId, checkSetupWeek = true) => {
         }
     }
 
-    const getInitialStats = async userId => {
+    const getInitialStats = async (userId) => {
         const [[match]] = await sequelize.query(
             `SELECT m.challengerElo,
                     m.challengerMatches,
@@ -210,7 +210,7 @@ const getTournamentInfo = async (context, tournamentId) => {
     return tournamentInfo.data;
 };
 
-const createTeam = options => async context => {
+const createTeam = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -237,17 +237,17 @@ const createTeam = options => async context => {
         }
     }
 
-    const players = ['player1', 'player2', 'player3', 'player4', 'player5'].filter(name => data[name]);
+    const players = ['player1', 'player2', 'player3', 'player4', 'player5'].filter((name) => data[name]);
     if (players.length < 1) {
         throw new Unprocessable('Is has to be at least one player in a team.');
     }
 
     const teamsStat = await getTeamsStat(sequelize, data.tournamentId);
-    if (players.some(name => teamsStat.captains.includes(data[name]) || teamsStat.members.includes(data[name]))) {
+    if (players.some((name) => teamsStat.captains.includes(data[name]) || teamsStat.members.includes(data[name]))) {
         throw new Unprocessable('Some players are playing in another team.');
     }
 
-    if (players.some(name => !teamsStat.unassigned.includes(data[name]))) {
+    if (players.some((name) => !teamsStat.unassigned.includes(data[name]))) {
         throw new Unprocessable('Some players are not eligible to play in Teams.');
     }
 
@@ -306,7 +306,7 @@ const createTeam = options => async context => {
     return context;
 };
 
-const joinAnyTeam = options => async context => {
+const joinAnyTeam = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -329,7 +329,7 @@ const joinAnyTeam = options => async context => {
     }
 
     const teamsStat = await getTeamsStat(sequelize, tournamentId);
-    const currentPlayerId = teamsStat.unassigned.find(id => teamsStat.userIds[id] === currentUser.id);
+    const currentPlayerId = teamsStat.unassigned.find((id) => teamsStat.userIds[id] === currentUser.id);
     if (!currentPlayerId) {
         throw new Unprocessable('You cannot join the Player Pool.');
     }
@@ -358,12 +358,12 @@ const joinAnyTeam = options => async context => {
         const tournamentInfo = await getTournamentInfo(context, tournamentId);
 
         const captains = tournamentInfo.teams
-            .filter(team => {
-                const tlrLimit = getTlrLimit(team.players.map(item => tournamentInfo.players[item.id]));
+            .filter((team) => {
+                const tlrLimit = getTlrLimit(team.players.map((item) => tournamentInfo.players[item.id]));
                 return initialTlr <= tlrLimit;
             })
-            .map(team => {
-                const captain = team.players.find(item => item.role === 'captain');
+            .map((team) => {
+                const captain = team.players.find((item) => item.role === 'captain');
                 return tournamentInfo.players[captain.id];
             });
 
@@ -383,7 +383,7 @@ const joinAnyTeam = options => async context => {
     return context;
 };
 
-const askToJoin = options => async context => {
+const askToJoin = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -398,7 +398,7 @@ const askToJoin = options => async context => {
     const { tournamentId } = team;
 
     const teamsStat = await getTeamsStat(sequelize, tournamentId);
-    const currentPlayerId = teamsStat.unassigned.find(id => teamsStat.userIds[id] === currentUser.id);
+    const currentPlayerId = teamsStat.unassigned.find((id) => teamsStat.userIds[id] === currentUser.id);
     if (!currentPlayerId) {
         throw new Unprocessable('You cannot send a join request.');
     }
@@ -449,7 +449,7 @@ const askToJoin = options => async context => {
     return context;
 };
 
-const updateTeam = options => async context => {
+const updateTeam = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -483,14 +483,14 @@ const updateTeam = options => async context => {
 
     const teamsStat = await getTeamsStat(sequelize, tournamentId);
     const teamInfo = teamsStat.teams[teamId];
-    const currentPlayerId = teamsStat.captains.find(id => teamsStat.userIds[id] === currentUser.id);
+    const currentPlayerId = teamsStat.captains.find((id) => teamsStat.userIds[id] === currentUser.id);
     if (!currentPlayerId || !teamInfo.players.includes(currentPlayerId)) {
         throw new Unprocessable('You are not a captain.');
     }
 
-    const players = ['player2', 'player3', 'player4', 'player5'].filter(name => data[name]);
+    const players = ['player2', 'player3', 'player4', 'player5'].filter((name) => data[name]);
 
-    if (players.some(name => !teamsStat.unassigned.includes(data[name]) && !teamInfo.players.includes(data[name]))) {
+    if (players.some((name) => !teamsStat.unassigned.includes(data[name]) && !teamInfo.players.includes(data[name]))) {
         throw new Unprocessable('Some players are not available to join.');
     }
 
@@ -499,7 +499,7 @@ const updateTeam = options => async context => {
         throw new Unprocessable('Name is required.', { errors: { name: 'Name is required.' } });
     }
 
-    const newMembers = players.map(name => data[name]);
+    const newMembers = players.map((name) => data[name]);
     const toBeDeleted = _difference(teamInfo.players, [...newMembers, currentPlayerId]);
     const toBeAdded = _difference(newMembers, teamInfo.players);
 
@@ -571,7 +571,7 @@ const updateTeam = options => async context => {
     return context;
 };
 
-const disbandTeam = options => async context => {
+const disbandTeam = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -601,7 +601,7 @@ const disbandTeam = options => async context => {
 
     const teamsStat = await getTeamsStat(sequelize, tournamentId);
     const teamInfo = teamsStat.teams[teamId];
-    const currentPlayerId = teamsStat.captains.find(id => teamsStat.userIds[id] === currentUser.id);
+    const currentPlayerId = teamsStat.captains.find((id) => teamsStat.userIds[id] === currentUser.id);
     if (!currentPlayerId || !teamInfo.players.includes(currentPlayerId)) {
         throw new Unprocessable('You are not a captain.');
     }
@@ -640,7 +640,7 @@ const disbandTeam = options => async context => {
     return context;
 };
 
-const leaveTeam = options => async context => {
+const leaveTeam = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -669,7 +669,7 @@ const leaveTeam = options => async context => {
 
     const teamsStat = await getTeamsStat(sequelize, tournamentId);
     const teamInfo = teamsStat.teams[teamId];
-    const currentPlayerId = teamInfo.players.find(id => teamsStat.userIds[id] === currentUser.id);
+    const currentPlayerId = teamInfo.players.find((id) => teamsStat.userIds[id] === currentUser.id);
     if (!currentPlayerId) {
         throw new Unprocessable('You are not a member of the team.');
     }
@@ -715,7 +715,7 @@ const leaveTeam = options => async context => {
     return context;
 };
 
-const acceptMember = options => async context => {
+const acceptMember = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -731,7 +731,7 @@ const acceptMember = options => async context => {
 
     const teamsStat = await getTeamsStat(sequelize, tournamentId);
     const teamInfo = teamsStat.teams[teamId];
-    const currentPlayerId = teamInfo.players.find(id => teamsStat.userIds[id] === currentUser.id);
+    const currentPlayerId = teamInfo.players.find((id) => teamsStat.userIds[id] === currentUser.id);
     if (!currentPlayerId || currentPlayerId !== teamInfo.captain) {
         throw new Unprocessable('You are not a captain.');
     }
@@ -771,7 +771,7 @@ const acceptMember = options => async context => {
     return context;
 };
 
-const deleteCandidate = options => async context => {
+const deleteCandidate = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -794,7 +794,7 @@ const deleteCandidate = options => async context => {
     return context;
 };
 
-const acceptMemberByLink = options => async context => {
+const acceptMemberByLink = (options) => async (context) => {
     let action;
     try {
         action = decodeAction(context.data.payload);
@@ -873,7 +873,7 @@ const acceptMemberByLink = options => async context => {
     return context;
 };
 
-const invitePlayers = options => async context => {
+const invitePlayers = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const teamId = Number(context.id);
@@ -892,19 +892,19 @@ const invitePlayers = options => async context => {
 
     const teamsStat = await getTeamsStat(sequelize, tournamentId);
     const teamInfo = teamsStat.teams[teamId];
-    const currentPlayerId = teamInfo.players.find(id => teamsStat.userIds[id] === currentUser.id);
+    const currentPlayerId = teamInfo.players.find((id) => teamsStat.userIds[id] === currentUser.id);
     if (!currentPlayerId || currentPlayerId !== teamInfo.captain) {
         throw new Unprocessable('You are not a captain.');
     }
 
-    if (context.data.players.some(id => !teamsStat.unassigned.includes(id))) {
+    if (context.data.players.some((id) => !teamsStat.unassigned.includes(id))) {
         throw new Unprocessable('Some players are not available to join.');
     }
 
     const invitedPlayers = team.invitedPlayers ? team.invitedPlayers.split(',').map(Number) : [];
     const currentDate = dayjs.tz();
 
-    if (context.data.players.some(id => invitedPlayers.includes(id))) {
+    if (context.data.players.some((id) => invitedPlayers.includes(id))) {
         throw new Unprocessable('You already invited some of these players.');
     }
     if (team.invitedAt && currentDate.isSame(dayjs.tz(team.invitedAt), 'day')) {
@@ -928,7 +928,7 @@ const invitePlayers = options => async context => {
 
         const props = encodeURIComponent(
             JSON.stringify({
-                team: tournamentInfo.teams.find(item => item.id === teamId),
+                team: tournamentInfo.teams.find((item) => item.id === teamId),
                 players: teamInfo.players.reduce((obj, id) => {
                     obj[id] = _pick(tournamentInfo.players[id], ['id', 'firstName', 'lastName', 'avatar', 'weekTlr']);
                     return obj;
@@ -962,7 +962,7 @@ const invitePlayers = options => async context => {
     return context;
 };
 
-const joinTeamByLink = options => async context => {
+const joinTeamByLink = (options) => async (context) => {
     let action;
     try {
         action = decodeAction(context.data.payload);
@@ -1037,7 +1037,7 @@ const joinTeamByLink = options => async context => {
     return context;
 };
 
-const pickPlayersForNextWeek = options => async context => {
+const pickPlayersForNextWeek = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const teamId = Number(context.id);
@@ -1058,12 +1058,12 @@ const pickPlayersForNextWeek = options => async context => {
 
     const teamsStat = await getTeamsStat(sequelize, tournamentId, false);
     const teamInfo = teamsStat.teams[teamId];
-    const currentPlayerId = teamInfo.players.find(id => teamsStat.userIds[id] === currentUser.id);
+    const currentPlayerId = teamInfo.players.find((id) => teamsStat.userIds[id] === currentUser.id);
     if (!currentPlayerId || currentPlayerId !== teamInfo.captain) {
         throw new Unprocessable('You are not a captain.');
     }
 
-    if (context.data.players.some(id => !teamInfo.players.includes(id))) {
+    if (context.data.players.some((id) => !teamInfo.players.includes(id))) {
         throw new Unprocessable('Players are not from your team.');
     }
 
@@ -1079,7 +1079,7 @@ const pickPlayersForNextWeek = options => async context => {
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

@@ -37,7 +37,7 @@ app.declareService = (name, ...middlewares) => {
 
     return app.getService(name);
 };
-app.getService = name => app.service(app.get('apiPrefix') + '/' + name);
+app.getService = (name) => app.service(app.get('apiPrefix') + '/' + name);
 
 app.use(gitcommit());
 

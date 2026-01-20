@@ -5,7 +5,7 @@ import style from './style.module.scss';
 import formatSum from '@/utils/formatSum';
 import { formatCustom } from '@/utils/dayjs';
 
-const Check = props => {
+const Check = (props) => {
     const { payload, sessionId, amount, processedAt } = props;
     const orderId = sessionId.slice(10, 30);
     const { transactions } = payload;

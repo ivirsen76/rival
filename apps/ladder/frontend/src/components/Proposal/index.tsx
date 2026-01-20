@@ -26,15 +26,15 @@ import practiceTypeOptions from '@rival/ladder.backend/src/services/proposals/pr
 import matchFormatOptions from '@rival/ladder.backend/src/services/proposals/matchFormatOptions';
 import durationOptions from '@rival/ladder.backend/src/services/proposals/durationOptions';
 
-const FormAcceptProposal = props => {
+const FormAcceptProposal = (props) => {
     const { match, onSubmit, onCancel, tournament } = props;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const currentPlayerId = currentUser.tournaments[tournament.id].playerId;
     const currentPlayer = tournament.players[currentPlayerId];
     const isDoublesTeam = tournament.levelType === 'doubles-team';
     const isPracticeProposal = Boolean(match.practiceType);
 
-    const matchFormat = matchFormatOptions.find(item => item.value === match.matchFormat);
+    const matchFormat = matchFormatOptions.find((item) => item.value === match.matchFormat);
     const needPickPlayers = isDoublesTeam && currentPlayer.partners.length > 2;
 
     const getInitialValues = () => {
@@ -43,7 +43,7 @@ const FormAcceptProposal = props => {
         if (isDoublesTeam) {
             values.acceptors =
                 currentPlayer.partners.length === 2
-                    ? [currentPlayer.id, currentPlayer.partners.find(item => item.id !== currentPlayer.id).id]
+                    ? [currentPlayer.id, currentPlayer.partners.find((item) => item.id !== currentPlayer.id).id]
                     : [currentPlayer.id];
         }
 
@@ -67,7 +67,7 @@ const FormAcceptProposal = props => {
                         <div className="alert alert-primary mb-6">
                             This is a <b>{matchFormat.label}</b> match proposal following these rules:
                             <ul className="mt-2 mb-0 ps-8">
-                                {matchFormat.rules.map(rule => (
+                                {matchFormat.rules.map((rule) => (
                                     <li key={rule} className="mb-1">
                                         {rule}
                                     </li>
@@ -107,13 +107,13 @@ FormAcceptProposal.propTypes = {
     onCancel: PropTypes.func,
 };
 
-const Proposal = props => {
+const Proposal = (props) => {
     const { tournament, match, onStatusUpdate, showActions, showWeather, isUpcomingPlayStyle, showElo } = props;
     const { canAcceptProposal, canDeleteProposal, canUnacceptProposal, canSeeContact } = useMatchPermissions({
         tournament,
         match,
     });
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
 
     const { players } = tournament;
     const challenger = players[match.challengerId];
@@ -128,7 +128,7 @@ const Proposal = props => {
         return currentUser.id === challenger.userId ? acceptor : challenger;
     })();
 
-    const acceptProposal = async values => {
+    const acceptProposal = async (values) => {
         try {
             await axios.put(`/api/proposals/${match.id}`, { action: 'acceptProposal', ...values });
         } catch (e) {
@@ -146,14 +146,14 @@ const Proposal = props => {
 
     const practiceType =
         match.practiceType && match.practiceType < 99
-            ? practiceTypeOptions.find(item => item.value === match.practiceType).explanation
+            ? practiceTypeOptions.find((item) => item.value === match.practiceType).explanation
             : null;
 
     const matchFormat =
         match.matchFormat && match.matchFormat !== 0
-            ? matchFormatOptions.find(item => item.value === match.matchFormat)
+            ? matchFormatOptions.find((item) => item.value === match.matchFormat)
             : null;
-    const duration = match.duration ? durationOptions.find(item => item.value === match.duration).label : null;
+    const duration = match.duration ? durationOptions.find((item) => item.value === match.duration).label : null;
 
     const challengerElo = (() => {
         if (!showElo || !match.challengerId) {
@@ -293,7 +293,7 @@ const Proposal = props => {
                                                 <div className="p-2">
                                                     <h2 className="text-white">Rules</h2>
                                                     <ul className="m-0 ps-4">
-                                                        {matchFormat.rules.map(rule => (
+                                                        {matchFormat.rules.map((rule) => (
                                                             <li key={rule}>{rule}</li>
                                                         ))}
                                                     </ul>

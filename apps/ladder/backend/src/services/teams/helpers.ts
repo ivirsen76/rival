@@ -36,10 +36,10 @@ export const tlrBudget3 = 4800;
 export const minMatches = 10;
 export const maxTeamMembers = 5;
 
-export const getTlrLimit = players => {
+export const getTlrLimit = (players) => {
     const tlrs = players
-        .filter(player => player.weekTlr)
-        .map(player => player.weekTlr)
+        .filter((player) => player.weekTlr)
+        .map((player) => player.weekTlr)
         .sort((a, b) => b - a);
 
     if (tlrs.length >= 2) {
@@ -49,7 +49,7 @@ export const getTlrLimit = players => {
     return 9999;
 };
 
-export const getTeamName = team => {
+export const getTeamName = (team) => {
     if (team.name === 0) {
         return '';
     }
@@ -58,5 +58,5 @@ export const getTeamName = team => {
         return team.customName;
     }
 
-    return teamNameOptions.find(item => item.value === team.name)?.label || '';
+    return teamNameOptions.find((item) => item.value === team.name)?.label || '';
 };

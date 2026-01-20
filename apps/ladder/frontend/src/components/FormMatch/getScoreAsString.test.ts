@@ -207,7 +207,7 @@ describe('getScoreAsString()', () => {
     ];
 
     for (const { result, ...values } of variants) {
-        const scoreStr = values.score.map(item => item.join('-')).join(' ');
+        const scoreStr = values.score.map((item) => item.join('-')).join(' ');
 
         it(`Should convert ${scoreStr} (isInjury = ${values.wonByInjury}) to ${result}`, () => {
             expect(getScoreAsString(values)).toBe(result);

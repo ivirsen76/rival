@@ -29,7 +29,7 @@ const getVisiblePlayers = (stats, values) => {
     }
 
     function intersect(a, b) {
-        return new Set([...a].filter(x => b.has(x)));
+        return new Set([...a].filter((x) => b.has(x)));
     }
 
     let players = values.tournaments.reduce((set, id) => {
@@ -53,12 +53,12 @@ const getVisiblePlayers = (stats, values) => {
     return players.size;
 };
 
-const FormProposal = props => {
+const FormProposal = (props) => {
     const { initialValues, isPractice, onSubmit, tournament } = props;
     const [confirmed, setConfirmed] = useState(false);
     const tournamentOptions = useTournamentOptions(tournament.id);
     const visibleStats = useVisibleStats();
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const currentPlayerId = currentUser.tournaments[tournament.id].playerId;
     const currentPlayer = tournament.players[currentPlayerId];
 
@@ -68,7 +68,7 @@ const FormProposal = props => {
         ? dayjs.tz(tournament.breakEnd).subtract(12, 'hour')
         : dayjs.tz().add(1, 'year');
 
-    const handleSubmit = async values => {
+    const handleSubmit = async (values) => {
         let confirm = true;
         if (!confirmed && values.playedAt) {
             const playedAt = dayjs.tz(values.playedAt);
@@ -122,7 +122,7 @@ const FormProposal = props => {
         if (isDoublesTeam) {
             values.challengers =
                 currentPlayer.partners.length === 2
-                    ? [currentPlayer.id, currentPlayer.partners.find(item => item.id !== currentPlayer.id).id]
+                    ? [currentPlayer.id, currentPlayer.partners.find((item) => item.id !== currentPlayer.id).id]
                     : [currentPlayer.id];
         }
 
@@ -222,7 +222,7 @@ const FormProposal = props => {
                                     <div className="mb-6">
                                         <label className="form-label">Match format</label>
                                         <div className="btn-group w-100">
-                                            {matchFormatOptions.map(item => (
+                                            {matchFormatOptions.map((item) => (
                                                 <button
                                                     key={item.value}
                                                     type="button"
@@ -238,7 +238,7 @@ const FormProposal = props => {
                                             ))}
                                         </div>
                                         <div className={style.matchFormatDescriptions}>
-                                            {matchFormatOptions.map(item => (
+                                            {matchFormatOptions.map((item) => (
                                                 <div key={item.value}>{item.description}</div>
                                             ))}
                                         </div>

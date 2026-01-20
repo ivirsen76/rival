@@ -27,7 +27,7 @@ import getSeasonSvg from './getSeasonSvg';
 import md5 from 'md5';
 
 // Helpers
-const getConfig = async sequelize => {
+const getConfig = async (sequelize) => {
     const config = await getCombinedConfig();
     return { ...staticConfig, ...config };
 };
@@ -58,7 +58,7 @@ const getSeasonUsers = async (sequelize, seasonId) => {
          WHERE p.tournamentId=t.id AND t.seasonId=:seasonId`,
         { replacements: { seasonId } }
     );
-    return new Set(nextSeasonUserIds.map(item => item.userId));
+    return new Set(nextSeasonUserIds.map((item) => item.userId));
 };
 const getSeasonRegistrations = async (sequelize, seasonId) => {
     const [[row]] = await sequelize.query(
@@ -70,7 +70,7 @@ const getSeasonRegistrations = async (sequelize, seasonId) => {
     );
     return row.cnt;
 };
-const getCurrentSeasons = async sequelize => {
+const getCurrentSeasons = async (sequelize) => {
     const dateMonthAgo = dayjs.tz().subtract(1, 'month');
     const [seasons] = await sequelize.query(
         `SELECT *
@@ -82,7 +82,7 @@ const getCurrentSeasons = async sequelize => {
 
     return [seasons[0], seasons[1]];
 };
-const getImagesFromSvg = async svgs => {
+const getImagesFromSvg = async (svgs) => {
     if (process.env.NODE_ENV === 'test') {
         return Object.keys(svgs).reduce((obj, key) => {
             obj[key] =
@@ -115,7 +115,7 @@ const getImagesFromSvg = async svgs => {
     }
 
     const imageChunks = await Promise.all(
-        getObjectChunkes(hashes, 50).map(async chunk => {
+        getObjectChunkes(hashes, 50).map(async (chunk) => {
             const response = await invokeLambda('svgToPng:1', {
                 bucket: process.env.AWS_S3_BUCKET,
                 payload: chunk,
@@ -132,7 +132,7 @@ const getImagesFromSvg = async svgs => {
     return result;
 };
 
-export const remindForTournament = async app => {
+export const remindForTournament = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
     const config = await getConfig(sequelize);
@@ -178,10 +178,10 @@ export const remindForTournament = async app => {
         if (isDoublesTeam) {
             const captainIds = new Set(
                 Object.values(tournamentInfo.data.players)
-                    .filter(item => item.isDoublesTeamCaptain && item.partnerIds.length > 1)
-                    .map(item => item.userId)
+                    .filter((item) => item.isDoublesTeamCaptain && item.partnerIds.length > 1)
+                    .map((item) => item.userId)
             );
-            getSuitableUsers = user => captainIds.has(user.id);
+            getSuitableUsers = (user) => captainIds.has(user.id);
         }
 
         // Get all users
@@ -230,7 +230,7 @@ export const remindForTournament = async app => {
     logger.info(`Tournament reminder sent to ${count} users`);
 };
 
-export const lastDayRemindForTournament = async app => {
+export const lastDayRemindForTournament = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
     const config = await getConfig(sequelize);
@@ -347,16 +347,16 @@ export const lastDayRemindForTournament = async app => {
                 });
 
                 // wait a bit just to not overwhelm email server
-                await new Promise(resolve => setTimeout(resolve, 500));
+                await new Promise((resolve) => setTimeout(resolve, 500));
             }
         };
 
         await sendEmails({
-            recipients: users.filter(user => user.readyForFinal === 1),
+            recipients: users.filter((user) => user.readyForFinal === 1),
             isRegistered: true,
         });
         await sendEmails({
-            recipients: users.filter(user => user.readyForFinal !== 1),
+            recipients: users.filter((user) => user.readyForFinal !== 1),
             isRegistered: false,
         });
     }
@@ -368,7 +368,7 @@ export const lastDayRemindForTournament = async app => {
     logger.info(`Last day tournament reminder sent to ${count} users`);
 };
 
-export const remindForFirstDay = async app => {
+export const remindForFirstDay = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
     const config = await getConfig(sequelize);
@@ -431,7 +431,7 @@ export const remindForFirstDay = async app => {
     logger.info(`Season first day reminder sent to ${emails.length} users`);
 };
 
-export const requestFeedbackForNoJoin = async app => {
+export const requestFeedbackForNoJoin = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
     const config = await getConfig(sequelize);
@@ -506,7 +506,7 @@ export const requestFeedbackForNoJoin = async app => {
             { replacements: { seasonId: prevSeason.id } }
         );
 
-        const addEmailForUserId = user => {
+        const addEmailForUserId = (user) => {
             if (withFeedbackUserIds.has(user.id)) {
                 return;
             }
@@ -555,7 +555,7 @@ export const requestFeedbackForNoJoin = async app => {
     logger.info(`Feedback request sent to ${emails.length} users`);
 };
 
-export const switchToPercentReferral = async app => {
+export const switchToPercentReferral = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
     const config = await getConfig(sequelize);
@@ -612,7 +612,7 @@ export const switchToPercentReferral = async app => {
         { replacements: { date: dateDayAgo.format('YYYY-MM-DD HH:mm:ss') } }
     );
 
-    const filteredUsers = users.filter(user => !alreadySentIds.has(user.id));
+    const filteredUsers = users.filter((user) => !alreadySentIds.has(user.id));
 
     const emails = filteredUsers.map(getEmailContact);
     if (emails.length === 0) {
@@ -639,7 +639,7 @@ export const switchToPercentReferral = async app => {
     logger.info(`Percent referral offer sent to ${emails.length} users`);
 };
 
-export const remindForActivity = async app => {
+export const remindForActivity = async (app) => {
     const sequelize = app.get('sequelizeClient');
     const { users } = sequelize.models;
     const ACTION_NAME = 'activityReminder';
@@ -705,7 +705,7 @@ export const remindForActivity = async app => {
             }
         );
 
-        const userIds = rows.map(row => row.userId).filter(id => !usersIgnored.has(id));
+        const userIds = rows.map((row) => row.userId).filter((id) => !usersIgnored.has(id));
 
         for (const userId of userIds) {
             const user = await users.findByPk(userId);
@@ -729,7 +729,7 @@ export const remindForActivity = async app => {
     }
 };
 
-export const remindForChoosingLadder = async app => {
+export const remindForChoosingLadder = async (app) => {
     const sequelize = app.get('sequelizeClient');
     const ACTION_NAME = 'chooseLadderReminder';
 
@@ -785,7 +785,7 @@ export const remindForChoosingLadder = async app => {
         }
     );
 
-    const filteredUsers = users.filter(user => !usersIgnored.has(user.id) && user.roles.includes('player'));
+    const filteredUsers = users.filter((user) => !usersIgnored.has(user.id) && user.roles.includes('player'));
     for (const user of filteredUsers) {
         const emails = [getEmailContact(user)];
 
@@ -806,7 +806,7 @@ export const remindForChoosingLadder = async app => {
     }
 };
 
-export const seasonIsOver = async app => {
+export const seasonIsOver = async (app) => {
     const { TL_URL } = process.env;
     const sequelize = app.get('sequelizeClient');
     const MIN_MATCHES_PLAYED = process.env.NODE_ENV === 'test' ? 5 : 25;
@@ -1118,7 +1118,7 @@ export const seasonIsOver = async app => {
 
     const playersArray = Object.values(players);
     const avatars = await Promise.all(
-        playersArray.map(player => {
+        playersArray.map((player) => {
             const avatarObject = allPlayers[player.userId].avatarObject;
             if (!avatarObject) {
                 return renderImage(`${TL_URL}/image/avatar`);
@@ -1171,7 +1171,7 @@ export const seasonIsOver = async app => {
     }
 };
 
-export const joinNextSeason = async app => {
+export const joinNextSeason = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
     const [prevSeason, nextSeason] = await getCurrentSeasons(sequelize);
@@ -1186,7 +1186,7 @@ export const joinNextSeason = async app => {
         {
             ACTION_NAME: 'joinNextSeasonFirst',
             daysToNextSeason: 20,
-            getSubject: isFree => {
+            getSubject: (isFree) => {
                 return isFree
                     ? `Rejoin the ${config.city} Tennis Ladder for Free!`
                     : `Sign Up Today for the ${getSeasonName(nextSeason)} Season!`;
@@ -1195,7 +1195,7 @@ export const joinNextSeason = async app => {
         {
             ACTION_NAME: 'joinNextSeasonBetween',
             daysToNextSeason: 10,
-            getSubject: isFree => {
+            getSubject: (isFree) => {
                 return isFree
                     ? `Reminder: You Can Rejoin the Ladder for Free!`
                     : `Don't Forget to Register Today for $${config.earlyRegistrationDiscount / 100} Off!`;
@@ -1204,7 +1204,7 @@ export const joinNextSeason = async app => {
         {
             ACTION_NAME: 'joinNextSeasonLast',
             daysToNextSeason: 3,
-            getSubject: isFree => {
+            getSubject: (isFree) => {
                 return isFree
                     ? `You Can Rejoin the Ladder for Free!`
                     : `Register Today for $${config.earlyRegistrationDiscount / 100} Off!`;
@@ -1214,7 +1214,7 @@ export const joinNextSeason = async app => {
 
     const daysToNextSeason = dayjs.tz(nextSeason.startDate).diff(currentDate, 'day', true);
     const reminder = REMINDERS.find(
-        item => daysToNextSeason < item.daysToNextSeason && daysToNextSeason > item.daysToNextSeason - 2
+        (item) => daysToNextSeason < item.daysToNextSeason && daysToNextSeason > item.daysToNextSeason - 2
     );
 
     if (!reminder) {
@@ -1244,7 +1244,7 @@ export const joinNextSeason = async app => {
          WHERE ${getStatsMatches('m')}`
     );
     const matches = usersIds.reduce((obj, row) => {
-        [row.challengerUserId, row.challenger2UserId, row.acceptorUserId, row.acceptor2UserId].forEach(id => {
+        [row.challengerUserId, row.challenger2UserId, row.acceptorUserId, row.acceptor2UserId].forEach((id) => {
             if (id) {
                 obj[id] = (obj[id] || 0) + 1;
             }
@@ -1270,7 +1270,7 @@ export const joinNextSeason = async app => {
         }
     );
 
-    const affectedUsers = allUsers.filter(user => !nextSeasonUserIds.has(user.id));
+    const affectedUsers = allUsers.filter((user) => !nextSeasonUserIds.has(user.id));
 
     // get TLR
     const establishedEloAllUsers = await getEstablishedEloAllUsers({ config, sequelize });
@@ -1315,14 +1315,14 @@ export const joinNextSeason = async app => {
     const images = await getImagesFromSvg(svgs);
 
     const usersFree = affectedUsers.filter(
-        user => nextSeason.isFree || !matches[user.id] || matches[user.id] < config.minMatchesToPay
+        (user) => nextSeason.isFree || !matches[user.id] || matches[user.id] < config.minMatchesToPay
     );
     const usersPaid = affectedUsers.filter(
-        user => !nextSeason.isFree && matches[user.id] && matches[user.id] >= config.minMatchesToPay
+        (user) => !nextSeason.isFree && matches[user.id] && matches[user.id] >= config.minMatchesToPay
     );
 
     const sendReminder = async (list, isFree) => {
-        const emails = list.map(user => ({
+        const emails = list.map((user) => ({
             ...getEmailContact(user),
             variables: {
                 '#seasonImageSrc#': images[user.id],
@@ -1348,7 +1348,7 @@ export const joinNextSeason = async app => {
     });
 };
 
-export const remindForClaimingReward = async app => {
+export const remindForClaimingReward = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
     const config = await getConfig(sequelize);
@@ -1495,7 +1495,7 @@ export const remindForClaimingReward = async app => {
     }
 };
 
-export const sendFinalScheduleReminder = async app => {
+export const sendFinalScheduleReminder = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
     const config = await getConfig(sequelize);
@@ -1551,7 +1551,7 @@ export const sendFinalScheduleReminder = async app => {
 
     let count = 0;
 
-    const sendEmail = params => {
+    const sendEmail = (params) => {
         const { emails, finalSpot, opponentName, opponentEmail, opponentPhone, subject, roundsTotal } = params;
 
         const html = finalMatchScheduleTemplate(config, {
@@ -1648,7 +1648,7 @@ export const sendFinalScheduleReminder = async app => {
     }
 };
 
-export const generateWordCloud = async app => {
+export const generateWordCloud = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
     const [[settings]] = await sequelize.query(`SELECT wordcloudUrl FROM settings`);
@@ -1679,7 +1679,7 @@ export const generateWordCloud = async app => {
            m.playedAt>"${dateYearAgo}"`);
 
     const result = {};
-    const addUser = id => {
+    const addUser = (id) => {
         if (!id || !usersObj[id]) {
             return;
         }
@@ -1710,7 +1710,7 @@ export const generateWordCloud = async app => {
     }
 
     const words = {};
-    list.forEach(item => {
+    list.forEach((item) => {
         let key = item.text;
         let counter = 1;
         while (words[key]) {
@@ -1734,7 +1734,7 @@ export const generateWordCloud = async app => {
     logger.info(`Wordcloud generated with ${list.length} players`);
 };
 
-export const sendMissingTeammateReminder = async app => {
+export const sendMissingTeammateReminder = async (app) => {
     const sequelize = app.get('sequelizeClient');
     const config = await getConfig(sequelize);
 
@@ -1756,7 +1756,7 @@ export const sendMissingTeammateReminder = async app => {
     const [rows] = await sequelize.query(`SELECT tableId FROM actions WHERE name=:name`, {
         replacements: { name: ACTION_NAME },
     });
-    const captainsWithReminders = new Set(rows.map(item => item.tableId));
+    const captainsWithReminders = new Set(rows.map((item) => item.tableId));
 
     const [players] = await sequelize.query(
         `
@@ -1778,8 +1778,8 @@ export const sendMissingTeammateReminder = async app => {
                p.isActive=1`,
         { replacements: { seasonId: seasonToRegister.id } }
     );
-    const captainsWithTeammate = new Set(players.map(item => item.partnerId));
-    const captainsWithoutTeammate = players.filter(item => {
+    const captainsWithTeammate = new Set(players.map((item) => item.partnerId));
+    const captainsWithoutTeammate = players.filter((item) => {
         if (item.partnerId) {
             return false;
         }
@@ -1830,7 +1830,7 @@ ${signature({ config })}
     logger.info(`Reminder for captains without teammates sent to ${captainsWithoutTeammate.length} players`);
 };
 
-export const sendHighProjectedTlrWarning = async app => {
+export const sendHighProjectedTlrWarning = async (app) => {
     const sequelize = app.get('sequelizeClient');
     const config = await getConfig(sequelize);
     const { players } = sequelize.models;
@@ -1852,7 +1852,7 @@ export const sendHighProjectedTlrWarning = async app => {
     const [rows] = await sequelize.query(`SELECT tableId FROM actions WHERE name=:name`, {
         replacements: { name: ACTION_NAME },
     });
-    const usersWithReminders = new Set(rows.map(item => item.tableId));
+    const usersWithReminders = new Set(rows.map((item) => item.tableId));
 
     const [matches] = await sequelize.query(
         `
@@ -1915,7 +1915,7 @@ export const sendHighProjectedTlrWarning = async app => {
     }
 
     const nextLevels = levels.reduce((obj, item) => {
-        const nextLevel = levels.find(level => level.gender === item.gender && level.baseTlr > item.baseTlr);
+        const nextLevel = levels.find((level) => level.gender === item.gender && level.baseTlr > item.baseTlr);
         if (nextLevel) {
             obj[item.slug] = nextLevel;
         }
@@ -2037,8 +2037,8 @@ export const sendHighProjectedTlrWarning = async app => {
     }
 };
 
-export default async app => {
-    const runAction = async fn => {
+export default async (app) => {
+    const runAction = async (fn) => {
         try {
             await fn(app);
         } catch (e) {

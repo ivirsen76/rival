@@ -1,4 +1,4 @@
-export const getUserMilestone = num => {
+export const getUserMilestone = (num) => {
     if (num < 5) {
         return num;
     }

@@ -37,7 +37,7 @@ const getTimeDiff = (date1, date2) => {
     return (new Date(date2) - new Date(date1)) / (24 * 3600 * 1000);
 };
 
-export const getTotalGames = score => {
+export const getTotalGames = (score) => {
     const arr = score.match(/\d+/g);
     if (!arr) {
         return 0;
@@ -46,10 +46,10 @@ export const getTotalGames = score => {
     return arr.reduce((sum, num) => sum + Number(num), 0);
 };
 
-export const reverseScore = score =>
+export const reverseScore = (score) =>
     score
         .split(' ')
-        .map(set => set.replace(/^(\d+)-(\d+)$/, '$2-$1'))
+        .map((set) => set.replace(/^(\d+)-(\d+)$/, '$2-$1'))
         .join(' ');
 
 const scaleTlrToElo = (10 * 3) / 5;
@@ -65,9 +65,9 @@ const tlrToElo = (tlr, baseTlr) => {
 const getTlr = ({ first, second, outcome, playedAt, eloDiff, multiplier = 1, baseTlr }) => {
     const pi = 3.1415926;
     const q = Math.log(10) / 400;
-    const g = rd => 1 / Math.sqrt(1 + (3 * q ** 2 * rd ** 2) / pi ** 2);
+    const g = (rd) => 1 / Math.sqrt(1 + (3 * q ** 2 * rd ** 2) / pi ** 2);
     const e = (r, rj, rdj) => 1 / (1 + 10 ** ((-g(rdj) * (r - rj)) / 400));
-    const getK = rd => 1.1 - 20 / (maxRd - rd + 20 / 0.4); // confidence in TLR (from 0.7 to 1.1)
+    const getK = (rd) => 1.1 - 20 / (maxRd - rd + 20 / 0.4); // confidence in TLR (from 0.7 to 1.1)
 
     const firstElo = tlrToElo(first.elo, baseTlr);
     const secondElo = tlrToElo(second.elo, baseTlr);
@@ -100,7 +100,7 @@ export const calculateElo = async () => {
     connection.connect();
 
     const levels = await runQuery(connection, 'SELECT id FROM levels WHERE baseTlr IS NOT NULL AND type="single"');
-    const levelIds = levels.map(level => level.id);
+    const levelIds = levels.map((level) => level.id);
 
     if (levelIds.length === 0) {
         connection.end();
@@ -262,7 +262,7 @@ export const calculateElo = async () => {
                 challengerRd !== match.challengerRd ||
                 acceptorRd !== match.acceptorRd
             ) {
-                const getQuery = id => `UPDATE matches
+                const getQuery = (id) => `UPDATE matches
                     SET challengerElo=${newRoundedChallengerElo},
                         acceptorElo=${newRoundedAcceptorElo},
                         challengerEloChange=${challengerEloChange},

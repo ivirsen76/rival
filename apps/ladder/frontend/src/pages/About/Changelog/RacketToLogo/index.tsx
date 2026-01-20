@@ -3,7 +3,7 @@ import Racket from './racket.svg?react';
 import Logo from '@/assets/logo.svg?react';
 import style from './style.module.scss';
 
-const RacketToLogo = props => {
+const RacketToLogo = (props) => {
     return (
         <div className={style.wrapper}>
             <div className={classnames(style.racket, style.top)}>

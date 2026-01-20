@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Counter = props => {
+const Counter = (props) => {
     const { field, form, min, max } = props;
 
     return (

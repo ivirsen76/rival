@@ -14,7 +14,7 @@ import confirmation from '@/utils/confirmation';
 import showLoader from '@/utils/showLoader';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 
-const Admin = props => {
+const Admin = (props) => {
     const { tournament, reloadTournament } = props;
 
     const sortedPlayers = useMemo(
@@ -22,7 +22,7 @@ const Admin = props => {
         [tournament.players]
     );
 
-    const removePlayer = async player => {
+    const removePlayer = async (player) => {
         const confirm = await confirmation({
             title: 'Remove player',
             message: (
@@ -48,7 +48,7 @@ const Admin = props => {
         });
     };
 
-    const activatePlayer = async player => {
+    const activatePlayer = async (player) => {
         const confirm = await confirmation({
             title: 'Activate player',
             message: (
@@ -74,7 +74,7 @@ const Admin = props => {
         });
     };
 
-    const deactivatePlayer = async player => {
+    const deactivatePlayer = async (player) => {
         const confirm = await confirmation({
             title: 'Deactivate player',
             message: (
@@ -119,11 +119,11 @@ const Admin = props => {
                 renderBody={({ hide }) => (
                     <AddPlayerForm
                         sortedPlayers={sortedPlayers}
-                        onSubmit={async values => {
+                        onSubmit={async (values) => {
                             await axios.put('/api/players/0', {
                                 action: 'batchAddPlayers',
                                 tournamentId: tournament.id,
-                                users: values.users.map(user => user.id),
+                                users: values.users.map((user) => user.id),
                             });
                             await reloadTournament();
                             hide();

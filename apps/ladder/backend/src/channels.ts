@@ -4,7 +4,7 @@ export default function (app) {
         return;
     }
 
-    app.on('connection', connection => {
+    app.on('connection', (connection) => {
         // On a new real-time connection, add it to the anonymous channel
         app.channel('anonymous').join(connection);
     });

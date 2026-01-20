@@ -4,7 +4,7 @@ import Tooltip from '@/components/Tooltip';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const NumberPicker = props => {
+const NumberPicker = (props) => {
     const { value, onChange } = props;
     const tooltipRef = useRef();
 
@@ -18,7 +18,7 @@ const NumberPicker = props => {
             theme="light"
             content={
                 <div className={style.pickerWrapper} data-number-picker-dropdown>
-                    {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(num => (
+                    {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
                         <div key={num}>
                             <button
                                 className={classnames('btn', style.num, {
@@ -37,7 +37,7 @@ const NumberPicker = props => {
                     ))}
                 </div>
             }
-            onShow={instance => {
+            onShow={(instance) => {
                 tooltipRef.current = instance;
             }}
         >

@@ -114,7 +114,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await expect(overview.area).toBeVisible();
 
         // No emails should be sent
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         expect(await getNumRecords('emails')).toBe(0);
     });
 
@@ -222,7 +222,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await expect(overview.area).toBeVisible();
 
         // No emails should be sent
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         expect(await getNumRecords('emails')).toBe(0);
     });
 
@@ -257,7 +257,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await expect(overview.area).toBeVisible();
 
         // No emails should be sent
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         expect(await getNumRecords('emails')).toBe(0);
     });
 
@@ -366,7 +366,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await expect(overview.area).toBeVisible();
 
         // No emails should be sent
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         expect(await getNumRecords('emails')).toBe(0);
     });
 
@@ -1651,7 +1651,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await expect(overview.playerList).toContainText('Not Played User');
         await expect(common.body).toContainText('Men 4.0');
 
-        await new Promise(resolve => setTimeout(resolve, 500)); // to save emails in DB
+        await new Promise((resolve) => setTimeout(resolve, 500)); // to save emails in DB
         const welcomeEmail = await getRecord('emails', {
             subject: 'Welcome to the Raleigh Rival Tennis Ladder!',
             recipientEmail: 'player8@gmail.com',
@@ -1880,7 +1880,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await match.nextButton.click();
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(2);
         await match.submitMatchButton.click();
@@ -1914,13 +1914,13 @@ test('We can see validation error during registration', async ({ page, common, r
         await match.nextButton.click();
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(2);
         await match.submitMatchButton.click();
         await expect(common.alert).toContainText('The match has been reported');
 
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         expect(await getNumRecords('emails', { recipientEmail: 'player1@gmail.com' })).toBe(2);
         expect(await getNumRecords('payments', { userId: 1 })).toBe(1);
     });
@@ -2137,7 +2137,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await page.goto('/season/2022/spring/men-40');
         await expect(overview.playerList).toContainText('Not Played User');
 
-        await new Promise(resolve => setTimeout(resolve, 500)); // to save emails in DB
+        await new Promise((resolve) => setTimeout(resolve, 500)); // to save emails in DB
         const welcomeEmail = await getRecord('emails', {
             subject: 'Welcome to the Raleigh Rival Tennis Ladder!',
             recipientEmail: 'player8@gmail.com',
@@ -2169,7 +2169,7 @@ test('We can see validation error during registration', async ({ page, common, r
 
         await register.globalRegisterButton.click();
 
-        expect(await page.evaluate(key => localStorage.getItem(key), storageKey)).toBeTruthy();
+        expect(await page.evaluate((key) => localStorage.getItem(key), storageKey)).toBeTruthy();
 
         await register.firstNameField.fill('Peter');
         await register.lastNameField.fill('Allen');
@@ -2208,7 +2208,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await page.goto('/');
         await page.locator('a.btn').getByText('Scoring').click();
         await expect(page.locator('h1').getByText('Scoring')).toBeVisible();
-        expect(await page.evaluate(key => localStorage.getItem(key), storageKey)).toBeTruthy();
+        expect(await page.evaluate((key) => localStorage.getItem(key), storageKey)).toBeTruthy();
 
         await page.locator('[data-top-menu] a').getByText('Sign in').click();
         await login.emailField.fill('player1@gmail.com');
@@ -2222,6 +2222,6 @@ test('We can see validation error during registration', async ({ page, common, r
         const state = await page.evaluate(() => window.tl.store.getState());
         expect(state.auth.history).toEqual([]);
 
-        expect(await page.evaluate(key => localStorage.getItem(key), storageKey)).toBeFalsy();
+        expect(await page.evaluate((key) => localStorage.getItem(key), storageKey)).toBeFalsy();
     });
 }

@@ -39,7 +39,7 @@ export const comeFromOptions = [
     { value: 99, label: 'Other' },
 ];
 
-const RegisterForm = props => {
+const RegisterForm = (props) => {
     const history = useHistory();
     const { settings } = useSettings();
     const { comeFromPartners } = settings;
@@ -50,7 +50,7 @@ const RegisterForm = props => {
     const [referrer, setReferrer] = useState(null);
     const [referralMessage, setReferralMessage] = useState('');
     const [debouncedSearch, debounced] = useDebounce(search, 2000);
-    const registerHistory = useSelector(state => state.auth.history);
+    const registerHistory = useSelector((state) => state.auth.history);
     const { onRegister } = useStatsigEvents();
 
     useEffect(() => {
@@ -125,12 +125,12 @@ const RegisterForm = props => {
                 agree: false,
                 zip: '',
             }}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 const additionalValues = {};
                 if (referrer && values.comeFrom === 9) {
                     additionalValues.referralCode = referrer.referralCode;
                 }
-                const partner = comeFromPartners.find(item => item.value === values.comeFrom);
+                const partner = comeFromPartners.find((item) => item.value === values.comeFrom);
                 if (partner) {
                     additionalValues.referralCode = partner.referralCode;
                     additionalValues.comeFrom = 0;
@@ -155,7 +155,7 @@ const RegisterForm = props => {
                             <a
                                 href=""
                                 className="link-primary fw-bold"
-                                onClick={e => {
+                                onClick={(e) => {
                                     e.preventDefault();
                                     goToLogin();
                                 }}
@@ -180,7 +180,7 @@ const RegisterForm = props => {
                         description="Only visible to your match opponents"
                         type="email"
                         component={Input}
-                        renderError={error =>
+                        renderError={(error) =>
                             error.includes('unique') ? (
                                 <div>
                                     This email is already used by another player.
@@ -188,7 +188,7 @@ const RegisterForm = props => {
                                     You can{' '}
                                     <a
                                         href=""
-                                        onClick={e => {
+                                        onClick={(e) => {
                                             e.preventDefault();
                                             goToLogin();
                                         }}
@@ -245,9 +245,9 @@ const RegisterForm = props => {
                                 component={Select}
                                 options={[
                                     { value: 0, label: '-- Choose --' },
-                                    ...comeFromOptions.filter(item => item.value !== 99),
+                                    ...comeFromOptions.filter((item) => item.value !== 99),
                                     ...comeFromPartners,
-                                    ...comeFromOptions.filter(item => item.value === 99),
+                                    ...comeFromOptions.filter((item) => item.value === 99),
                                 ]}
                             />
 
@@ -281,7 +281,7 @@ const RegisterForm = props => {
                                                         ? `${referrer.firstName} ${referrer.lastName}`
                                                         : search
                                                 }
-                                                onChange={e => setSearch(e.target.value)}
+                                                onChange={(e) => setSearch(e.target.value)}
                                                 spellCheck={false}
                                             />
                                             <div className="position-absolute translate-middle-y top-50 end-0 me-3">

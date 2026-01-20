@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import _omit from 'lodash/omit';
 
-const Button = props => {
+const Button = (props) => {
     const passingProps = _omit(props, ['isSubmitting', 'children', 'submittingTitle']);
 
     return (

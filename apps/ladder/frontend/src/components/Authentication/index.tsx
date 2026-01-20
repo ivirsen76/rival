@@ -8,8 +8,8 @@ import VerifyEmail from '@/components/VerifyEmail';
 import EmailIcon from '@rival/packages/metronic/icons/duotone/Communication/Mail-at.svg?react';
 import { authenticate } from '@/reducers/auth';
 
-const Authentication = props => {
-    const currentUser = useSelector(state => state.auth.user);
+const Authentication = (props) => {
+    const currentUser = useSelector((state) => state.auth.user);
     const [tab, setTab] = useState('register');
     const dispatch = useDispatch();
 
@@ -22,7 +22,7 @@ const Authentication = props => {
             <Register
                 goToLogin={() => setTab('login')}
                 showComeFrom={false}
-                onSubmit={async values => {
+                onSubmit={async (values) => {
                     await axios.post('/api/users', values);
 
                     notification({

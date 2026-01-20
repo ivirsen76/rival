@@ -3,7 +3,7 @@ import { getSchemaErrors } from '../../helpers';
 import dayjs from '../../utils/dayjs';
 import { isDateThisWeek } from './helpers';
 
-export default values => {
+export default (values) => {
     const schema = yup.object().shape({
         challengerId: yup.number().required().integer().min(1),
         acceptorId: yup.number().required().integer().min(1),

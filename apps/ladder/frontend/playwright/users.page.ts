@@ -23,7 +23,7 @@ test.beforeEach(async ({ page }) => {
         await expect(common.alert).toContainText('Message was successfuly sent to 5 recipients');
 
         // wait for the message to be saved in DB
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         expect(await getNumRecords('emails')).toBe(0);
     });
 

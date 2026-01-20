@@ -4,10 +4,10 @@ import PlusIcon from '@rival/packages/metronic/icons/duotone/Interface/Plus-Squa
 import MinusIcon from '@rival/packages/metronic/icons/duotone/Interface/Minus-Square.svg?react';
 import style from './style.module.scss';
 
-const HiddenText = props => {
+const HiddenText = (props) => {
     const [visible, setVisible] = useState(false);
 
-    const toggleVisible = e => {
+    const toggleVisible = (e) => {
         e && e.preventDefault();
         setVisible(!visible);
     };

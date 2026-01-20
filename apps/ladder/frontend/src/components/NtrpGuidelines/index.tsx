@@ -2,7 +2,7 @@ import Modal from '@/components/Modal';
 import { Title } from '@/components/Statbox';
 import style from './style.module.scss';
 
-const NtrpGuidelines = props => {
+const NtrpGuidelines = (props) => {
     const baseHue = 212;
 
     return (
@@ -155,7 +155,7 @@ export const NtrpGuidelinesLink = () => (
         renderTrigger={({ show }) => (
             <a
                 href=""
-                onClick={e => {
+                onClick={(e) => {
                     e.preventDefault();
                     show();
                 }}

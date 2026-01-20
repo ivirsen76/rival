@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 import style from './style.module.scss';
 
-const MostProgress = props => {
+const MostProgress = (props) => {
     const { mostProgress, players } = props.tournament;
     const { isReport } = props;
 
@@ -21,7 +21,7 @@ const MostProgress = props => {
                     </thead>
 
                     <tbody>
-                        {mostProgress.map(obj => {
+                        {mostProgress.map((obj) => {
                             const player = players[obj.id];
 
                             return (

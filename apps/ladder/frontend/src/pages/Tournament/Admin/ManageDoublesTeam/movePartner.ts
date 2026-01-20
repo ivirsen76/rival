@@ -6,7 +6,7 @@ export default ({ tournament, playerId, captainId, replaceCaptain }) => {
     const isSameTeam = result.players[playerId].partnerIds?.[0] === captainId;
     const isCaptain = result.players[playerId].partnerIds?.[0] === playerId;
     const playerTeamName = result.players[playerId].teamName;
-    const partnersFrom = (result.players[playerId].partnerIds || []).filter(id => id !== playerId);
+    const partnersFrom = (result.players[playerId].partnerIds || []).filter((id) => id !== playerId);
 
     if (captainId === 999999) {
         result.players[playerId].isDoublesTeamCaptain = false;
@@ -17,7 +17,7 @@ export default ({ tournament, playerId, captainId, replaceCaptain }) => {
         delete result.players[playerId].partnerIds;
 
         for (const partnerId of partnersFrom) {
-            result.players[partnerId].partnerIds = result.players[partnerId].partnerIds.filter(id => id !== playerId);
+            result.players[partnerId].partnerIds = result.players[partnerId].partnerIds.filter((id) => id !== playerId);
         }
 
         if (isCaptain && partnersFrom.length > 0) {
@@ -32,15 +32,15 @@ export default ({ tournament, playerId, captainId, replaceCaptain }) => {
     }
 
     result.players[playerId].partnerIds = replaceCaptain
-        ? [playerId, ...result.players[captainId].partnerIds.filter(id => id !== playerId)]
-        : [...result.players[captainId].partnerIds.filter(id => id !== playerId), playerId];
+        ? [playerId, ...result.players[captainId].partnerIds.filter((id) => id !== playerId)]
+        : [...result.players[captainId].partnerIds.filter((id) => id !== playerId), playerId];
     result.players[playerId].isDoublesTeamCaptain = replaceCaptain;
     result.players[playerId].isDoublesTeamPartner = !replaceCaptain;
     result.players[playerId].isDoublesTeamPlayerPool = false;
     result.players[playerId].teamName = replaceCaptain ? result.players[captainId].teamName : null;
     result.players[playerId].partnerId = replaceCaptain ? null : captainId;
 
-    const partnersTo = result.players[captainId].partnerIds.filter(id => id !== playerId);
+    const partnersTo = result.players[captainId].partnerIds.filter((id) => id !== playerId);
     for (const partnerId of partnersTo) {
         result.players[partnerId].partnerIds = result.players[playerId].partnerIds;
 
@@ -61,7 +61,7 @@ export default ({ tournament, playerId, captainId, replaceCaptain }) => {
 
     if (!isSameTeam) {
         for (const partnerId of partnersFrom) {
-            result.players[partnerId].partnerIds = result.players[partnerId].partnerIds.filter(id => id !== playerId);
+            result.players[partnerId].partnerIds = result.players[partnerId].partnerIds.filter((id) => id !== playerId);
         }
         if (isCaptain && partnersFrom.length > 0) {
             const newCaptainId = partnersFrom[0];

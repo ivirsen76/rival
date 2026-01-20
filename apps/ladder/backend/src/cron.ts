@@ -15,13 +15,13 @@ import { applyNewBadges } from './utils/applyNewBadges';
 import remindAboutLastOpenSlot from './utils/remindAboutLastOpenSlot';
 import sendProposalEmails from './utils/sendProposalEmails';
 
-export default app => {
+export default (app) => {
     // use TL_DB_NAME to set the starting random point
     const random = seedrandom(process.env.TL_DB_NAME);
     const sequelize = app.get('sequelizeClient');
 
     // to be between 4am and 6am
-    const scheduleNightTask = task => {
+    const scheduleNightTask = (task) => {
         const minute = Math.floor(random() * 60);
         const hour = 4 + Math.floor(random() * 2);
         const schedule = `${minute} ${hour} * * *`;
@@ -30,7 +30,7 @@ export default app => {
     };
 
     // to be between 7am and 9am
-    const scheduleMorningTask = task => {
+    const scheduleMorningTask = (task) => {
         const minute = Math.floor(random() * 60);
         const hour = 7 + Math.floor(random() * 2);
         const schedule = `${minute} ${hour} * * *`;
@@ -38,14 +38,14 @@ export default app => {
         cron.schedule(schedule, task, { timezone: process.env.TL_TIMEZONE });
     };
 
-    const schedule3HourTask = task => {
+    const schedule3HourTask = (task) => {
         const minute = Math.floor(random() * 60);
         const schedule = `${minute} */3 * * *`;
 
         cron.schedule(schedule, task, { timezone: process.env.TL_TIMEZONE });
     };
 
-    const schedule2MinuteTask = task => {
+    const schedule2MinuteTask = (task) => {
         const schedule = `*/2 * * * *`;
 
         cron.schedule(schedule, task, { timezone: process.env.TL_TIMEZONE });

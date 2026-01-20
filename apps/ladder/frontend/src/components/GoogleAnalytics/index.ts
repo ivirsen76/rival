@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import useSettings from '@/utils/useSettings';
 
-const GoogleAnalytics = props => {
+const GoogleAnalytics = (props) => {
     const { settings } = useSettings();
     const { listen } = useHistory();
 
@@ -38,7 +38,7 @@ const GoogleAnalytics = props => {
         }
 
         // Trigger getting page stats on SPA page changes
-        const unlisten = listen(location => {
+        const unlisten = listen((location) => {
             window.gtag('set', 'page_path', location.pathname);
             window.gtag('event', 'page_view');
         });

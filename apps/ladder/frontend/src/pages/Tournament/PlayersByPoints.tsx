@@ -61,7 +61,7 @@ export const List = ({
     lineLabel = 'Tournament Line',
 }) => {
     const { isOver, isBreak, isParticipation, playingAnotherFinal } = tournament;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const isDoublesTeam = tournament.levelType === 'doubles-team';
     const currentPlayerId = currentUser?.tournaments[tournament.id]?.playerId;
 
@@ -97,7 +97,7 @@ export const List = ({
         };
     }, [tournament]);
 
-    const getIsMe = player =>
+    const getIsMe = (player) =>
         Boolean(player && (currentUser?.id === player.userId || player.partnerIds?.includes(currentPlayerId)));
 
     return (
@@ -255,7 +255,7 @@ export const List = ({
                                                         <a
                                                             href=""
                                                             className="fw-semibold"
-                                                            onClick={e => {
+                                                            onClick={(e) => {
                                                                 e.preventDefault();
                                                                 show();
                                                             }}
@@ -332,7 +332,7 @@ export const List = ({
                                             <td colSpan={2} />
                                             <td className="ps-0 pt-0" colSpan="7">
                                                 <div className={style.partners}>
-                                                    {player.partners.map(partner => (
+                                                    {player.partners.map((partner) => (
                                                         <div key={partner.id} className={style.partner}>
                                                             <PlayerName player1={partner} isLink highlight={false} />
                                                         </div>
@@ -385,7 +385,7 @@ export const List = ({
                             </tr>
                         </thead>
                         <tbody>
-                            {projectedPlayers.map(player => (
+                            {projectedPlayers.map((player) => (
                                 <tr key={player.id}>
                                     <td className={style.value}>
                                         {player.rank}
@@ -444,7 +444,7 @@ List.propTypes = {
     lineLabel: PropTypes.node,
 };
 
-const PlayersByPoints = props => {
+const PlayersByPoints = (props) => {
     const { tournament, showDoublesPlayers } = props;
 
     const currentWeek = Math.ceil(dayjs.tz().diff(dayjs.tz(tournament.startDate), 'week', true));
@@ -453,7 +453,7 @@ const PlayersByPoints = props => {
     const sortedPlayers = useMemo(
         () =>
             Object.values(tournament.players)
-                .filter(player => !player.hidden)
+                .filter((player) => !player.hidden)
                 .sort(
                     compareFields('stats.rank', 'stats.matches-desc', 'stats.matchesWon-desc', 'firstName', 'lastName')
                 )
@@ -469,7 +469,7 @@ const PlayersByPoints = props => {
         [tournament.players]
     );
 
-    const list = sortedPlayers.map(player => ({
+    const list = sortedPlayers.map((player) => ({
         ...player,
         ...player.stats,
     }));
@@ -481,7 +481,7 @@ const PlayersByPoints = props => {
         }
 
         const lastFinalPlayer = sortedPlayers
-            .filter(player => player.readyForFinal === 1)
+            .filter((player) => player.readyForFinal === 1)
             .slice(tournament.totalFinalPlayers - 1);
         const lineAfterId = lastFinalPlayer.length > 0 ? lastFinalPlayer[0].id : 0;
         const lineLabel = <span>Top {tournament.totalFinalPlayers} Tournament Line</span>;

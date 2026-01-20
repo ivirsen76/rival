@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const Referral = props => {
+const Referral = (props) => {
     const { history } = props;
     const { code } = props.match.params;
 

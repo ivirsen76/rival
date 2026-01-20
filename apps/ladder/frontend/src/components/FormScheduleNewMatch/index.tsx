@@ -9,7 +9,7 @@ import FormPickDoublesPlayers from '@/components/FormPickDoublesPlayers';
 import getPlayersName from '@/utils/getPlayersName';
 import hasAnyRole from '@/utils/hasAnyRole';
 
-const JustForm = props => {
+const JustForm = (props) => {
     const { values, players, setFieldValue, currentPlayerId } = props;
 
     useEffect(() => {
@@ -45,10 +45,10 @@ JustForm.propTypes = {
     currentPlayerId: PropTypes.number,
 };
 
-const FormScheduleNewNewMatch = props => {
+const FormScheduleNewNewMatch = (props) => {
     const { tournament, onAdd } = props;
     const [match, setMatch] = useState({ id: 0, type: 'regular' });
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const isDoublesTeam = tournament.levelType === 'doubles-team';
     const isAdmin = hasAnyRole(currentUser, ['admin', 'manager']);
     const currentPlayerId = (() => {
@@ -64,7 +64,7 @@ const FormScheduleNewNewMatch = props => {
         return [
             { value: 0, label: isDoublesTeam ? '-- Select the team --' : '-- Select the player --' },
             ...Object.values(tournament.players)
-                .filter(item => {
+                .filter((item) => {
                     if (!item.isActive) {
                         return false;
                     }
@@ -77,12 +77,12 @@ const FormScheduleNewNewMatch = props => {
 
                     return true;
                 })
-                .map(item => ({ value: item.id, label: item.teamName || getPlayersName(item) }))
+                .map((item) => ({ value: item.id, label: item.teamName || getPlayersName(item) }))
                 .sort((a, b) => a.label.localeCompare(b.label)),
         ];
     }, [tournament.players]);
 
-    const onSubmit = values => {
+    const onSubmit = (values) => {
         const newMatch = { ...match, ...values };
 
         if (isDoublesTeam) {
@@ -118,7 +118,7 @@ const FormScheduleNewNewMatch = props => {
         <FormPickDoublesPlayers
             match={match}
             players={tournament.players}
-            onSubmit={values => {
+            onSubmit={(values) => {
                 setMatch({ ...match, ...values });
             }}
             isScheduling

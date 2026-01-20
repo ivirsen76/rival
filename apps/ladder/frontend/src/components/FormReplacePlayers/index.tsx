@@ -6,19 +6,19 @@ import Button from '@/components/Button';
 import notification from '@/components/notification';
 import axios from '@/utils/axios';
 
-const FormReplacePlayers = props => {
+const FormReplacePlayers = (props) => {
     const { players, match } = props;
 
     const playersOptions = useMemo(() => {
         return [
             ...Object.values(players)
-                .filter(item => item.isActive)
-                .map(item => ({ value: item.id, label: `${item.firstName} ${item.lastName}` }))
+                .filter((item) => item.isActive)
+                .map((item) => ({ value: item.id, label: `${item.firstName} ${item.lastName}` }))
                 .sort((a, b) => a.label.localeCompare(b.label)),
         ];
     }, [players]);
 
-    const onSubmit = async values => {
+    const onSubmit = async (values) => {
         await axios.put(`/api/matches/${match.id}`, {
             action: 'replacePlayers',
             challengerId: values.challengerId,

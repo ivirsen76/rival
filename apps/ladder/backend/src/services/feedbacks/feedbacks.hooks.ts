@@ -8,7 +8,7 @@ import { logEvent, generateBadges } from '../commonHooks';
 import striptags from 'striptags';
 import { getEmailContact } from '../users/helpers';
 
-const validateCreate = options => context => {
+const validateCreate = (options) => (context) => {
     const errors = validate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -18,7 +18,7 @@ const validateCreate = options => context => {
     return context;
 };
 
-const populateUserId = options => context => {
+const populateUserId = (options) => (context) => {
     const { data } = context;
 
     data.userId = context.params.user.id;
@@ -26,7 +26,7 @@ const populateUserId = options => context => {
     return context;
 };
 
-const sendNewFeedbackEmail = options => async context => {
+const sendNewFeedbackEmail = (options) => async (context) => {
     const currentUser = context.params.user;
     const config = context.params.config;
     const sequelize = context.app.get('sequelizeClient');
@@ -42,7 +42,7 @@ const sendNewFeedbackEmail = options => async context => {
 
         context.app.service('api/emails').create({
             replyTo: getEmailContact(currentUser),
-            to: emails.map(item => ({ email: item })),
+            to: emails.map((item) => ({ email: item })),
             subject: `Feedback - ${context.data.type} (${config.city})`,
             html,
         });

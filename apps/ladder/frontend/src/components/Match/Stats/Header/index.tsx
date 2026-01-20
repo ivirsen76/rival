@@ -6,14 +6,14 @@ import dayjs from '@/utils/dayjs';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 import style from './style.module.scss';
 
-const minutesToTime = minutes => {
+const minutesToTime = (minutes) => {
     const hours = `${Math.floor(minutes / 60)}`.padStart(2, '0');
     minutes = `${minutes % 60}`.padStart(2, '0');
 
     return `${hours}:${minutes}`;
 };
 
-const Header = props => {
+const Header = (props) => {
     const { match, challenger, challengerName, acceptor, acceptorName } = props;
     const { stat } = match;
 

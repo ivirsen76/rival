@@ -15,7 +15,7 @@ export default (config, { user, opponent, lead, history, img, previewText }) => 
   <mj-text>
     <ul style="margin: 0 !important; padding-top: 0px; padding-bottom: 0px;">
       ${history
-          .map(match => `<li><b>${match.date}</b>: You ${match.isWinner ? 'won' : 'lost'} <b>${match.score}</b></li>`)
+          .map((match) => `<li><b>${match.date}</b>: You ${match.isWinner ? 'won' : 'lost'} <b>${match.score}</b></li>`)
           .join('')}
     </ul>
   </mj-text>

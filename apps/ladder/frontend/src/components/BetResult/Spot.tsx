@@ -6,11 +6,11 @@ import getRelativeStringLength from '@/utils/getRelativeStringLength';
 import { BYE_ID } from '@rival/ladder.backend/src/constants';
 import style from './style.module.scss';
 
-const isLongName = player => {
+const isLongName = (player) => {
     return getRelativeStringLength(player.firstName + ' ' + player.lastName) > 15;
 };
 
-const Match = props => {
+const Match = (props) => {
     const { match, challenger, acceptor, correctWinner, wrongWinner, correctScore, wrongScore } = props;
     const hasBye = match.challengerId === BYE_ID || match.acceptorId === BYE_ID;
 

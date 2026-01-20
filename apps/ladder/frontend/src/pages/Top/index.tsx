@@ -32,7 +32,7 @@ const groupOptions = [
     { value: 'current', label: 'Current players' },
 ];
 
-const Top = props => {
+const Top = (props) => {
     const category = props.match.params.category;
     const history = useHistory();
     const [currentGender, setCurrentGender] = useState('all');
@@ -40,7 +40,7 @@ const Top = props => {
     const [loadedCategory, setLoadedCategory] = useState();
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const config = useConfig();
     const size = useBreakpoints();
 
@@ -61,7 +61,7 @@ const Top = props => {
                     name: 'matches',
                     label: 'Matches',
                     className: 'text-center',
-                    render: value => formatNumber(value),
+                    render: (value) => formatNumber(value),
                 },
                 ...(isSmall
                     ? []
@@ -74,7 +74,7 @@ const Top = props => {
                           },
                       ]),
             ],
-            getUserInfo: userRow => (
+            getUserInfo: (userRow) => (
                 <>
                     You played <b>{userRow.matches}</b> matches
                 </>
@@ -106,7 +106,7 @@ const Top = props => {
                           },
                       ]),
             ],
-            getUserInfo: userRow => (
+            getUserInfo: (userRow) => (
                 <>
                     You played <b>{userRow.seasons}</b> seasons
                 </>
@@ -125,7 +125,7 @@ const Top = props => {
                 {
                     name: 'elo',
                     label: <span className="text-nowrap">Max TLR</span>,
-                    render: value => (
+                    render: (value) => (
                         <span className={`badge badge-square badge-dark ${style.elo}`}>{formatElo(value)}</span>
                     ),
                     className: 'text-center',
@@ -136,11 +136,11 @@ const Top = props => {
                           {
                               name: 'date',
                               label: 'Achieved At',
-                              render: value => formatCustom(value, 'MMM D, YYYY'),
+                              render: (value) => formatCustom(value, 'MMM D, YYYY'),
                           },
                       ]),
             ],
-            getUserInfo: userRow => (
+            getUserInfo: (userRow) => (
                 <>
                     You max TLR is <b>{formatElo(userRow.elo)}</b>
                 </>
@@ -159,7 +159,7 @@ const Top = props => {
                 {
                     name: 'diffElo',
                     label: 'TLR Gain',
-                    render: value => `+${formatElo(value)}`,
+                    render: (value) => `+${formatElo(value)}`,
                     className: 'text-center',
                 },
                 ...(isSmall
@@ -183,7 +183,7 @@ const Top = props => {
                           },
                       ]),
             ],
-            getUserInfo: userRow => (
+            getUserInfo: (userRow) => (
                 <>
                     You gained <b>{formatElo(userRow.diffElo)}</b> TLR points
                 </>
@@ -206,7 +206,7 @@ const Top = props => {
                     className: 'text-center',
                 },
             ],
-            getUserInfo: userRow => (
+            getUserInfo: (userRow) => (
                 <>
                     You have <b>{userRow.comebacks}</b> comebacks
                 </>
@@ -228,7 +228,7 @@ const Top = props => {
                     className: 'text-center',
                 },
             ],
-            getUserInfo: userRow => (
+            getUserInfo: (userRow) => (
                 <>
                     You have <b>{userRow.rivalries}</b> rivalries
                 </>
@@ -290,7 +290,7 @@ const Top = props => {
                     ),
                 },
             ],
-            getUserInfo: userRow => {
+            getUserInfo: (userRow) => {
                 const opponent = userRow.userIds[0] === currentUser.id ? userRow.secondUser : userRow.firstUser;
 
                 return (
@@ -317,7 +317,7 @@ const Top = props => {
                     className: 'text-center',
                 },
             ],
-            getUserInfo: userRow => (
+            getUserInfo: (userRow) => (
                 <>
                     You have earned <b>{userRow.badges}</b> badges
                 </>
@@ -326,7 +326,7 @@ const Top = props => {
     ];
 
     useEffect(() => {
-        if (!categories.find(item => item.code === category)) {
+        if (!categories.find((item) => item.code === category)) {
             history.push(`/top/${categories[0].code}`);
             return;
         }
@@ -342,9 +342,9 @@ const Top = props => {
         })();
     }, [category]);
 
-    const currentCategory = categories.find(item => item.code === loadedCategory);
+    const currentCategory = categories.find((item) => item.code === loadedCategory);
 
-    const filteredData = data.filter(row => {
+    const filteredData = data.filter((row) => {
         if (currentGroup === 'current' && !row.isCurrent) {
             return false;
         }
@@ -358,7 +358,7 @@ const Top = props => {
     const renderFilter = () => (
         <div>
             <div className={style.buttons}>
-                {groupOptions.map(item => (
+                {groupOptions.map((item) => (
                     <button
                         key={item.value}
                         type="button"
@@ -370,7 +370,7 @@ const Top = props => {
                 ))}
             </div>
             <div className={style.buttons + ' mt-2'}>
-                {genderOptions.map(item => (
+                {genderOptions.map((item) => (
                     <button
                         key={item.value}
                         type="button"
@@ -390,7 +390,7 @@ const Top = props => {
         }
 
         const index = filteredData.findIndex(
-            item => item.id === currentUser.id || (item.userIds && item.userIds.includes(currentUser.id))
+            (item) => item.id === currentUser.id || (item.userIds && item.userIds.includes(currentUser.id))
         );
         let verdict;
         if (index === -1) {
@@ -413,7 +413,7 @@ const Top = props => {
         );
     };
 
-    const getRowClassName = row => (row.isCurrent ? 'table-primary tl-tr-all-round' : '');
+    const getRowClassName = (row) => (row.isCurrent ? 'table-primary tl-tr-all-round' : '');
     const filterKey = `key-${loadedCategory}-${currentGroup}-${currentGender}`;
 
     const getRules = () => (
@@ -427,7 +427,7 @@ const Top = props => {
         </ul>
     );
 
-    const tabs = categories.map(item => ({
+    const tabs = categories.map((item) => ({
         code: item.code,
         label: item.label,
         title: item.title,
@@ -449,11 +449,11 @@ const Top = props => {
                         <select
                             className="form-select form-select-solid"
                             value={category}
-                            onChange={e => {
+                            onChange={(e) => {
                                 history.push(`/top/${e.target.value}`);
                             }}
                         >
-                            {tabs.map(option => (
+                            {tabs.map((option) => (
                                 <option key={option.code} value={option.code}>
                                     {option.title}
                                 </option>

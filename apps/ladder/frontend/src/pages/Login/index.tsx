@@ -5,7 +5,7 @@ import { logout } from '@/reducers/auth';
 import Card from '@/components/Card';
 import Login from '@/components/Authentication/Login';
 
-const LoginPage = props => {
+const LoginPage = (props) => {
     const [redirectAfterLogin, setRedirectAfterLogin] = useState(null);
     const dispatch = useDispatch();
     const history = useHistory();
@@ -23,7 +23,7 @@ const LoginPage = props => {
         }
     }, []);
 
-    const onSubmit = user => {
+    const onSubmit = (user) => {
         history.push(redirectAfterLogin || user.redirectAfterLogin || '/');
     };
 

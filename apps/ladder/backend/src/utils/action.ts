@@ -15,7 +15,7 @@ export const encodeBase64 = (str: string) => {
 
 const getHash = (obj, secureKey) => {
     const sorted = Object.entries(obj).sort((a, b) => a[0].localeCompare(b[0]));
-    const str = sorted.map(pair => pair[0] + '=' + pair[1]).join('=') + ':' + secureKey;
+    const str = sorted.map((pair) => pair[0] + '=' + pair[1]).join('=') + ':' + secureKey;
 
     return md5(str).slice(0, 20);
 };
@@ -105,7 +105,7 @@ export const decodeAction = (str, currentTimestamp = dayjs.tz().unix(), secureKe
         str = decodeBase64(str);
         const parts = str.split('&');
         if (
-            parts.some(part => {
+            parts.some((part) => {
                 if (!/^.+=.+$/.test(part)) {
                     return true;
                 }

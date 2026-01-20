@@ -4,7 +4,7 @@ import { useDebounce } from 'use-debounce';
 import _isEqual from 'lodash/isEqual';
 import _cloneDeep from 'lodash/cloneDeep';
 
-const Autosave = props => {
+const Autosave = (props) => {
     const { values, callback } = props;
     const [debouncedValues] = useDebounce(values, 3000);
     const savedRef = useRef(values);

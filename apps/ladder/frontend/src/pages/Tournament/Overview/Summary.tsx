@@ -6,7 +6,7 @@ import WeatherForecast from '@/components/WeatherForecast';
 import WeatherAtTime from '@/components/WeatherForecast/WeatherAtTime';
 import style from './style.module.scss';
 
-const Summary = props => {
+const Summary = (props) => {
     const { tournament, showWeather } = props;
     const { isStarted, isOver, isBreak, isFinalTournament } = tournament;
     const currentWeather = useCurrentWeather();
@@ -22,7 +22,7 @@ const Summary = props => {
         );
     }
 
-    const format = date => dayjs.tz(date).format('MMM D');
+    const format = (date) => dayjs.tz(date).format('MMM D');
     const finalTournamentDates = `Starting ${format(dayjs.tz(tournament.endDate).isoWeekday(1))}`;
 
     return (

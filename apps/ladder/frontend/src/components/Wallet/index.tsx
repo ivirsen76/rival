@@ -12,7 +12,7 @@ import FileIcon from '@rival/packages/metronic/icons/duotone/Files/File.svg?reac
 import WalletIcon from '@rival/packages/metronic/icons/duotone/Shopping/Wallet.svg?react';
 import style from './style.module.scss';
 
-const Wallet = props => {
+const Wallet = (props) => {
     const { userId, isFullWidth } = props;
 
     const { data: payments, isLoading } = useQuery(
@@ -35,13 +35,13 @@ const Wallet = props => {
             name: 'createdAt',
             label: 'Date',
             className: 'text-nowrap',
-            render: value => formatCustom(value, 'MMM D, YYYY'),
+            render: (value) => formatCustom(value, 'MMM D, YYYY'),
         },
         { name: 'description', label: 'Description', className: isFullWidth ? 'w-100' : '' },
         {
             name: 'amount',
             label: 'Amount',
-            render: value => {
+            render: (value) => {
                 return <span className={classnames({ [style.credit]: value > 0 })}>{formatSum(value)}</span>;
             },
             className: 'text-end fw-bold text-nowrap',
@@ -61,7 +61,7 @@ const Wallet = props => {
                         renderTrigger={({ show }) => (
                             <a
                                 href=""
-                                onClick={e => {
+                                onClick={(e) => {
                                     e.preventDefault();
                                     show();
                                 }}

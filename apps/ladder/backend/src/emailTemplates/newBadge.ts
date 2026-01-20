@@ -14,7 +14,7 @@ export default (config, { badges }) => {
     <mj-table font-size="16px" line-height="24px">
         ${badges
             .map(
-                badge => `<tr>
+                (badge) => `<tr>
     <td width="100px" style="padding-top: 5px; padding-bottom: 5px;">
         <img src="${badge.image}" style="width: 100%;" />
     </td>

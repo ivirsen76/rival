@@ -1,7 +1,7 @@
 import dayjs from './dayjs';
 import getCombinedConfig from './getCombinedConfig';
 
-export default async app => {
+export default async (app) => {
     if (process.env.TL_ENV === 'production') {
         return;
     }

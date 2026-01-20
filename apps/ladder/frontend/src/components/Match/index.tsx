@@ -45,11 +45,11 @@ import useMatchPermissions from '@/utils/useMatchPermissions';
 import { BYE_ID } from '@rival/ladder.backend/src/constants';
 import matchFormatOptions from '@rival/ladder.backend/src/services/proposals/matchFormatOptions';
 
-const isLongName = player => {
+const isLongName = (player) => {
     return getRelativeStringLength(player.firstName + ' ' + player.lastName) > 15;
 };
 
-const Match = props => {
+const Match = (props) => {
     const {
         match,
         onUpdate,
@@ -160,7 +160,7 @@ const Match = props => {
         return <span data-playwright-placeholder="middle">{formatMiddle(match.playedAt)}</span>;
     };
 
-    const renderElo = elo => <div className={'badge badge-small bg-white ' + style.elo}>{formatElo(elo)}</div>;
+    const renderElo = (elo) => <div className={'badge badge-small bg-white ' + style.elo}>{formatElo(elo)}</div>;
 
     const getEloChange = (elo, diff) => {
         const prev = elo - diff;
@@ -190,8 +190,8 @@ const Match = props => {
             !challenger.elo.isEloEstablished || !acceptor.elo.isEloEstablished
                 ? 'Uncertain'
                 : challengerWinPercent >= 50
-                ? `${challenger.firstName} wins (${challengerWinPercent}%)`
-                : `${acceptor.firstName} wins (${100 - challengerWinPercent}%)`;
+                  ? `${challenger.firstName} wins (${challengerWinPercent}%)`
+                  : `${acceptor.firstName} wins (${100 - challengerWinPercent}%)`;
 
         return (
             <div>
@@ -308,19 +308,19 @@ const Match = props => {
             score: match.wonByInjury ? completeInjuryScore(match.score, isChallengerWon) : match.score,
         });
 
-        const replaceVars = str => {
-            ['participationBonus', 'challengerBonus', 'rankDiff', 'totalGames', 'gamesDiff'].forEach(name => {
+        const replaceVars = (str) => {
+            ['participationBonus', 'challengerBonus', 'rankDiff', 'totalGames', 'gamesDiff'].forEach((name) => {
                 str = str.replace(name, `<span class="${style[name]}">${calc[name]}</span>`);
             });
 
-            ['challengerPoints', 'acceptorPoints'].forEach(name => {
+            ['challengerPoints', 'acceptorPoints'].forEach((name) => {
                 str = str.replace(
                     name,
                     `<span class="badge badge-small badge-square ${style.resultedPoints}">${calc[name]}</span>`
                 );
             });
 
-            ['winOverHigher', 'winOverEqual', 'winOverLower'].forEach(name => {
+            ['winOverHigher', 'winOverEqual', 'winOverLower'].forEach((name) => {
                 str = str.replace(name, `<span class="${style.winPoints}">${calc[name]}</span>`);
             });
 
@@ -445,7 +445,7 @@ const Match = props => {
     if (canSeeMatchDetails) {
         const matchFormat =
             match.matchFormat && match.matchFormat > 0
-                ? matchFormatOptions.find(item => item.value === match.matchFormat).label
+                ? matchFormatOptions.find((item) => item.value === match.matchFormat).label
                 : null;
 
         actions.push(
@@ -574,7 +574,7 @@ const Match = props => {
                 renderBody={({ hide }) => (
                     <FormAddStats
                         match={match}
-                        onSubmit={async values => {
+                        onSubmit={async (values) => {
                             await onUpdate();
                             notification({
                                 inModal: true,
@@ -758,7 +758,7 @@ const Match = props => {
                                             {actions}
                                         </div>
                                     }
-                                    onShow={instance => {
+                                    onShow={(instance) => {
                                         tooltipRef.current = instance;
                                     }}
                                 >
@@ -786,7 +786,7 @@ const Match = props => {
                                                     className="btn btn-link btn-active-icon-primary p-0"
                                                     style={{ position: 'relative', top: '-0.1rem' }}
                                                     data-match-stats={match.id}
-                                                    onClick={async e => {
+                                                    onClick={async (e) => {
                                                         e.preventDefault();
                                                         show();
                                                     }}
@@ -834,7 +834,7 @@ const Match = props => {
                                     href=""
                                     className="btn btn-primary btn-xs me-1"
                                     style={{ marginBottom: '-0.2rem' }}
-                                    onClick={async e => {
+                                    onClick={async (e) => {
                                         e.preventDefault();
                                         show();
                                     }}
@@ -867,7 +867,7 @@ const Match = props => {
                                     href=""
                                     className="btn btn-success btn-xs"
                                     style={{ marginBottom: '-0.2rem' }}
-                                    onClick={async e => {
+                                    onClick={async (e) => {
                                         e.preventDefault();
                                         scoreModalInterceptor ? scoreModalInterceptor(show) : show();
                                     }}

@@ -3,7 +3,7 @@ import { Unprocessable } from '@feathersjs/errors';
 import { disallow } from 'feathers-hooks-common';
 import { logEvent } from '../commonHooks';
 
-const getLongLink = options => async context => {
+const getLongLink = (options) => async (context) => {
     const { name, code } = context.data;
     const sequelize = context.app.get('sequelizeClient');
 
@@ -20,7 +20,7 @@ const getLongLink = options => async context => {
     return context;
 };
 
-const decodePayload = options => async context => {
+const decodePayload = (options) => async (context) => {
     const { payload } = context.data;
 
     try {

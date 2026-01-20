@@ -6,7 +6,7 @@ export default () => {
         const lazyloadImages = document.querySelectorAll(`.${style.lazy}`);
         const imageObserver = new IntersectionObserver(
             (entries, observer) => {
-                entries.forEach(entry => {
+                entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         const image = entry.target;
                         image.classList.remove(style.lazy);
@@ -17,12 +17,12 @@ export default () => {
             { rootMargin: '2000px 0px 2000px 0px' }
         );
 
-        lazyloadImages.forEach(image => {
+        lazyloadImages.forEach((image) => {
             imageObserver.observe(image);
         });
 
         return () => {
-            lazyloadImages.forEach(image => {
+            lazyloadImages.forEach((image) => {
                 imageObserver.unobserve(image);
             });
         };

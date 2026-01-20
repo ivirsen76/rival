@@ -11,9 +11,9 @@ import _capitalize from 'lodash/capitalize';
 import allBadges from '@rival/ladder.backend/src/utils/badges';
 import style from './style.module.scss';
 
-const returnFunc = value => value;
+const returnFunc = (value) => value;
 
-const BadgesStat = props => {
+const BadgesStat = (props) => {
     const { data, isMyself, isLight } = props;
 
     const stats = data?.stats;
@@ -73,7 +73,7 @@ const BadgesStat = props => {
         <div className={style.wrapper}>
             <Statbox text="One-Time Badges" isLight={isLight}>
                 <div className={style.badges}>
-                    {allBadges.oneTime.map(item => {
+                    {allBadges.oneTime.map((item) => {
                         const badgeState = item.getState({ stats });
 
                         return (
@@ -152,7 +152,7 @@ const BadgesStat = props => {
 
             <Statbox text="Series Badges" isLight={isLight}>
                 <div className={style.badges}>
-                    {allBadges.series.map(item => {
+                    {allBadges.series.map((item) => {
                         const badgeState = item.getState({ stats });
                         const getLabel = item.getLabel || returnFunc;
 
@@ -246,10 +246,10 @@ const BadgesStat = props => {
                 </div>
             </Statbox>
 
-            {levels.map(level => (
+            {levels.map((level) => (
                 <Statbox key={level.slug} text={`${level.name} Badges`} isLight={isLight}>
                     <div className={style.badges}>
-                        {allBadges.levels.map(item => {
+                        {allBadges.levels.map((item) => {
                             const badgeState = item.getState({ stats: level });
 
                             return (

@@ -4,7 +4,7 @@ import TeamNamePicker, { getValidateTeamName } from '@/components/formik/TeamNam
 import useConfig from '@/utils/useConfig';
 import Button from '@/components/Button';
 
-const CreateTeamForm = props => {
+const CreateTeamForm = (props) => {
     const { tournament, player, onSubmit } = props;
     const playerName = `${player.firstName} ${player.lastName}`;
     const config = useConfig();

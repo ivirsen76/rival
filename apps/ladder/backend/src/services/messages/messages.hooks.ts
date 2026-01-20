@@ -9,7 +9,7 @@ import newMessageTemplate from '../../emailTemplates/newMessage';
 import { getStatsMatches } from '../../utils/sqlConditions';
 import { getEmailContact, getPlayerName } from '../users/helpers';
 
-const validateCreate = options => async context => {
+const validateCreate = (options) => async (context) => {
     // Validate data
     {
         const schema = yup.object().shape({
@@ -65,7 +65,7 @@ const validateCreate = options => async context => {
             { replacements: { currentUserId: currentUser.id, userId: recipient.id, seasonId: currentSeason.id } }
         );
 
-        const hasTheSameTournament = tournaments.some(item => item.cnt === 2);
+        const hasTheSameTournament = tournaments.some((item) => item.cnt === 2);
         if (!hasTheSameTournament) {
             throw new Unprocessable('You can only send messages to players on your current ladders.');
         }
@@ -110,7 +110,7 @@ const validateCreate = options => async context => {
     return context;
 };
 
-const sendMessage = options => async context => {
+const sendMessage = (options) => async (context) => {
     const currentUser = context.params.user;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;

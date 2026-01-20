@@ -3,7 +3,7 @@ import merge from 'deepmerge';
 
 export const defaultValues = {
     subscribeForProposals: {
-        playFormats: [...matchFormatOptions.map(item => item.value), 99],
+        playFormats: [...matchFormatOptions.map((item) => item.value), 99],
         onlyNotPlaying: true,
         onlyCompetitive: false,
         onlyAgeCompatible: false,
@@ -12,7 +12,7 @@ export const defaultValues = {
     },
 };
 
-export default information => {
+export default (information) => {
     if (!information) {
         information = {};
     }

@@ -83,10 +83,10 @@ const typeOptions = [
     },
 ];
 
-const FormFeedback = props => {
+const FormFeedback = (props) => {
     const { onSubmit } = props;
 
-    const handleSubmit = async values => {
+    const handleSubmit = async (values) => {
         await axios.post('/api/feedbacks', {
             ...values,
             description: values.description,
@@ -103,7 +103,7 @@ const FormFeedback = props => {
     return (
         <Formik initialValues={{ type: '', description: '' }} onSubmit={handleSubmit}>
             {({ isSubmitting, values, setFieldValue }) => {
-                const currentType = typeOptions.find(type => type.value === values.type);
+                const currentType = typeOptions.find((type) => type.value === values.type);
 
                 return (
                     <Form noValidate>
@@ -120,7 +120,7 @@ const FormFeedback = props => {
                             </>
                         ) : (
                             <div className={style.list}>
-                                {typeOptions.map(option => (
+                                {typeOptions.map((option) => (
                                     <div
                                         key={option.value}
                                         className={style.type}

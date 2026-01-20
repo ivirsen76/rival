@@ -107,7 +107,7 @@ test('Should get a new badge after playing a match and get an email notification
 
     await match.pickChallengerPoints(6);
     await match.pickAcceptorPoints(7);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await match.pickChallengerPoints(6);
     await match.pickAcceptorPoints(7);
@@ -287,7 +287,7 @@ test('Should get a new badge for feedback and do not get an email notification',
     await common.modalSubmitButton.click();
     await expect(common.alert).toContainText('Thank you!');
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     expect(await getNumRecords('emails')).toBe(0);
 });
 
@@ -328,7 +328,7 @@ test('Should get a new badge for avatar and get an email notification', async ({
     const { achievedAt } = await expectRecordToExist('badges', { userId: 8, code: 'avatar' });
     expect(achievedAt).toContain(dayjs().tz().format('YYYY-MM-DD'));
 
-    await new Promise(resolve => setTimeout(resolve, 1000)); // to be at least one second late
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // to be at least one second late
     await page.locator('button').getByText('Edit avatar').click();
     await page.locator('button').getByText('Save').click();
     await expect(common.modal).toBeHidden();
@@ -388,7 +388,7 @@ test('Should get a new badge for profile info and get an email notification', as
     const { achievedAt } = await expectRecordToExist('badges', { userId: 8, code: 'profile' });
     expect(achievedAt).toContain(dayjs().tz().format('YYYY-MM-DD'));
 
-    await new Promise(resolve => setTimeout(resolve, 1000)); // to be at least one second late
+    await new Promise((resolve) => setTimeout(resolve, 1000)); // to be at least one second late
     await page.locator('a[data-edit-tennis-equipment]').click();
     await common.modalSubmitButton.click();
     await expect(common.modal).toBeHidden();

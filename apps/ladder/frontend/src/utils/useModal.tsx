@@ -5,7 +5,7 @@ export default () => {
     const [visible, setVisible] = useState(false);
     const [param, setParam] = useState(null);
 
-    const show = value => {
+    const show = (value) => {
         setParam(value);
         setVisible(true);
     };

@@ -4,32 +4,32 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addHistoryEventAndSave } from '@/reducers/auth';
 import style from './style.module.scss';
 
-const RegisterButton = props => {
+const RegisterButton = (props) => {
     const [show, setShow] = useState(false);
     const [animateClassName, setAnimateClassName] = useState('animate__animated animate__bounceIn');
     const history = useHistory();
     const location = useLocation();
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
     useEffect(() => {
         (async () => {
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
             setShow(true);
 
             if (currentUser) {
                 // Don't animate it when rendering for the second time
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                await new Promise((resolve) => setTimeout(resolve, 1000));
                 setAnimateClassName('');
             } else {
                 // 1 minute
-                await new Promise(resolve => setTimeout(resolve, 60 * 1000));
+                await new Promise((resolve) => setTimeout(resolve, 60 * 1000));
                 setAnimateClassName('animate__animated animate__heartBeat');
 
                 // another 1 minute
-                await new Promise(resolve => setTimeout(resolve, 60 * 1000));
+                await new Promise((resolve) => setTimeout(resolve, 60 * 1000));
                 setAnimateClassName('');
-                await new Promise(resolve => setTimeout(resolve, 0));
+                await new Promise((resolve) => setTimeout(resolve, 0));
                 setAnimateClassName('animate__animated animate__heartBeat');
             }
         })();
@@ -40,7 +40,7 @@ const RegisterButton = props => {
         history.push('/register');
     };
 
-    if ([/^\/register$/, /^\/login$/, /^\/action\//].some(regex => regex.test(location.pathname))) {
+    if ([/^\/register$/, /^\/login$/, /^\/action\//].some((regex) => regex.test(location.pathname))) {
         return null;
     }
     if (currentUser && location.pathname !== '/') {

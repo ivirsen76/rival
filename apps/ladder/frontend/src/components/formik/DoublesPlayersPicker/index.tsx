@@ -6,12 +6,12 @@ import classnames from 'classnames';
 import { useSelector } from 'react-redux';
 import style from './style.module.scss';
 
-const DoublesPlayersPicker = props => {
+const DoublesPlayersPicker = (props) => {
     const { field, form, partners } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
 
-    const possiblePartners = partners.filter(item => item.userId !== currentUser.id);
+    const possiblePartners = partners.filter((item) => item.userId !== currentUser.id);
 
     return (
         <FieldWrapper {...props}>

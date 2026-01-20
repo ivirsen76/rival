@@ -11,15 +11,15 @@ import { IMaskInput } from 'react-imask';
 import classnames from 'classnames';
 import axios from '@/utils/axios';
 
-const PhoneForm = props => {
-    const currentUser = useSelector(state => state.auth.user);
+const PhoneForm = (props) => {
+    const currentUser = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
     if (!currentUser) {
         return <NotFound />;
     }
 
-    const validate = values => {
+    const validate = (values) => {
         const errors = {};
 
         if (!values.phone) {
@@ -37,7 +37,7 @@ const PhoneForm = props => {
         <Formik
             initialValues={{ phone: '' }}
             validate={validate}
-            onSubmit={async values => {
+            onSubmit={async (values) => {
                 await axios.put('/api/users/0', { action: 'validatePhone', phone: values.phone });
                 props.onSubmit();
 

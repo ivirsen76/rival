@@ -10,14 +10,14 @@ import hslToRgb from '@/utils/hslToRgb';
 import useAppearance from '@/utils/useAppearance';
 import style from './style.module.scss';
 
-const WeatherForecast = props => {
+const WeatherForecast = (props) => {
     const { isDelay } = props;
     const { settings } = useSettings();
     const { weather } = settings.settings;
     const appearance = useAppearance();
 
     const currentTime = dayjs.tz().subtract(30, 'minute').format('YYYY-MM-DD HH:mm:ss');
-    const nowHour = weather.hours.find(item => item.datetime >= currentTime);
+    const nowHour = weather.hours.find((item) => item.datetime >= currentTime);
 
     const totalDays = weather.days.length;
 
@@ -36,7 +36,7 @@ const WeatherForecast = props => {
             : {}),
     }));
 
-    const minTemp = Math.min(...data.map(item => item.temp));
+    const minTemp = Math.min(...data.map((item) => item.temp));
     const showFreezingLevel = minTemp < 40;
 
     const chartInit = ({ am4core, am4charts, instance }) => {

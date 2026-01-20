@@ -7,7 +7,7 @@ import notification from '@/components/notification';
 import axios from '@/utils/axios';
 import Form from '@/pages/Settings/SubscriptionsForm/Form';
 
-const Unsubscribe = props => {
+const Unsubscribe = (props) => {
     const { data, isLoading } = useQuery('getUserSubscriptions', async () => {
         const response = await axios.put('/api/users/0', { action: 'getUserSubscriptions', payload: props.payload });
         return response.data.data;
@@ -22,7 +22,7 @@ const Unsubscribe = props => {
         payload: props.payload,
     };
 
-    const onSubmit = async values => {
+    const onSubmit = async (values) => {
         await axios.put('/api/users/0', { action: 'updateUserSubscriptions', ...values });
 
         notification({

@@ -8,7 +8,7 @@ import style from './confirmation.module.scss';
 const wrapper = document.createElement('div');
 document.body.appendChild(wrapper);
 
-const ConfirmModal = props => {
+const ConfirmModal = (props) => {
     const [show, setShow] = useState(true);
 
     const handleConfirm = () => {
@@ -59,7 +59,7 @@ ConfirmModal.defaultProps = {
     cancelButtonTitle: 'Cancel',
 };
 
-export default async options => {
+export default async (options) => {
     if (typeof options === 'string') {
         options = {
             message: options,

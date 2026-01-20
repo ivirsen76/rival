@@ -1,4 +1,4 @@
-export const getEmailsFromList = str => {
+export const getEmailsFromList = (str) => {
     if (!str) {
         return [];
     }

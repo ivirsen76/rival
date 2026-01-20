@@ -8,9 +8,9 @@ import { useSelector } from 'react-redux';
 import hasAnyRole from '@/utils/hasAnyRole';
 import style from './style.module.scss';
 
-const Global = props => {
+const Global = (props) => {
     const { path, url } = useRouteMatch();
-    const user = useSelector(state => state.auth.user);
+    const user = useSelector((state) => state.auth.user);
 
     if (!hasAnyRole(user, ['admin'])) {
         return <NotFound />;
@@ -33,7 +33,7 @@ const Global = props => {
                         style.navbar
                     }
                 >
-                    {links.map(link => (
+                    {links.map((link) => (
                         <li key={link.url} className="nav-item">
                             <NavLink
                                 exact

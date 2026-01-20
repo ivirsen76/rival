@@ -21,9 +21,9 @@ import style from './style.module.scss';
 
 let counter = 1;
 
-const Settings = props => {
+const Settings = (props) => {
     const [uploadStatus, setUploadStatus] = useState({});
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const queryClient = useQueryClient();
     const config = useConfig();
 
@@ -33,15 +33,15 @@ const Settings = props => {
     });
 
     const photosWithAuthor = useMemo(
-        () => photos.map(item => ({ ...item, author: currentUser })),
+        () => photos.map((item) => ({ ...item, author: currentUser })),
         [photos, currentUser]
     );
 
     const onDrop = useCallback(async (acceptedFiles, rejectedFiles) => {
         let correctFiles = acceptedFiles
-            .filter(file => file.size <= config.maxPhotoSize)
-            .map(file => ({ id: counter++, payload: file }));
-        const wrongFiles = rejectedFiles.map(file => ({
+            .filter((file) => file.size <= config.maxPhotoSize)
+            .map((file) => ({ id: counter++, payload: file }));
+        const wrongFiles = rejectedFiles.map((file) => ({
             id: counter++,
             name: file.file.name,
             reason: 'Unsupported file type',
@@ -50,8 +50,8 @@ const Settings = props => {
         // Check max file size
         wrongFiles.push(
             ...acceptedFiles
-                .filter(file => file.size > config.maxPhotoSize)
-                .map(file => ({
+                .filter((file) => file.size > config.maxPhotoSize)
+                .map((file) => ({
                     id: file.id,
                     name: file.name,
                     reason: `Size is bigger than ${formatSize(config.maxPhotoSize)}`,
@@ -74,7 +74,7 @@ const Settings = props => {
             {
                 const response = await axios.put(`/api/photos/0`, {
                     action: 'getPresignedUrlForPhotosUpload',
-                    files: correctFiles.map(file => ({
+                    files: correctFiles.map((file) => ({
                         id: file.id,
                         name: file.payload.name,
                         size: file.payload.size,
@@ -82,7 +82,7 @@ const Settings = props => {
                 });
                 const result = response.data;
 
-                wrongFiles.push(...result.filter(item => item.status !== 'success'));
+                wrongFiles.push(...result.filter((item) => item.status !== 'success'));
                 correctFiles = correctFiles.filter((file, index) => {
                     if (result[index].status !== 'success') {
                         return false;
@@ -93,10 +93,10 @@ const Settings = props => {
                     return true;
                 });
 
-                setUploadStatus(prev =>
+                setUploadStatus((prev) =>
                     _omit(
                         prev,
-                        wrongFiles.map(file => file.id)
+                        wrongFiles.map((file) => file.id)
                     )
                 );
             }
@@ -107,7 +107,7 @@ const Settings = props => {
 
             // uploading files to s3
             {
-                const uploadFile = async file => {
+                const uploadFile = async (file) => {
                     const response = await axios.put(file.url, file.payload, {
                         headers: { 'Content-Type': file.payload.type },
                         transformRequest: [
@@ -116,8 +116,8 @@ const Settings = props => {
                                 return data;
                             },
                         ],
-                        onUploadProgress: progressEvent => {
-                            setUploadStatus(prev => ({
+                        onUploadProgress: (progressEvent) => {
+                            setUploadStatus((prev) => ({
                                 ...prev,
                                 [file.id]: [progressEvent.loaded, progressEvent.total],
                             }));
@@ -131,7 +131,7 @@ const Settings = props => {
                 wrongFiles.push(
                     ...correctFiles
                         .filter((file, index) => result[index].status !== 200)
-                        .map(file => ({
+                        .map((file) => ({
                             id: file.id,
                             name: file.payload.name,
                             reason: 'Upload error',
@@ -139,10 +139,10 @@ const Settings = props => {
                 );
                 correctFiles = correctFiles.filter((file, index) => result[index].status === 200);
 
-                setUploadStatus(prev =>
+                setUploadStatus((prev) =>
                     _omit(
                         prev,
-                        wrongFiles.map(file => file.id)
+                        wrongFiles.map((file) => file.id)
                     )
                 );
             }
@@ -155,10 +155,10 @@ const Settings = props => {
             {
                 const result = await axios.put(`/api/photos/0`, {
                     action: 'batchProcess',
-                    files: correctFiles.map(file => ({ id: file.id, name: file.payload.name, key: file.key })),
+                    files: correctFiles.map((file) => ({ id: file.id, name: file.payload.name, key: file.key })),
                 });
 
-                wrongFiles.push(...result.data.filter(item => item.status !== 'success'));
+                wrongFiles.push(...result.data.filter((item) => item.status !== 'success'));
                 correctFiles = correctFiles.filter((file, index) => {
                     if (result.data[index].status !== 'success') {
                         return false;
@@ -172,10 +172,10 @@ const Settings = props => {
                     return true;
                 });
 
-                setUploadStatus(prev =>
+                setUploadStatus((prev) =>
                     _omit(
                         prev,
-                        wrongFiles.map(file => file.id)
+                        wrongFiles.map((file) => file.id)
                     )
                 );
             }
@@ -199,7 +199,7 @@ const Settings = props => {
                         <div className="alert alert-danger mb-8">
                             <div>We are not able to upload the following photo{wrongFiles.length > 1 ? 's' : ''}:</div>
                             <ul className="ps-8 mt-2 mb-0">
-                                {wrongFiles.map(file => (
+                                {wrongFiles.map((file) => (
                                     <li key={file.id} className="m-0">
                                         <b>{file.name}</b> - {file.reason}
                                     </li>
@@ -219,7 +219,7 @@ const Settings = props => {
                                 },
                                 { permissions: {} }
                             )}
-                            onSubmit={async values => {
+                            onSubmit={async (values) => {
                                 await axios.put(`/api/photos/0`, {
                                     action: 'changePermissions',
                                     ...values,
@@ -243,7 +243,7 @@ const Settings = props => {
                                         </div>
                                     </div>
                                     <div className={style.reviewWrapper + ' mb-6'}>
-                                        {correctFiles.map(item => (
+                                        {correctFiles.map((item) => (
                                             <div key={item.id} className={style.review}>
                                                 <div className={style.image}>
                                                     <img src={item.thumbnail} alt="" />
@@ -375,7 +375,7 @@ const Settings = props => {
                                 <div className="mt-4">
                                     <Gallery
                                         photos={photosWithAuthor}
-                                        albumProps={{ targetRowHeight: width => (width < 600 ? 100 : 150) }}
+                                        albumProps={{ targetRowHeight: (width) => (width < 600 ? 100 : 150) }}
                                         onPhotoDelete={onPhotoDelete}
                                     />
                                 </div>

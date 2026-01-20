@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Mark = props => {
+const Mark = (props) => {
     return (
         <div
             className={classnames(style.wrapper, {

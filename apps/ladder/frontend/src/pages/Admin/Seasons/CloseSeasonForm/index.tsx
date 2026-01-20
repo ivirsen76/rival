@@ -3,7 +3,7 @@ import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Button from '@/components/Button';
 
-const CloseSeasonForm = props => {
+const CloseSeasonForm = (props) => {
     const { onSubmit } = props;
 
     return (

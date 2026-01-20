@@ -52,7 +52,7 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
         await page.locator('a').getByText('Score').click();
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickChallengerPoints(2);
 
         await expect(common.modal).toContainText('+19');
@@ -74,7 +74,7 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
         await page.locator('button').getByText('Next').click();
 
         await match.pickChallengerPoints(0);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickChallengerPoints(0);
 
         await common.modal.locator('button').getByText('Report match').click();
@@ -103,7 +103,7 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
         await page.locator('button').getByText('Next').click();
 
         await match.pickAcceptorPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickAcceptorPoints(0);
         await expect(common.modal).toContainText('+30');
@@ -132,7 +132,7 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
         await page.locator('button').getByText('Next').click();
 
         await match.pickChallengerPoints(0);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickChallengerPoints(0);
 
         await common.modal.locator('button').getByText('Report match').click();
@@ -152,7 +152,7 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
 
         await overview.finalTournamentArea.locator('a').getByText('Score').click();
         await match.pickChallengerPoints(0);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickChallengerPoints(0);
         await common.modal.locator('button').getByText('Report match').click();
         await expectRecordToExist('matches', { finalSpot: 2, score: '0-6 0-6' });
@@ -164,7 +164,7 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
         await expect(page.locator('button[data-delete-match]')).toBeHidden();
         await overview.finalTournamentArea.locator('button[data-edit-match]').click();
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await page.locator('a').getByText('Set 2').click();
         await match.pickChallengerPoints(3);
         await common.modal.locator('button').getByText('Report match').click();
@@ -185,7 +185,7 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
         // report semi-final match
         await page.locator('[data-final-spot="2"]').locator('a').getByText('Score').click();
         await match.pickChallengerPoints(0);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickChallengerPoints(0);
         await common.modal.locator('button').getByText('Report match').click();
         await expectRecordToExist('matches', { finalSpot: 2, score: '0-6 0-6' });
@@ -193,7 +193,7 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
         // report final match
         await page.locator('[data-final-spot="1"]').locator('a').getByText('Score').click();
         await match.pickChallengerPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickChallengerPoints(1);
         await common.modal.locator('button').getByText('Report match').click();
         await expectRecordToExist('matches', { finalSpot: 1, score: '1-6 1-6' });
@@ -314,7 +314,7 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
         await expect(common.alert).toContainText('Message was successfuly sent to 7 recipients');
 
         // wait for the message to be saved in DB
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         const email = await getRecord('emails', { subject: 'Final' });
         expect(email.subject).toBe('Final');
         expect(email.recipientEmail).toContain('some@gmail.com');
@@ -405,7 +405,7 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
         await common.modalSubmitButton.click();
         await expect(common.alert).toContainText('1 players were added');
 
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         expect(await getNumRecords('emails')).toBe(0);
     });
 
@@ -641,7 +641,7 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
             expect(user.deletedAt).toBeTruthy();
         }
 
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await page.locator('[data-restore="6"]').click();
         await common.modal.locator('button').getByText('Yes').click();
 

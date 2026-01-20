@@ -9,7 +9,7 @@ import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
 import Tooltip from '@/components/Tooltip';
 import QuestionIcon from '@rival/packages/metronic/icons/duotone/Navigation/Question.svg?react';
 
-const GlobalStats = props => {
+const GlobalStats = (props) => {
     const [selectedCity, setSelectedCity] = useState('all');
     const { data, isLoading, isSuccess } = useQuery(
         `global`,
@@ -133,9 +133,9 @@ const GlobalStats = props => {
                         <th style={{ verticalAlign: 'middle' }}>
                             <select
                                 className="form-select form-select-sm"
-                                onChange={e => setSelectedCity(e.target.value)}
+                                onChange={(e) => setSelectedCity(e.target.value)}
                             >
-                                {cityOptions.map(city => (
+                                {cityOptions.map((city) => (
                                     <option key={city.value} value={city.value}>
                                         {city.label}
                                     </option>
@@ -161,7 +161,7 @@ const GlobalStats = props => {
                                 </span>
                             </Tooltip>
                         </td>
-                        {years.map(year => (
+                        {years.map((year) => (
                             <td key={year.to} className="text-center">
                                 {year.ladders}
                             </td>
@@ -176,7 +176,7 @@ const GlobalStats = props => {
                                 </span>
                             </Tooltip>
                         </td>
-                        {years.map(year => (
+                        {years.map((year) => (
                             <td key={year.to} className="text-center">
                                 {formatNumber(year.matches)}
                             </td>
@@ -191,7 +191,7 @@ const GlobalStats = props => {
                                 </span>
                             </Tooltip>
                         </td>
-                        {years.map(year => (
+                        {years.map((year) => (
                             <td key={year.to} className="text-center">
                                 {formatNumber(year.activePlayers)}
                             </td>
@@ -206,7 +206,7 @@ const GlobalStats = props => {
                                 </span>
                             </Tooltip>
                         </td>
-                        {years.map(year => (
+                        {years.map((year) => (
                             <td key={year.to} className="text-center">
                                 {formatNumber(year.paymentsCount)}
                             </td>
@@ -228,7 +228,7 @@ const GlobalStats = props => {
                                 </span>
                             </Tooltip>
                         </td>
-                        {years.map(year => (
+                        {years.map((year) => (
                             <td key={year.to} className="text-center">
                                 {year.playersPaidLastYear > 0
                                     ? `${Math.floor((year.playersPaidThisYearAgain / year.playersPaidLastYear) * 100)}%`

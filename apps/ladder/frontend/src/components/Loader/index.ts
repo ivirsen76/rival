@@ -27,7 +27,7 @@ const hide = () => {
 };
 
 const list = new Set();
-const addId = id => {
+const addId = (id) => {
     if (list.size === 0) {
         clearTimeout(timeout);
         timeout = setTimeout(show, SHOW_DELAY);
@@ -35,7 +35,7 @@ const addId = id => {
 
     list.add(id);
 };
-const deleteId = id => {
+const deleteId = (id) => {
     list.delete(id);
 
     if (list.size === 0) {
@@ -45,7 +45,7 @@ const deleteId = id => {
 };
 
 let counter = 0;
-const Loader = props => {
+const Loader = (props) => {
     const { loading } = props;
     const id = useRef(counter++);
 

@@ -716,7 +716,7 @@ test('We can register for free if it is our first season', async ({ common, logi
 
         await expect(common.body).toContainText('The player who provided this link is no longer a captain.');
 
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await expect(common.alert).toBeHidden();
     });
 
@@ -2220,10 +2220,10 @@ test('We can register for free if it is our first season', async ({ common, logi
         await overview.upcomingMatchesArea.locator('a').getByText('Score').click();
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(2);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await expect(common.modal).toContainText('+9');
         await expect(common.modal).toContainText('+24');
@@ -2273,7 +2273,7 @@ test('We can register for free if it is our first season', async ({ common, logi
         await expect(common.modal).toContainText('Game-Set-Match');
 
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(2);
 
@@ -2319,7 +2319,7 @@ test('We can register for free if it is our first season', async ({ common, logi
 
         await match.pickChallengerPoints(3);
         await match.pickAcceptorPoints(6);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(2);
         await match.pickAcceptorPoints(2);
@@ -2402,10 +2402,10 @@ test('We can register for free if it is our first season', async ({ common, logi
         await match.nextButton.click();
 
         await match.pickChallengerPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickChallengerPoints(1);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await expect(common.modal).toContainText('+6');
         await expect(common.modal).toContainText('+27');
@@ -2856,10 +2856,10 @@ test('Captain can change team name', async ({ page, common, login, overview, mat
         await common.modal.locator('button').getByText('Next').click();
 
         await match.pickAcceptorPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await match.pickAcceptorPoints(2);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
 
         await common.modalSubmitButton.click();
         await expect(common.modal).toBeHidden();
@@ -2889,7 +2889,7 @@ test('Captain can change team name', async ({ page, common, login, overview, mat
         await common.modal.locator('button').getByText('Matthew Burt').click();
         await common.modal.locator('button').getByText('Next').click();
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickChallengerPoints(2);
         await common.modalSubmitButton.click();
         await expect(common.modal).toBeHidden();
@@ -2899,7 +2899,7 @@ test('Captain can change team name', async ({ page, common, login, overview, mat
         await common.modal.locator('button').getByText('Matthew Burt').click();
         await common.modal.locator('button').getByText('Next').click();
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickChallengerPoints(2);
         await common.modalSubmitButton.click();
         await expect(common.modal).toBeHidden();
@@ -2958,7 +2958,7 @@ test('Captain can change team name', async ({ page, common, login, overview, mat
         expect(email.html).toContain('$15 credit');
 
         // just to wait for all payments sent
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await expectNumRecords('payments', { description: 'Champion award for Men Team Doubles' }, 2);
     });
 
@@ -2977,14 +2977,14 @@ test('Captain can change team name', async ({ page, common, login, overview, mat
 
         await overview.finalTournamentArea.locator('a').getByText('Score').click();
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickChallengerPoints(2);
         await common.modalSubmitButton.click();
         await expect(common.modal).toBeHidden();
 
         await overview.finalTournamentArea.locator('a').getByText('Score').click();
         await match.pickChallengerPoints(3);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await match.pickChallengerPoints(2);
         await common.modalSubmitButton.click();
         await expect(common.modal).toBeHidden();
@@ -3027,7 +3027,7 @@ test('Captain can change team name', async ({ page, common, login, overview, mat
         expect(email.html).toContain('$15 credit');
 
         // just to wait for all payments sent
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         await expectNumRecords('payments', { description: 'Champion award for Men Team Doubles' }, 2);
     });
 

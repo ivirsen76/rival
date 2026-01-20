@@ -95,14 +95,14 @@ const absoluteChartInit =
         instance.cursor = new am4charts.XYCursor();
     };
 
-const Tracking = props => {
+const Tracking = (props) => {
     const [codes, setCodes] = useState([]);
 
     const { data: stat, isLoading } = useQuery(
         'getTrackingStats',
         async () => {
             const response = await axios.put('/api/utils/0', { action: 'getTrackingStats' });
-            setCodes([...new Set(response.data.data.map(item => item.code))].sort((a, b) => a.localeCompare(b)));
+            setCodes([...new Set(response.data.data.map((item) => item.code))].sort((a, b) => a.localeCompare(b)));
 
             return response.data.data;
         },
@@ -114,7 +114,7 @@ const Tracking = props => {
             return [];
         }
 
-        return [...new Set(stat.map(item => item.code))].sort((a, b) => a.localeCompare(b));
+        return [...new Set(stat.map((item) => item.code))].sort((a, b) => a.localeCompare(b));
     }, [stat]);
 
     const data = useMemo(() => {
@@ -123,7 +123,7 @@ const Tracking = props => {
         }
 
         return stat
-            .filter(item => codes.includes(item.code))
+            .filter((item) => codes.includes(item.code))
             .sort((a, b) => a.date.localeCompare(b.date))
             .reduce((arr, item) => {
                 let last = arr[arr.length - 1];
@@ -155,7 +155,7 @@ const Tracking = props => {
         }
 
         const currentDate = dayjs.tz().format('YYYY-MM-DD');
-        const filteredStat = stat.filter(item => codes.includes(item.code) && item.date !== currentDate);
+        const filteredStat = stat.filter((item) => codes.includes(item.code) && item.date !== currentDate);
 
         if (filteredStat.length === 0) {
             return null;
@@ -197,7 +197,7 @@ const Tracking = props => {
         }, {});
     }, [stat, codes]);
 
-    const toggleCode = code => {
+    const toggleCode = (code) => {
         setCodes(_xor(codes, [code]));
     };
 
@@ -205,7 +205,7 @@ const Tracking = props => {
         return <Loader loading />;
     }
 
-    const renderSummary = obj => (
+    const renderSummary = (obj) => (
         <div>
             <div>
                 Sent: <b>{obj.sent}</b>
@@ -229,7 +229,7 @@ const Tracking = props => {
         <Card>
             <h3>Filter</h3>
             <div className="d-flex gap-2">
-                {allCodes.map(code => (
+                {allCodes.map((code) => (
                     <button
                         key={code}
                         type="button"
@@ -253,8 +253,8 @@ const Tracking = props => {
                             </div>
                         )}
                         {allCodes
-                            .filter(code => codes.includes(code) && total && total[code])
-                            .map(code => (
+                            .filter((code) => codes.includes(code) && total && total[code])
+                            .map((code) => (
                                 <div key={code}>
                                     <h4 className="mb-2">{code}:</h4>
                                     {renderSummary(total[code])}

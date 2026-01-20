@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import useUniqueId from '@/utils/useUniqueId';
 import style from './style.module.scss';
 
-const Icon = props => {
+const Icon = (props) => {
     const sunGradientId = useUniqueId();
     const sunGlowId = useUniqueId();
 

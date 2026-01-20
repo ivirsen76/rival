@@ -247,7 +247,7 @@ test('We can upload naked photo and approve it', async ({ page, common, login })
     await expect(common.modal).toContainText('Photo is approved');
     await expectRecordToExist('photos', { id: 2 }, { isApproved: 1 });
 
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     await page.goto(approvePhotoUrl);
     await expect(common.alert).toContainText('Photo is already approved.');
@@ -413,17 +413,17 @@ test('We can gather views', async ({ page, common, login }) => {
     await login.loginAsPlayer2();
     await page.goto('/player/ben-done');
     await page.locator('[data-photo-id="1"]').click();
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     await page.locator('[data-action-close]').click();
 
     await page.goto('/player/ben-done');
     await page.locator('[data-photo-id="1"]').click();
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     await expectRecordToExist('views', { photoId: 1 }, { count: 1 });
 
     await page.goto('/player/ben-done');
     await page.locator('[data-photo-id="1"]').click();
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     await expectRecordToExist('views', { photoId: 1 }, { count: 2 });
 });
 
@@ -605,6 +605,6 @@ test('Guests can see the comments', async ({ page, common, login }) => {
     await page.locator('[data-photo-id="1"]').click();
     await page.locator('[data-action-comments]').click();
 
-    await new Promise(resolve => setTimeout(resolve, 5000));
+    await new Promise((resolve) => setTimeout(resolve, 5000));
     await expect(common.body).toContainText('Ben Done');
 });

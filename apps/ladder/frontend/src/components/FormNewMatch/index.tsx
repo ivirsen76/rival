@@ -12,7 +12,7 @@ import getPossibleOpponents from './getPossibleOpponents';
 import getPlayersName from '@/utils/getPlayersName';
 import style from './style.module.scss';
 
-const JustForm = props => {
+const JustForm = (props) => {
     const { values, players, setFieldValue, currentPlayerId } = props;
 
     useEffect(() => {
@@ -42,7 +42,7 @@ JustForm.propTypes = {
     currentPlayerId: PropTypes.number,
 };
 
-const FormNewMatch = props => {
+const FormNewMatch = (props) => {
     const { tournament, onAdd, possibleMatches } = props;
 
     const [showPossibleOpponents, setShowPossibleOpponents] = useState(true);
@@ -51,11 +51,11 @@ const FormNewMatch = props => {
     const [playedAt, setPlayedAt] = useState();
     const [matchId, setMatchId] = useState(null);
 
-    const currentUser = useSelector(state => state.auth.user);
+    const currentUser = useSelector((state) => state.auth.user);
     const isDoublesTeam = tournament.levelType === 'doubles-team';
 
     const currentPlayerId = useMemo(() => {
-        const player = Object.values(tournament.players).find(item => item.userId === currentUser.id);
+        const player = Object.values(tournament.players).find((item) => item.userId === currentUser.id);
         return player.partnerIds?.[0] || player.id;
     }, [tournament.players, currentUser]);
 
@@ -63,7 +63,7 @@ const FormNewMatch = props => {
         return [
             { value: 0, label: isDoublesTeam ? '-- Select the team --' : '-- Select the player --' },
             ...Object.values(tournament.players)
-                .filter(item => {
+                .filter((item) => {
                     if (!item.isActive) {
                         return false;
                     }
@@ -76,7 +76,7 @@ const FormNewMatch = props => {
 
                     return true;
                 })
-                .map(item => ({ value: item.id, label: item.teamName || getPlayersName(item) }))
+                .map((item) => ({ value: item.id, label: item.teamName || getPlayersName(item) }))
                 .sort((a, b) => a.label.localeCompare(b.label)),
         ];
     }, [tournament.players]);
@@ -85,7 +85,7 @@ const FormNewMatch = props => {
         return getPossibleOpponents(possibleMatches, currentPlayerId);
     }, [possibleMatches, currentPlayerId]);
 
-    const onSubmit = values => {
+    const onSubmit = (values) => {
         setChallenger(tournament.players[values.challengerId]);
         setAcceptor(tournament.players[values.acceptorId]);
         setPlayedAt('2021-05-03 17:50:47');
@@ -113,7 +113,7 @@ const FormNewMatch = props => {
                     </Tooltip>
                 </p>
                 <div className={style.wrapper}>
-                    {possibleOpponents.map(match1 => {
+                    {possibleOpponents.map((match1) => {
                         const challenger1 = tournament.players[match1.challengerId];
                         const acceptor1 = tournament.players[match1.acceptorId];
                         const opponent = currentUser.id === challenger1.userId ? acceptor1 : challenger1;

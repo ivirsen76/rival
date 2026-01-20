@@ -5,7 +5,7 @@ import Select from '@/components/formik/Select';
 import Button from '@/components/Button';
 import FormMatch from '@/components/FormMatch';
 
-const FormNewMatchByAdmin = props => {
+const FormNewMatchByAdmin = (props) => {
     const { tournament, onAdd } = props;
     const isDoublesTeam = tournament.levelType === 'doubles-team';
 
@@ -16,12 +16,12 @@ const FormNewMatchByAdmin = props => {
         return [
             { value: 0, label: isDoublesTeam ? '-- Select the team --' : '-- Select the player --' },
             ...Object.values(tournament.players)
-                .map(item => ({ value: item.id, label: `${item.firstName} ${item.lastName}` }))
+                .map((item) => ({ value: item.id, label: `${item.firstName} ${item.lastName}` }))
                 .sort((a, b) => a.label.localeCompare(b.label)),
         ];
     }, [tournament.players]);
 
-    const onSubmit = values => {
+    const onSubmit = (values) => {
         setChallenger(tournament.players[values.challengerId]);
         setAcceptor(tournament.players[values.acceptorId]);
     };

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-const RenderDelay = props => {
+const RenderDelay = (props) => {
     const { delay, children } = props;
     const [mounted, setMounted] = useState(false);
 

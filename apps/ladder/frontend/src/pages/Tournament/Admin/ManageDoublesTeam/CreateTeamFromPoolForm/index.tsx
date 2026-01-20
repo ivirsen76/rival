@@ -13,7 +13,7 @@ import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import axios from '@/utils/axios';
 import style from './style.module.scss';
 
-const validate = values => {
+const validate = (values) => {
     const errors = {};
 
     if (values.players.length < 2 || values.players.length > 3) {
@@ -23,16 +23,16 @@ const validate = values => {
     return errors;
 };
 
-const CreateTeamFromPoolForm = props => {
+const CreateTeamFromPoolForm = (props) => {
     const { tournament, onSubmit } = props;
     const config = useConfig();
 
     const playerOptions = useMemo(() => {
         // TODO: use total matches including doubles instead of just ELO matches
         return Object.values(tournament.players)
-            .filter(player => player.isDoublesTeamPlayerPool)
+            .filter((player) => player.isDoublesTeamPlayerPool)
             .sort(compareFields('firstName', 'lastName'))
-            .map(player => ({
+            .map((player) => ({
                 value: player.id,
                 label: (
                     <>
@@ -45,7 +45,7 @@ const CreateTeamFromPoolForm = props => {
             }));
     }, [tournament]);
 
-    const createTeamFromPool = async values => {
+    const createTeamFromPool = async (values) => {
         await axios.put(`/api/players/0`, { action: 'createTeamFromPool', ...values });
         await onSubmit();
     };

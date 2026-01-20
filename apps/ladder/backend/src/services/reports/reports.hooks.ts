@@ -7,7 +7,7 @@ import { getEmailsFromList } from '../settings/helpers';
 import commentReportNotificationTemplate from '../../emailTemplates/commentReportNotification';
 import { getPlayerName, getEmailContact } from '../users/helpers';
 
-const reportAboutComment = options => async context => {
+const reportAboutComment = (options) => async (context) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -49,7 +49,7 @@ const reportAboutComment = options => async context => {
 
         context.app.service('api/emails').create({
             replyTo: getEmailContact(currentUser),
-            to: emails.map(item => ({ email: item })),
+            to: emails.map((item) => ({ email: item })),
             subject: 'New Report About Comment',
 
             html: commentReportNotificationTemplate(config, {
@@ -64,7 +64,7 @@ const reportAboutComment = options => async context => {
     return context;
 };
 
-const runCustomAction = options => async context => {
+const runCustomAction = (options) => async (context) => {
     const { action } = context.data;
     delete context.data.action;
 

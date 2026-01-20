@@ -6,7 +6,7 @@ import dayjs from '@/utils/dayjs';
 const applyVariables = (tournamentEndDate, text) => {
     const endDate = dayjs.tz(tournamentEndDate).add(12, 'hour');
     const nextMonday = endDate.add(1, 'week');
-    const format = date => dayjs.tz(date).format('MMMM D');
+    const format = (date) => dayjs.tz(date).format('MMMM D');
 
     const variables = {
         // last season Sunday
@@ -39,7 +39,7 @@ const applyVariables = (tournamentEndDate, text) => {
     return adjustedText;
 };
 
-const TournamentText = props => {
+const TournamentText = (props) => {
     const { tournament } = props;
     const adjustedText = applyVariables(tournament.endDate, props.text);
 
