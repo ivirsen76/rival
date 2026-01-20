@@ -21,12 +21,12 @@ describe('decodeAction', () => {
 
     it('Should show error about wrong encoding', () => {
         const str = 'DSJLKFJ(S()S*()FSKLJKLSKLFJLSJ';
-        expect(() => decodeAction(str)).toThrow(/^The link is broken$/);
+        expect(() => decodeAction(str, undefined, 'SECUREKEY')).toThrow(/^The link is broken$/);
     });
 
     it('Should show error about missing fields', () => {
         const str = encodeBase64('name=newPassword&userId=123&t=100&d=10');
-        expect(() => decodeAction(str)).toThrow(/^There are missing fields in the link$/);
+        expect(() => decodeAction(str, undefined, 'SECUREKEY')).toThrow(/^There are missing fields in the link$/);
     });
 
     it('Should show error about missing secure key', () => {

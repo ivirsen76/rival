@@ -6,7 +6,7 @@ yup.addMethod(yup.string, 'isValidDate', function (msg) {
 });
 
 yup.addMethod(yup.string, 'email', function (msg) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
     return this.matches(emailRegex, {
         msg,

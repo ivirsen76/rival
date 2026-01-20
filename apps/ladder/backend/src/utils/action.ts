@@ -13,7 +13,7 @@ export const encodeBase64 = (str: string) => {
     return Buffer.from(str, 'ascii').toString('base64');
 };
 
-const getHash = (obj, secureKey) => {
+const getHash = (obj, secureKey: string) => {
     const sorted = Object.entries(obj).sort((a, b) => a[0].localeCompare(b[0]));
     const str = sorted.map((pair) => pair[0] + '=' + pair[1]).join('=') + ':' + secureKey;
 
@@ -94,7 +94,11 @@ export const getActionLink = async ({
     return shortUrl;
 };
 
-export const decodeAction = (str, currentTimestamp = dayjs.tz().unix(), secureKey = process.env.TL_SECURE_KEY) => {
+export const decodeAction = (
+    str: string,
+    currentTimestamp = dayjs.tz().unix(),
+    secureKey = process.env.TL_SECURE_KEY
+) => {
     let params;
 
     if (!secureKey) {
