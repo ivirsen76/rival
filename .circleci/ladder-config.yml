@@ -1,9 +1,36 @@
+aliases:
+    - &image
+      docker:
+          - image: cimg/node:20.19.4-browsers
+          - image: cimg/mysql:5.7.38
+            environment:
+                MYSQL_ROOT_PASSWORD: password
+          - image: cimg/redis:6.2.7
+      working_directory: ~/repo
+      executor: node/default
+
+    - &node
+      docker:
+          - image: cimg/node:20.19.4
+      working_directory: ~/repo
+
+    - &setup |
+        cd src/server && npm install
+        sudo apt-get update
+        sudo apt-get install mysql-client redis-server
+        mysql -h $TL_DB_HOSTNAME -u $TL_DB_USERNAME -p$TL_DB_PASSWORD -e "CREATE DATABASE $TL_DB_NAME"
+
 version: 2.1
 
 jobs:
+    build:
+        <<: *node
+        steps:
+            - checkout
+            - run: pnpm install --filter @rival/packages --filter "@rival/ladder.*"
+            - run: cd apps/ladder/frontend && NODE_ENV=production pnpm run build
     test:
-        docker:
-            - image: cimg/node:20.19.4-browsers
+        <<: *node
         steps:
             - checkout
             - run: pnpm install --filter @rival/packages --filter "@rival/ladder.*"
@@ -12,4 +39,5 @@ jobs:
 workflows:
     test-deploy:
         jobs:
+            - build
             - test
