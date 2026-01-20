@@ -4,6 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "format": "prettier --write \"**/*.{ts,tsx}\"",
         "lint": "eslint ."
     },
     "keywords": [],
