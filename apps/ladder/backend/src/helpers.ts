@@ -1,6 +1,6 @@
 import { Unprocessable } from '@feathersjs/errors';
 
-export const getSlug = str => {
+export const getSlug = (str: string) => {
     return str
         .replace(/[^\w-\s]+/g, '')
         .replace(/^\W+/, '')
@@ -26,11 +26,11 @@ export const getSchemaErrors = (schema, values) => {
     return errors;
 };
 
-export const throwValidationErrors = errors => {
+export const throwValidationErrors = (errors) => {
     throw new Unprocessable('Invalid request', { errors });
 };
 
-export const getMedian = values => {
+export const getMedian = (values: number[]) => {
     if (values.length === 0) {
         throw new Error('No inputs');
     }
@@ -52,14 +52,14 @@ export const generateReferralCode = () => {
 
     return new Array(length)
         .fill(0)
-        .map(_ => {
+        .map((_) => {
             const index = Math.floor(Math.random() * letters.length);
             return letters[index];
         })
         .join('');
 };
 
-export const isEmail = email => {
+export const isEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 };
@@ -68,7 +68,7 @@ export const limitedPromiseAll = async (arr, func, limit = 10) => {
     const results = [];
     for (let i = 0; i < arr.length; i += limit) {
         const batch = arr.slice(i, i + limit);
-        const batchResults = await Promise.all(batch.map(item => func(item)));
+        const batchResults = await Promise.all(batch.map((item) => func(item)));
         results.push(...batchResults);
     }
     return results;

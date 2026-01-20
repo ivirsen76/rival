@@ -58,14 +58,14 @@ export const teamNames = [
     'Breaking Baddies',
 ];
 
-export const formatTeamName = str => {
+export const formatTeamName = (str) => {
     const exceptions = new Set(['The', 'A', 'Of', 'For', 'At', 'As', 'By', 'But', 'From', 'On', 'Out', 'To', 'With']);
 
     return str
         .trim()
         .replace(/\s\s+/g, ' ')
-        .replace(/[a-zA-Z0-9]+/g, s => _capitalize(s))
-        .replace(/\s[a-zA-Z]+/g, s => {
+        .replace(/[a-zA-Z0-9]+/g, (s) => _capitalize(s))
+        .replace(/\s[a-zA-Z]+/g, (s) => {
             if (exceptions.has(s.slice(1))) {
                 return s.toLowerCase();
             }
@@ -73,13 +73,13 @@ export const formatTeamName = str => {
         });
 };
 
-export const getJoinDoublesLink = async (playerId, app) => {
+export const getJoinDoublesLink = async (playerId: number, app) => {
     // link is active for 4 weeks
     const link = await getActionLink({ payload: { name: 'joinDoubles', playerId }, duration: 28 * 24 * 3600, app });
     return link;
 };
 
-export const sendAcceptedTeammateMessage = async (context, teammateUserId) => {
+export const sendAcceptedTeammateMessage = async (context, teammateUserId: number) => {
     const sequelize = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
     const { TL_URL } = process.env;
@@ -108,7 +108,7 @@ export const sendAcceptedTeammateMessage = async (context, teammateUserId) => {
     });
 };
 
-export const sendNewPoolPlayerMessage = async (context, playerId) => {
+export const sendNewPoolPlayerMessage = async (context, playerId: number) => {
     const sequelizeClient = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
     const { config } = context.params;
@@ -158,10 +158,10 @@ export const sendNewPoolPlayerMessage = async (context, playerId) => {
         return set;
     }, new Set());
     const captainsWithoutTeammates = allPlayers.filter(
-        item => !captainsWithTeammates.has(item.id) && item.isActive === 1 && !item.partnerId
+        (item) => !captainsWithTeammates.has(item.id) && item.isActive === 1 && !item.partnerId
     );
     const otherPlayersFromPool = allPlayers.filter(
-        item => item.id !== playerId && item.isActive === 1 && item.partnerId === POOL_PARTNER_ID
+        (item) => item.id !== playerId && item.isActive === 1 && item.partnerId === POOL_PARTNER_ID
     );
 
     const emails = [...captainsWithoutTeammates, ...otherPlayersFromPool].map(getEmailContact);
@@ -185,7 +185,7 @@ export const sendNewPoolPlayerMessage = async (context, playerId) => {
     });
 };
 
-export const sendDoublesTeamInvitation = async (context, tournamentIds, partners) => {
+export const sendDoublesTeamInvitation = async (context, tournamentIds: number[], partners) => {
     const sequelize = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
     const { config } = context.params;
@@ -247,7 +247,7 @@ export const sendDoublesTeamInvitation = async (context, tournamentIds, partners
         const partnerInfo = partners[`partner-${id}`];
         if (partnerInfo.decision === 'email') {
             // TODO: check emails for deliverability
-            const emails = [partnerInfo.email1, partnerInfo.email2].filter(Boolean).map(email => ({ email }));
+            const emails = [partnerInfo.email1, partnerInfo.email2].filter(Boolean).map((email) => ({ email }));
 
             context.app.service('api/emails').create({
                 to: emails,
@@ -283,8 +283,8 @@ export const getPlayersUpdates = ({ players, playerId, captainId, replaceCaptain
         replaceCaptain = false;
     }
 
-    const player = players.find(item => item.id === playerId);
-    const captain = players.find(item => item.id === captainId);
+    const player = players.find((item) => item.id === playerId);
+    const captain = players.find((item) => item.id === captainId);
     const isPlayerCaptain = !player.partnerId;
 
     if (isPlayerCaptain && playerId === captainId && replaceCaptain) {
@@ -299,8 +299,8 @@ export const getPlayersUpdates = ({ players, playerId, captainId, replaceCaptain
 
     if (player.partnerId === captainId && replaceCaptain) {
         players
-            .filter(item => (item.partnerId === captainId || item.id === captainId) && item.id !== playerId)
-            .forEach(item => {
+            .filter((item) => (item.partnerId === captainId || item.id === captainId) && item.id !== playerId)
+            .forEach((item) => {
                 result.push({
                     id: item.id,
                     partnerId: playerId,
@@ -309,7 +309,7 @@ export const getPlayersUpdates = ({ players, playerId, captainId, replaceCaptain
             });
     } else {
         if (isPlayerCaptain) {
-            const newCaptain = players.find(item => item.partnerId === playerId);
+            const newCaptain = players.find((item) => item.partnerId === playerId);
 
             // captain is moving to partner at the same team
             if (newCaptain && playerId === captainId) {
@@ -317,8 +317,8 @@ export const getPlayersUpdates = ({ players, playerId, captainId, replaceCaptain
             }
 
             players
-                .filter(item => item.partnerId === playerId)
-                .forEach(item => {
+                .filter((item) => item.partnerId === playerId)
+                .forEach((item) => {
                     result.push({
                         id: item.id,
                         partnerId: item.id === newCaptain.id ? null : newCaptain.id,
@@ -328,8 +328,8 @@ export const getPlayersUpdates = ({ players, playerId, captainId, replaceCaptain
         }
         if (replaceCaptain && playerId !== captainId) {
             players
-                .filter(item => item.partnerId === captainId || item.id === captainId)
-                .forEach(item => {
+                .filter((item) => item.partnerId === captainId || item.id === captainId)
+                .forEach((item) => {
                     result.push({
                         id: item.id,
                         partnerId: playerId,
@@ -342,7 +342,7 @@ export const getPlayersUpdates = ({ players, playerId, captainId, replaceCaptain
     return result.sort((a, b) => a.id - b.id);
 };
 
-export function splitAddress(address) {
+export function splitAddress(address: string) {
     const designators = ['Apartment', 'Apt', 'Unit', 'Suite', 'Ste', 'Floor', 'Fl', 'Room'];
     const designatorRegex = new RegExp(`\\s*(${designators.join('|')})\\s*#?\\s*([\\w\\-]+)$`, 'i');
 
