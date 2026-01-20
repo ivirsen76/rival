@@ -75,7 +75,7 @@ describe('validate()', () => {
 
     checkForErrors('firstName', [null, '', 123, '%#^$', 'a'.repeat(21)]);
     checkForErrors('lastName', [null, '', 123, '%#^$', 'a'.repeat(21)]);
-    checkForErrors('email', [null, '', 123, '%#^$', 'ass', 'sdjkfs@sdjfl']);
+    checkForErrors('email', [null, '', 123, '%#^$', 'ass', 'some@email', 'some@email.']);
     checkForErrors('gender', [null, 123, 'some']);
     checkForErrors('personalInfo', [123, 'a'.repeat(501)]);
     checkForErrors('dominantHand', [123, 'a'.repeat(251)]);

@@ -23,8 +23,7 @@
         "merge:env": "src/scripts/mergeEnv.js"
     },
     "peerDependencies": {
-        "bcryptjs": "*",
-        "yup": "^0.32.9"
+        "bcryptjs": "*"
     },
     "dependencies": {
         "@aws-sdk/client-lambda": "^3.637.0",

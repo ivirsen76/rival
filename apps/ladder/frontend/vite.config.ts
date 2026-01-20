@@ -4,7 +4,6 @@ import svgr from 'vite-plugin-svgr';
 import autoprefixer from 'autoprefixer';
 import { imagetools } from 'vite-imagetools';
 
-// https://vite.dev/config/
 export default defineConfig({
     plugins: [react(), svgr(), imagetools()],
     css: {
@@ -30,6 +29,11 @@ export default defineConfig({
     server: {
         port: 5173,
         strictPort: true,
+    },
+    test: {
+        globals: true,
+        environment: 'happy-dom',
+        exclude: ['dist', 'node_modules'],
     },
     build: {
         target: 'es2015',

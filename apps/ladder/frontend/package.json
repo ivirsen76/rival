@@ -1,5 +1,5 @@
 {
-    "name": "tennis-ladder",
+    "name": "@rival/ladder.frontend",
     "version": "1.0.0",
     "private": true,
     "scripts": {
@@ -131,7 +131,6 @@
         "terminate": "^2.1.2",
         "vite": "^7.3.1",
         "vite-imagetools": "^9.0.2",
-        "vite-plugin-svgr": "^4.5.0",
-        "vitest": "^4.0.17"
+        "vite-plugin-svgr": "^4.5.0"
     }
 }
