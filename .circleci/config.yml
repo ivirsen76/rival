@@ -7,5 +7,5 @@ workflows:
         jobs:
             - path-filtering/filter:
                   base-revision: main
-                  mapping: |
-                      apps/ladder/.* foo bar .circleci/ladder-config.yml
+                  mapping: apps/ladder/.*
+                  config-path: .circleci/ladder-config.yml
