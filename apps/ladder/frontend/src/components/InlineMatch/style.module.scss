@@ -1,0 +1,18 @@
+.player {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+}
+.score {
+    padding: 0.1rem 0.5rem;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    justify-self: start;
+    font-weight: 500;
+
+    [data-bs-theme='dark'] & {
+        color: var(--rival-dark-1);
+        background-color: var(--rival-light-3);
+    }
+}

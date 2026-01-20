@@ -1,0 +1,21 @@
+.injury {
+    width: 0.9em;
+    height: 0.9em;
+    margin-left: -0.025em;
+    font-size: 1.5em;
+    font-weight: 700;
+    border-radius: 50%;
+    background-color: #fff;
+    color: hsl(1, 83%, 45%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    box-shadow: 0 0 1rem rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--rival-light-3);
+    line-height: 0;
+
+    [data-bs-theme='dark'] & {
+        background-color: var(--rival-light-2);
+    }
+}

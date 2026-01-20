@@ -1,0 +1,161 @@
+$marginBetweenMatches: 2rem;
+$width: 1.6em;
+$height: math.div(38, 33) * $width;
+
+.wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+
+    > * {
+        flex-grow: 1;
+        flex-basis: 0;
+        white-space: nowrap;
+    }
+    .divider {
+        flex: 0 0 22px;
+        position: relative;
+    }
+    .header {
+        text-align: center;
+        background-color: var(--rival-block-bg-color-2);
+        border-radius: 0.5rem;
+        padding: 0.5rem 0;
+
+        [data-bs-theme='dark'] & {
+            color: var(--rival-block-color) !important;
+        }
+    }
+    .margin7 {
+        margin-top: 3.6rem + $marginBetweenMatches * 1.5;
+    }
+    .margin6 {
+        margin-top: 7.4rem + $marginBetweenMatches * 2;
+    }
+    .margin5 {
+        margin-top: 7.4rem + $marginBetweenMatches * 2;
+    }
+    .margin4 {
+        margin-top: 7.4rem + $marginBetweenMatches * 2;
+    }
+    .margin3 {
+        margin-top: 11rem + $marginBetweenMatches * 2.5;
+    }
+    .margin2 {
+        margin-top: 22.3rem + $marginBetweenMatches * 4;
+    }
+    .margin1 {
+        margin-top: 25.9rem + $marginBetweenMatches * 4.5;
+    }
+    &.three {
+        .margin3 {
+            margin-top: 3.6rem + $marginBetweenMatches * 1.5;
+        }
+        .margin2 {
+            margin-top: 7.4rem + $marginBetweenMatches * 2;
+        }
+        .margin1 {
+            margin-top: 11rem + $marginBetweenMatches * 2.5;
+        }
+    }
+    &.two {
+        .margin1 {
+            margin-top: 3.6rem + $marginBetweenMatches * 1.5;
+        }
+    }
+    &.one {
+        .margin1 {
+            margin-top: 1rem;
+        }
+        > * {
+            max-width: 25rem;
+        }
+    }
+    &.isReport {
+        .bracket {
+            border-color: #999;
+
+            .tick {
+                background-color: #999;
+            }
+        }
+        .header {
+            background-color: darken(#f5f8fa, 5%);
+            color: #333 !important;
+        }
+    }
+}
+.matches {
+    > *:not(:last-child) {
+        margin-bottom: $marginBetweenMatches;
+    }
+}
+.bracket {
+    position: absolute;
+    width: 6px;
+    border: 2px solid #ccc;
+    border-left-width: 0;
+    left: 6px;
+    border-radius: 0 3px 3px 0;
+
+    .tick {
+        position: absolute;
+        top: 50%;
+        left: 6px;
+        width: 4px;
+        height: 2px;
+        background-color: #ccc;
+    }
+
+    [data-bs-theme='dark'] & {
+        border-color: var(--rival-dark-4);
+
+        .tick {
+            background-color: var(--rival-dark-4);
+        }
+    }
+}
+.tournamentWrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    @include media-breakpoint-down(md) {
+        display: block;
+    }
+}
+.betContest {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    min-width: 26rem;
+
+    @include media-breakpoint-down(md) {
+        min-width: auto;
+    }
+}
+.timeoutInfo {
+    margin-top: 0.25rem;
+    text-align: center;
+    font-size: 0.8rem;
+}
+.botIcon {
+    color: var(--rival-dark-4);
+    margin-right: 0.25rem;
+
+    svg {
+        width: $width;
+        height: $height;
+        fill: #fff;
+        stroke: var(--rival-dark-4);
+    }
+    [data-bs-theme='dark'] & {
+        color: var(--rival-light-3);
+
+        svg {
+            fill: var(--rival-dark-2);
+            stroke: var(--rival-light-3);
+        }
+    }
+}

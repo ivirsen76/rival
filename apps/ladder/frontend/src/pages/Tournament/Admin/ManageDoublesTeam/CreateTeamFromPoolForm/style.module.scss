@@ -1,0 +1,12 @@
+.avatar {
+    font-size: 4rem;
+}
+.captain {
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-left: 0.5rem;
+
+    [data-bs-theme='dark'] & circle {
+        fill: var(--rival-dark-5) !important;
+    }
+}

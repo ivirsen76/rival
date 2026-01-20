@@ -1,0 +1,11 @@
+.pagination {
+    :global .page-item {
+        cursor: pointer;
+    }
+    :global .page-item.disabled {
+        cursor: default;
+    }
+    :global .page-link {
+        transition: none !important;
+    }
+}

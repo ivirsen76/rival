@@ -1,0 +1,35 @@
+$tooltipSize: 2.2rem;
+
+:global .card > .card-body {
+    padding: 1.8rem;
+}
+.tooltip {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: $tooltipSize;
+    height: $tooltipSize;
+    border-radius: 0;
+    border-bottom-left-radius: 100%;
+    border-top-right-radius: 0.475rem;
+
+    .letter {
+        font-family: sans-serif;
+        position: absolute;
+        right: 0.5rem;
+        top: 0.2rem;
+        font-weight: bold;
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    .card {
+        margin-left: -15px;
+        margin-right: -15px;
+        border-radius: 0;
+
+        :global .card-body {
+            padding: 20px;
+        }
+    }
+}

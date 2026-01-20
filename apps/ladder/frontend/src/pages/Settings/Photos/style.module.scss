@@ -1,0 +1,99 @@
+.wrapper {
+    position: relative;
+
+    .draggingInvitaion {
+        display: none;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border: 2px dashed var(--rival-light-4);
+        border-radius: 0.5rem;
+        background-color: hsla(0, 0%, 100%, 0.8);
+        z-index: 1;
+        font-size: 2rem;
+        color: var(--rival-light-4);
+
+        [data-bs-theme='dark'] & {
+            background-color: hsla(0, 0%, 0%, 0.8);
+            border-color: var(--rival-dark-5);
+            color: var(--rival-dark-5);
+        }
+    }
+    &.isDragActive {
+        .draggingInvitaion {
+            display: flex;
+        }
+    }
+    .photos {
+        display: grid;
+        gap: 1rem;
+        margin-top: 2rem;
+
+        .photo {
+            display: flex;
+            gap: 2rem;
+
+            .image {
+                width: 18rem;
+                height: 11rem;
+                padding: 1rem;
+                background-color: rivalDarkColor(95%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 1.5rem;
+
+                img {
+                    border-radius: 1rem;
+                }
+            }
+            .title {
+                flex-grow: 1;
+                max-width: 30rem;
+            }
+        }
+    }
+}
+.stats {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.25rem;
+
+    svg {
+        width: 2rem;
+        height: 2rem;
+        margin-right: 0.25rem;
+    }
+    .views svg {
+        margin-right: 0.35rem;
+    }
+}
+.reviewWrapper {
+    display: grid;
+    gap: 2rem;
+
+    .review {
+        display: flex;
+        gap: 1.5rem;
+
+        [data-bs-theme='dark'] & {
+            border-color: var(--rival-dark-4);
+        }
+        .image {
+            img {
+                width: 10rem;
+                height: auto;
+                border-radius: 1rem;
+
+                @include media-breakpoint-down(2m) {
+                    width: 8rem;
+                }
+            }
+        }
+    }
+}

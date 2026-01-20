@@ -1,0 +1,79 @@
+.number {
+    width: 0;
+}
+.noOrder {
+    position: relative;
+    padding-right: 1.4rem;
+    cursor: pointer;
+
+    &:before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        margin-top: -0.6rem;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 0.5rem 0.5rem 0.5rem;
+        border-color: transparent transparent #ccc transparent;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        margin-top: 0.1rem;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0.5rem 0.5rem 0 0.5rem;
+        border-color: #ccc transparent transparent transparent;
+    }
+}
+.orderAsc {
+    position: relative;
+    padding-right: 1.4rem;
+    cursor: pointer;
+
+    &:before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        margin-top: -0.25rem;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0 0.5rem 0.5rem 0.5rem;
+        border-color: transparent transparent #009ef7 transparent;
+    }
+}
+.orderDesc {
+    position: relative;
+    padding-right: 1.4rem;
+    cursor: pointer;
+
+    &:before {
+        content: '';
+        position: absolute;
+        right: 0;
+        top: 50%;
+        margin-top: -0.25rem;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 0.5rem 0.5rem 0 0.5rem;
+        border-color: #009ef7 transparent transparent transparent;
+    }
+}
+.rowActionsWrapper {
+    > *:not(:last-child) {
+        margin-right: 0.5rem;
+    }
+}
+.filter {
+    th {
+        padding-top: 0 !important;
+    }
+}

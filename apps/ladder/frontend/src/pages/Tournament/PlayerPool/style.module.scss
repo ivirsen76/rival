@@ -1,0 +1,33 @@
+.players {
+    display: grid;
+    gap: 1rem;
+
+    .player {
+        border-radius: 5px;
+        overflow: hidden;
+        color: #666;
+
+        [data-bs-theme='dark'] & {
+            color: var(--rival-block-color);
+        }
+        .header {
+            padding: 0.4rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--rival-block-bg-color-1);
+
+            .actions {
+                flex-grow: 1;
+                text-align: right;
+                display: flex;
+                justify-content: right;
+                gap: 0.5rem;
+            }
+        }
+        .info {
+            padding: 0.4rem 0.6rem;
+            background-color: var(--rival-block-bg-color-2);
+        }
+    }
+}

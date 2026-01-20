@@ -1,0 +1,23 @@
+.tippy-box[data-theme~='danger'] {
+    color: #fff;
+    box-shadow: $dropdown-box-shadow;
+    background: #f1416c;
+}
+.tippy-box[data-theme~='danger'][data-placement^='top'] > .tippy-arrow:before {
+    border-top-color: #f1416c;
+}
+.tippy-box[data-theme~='danger'][data-placement^='bottom'] > .tippy-arrow:before {
+    border-bottom-color: #f1416c;
+}
+.tippy-box[data-theme~='danger'][data-placement^='left'] > .tippy-arrow:before {
+    border-left-color: #f1416c;
+}
+.tippy-box[data-theme~='danger'][data-placement^='right'] > .tippy-arrow:before {
+    border-right-color: #f1416c;
+}
+.tippy-box[data-theme~='danger'] > .tippy-backdrop {
+    background-color: #f1416c;
+}
+.tippy-box[data-theme~='danger'] > .tippy-svg-arrow {
+    fill: #f1416c;
+}

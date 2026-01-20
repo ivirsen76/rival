@@ -1,0 +1,310 @@
+.wrapper {
+    max-width: 30rem;
+    scroll-margin-bottom: 2rem;
+}
+.header {
+    min-height: 1.73rem;
+    margin-bottom: 0.4rem;
+    display: flex;
+    align-items: flex-end;
+
+    .time {
+        color: #888;
+        font-weight: 500;
+
+        [data-bs-theme='dark'] & {
+            color: var(--bs-text-muted);
+        }
+    }
+    .icons {
+        white-space: nowrap;
+        margin-bottom: -0.1rem;
+        flex-grow: 1;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 0.5rem;
+
+        &:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+}
+.matchWrapper {
+    border-radius: 5px;
+}
+.match {
+    color: #666;
+    width: 100%;
+    min-width: 14rem;
+
+    [data-bs-theme='dark'] & {
+        color: var(--rival-block-color);
+    }
+    td {
+        padding: 0.4rem 0;
+
+        &:first-child {
+            padding-left: 0.4rem;
+        }
+        &:last-child {
+            padding-right: 0.4rem;
+        }
+    }
+    tr:nth-child(1) {
+        background-color: var(--rival-block-bg-color-2);
+
+        td:first-child {
+            border-top-left-radius: 5px;
+        }
+        td:last-child {
+            border-top-right-radius: 5px;
+        }
+    }
+    tr:nth-child(2) {
+        background-color: var(--rival-block-bg-color-1);
+
+        td:first-child {
+            border-bottom-left-radius: 5px;
+        }
+        td:last-child {
+            border-bottom-right-radius: 5px;
+        }
+    }
+    .player {
+        width: 100%;
+        line-height: 1.2;
+        padding-left: 0.5rem;
+        padding-right: 1rem;
+        position: relative;
+
+        .flag {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+    }
+    .win {
+        color: #181c32;
+        font-weight: bold;
+
+        [data-bs-theme='dark'] & {
+            color: var(--rival-light-2);
+            font-weight: 600;
+        }
+    }
+    .score {
+        padding: 0 3px;
+        text-align: center;
+    }
+    .badge {
+        position: relative;
+        font-size: 0.7rem;
+        top: -0.4rem;
+        margin-left: 0.2rem;
+        font-weight: normal;
+    }
+    .points {
+        max-width: 2rem;
+        width: 2rem;
+        height: 1.7rem;
+        background-color: #333;
+
+        [data-bs-theme='dark'] & {
+            color: var(--rival-dark-1);
+            background-color: var(--rival-light-3);
+        }
+    }
+    .default,
+    .unavailable,
+    .injury {
+        height: 1.75rem;
+        display: flex;
+        align-items: center;
+    }
+    .unavailable {
+        background-color: #ff8400 !important;
+    }
+    &.isReport {
+        color: #333;
+
+        tr:nth-child(1) {
+            background-color: darken(#f5f8fa, 3%);
+        }
+        tr:nth-child(2) {
+            background-color: darken(#f5f8fa, 6%);
+        }
+    }
+}
+.avatar {
+    &.bye {
+        visibility: hidden;
+    }
+}
+.number {
+    border-radius: 0.5rem;
+    background-color: hsl(204, 33%, 94%);
+    width: 1.4rem;
+    height: 1.4rem;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+    cursor: default;
+}
+.teamMatch {
+    border-radius: 0.5rem;
+    background-color: hsl(202, 100%, 48%);
+    width: 1.4rem;
+    height: 1.4rem;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: default;
+}
+@keyframes bounceIn1 {
+    0% {
+        opacity: 0;
+        transform: scale3d(0, 0, 0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale3d(1.2, 1.2, 1.2);
+    }
+    75% {
+        transform: scale3d(0.9, 0.9, 0.9);
+    }
+    90% {
+        transform: scale3d(1.05, 1.05, 1.05);
+    }
+    100% {
+        transform: scale3d(1, 1, 1);
+    }
+}
+@keyframes bounceIn2 {
+    0% {
+        transform: scale3d(1, 1, 1);
+    }
+    50% {
+        transform: scale3d(1.05, 1.2, 1.2);
+    }
+    75% {
+        transform: scale3d(0.9, 0.9, 0.9);
+    }
+    90% {
+        transform: scale3d(1.05, 1.05, 1.05);
+    }
+    100% {
+        transform: scale3d(1, 1, 1);
+    }
+}
+.animateScore {
+    animation-duration: 0.8s;
+    animation-name: bounceIn1;
+}
+.animateWinner {
+    animation-duration: 0.8s;
+    animation-name: bounceIn2;
+}
+.location {
+    opacity: 0.5;
+    margin-bottom: -0.2rem;
+    position: relative;
+    top: -0.1rem;
+}
+.pointsFormula {
+    padding: 0.5rem;
+
+    .legend {
+        display: grid;
+        grid-template-columns: auto auto 1fr;
+        grid-gap: 0 0.4rem;
+        margin-bottom: 1rem;
+    }
+
+    .participationBonus {
+        font-weight: 700;
+        color: hsl(270, 75%, 75%);
+    }
+    .challengerBonus {
+        font-weight: 700;
+        color: hsl(0, 75%, 75%);
+    }
+    .winPoints {
+        font-weight: 700;
+        color: hsl(218, 75%, 75%);
+    }
+    .gamesDiff {
+        font-weight: 700;
+        color: hsl(67, 75%, 75%);
+    }
+    .rankDiff {
+        font-weight: 700;
+        color: hsl(314, 75%, 75%);
+    }
+    .totalGames {
+        font-weight: 700;
+        color: hsl(120, 75%, 75%);
+    }
+
+    .resultedPoints {
+        background-color: #fff;
+        padding: 0 0.3rem;
+
+        [data-bs-theme='dark'] & {
+            color: var(--rival-dark-1);
+            background-color: var(--rival-light-2) !important;
+        }
+    }
+    .formula {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+}
+.positive {
+    font-weight: 600;
+    color: hsl(120, 75%, 75%);
+}
+.negative {
+    font-weight: 600;
+    color: hsl(0, 75%, 75%);
+}
+.elo {
+    height: 1.75rem;
+    min-width: 2.6rem !important;
+    padding: 0 0.2rem !important;
+    justify-content: center;
+
+    [data-bs-theme='dark'] & {
+        color: var(--rival-dark-1);
+        background-color: var(--rival-light-2) !important;
+    }
+}
+.eloEquation {
+    display: flex;
+    gap: 0.3rem;
+    align-items: center;
+}
+.completeScore {
+    background-color: #fff;
+    padding: 0 0.5rem;
+
+    [data-bs-theme='dark'] & {
+        color: var(--rival-dark-1);
+        background-color: var(--rival-light-2) !important;
+    }
+}
+.muted {
+    color: var(--rival-light-4);
+
+    [data-bs-theme='dark'] & {
+        color: var(--rival-dark-7);
+    }
+}

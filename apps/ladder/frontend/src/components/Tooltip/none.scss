@@ -1,0 +1,30 @@
+.tippy-box[data-theme~='none'] {
+    color: #26323d;
+    box-shadow: $dropdown-box-shadow;
+    background: none;
+}
+.tippy-box[data-theme~='none'] > .tippy-content {
+    padding: 0;
+}
+.tippy-box[data-theme~='none'][data-placement^='top'] > .tippy-arrow:before {
+    border-top-color: #fff;
+}
+.tippy-box[data-theme~='none'][data-placement^='bottom'] > .tippy-arrow:before {
+    border-bottom-color: #fff;
+
+    [data-bs-theme='dark'] & {
+        border-bottom-color: var(--rival-dark-3);
+    }
+}
+.tippy-box[data-theme~='none'][data-placement^='left'] > .tippy-arrow:before {
+    border-left-color: #fff;
+}
+.tippy-box[data-theme~='none'][data-placement^='right'] > .tippy-arrow:before {
+    border-right-color: #fff;
+}
+.tippy-box[data-theme~='none'] > .tippy-backdrop {
+    background-color: #fff;
+}
+.tippy-box[data-theme~='none'] > .tippy-svg-arrow {
+    fill: #fff;
+}

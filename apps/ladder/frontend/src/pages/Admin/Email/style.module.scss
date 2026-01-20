@@ -1,0 +1,13 @@
+.preview {
+    > p:last-child {
+        margin-bottom: 0;
+    }
+}
+.desktop {
+    max-width: 592px;
+    transition: all 0.25s !important;
+}
+.mobile {
+    max-width: 380px;
+    transition: all 0.25s !important;
+}

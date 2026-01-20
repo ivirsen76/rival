@@ -1,0 +1,47 @@
+.elo {
+    min-width: 2.6rem !important;
+    padding: 0 0.2rem !important;
+}
+.tableWrapper {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+
+    .table {
+        flex-grow: 1;
+        flex-basis: 100px;
+    }
+    .explanation {
+        flex-grow: 1;
+        flex-basis: 0;
+        order: 1;
+    }
+
+    @include media-breakpoint-down(lg) {
+        display: block;
+
+        .explanation {
+            margin-bottom: 1.5rem;
+        }
+    }
+}
+.buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+.rivalry {
+    display: flex;
+    align-items: center;
+
+    .vs {
+        margin: 0 0.5rem;
+    }
+
+    @include media-breakpoint-down(xl) {
+        display: block;
+
+        .vs {
+            display: none;
+        }
+    }
+}

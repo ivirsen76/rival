@@ -1,0 +1,284 @@
+.avatar {
+    position: relative;
+    font-size: 1.2rem;
+    padding: 0.15rem 0;
+
+    @include media-breakpoint-down(sm) {
+        padding: 0.1rem 0;
+    }
+    .participating,
+    .skipping,
+    .forbidden,
+    .tooStrong {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        border-radius: 0.5rem;
+        z-index: 1;
+
+        &:before,
+        &:after {
+            position: absolute;
+            content: '';
+            left: 100%;
+            top: 100%;
+        }
+        &:before {
+            margin-left: -10.5px;
+            margin-top: -11.5px;
+            width: 13px;
+            height: 13px;
+            background-color: #fff;
+            border-radius: 50%;
+            z-index: 1;
+
+            [data-bs-theme='dark'] & {
+                background-color: var(--rival-dark-2);
+            }
+            .myself & {
+                background-color: var(--bs-table-bg);
+            }
+        }
+        &:after {
+            margin-left: -7.5px;
+            margin-top: -8.5px;
+            width: 7px;
+            height: 7px;
+            background-color: #47be7d;
+            border-radius: 50%;
+            z-index: 2;
+        }
+    }
+    .skipping:after {
+        background-color: #d9214e;
+    }
+    .forbidden:after {
+        background-color: #666;
+    }
+    .tooStrong:after {
+        background-color: #ffa500;
+    }
+}
+td.value {
+    padding-right: 0rem;
+    white-space: nowrap;
+
+    .change {
+        font-size: 0.7rem;
+        color: #666;
+        padding-left: 0.3rem;
+        white-space: nowrap;
+        position: relative;
+        top: -0.7rem;
+
+        [data-bs-theme='dark'] & {
+            color: var(--rival-block-color);
+        }
+        &.up {
+            color: #090;
+
+            [data-bs-theme='dark'] & {
+                color: hsl(120, 60%, 40%);
+            }
+        }
+        &.down {
+            color: #900;
+
+            [data-bs-theme='dark'] & {
+                color: hsl(0, 60%, 60%);
+            }
+        }
+    }
+}
+.ratingChange {
+    margin-left: 0.5rem;
+    font-size: 0.8rem;
+
+    &.increase {
+        color: #090;
+    }
+}
+.points {
+    min-width: 2.2rem !important;
+    padding: 0 0.2rem !important;
+}
+.elo {
+    min-width: 2.6rem !important;
+    padding: 0 0.2rem !important;
+}
+.navbar {
+    :global {
+        .nav-link.active,
+        .nav-link:hover:not(.disabled) {
+            border-color: #fff !important;
+        }
+    }
+    .new {
+        position: absolute;
+        top: 0.2rem;
+        left: 100%;
+        margin-left: 0.2rem;
+        font-size: 0.8rem;
+        font-weight: bold;
+        color: #f1416c;
+    }
+}
+.average {
+    display: flex;
+    align-items: center;
+    height: 3rem;
+
+    > *:first-child,
+    > *:last-child {
+        flex-grow: 1;
+        height: 2px;
+        background-color: #999;
+    }
+    > *:nth-child(2) {
+        line-height: 1;
+        margin: 0 1.5rem;
+    }
+}
+.levelLinkTrigger {
+    border-bottom: 1px dashed #ccc;
+    white-space: nowrap;
+    cursor: pointer;
+}
+.levelDropdown {
+    .levelLink {
+        padding: 0.5rem 1.5rem 0.5rem 2.5rem;
+        margin: 0 -0.6rem;
+        position: relative;
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: #5e6278;
+        display: block;
+
+        &:hover {
+            color: #009ef7;
+            background-color: rgba(245, 248, 250, 0.8);
+        }
+        &:before {
+            position: absolute;
+            content: '';
+            left: 1.3rem;
+            top: 50%;
+            margin-top: -2px;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: #b5b5c3;
+        }
+        [data-bs-theme='dark'] & {
+            color: var(--rival-light-3);
+
+            &:hover {
+                color: var(--rival-light-1);
+                background-color: var(--rival-dark-4);
+            }
+            &:before {
+                background-color: var(--rival-light-3);
+            }
+        }
+    }
+}
+.seasonNav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    > * {
+        margin-top: 0.5rem;
+    }
+    .pair {
+        display: flex;
+        margin-right: 1rem;
+    }
+}
+.projectedWrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    backdrop-filter: blur(5px);
+
+    .projectedContent {
+        max-width: 26rem;
+        text-align: center;
+        background-color: #fff;
+        padding: 1rem;
+        border: 1px solid var(--rival-light-2);
+        border-radius: 1rem;
+        margin: 1.5rem auto 0;
+        color: var(--rival-dark-5);
+        font-size: 1.2rem;
+        font-weight: 500;
+
+        [data-bs-theme='dark'] & {
+            background-color: var(--rival-dark-3);
+            border-color: var(--rival-dark-4);
+            color: var(--rival-light-4);
+        }
+    }
+}
+.partners {
+    font-size: 0.9rem;
+    position: relative;
+    padding-top: 0.25rem;
+    margin-top: -0.5rem;
+
+    &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1px;
+        height: calc(100% - 0.7em);
+        background-color: var(--rival-light-4);
+
+        [data-bs-theme='dark'] & {
+            background-color: var(--rival-dark-5);
+        }
+    }
+    .partner {
+        position: relative;
+        padding-left: 1rem;
+
+        &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 0.5rem;
+            height: 1px;
+            background-color: var(--rival-light-4);
+
+            [data-bs-theme='dark'] & {
+                background-color: var(--rival-dark-5);
+            }
+        }
+    }
+}
+.teamSeparator {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    height: 1px;
+    background-color: var(--rival-light-2);
+
+    [data-bs-theme='dark'] & {
+        background-color: var(--rival-dark-4);
+    }
+}
+.tooStrongLink {
+    a {
+        color: $danger !important;
+    }
+}
+.tooStrong {
+    font-size: 0.8rem;
+    line-height: 1;
+}

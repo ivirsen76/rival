@@ -1,0 +1,173 @@
+$stageSize: 2.4rem;
+
+@mixin bg($hue) {
+    background-color: hsl($hue, 75%, 85%);
+    border-color: hsl($hue, 75%, 80%);
+    color: hsl($hue, 75%, 30%);
+
+    &:hover {
+        background-color: hsl($hue, 75%, 80%);
+        border-color: hsl($hue, 75%, 75%);
+        color: hsl($hue, 75%, 25%);
+    }
+
+    [data-bs-theme='dark'] & {
+        background-color: hsl($hue, 50%, 40%);
+        border-color: hsl($hue, 50%, 45%);
+        color: hsl($hue, 50%, 85%);
+
+        &:hover {
+            background-color: hsl($hue, 50%, 45%);
+            border-color: hsl($hue, 50%, 50%);
+            color: hsl($hue, 50%, 90%);
+        }
+    }
+}
+.wrapper {
+    width: 100%;
+    overflow: auto;
+}
+.key {
+    margin: 0.5rem;
+    display: grid;
+    grid-gap: 0.3rem 0.5rem;
+    grid-template-columns: auto auto;
+    align-items: center;
+}
+.table {
+    td,
+    th {
+        padding: 0.2rem 0;
+    }
+    tr > *:not(:first-child) {
+        text-align: center;
+        vertical-align: middle;
+    }
+    tr > *:first-child {
+        padding-right: 1rem;
+        font-weight: $font-weight-bold !important;
+        color: $text-muted !important;
+        white-space: nowrap;
+    }
+    thead {
+        th:nth-child(2) {
+            border-top-left-radius: 0.475rem !important;
+            border-bottom-left-radius: 0.475rem !important;
+        }
+        th:last-child {
+            border-top-right-radius: 0.475rem !important;
+            border-bottom-right-radius: 0.475rem !important;
+        }
+        th:not(:first-child) {
+            color: $text-muted !important;
+            background-color: $light !important;
+            font-weight: $font-weight-bold !important;
+
+            [data-bs-theme='dark'] & {
+                color: var(--rival-block-color) !important;
+                background-color: var(--rival-block-bg-color-2) !important;
+            }
+        }
+        th {
+            padding: 0.5rem;
+        }
+    }
+    tbody tr:first-child td {
+        padding-top: 1rem;
+    }
+    tfoot {
+        tr:first-child td {
+            padding-top: 1rem;
+        }
+    }
+}
+.chart {
+    background-color: #f5f8fa;
+    border-radius: 0.5rem;
+
+    [data-bs-theme='dark'] & {
+        background-color: var(--rival-dark-3);
+    }
+}
+.chartBg {
+    fill: #f5f8fa;
+
+    [data-bs-theme='dark'] & {
+        fill: var(--rival-dark-3);
+    }
+}
+.chartDivider {
+    stroke: var(--bs-modal-bg);
+}
+.chartGradient {
+    fill-opacity: 0.1;
+
+    [data-bs-theme='dark'] & {
+        fill-opacity: 0.2;
+    }
+}
+.chartLabel {
+    fill: #333;
+
+    [data-bs-theme='dark'] & {
+        fill: var(--rival-light-3);
+    }
+}
+.placeholder {
+    height: $stageSize;
+    line-height: $stageSize;
+
+    > * {
+        width: 50px;
+    }
+}
+.stage {
+    height: $stageSize;
+    width: 44px;
+    padding: 0;
+    line-height: $stageSize;
+    text-align: center;
+    border: 1px solid #fff;
+    border-radius: 0.3rem;
+    margin: 0 3px;
+    font-weight: 500;
+    transition: all 0.2s;
+
+    &.regular {
+        background-color: hsl(204, 33%, 95%);
+        border-color: hsl(204, 33%, 90%);
+        color: hsl(204, 75%, 40%);
+
+        &:hover {
+            background-color: hsl(204, 33%, 90%);
+            border-color: hsl(204, 33%, 85%);
+            color: hsl(204, 75%, 35%);
+        }
+        [data-bs-theme='dark'] & {
+            background-color: hsl(204, 33%, 25%);
+            border-color: hsl(204, 33%, 30%);
+            color: hsl(204, 75%, 85%);
+
+            &:hover {
+                background-color: hsl(204, 33%, 30%);
+                border-color: hsl(204, 33%, 35%);
+                color: hsl(204, 75%, 90%);
+            }
+        }
+    }
+    &.roundOf16 {
+        @include bg(180);
+    }
+    &.quarterfinal {
+        @include bg(29);
+    }
+    &.semifinal {
+        @include bg(138);
+    }
+    &.final {
+        @include bg(235);
+    }
+    &.champion {
+        @include bg(295);
+    }
+}

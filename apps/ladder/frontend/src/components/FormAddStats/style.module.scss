@@ -1,0 +1,43 @@
+.swingVision {
+    width: 100%;
+    max-width: 600px;
+    aspect-ratio: 1200 / 396;
+    background-image: url('./swingVision.png');
+    background-size: cover;
+    margin: 0.5rem 0 2rem;
+    border-radius: 0.5rem;
+}
+.swingVisionInterface {
+    width: 198px;
+    aspect-ratio: 396 / 484;
+    background-image: url('./swingVisionInterface.jpg');
+    background-size: cover;
+    margin: 0.5rem 0 2rem;
+    border-radius: 0.5rem;
+}
+.copyLink {
+    width: 100%;
+    max-width: 331px;
+    aspect-ratio: 662 / 1432;
+    background-image: url('./copyLink.png');
+    background-size: cover;
+    margin: 0.5rem 0 2rem;
+    border-radius: 0.5rem;
+}
+.paste {
+    width: 100%;
+    max-width: 399px;
+    aspect-ratio: 798 / 295;
+    background-image: url('./paste.png');
+    background-size: cover;
+    margin: 0.5rem 0 1rem;
+    border-radius: 0.5rem;
+}
+.stats {
+    width: 100%;
+    aspect-ratio: 1200 / 747;
+    background-image: url('./stats.jpg');
+    background-size: cover;
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+}

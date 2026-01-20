@@ -1,0 +1,36 @@
+.wrapper {
+    display: flex;
+    align-items: flex-start;
+
+    .list {
+        flex-shrink: 0;
+        width: 26rem;
+
+        &.doubles {
+            width: 30rem;
+        }
+    }
+    .filter {
+        flex-grow: 1;
+        margin-left: 1.5rem;
+    }
+}
+@include media-breakpoint-down(lg) {
+    .wrapper {
+        display: grid;
+        gap: 1.5rem;
+
+        .list {
+            width: 100% !important;
+            order: 2;
+        }
+        .filter {
+            margin-left: 0;
+            order: 1;
+        }
+    }
+}
+.proposals {
+    display: grid;
+    grid-gap: 2rem;
+}

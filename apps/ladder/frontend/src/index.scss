@@ -1,0 +1,370 @@
+@import './variables.scss';
+@import 'flatpickr/dist/flatpickr.css';
+@import '@rival/packages/metronic/scss/style';
+@import '@rival/packages/metronic/scss/plugins';
+@import './variablesCss.scss';
+
+// Headers
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 1.4em;
+    margin-bottom: 0.7em;
+
+    &:first-child {
+        margin-top: 0;
+    }
+}
+.modal-title {
+    &.h1,
+    &.h2,
+    &.h3,
+    &.h4,
+    &.h5,
+    &.h6 {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+.nav-line-tabs .nav-item .nav-link {
+    padding-bottom: 0.2rem;
+}
+
+.form-control.form-control-solid.is-invalid {
+    border-color: $danger;
+}
+.form-control.form-control-solid:disabled {
+    color: var(--bs-gray-500);
+}
+.form-select.form-select-solid:disabled {
+    color: var(--bs-gray-500);
+}
+.is-invalid {
+    .form-control.form-control-solid {
+        border-color: $danger;
+    }
+}
+
+[data-bs-theme='dark'] {
+    .form-label {
+        color: var(--rival-light-2);
+    }
+}
+
+.table.tl-table {
+    margin-bottom: 0;
+    vertical-align: middle !important;
+
+    &.tl-table-top {
+        vertical-align: top !important;
+    }
+    thead {
+        tr {
+            color: $text-muted !important;
+            background-color: var(--rival-block-bg-color-2);
+            font-weight: $font-weight-bold !important;
+
+            [data-bs-theme='dark'] & {
+                color: var(--rival-block-color) !important;
+            }
+            th {
+                padding: 0.5rem 0.75rem;
+            }
+            th:first-child {
+                padding-left: 1rem;
+                border-top-left-radius: 0.475rem !important;
+                border-bottom-left-radius: 0.475rem !important;
+            }
+            th:last-child {
+                padding-right: 1rem;
+                border-top-right-radius: 0.475rem !important;
+                border-bottom-right-radius: 0.475rem !important;
+            }
+        }
+        &:after {
+            content: '@';
+            display: block;
+            line-height: 0.5rem;
+            text-indent: -99999px;
+        }
+    }
+    td {
+        padding-top: 0.2rem;
+        padding-bottom: 0.2rem;
+    }
+    td:first-child {
+        padding-left: 1rem;
+    }
+    td:last-child {
+        padding-right: 1rem;
+    }
+
+    .tl-tr-top-round {
+        td:first-child {
+            border-top-left-radius: 0.475rem !important;
+        }
+        td:last-child {
+            border-top-right-radius: 0.475rem !important;
+        }
+    }
+    .tl-tr-bottom-round {
+        td:first-child {
+            border-bottom-left-radius: 0.475rem !important;
+        }
+        td:last-child {
+            border-bottom-right-radius: 0.475rem !important;
+        }
+    }
+    .tl-tr-all-round {
+        @extend .tl-tr-top-round;
+        @extend .tl-tr-bottom-round;
+    }
+    &.tl-table-spacious {
+        td {
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+        }
+        thead:after {
+            line-height: 1rem;
+        }
+    }
+    &.tl-table-striped {
+        tbody tr:nth-child(even) {
+            background-color: $light;
+        }
+    }
+    &.tl-table-report {
+        thead {
+            tr {
+                color: darken($text-muted, 30%) !important;
+                background-color: darken($light, 5%) !important;
+            }
+        }
+    }
+}
+@include media-breakpoint-down(sm) {
+    .table.tl-table {
+        margin-left: -20px;
+        margin-right: -20px;
+        width: calc(100% + 40px);
+
+        th:first-child,
+        td:first-child {
+            padding-left: 20px;
+        }
+        th:last-child,
+        td:last-child {
+            padding-right: 20px;
+        }
+    }
+}
+
+.tl-word-break {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+.tl-panel {
+    margin: 0 auto;
+    max-width: 500px;
+}
+.btn-xs {
+    padding: calc(0.2rem + 1px) calc(0.4rem + 1px) !important;
+    font-size: $font-size-sm;
+}
+.btn-icon.btn-xs {
+    padding: calc(0.2rem + 1px) !important;
+    height: auto !important;
+    width: auto !important;
+}
+.tl-fixed-value {
+    background-color: var(--rival-light-2);
+    border: 1px solid var(--rival-light-2);
+    color: var(--rival-dark-3);
+    line-height: 1;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+
+    .tippy-content & {
+        background-color: var(--rival-light-15);
+    }
+    [data-bs-theme='dark'] & {
+        color: var(--rival-light-3);
+        background-color: var(--rival-dark-4);
+        border: 1px solid var(--rival-dark-4);
+    }
+}
+
+.header-menu {
+    font-size: 1.1rem;
+}
+.menu-item .menu-link {
+    padding-top: 0.4rem !important;
+    padding-bottom: 0.4rem !important;
+}
+// Fix menu arrows color
+body:not([data-kt-sticky-header='on']) .header .header-menu .menu > .menu-item > .menu-link .menu-arrow:after {
+    @include svg-bg-icon(arrow-end, #fff);
+}
+
+// Fix styles for multimple modals
+@for $i from 1 through 10 {
+    $zIndexBackdrop: #{1200 - (2 * $i)};
+    $zIndexContent: #{1200 - (2 * $i) - 1};
+    .modal-backdrop.show:nth-last-child(#{$i}) {
+        z-index: $zIndexBackdrop;
+    }
+    div[role='dialog'][aria-modal='true']:nth-last-child(#{$i}) {
+        z-index: $zIndexContent;
+    }
+}
+
+b,
+strong {
+    font-weight: $font-weight-bold !important;
+}
+
+.flatpickr-calendar {
+    background-color: #fff !important;
+}
+.badge.badge-small {
+    height: 1.5rem;
+    min-width: 1.5rem;
+}
+ol,
+ul {
+    padding-left: 4rem;
+    @include media-breakpoint-down(md) {
+        padding-left: 3rem;
+    }
+
+    li:not(:last-child) {
+        margin-bottom: 1rem;
+    }
+}
+
+.tl-front {
+    font-size: 1.4rem;
+    line-height: 1.5;
+
+    h1 {
+        font-size: 1.4 * $h1-font-size;
+    }
+    h2 {
+        font-size: 1.4 * $h2-font-size;
+    }
+    h3 {
+        font-size: 1.4 * $h3-font-size;
+    }
+    h4 {
+        font-size: 1.4 * $h4-font-size;
+    }
+}
+@include media-breakpoint-down(sm) {
+    .tl-front {
+        font-size: 1.2rem;
+
+        h1 {
+            font-size: 1.2 * $h1-font-size;
+        }
+        h2 {
+            font-size: 1.2 * $h2-font-size;
+        }
+        h3 {
+            font-size: 1.2 * $h3-font-size;
+        }
+        h4 {
+            font-size: 1.2 * $h4-font-size;
+        }
+    }
+}
+
+[data-bs-theme='dark'] {
+    .modal-open #root {
+        filter: blur(5px);
+    }
+    .fade.modal.show:has(+ .fade.modal-backdrop.show) {
+        filter: blur(5px);
+    }
+    .drawer-overlay {
+        backdrop-filter: blur(5px);
+    }
+}
+
+@keyframes bounceIn {
+    from,
+    20%,
+    40%,
+    60%,
+    80%,
+    to {
+        animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+    }
+
+    0% {
+        opacity: 0;
+        transform: scale3d(0.3, 0.3, 0.3);
+    }
+
+    20% {
+        transform: scale3d(1.1, 1.1, 1.1);
+    }
+
+    40% {
+        transform: scale3d(0.9, 0.9, 0.9);
+    }
+
+    60% {
+        opacity: 1;
+        transform: scale3d(1.03, 1.03, 1.03);
+    }
+
+    80% {
+        transform: scale3d(0.97, 0.97, 0.97);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale3d(1, 1, 1);
+    }
+}
+@keyframes heartBeat {
+    0% {
+        transform: scale(1);
+    }
+
+    20% {
+        transform: scale(1.1);
+    }
+
+    40% {
+        transform: scale(1);
+    }
+
+    60% {
+        transform: scale(1.1);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+.animate__animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+}
+.animate__bounceIn {
+    animation-name: bounceIn;
+}
+.animate__heartBeat {
+    animation-name: heartBeat;
+    animation-timing-function: ease-in-out;
+}
+
+// Hide Powered by Google sign
+.pac-container:after {
+    display: none;
+}

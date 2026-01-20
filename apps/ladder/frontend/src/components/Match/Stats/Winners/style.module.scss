@@ -1,0 +1,79 @@
+$baseColor: #009ef7;
+$normalColor: #eee;
+$betterColor: #f1ec52;
+$barSize: 8px;
+
+.wrapper {
+    color: $normalColor;
+    line-height: 1.1;
+
+    .title {
+        padding-bottom: 1rem;
+    }
+    .block {
+        display: flex;
+
+        &:first-child {
+            margin-bottom: 1rem;
+        }
+        .total {
+            font-size: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.3);
+            width: 98px;
+            height: 98px;
+            border: 7px solid $baseColor;
+            border-radius: 49px;
+
+            &.better {
+                color: $betterColor;
+            }
+        }
+        .parts {
+            padding: 0.5rem 1rem 0;
+        }
+    }
+}
+.barWrapper {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 700;
+
+    .num {
+        text-align: right;
+        width: 1.6rem;
+        margin-right: 1rem;
+        height: 2rem;
+        line-height: 2rem;
+        color: #a6d8f4;
+
+        &.better {
+            color: $betterColor;
+        }
+    }
+    .bar {
+        width: 40px;
+        height: $barSize;
+        background-color: #666;
+        border-radius: math.div($barSize, 2);
+        position: relative;
+        margin-right: 1rem;
+        overflow: hidden;
+
+        .line {
+            height: $barSize;
+            background-color: #a6d8f4;
+            border-radius: math.div($barSize, 2);
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            &.better {
+                background-color: $betterColor;
+            }
+        }
+    }
+}

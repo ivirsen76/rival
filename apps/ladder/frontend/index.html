@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+    <head>
+        <meta charset="utf-8" />
+
+        <link rel="icon" href="/favicon.ico" sizes="48x48" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="Rival" />
+        <link rel="manifest" href="/manifest.webmanifest" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+        <meta name="theme-color" content="#000000" />
+        <meta
+            name="description"
+            content="Play tennis any day, any time, at any court with local players on your level."
+            data-react-helmet="true"
+        />
+        <meta name="keywords" content="rival, tennis, ladder, player, tournament, rating, league" />
+
+        <meta property="og:title" content="Rival Tennis Ladder" />
+        <meta
+            property="og:description"
+            content="Play tennis any day, any time, at any court with local players on your level."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content="https://utl.nyc3.digitaloceanspaces.com/images/rival-wallpaper.jpg" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="628" />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Rival Tennis Ladder" />
+        <meta
+            name="twitter:description"
+            content="Play tennis any day, any time, at any court with local players on your level."
+        />
+        <meta name="twitter:image" content="https://utl.nyc3.digitaloceanspaces.com/images/rival-twitter.jpg" />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+        <script>
+            try {
+                window.TL_SERVER_URL = __TL_SERVER_URL__;
+                window.TL_TIMEZONE = __TL_TIMEZONE__;
+            } catch (e) {
+                // doing nothing
+            }
+        </script>
+        <title>Rival Tennis Ladder</title>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <style>
+            .tl-old-browser-banana {
+                position: fixed;
+                top: -200px;
+                left: 0;
+                width: 100%;
+                background-color: #f2dede;
+                z-index: 2000;
+                transition: all 0.5s cubic-bezier(0.47, 1.64, 0.41, 0.8);
+                color: hsl(1, 44%, 36%);
+                text-align: center;
+                padding: 1rem 3rem;
+                border-bottom: 1px solid #fff;
+            }
+            .tl-old-browser-banana h3 {
+                margin-top: 0;
+            }
+            #tl-old-browser-banana-close-button {
+                position: absolute;
+                top: 15px;
+                right: 20px;
+                font-size: 24px;
+                font-weight: bold;
+                line-height: 1;
+            }
+            #tl-old-browser-banana-close-button:hover {
+                cursor: pointer;
+            }
+            @keyframes root-loader-spinner {
+                to {
+                    transform: rotate(360deg);
+                }
+            }
+            .root-loader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: hsl(225, 40%, 98%);
+                z-index: 2000;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                pointer-events: none;
+                color: #009ef7;
+            }
+            [data-bs-theme='dark'] .root-loader {
+                color: hsl(212, 100%, 52%);
+                background-color: hsl(225, 40%, 0%);
+            }
+            .root-loader:before {
+                content: '';
+                width: 23px;
+                height: 23px;
+                border: 2.5px solid currentColor;
+                border-right-color: transparent;
+                border-radius: 50%;
+                animation: 0.65s linear infinite root-loader-spinner;
+            }
+        </style>
+        <script>
+            // switch to dark theme immediately just to avoid flicking issue
+            {
+                const appearance = localStorage.getItem('appearance');
+                if (appearance === 'dark') {
+                    document.documentElement.setAttribute('data-bs-theme', 'dark');
+                }
+            }
+
+            (function () {
+                var isOldBrowser = false;
+
+                // Check for old browser
+                try {
+                    // arrow function is not supported in old browsers
+                    eval('const dummyArrowFunction = () => {};');
+                    // spread operator is not supported in old Edge (< 79)
+                    eval('const dummyObject = { ...{} };');
+                } catch (error) {
+                    isOldBrowser = true;
+                    var banana = document.createElement('div');
+                    banana.className = 'tl-old-browser-banana';
+                    banana.innerHTML =
+                        '<h3>We noticed that your browser is out of date.</h3><div>This may affect your browser’s ability to properly display the content on this website.<br>We recommend that you use the most recent version of Google Chrome.</div><span id="tl-old-browser-banana-close-button">x</span>';
+                    document.body.appendChild(banana);
+                    setTimeout(function () {
+                        banana.style.top = '0';
+                        document
+                            .getElementById('tl-old-browser-banana-close-button')
+                            .addEventListener('click', function () {
+                                banana.style.top = '-200px';
+                            });
+                    }, 2000);
+                }
+
+                // Check for Samsung Internet
+                if (!isOldBrowser && navigator.userAgent.match(/samsung/i)) {
+                    var storageKey = 'tl-samsung-browser-banana-date';
+                    var showPeriod = 30 * 24 * 3600 * 1000; // 30 days
+
+                    function isTimeToShowBanana() {
+                        var lastDate = Number(window.localStorage.getItem(storageKey));
+                        var currentDate = Number(new Date());
+                        return !lastDate || currentDate - lastDate > showPeriod;
+                    }
+
+                    function updateBananaTime() {
+                        window.localStorage.setItem(storageKey, Number(new Date()));
+                    }
+
+                    if (isTimeToShowBanana()) {
+                        var banana = document.createElement('div');
+                        banana.className = 'tl-old-browser-banana';
+                        banana.innerHTML =
+                            '<h3>You are using<br />Samsung Internet browser.</h3><div>It may not show Rival Tennis Ladder correctly, especially with dark mode on your phone. We recommend that you use the most recent version of Google Chrome.</div><span id="tl-old-browser-banana-close-button">x</span>';
+                        document.body.appendChild(banana);
+                        setTimeout(function () {
+                            banana.style.top = '0';
+                            document
+                                .getElementById('tl-old-browser-banana-close-button')
+                                .addEventListener('click', function () {
+                                    updateBananaTime();
+                                    banana.style.top = '-200px';
+                                });
+                        }, 2000);
+                    }
+                }
+            })();
+        </script>
+        <div id="root"><div class="root-loader" /></div>
+        <script type="module" src="/src/index.jsx"></script>
+    </body>
+</html>

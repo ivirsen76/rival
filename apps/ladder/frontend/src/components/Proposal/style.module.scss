@@ -1,0 +1,91 @@
+.wrapper {
+    max-width: 34rem;
+
+    .matchWrapper {
+        border-radius: 5px;
+        overflow: hidden;
+    }
+    .match {
+        width: 100%;
+        color: #666;
+
+        [data-bs-theme='dark'] & {
+            color: var(--rival-block-color);
+        }
+        > div {
+            padding: 0.4rem;
+        }
+        > div:nth-child(1),
+        > div:nth-child(3) {
+            background-color: var(--rival-block-bg-color-1);
+        }
+        > div:nth-child(2) {
+            background-color: var(--rival-block-bg-color-2);
+        }
+        .first {
+            display: flex;
+            align-items: center;
+            gap: var(--rival-grid-column-gap);
+
+            .practice {
+                display: flex;
+                flex: 0 0 var(--rival-grid-icon-column-width);
+                justify-content: center;
+
+                &:before {
+                    content: 'P';
+                    font-weight: bold;
+                    width: 1.4rem;
+                    line-height: 1.4rem;
+                    text-align: center;
+                    color: #fff;
+                    background-color: hsl(202, 31%, 50%);
+                    border-radius: 0.5rem;
+                    font-size: 0.9rem;
+
+                    [data-bs-theme='dark'] & {
+                        background-color: hsl(202, 31%, 40%);
+                    }
+                }
+            }
+            .avatar {
+                display: flex;
+                flex: 0 0 var(--rival-grid-icon-column-width);
+                justify-content: center;
+            }
+            .player {
+                flex-grow: 1;
+                line-height: 1.2;
+                padding-right: 0.5rem;
+            }
+        }
+        .grid {
+            display: grid;
+            gap: 0.25rem;
+
+            .row {
+                display: flex;
+                gap: var(--rival-grid-column-gap);
+
+                > *:first-child {
+                    display: flex;
+                    flex: 0 0 var(--rival-grid-icon-column-width);
+                    justify-content: center;
+                }
+                > *:nth-child(2) {
+                    margin-top: 0.1rem;
+                }
+            }
+        }
+    }
+}
+.avatar {
+    width: 1.6rem;
+}
+.badge {
+    position: relative;
+    font-size: 0.7rem;
+    top: -0.4rem;
+    margin-left: 0.2rem;
+    font-weight: normal;
+}

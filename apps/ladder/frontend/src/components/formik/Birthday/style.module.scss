@@ -1,0 +1,29 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: 3rem 3rem 4rem auto;
+    grid-gap: 0.2rem 0.5rem;
+    align-items: center;
+    text-align: center;
+
+    input {
+        text-align: center;
+        background-image: none !important;
+        padding: 0.5rem 0 !important;
+    }
+    .month,
+    .day,
+    .year {
+        font-size: 0.8rem;
+    }
+    .result {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #a1a5b7;
+        text-align: left;
+        padding-left: 0.5rem;
+
+        [data-bs-theme='dark'] & {
+            color: var(--rival-light-5);
+        }
+    }
+}

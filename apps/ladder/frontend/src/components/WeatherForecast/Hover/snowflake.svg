@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="141 119.33 245 245" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <g>
+      <path style="fill: none; stroke: #009ef7; stroke-width: 24px; stroke-linecap: round;" d="M 262.33 131.33 L 262.32 351.75"/>
+      <path style="fill: none; stroke: #009ef7; stroke-width: 24px; stroke-linecap: round;" d="M 231.17 147.34 L 262.91 165.74 L 294.07 147.05"/>
+      <path style="fill: none; stroke: #009ef7; stroke-width: 24px; stroke-linecap: round;" d="M 230.87 335.75 L 262.61 317.35 L 293.77 336.04"/>
+    </g>
+    <g transform="matrix(0.499851, -0.866113, 0.866113, 0.499851, -77.926445, 348.134705)">
+      <path style="fill: none; stroke: #009ef7; stroke-width: 24px; stroke-linecap: round;" d="M 262.33 131.33 L 262.32 351.75"/>
+      <path style="fill: none; stroke: #009ef7; stroke-width: 24px; stroke-linecap: round;" d="M 231.17 147.34 L 262.91 165.74 L 294.07 147.05"/>
+      <path style="fill: none; stroke: #009ef7; stroke-width: 24px; stroke-linecap: round;" d="M 230.87 335.75 L 262.61 317.35 L 293.77 336.04"/>
+    </g>
+    <g transform="matrix(0.498674, 0.866792, -0.866792, 0.498674, 340.948517, -106.4161)">
+      <path style="fill: none; stroke: #009ef7; stroke-width: 24px; stroke-linecap: round;" d="M 262.33 131.33 L 262.32 351.75"/>
+      <path style="fill: none; stroke: #009ef7; stroke-width: 24px; stroke-linecap: round;" d="M 231.17 147.34 L 262.91 165.74 L 294.07 147.05"/>
+      <path style="fill: none; stroke: #009ef7; stroke-width: 24px; stroke-linecap: round;" d="M 230.87 335.75 L 262.61 317.35 L 293.77 336.04"/>
+    </g>
+  </g>
+</svg>

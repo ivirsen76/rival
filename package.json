@@ -1,0 +1,23 @@
+{
+    "name": "rival",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "lint": "eslint ."
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "packageManager": "pnpm@10.28.0",
+    "devDependencies": {
+        "@eslint/js": "^9.39.1",
+        "eslint-plugin-react-hooks": "^7.0.1",
+        "eslint-plugin-react-refresh": "^0.4.24",
+        "eslint": "^9.39.1",
+        "globals": "^16.5.0",
+        "prettier": "^3.7.4",
+        "typescript-eslint": "^8.46.4",
+        "typescript": "~5.9.3"
+    }
+}

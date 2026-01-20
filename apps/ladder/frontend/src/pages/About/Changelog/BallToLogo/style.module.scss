@@ -1,0 +1,141 @@
+$ballWidth: 0.285em;
+$logoWidth: 0.17em;
+$animationDuration: 8s;
+
+@keyframes disappear {
+    90% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+@keyframes moveRight {
+    0% {
+        transform: translate(-0.5em, 0);
+        opacity: 0;
+    }
+    20% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+@keyframes moveLeft {
+    0% {
+        transform: translate(0.5em, 0);
+        opacity: 0;
+    }
+    20% {
+        transform: translate(0, 0);
+        opacity: 1;
+    }
+}
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+    30% {
+        transform: scale(7);
+        animation-timing-function: ease-in;
+        opacity: 0;
+    }
+    35.7% {
+        transform: scale(1);
+        animation-timing-function: ease-out;
+        opacity: 1;
+    }
+    38.25% {
+        transform: scale(1.5);
+        animation-timing-function: ease-in;
+    }
+    40.8% {
+        transform: scale(1);
+        animation-timing-function: ease-out;
+    }
+    42.15% {
+        transform: scale(1.24);
+        animation-timing-function: ease-in;
+    }
+    43.35% {
+        transform: scale(1);
+        animation-timing-function: ease-out;
+    }
+    44.25% {
+        transform: scale(1.04);
+        animation-timing-function: ease-in;
+    }
+    45% {
+        transform: scale(1);
+        animation-timing-function: ease-out;
+        opacity: 1;
+    }
+    100% {
+        transform: none;
+        opacity: 1;
+    }
+}
+
+.wrapper {
+    width: 1em;
+    height: 0.285em;
+    position: relative;
+    font-size: 26rem;
+    overflow: hidden;
+    animation: disappear $animationDuration infinite;
+
+    @include media-breakpoint-down(sm) {
+        font-size: calc(100vw - 40px);
+    }
+    .ball {
+        position: absolute;
+        width: $ballWidth;
+        height: $ballWidth;
+        animation-duration: $animationDuration;
+        animation-iteration-count: infinite;
+        animation-timing-function: ease-out;
+
+        svg {
+            position: absolute;
+            left: 0.5em - math.div($ballWidth, 2);
+            top: math.div($ballWidth, 2) - math.div($ballWidth, 2);
+            width: 100%;
+            height: 100%;
+
+            color: var(--rival-light-15);
+
+            [data-bs-theme='dark'] & {
+                color: var(--rival-dark-35);
+            }
+        }
+        &.left {
+            animation-name: moveRight;
+        }
+        &.right {
+            animation-name: moveLeft;
+
+            svg {
+                transform: rotate(-90deg);
+            }
+        }
+    }
+    .logo {
+        svg {
+            animation: appear $animationDuration infinite;
+            position: absolute;
+            top: math.div($ballWidth, 2) - math.div($logoWidth, 2);
+            left: 0.5em - math.div($logoWidth, 2);
+            width: $logoWidth;
+            height: $logoWidth;
+
+            * {
+                fill: #000;
+
+                [data-bs-theme='dark'] & {
+                    fill: #fff;
+                }
+            }
+        }
+    }
+}

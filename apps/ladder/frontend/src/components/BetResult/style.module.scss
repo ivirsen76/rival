@@ -1,0 +1,234 @@
+$marginBetweenMatches: 2rem;
+$matchHeight: 5.425rem;
+
+.wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+
+    > * {
+        flex-grow: 1;
+        flex-basis: 0;
+        white-space: nowrap;
+    }
+    .divider {
+        flex: 0 0 22px;
+        position: relative;
+    }
+    .header {
+        text-align: center;
+        background-color: var(--rival-block-bg-color-2);
+        border-radius: 0.5rem;
+        padding: 0.5rem 0;
+
+        [data-bs-theme='dark'] & {
+            color: var(--rival-block-color) !important;
+        }
+    }
+    .margin7 {
+        margin-top: math.div($matchHeight, 2) + $marginBetweenMatches * 1.5;
+    }
+    .margin6 {
+        margin-top: $matchHeight + $marginBetweenMatches * 2;
+    }
+    .margin5 {
+        margin-top: $matchHeight + $marginBetweenMatches * 2;
+    }
+    .margin4 {
+        margin-top: $matchHeight + $marginBetweenMatches * 2;
+    }
+    .margin3 {
+        margin-top: $matchHeight * 1.5 + $marginBetweenMatches * 2.5;
+    }
+    .margin2 {
+        margin-top: $matchHeight * 3 + $marginBetweenMatches * 4;
+    }
+    .margin1 {
+        margin-top: $matchHeight * 3.5 + $marginBetweenMatches * 4.5;
+    }
+    &.three {
+        .margin3 {
+            margin-top: math.div($matchHeight, 2) + $marginBetweenMatches * 1.5;
+        }
+        .margin2 {
+            margin-top: $matchHeight + $marginBetweenMatches * 2;
+        }
+        .margin1 {
+            margin-top: $matchHeight * 1.5 + $marginBetweenMatches * 2.5;
+        }
+    }
+    &.two {
+        .margin1 {
+            margin-top: $matchHeight;
+        }
+    }
+}
+.matches {
+    > *:not(:last-child) {
+        margin-bottom: $marginBetweenMatches;
+    }
+}
+.matchWrapper {
+    border-radius: 5px;
+    border: 1px solid hsla(204, 50%, 40%, 40%);
+    overflow: hidden;
+    cursor: default;
+
+    &.hasBye {
+        border-color: transparent;
+    }
+    &.correctWinner {
+        border-color: hsl(120, 50%, 40%);
+
+        [data-bs-theme='dark'] & {
+            border-color: hsl(120, 50%, 30%);
+        }
+    }
+    &.wrongWinner {
+        border-color: hsl(0, 50%, 40%);
+
+        [data-bs-theme='dark'] & {
+            border-color: hsl(0, 50%, 30%);
+        }
+    }
+}
+.match {
+    color: #666;
+
+    [data-bs-theme='dark'] & {
+        color: var(--rival-block-color);
+    }
+    td {
+        padding: 0.4rem 0;
+
+        &:first-child {
+            padding-left: 0.4rem;
+        }
+        &:last-child {
+            padding-right: 0.4rem;
+        }
+    }
+    tr:nth-child(1) {
+        background-color: var(--rival-block-bg-color-2);
+    }
+    tr:nth-child(2) {
+        background-color: var(--rival-block-bg-color-1);
+    }
+    .player {
+        width: 100%;
+        line-height: 1.2;
+        padding-left: 0.5rem;
+        padding-right: 1rem;
+        position: relative;
+
+        .flag {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+    }
+    .win {
+        color: #181c32;
+        font-weight: bold;
+
+        [data-bs-theme='dark'] & {
+            color: var(--rival-light-2);
+            font-weight: 600;
+        }
+    }
+    .score {
+        text-align: center;
+        padding: 0 0.5rem;
+    }
+}
+.correctWinner {
+    .match {
+        tr:nth-child(1) {
+            background-color: hsl(120, 33%, 97%);
+        }
+        tr:nth-child(2) {
+            background-color: hsl(120, 33%, 94%);
+        }
+        [data-bs-theme='dark'] & {
+            tr:nth-child(1) {
+                background-color: hsl(120, 20%, 16%);
+            }
+            tr:nth-child(2) {
+                background-color: hsl(120, 20%, 18%);
+            }
+        }
+    }
+}
+.wrongWinner {
+    .match {
+        tr:nth-child(1) {
+            background-color: hsl(0, 33%, 97%);
+        }
+        tr:nth-child(2) {
+            background-color: hsl(0, 33%, 94%);
+        }
+        [data-bs-theme='dark'] & {
+            tr:nth-child(1) {
+                background-color: hsl(0, 20%, 16%);
+            }
+            tr:nth-child(2) {
+                background-color: hsl(0, 20%, 18%);
+            }
+        }
+    }
+}
+.correctScore {
+    .score {
+        color: #fff;
+        background-color: hsl(120, 50%, 40%);
+
+        [data-bs-theme='dark'] & {
+            background-color: hsl(120, 50%, 30%);
+        }
+        .win {
+            color: #fff;
+        }
+    }
+}
+.wrongScore {
+    .score {
+        color: #fff;
+        background-color: hsl(0, 50%, 40%);
+
+        [data-bs-theme='dark'] & {
+            background-color: hsl(0, 50%, 30%);
+        }
+        .win {
+            color: #fff;
+        }
+    }
+}
+
+.bracket {
+    position: absolute;
+    width: 6px;
+    border: 2px solid #ccc;
+    border-left-width: 0;
+    left: 6px;
+    border-radius: 0 3px 3px 0;
+
+    .tick {
+        position: absolute;
+        top: 50%;
+        left: 6px;
+        width: 4px;
+        height: 2px;
+        background-color: #ccc;
+    }
+
+    [data-bs-theme='dark'] & {
+        border-color: var(--rival-dark-4);
+
+        .tick {
+            background-color: var(--rival-dark-4);
+        }
+    }
+}
+.avatar.bye {
+    visibility: hidden;
+}

@@ -1,0 +1,18 @@
+.input {
+    cursor: pointer;
+}
+.option {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-radius: 0.5rem;
+
+    &.selected,
+    &:hover {
+        background-color: var(--rival-light-2);
+
+        [data-bs-theme='dark'] & {
+            background-color: var(--rival-dark-4);
+        }
+    }
+}

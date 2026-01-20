@@ -1,0 +1,29 @@
+.icon {
+    width: 1.8rem;
+}
+.content {
+    [data-bs-theme='light'] & {
+        background-color: hsl(201, 92%, 93%);
+        border-color: hsl(202, 95%, 88%);
+
+        :global {
+            .form-label {
+                color: #005f94;
+            }
+            .form-check.form-check-solid .form-check-input:not(:checked) {
+                background-color: #fff;
+            }
+        }
+    }
+
+    p:last-child {
+        margin-bottom: 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        color: #009ef7;
+    }
+}

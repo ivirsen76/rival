@@ -1,0 +1,60 @@
+.wrapper {
+    background-color: #15141a;
+    background-image: url('./bg.jpg');
+    background-size: cover;
+    background-position: center center;
+    color: #eee;
+    font-size: 22px;
+    font-weight: 700;
+    padding: 2rem;
+    display: grid;
+    grid-gap: 3rem;
+    text-align: left;
+
+    .winnersWrapper {
+        display: flex;
+
+        .divider {
+            flex-grow: 1;
+        }
+        .players {
+            align-self: center;
+            line-height: 1.5;
+            flex: 0 0 240px;
+            width: 240px;
+            padding-top: 2.5rem;
+            padding-right: 1rem;
+
+            > * {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
+    }
+    .serveStat {
+        display: flex;
+
+        .divider {
+            flex-grow: 1;
+        }
+        .serveTitle {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .players {
+            flex: 0 0 240px;
+            width: 240px;
+            line-height: 1.5;
+            padding-top: 3.4rem;
+            align-self: center;
+            padding-right: 1rem;
+
+            > * {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+.grid {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 2rem;
+    margin: 4rem 0;
+
+    .person {
+        text-align: center;
+        box-shadow: 0 0.5rem 1.5rem 0.5rem rgba(0, 0, 0, 0.075);
+        padding: 1.8rem;
+        border-radius: 0.5rem;
+
+        [data-bs-theme='dark'] & {
+            background-color: var(--rival-dark-3);
+        }
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .grid {
+        grid-template-columns: auto;
+        margin: 3rem 0;
+    }
+}
