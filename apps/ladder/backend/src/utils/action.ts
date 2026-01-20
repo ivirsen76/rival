@@ -5,11 +5,11 @@ import { generateReferralCode } from '../helpers';
 
 import 'dotenv/config';
 
-export const decodeBase64 = str => {
+export const decodeBase64 = (str: string) => {
     return Buffer.from(str, 'base64').toString('ascii');
 };
 
-export const encodeBase64 = str => {
+export const encodeBase64 = (str: string) => {
     return Buffer.from(str, 'ascii').toString('base64');
 };
 
@@ -24,7 +24,15 @@ const getHash = (obj, secureKey) => {
 const actionLinks = {};
 
 // if "app" presents, then create a short link
-export const getActionLink = async ({ payload, duration = 24 * 3600, app }) => {
+export const getActionLink = async ({
+    payload,
+    duration = 24 * 3600,
+    app,
+}: {
+    payload: any;
+    duration?: number;
+    app?: any;
+}) => {
     const { TL_TESTCAFE_URL, TL_URL, TL_SECURE_KEY, NODE_ENV } = process.env;
 
     if (!TL_SECURE_KEY) {
