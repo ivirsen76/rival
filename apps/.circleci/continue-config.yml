@@ -1,0 +1,21 @@
+version: 2.1
+
+parameters:
+    app-ladder:
+        type: boolean
+        default: false
+
+jobs:
+    test-app-ladder:
+        docker:
+            - image: cimg/node:20.19.4-browsers
+        steps:
+            - checkout
+            - run: pnpm install --filter "@rival/ladder.frontend @rival/ladder.backend"
+            - run: pnpm exec vitest run apps/ladder/backend apps/ladder/frontend
+
+workflows:
+    app-ladder-flow:
+        when: << pipeline.parameters.app-ladder >>
+        jobs:
+            - test-app-ladder

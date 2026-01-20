@@ -1,0 +1,15 @@
+version: 2.1
+
+setup: true
+
+orbs:
+    path-filtering: circleci/path-filtering@1.0.0
+
+workflows:
+    always-run:
+        jobs:
+            - path-filtering/filter:
+                  mapping: |
+                      apps/ladder/.* app-ladder true
+                  base-revision: main
+                  config-path: .circleci/continue-config.yml

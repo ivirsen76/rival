@@ -17,9 +17,9 @@
         "seed": "cd src/server && node_modules/.bin/sequelize-cli db:seed:all",
         "build": "vite build",
         "lint": "eslint src --ext .js,.jsx",
-        "check": "npm run lint && vitest run --no-threads",
+        "check": "vitest run",
         "check:staged": "src/scripts/lint-staged.js && src/scripts/test-staged.js",
-        "test": "vitest watch --no-threads"
+        "test": "vitest"
     },
     "browserslist": {
         "production": [
