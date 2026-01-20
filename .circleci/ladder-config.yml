@@ -6,7 +6,7 @@ jobs:
             - image: cimg/node:20.19.4-browsers
         steps:
             - checkout
-            - run: pnpm install --filter @rival/ladder.frontend
+            - run: pnpm install --filter @rival/ladder.frontend --filter @rival/ladder.backend --filter @rival/packages
             - run: pnpm exec vitest run apps/ladder/backend apps/ladder/frontend
 
 workflows:
