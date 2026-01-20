@@ -8,5 +8,4 @@ workflows:
             - path-filtering/filter:
                   base-revision: main
                   mapping: |
-                      apps/ladder/.* app-ladder true
-                  config-path: .circleci/ladder-config.yml
+                      apps/ladder/.* .circleci/ladder-config.yml
