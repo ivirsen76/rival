@@ -72,10 +72,10 @@
         "twilio": "^5.11.2",
         "umzug": "^3.8.2",
         "write-excel-file": "^1.4.30",
-        "rsync": "^0.6.1",
         "yup": "^1.7.1"
     },
     "devDependencies": {
+        "rsync": "^0.6.1",
         "supertest": "^6.1.3",
         "tsx": "^4.21.0"
     }
