@@ -7,7 +7,7 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateCurrentUser } from '@/reducers/auth';
 
-const setAppearance = (appearance) => {
+const setAppearance = (appearance: string) => {
     const currentAppearance = document.documentElement.getAttribute('data-bs-theme');
     if (appearance !== currentAppearance) {
         document.documentElement.setAttribute('data-bs-theme', appearance);
@@ -26,7 +26,7 @@ const setAppearance = (appearance) => {
     }
 };
 
-const AppearanceChecker = (props) => {
+const AppearanceChecker = () => {
     const appearance = useAppearance();
     const currentUser = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();

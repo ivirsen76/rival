@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import notification from '@/components/notification';
 import axios from '@/utils/axios';
 
-const AcceptTeamMember = (props) => {
+type AcceptTeamMemberProps = {
+    payload: string;
+};
+
+const AcceptTeamMember = (props: AcceptTeamMemberProps) => {
     const history = useHistory();
 
     useEffect(() => {
@@ -25,10 +28,6 @@ const AcceptTeamMember = (props) => {
     }, []);
 
     return null;
-};
-
-AcceptTeamMember.propTypes = {
-    payload: PropTypes.string,
 };
 
 export default AcceptTeamMember;
