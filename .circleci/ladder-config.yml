@@ -14,8 +14,10 @@ aliases:
           - image: cimg/node:20.19.4
       working_directory: ~/repo
 
+    - &install |
+        pnpm install --filter @rival/packages --filter "@rival/ladder.*"
+
     - &setup |
-        cd src/server && npm install
         sudo apt-get update
         sudo apt-get install mysql-client redis-server
         mysql -h $TL_DB_HOSTNAME -u $TL_DB_USERNAME -p$TL_DB_PASSWORD -e "CREATE DATABASE $TL_DB_NAME"
@@ -27,17 +29,51 @@ jobs:
         <<: *node
         steps:
             - checkout
-            - run: pnpm install --filter @rival/packages --filter "@rival/ladder.*"
+            - run: *install
             - run: cd apps/ladder/frontend && NODE_ENV=production pnpm run build
+            - run: cd apps/ladder/backend && pnpm run build
+
+            - persist_to_workspace:
+                  root: ~/repo
+                  paths:
+                      - apps/ladder/frontend/dist
+                      - apps/ladder/backend/dist
     test:
-        <<: *node
+        <<: *image
         steps:
             - checkout
-            - run: pnpm install --filter @rival/packages --filter "@rival/ladder.*"
+            - run: *install
             - run: pnpm exec vitest run apps/ladder/backend apps/ladder/frontend
 
+    playwright:
+        <<: *image
+        parallelism: 8
+        steps:
+            - checkout
+            - run: *install
+            - run: *setup
+            - run: cd apps/ladder/frontend && pnpm exec playwright install chromium
+
+            # restore dist from shared workspace
+            - attach_workspace:
+                  at: ~/repo
+
+            # Run server
+            - run:
+                  name: Run server
+                  command: cd apps/ladder/backend && pnpm run start:prod
+                  background: true
+            - run: sleep 5
+
+            - run:
+                  command: |
+                      circleci tests glob "apps/ladder/frontend/playwright/**/*.page.ts" | circleci tests split --split-by=filesize > /tmp/tests-to-run
+            # Run browser tests
+            - run: cd apps/ladder/frontend && pnpm run playwright -- $(cat /tmp/tests-to-run)
 workflows:
-    test-deploy:
+    build-test-deploy:
         jobs:
             - build
-            - test
+            - playwright
+                  requires:
+                     - build
