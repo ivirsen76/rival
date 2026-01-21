@@ -2,21 +2,22 @@ import path from 'path';
 import _memoize from 'lodash/memoize';
 import _omit from 'lodash/omit';
 import dayjs from '../utils/dayjs';
-import generateNews from '../src/services/news/generateNews';
-import removeUnverifiedAccounts from '../src/utils/removeUnverifiedAccounts';
-import runActions from '../src/utils/runActions';
-import refundForCanceledTournaments from '../src/utils/refundForCanceledTournaments';
+import generateNews from '../services/news/generateNews';
+import removeUnverifiedAccounts from '../utils/removeUnverifiedAccounts';
+import runActions from '../utils/runActions';
+import refundForCanceledTournaments from '../utils/refundForCanceledTournaments';
+
 // import { TextEncoder } from 'util';
 //
 // if (!global.TextEncoder) {
 //     global.TextEncoder = TextEncoder;
 // }
-import remindAboutLastOpenSlot from '../src/utils/remindAboutLastOpenSlot';
+import remindAboutLastOpenSlot from '../utils/remindAboutLastOpenSlot';
 
-process.chdir(path.join(__dirname, '..'));
+process.chdir(path.join(__dirname, '..', '..'));
 
 import supertest from 'supertest';
-import app from '../src/app';
+import app from '../app';
 import {
     restoreDb,
     getRecord,
@@ -25,7 +26,7 @@ import {
     getNumRecords,
     overrideConfig,
     expectNumRecords,
-} from '../../playwright/db';
+} from '../db/helpers';
 
 let server;
 let request;
