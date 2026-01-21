@@ -4,7 +4,7 @@ import sequelize from './sequelize';
 
 const umzug = new Umzug({
     migrations: {
-        glob: 'src/db/seeders/*.ts',
+        glob: 'dist/db/seeders/*.js',
     },
     context: sequelize.getQueryInterface(),
     storage: new SequelizeStorage({ sequelize, tableName: '_seeders' }),
