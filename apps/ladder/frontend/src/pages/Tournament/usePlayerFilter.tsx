@@ -5,7 +5,7 @@ import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import PlayerName from '@/components/PlayerName';
 import style from './usePlayerFilter.module.scss';
 
-export default ({ players }) => {
+export default function usePlayerFilter({ players }) {
     const [selected, setSelected] = useState([]);
     const size = useBreakpoints();
 
@@ -77,4 +77,4 @@ export default ({ players }) => {
     );
 
     return { selected, playerFilter };
-};
+}

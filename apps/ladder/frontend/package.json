@@ -16,7 +16,7 @@
         "migrate:undo:all": "cd src/server && node_modules/.bin/sequelize-cli db:migrate:undo:all",
         "seed": "cd src/server && node_modules/.bin/sequelize-cli db:seed:all",
         "build": "vite build",
-        "lint": "eslint src --ext .js,.jsx",
+        "lint": "tsc --noEmit --project tsconfig.app.json",
         "check": "vitest run",
         "check:staged": "src/scripts/lint-staged.js && src/scripts/test-staged.js",
         "test": "vitest"
@@ -91,6 +91,7 @@
     },
     "devDependencies": {
         "@playwright/test": "^1.50.1",
+        "@types/lodash": "^4.17.23",
         "@types/node": "^22.13.2",
         "@types/react": "^19.2.8",
         "@types/react-dom": "^19.2.3",

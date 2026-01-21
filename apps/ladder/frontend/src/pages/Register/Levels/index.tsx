@@ -27,7 +27,7 @@ import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 import TeammateForm from './TeammateForm';
 import useModal from '@/utils/useModal';
 
-const renderTeammateDescription = (tournamentId, values) => {
+const renderTeammateDescription = (tournamentId: number, values) => {
     const partnerInfo = values.partners[`partner-${tournamentId}`];
     if (!partnerInfo) {
         return null;

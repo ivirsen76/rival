@@ -135,7 +135,7 @@ export const savePaw = () => async (dispatch, getState) => {
     }
 };
 
-export const authenticate = (email, password) => async (dispatch, getState) => {
+export const authenticate = (email: string, password: string) => async (dispatch, getState) => {
     try {
         const result = await axios.post('/api/authentication', { strategy: 'local', email, password });
         localStorage.setItem('token', result.data.accessToken);
