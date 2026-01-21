@@ -21,7 +21,6 @@
         "start:prod": "node dist/db/migrate.js && node dist/"
     },
     "peerDependencies": {
-        "bcryptjs": "*",
         "vitest": "*"
     },
     "dependencies": {
@@ -39,6 +38,7 @@
         "@rival-tennis-ladder/logger": "^4.1.0",
         "@types/lodash": "^4.17.23",
         "axios": "^0.21.1",
+        "bcryptjs": "^3.0.3",
         "cors": "^2.8.5",
         "datauri": "^4.1.0",
         "dayjs": "^1.11.10",
