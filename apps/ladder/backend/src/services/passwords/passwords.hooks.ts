@@ -15,7 +15,7 @@ const validateCreate = (options) => async (context) => {
     // validate input
     {
         const schema = yup.object().shape({
-            email: yup.string().required().email('Email is incorrect.'),
+            email: yup.string().required().email(),
         });
 
         const errors = getSchemaErrors(schema, context.data);

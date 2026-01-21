@@ -19,7 +19,7 @@ export default (values) => {
             .matches(nameRegex, 'Last name should contain only letters.')
             .min(2, 'Minimum 2 letters')
             .max(20),
-        email: yup.string().required('Email is required').email('Email is incorrect'),
+        email: yup.string().required('Email is required').email(),
         gender: yup.string().oneOf(['', 'male', 'female']),
         password: yup.string().min(8, 'Password must be at least 8 characters').max(20),
         personalInfo: yup.string().nullable().max(500),

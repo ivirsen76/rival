@@ -5,11 +5,11 @@ yup.addMethod(yup.string, 'isValidDate', function (msg) {
     return this.test('isValidDate', msg || 'The date is wrong.', (value) => dayjs(value).isValid());
 });
 
-yup.addMethod(yup.string, 'email', function (msg) {
+yup.addMethod(yup.string, 'email', function (msg = 'Email is incorrect.') {
     const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
 
     return this.matches(emailRegex, {
-        msg,
+        message: msg,
         name: 'email',
         excludeEmptyString: true,
     });
