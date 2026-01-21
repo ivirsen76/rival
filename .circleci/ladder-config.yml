@@ -51,7 +51,7 @@ jobs:
 
     playwright:
         <<: *image
-        # parallelism: 8
+        parallelism: 8
         steps:
             - checkout
             - run: *install
@@ -69,12 +69,11 @@ jobs:
                   background: true
             - run: sleep 5
 
-            - run: cd apps/ladder/frontend && pnpm run playwright
-            # - run:
-            #       command: |
-            #           circleci tests glob "apps/ladder/frontend/playwright/**/*.page.ts" | circleci tests split --split-by=filesize > /tmp/tests-to-run
-            # # Run browser tests
-            # - run: cd apps/ladder/frontend && pnpm run playwright -- $(cat /tmp/tests-to-run)
+            - run:
+                  command: |
+                      circleci tests glob "apps/ladder/frontend/playwright/**/*.page.ts" | circleci tests split --split-by=filesize > /tmp/tests-to-run
+            # Run browser tests
+            - run: cd apps/ladder/frontend && pnpm run playwright -- $(cat /tmp/tests-to-run)
 workflows:
     build-test-deploy:
         jobs:
