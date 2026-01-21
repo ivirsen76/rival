@@ -1,3 +1,4 @@
+import path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 import svgr from 'vite-plugin-svgr';
@@ -33,9 +34,11 @@ export default defineConfig({
     test: {
         globals: true,
         environment: 'happy-dom',
-        exclude: ['dist', 'node_modules'],
+        exclude: ['node_modules'],
     },
     build: {
         target: 'es2015',
+        outDir: path.resolve(__dirname, '../backend/build'),
+        emptyOutDir: true,
     },
 });
