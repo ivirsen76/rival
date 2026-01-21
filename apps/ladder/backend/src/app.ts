@@ -21,7 +21,7 @@ import rateLimiter from './rateLimiter';
 import gitcommit from './gitcommit';
 
 const indexContent = fs
-    .readFileSync(path.resolve(__dirname, '..', '..', 'frontend', 'dist', 'index.html'), 'utf8')
+    .readFileSync(path.resolve(__dirname, '..', 'build', 'index.html'), 'utf8')
     .replace('__TL_SERVER_URL__', `'${process.env.TL_SERVER_URL}'`)
     .replace('__TL_TIMEZONE__', `'${process.env.TL_TIMEZONE}'`);
 

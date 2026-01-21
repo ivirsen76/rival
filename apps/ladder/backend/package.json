@@ -18,7 +18,8 @@
         "migrate": "node dist/db/migrate.js",
         "seed": "node dist/db/seed.js",
         "build": "tsc --noCheck && rsync -av --exclude='*.ts' src/ dist/",
-        "start:prod": "node dist/db/migrate.js && NODE_CONFIG_DIR=./dist/config node dist/"
+        "start": "NODE_CONFIG_DIR=./dist/config node dist/",
+        "start:prod": "pnpm run migrate && pnpm run start"
     },
     "peerDependencies": {
         "vitest": "*"
