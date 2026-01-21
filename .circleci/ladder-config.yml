@@ -40,7 +40,7 @@ jobs:
             - persist_to_workspace:
                   root: ~/repo
                   paths:
-                      - apps/ladder/frontend/dist
+                      - apps/ladder/backend/build
                       - apps/ladder/backend/dist
     test:
         <<: *image
