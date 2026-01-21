@@ -8,13 +8,13 @@
     "directories": {
         "lib": "src",
         "test": "test/",
-        "config": "config/"
+        "config": "src/config/"
     },
     "engines": {
         "node": "^20.0.0"
     },
     "scripts": {
-        "dev": "tsx watch src",
+        "dev": "NODE_CONFIG_DIR=./src/config tsx watch src",
         "migrate": "node dist/db/migrate.js",
         "seed": "node dist/db/seed.js",
         "build": "tsc --noCheck && rsync -av --exclude='*.ts' src/ dist/",
