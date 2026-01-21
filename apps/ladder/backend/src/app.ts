@@ -6,12 +6,10 @@ import logger from '@rival-tennis-ladder/logger';
 import feathers from '@feathersjs/feathers';
 import configuration from '@feathersjs/configuration';
 import express from '@feathersjs/express';
-
 import middleware from './middleware';
 import services from './services';
 import appHooks from './app.hooks';
 import channels from './channels';
-
 import authentication from './authentication';
 import sequelize from './sequelize';
 import redis from './redis';
@@ -107,7 +105,7 @@ app.get('/t/click', async (req, res) => {
 });
 
 // Host the public folder
-app.use('/', express.static('../../dist'));
+app.use('/', express.static('./build'));
 
 // Host screenshots folder
 app.use('/screenshots', express.static('../../screenshots'));
