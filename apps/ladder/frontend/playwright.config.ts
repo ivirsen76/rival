@@ -1,8 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
-import dotenv from 'dotenv';
-import path from 'path';
-
-dotenv.config({ path: path.resolve(__dirname, '.env') });
+import 'dotenv/config';
 
 export default defineConfig({
     testDir: './playwright',
@@ -14,7 +11,7 @@ export default defineConfig({
     forbidOnly: !!process.env.CI,
 
     /* Retry on CI only */
-    retries: process.env.CI ? 2 : 0,
+    retries: process.env.CIWRONG ? 2 : 0,
 
     /* Opt out of parallel tests on CI. */
     workers: 1,
