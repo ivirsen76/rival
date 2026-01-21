@@ -1,5 +1,5 @@
 import { test, expect } from './base';
-import { restoreDb, getRecord } from './db';
+import { restoreDb, getRecord } from '@rival/ladder.backend/src/db/helpers';
 
 import { decrypt } from '@rival/ladder.backend/src/utils/crypt';
 

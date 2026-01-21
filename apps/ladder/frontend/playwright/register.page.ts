@@ -1,4 +1,11 @@
-import { restoreDb, runQuery, expectRecordToExist, getRecord, getNumRecords, overrideConfig } from './db';
+import {
+    restoreDb,
+    runQuery,
+    expectRecordToExist,
+    getRecord,
+    getNumRecords,
+    overrideConfig,
+} from '@rival/ladder.backend/src/db/helpers';
 import { test, expect } from './base';
 import dayjs from '@rival/ladder.backend/src/utils/dayjs';
 import { decrypt } from '@rival/ladder.backend/src/utils/crypt';

@@ -1,5 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-import { expectRecordToExist } from '../db';
+import { expectRecordToExist } from '@rival/ladder.backend/src/db/helpers';
 
 export class Login {
     readonly page: Page;

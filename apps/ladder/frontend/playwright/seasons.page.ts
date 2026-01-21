@@ -1,5 +1,5 @@
 import { test, expect } from './base';
-import { restoreDb } from './db';
+import { restoreDb } from '@rival/ladder.backend/src/db/helpers';
 
 test.beforeEach(async ({ login }) => {
     restoreDb();

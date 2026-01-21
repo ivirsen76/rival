@@ -8,7 +8,7 @@ import {
     getNumRecords,
     cleanRedisCache,
     overrideConfig,
-} from './db';
+} from '@rival/ladder.backend/src/db/helpers';
 import { imageRegex } from './helpers';
 
 test.beforeEach(async ({ page, login }) => {

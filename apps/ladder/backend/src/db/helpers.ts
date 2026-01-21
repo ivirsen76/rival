@@ -1,5 +1,5 @@
 import path from 'path';
-import 'dotenv/config';
+import dotenv from 'dotenv';
 import mysql from 'mysql';
 import redis from 'redis';
 import { execSync } from 'child_process';
@@ -10,6 +10,8 @@ import expect from 'expect';
 import colors from 'colors/safe';
 import mkdirp from 'mkdirp';
 import { rimraf } from 'rimraf';
+
+dotenv.config({ path: path.resolve(__dirname, '..', '..', '.env') });
 
 const {
     TL_DB_NAME,
@@ -87,7 +89,7 @@ const generateDump = () => {
     });
 
     // Populate database
-    const serverFolder = path.join(__dirname, '..', '..', 'backend');
+    const serverFolder = path.join(__dirname, '..', '..');
     execSync(`cd ${serverFolder} && pnpm run migrate`);
     execSync(`cd ${serverFolder} && pnpm run seed`);
 
@@ -118,9 +120,7 @@ const needNewDump = () => {
             return isDirectory ? Math.max(max, getMaxModifiedTime(name)) : Math.max(max, stat.mtimeMs);
         }, 0);
 
-    const migrationsModifiedTime = getMaxModifiedTime(
-        path.join(__dirname, '..', '..', 'backend', 'src', 'db', 'migrations')
-    );
+    const migrationsModifiedTime = getMaxModifiedTime(path.join(__dirname, '..', '..', 'dist', 'db', 'migrations'));
     const envModifiedTime = fs.existsSync(envPath) ? fs.statSync(envPath).mtimeMs : 0;
     const dumpModifiedTime = fs.statSync(dumpPath).mtimeMs;
     const timeOneHourAgo = Number(new Date()) - 3600 * 1000;

@@ -1,5 +1,12 @@
 import { test, expect } from './base';
-import { restoreDb, runQuery, getRecord, expectRecordToExist, expectNumRecords, overrideConfig } from './db';
+import {
+    restoreDb,
+    runQuery,
+    getRecord,
+    expectRecordToExist,
+    expectNumRecords,
+    overrideConfig,
+} from '@rival/ladder.backend/src/db/helpers';
 import dayjs from '@rival/ladder.backend/src/utils/dayjs';
 
 test.beforeEach(async ({ page }) => {

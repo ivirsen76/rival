@@ -1,5 +1,5 @@
 import { test, expect } from './base';
-import { restoreDb, runQuery } from './db';
+import { restoreDb, runQuery } from '@rival/ladder.backend/src/db/helpers';
 
 // Helpers
 // const getLocation = ClientFunction(() => window.location.href);

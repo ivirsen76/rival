@@ -8,7 +8,7 @@ import {
     expectNumRecords,
     cleanRedisCache,
     overrideConfig,
-} from './db';
+} from '@rival/ladder.backend/src/db/helpers';
 import dayjs from '@rival/ladder.backend/src/utils/dayjs';
 
 test.beforeEach(async ({ login }) => {

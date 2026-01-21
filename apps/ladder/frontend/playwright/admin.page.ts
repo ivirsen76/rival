@@ -7,7 +7,7 @@ import {
     expectRecordToExist,
     overrideConfig,
     expectNumRecords,
-} from './db';
+} from '@rival/ladder.backend/src/db/helpers';
 import { imageRegex } from './helpers';
 import dayjs from '@rival/ladder.backend/src/utils/dayjs';
 import { decrypt } from '@rival/ladder.backend/src/utils/crypt';

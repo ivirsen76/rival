@@ -1,5 +1,5 @@
 import { test, expect } from './base';
-import { restoreDb } from './db';
+import { restoreDb } from '@rival/ladder.backend/src/db/helpers';
 import { encodeBase64 } from '@rival/ladder.backend/src/utils/action';
 
 test.beforeEach(async ({ page }) => {

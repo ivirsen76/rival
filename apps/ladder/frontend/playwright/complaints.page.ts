@@ -1,5 +1,5 @@
 import { test, expect } from './base';
-import { restoreDb, runQuery, getNumRecords, expectRecordToExist } from './db';
+import { restoreDb, runQuery, getNumRecords, expectRecordToExist } from '@rival/ladder.backend/src/db/helpers';
 
 test.beforeEach(async ({ page }) => {
     restoreDb();

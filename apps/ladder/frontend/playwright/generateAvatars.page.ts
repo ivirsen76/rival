@@ -1,5 +1,5 @@
 import { test, expect } from './base';
-import { runQuery } from './db';
+import { runQuery } from '@rival/ladder.backend/src/db/helpers';
 
 test.skip('Should generate avatar', async ({ page, common, login }) => {
     const emails = (

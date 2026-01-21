@@ -1,5 +1,5 @@
 import { test, expect } from './base';
-import { restoreDb, runQuery } from './db';
+import { restoreDb, runQuery } from '@rival/ladder.backend/src/db/helpers';
 import dayjs from '@rival/ladder.backend/src/utils/dayjs';
 
 test.beforeEach(async ({ page }) => {

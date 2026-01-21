@@ -1,6 +1,12 @@
 import { test, expect } from './base';
 import { Common } from './poms/Common';
-import { restoreDb, expectRecordToExist, runQuery, getNumRecords, overrideConfig } from './db';
+import {
+    restoreDb,
+    expectRecordToExist,
+    runQuery,
+    getNumRecords,
+    overrideConfig,
+} from '@rival/ladder.backend/src/db/helpers';
 
 test.beforeEach(async ({ page }) => {
     restoreDb();
