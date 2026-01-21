@@ -58,7 +58,7 @@ const JoinDoubles = (props) => {
                 setError(errors.link);
             }
         })();
-    }, [currentUser, data, error]);
+    }, [currentUser?.id, data, error]);
 
     if (error) {
         return <Error message={error} />;
