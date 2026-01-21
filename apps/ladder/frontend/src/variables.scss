@@ -1,5 +1,10 @@
 $font-family-sans-serif: Poppins, Helvetica, 'sans-serif';
-$font-family-emoji: 'Twemoji Mozilla', Apple Color Emoji, 'Segoe UI Emoji', 'Noto Color Emoji', 'EmojiOne Color',
+$font-family-emoji:
+    'Twemoji Mozilla',
+    Apple Color Emoji,
+    'Segoe UI Emoji',
+    'Noto Color Emoji',
+    'EmojiOne Color',
     Poppins;
 
 // font size
@@ -105,4 +110,4 @@ $caret-vertical-align: 0.15em;
 
 $dropdown-box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.2);
 
-@import '@rival/packages/metronic/scss/_init.scss';
+@import '@/styles/metronic/scss/_init.scss';

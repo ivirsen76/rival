@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import PlusIcon from '@rival/packages/metronic/icons/duotone/Interface/Plus-Square.svg?react';
-import MinusIcon from '@rival/packages/metronic/icons/duotone/Interface/Minus-Square.svg?react';
+import PlusIcon from '@/styles/metronic/icons/duotone/Interface/Plus-Square.svg?react';
+import MinusIcon from '@/styles/metronic/icons/duotone/Interface/Minus-Square.svg?react';
 import style from './style.module.scss';
 
 const HiddenText = (props) => {

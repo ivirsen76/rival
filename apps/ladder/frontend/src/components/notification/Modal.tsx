@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
-import CheckIcon from '@rival/packages/metronic/icons/duotune/arrows/arr016.svg?react';
+import CheckIcon from '@/styles/metronic/icons/duotune/arrows/arr016.svg?react';
 
 const NotificationModal = (props) => {
     const [visible, setVisible] = useState(true);

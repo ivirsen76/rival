@@ -6,7 +6,7 @@ import PlayerAvatar from '@/components/PlayerAvatar';
 import Modal from '@/components/Modal';
 import { Title } from '@/components/Statbox';
 import dayjs, { formatDate } from '@/utils/dayjs';
-import ChartIcon from '@rival/packages/metronic/icons/duotone/Shopping/Chart-bar1.svg?react';
+import ChartIcon from '@/styles/metronic/icons/duotone/Shopping/Chart-bar1.svg?react';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';
 import PieChart from './PieChart';

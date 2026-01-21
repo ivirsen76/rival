@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import axios from '@/utils/axios';
 import notification from '@/components/notification';
 import VerifyEmail from '@/components/VerifyEmail';
-import EmailIcon from '@rival/packages/metronic/icons/duotone/Communication/Mail-at.svg?react';
+import EmailIcon from '@/styles/metronic/icons/duotone/Communication/Mail-at.svg?react';
 import { authenticate } from '@/reducers/auth';
 
 const Authentication = (props) => {

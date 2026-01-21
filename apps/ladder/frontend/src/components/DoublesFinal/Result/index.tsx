@@ -12,7 +12,7 @@ import classnames from 'classnames';
 import { formatMiddle } from '@/utils/dayjs';
 import hasAnyRole from '@/utils/hasAnyRole';
 import Tooltip from '@/components/Tooltip';
-import OtherIcon from '@rival/packages/metronic/icons/duotone/General/Other2.svg?react';
+import OtherIcon from '@/styles/metronic/icons/duotone/General/Other2.svg?react';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import { BYE_ID } from '@rival/ladder.backend/src/constants';
 import style from './style.module.scss';

@@ -7,7 +7,7 @@ import Error from '@/components/Error';
 import Chart from '@/components/Chart';
 import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
 import Tooltip from '@/components/Tooltip';
-import QuestionIcon from '@rival/packages/metronic/icons/duotone/Navigation/Question.svg?react';
+import QuestionIcon from '@/styles/metronic/icons/duotone/Navigation/Question.svg?react';
 
 const GlobalStats = (props) => {
     const [selectedCity, setSelectedCity] = useState('all');

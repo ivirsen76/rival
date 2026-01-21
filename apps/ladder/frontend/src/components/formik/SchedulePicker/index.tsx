@@ -7,7 +7,7 @@ import _cloneDeep from 'lodash/cloneDeep';
 import mergeBlocks from './mergeBlocks';
 import useBreakpoints from '@/utils/useBreakpoints';
 import Tooltip from '@/components/Tooltip';
-import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
+import CloseIcon from '@/styles/metronic/icons/duotone/Navigation/Close.svg?react';
 import style from './style.module.scss';
 
 const MIN_HOUR = 6;

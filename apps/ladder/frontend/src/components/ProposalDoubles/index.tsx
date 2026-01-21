@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import style from './style.module.scss';
-import MarkerIcon from '@rival/packages/metronic/icons/duotune/general/gen018.svg?react';
-import ClockIcon from '@rival/packages/metronic/icons/duotone/Home/Clock.svg?react';
-import CommentIcon from '@rival/packages/metronic/icons/duotone/Interface/Comment.svg?react';
+import MarkerIcon from '@/styles/metronic/icons/duotune/general/gen018.svg?react';
+import ClockIcon from '@/styles/metronic/icons/duotone/Home/Clock.svg?react';
+import CommentIcon from '@/styles/metronic/icons/duotone/Interface/Comment.svg?react';
 import dayjs, { formatLong } from '@/utils/dayjs';
 import { useSelector } from 'react-redux';
 import axios from '@/utils/axios';

@@ -5,7 +5,7 @@ import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import Tooltip from '@/components/Tooltip';
 import { Link } from 'react-router-dom';
-import WarningIcon from '@rival/packages/metronic/icons/duotone/Code/Warning-1-circle.svg?react';
+import WarningIcon from '@/styles/metronic/icons/duotone/Code/Warning-1-circle.svg?react';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 import classnames from 'classnames';

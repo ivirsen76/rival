@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import TopMenu from './TopMenu';
 import SideMenu from './SideMenu';
 import useSettings from '@/utils/useSettings';
-import ChatIcon from '@rival/packages/metronic/icons/duotone/Communication/Chat6.svg?react';
+import ChatIcon from '@/styles/metronic/icons/duotone/Communication/Chat6.svg?react';
 import { useSelector } from 'react-redux';
 import testImage from './clay.jpg';
 import useBreakpoints from '@/utils/useBreakpoints';

@@ -12,8 +12,8 @@ import classnames from 'classnames';
 import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
 import saveAsCsv from '@/utils/saveAsCsv';
 import getRelativeStringLength from '@/utils/getRelativeStringLength';
-import CheckIcon from '@rival/packages/metronic/icons/duotone/Navigation/Check.svg?react';
-import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
+import CheckIcon from '@/styles/metronic/icons/duotone/Navigation/Check.svg?react';
+import CloseIcon from '@/styles/metronic/icons/duotone/Navigation/Close.svg?react';
 
 const rewardOptions = {
     gift: 'Gift card',

@@ -8,8 +8,8 @@ import { useQuery } from 'react-query';
 import { formatCustom } from '@/utils/dayjs';
 import classnames from 'classnames';
 import formatSum from '@/utils/formatSum';
-import FileIcon from '@rival/packages/metronic/icons/duotone/Files/File.svg?react';
-import WalletIcon from '@rival/packages/metronic/icons/duotone/Shopping/Wallet.svg?react';
+import FileIcon from '@/styles/metronic/icons/duotone/Files/File.svg?react';
+import WalletIcon from '@/styles/metronic/icons/duotone/Shopping/Wallet.svg?react';
 import style from './style.module.scss';
 
 const Wallet = (props) => {

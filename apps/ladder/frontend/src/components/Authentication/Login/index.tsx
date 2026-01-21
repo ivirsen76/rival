@@ -10,7 +10,7 @@ import PasswordInput from '@/components/formik/PasswordInput';
 import Button from '@/components/Button';
 import notification from '@/components/notification';
 import VerifyEmail from '@/components/VerifyEmail';
-import EmailIcon from '@rival/packages/metronic/icons/duotone/Communication/Mail-at.svg?react';
+import EmailIcon from '@/styles/metronic/icons/duotone/Communication/Mail-at.svg?react';
 
 const Login = (props) => {
     const dispatch = useDispatch();

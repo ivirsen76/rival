@@ -5,7 +5,7 @@ import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
 import notification from '@/components/notification';
 import BanForm from './BanForm';
-import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
+import CloseIcon from '@/styles/metronic/icons/duotone/Navigation/Close.svg?react';
 import confirmation from '@/utils/confirmation';
 import { formatDate } from '@/utils/dayjs';
 import { Link } from 'react-router-dom';

@@ -3,7 +3,7 @@ import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Button from '@/components/Button';
 import PlayerName from '@/components/PlayerName';
-import WarningIcon from '@rival/packages/metronic/icons/duotone/Code/Warning-2.svg?react';
+import WarningIcon from '@/styles/metronic/icons/duotone/Code/Warning-2.svg?react';
 import axios from '@/utils/axios';
 import notification from '@/components/notification';
 import dayjs from '@/utils/dayjs';

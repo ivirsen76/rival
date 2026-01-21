@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import dayjs from '@/utils/dayjs';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import Tooltip from '@/components/Tooltip';
-import QuestionIcon from '@rival/packages/metronic/icons/duotone/Navigation/Question.svg?react';
+import QuestionIcon from '@/styles/metronic/icons/duotone/Navigation/Question.svg?react';
 import { List } from './PlayersByPoints';
 import { useSelector, useDispatch } from 'react-redux';
 import { setShowAllPlayers } from '@/reducers/auth';
-import ArrowDownIcon from '@rival/packages/metronic/icons/duotone/Navigation/Angle-down.svg?react';
+import ArrowDownIcon from '@/styles/metronic/icons/duotone/Navigation/Angle-down.svg?react';
 import useBreakpoints from '@/utils/useBreakpoints';
 
 const firstPlayers = 10;
