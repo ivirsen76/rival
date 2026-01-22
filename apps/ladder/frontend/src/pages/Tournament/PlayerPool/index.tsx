@@ -222,6 +222,4 @@ const PlayerPool = (props: PlayerPoolProps) => {
     );
 };
 
-PlayerPool.defaultProps = {};
-
 export default PlayerPool;

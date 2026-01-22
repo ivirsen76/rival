@@ -22,9 +22,12 @@ import showLoader from '@/utils/showLoader';
 const getFilteredData = (item, filter) => {
     filter = filter.toLowerCase();
 
-    return ((item.name && item.name.toLowerCase().includes(filter)) ||
-    (item.email && item.email.toLowerCase().includes(filter)) ||
-    (item.phone && item.phone.includes(filter.replace(/-/g, ''))) || (item.birthday && item.birthday.includes(filter)));
+    return (
+        (item.name && item.name.toLowerCase().includes(filter)) ||
+        (item.email && item.email.toLowerCase().includes(filter)) ||
+        (item.phone && item.phone.includes(filter.replace(/-/g, ''))) ||
+        (item.birthday && item.birthday.includes(filter))
+    );
 };
 
 type PlayersProps = {};
@@ -234,7 +237,5 @@ const Players = (props: PlayersProps) => {
         </Card>
     );
 };
-
-Players.defaultProps = {};
 
 export default Players;

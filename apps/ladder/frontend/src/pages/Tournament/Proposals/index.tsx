@@ -177,6 +177,4 @@ const Proposals = (props: ProposalsProps) => {
     );
 };
 
-Proposals.defaultProps = {};
-
 export default Proposals;

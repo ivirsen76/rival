@@ -104,6 +104,4 @@ const Rivalry = (props: RivalryProps) => {
     );
 };
 
-Rivalry.defaultProps = {};
-
 export default Rivalry;

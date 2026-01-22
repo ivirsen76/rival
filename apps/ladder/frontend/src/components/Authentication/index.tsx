@@ -55,6 +55,4 @@ const Authentication = (props: AuthenticationProps) => {
     return <Login goToRegister={() => setTab('register')} />;
 };
 
-Authentication.defaultProps = {};
-
 export default Authentication;

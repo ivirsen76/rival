@@ -97,6 +97,4 @@ const TeamInfo = (props: TeamInfoProps) => {
     );
 };
 
-TeamInfo.defaultProps = {};
-
 export default TeamInfo;

@@ -97,6 +97,4 @@ const Complaints = (props: ComplaintsProps) => {
     );
 };
 
-Complaints.defaultProps = {};
-
 export default Complaints;

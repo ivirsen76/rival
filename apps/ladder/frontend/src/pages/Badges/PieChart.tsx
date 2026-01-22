@@ -45,6 +45,4 @@ const PieChart = (props: PieChartProps) => {
     );
 };
 
-PieChart.defaultProps = {};
-
 export default PieChart;

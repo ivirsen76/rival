@@ -212,6 +212,4 @@ const Tournament = (props: TournamentProps) => {
     );
 };
 
-Tournament.defaultProps = {};
-
 export default Tournament;

@@ -375,6 +375,4 @@ const SchedulePicker = (props: SchedulePickerProps) => {
     );
 };
 
-SchedulePicker.defaultProps = {};
-
 export default SchedulePicker;

@@ -275,6 +275,4 @@ const Calendar = (props: CalendarProps) => {
     );
 };
 
-Calendar.defaultProps = {};
-
 export default Calendar;

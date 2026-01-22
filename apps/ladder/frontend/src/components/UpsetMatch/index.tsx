@@ -145,6 +145,4 @@ const Match = (props: MatchProps) => {
     );
 };
 
-Match.defaultProps = {};
-
 export default Match;

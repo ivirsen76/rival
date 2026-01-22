@@ -13,6 +13,4 @@ const Photos = (props: PhotosProps) => {
     return <Gallery photos={photosWithAuthor} />;
 };
 
-Photos.defaultProps = {};
-
 export default Photos;

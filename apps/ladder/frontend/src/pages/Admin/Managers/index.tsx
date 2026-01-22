@@ -109,6 +109,4 @@ const Managers = (props: ManagersProps) => {
     );
 };
 
-Managers.defaultProps = {};
-
 export default Managers;

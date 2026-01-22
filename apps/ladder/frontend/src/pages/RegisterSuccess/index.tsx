@@ -42,6 +42,4 @@ const RegisterSuccess = (props: RegisterSuccessProps) => {
     return <Loader loading={loading} />;
 };
 
-RegisterSuccess.defaultProps = {};
-
 export default RegisterSuccess;

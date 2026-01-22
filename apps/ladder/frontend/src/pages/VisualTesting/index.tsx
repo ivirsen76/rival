@@ -70,6 +70,4 @@ const VisualTesting = (props: VisualTestingProps) => {
     );
 };
 
-VisualTesting.defaultProps = {};
-
 export default VisualTesting;

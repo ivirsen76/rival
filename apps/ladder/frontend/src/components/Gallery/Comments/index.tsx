@@ -388,6 +388,4 @@ const Comments = (props: CommentsProps) => {
     );
 };
 
-Comments.defaultProps = {};
-
 export default Comments;

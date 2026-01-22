@@ -73,6 +73,4 @@ const InjuryForm = (props: InjuryFormProps) => {
     );
 };
 
-InjuryForm.defaultProps = {};
-
 export default InjuryForm;

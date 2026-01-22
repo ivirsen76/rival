@@ -587,6 +587,4 @@ const FormMatch = (props: FormMatchProps) => {
     );
 };
 
-FormMatch.defaultProps = {};
-
 export default FormMatch;

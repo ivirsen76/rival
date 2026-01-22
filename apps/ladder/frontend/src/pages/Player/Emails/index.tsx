@@ -46,6 +46,4 @@ const Emails = (props: EmailsProps) => {
     return <Table className="table tl-table" columns={columns} data={emails} showRowNumber={false} perPage={10} />;
 };
 
-Emails.defaultProps = {};
-
 export default Emails;

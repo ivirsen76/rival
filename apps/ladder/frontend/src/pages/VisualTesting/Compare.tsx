@@ -70,6 +70,4 @@ const Compare = (props: CompareProps) => {
     );
 };
 
-Compare.defaultProps = {};
-
 export default Compare;

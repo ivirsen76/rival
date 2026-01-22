@@ -1297,6 +1297,4 @@ const Overview = (props: OverviewProps) => {
     );
 };
 
-Overview.defaultProps = {};
-
 export default Overview;

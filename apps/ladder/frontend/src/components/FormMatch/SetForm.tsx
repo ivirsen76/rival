@@ -218,6 +218,4 @@ const SetForm = (props: SetFormProps) => {
     );
 };
 
-SetForm.defaultProps = {};
-
 export default SetForm;

@@ -208,6 +208,4 @@ const Admin = (props: AdminProps) => {
     );
 };
 
-Admin.defaultProps = {};
-
 export default Admin;

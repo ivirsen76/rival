@@ -249,6 +249,4 @@ const Merge = (props: MergeProps) => {
     );
 };
 
-Merge.defaultProps = {};
-
 export default Merge;

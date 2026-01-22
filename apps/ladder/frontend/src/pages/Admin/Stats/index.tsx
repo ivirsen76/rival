@@ -232,6 +232,4 @@ const Stats = (props: StatsProps) => {
     );
 };
 
-Stats.defaultProps = {};
-
 export default Stats;

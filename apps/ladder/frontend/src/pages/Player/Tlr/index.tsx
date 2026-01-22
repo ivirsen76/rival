@@ -45,6 +45,4 @@ const Tlr = (props: TlrProps) => {
     );
 };
 
-Tlr.defaultProps = {};
-
 export default Tlr;

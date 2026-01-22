@@ -280,6 +280,4 @@ const ManageDoublesTeam = (props: ManageDoublesTeamProps) => {
     );
 };
 
-ManageDoublesTeam.defaultProps = {};
-
 export default ManageDoublesTeam;
