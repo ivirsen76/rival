@@ -1,9 +1,13 @@
-import PropTypes from 'prop-types';
 import { formatDate } from '@/utils/dayjs';
 import classnames from 'classnames';
 import Chart from '@/components/Chart';
 
-const Rivalry = (props) => {
+type RivalryProps = {
+    rivalry?: object;
+    user?: object;
+};
+
+const Rivalry = (props: RivalryProps) => {
     const { rivalry, user } = props;
 
     const stat = (() => {
@@ -98,11 +102,6 @@ const Rivalry = (props) => {
             </table>
         </div>
     );
-};
-
-Rivalry.propTypes = {
-    rivalry: PropTypes.object,
-    user: PropTypes.object,
 };
 
 Rivalry.defaultProps = {};

@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import axios from '@/utils/axios';
 import WarningIcon from '@/styles/metronic/icons/duotone/Code/Warning-2.svg?react';
 import PhoneIcon from '@/styles/metronic/icons/duotone/Interface/Phone.svg?react';
@@ -8,7 +7,13 @@ import WaitTill from '@/components/WaitTill';
 import formatPhone from '@/utils/formatPhone';
 import style from './style.module.scss';
 
-const VerifyPhone = (props) => {
+type VerifyPhoneProps = {
+    phone: string;
+    onSuccess: (...args: unknown[]) => unknown;
+    render?: (...args: unknown[]) => unknown;
+};
+
+const VerifyPhone = (props: VerifyPhoneProps) => {
     const { phone, onSuccess, render } = props;
     const [iteration, setIteration] = useState(0);
     const [code, setCode] = useState('');
@@ -130,12 +135,6 @@ const VerifyPhone = (props) => {
             {body}
         </div>
     );
-};
-
-VerifyPhone.propTypes = {
-    phone: PropTypes.string.isRequired,
-    onSuccess: PropTypes.func.isRequired,
-    render: PropTypes.func,
 };
 
 export default VerifyPhone;

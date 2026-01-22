@@ -1,8 +1,13 @@
-import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import useConfig from '@/utils/useConfig';
 
-const Header = (props) => {
+type HeaderProps = {
+    title?: string;
+    description?: string;
+    schema?: object;
+};
+
+const Header = (props: HeaderProps) => {
     const config = useConfig();
 
     if (!config?.city) {
@@ -28,12 +33,6 @@ const Header = (props) => {
             )}
         </Helmet>
     );
-};
-
-Header.propTypes = {
-    title: PropTypes.string,
-    description: PropTypes.string,
-    schema: PropTypes.object,
 };
 
 Header.defaultProps = {

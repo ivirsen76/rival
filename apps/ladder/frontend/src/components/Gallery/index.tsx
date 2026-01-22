@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useMemo, useEffect, useRef, useState, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { Squircle } from 'corner-smoothing';
 import RenderInBody from '@/components/RenderInBody';
 import PlayerAvatar from '@/components/PlayerAvatar';
@@ -44,7 +43,13 @@ let reactionIdCounter = 90000;
 const TENNIS_BALL_EMOJI_CODE = '1f3be';
 const REM_SIZE = 14;
 
-const Gallery = (props) => {
+type GalleryProps = {
+    photos?: unknown[];
+    albumProps?: object;
+    onPhotoDelete?: (...args: unknown[]) => unknown;
+};
+
+const Gallery = (props: GalleryProps) => {
     const { photos, albumProps, onPhotoDelete } = props;
     const lightboxInstance = useRef();
     const settings = useRef({ showComments: false });
@@ -604,12 +609,6 @@ const Gallery = (props) => {
             )}
         </>
     );
-};
-
-Gallery.propTypes = {
-    photos: PropTypes.array,
-    albumProps: PropTypes.object,
-    onPhotoDelete: PropTypes.func,
 };
 
 export default Gallery;

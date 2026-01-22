@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
 
-const Referral = (props) => {
+type ReferralProps = {
+    history?: object;
+    match?: object;
+};
+
+const Referral = (props: ReferralProps) => {
     const { history } = props;
     const { code } = props.match.params;
 
@@ -19,11 +23,6 @@ const Referral = (props) => {
     }, []);
 
     return null;
-};
-
-Referral.propTypes = {
-    history: PropTypes.object,
-    match: PropTypes.object,
 };
 
 export default Referral;

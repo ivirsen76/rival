@@ -1,12 +1,11 @@
-import PropTypes from 'prop-types';
 import style from './style.module.scss';
 
-const Html = (props) => {
-    return <div className={style.html} dangerouslySetInnerHTML={{ __html: props.content }} />;
+type HtmlProps = {
+    content?: string;
 };
 
-Html.propTypes = {
-    content: PropTypes.string,
+const Html = (props: HtmlProps) => {
+    return <div className={style.html} dangerouslySetInnerHTML={{ __html: props.content }} />;
 };
 
 export default Html;

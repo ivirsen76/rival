@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Button from '@/components/Button';
@@ -6,7 +5,12 @@ import HiddenText from '@/components/HiddenText';
 import axios from '@/utils/axios';
 import style from './style.module.scss';
 
-const FormAddStats = (props) => {
+type FormAddStatsProps = {
+    match?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const FormAddStats = (props: FormAddStatsProps) => {
     const { match } = props;
 
     const onSubmit = async (values) => {
@@ -61,11 +65,6 @@ const FormAddStats = (props) => {
             )}
         </Formik>
     );
-};
-
-FormAddStats.propTypes = {
-    match: PropTypes.object,
-    onSubmit: PropTypes.func,
 };
 
 export default FormAddStats;

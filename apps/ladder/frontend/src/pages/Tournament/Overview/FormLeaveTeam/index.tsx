@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Button from '@/components/Button';
@@ -7,7 +6,12 @@ import { loadCurrentUser } from '@/reducers/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import dayjs from '@/utils/dayjs';
 
-const FormLeaveTeam = (props) => {
+type FormLeaveTeamProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+    tournament?: object;
+};
+
+const FormLeaveTeam = (props: FormLeaveTeamProps) => {
     const { tournament, onSubmit } = props;
     const currentUser = useSelector((state) => state.auth.user);
     const currentPlayerId = currentUser.tournaments[tournament.id].playerId;
@@ -73,11 +77,6 @@ const FormLeaveTeam = (props) => {
             )}
         </Formik>
     );
-};
-
-FormLeaveTeam.propTypes = {
-    onSubmit: PropTypes.func,
-    tournament: PropTypes.object,
 };
 
 export default FormLeaveTeam;

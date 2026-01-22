@@ -9,7 +9,9 @@ import CloseIcon from '@/styles/metronic/icons/duotone/Navigation/Close.svg?reac
 import confirmation from '@/utils/confirmation';
 import { Link } from 'react-router-dom';
 
-const Managers = (props) => {
+type ManagersProps = {};
+
+const Managers = (props: ManagersProps) => {
     const queryClient = useQueryClient();
 
     const { data: list, isLoading } = useQuery(`getManagerList`, async () => {
@@ -106,8 +108,6 @@ const Managers = (props) => {
         </Card>
     );
 };
-
-Managers.propTypes = {};
 
 Managers.defaultProps = {};
 

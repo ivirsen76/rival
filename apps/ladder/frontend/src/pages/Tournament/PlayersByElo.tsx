@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import EloPreview from './EloPreview';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
@@ -15,7 +14,11 @@ import useConfig from '@/utils/useConfig';
 import { useSelector } from 'react-redux';
 import style from './style.module.scss';
 
-const PlayersByElo = (props) => {
+type PlayersByEloProps = {
+    tournament?: object;
+};
+
+const PlayersByElo = (props: PlayersByEloProps) => {
     const { tournament } = props;
     const appearance = useAppearance();
     const config = useConfig();
@@ -162,10 +165,6 @@ const PlayersByElo = (props) => {
             </tbody>
         </table>
     );
-};
-
-PlayersByElo.propTypes = {
-    tournament: PropTypes.object,
 };
 
 export default PlayersByElo;

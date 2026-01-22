@@ -1,11 +1,16 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import EloHistory from '../../Tournament/EloHistory';
 import Modal from '@/components/Modal';
 import Loader from '@/components/Loader';
 import axios from '@/utils/axios';
 
-const Tlr = (props) => {
+type TlrProps = {
+    user?: object;
+    renderTrigger?: (...args: unknown[]) => unknown;
+    tournament?: object;
+};
+
+const Tlr = (props: TlrProps) => {
     const { user, renderTrigger, tournament } = props;
 
     const [currentEloHistory, setCurrentEloHistory] = useState([]);
@@ -38,12 +43,6 @@ const Tlr = (props) => {
             />
         </>
     );
-};
-
-Tlr.propTypes = {
-    user: PropTypes.object,
-    renderTrigger: PropTypes.func,
-    tournament: PropTypes.object,
 };
 
 Tlr.defaultProps = {};

@@ -1,9 +1,13 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import UserPicker from '@/components/formik/UserPicker';
 import Button from '@/components/Button';
 
-const AddPlayerForm = (props) => {
+type AddPlayerFormProps = {
+    sortedPlayers?: unknown[];
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const AddPlayerForm = (props: AddPlayerFormProps) => {
     const { sortedPlayers, onSubmit } = props;
 
     const getDisabledUsers = (values) => {
@@ -35,11 +39,6 @@ const AddPlayerForm = (props) => {
             )}
         </Formik>
     );
-};
-
-AddPlayerForm.propTypes = {
-    sortedPlayers: PropTypes.array,
-    onSubmit: PropTypes.func,
 };
 
 export default AddPlayerForm;

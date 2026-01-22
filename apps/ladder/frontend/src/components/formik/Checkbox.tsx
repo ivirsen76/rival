@@ -1,10 +1,17 @@
-import PropTypes from 'prop-types';
 import FieldWrapper from './FieldWrapper';
 import classnames from 'classnames';
 import _omit from 'lodash/omit';
 import style from './style.module.scss';
 
-const Checkbox = (props) => {
+type CheckboxProps = {
+    form?: object;
+    field?: object;
+    label?: React.ReactNode;
+    description?: React.ReactNode;
+    className?: string;
+};
+
+const Checkbox = (props: CheckboxProps) => {
     const { field, form, label, description, className } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
 
@@ -30,14 +37,6 @@ const Checkbox = (props) => {
             </div>
         </FieldWrapper>
     );
-};
-
-Checkbox.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    label: PropTypes.node,
-    description: PropTypes.node,
-    className: PropTypes.string,
 };
 
 Checkbox.defaultProps = {

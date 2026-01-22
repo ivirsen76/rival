@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import Card from '@/components/Card';
 import Copy from '@/components/Copy';
@@ -15,7 +14,11 @@ import axios from '@/utils/axios';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
-const PartnerReferral = (props) => {
+type PartnerReferralProps = {
+    showShareLinkInstruction?: boolean;
+};
+
+const PartnerReferral = (props: PartnerReferralProps) => {
     const { showShareLinkInstruction } = props;
     const currentUser = useSelector((state) => state.auth.user);
     const config = useConfig();
@@ -209,10 +212,6 @@ const PartnerReferral = (props) => {
             </div>
         </Card>
     );
-};
-
-PartnerReferral.propTypes = {
-    showShareLinkInstruction: PropTypes.bool,
 };
 
 PartnerReferral.defaultProps = {

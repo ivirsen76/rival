@@ -1,6 +1,11 @@
-import PropTypes from 'prop-types';
+type CounterProps = {
+    form?: object;
+    field?: object;
+    min?: number;
+    max?: number;
+};
 
-const Counter = (props) => {
+const Counter = (props: CounterProps) => {
     const { field, form, min, max } = props;
 
     return (
@@ -37,13 +42,6 @@ const Counter = (props) => {
             </button>
         </div>
     );
-};
-
-Counter.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    min: PropTypes.number,
-    max: PropTypes.number,
 };
 
 Counter.defaultProps = {

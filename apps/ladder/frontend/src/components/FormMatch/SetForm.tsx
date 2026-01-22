@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import GamePicker from './GamePicker';
 import Tooltip from '@/components/Tooltip';
 import classnames from 'classnames';
@@ -11,7 +10,16 @@ import {
 } from '@rival/ladder.backend/src/services/matches/helpers';
 import style from './style.module.scss';
 
-const SetForm = (props) => {
+type SetFormProps = {
+    values?: object;
+    setValues?: (...args: unknown[]) => unknown;
+    errors?: object;
+    challengerName?: React.ReactNode;
+    acceptorName?: React.ReactNode;
+    goToNextSet?: (...args: unknown[]) => unknown;
+};
+
+const SetForm = (props: SetFormProps) => {
     const { values, setValues, errors, challengerName, acceptorName, goToNextSet } = props;
     const allowMatchTieBreak = !values.wonByInjury && values.currentSetNumber === 3;
 
@@ -208,15 +216,6 @@ const SetForm = (props) => {
             )}
         </div>
     );
-};
-
-SetForm.propTypes = {
-    values: PropTypes.object,
-    setValues: PropTypes.func,
-    errors: PropTypes.object,
-    challengerName: PropTypes.node,
-    acceptorName: PropTypes.node,
-    goToNextSet: PropTypes.func,
 };
 
 SetForm.defaultProps = {};

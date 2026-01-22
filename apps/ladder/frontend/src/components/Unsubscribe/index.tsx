@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Card from '@/components/Card';
 import _omit from 'lodash/omit';
 import { useQuery } from 'react-query';
@@ -7,7 +6,11 @@ import notification from '@/components/notification';
 import axios from '@/utils/axios';
 import Form from '@/pages/Settings/SubscriptionsForm/Form';
 
-const Unsubscribe = (props) => {
+type UnsubscribeProps = {
+    payload?: string;
+};
+
+const Unsubscribe = (props: UnsubscribeProps) => {
     const { data, isLoading } = useQuery('getUserSubscriptions', async () => {
         const response = await axios.put('/api/users/0', { action: 'getUserSubscriptions', payload: props.payload });
         return response.data.data;
@@ -41,10 +44,6 @@ const Unsubscribe = (props) => {
             </div>
         </Card>
     );
-};
-
-Unsubscribe.propTypes = {
-    payload: PropTypes.string,
 };
 
 export default Unsubscribe;

@@ -1,5 +1,4 @@
 import { useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import style from './style.module.scss';
 
 const div = document.createElement('div');
@@ -45,7 +44,12 @@ const deleteId = (id) => {
 };
 
 let counter = 0;
-const Loader = (props) => {
+
+type LoaderProps = {
+    loading?: boolean;
+};
+
+const Loader = (props: LoaderProps) => {
     const { loading } = props;
     const id = useRef(counter++);
 
@@ -60,10 +64,6 @@ const Loader = (props) => {
     }, [loading]);
 
     return null;
-};
-
-Loader.propTypes = {
-    loading: PropTypes.bool,
 };
 
 Loader.defaultProps = {

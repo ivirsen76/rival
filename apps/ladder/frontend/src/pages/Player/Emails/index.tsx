@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Loader from '@/components/Loader';
 import Table from '@/components/Table';
 import axios from '@/utils/axios';
@@ -6,7 +5,11 @@ import { useQuery } from 'react-query';
 import { formatCustom } from '@/utils/dayjs';
 import style from './style.module.scss';
 
-const Emails = (props) => {
+type EmailsProps = {
+    user?: object;
+};
+
+const Emails = (props: EmailsProps) => {
     const { user } = props;
 
     const { data: emails, isLoading } = useQuery(`/api/users/emails/${user.id}`, async () => {
@@ -41,10 +44,6 @@ const Emails = (props) => {
     ];
 
     return <Table className="table tl-table" columns={columns} data={emails} showRowNumber={false} perPage={10} />;
-};
-
-Emails.propTypes = {
-    user: PropTypes.object,
 };
 
 Emails.defaultProps = {};

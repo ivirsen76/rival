@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateCurrentUser } from '@/reducers/auth';
 import Form from './Form';
 import _pick from 'lodash/pick';
 
-const SubscriptionsForm = (props) => {
+type SubscriptionsFormProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const SubscriptionsForm = (props: SubscriptionsFormProps) => {
     const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
@@ -22,10 +25,6 @@ const SubscriptionsForm = (props) => {
     ]);
 
     return <Form initialValues={initialValues} onSubmit={onSubmit} />;
-};
-
-SubscriptionsForm.propTypes = {
-    onSubmit: PropTypes.func,
 };
 
 export default SubscriptionsForm;

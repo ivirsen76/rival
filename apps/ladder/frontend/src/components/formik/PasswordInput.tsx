@@ -1,10 +1,14 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import FieldWrapper from './FieldWrapper';
 import _omit from 'lodash/omit';
 import classnames from 'classnames';
 
-const PasswordInput = (props) => {
+type PasswordInputProps = {
+    form?: object;
+    field?: object;
+};
+
+const PasswordInput = (props: PasswordInputProps) => {
     const { field, form } = props;
     const [show, setShow] = useState(false);
 
@@ -36,11 +40,6 @@ const PasswordInput = (props) => {
             </div>
         </FieldWrapper>
     );
-};
-
-PasswordInput.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
 };
 
 export default PasswordInput;

@@ -1,11 +1,21 @@
-import PropTypes from 'prop-types';
 import UserIcon from '@/assets/user.svg?react';
 import PossibleUserIcon from '@/assets/possibleUser.svg?react';
 import classnames from 'classnames';
 import Avatar from '@/components/avataaars';
 import style from './style.module.scss';
 
-const SingleAvatar = ({ player, highQuality, isWinner, ...props }) => {
+type SingleAvatarProps = {
+    player?: object;
+    highQuality?: boolean;
+    isWinner?: boolean;
+};
+
+const SingleAvatar = ({
+    player,
+    highQuality,
+    isWinner,
+    ...props
+}: SingleAvatarProps) => {
     if (!player) {
         return <UserIcon {...props} />;
     }
@@ -27,13 +37,20 @@ const SingleAvatar = ({ player, highQuality, isWinner, ...props }) => {
 
     return <img src={player.avatar} alt="" {...props} />;
 };
-SingleAvatar.propTypes = {
-    player: PropTypes.object,
-    highQuality: PropTypes.bool,
-    isWinner: PropTypes.bool,
+
+type PlayerAvatarProps = {
+    className?: string;
+    player1?: object;
+    player2?: object;
+    player3?: object;
+    player4?: object;
+    player5?: object;
+    isWinner?: boolean;
+    highQuality?: boolean;
+    showTeamAvatar?: boolean;
 };
 
-const PlayerAvatar = (props) => {
+const PlayerAvatar = (props: PlayerAvatarProps) => {
     const isTeamAvatar = props.player1.partners && (props.showTeamAvatar || !props.player2);
 
     const adjustedProps = { ...props };
@@ -71,18 +88,6 @@ const PlayerAvatar = (props) => {
             {avatar}
         </div>
     );
-};
-
-PlayerAvatar.propTypes = {
-    className: PropTypes.string,
-    player1: PropTypes.object,
-    player2: PropTypes.object,
-    player3: PropTypes.object,
-    player4: PropTypes.object,
-    player5: PropTypes.object,
-    isWinner: PropTypes.bool,
-    highQuality: PropTypes.bool,
-    showTeamAvatar: PropTypes.bool,
 };
 
 PlayerAvatar.defaultProps = {

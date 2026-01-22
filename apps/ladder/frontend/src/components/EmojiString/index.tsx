@@ -1,9 +1,12 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import emojiRegex from 'emoji-regex-xs';
 import style from './style.module.scss';
 
-const EmojiString = (props) => {
+type EmojiStringProps = {
+    str?: string;
+};
+
+const EmojiString = (props: EmojiStringProps) => {
     const { str } = props;
 
     const html = useMemo(() => {
@@ -12,10 +15,6 @@ const EmojiString = (props) => {
     }, [str]);
 
     return <span dangerouslySetInnerHTML={{ __html: html }} />;
-};
-
-EmojiString.propTypes = {
-    str: PropTypes.string,
 };
 
 export default EmojiString;

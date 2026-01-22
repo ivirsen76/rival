@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
 import Button from '@/components/Button';
@@ -6,7 +5,12 @@ import { useSelector } from 'react-redux';
 import useConfig from '@/utils/useConfig';
 import axios from '@/utils/axios';
 
-const MessageForm = (props) => {
+type MessageFormProps = {
+    user?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const MessageForm = (props: MessageFormProps) => {
     const { user } = props;
     const currentUser = useSelector((state) => state.auth.user);
     const config = useConfig();
@@ -67,11 +71,6 @@ const MessageForm = (props) => {
             )}
         </Formik>
     );
-};
-
-MessageForm.propTypes = {
-    user: PropTypes.object,
-    onSubmit: PropTypes.func,
 };
 
 export default MessageForm;

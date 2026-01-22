@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import AngleLeftIcon from '@/styles/metronic/icons/duotone/Navigation/Angle-left.svg?react';
 import CupIcon from './cup.svg?react';
 import classnames from 'classnames';
@@ -9,7 +8,12 @@ import Modal from '@/components/Modal';
 import { Squircle } from 'corner-smoothing';
 import style from './style.module.scss';
 
-const LevelStat = (props) => {
+type LevelStatProps = {
+    user?: object;
+    data?: object;
+};
+
+const LevelStat = (props: LevelStatProps) => {
     const [expanded, setExpanded] = useState(false);
 
     const { user } = props;
@@ -160,11 +164,6 @@ const LevelStat = (props) => {
             )}
         </div>
     );
-};
-
-LevelStat.propTypes = {
-    user: PropTypes.object,
-    data: PropTypes.object,
 };
 
 export default LevelStat;

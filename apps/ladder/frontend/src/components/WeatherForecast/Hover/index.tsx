@@ -1,5 +1,4 @@
 import { useRef, useCallback, useMemo, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Tooltip from '@/components/Tooltip';
 import Icon from '../Icon';
 import _throttle from 'lodash/throttle';
@@ -15,7 +14,12 @@ const courtConditions = {
     wet: 'Courts are wet.',
 };
 
-const Hover = (props) => {
+type HoverProps = {
+    weather?: object;
+    courtDryness?: unknown[];
+};
+
+const Hover = (props: HoverProps) => {
     const { weather, courtDryness } = props;
     const [position, setPosition] = useState(null);
     const [ready, setReady] = useState(false);
@@ -164,11 +168,6 @@ const Hover = (props) => {
             ))}
         </div>
     );
-};
-
-Hover.propTypes = {
-    weather: PropTypes.object,
-    courtDryness: PropTypes.array,
 };
 
 export default Hover;

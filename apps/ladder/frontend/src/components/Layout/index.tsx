@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import TopMenu from './TopMenu';
 import SideMenu from './SideMenu';
@@ -21,7 +20,13 @@ import useAppearance from '@/utils/useAppearance';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Layout = (props) => {
+type LayoutProps = {
+    children?: React.ReactNode;
+    TopBlock?: (...args: unknown[]) => unknown;
+    topBlockClassname?: string;
+};
+
+const Layout = (props: LayoutProps) => {
     const { TopBlock, topBlockClassname } = props;
     const { settings } = useSettings();
     const { seasons, config } = settings;
@@ -305,12 +310,6 @@ const Layout = (props) => {
             </PullToRefresh>
         </div>
     );
-};
-
-Layout.propTypes = {
-    children: PropTypes.node,
-    TopBlock: PropTypes.func,
-    topBlockClassname: PropTypes.string,
 };
 
 export default Layout;

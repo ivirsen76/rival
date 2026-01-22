@@ -1,8 +1,11 @@
-import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 
-const Tabs = (props) => {
+type TabsProps = {
+    list?: unknown[];
+};
+
+const Tabs = (props: TabsProps) => {
     const { list } = props;
 
     return (
@@ -22,10 +25,6 @@ const Tabs = (props) => {
             ))}
         </ul>
     );
-};
-
-Tabs.propTypes = {
-    list: PropTypes.array,
 };
 
 export default Tabs;

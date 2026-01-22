@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import axios from '@/utils/axios';
 import style from './style.module.scss';
@@ -10,7 +9,14 @@ const types = [
     { value: 'diff', label: 'Diff', key: '3' },
 ];
 
-const Compare = (props) => {
+type CompareProps = {
+    file?: string;
+    percent?: number;
+    size?: object;
+    onAccept?: (...args: unknown[]) => unknown;
+};
+
+const Compare = (props: CompareProps) => {
     const { file, percent, size, onAccept } = props;
     const [type, setType] = useState('diff');
 
@@ -62,13 +68,6 @@ const Compare = (props) => {
             )}
         </div>
     );
-};
-
-Compare.propTypes = {
-    file: PropTypes.string,
-    percent: PropTypes.number,
-    size: PropTypes.object,
-    onAccept: PropTypes.func,
 };
 
 Compare.defaultProps = {};

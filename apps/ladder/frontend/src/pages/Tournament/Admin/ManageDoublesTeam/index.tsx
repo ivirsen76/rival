@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import Card from '@/components/Card';
 import Modal from '@/components/Modal';
 import PlayerName from '@/components/PlayerName';
@@ -15,7 +14,12 @@ import movePartner from './movePartner';
 import _omit from 'lodash/omit';
 import style from './style.module.scss';
 
-const ManageDoublesTeam = (props) => {
+type ManageDoublesTeamProps = {
+    tournament?: object;
+    reloadTournament?: (...args: unknown[]) => unknown;
+};
+
+const ManageDoublesTeam = (props: ManageDoublesTeamProps) => {
     const { tournament, reloadTournament } = props;
     const [draggedPlayerId, setDraggedPlayerId] = useState(null);
     const [cachedTournament, setCachedTournament] = useState(tournament);
@@ -274,11 +278,6 @@ const ManageDoublesTeam = (props) => {
             </DragDropContext>
         </Card>
     );
-};
-
-ManageDoublesTeam.propTypes = {
-    tournament: PropTypes.object,
-    reloadTournament: PropTypes.func,
 };
 
 ManageDoublesTeam.defaultProps = {};

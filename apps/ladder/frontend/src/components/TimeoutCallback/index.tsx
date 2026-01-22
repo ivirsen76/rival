@@ -1,9 +1,14 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import formatDuration from '@/utils/formatDuration';
 
-const TimeoutCallback = (props) => {
+type TimeoutCallbackProps = {
+    deadline?: object;
+    onTimeout?: (...args: unknown[]) => unknown;
+    render?: (...args: unknown[]) => unknown;
+};
+
+const TimeoutCallback = (props: TimeoutCallbackProps) => {
     const { render, onTimeout, deadline } = props;
 
     const [secondsLeft, setSecondsLeft] = useState();
@@ -43,12 +48,6 @@ const TimeoutCallback = (props) => {
     );
 
     return render({ secondsLeft, timeLeft });
-};
-
-TimeoutCallback.propTypes = {
-    deadline: PropTypes.object,
-    onTimeout: PropTypes.func,
-    render: PropTypes.func,
 };
 
 export default TimeoutCallback;

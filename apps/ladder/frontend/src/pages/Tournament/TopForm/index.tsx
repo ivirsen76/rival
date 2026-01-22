@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 import style from './style.module.scss';
 
-const MostProgress = (props) => {
+type MostProgressProps = {
+    tournament?: object;
+};
+
+const MostProgress = (props: MostProgressProps) => {
     const { topForm, players } = props.tournament;
 
     const sortedTopForm = topForm
@@ -48,10 +51,6 @@ const MostProgress = (props) => {
             )}
         </div>
     );
-};
-
-MostProgress.propTypes = {
-    tournament: PropTypes.object,
 };
 
 export default MostProgress;

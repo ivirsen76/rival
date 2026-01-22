@@ -1,10 +1,16 @@
 import { useMemo, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import dayjs from '@/utils/dayjs';
 import style from './style.module.scss';
 
-const SeasonPicker = (props) => {
+type SeasonPickerProps = {
+    settings?: object;
+    updateSettings?: (...args: unknown[]) => unknown;
+    onSubmit?: (...args: unknown[]) => unknown;
+    seasons?: unknown[];
+};
+
+const SeasonPicker = (props: SeasonPickerProps) => {
     const { settings, updateSettings, onSubmit, seasons } = props;
 
     useEffect(() => {
@@ -61,13 +67,6 @@ const SeasonPicker = (props) => {
             </div>
         </div>
     );
-};
-
-SeasonPicker.propTypes = {
-    settings: PropTypes.object,
-    updateSettings: PropTypes.func,
-    onSubmit: PropTypes.func,
-    seasons: PropTypes.array,
 };
 
 export default SeasonPicker;

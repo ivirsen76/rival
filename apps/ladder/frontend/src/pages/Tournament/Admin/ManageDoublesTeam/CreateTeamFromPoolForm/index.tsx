@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
@@ -23,7 +22,12 @@ const validate = (values) => {
     return errors;
 };
 
-const CreateTeamFromPoolForm = (props) => {
+type CreateTeamFromPoolFormProps = {
+    tournament?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const CreateTeamFromPoolForm = (props: CreateTeamFromPoolFormProps) => {
     const { tournament, onSubmit } = props;
     const config = useConfig();
 
@@ -100,11 +104,6 @@ const CreateTeamFromPoolForm = (props) => {
             }}
         </Formik>
     );
-};
-
-CreateTeamFromPoolForm.propTypes = {
-    tournament: PropTypes.object,
-    onSubmit: PropTypes.func,
 };
 
 export default CreateTeamFromPoolForm;

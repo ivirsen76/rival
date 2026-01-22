@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Form } from '@/components/formik';
 import { useSelector } from 'react-redux';
 import Button from '@/components/Button';
@@ -10,7 +9,15 @@ import CloseIcon from '@/styles/metronic/icons/duotone/Navigation/Close.svg?reac
 import hasAnyRole from '@/utils/hasAnyRole';
 import style from './style.module.scss';
 
-const JustForm = (props) => {
+type JustFormProps = {
+    values?: object;
+    players?: object;
+    playerOptions?: unknown[];
+    setFieldValue?: (...args: unknown[]) => unknown;
+    isAdmin?: boolean;
+};
+
+const JustForm = (props: JustFormProps) => {
     const { values, players, playerOptions, setFieldValue, isAdmin } = props;
 
     const getPlayerPicker = (name) => () => {
@@ -101,15 +108,12 @@ const JustForm = (props) => {
     );
 };
 
-JustForm.propTypes = {
-    values: PropTypes.object,
-    players: PropTypes.object,
-    playerOptions: PropTypes.array,
-    setFieldValue: PropTypes.func,
-    isAdmin: PropTypes.bool,
+type FormNewMatchProps = {
+    tournament?: object;
+    onAdd?: (...args: unknown[]) => unknown;
 };
 
-const FormNewMatch = (props) => {
+const FormNewMatch = (props: FormNewMatchProps) => {
     const { tournament, onAdd } = props;
 
     const [matchValues, setMatchValues] = useState();
@@ -192,11 +196,6 @@ const FormNewMatch = (props) => {
             }}
         </Formik>
     );
-};
-
-FormNewMatch.propTypes = {
-    tournament: PropTypes.object,
-    onAdd: PropTypes.func,
 };
 
 export default FormNewMatch;

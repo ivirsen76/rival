@@ -1,8 +1,11 @@
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Mark = (props) => {
+type MarkProps = {
+    isEmpty?: boolean;
+};
+
+const Mark = (props: MarkProps) => {
     return (
         <div
             className={classnames(style.wrapper, {
@@ -13,10 +16,6 @@ const Mark = (props) => {
             <div className={style.circle} />
         </div>
     );
-};
-
-Mark.propTypes = {
-    isEmpty: PropTypes.bool,
 };
 
 export default Mark;

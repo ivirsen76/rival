@@ -1,11 +1,16 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Button from '@/components/Button';
 import axios from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import DoublesPlayersPicker from '@/components/formik/DoublesPlayersPicker';
 
-const FormReplaceCaptain = (props) => {
+type FormReplaceCaptainProps = {
+    hide?: (...args: unknown[]) => unknown;
+    onSubmit?: (...args: unknown[]) => unknown;
+    tournament?: object;
+};
+
+const FormReplaceCaptain = (props: FormReplaceCaptainProps) => {
     const { tournament, hide, onSubmit } = props;
     const currentUser = useSelector((state) => state.auth.user);
     const currentPlayerId = currentUser.tournaments[tournament.id].playerId;
@@ -55,12 +60,6 @@ const FormReplaceCaptain = (props) => {
             )}
         </Formik>
     );
-};
-
-FormReplaceCaptain.propTypes = {
-    hide: PropTypes.func,
-    onSubmit: PropTypes.func,
-    tournament: PropTypes.object,
 };
 
 export default FormReplaceCaptain;

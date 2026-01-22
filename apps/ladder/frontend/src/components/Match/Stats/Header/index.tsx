@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import ClockIcon from './Clock.svg?react';
 import Avatar from '@/components/avataaars';
 import UserIcon from '@/assets/user.svg?react';
@@ -13,7 +12,15 @@ const minutesToTime = (minutes) => {
     return `${hours}:${minutes}`;
 };
 
-const Header = (props) => {
+type HeaderProps = {
+    match?: object;
+    challenger?: object;
+    acceptor?: object;
+    challengerName?: React.ReactNode;
+    acceptorName?: React.ReactNode;
+};
+
+const Header = (props: HeaderProps) => {
     const { match, challenger, challengerName, acceptor, acceptorName } = props;
     const { stat } = match;
 
@@ -55,14 +62,6 @@ const Header = (props) => {
             </div>
         </div>
     );
-};
-
-Header.propTypes = {
-    match: PropTypes.object,
-    challenger: PropTypes.object,
-    acceptor: PropTypes.object,
-    challengerName: PropTypes.node,
-    acceptorName: PropTypes.node,
 };
 
 export default Header;

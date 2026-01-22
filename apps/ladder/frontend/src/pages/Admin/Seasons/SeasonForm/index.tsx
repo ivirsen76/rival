@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Select from '@/components/formik/Select';
@@ -13,7 +12,13 @@ import axios from '@/utils/axios';
 
 const currentYear = Number(dayjs.tz().format('YYYY'));
 
-const SeasonForm = (props) => {
+type SeasonFormProps = {
+    initialValues?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+    isCurrentSeason?: boolean;
+};
+
+const SeasonForm = (props: SeasonFormProps) => {
     const { initialValues, onSubmit, isCurrentSeason } = props;
     const { settings } = useSettings();
     const { levels } = settings;
@@ -125,12 +130,6 @@ const SeasonForm = (props) => {
             )}
         </Formik>
     );
-};
-
-SeasonForm.propTypes = {
-    initialValues: PropTypes.object,
-    onSubmit: PropTypes.func,
-    isCurrentSeason: PropTypes.bool,
 };
 
 export default SeasonForm;

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form } from '@/components/formik';
 import PasswordInput from '@/components/formik/PasswordInput';
@@ -8,7 +7,11 @@ import notification from '@/components/notification';
 import { useSelector } from 'react-redux';
 import NotFound from '@/pages/NotFound';
 
-const PasswordForm = (props) => {
+type PasswordFormProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const PasswordForm = (props: PasswordFormProps) => {
     const currentUser = useSelector((state) => state.auth.user);
 
     if (!currentUser) {
@@ -53,10 +56,6 @@ const PasswordForm = (props) => {
             )}
         </Formik>
     );
-};
-
-PasswordForm.propTypes = {
-    onSubmit: PropTypes.func,
 };
 
 export default PasswordForm;

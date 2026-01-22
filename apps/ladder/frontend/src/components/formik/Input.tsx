@@ -1,9 +1,14 @@
-import PropTypes from 'prop-types';
 import FieldWrapper from './FieldWrapper';
 import _omit from 'lodash/omit';
 import classnames from 'classnames';
 
-const Input = (props) => {
+type InputProps = {
+    form?: object;
+    field?: object;
+    type?: string;
+};
+
+const Input = (props: InputProps) => {
     const { field, form } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
     const passingProps = _omit(props, [
@@ -27,12 +32,6 @@ const Input = (props) => {
             />
         </FieldWrapper>
     );
-};
-
-Input.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    type: PropTypes.string,
 };
 
 Input.defaultProps = {

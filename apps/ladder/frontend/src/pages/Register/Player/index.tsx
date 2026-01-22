@@ -1,6 +1,4 @@
-/* eslint-disable react/prop-types */
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { logout, authenticate } from '@/reducers/auth';
 import { Formik, Field, Form } from '@/components/formik';
@@ -14,7 +12,13 @@ import VerifyEmail from '@/components/VerifyEmail';
 import EmailIcon from '@/styles/metronic/icons/duotone/Communication/Mail-at.svg?react';
 import axios from '@/utils/axios';
 
-const Player = (props) => {
+type PlayerProps = {
+    settings?: object;
+    updateSettings?: (...args: unknown[]) => unknown;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const Player = (props: PlayerProps) => {
     const { settings, updateSettings, onSubmit } = props;
 
     const dispatch = useDispatch();
@@ -135,12 +139,6 @@ const Player = (props) => {
             )}
         </div>
     );
-};
-
-Player.propTypes = {
-    settings: PropTypes.object,
-    updateSettings: PropTypes.func,
-    onSubmit: PropTypes.func,
 };
 
 export default Player;

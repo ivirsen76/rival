@@ -1,12 +1,16 @@
 import { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import Chart from '@/components/Chart';
 import _findLastIndex from 'lodash/findLastIndex';
 import Tooltip from '@/components/Tooltip';
 import Mark from './Mark';
 import useAppearance from '@/utils/useAppearance';
 
-const EloHistory = (props) => {
+type EloHistoryProps = {
+    tournament?: object;
+    eloHistory?: unknown[];
+};
+
+const EloHistory = (props: EloHistoryProps) => {
     const { eloHistory, tournament } = props;
     const appearance = useAppearance();
 
@@ -168,11 +172,6 @@ const EloHistory = (props) => {
             <Chart init={chartInit} getData={getData} />
         </div>
     );
-};
-
-EloHistory.propTypes = {
-    tournament: PropTypes.object,
-    eloHistory: PropTypes.array,
 };
 
 export default EloHistory;

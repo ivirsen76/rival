@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps, react/prop-types */
-
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { authenticate } from '@/reducers/auth';
@@ -12,7 +9,12 @@ import notification from '@/components/notification';
 import VerifyEmail from '@/components/VerifyEmail';
 import EmailIcon from '@/styles/metronic/icons/duotone/Communication/Mail-at.svg?react';
 
-const Login = (props) => {
+type LoginProps = {
+    goToRegister?: (...args: unknown[]) => unknown;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const Login = (props: LoginProps) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -116,11 +118,6 @@ const Login = (props) => {
             )}
         </Formik>
     );
-};
-
-Login.propTypes = {
-    goToRegister: PropTypes.func,
-    onSubmit: PropTypes.func,
 };
 
 export default Login;

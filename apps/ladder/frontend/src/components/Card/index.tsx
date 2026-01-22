@@ -1,10 +1,16 @@
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import _pick from 'lodash/pick';
 import style from './style.module.scss';
 import Tooltip from '@/components/Tooltip';
 
-const Card = (props) => {
+type CardProps = {
+    className?: string;
+    children?: React.ReactNode;
+    tooltip?: React.ReactNode;
+    tooltipProps?: object;
+};
+
+const Card = (props: CardProps) => {
     const passingProps = _pick(props, ['id', 'style']);
 
     return (
@@ -28,13 +34,6 @@ const Card = (props) => {
             </div>
         </div>
     );
-};
-
-Card.propTypes = {
-    className: PropTypes.string,
-    children: PropTypes.node,
-    tooltip: PropTypes.node,
-    tooltipProps: PropTypes.object,
 };
 
 export default Card;

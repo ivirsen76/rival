@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Button from '@/components/Button';
 
-const CloseSeasonForm = (props) => {
+type CloseSeasonFormProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const CloseSeasonForm = (props: CloseSeasonFormProps) => {
     const { onSubmit } = props;
 
     return (
@@ -21,10 +24,6 @@ const CloseSeasonForm = (props) => {
             )}
         </Formik>
     );
-};
-
-CloseSeasonForm.propTypes = {
-    onSubmit: PropTypes.func,
 };
 
 export default CloseSeasonForm;

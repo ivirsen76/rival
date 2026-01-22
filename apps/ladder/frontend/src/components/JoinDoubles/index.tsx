@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import notification from '@/components/notification';
 import Card from '@/components/Card';
@@ -11,7 +10,11 @@ import getRegisterNotificationProps from '@/utils/getRegisterNotificationProps';
 import { useHistory } from 'react-router-dom';
 import { loadCurrentUser } from '@/reducers/auth';
 
-const JoinDoubles = (props) => {
+type JoinDoublesProps = {
+    payload?: string;
+};
+
+const JoinDoubles = (props: JoinDoublesProps) => {
     const [data, setData] = useState();
     const [error, setError] = useState();
     const currentUser = useSelector((state) => state.auth.user);
@@ -80,10 +83,6 @@ const JoinDoubles = (props) => {
             </div>
         </Card>
     );
-};
-
-JoinDoubles.propTypes = {
-    payload: PropTypes.string,
 };
 
 export default JoinDoubles;

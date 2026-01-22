@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Loader from '@/components/Loader';
 import axios from '@/utils/axios';
 import Table from '@/components/Table';
@@ -12,7 +11,12 @@ import FileIcon from '@/styles/metronic/icons/duotone/Files/File.svg?react';
 import WalletIcon from '@/styles/metronic/icons/duotone/Shopping/Wallet.svg?react';
 import style from './style.module.scss';
 
-const Wallet = (props) => {
+type WalletProps = {
+    userId?: number;
+    isFullWidth?: boolean;
+};
+
+const Wallet = (props: WalletProps) => {
     const { userId, isFullWidth } = props;
 
     const { data: payments, isLoading } = useQuery(
@@ -103,11 +107,6 @@ const Wallet = (props) => {
             )}
         </div>
     );
-};
-
-Wallet.propTypes = {
-    userId: PropTypes.number,
-    isFullWidth: PropTypes.bool,
 };
 
 export default Wallet;

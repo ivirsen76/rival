@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
 import Checkbox from '@/components/formik/Checkbox';
@@ -13,7 +12,12 @@ const adjustedReasonOptions = reasonOptions.map((item) => ({
     description: reasonDescriptions[item.value],
 }));
 
-const ComplaintForm = (props) => {
+type ComplaintFormProps = {
+    user?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const ComplaintForm = (props: ComplaintFormProps) => {
     const { user, onSubmit } = props;
 
     return (
@@ -104,11 +108,6 @@ const ComplaintForm = (props) => {
             )}
         </Formik>
     );
-};
-
-ComplaintForm.propTypes = {
-    user: PropTypes.object,
-    onSubmit: PropTypes.func,
 };
 
 export default ComplaintForm;

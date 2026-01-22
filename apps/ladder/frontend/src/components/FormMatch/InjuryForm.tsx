@@ -1,10 +1,19 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import PlayerName from '@/components/PlayerName';
 import style from './style.module.scss';
 
-const InjuryForm = (props) => {
+type InjuryFormProps = {
+    challenger?: object;
+    acceptor?: object;
+    challenger2?: object;
+    acceptor2?: object;
+    injuredPlayerId?: number;
+    onSubmit?: (...args: unknown[]) => unknown;
+    hide?: (...args: unknown[]) => unknown;
+};
+
+const InjuryForm = (props: InjuryFormProps) => {
     const { challenger, acceptor, challenger2, acceptor2, onSubmit, hide } = props;
     const [playerId, setPlayerId] = useState(props.injuredPlayerId);
 
@@ -62,16 +71,6 @@ const InjuryForm = (props) => {
             </div>
         </div>
     );
-};
-
-InjuryForm.propTypes = {
-    challenger: PropTypes.object,
-    acceptor: PropTypes.object,
-    challenger2: PropTypes.object,
-    acceptor2: PropTypes.object,
-    injuredPlayerId: PropTypes.number,
-    onSubmit: PropTypes.func,
-    hide: PropTypes.func,
 };
 
 InjuryForm.defaultProps = {};

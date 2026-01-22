@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Loader from '@/components/Loader';
 import notification from '@/components/notification';
 import axios from '@/utils/axios';
@@ -8,7 +7,11 @@ import { loadCurrentUser } from '@/reducers/auth';
 import getRegisterNotificationProps from '@/utils/getRegisterNotificationProps';
 import { useHistory } from 'react-router-dom';
 
-const RegisterSuccess = (props) => {
+type RegisterSuccessProps = {
+    match?: object;
+};
+
+const RegisterSuccess = (props: RegisterSuccessProps) => {
     const { sessionId } = props.match.params;
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
@@ -37,10 +40,6 @@ const RegisterSuccess = (props) => {
     }, []);
 
     return <Loader loading={loading} />;
-};
-
-RegisterSuccess.propTypes = {
-    match: PropTypes.object,
 };
 
 RegisterSuccess.defaultProps = {};

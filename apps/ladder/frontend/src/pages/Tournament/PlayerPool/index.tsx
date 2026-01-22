@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import Modal from '@/components/Modal';
@@ -13,7 +12,12 @@ import notification from '@/components/notification';
 import JoinPlayerPoolForm from './JoinPlayerPoolForm';
 import CreateTeamForm from './CreateTeamForm';
 
-const PlayerPool = (props) => {
+type PlayerPoolProps = {
+    tournament?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const PlayerPool = (props: PlayerPoolProps) => {
     const { tournament, onSubmit } = props;
     const currentUser = useSelector((state) => state.auth.user);
     const currentPlayerId = currentUser?.tournaments[tournament.id]?.playerId;
@@ -216,11 +220,6 @@ const PlayerPool = (props) => {
             )}
         </div>
     );
-};
-
-PlayerPool.propTypes = {
-    tournament: PropTypes.object,
-    onSubmit: PropTypes.func,
 };
 
 PlayerPool.defaultProps = {};

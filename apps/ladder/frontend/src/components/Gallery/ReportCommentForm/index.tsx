@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
 import Button from '@/components/Button';
 import notification from '@/components/notification';
 import axios from 'axios';
 
-const ReportCommentForm = (props) => {
+type ReportCommentFormProps = {
+    commentId?: number;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const ReportCommentForm = (props: ReportCommentFormProps) => {
     const { commentId, onSubmit } = props;
 
     return (
@@ -38,11 +42,6 @@ const ReportCommentForm = (props) => {
             )}
         </Formik>
     );
-};
-
-ReportCommentForm.propTypes = {
-    commentId: PropTypes.number,
-    onSubmit: PropTypes.func,
 };
 
 ReportCommentForm.defaultProps = {

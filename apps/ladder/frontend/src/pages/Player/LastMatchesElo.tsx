@@ -1,7 +1,10 @@
-import PropTypes from 'prop-types';
 import _round from 'lodash/round';
 
-const LastMatchesElo = (props) => {
+type LastMatchesEloProps = {
+    data?: unknown[];
+};
+
+const LastMatchesElo = (props: LastMatchesEloProps) => {
     const { data } = props;
     const padding = 20;
     const step = 11;
@@ -42,10 +45,6 @@ const LastMatchesElo = (props) => {
             <path d={path} fill="none" stroke="#6db7d9" strokeWidth={`${width}px`} strokeLinecap="round" />
         </svg>
     );
-};
-
-LastMatchesElo.propTypes = {
-    data: PropTypes.array,
 };
 
 export default LastMatchesElo;

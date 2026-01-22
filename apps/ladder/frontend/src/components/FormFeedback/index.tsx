@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Button from '@/components/Button';
 import Textarea from '@/components/formik/Textarea';
@@ -83,7 +82,11 @@ const typeOptions = [
     },
 ];
 
-const FormFeedback = (props) => {
+type FormFeedbackProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const FormFeedback = (props: FormFeedbackProps) => {
     const { onSubmit } = props;
 
     const handleSubmit = async (values) => {
@@ -141,10 +144,6 @@ const FormFeedback = (props) => {
             }}
         </Formik>
     );
-};
-
-FormFeedback.propTypes = {
-    onSubmit: PropTypes.func,
 };
 
 export default FormFeedback;

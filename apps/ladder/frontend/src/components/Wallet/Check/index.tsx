@@ -1,11 +1,15 @@
-/* eslint-disable react/no-array-index-key */
-
-import PropTypes from 'prop-types';
 import style from './style.module.scss';
 import formatSum from '@/utils/formatSum';
 import { formatCustom } from '@/utils/dayjs';
 
-const Check = (props) => {
+type CheckProps = {
+    payload?: object;
+    sessionId?: string;
+    amount?: number;
+    processedAt?: string;
+};
+
+const Check = (props: CheckProps) => {
     const { payload, sessionId, amount, processedAt } = props;
     const orderId = sessionId.slice(10, 30);
     const { transactions } = payload;
@@ -37,13 +41,6 @@ const Check = (props) => {
             </div>
         </div>
     );
-};
-
-Check.propTypes = {
-    payload: PropTypes.object,
-    sessionId: PropTypes.string,
-    amount: PropTypes.number,
-    processedAt: PropTypes.string,
 };
 
 export default Check;

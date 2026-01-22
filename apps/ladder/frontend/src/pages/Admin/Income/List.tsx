@@ -5,9 +5,12 @@ import Table from '@/components/Table';
 import PlayerName from '@/components/PlayerName';
 import formatSum from '@/utils/formatSum';
 import { formatLong } from '@/utils/dayjs';
-import PropTypes from 'prop-types';
 
-const List = (props) => {
+type ListProps = {
+    seasonId?: number;
+};
+
+const List = (props: ListProps) => {
     const { seasonId } = props;
 
     const { data: payments, isLoading } = useQuery(`getSeasonPayments-${seasonId}`, async () => {
@@ -61,10 +64,6 @@ const List = (props) => {
             <Table className="table tl-table" columns={columns} data={payments} perPage={25} showTopPaginator={false} />
         </div>
     );
-};
-
-List.propTypes = {
-    seasonId: PropTypes.number,
 };
 
 export default List;

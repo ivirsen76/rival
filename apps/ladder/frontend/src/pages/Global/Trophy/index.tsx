@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Card from '@/components/Card';
 import axios from '@/utils/axios';
 import { useQuery } from 'react-query';
@@ -29,7 +28,12 @@ function saveFile(content, filename) {
     URL.revokeObjectURL(link.href);
 }
 
-const TrophyReport = (props) => {
+type TrophyReportProps = {
+    selectedRows?: unknown[];
+    data?: unknown[];
+};
+
+const TrophyReport = (props: TrophyReportProps) => {
     const { selectedRows, data } = props;
 
     const generateSvg = () => {
@@ -158,12 +162,13 @@ const TrophyReport = (props) => {
         </button>
     );
 };
-TrophyReport.propTypes = {
-    selectedRows: PropTypes.array,
-    data: PropTypes.array,
+
+type EmailCopyProps = {
+    selectedRows?: unknown[];
+    data?: unknown[];
 };
 
-const EmailCopy = (props) => {
+const EmailCopy = (props: EmailCopyProps) => {
     const { selectedRows, data } = props;
 
     const copyEmails = () => {
@@ -186,12 +191,13 @@ const EmailCopy = (props) => {
         </button>
     );
 };
-EmailCopy.propTypes = {
-    selectedRows: PropTypes.array,
-    data: PropTypes.array,
+
+type UspsSpreadsheetProps = {
+    selectedRows?: unknown[];
+    data?: unknown[];
 };
 
-const UspsSpreadsheet = (props) => {
+const UspsSpreadsheet = (props: UspsSpreadsheetProps) => {
     const { selectedRows, data } = props;
 
     const downloadSpreadsheet = () => {
@@ -262,10 +268,6 @@ const UspsSpreadsheet = (props) => {
             USPS spreadsheet
         </button>
     );
-};
-UspsSpreadsheet.propTypes = {
-    selectedRows: PropTypes.array,
-    data: PropTypes.array,
 };
 
 const Global = (props) => {

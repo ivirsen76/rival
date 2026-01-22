@@ -1,7 +1,10 @@
-import PropTypes from 'prop-types';
 import { Formik as OriginalFormik } from 'formik';
 
-export const Formik = (props) => {
+type FormikProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+export const Formik = (props: FormikProps) => {
     const onSubmit = async (values, actions) => {
         try {
             await props.onSubmit(values, actions);
@@ -12,10 +15,6 @@ export const Formik = (props) => {
     };
 
     return <OriginalFormik {...props} onSubmit={onSubmit} />;
-};
-
-Formik.propTypes = {
-    onSubmit: PropTypes.func,
 };
 
 export {

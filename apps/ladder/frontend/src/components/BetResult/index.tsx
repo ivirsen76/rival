@@ -1,5 +1,4 @@
 import Spot from './Spot';
-import PropTypes from 'prop-types';
 import Bracket from './Bracket';
 import Tooltip from '@/components/Tooltip';
 import getComments from './getComments';
@@ -7,7 +6,15 @@ import classnames from 'classnames';
 import { BYE_ID } from '@rival/ladder.backend/src/constants';
 import style from './style.module.scss';
 
-const BetResult = (props) => {
+type BetResultProps = {
+    players?: object;
+    prediction?: unknown[];
+    predictionPoints?: object;
+    matches?: object;
+    showMaxPoints?: boolean;
+};
+
+const BetResult = (props: BetResultProps) => {
     const { players, prediction, predictionPoints, matches, showMaxPoints } = props;
     const predictionObject = prediction.reduce((obj, item) => {
         obj[item.finalSpot] = item;
@@ -167,14 +174,6 @@ const BetResult = (props) => {
             </div>
         </div>
     );
-};
-
-BetResult.propTypes = {
-    players: PropTypes.object,
-    prediction: PropTypes.array,
-    predictionPoints: PropTypes.object,
-    matches: PropTypes.object,
-    showMaxPoints: PropTypes.bool,
 };
 
 BetResult.defaultProps = {

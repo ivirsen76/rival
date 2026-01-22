@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import axios from '@/utils/axios';
 import notification from '@/components/notification';
@@ -66,7 +65,18 @@ const stateOptions = [
     { value: 'WY', label: 'WY' },
 ];
 
-const FormItself = (props) => {
+type FormItselfProps = {
+    setFieldValue?: (...args: unknown[]) => unknown;
+    isChampion?: boolean;
+    isSubmitting?: boolean;
+    handleSubmit?: (...args: unknown[]) => unknown;
+    prize?: number;
+    prizeAsCredit?: number;
+    tournament?: object;
+    trophyAvailabilityDate?: string;
+};
+
+const FormItself = (props: FormItselfProps) => {
     const {
         setFieldValue,
         isSubmitting,
@@ -231,18 +241,13 @@ const FormItself = (props) => {
     );
 };
 
-FormItself.propTypes = {
-    setFieldValue: PropTypes.func,
-    isChampion: PropTypes.bool,
-    isSubmitting: PropTypes.bool,
-    handleSubmit: PropTypes.func,
-    prize: PropTypes.number,
-    prizeAsCredit: PropTypes.number,
-    tournament: PropTypes.object,
-    trophyAvailabilityDate: PropTypes.string,
+type ClaimRewardProps = {
+    reloadTournament?: (...args: unknown[]) => unknown;
+    isChampion?: boolean;
+    tournament?: object;
 };
 
-const ClaimReward = (props) => {
+const ClaimReward = (props: ClaimRewardProps) => {
     const { isChampion, tournament, reloadTournament } = props;
     const currentUser = useSelector((state) => state.auth.user);
     const { playerId } = currentUser.tournaments[tournament.id];
@@ -388,12 +393,6 @@ const ClaimReward = (props) => {
             )}
         </Formik>
     );
-};
-
-ClaimReward.propTypes = {
-    reloadTournament: PropTypes.func,
-    isChampion: PropTypes.bool,
-    tournament: PropTypes.object,
 };
 
 export default ClaimReward;

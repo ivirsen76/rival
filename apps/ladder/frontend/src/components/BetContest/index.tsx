@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import Table from '@/components/Table';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
@@ -12,7 +11,13 @@ import useBreakpoints from '@/utils/useBreakpoints';
 import { BRACKET_BOT_ID } from '@rival/ladder.backend/src/constants';
 import style from './style.module.scss';
 
-const BetContest = (props) => {
+type BetContestProps = {
+    tournament?: object;
+    players?: object;
+    matches?: object;
+};
+
+const BetContest = (props: BetContestProps) => {
     const { tournament, players, matches } = props;
     const size = useBreakpoints();
     const isSmall = ['xs'].includes(size);
@@ -120,12 +125,6 @@ const BetContest = (props) => {
     ];
 
     return <Table columns={columns} data={data} showRowNumber={false} />;
-};
-
-BetContest.propTypes = {
-    tournament: PropTypes.object,
-    players: PropTypes.object,
-    matches: PropTypes.object,
 };
 
 export default BetContest;

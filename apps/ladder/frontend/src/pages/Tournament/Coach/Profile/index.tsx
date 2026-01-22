@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import log from '@/utils/log';
 import { Formik, Field, Form } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
@@ -18,7 +17,12 @@ const validate = (values) => {
     return errors;
 };
 
-const Profile = (props) => {
+type ProfileProps = {
+    coach?: object;
+    hide?: (...args: unknown[]) => unknown;
+};
+
+const Profile = (props: ProfileProps) => {
     const { coach, hide } = props;
 
     useEffect(() => {
@@ -114,11 +118,6 @@ const Profile = (props) => {
             </Formik>
         </div>
     );
-};
-
-Profile.propTypes = {
-    coach: PropTypes.object,
-    hide: PropTypes.func,
 };
 
 export default Profile;

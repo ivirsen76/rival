@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import style from './style.module.scss';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
@@ -13,7 +12,17 @@ const reverseScore = (score) =>
         .map((set) => set.replace(/^(\d+)-(\d+)$/, '$2-$1'))
         .join(' ');
 
-const InlineMatch = (props) => {
+type InlineMatchProps = {
+    challenger?: object;
+    acceptor?: object;
+    challenger2?: object;
+    acceptor2?: object;
+    match?: object;
+    columnClassName?: string;
+    extraColumn?: React.ReactNode;
+};
+
+const InlineMatch = (props: InlineMatchProps) => {
     const { challenger, acceptor, challenger2, acceptor2, match, columnClassName, extraColumn } = props;
     const size = useBreakpoints();
     const isSmall = ['xs', 'sm', 'md'].includes(size);
@@ -54,16 +63,6 @@ const InlineMatch = (props) => {
             {extraColumn && <div className={columnClassName}>{extraColumn}</div>}
         </>
     );
-};
-
-InlineMatch.propTypes = {
-    challenger: PropTypes.object,
-    acceptor: PropTypes.object,
-    challenger2: PropTypes.object,
-    acceptor2: PropTypes.object,
-    match: PropTypes.object,
-    columnClassName: PropTypes.string,
-    extraColumn: PropTypes.node,
 };
 
 export default InlineMatch;

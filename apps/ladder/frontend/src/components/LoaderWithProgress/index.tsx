@@ -1,7 +1,12 @@
-import PropTypes from 'prop-types';
 import style from './style.module.scss';
 
-const LoaderWithProgress = (props) => {
+type LoaderWithProgressProps = {
+    loading?: boolean;
+    message?: string;
+    percent?: number;
+};
+
+const LoaderWithProgress = (props: LoaderWithProgressProps) => {
     const { loading, message, percent } = props;
 
     if (!loading) {
@@ -21,12 +26,6 @@ const LoaderWithProgress = (props) => {
             </div>
         </div>
     );
-};
-
-LoaderWithProgress.propTypes = {
-    loading: PropTypes.bool,
-    message: PropTypes.string,
-    percent: PropTypes.number,
 };
 
 LoaderWithProgress.defaultProps = {

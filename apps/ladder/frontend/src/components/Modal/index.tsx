@@ -1,9 +1,17 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import _omit from 'lodash/omit';
 
-const ModalComponent = (props) => {
+type ModalComponentProps = {
+    title?: React.ReactNode;
+    renderTrigger: (...args: unknown[]) => unknown;
+    renderBody?: (...args: unknown[]) => unknown;
+    body?: React.ReactNode;
+    footer?: React.ReactNode;
+    hasForm?: boolean;
+};
+
+const ModalComponent = (props: ModalComponentProps) => {
     const [visible, setVisible] = useState(false);
 
     const show = () => setVisible(true);
@@ -33,15 +41,6 @@ const ModalComponent = (props) => {
             </Modal>
         </>
     );
-};
-
-ModalComponent.propTypes = {
-    title: PropTypes.node,
-    renderTrigger: PropTypes.func.isRequired,
-    renderBody: PropTypes.func,
-    body: PropTypes.node,
-    footer: PropTypes.node,
-    hasForm: PropTypes.bool,
 };
 
 ModalComponent.defaultProps = {

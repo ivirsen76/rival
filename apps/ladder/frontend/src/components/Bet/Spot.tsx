@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.module.scss';
 import PlayerAvatar from '@/components/PlayerAvatar';
@@ -10,7 +9,16 @@ const isLongName = (player) => {
     return getRelativeStringLength(player.firstName + ' ' + player.lastName) > 15;
 };
 
-const Match = (props) => {
+type MatchProps = {
+    match?: object;
+    challenger?: object;
+    acceptor?: object;
+    isActive?: boolean;
+    onSelect?: (...args: unknown[]) => unknown;
+    prediction?: object;
+};
+
+const Match = (props: MatchProps) => {
     const { match, isActive, challenger, acceptor, onSelect, prediction } = props;
     const hasBye = challenger.id === BYE_ID || acceptor.id === BYE_ID;
 
@@ -133,15 +141,6 @@ const Match = (props) => {
             </tbody>
         </table>
     );
-};
-
-Match.propTypes = {
-    match: PropTypes.object,
-    challenger: PropTypes.object,
-    acceptor: PropTypes.object,
-    isActive: PropTypes.bool,
-    onSelect: PropTypes.func,
-    prediction: PropTypes.object,
 };
 
 export default Match;

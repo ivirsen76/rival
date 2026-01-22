@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Button from '@/components/Button';
 import Select from '@/components/formik/Select';
@@ -20,7 +19,11 @@ const yearsOptions = [
     { value: 5, label: '5 years' },
 ];
 
-const FormGeneratePartnerLink = (props) => {
+type FormGeneratePartnerLinkProps = {
+    hide?: (...args: unknown[]) => unknown;
+};
+
+const FormGeneratePartnerLink = (props: FormGeneratePartnerLinkProps) => {
     const handleSubmit = async (values) => {
         const result = await axios.put('/api/utils/0', { action: 'generatePartnerLink', ...values });
         const link = result.data.link;
@@ -61,10 +64,6 @@ const FormGeneratePartnerLink = (props) => {
             )}
         </Formik>
     );
-};
-
-FormGeneratePartnerLink.propTypes = {
-    hide: PropTypes.func,
 };
 
 export default FormGeneratePartnerLink;

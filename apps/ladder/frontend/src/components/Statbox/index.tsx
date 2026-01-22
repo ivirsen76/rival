@@ -1,10 +1,16 @@
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import useAppearance from '@/utils/useAppearance';
 import { Squircle } from 'corner-smoothing';
 import style from './style.module.scss';
 
-export const Title = (props) => {
+type TitleProps = {
+    colorHue?: number;
+    colorLightness?: number;
+    className?: string;
+    children?: React.ReactNode;
+};
+
+export const Title = (props: TitleProps) => {
     const { colorHue, colorLightness, children, className } = props;
     const appearance = useAppearance();
 
@@ -24,19 +30,24 @@ export const Title = (props) => {
     );
 };
 
-Title.propTypes = {
-    colorHue: PropTypes.number,
-    colorLightness: PropTypes.number,
-    className: PropTypes.string,
-    children: PropTypes.node,
-};
-
 Title.defaultProps = {
     colorHue: 202,
     colorLightness: 40,
 };
 
-const StatBox = (props) => {
+type StatBoxProps = {
+    text?: React.ReactNode;
+    label?: React.ReactNode;
+    image?: React.ReactNode;
+    colorHue?: number;
+    colorLightness?: number;
+    even?: boolean;
+    className?: string;
+    isLight?: boolean;
+    children?: React.ReactNode;
+};
+
+const StatBox = (props: StatBoxProps) => {
     const { text, label, image, colorHue, colorLightness, even, className, isLight, children } = props;
 
     return (
@@ -54,18 +65,6 @@ const StatBox = (props) => {
             {children}
         </Squircle>
     );
-};
-
-StatBox.propTypes = {
-    text: PropTypes.node,
-    label: PropTypes.node,
-    image: PropTypes.node,
-    colorHue: PropTypes.number,
-    colorLightness: PropTypes.number,
-    even: PropTypes.bool,
-    className: PropTypes.string,
-    isLight: PropTypes.bool,
-    children: PropTypes.node,
 };
 
 StatBox.defaultProps = {

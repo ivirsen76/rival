@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import Button from '@/components/Button';
@@ -6,7 +5,14 @@ import { Formik, Form } from '@/components/formik';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const PickPlayersForm = (props) => {
+type PickPlayersFormProps = {
+    match?: object;
+    players?: object;
+    isScheduling?: boolean;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const PickPlayersForm = (props: PickPlayersFormProps) => {
     const { match, players, isScheduling } = props;
 
     const challenger = players[match.challengerId];
@@ -110,13 +116,6 @@ const PickPlayersForm = (props) => {
             )}
         </Formik>
     );
-};
-
-PickPlayersForm.propTypes = {
-    match: PropTypes.object,
-    players: PropTypes.object,
-    isScheduling: PropTypes.bool,
-    onSubmit: PropTypes.func,
 };
 
 export default PickPlayersForm;

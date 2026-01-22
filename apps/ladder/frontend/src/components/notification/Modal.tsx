@@ -1,9 +1,18 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import Modal from 'react-bootstrap/Modal';
 import CheckIcon from '@/styles/metronic/icons/duotune/arrows/arr016.svg?react';
 
-const NotificationModal = (props) => {
+type NotificationModalProps = {
+    message?: React.ReactNode;
+    buttonTitle?: string;
+    onHide?: (...args: unknown[]) => unknown;
+    cleanup?: (...args: unknown[]) => unknown;
+    render?: (...args: unknown[]) => unknown;
+    title?: React.ReactNode;
+    modalProps?: object;
+};
+
+const NotificationModal = (props: NotificationModalProps) => {
     const [visible, setVisible] = useState(true);
 
     const hide = () => {
@@ -49,16 +58,6 @@ const NotificationModal = (props) => {
             </Modal.Body>
         </Modal>
     );
-};
-
-NotificationModal.propTypes = {
-    message: PropTypes.node,
-    buttonTitle: PropTypes.string,
-    onHide: PropTypes.func,
-    cleanup: PropTypes.func,
-    render: PropTypes.func,
-    title: PropTypes.node,
-    modalProps: PropTypes.object,
 };
 
 NotificationModal.defaultProps = {

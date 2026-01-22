@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
@@ -10,7 +9,13 @@ const isLongName = (player) => {
     return getRelativeStringLength(player.firstName + ' ' + player.lastName) > 15;
 };
 
-const Match = (props) => {
+type MatchProps = {
+    match?: object;
+    challenger?: object;
+    acceptor?: object;
+};
+
+const Match = (props: MatchProps) => {
     const { match, challenger, acceptor } = props;
 
     return (
@@ -74,12 +79,6 @@ const Match = (props) => {
             </table>
         </div>
     );
-};
-
-Match.propTypes = {
-    match: PropTypes.object,
-    challenger: PropTypes.object,
-    acceptor: PropTypes.object,
 };
 
 export default Match;

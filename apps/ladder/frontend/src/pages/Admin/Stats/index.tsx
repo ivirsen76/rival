@@ -166,7 +166,9 @@ const ageChartInit =
         bullet.label.text = '{values.valueY.workingValue}%';
     };
 
-const Stats = (props) => {
+type StatsProps = {};
+
+const Stats = (props: StatsProps) => {
     const { data: stat, isLoading } = useQuery('getSeasonStats', async () => {
         const response = await axios.put('/api/seasons/0', { action: 'getSeasonStats' });
         return response.data.data;
@@ -229,8 +231,6 @@ const Stats = (props) => {
         </Card>
     );
 };
-
-Stats.propTypes = {};
 
 Stats.defaultProps = {};
 

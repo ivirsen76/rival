@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { createRoot } from 'react-dom/client';
 import Modal from 'react-bootstrap/Modal';
 import style from './confirmation.module.scss';
@@ -8,7 +7,16 @@ import style from './confirmation.module.scss';
 const wrapper = document.createElement('div');
 document.body.appendChild(wrapper);
 
-const ConfirmModal = (props) => {
+type ConfirmModalProps = {
+    title?: string;
+    message?: string | React.ReactNode;
+    confirmButtonTitle?: string;
+    cancelButtonTitle?: string;
+    resolve?: (...args: unknown[]) => unknown;
+    reject?: (...args: unknown[]) => unknown;
+};
+
+const ConfirmModal = (props: ConfirmModalProps) => {
     const [show, setShow] = useState(true);
 
     const handleConfirm = () => {
@@ -42,15 +50,6 @@ const ConfirmModal = (props) => {
             </Modal.Footer>
         </Modal>
     );
-};
-
-ConfirmModal.propTypes = {
-    title: PropTypes.string,
-    message: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
-    confirmButtonTitle: PropTypes.string,
-    cancelButtonTitle: PropTypes.string,
-    resolve: PropTypes.func,
-    reject: PropTypes.func,
 };
 
 ConfirmModal.defaultProps = {

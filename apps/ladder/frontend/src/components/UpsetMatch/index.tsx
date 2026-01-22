@@ -1,6 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.module.scss';
 import PlayerName from '@/components/PlayerName';
@@ -10,7 +7,17 @@ import { formatMiddle } from '@/utils/dayjs';
 import useConfig from '@/utils/useConfig';
 import parseScore from '@/components/Match/parseScore';
 
-const Match = (props) => {
+type MatchProps = {
+    challenger?: object;
+    acceptor?: object;
+    challenger2?: object;
+    acceptor2?: object;
+    match?: object;
+    customDateFormat?: (...args: unknown[]) => unknown;
+    extraData?: React.ReactNode;
+};
+
+const Match = (props: MatchProps) => {
     const { challenger, acceptor, challenger2, acceptor2, match, extraData } = props;
     const config = useConfig();
 
@@ -136,16 +143,6 @@ const Match = (props) => {
             </div>
         </div>
     );
-};
-
-Match.propTypes = {
-    challenger: PropTypes.object,
-    acceptor: PropTypes.object,
-    challenger2: PropTypes.object,
-    acceptor2: PropTypes.object,
-    match: PropTypes.object,
-    customDateFormat: PropTypes.func,
-    extraData: PropTypes.node,
 };
 
 Match.defaultProps = {};

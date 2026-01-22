@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Winner = (props) => {
+type WinnerProps = {
+    player?: object;
+};
+
+const Winner = (props: WinnerProps) => {
     const { player } = props;
     const isDoublesTeam = player.partners?.length > 1;
 
@@ -126,10 +129,6 @@ const Winner = (props) => {
             </h3>
         </div>
     );
-};
-
-Winner.propTypes = {
-    player: PropTypes.object,
 };
 
 export default Winner;

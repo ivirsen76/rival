@@ -1,6 +1,3 @@
-/* eslint-disable react/prop-types */
-
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Button from '@/components/Button';
@@ -12,7 +9,11 @@ import EmailIcon from '@/styles/metronic/icons/duotone/Communication/Mail-at.svg
 import NotFound from '@/pages/NotFound';
 import { loadCurrentUser, updateCurrentUser } from '@/reducers/auth';
 
-const EmailForm = (props) => {
+type EmailFormProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const EmailForm = (props: EmailFormProps) => {
     const currentUser = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
@@ -95,10 +96,6 @@ const EmailForm = (props) => {
             )}
         </Formik>
     );
-};
-
-EmailForm.propTypes = {
-    onSubmit: PropTypes.func,
 };
 
 export default EmailForm;

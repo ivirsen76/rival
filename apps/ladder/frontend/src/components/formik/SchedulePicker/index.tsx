@@ -1,5 +1,4 @@
 import { useRef, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import FieldWrapper from '../FieldWrapper';
 import useTooltipError from './useTooltipError';
 import classnames from 'classnames';
@@ -18,7 +17,21 @@ const MIN_DURATION = 2;
 const MIN_BETWEEN = 1;
 const MAX_TIME_TO_CLICK = 500; // in ms. Otherwise it treats as dragging
 
-const Block = (props) => {
+type BlockProps = {
+    wrapperRef?: object;
+    onChange?: (...args: unknown[]) => unknown;
+    onDelete?: (...args: unknown[]) => unknown;
+    showError?: (...args: unknown[]) => unknown;
+    setSelectedBlock?: (...args: unknown[]) => unknown;
+    index?: number;
+    from?: number;
+    to?: number;
+    point?: object;
+    isSelected?: boolean;
+    field?: object;
+};
+
+const Block = (props: BlockProps) => {
     const { wrapperRef, onChange, onDelete, showError, point, setSelectedBlock, isSelected, field } = props;
     const [dragging, setDragging] = useState(null);
     const [position, setPosition] = useState(null);
@@ -171,25 +184,17 @@ const Block = (props) => {
     );
 };
 
-Block.propTypes = {
-    wrapperRef: PropTypes.object,
-    onChange: PropTypes.func,
-    onDelete: PropTypes.func,
-    showError: PropTypes.func,
-    setSelectedBlock: PropTypes.func,
-    index: PropTypes.number,
-    from: PropTypes.number,
-    to: PropTypes.number,
-    point: PropTypes.object,
-    isSelected: PropTypes.bool,
-    field: PropTypes.object,
-};
-
 Block.defaultProps = {
     setSelectedBlock: () => {},
 };
 
-const SchedulePicker = (props) => {
+type SchedulePickerProps = {
+    form?: object;
+    field?: object;
+    days?: unknown[];
+};
+
+const SchedulePicker = (props: SchedulePickerProps) => {
     const { field, form, days } = props;
     const [placeholderProps, setPlaceholderProps] = useState(null);
     const [selectedBlock, setSelectedBlock] = useState();
@@ -368,12 +373,6 @@ const SchedulePicker = (props) => {
             </div>
         </FieldWrapper>
     );
-};
-
-SchedulePicker.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    days: PropTypes.array,
 };
 
 SchedulePicker.defaultProps = {};

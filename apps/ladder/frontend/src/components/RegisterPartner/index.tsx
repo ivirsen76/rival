@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import notification from '@/components/notification';
 import Card from '@/components/Card';
@@ -10,7 +9,11 @@ import Input from '@/components/formik/Input';
 import PasswordInput from '@/components/formik/PasswordInput';
 import Button from '@/components/Button';
 
-const RegisterPartner = (props) => {
+type RegisterPartnerProps = {
+    payload?: string;
+};
+
+const RegisterPartner = (props: RegisterPartnerProps) => {
     const history = useHistory();
     const dispatch = useDispatch();
 
@@ -70,10 +73,6 @@ const RegisterPartner = (props) => {
             </Formik>
         </Card>
     );
-};
-
-RegisterPartner.propTypes = {
-    payload: PropTypes.string,
 };
 
 export default RegisterPartner;

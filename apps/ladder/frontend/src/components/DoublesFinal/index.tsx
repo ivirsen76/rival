@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Result from './Result';
 import HiddenText from '@/components/HiddenText';
 import TournamentText from '@/components/TournamentText';
@@ -8,7 +7,16 @@ import Bracket from '../Final/Bracket';
 import { BYE_ID } from '@rival/ladder.backend/src/constants';
 import style from './style.module.scss';
 
-const DoublesFinal = (props) => {
+type DoublesFinalProps = {
+    matches?: unknown[];
+    players?: object;
+    tournament?: object;
+    reloadTournament?: (...args: unknown[]) => unknown;
+    showTournamentText?: boolean;
+    isReport?: boolean;
+};
+
+const DoublesFinal = (props: DoublesFinalProps) => {
     const { players, tournament, reloadTournament, showTournamentText, isReport } = props;
     const matches = props.matches.reduce((obj, match) => {
         obj[match.finalSpot] = match;
@@ -166,15 +174,6 @@ const DoublesFinal = (props) => {
             </div>
         </div>
     );
-};
-
-DoublesFinal.propTypes = {
-    matches: PropTypes.array,
-    players: PropTypes.object,
-    tournament: PropTypes.object,
-    reloadTournament: PropTypes.func,
-    showTournamentText: PropTypes.bool,
-    isReport: PropTypes.bool,
 };
 
 export default DoublesFinal;

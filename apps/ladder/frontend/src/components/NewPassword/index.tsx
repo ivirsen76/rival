@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 import { Formik, Field, Form } from '@/components/formik';
 import PasswordInput from '@/components/formik/PasswordInput';
@@ -10,7 +9,11 @@ import axios from '@/utils/axios';
 import { logout } from '@/reducers/auth';
 import { useDispatch } from 'react-redux';
 
-const NewPassword = (props) => {
+type NewPasswordProps = {
+    payload?: string;
+};
+
+const NewPassword = (props: NewPasswordProps) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
@@ -63,10 +66,6 @@ const NewPassword = (props) => {
             </Formik>
         </Card>
     );
-};
-
-NewPassword.propTypes = {
-    payload: PropTypes.string,
 };
 
 export default NewPassword;

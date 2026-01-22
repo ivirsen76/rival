@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
-const Tabs = (props) => {
+type TabsProps = {
+    list?: unknown[];
+};
+
+const Tabs = (props: TabsProps) => {
     const { list } = props;
     const [currentTabIndex, setCurrentTabIndex] = useState(0);
 
@@ -29,10 +32,6 @@ const Tabs = (props) => {
             {currentTab.content}
         </div>
     );
-};
-
-Tabs.propTypes = {
-    list: PropTypes.array,
 };
 
 export default Tabs;

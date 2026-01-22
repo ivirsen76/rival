@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import FieldWrapper from './FieldWrapper';
 import _omit from 'lodash/omit';
 import classnames from 'classnames';
@@ -6,7 +5,12 @@ import Flatpickr from 'react-flatpickr';
 import dayjs from '@/utils/dayjs';
 import CalendarIcon from '@/styles/metronic/icons/duotone/Interface/Calendar.svg?react';
 
-const DatePicker = (props) => {
+type DatePickerProps = {
+    form?: object;
+    field?: object;
+};
+
+const DatePicker = (props: DatePickerProps) => {
     const { field, form } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
     const passingProps = _omit(props, ['field', 'form', 'children', 'label', 'description']);
@@ -48,11 +52,6 @@ const DatePicker = (props) => {
             </div>
         </FieldWrapper>
     );
-};
-
-DatePicker.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
 };
 
 export default DatePicker;

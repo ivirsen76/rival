@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import FieldWrapper from '@/components/formik/FieldWrapper';
 import Button from '@/components/Button';
@@ -11,7 +10,11 @@ import { IMaskInput } from 'react-imask';
 import classnames from 'classnames';
 import axios from '@/utils/axios';
 
-const PhoneForm = (props) => {
+type PhoneFormProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const PhoneForm = (props: PhoneFormProps) => {
     const currentUser = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
@@ -84,10 +87,6 @@ const PhoneForm = (props) => {
             )}
         </Formik>
     );
-};
-
-PhoneForm.propTypes = {
-    onSubmit: PropTypes.func,
 };
 
 export default PhoneForm;

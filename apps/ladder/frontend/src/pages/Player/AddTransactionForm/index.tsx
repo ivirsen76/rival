@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Select from '@/components/formik/Select';
@@ -13,7 +12,12 @@ const typeOptions = [
     { value: 'product', label: 'Product' },
 ];
 
-const AddTransactionForm = (props) => {
+type AddTransactionFormProps = {
+    user?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const AddTransactionForm = (props: AddTransactionFormProps) => {
     const { user } = props;
 
     const onSubmit = async (values) => {
@@ -49,11 +53,6 @@ const AddTransactionForm = (props) => {
             )}
         </Formik>
     );
-};
-
-AddTransactionForm.propTypes = {
-    user: PropTypes.object,
-    onSubmit: PropTypes.func,
 };
 
 export default AddTransactionForm;

@@ -1,10 +1,17 @@
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import { useRef, useLayoutEffect } from 'react';
-import PropTypes from 'prop-types';
 import useUniqueId from './useUniqueId';
 
-const Chart = (props) => {
+type ChartProps = {
+    chartType?: string;
+    getData?: (...args: unknown[]) => unknown;
+    data?: unknown[];
+    init?: (...args: unknown[]) => unknown;
+    height?: string;
+};
+
+const Chart = (props: ChartProps) => {
     const { chartType, data, getData, height } = props;
     const chart = useRef(null);
     const chartId = useUniqueId();
@@ -21,14 +28,6 @@ const Chart = (props) => {
     }, []);
 
     return <div id={chartId} style={{ width: '100%', height }} />;
-};
-
-Chart.propTypes = {
-    chartType: PropTypes.string,
-    getData: PropTypes.func,
-    data: PropTypes.array,
-    init: PropTypes.func,
-    height: PropTypes.string,
 };
 
 Chart.defaultProps = {

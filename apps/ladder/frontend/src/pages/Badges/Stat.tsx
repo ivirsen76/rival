@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import Badge from '@/components/Badge';
 import Modal from '@/components/Modal';
 import classnames from 'classnames';
@@ -13,7 +12,13 @@ import style from './style.module.scss';
 
 const returnFunc = (value) => value;
 
-const BadgesStat = (props) => {
+type BadgesStatProps = {
+    data?: object;
+    isMyself?: boolean;
+    isLight?: boolean;
+};
+
+const BadgesStat = (props: BadgesStatProps) => {
     const { data, isMyself, isLight } = props;
 
     const stats = data?.stats;
@@ -354,12 +359,6 @@ const BadgesStat = (props) => {
             ))}
         </div>
     );
-};
-
-BadgesStat.propTypes = {
-    data: PropTypes.object,
-    isMyself: PropTypes.bool,
-    isLight: PropTypes.bool,
 };
 
 export default BadgesStat;

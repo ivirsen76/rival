@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Loader from '@/components/Loader';
 import notification from '@/components/notification';
 import axios from '@/utils/axios';
 import style from './style.module.scss';
 
-const ApprovePhoto = (props) => {
+type ApprovePhotoProps = {
+    payload?: string;
+};
+
+const ApprovePhoto = (props: ApprovePhotoProps) => {
     const { payload } = props;
     const [loading, setLoading] = useState(true);
 
@@ -33,10 +36,6 @@ const ApprovePhoto = (props) => {
     }, []);
 
     return <Loader loading={loading} />;
-};
-
-ApprovePhoto.propTypes = {
-    payload: PropTypes.string,
 };
 
 export default ApprovePhoto;

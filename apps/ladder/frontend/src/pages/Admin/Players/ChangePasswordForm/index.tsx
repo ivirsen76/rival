@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import PasswordInput from '@/components/formik/PasswordInput';
 import Button from '@/components/Button';
 
-const ChangePasswordForm = (props) => {
+type ChangePasswordFormProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const ChangePasswordForm = (props: ChangePasswordFormProps) => {
     return (
         <Formik
             initialValues={{
@@ -22,10 +25,6 @@ const ChangePasswordForm = (props) => {
             )}
         </Formik>
     );
-};
-
-ChangePasswordForm.propTypes = {
-    onSubmit: PropTypes.func,
 };
 
 export default ChangePasswordForm;

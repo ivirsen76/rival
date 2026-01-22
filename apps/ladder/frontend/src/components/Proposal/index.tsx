@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import style from './style.module.scss';
 import MarkerIcon from '@/styles/metronic/icons/duotune/general/gen018.svg?react';
 import CommentIcon from '@/styles/metronic/icons/duotone/Interface/Comment.svg?react';
@@ -26,7 +25,14 @@ import practiceTypeOptions from '@rival/ladder.backend/src/services/proposals/pr
 import matchFormatOptions from '@rival/ladder.backend/src/services/proposals/matchFormatOptions';
 import durationOptions from '@rival/ladder.backend/src/services/proposals/durationOptions';
 
-const FormAcceptProposal = (props) => {
+type FormAcceptProposalProps = {
+    match?: object;
+    tournament?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+    onCancel?: (...args: unknown[]) => unknown;
+};
+
+const FormAcceptProposal = (props: FormAcceptProposalProps) => {
     const { match, onSubmit, onCancel, tournament } = props;
     const currentUser = useSelector((state) => state.auth.user);
     const currentPlayerId = currentUser.tournaments[tournament.id].playerId;
@@ -100,14 +106,17 @@ const FormAcceptProposal = (props) => {
     );
 };
 
-FormAcceptProposal.propTypes = {
-    match: PropTypes.object,
-    tournament: PropTypes.object,
-    onSubmit: PropTypes.func,
-    onCancel: PropTypes.func,
+type ProposalProps = {
+    tournament?: object;
+    match?: object;
+    onStatusUpdate?: (...args: unknown[]) => unknown;
+    showActions?: boolean;
+    showWeather?: boolean;
+    isUpcomingPlayStyle?: boolean;
+    showElo?: boolean;
 };
 
-const Proposal = (props) => {
+const Proposal = (props: ProposalProps) => {
     const { tournament, match, onStatusUpdate, showActions, showWeather, isUpcomingPlayStyle, showElo } = props;
     const { canAcceptProposal, canDeleteProposal, canUnacceptProposal, canSeeContact } = useMatchPermissions({
         tournament,
@@ -349,16 +358,6 @@ const Proposal = (props) => {
             </div>
         </div>
     );
-};
-
-Proposal.propTypes = {
-    tournament: PropTypes.object,
-    match: PropTypes.object,
-    onStatusUpdate: PropTypes.func,
-    showActions: PropTypes.bool,
-    showWeather: PropTypes.bool,
-    isUpcomingPlayStyle: PropTypes.bool,
-    showElo: PropTypes.bool,
 };
 
 Proposal.defaultProps = {

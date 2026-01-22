@@ -1,10 +1,19 @@
-import PropTypes from 'prop-types';
 import FieldWrapper from '../FieldWrapper';
 import classnames from 'classnames';
 import AnimateHeight from 'react-animate-height';
 import style from './style.module.scss';
 
-const RadioModern = (props) => {
+type RadioModernProps = {
+    form?: object;
+    field?: object;
+    label?: React.ReactNode;
+    description?: React.ReactNode;
+    options?: unknown[];
+    alwaysShowDescription?: boolean;
+    allowUnselect?: boolean;
+};
+
+const RadioModern = (props: RadioModernProps) => {
     const { field, form, options, alwaysShowDescription, allowUnselect } = props;
 
     return (
@@ -56,15 +65,6 @@ const RadioModern = (props) => {
     );
 };
 
-RadioModern.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    label: PropTypes.node,
-    description: PropTypes.node,
-    options: PropTypes.array,
-    alwaysShowDescription: PropTypes.bool,
-    allowUnselect: PropTypes.bool,
-};
 RadioModern.defaultProps = {
     allowUnselect: true,
 };

@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import Match from '@/components/Match';
 import Card from '@/components/Card';
 import Modal from '@/components/Modal';
@@ -13,7 +12,12 @@ import { getUpcomingMatches } from '../Overview';
 import checkUserReady from '@/utils/checkUserReady';
 import style from './style.module.scss';
 
-const Matches = (props) => {
+type MatchesProps = {
+    tournament?: object;
+    reloadTournament?: (...args: unknown[]) => unknown;
+};
+
+const Matches = (props: MatchesProps) => {
     const { tournament, reloadTournament } = props;
     const { players } = tournament;
     const [matchFilter, setMatchFilter] = useState('played');
@@ -133,11 +137,6 @@ const Matches = (props) => {
             </div>
         </div>
     );
-};
-
-Matches.propTypes = {
-    tournament: PropTypes.object,
-    reloadTournament: PropTypes.func,
 };
 
 Matches.defaultProps = {};

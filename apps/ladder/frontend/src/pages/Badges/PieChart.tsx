@@ -1,8 +1,11 @@
-import PropTypes from 'prop-types';
 import Chart from '@/components/Chart';
 import style from './style.module.scss';
 
-const PieChart = (props) => {
+type PieChartProps = {
+    data?: unknown[];
+};
+
+const PieChart = (props: PieChartProps) => {
     const { data } = props;
 
     const chartInit = ({ am4core, am4charts, instance }) => {
@@ -40,10 +43,6 @@ const PieChart = (props) => {
             <Chart chartType="PieChart" init={chartInit} getData={getData} height="100%" />
         </div>
     );
-};
-
-PieChart.propTypes = {
-    data: PropTypes.array,
 };
 
 PieChart.defaultProps = {};

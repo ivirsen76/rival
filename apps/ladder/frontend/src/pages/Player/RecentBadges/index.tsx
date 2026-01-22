@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import Badge from '@/components/Badge';
 import BadgeStat from '@/pages/Badges/Stat';
 import { formatDate } from '@/utils/dayjs';
@@ -10,7 +9,11 @@ import style from './style.module.scss';
 
 const SHOW_BADGES = 5;
 
-const RecentBadges = (props) => {
+type RecentBadgesProps = {
+    user?: object;
+};
+
+const RecentBadges = (props: RecentBadgesProps) => {
     const { user } = props;
     const { stats, achievedBadges } = user.badges;
 
@@ -107,10 +110,6 @@ const RecentBadges = (props) => {
             renderBody={() => <BadgeStat data={user.badges} />}
         />
     );
-};
-
-RecentBadges.propTypes = {
-    user: PropTypes.object,
 };
 
 export default RecentBadges;

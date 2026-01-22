@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import DateTimeWithWeather from '@/components/DateTimeWithWeather';
@@ -15,7 +14,12 @@ import axios from '@/utils/axios';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import style from './style.module.scss';
 
-const JustForm = (props) => {
+type JustFormProps = {
+    formikProps?: object;
+    tournament?: object;
+};
+
+const JustForm = (props: JustFormProps) => {
     const { formikProps, tournament } = props;
     const { isSubmitting, values, setFieldValue } = formikProps;
 
@@ -142,12 +146,13 @@ const JustForm = (props) => {
     );
 };
 
-JustForm.propTypes = {
-    formikProps: PropTypes.object,
-    tournament: PropTypes.object,
+type FormDoublesProposalProps = {
+    initialValues?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+    tournament?: object;
 };
 
-const FormDoublesProposal = (props) => {
+const FormDoublesProposal = (props: FormDoublesProposalProps) => {
     const [confirmed, setConfirmed] = useState(false);
     const { initialValues, onSubmit, tournament } = props;
     const currentUser = useSelector((state) => state.auth.user);
@@ -202,12 +207,6 @@ const FormDoublesProposal = (props) => {
             {(formikProps) => <JustForm formikProps={formikProps} tournament={tournament} />}
         </Formik>
     );
-};
-
-FormDoublesProposal.propTypes = {
-    initialValues: PropTypes.object,
-    onSubmit: PropTypes.func,
-    tournament: PropTypes.object,
 };
 
 export default FormDoublesProposal;

@@ -1,5 +1,4 @@
 import { useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Button from '@/components/Button';
 import Modal from '@/components/Modal';
@@ -66,7 +65,15 @@ const renderTeammateDescription = (tournamentId: number, values) => {
     );
 };
 
-const Levels = (props) => {
+type LevelsProps = {
+    settings?: object;
+    updateSettings?: (...args: unknown[]) => unknown;
+    onSubmit?: (...args: unknown[]) => unknown;
+    user?: object;
+    selectedSeason?: object;
+};
+
+const Levels = (props: LevelsProps) => {
     const { settings, selectedSeason, updateSettings, onSubmit, user } = props;
     const config = useConfig();
     const dispatch = useDispatch();
@@ -568,14 +575,6 @@ const Levels = (props) => {
             )}
         </Formik>
     );
-};
-
-Levels.propTypes = {
-    settings: PropTypes.object,
-    updateSettings: PropTypes.func,
-    onSubmit: PropTypes.func,
-    user: PropTypes.object,
-    selectedSeason: PropTypes.object,
 };
 
 export default Levels;

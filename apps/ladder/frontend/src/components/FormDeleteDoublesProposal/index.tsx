@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Button from '@/components/Button';
@@ -6,7 +5,13 @@ import axios from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import notification from '@/components/notification';
 
-const FormDeleteDoublesProposal = (props) => {
+type FormDeleteDoublesProposalProps = {
+    onSubmit: (...args: unknown[]) => unknown;
+    match: object;
+    tournament: object;
+};
+
+const FormDeleteDoublesProposal = (props: FormDeleteDoublesProposalProps) => {
     const { match, tournament } = props;
     const { players } = tournament;
     const currentUser = useSelector((state) => state.auth.user);
@@ -61,12 +66,6 @@ const FormDeleteDoublesProposal = (props) => {
             )}
         </Formik>
     );
-};
-
-FormDeleteDoublesProposal.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    match: PropTypes.object.isRequired,
-    tournament: PropTypes.object.isRequired,
 };
 
 export default FormDeleteDoublesProposal;

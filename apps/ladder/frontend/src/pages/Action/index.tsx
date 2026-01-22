@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import Loader from '@/components/Loader';
 import Error from '@/components/Error';
 import NewPassword from '@/components/NewPassword';
@@ -22,7 +21,11 @@ const availableActions = {
     registerPartner: { component: RegisterPartner },
 };
 
-const Action = (props) => {
+type ActionProps = {
+    match?: object;
+};
+
+const Action = (props: ActionProps) => {
     const { payload } = props.match.params;
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState();
@@ -57,10 +60,6 @@ const Action = (props) => {
     const Component = availableActions[params.name].component;
 
     return <Component payload={payload} />;
-};
-
-Action.propTypes = {
-    match: PropTypes.object,
 };
 
 export default Action;

@@ -1,13 +1,12 @@
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const InjuryIcon = (props) => {
-    return <div className={classnames(style.injury, props.className)}>+</div>;
+type InjuryIconProps = {
+    className?: string;
 };
 
-InjuryIcon.propTypes = {
-    className: PropTypes.string,
+const InjuryIcon = (props: InjuryIconProps) => {
+    return <div className={classnames(style.injury, props.className)}>+</div>;
 };
 
 export default InjuryIcon;

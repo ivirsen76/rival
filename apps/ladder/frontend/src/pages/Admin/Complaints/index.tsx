@@ -13,7 +13,9 @@ const reasonOptionsMatch = reasonOptions.reduce((obj, item) => {
     return obj;
 }, []);
 
-const Complaints = (props) => {
+type ComplaintsProps = {};
+
+const Complaints = (props: ComplaintsProps) => {
     const { data: users, isLoading } = useQuery('getAllComplaints', async () => {
         const response = await axios.put('/api/complaints/0', { action: 'getAllComplaints' });
 
@@ -94,8 +96,6 @@ const Complaints = (props) => {
         </Card>
     );
 };
-
-Complaints.propTypes = {};
 
 Complaints.defaultProps = {};
 

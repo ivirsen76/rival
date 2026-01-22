@@ -22,15 +22,14 @@ import showLoader from '@/utils/showLoader';
 const getFilteredData = (item, filter) => {
     filter = filter.toLowerCase();
 
-    return (
-        (item.name && item.name.toLowerCase().includes(filter)) ||
-        (item.email && item.email.toLowerCase().includes(filter)) ||
-        (item.phone && item.phone.includes(filter.replace(/-/g, ''))) ||
-        (item.birthday && item.birthday.includes(filter))
-    );
+    return ((item.name && item.name.toLowerCase().includes(filter)) ||
+    (item.email && item.email.toLowerCase().includes(filter)) ||
+    (item.phone && item.phone.includes(filter.replace(/-/g, ''))) || (item.birthday && item.birthday.includes(filter)));
 };
 
-const Players = (props) => {
+type PlayersProps = {};
+
+const Players = (props: PlayersProps) => {
     const { data: users, isLoading } = useQuery(
         'getAllUsers',
         async () => {
@@ -235,8 +234,6 @@ const Players = (props) => {
         </Card>
     );
 };
-
-Players.propTypes = {};
 
 Players.defaultProps = {};
 

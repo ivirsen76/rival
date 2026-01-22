@@ -17,7 +17,9 @@ import showLoader from '@/utils/showLoader';
 import useTabs from '../../Tournament/useTabs';
 import style from './style.module.scss';
 
-const Merge = (props) => {
+type MergeProps = {};
+
+const Merge = (props: MergeProps) => {
     const queryClient = useQueryClient();
     const { data, isLoading } = useQuery('getDuplicatedUsers', async () => {
         const response = await axios.put('/api/users/0', { action: 'getDuplicatedUsers' });
@@ -246,8 +248,6 @@ const Merge = (props) => {
         </Card>
     );
 };
-
-Merge.propTypes = {};
 
 Merge.defaultProps = {};
 

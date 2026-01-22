@@ -1,11 +1,17 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
 import Button from '@/components/Button';
 import { useQueryClient } from 'react-query';
 import axios from 'axios';
 
-const EditCommentForm = (props) => {
+type EditCommentFormProps = {
+    commentId?: number;
+    slide?: object;
+    initialValues?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const EditCommentForm = (props: EditCommentFormProps) => {
     const { commentId, slide, initialValues, onSubmit } = props;
     const queryClient = useQueryClient();
 
@@ -40,13 +46,6 @@ const EditCommentForm = (props) => {
             )}
         </Formik>
     );
-};
-
-EditCommentForm.propTypes = {
-    commentId: PropTypes.number,
-    slide: PropTypes.object,
-    initialValues: PropTypes.object,
-    onSubmit: PropTypes.func,
 };
 
 EditCommentForm.defaultProps = {

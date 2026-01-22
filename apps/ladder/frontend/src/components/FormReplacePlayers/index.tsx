@@ -1,12 +1,17 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Select from '@/components/formik/Select';
 import Button from '@/components/Button';
 import notification from '@/components/notification';
 import axios from '@/utils/axios';
 
-const FormReplacePlayers = (props) => {
+type FormReplacePlayersProps = {
+    match?: object;
+    players?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const FormReplacePlayers = (props: FormReplacePlayersProps) => {
     const { players, match } = props;
 
     const playersOptions = useMemo(() => {
@@ -53,12 +58,6 @@ const FormReplacePlayers = (props) => {
             )}
         </Formik>
     );
-};
-
-FormReplacePlayers.propTypes = {
-    match: PropTypes.object,
-    players: PropTypes.object,
-    onSubmit: PropTypes.func,
 };
 
 export default FormReplacePlayers;

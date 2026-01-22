@@ -1,10 +1,13 @@
-import PropTypes from 'prop-types';
 import Icon from '../Icon';
 import useSettings from '@/utils/useSettings';
 import dayjs from '@/utils/dayjs';
 import style from './style.module.scss';
 
-const WeatherAtTime = (props) => {
+type WeatherAtTimeProps = {
+    time?: string;
+};
+
+const WeatherAtTime = (props: WeatherAtTimeProps) => {
     const { settings } = useSettings();
     const hours = settings.settings.weather?.hours || [];
     const time = dayjs.tz(props.time);
@@ -37,10 +40,6 @@ const WeatherAtTime = (props) => {
             </div>
         </div>
     );
-};
-
-WeatherAtTime.propTypes = {
-    time: PropTypes.string,
 };
 
 export default WeatherAtTime;

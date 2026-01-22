@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Button from '@/components/Button';
@@ -9,7 +8,15 @@ import notification from '@/components/notification';
 import dayjs from '@/utils/dayjs';
 import useMatchPermissions from '@/utils/useMatchPermissions';
 
-const FormDeleteProposal = (props) => {
+type FormDeleteProposalProps = {
+    onSubmit: (...args: unknown[]) => unknown;
+    onCancel?: (...args: unknown[]) => unknown;
+    match: object;
+    tournament: object;
+    renderDeletedProposal?: (...args: unknown[]) => unknown;
+};
+
+const FormDeleteProposal = (props: FormDeleteProposalProps) => {
     const { tournament, match, renderDeletedProposal } = props;
     const { isPartOfChallengers } = useMatchPermissions({ tournament, match });
 
@@ -93,14 +100,6 @@ const FormDeleteProposal = (props) => {
             )}
         </Formik>
     );
-};
-
-FormDeleteProposal.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func,
-    match: PropTypes.object.isRequired,
-    tournament: PropTypes.object.isRequired,
-    renderDeletedProposal: PropTypes.func,
 };
 
 export default FormDeleteProposal;

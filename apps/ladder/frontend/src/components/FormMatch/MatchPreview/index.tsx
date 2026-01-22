@@ -1,6 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.module.scss';
 import PlayerAvatar from '@/components/PlayerAvatar';
@@ -10,7 +7,12 @@ import _isInteger from 'lodash/isInteger';
 import parseScore from '@/components/Match/parseScore';
 import { isFullSetScoreCorrect, isFastSetScoreCorrect } from '@rival/ladder.backend/src/services/matches/helpers';
 
-const MatchPreview = (props) => {
+type MatchPreviewProps = {
+    tournament?: object;
+    match?: object;
+};
+
+const MatchPreview = (props: MatchPreviewProps) => {
     const { tournament, match } = props;
     const { players } = tournament;
 
@@ -206,11 +208,6 @@ const MatchPreview = (props) => {
             </div>
         </div>
     );
-};
-
-MatchPreview.propTypes = {
-    tournament: PropTypes.object,
-    match: PropTypes.object,
 };
 
 export default MatchPreview;

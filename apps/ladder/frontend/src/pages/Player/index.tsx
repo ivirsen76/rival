@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
 import Loader from '@/components/Loader';
 import Card from '@/components/Card';
@@ -53,7 +52,11 @@ import { Squircle } from 'corner-smoothing';
 import useBreakpoints from '@/utils/useBreakpoints';
 import style from './style.module.scss';
 
-const Player = (props) => {
+type PlayerProps = {
+    match?: object;
+};
+
+const Player = (props: PlayerProps) => {
     const slug = props.match.params.slug;
 
     const dispatch = useDispatch();
@@ -626,10 +629,6 @@ const Player = (props) => {
             </div>
         </div>
     );
-};
-
-Player.propTypes = {
-    match: PropTypes.object,
 };
 
 export default Player;

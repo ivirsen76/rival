@@ -1,8 +1,14 @@
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Bar = (props) => {
+type BarProps = {
+    label?: string;
+    num?: number;
+    total?: number;
+    isBetter?: boolean;
+};
+
+const Bar = (props: BarProps) => {
     const { label, num, total, isBetter } = props;
 
     return (
@@ -19,14 +25,13 @@ const Bar = (props) => {
     );
 };
 
-Bar.propTypes = {
-    label: PropTypes.string,
-    num: PropTypes.number,
-    total: PropTypes.number,
-    isBetter: PropTypes.bool,
+type WinnersProps = {
+    title?: string;
+    data?: unknown[];
+    isGrowing?: boolean;
 };
 
-const Winners = (props) => {
+const Winners = (props: WinnersProps) => {
     const { title, data, isGrowing } = props;
 
     const totals = data.reduce(
@@ -69,12 +74,6 @@ const Winners = (props) => {
             </div>
         </div>
     );
-};
-
-Winners.propTypes = {
-    title: PropTypes.string,
-    data: PropTypes.array,
-    isGrowing: PropTypes.bool,
 };
 
 Winners.defaultProps = {

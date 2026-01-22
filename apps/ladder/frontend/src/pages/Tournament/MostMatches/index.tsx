@@ -1,9 +1,13 @@
-import PropTypes from 'prop-types';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import classnames from 'classnames';
 
-const MostMatches = (props) => {
+type MostMatchesProps = {
+    tournament?: object;
+    isReport?: boolean;
+};
+
+const MostMatches = (props: MostMatchesProps) => {
     const { mostMatches, players } = props.tournament;
     const { isReport } = props;
 
@@ -38,11 +42,6 @@ const MostMatches = (props) => {
             </table>
         </>
     );
-};
-
-MostMatches.propTypes = {
-    tournament: PropTypes.object,
-    isReport: PropTypes.bool,
 };
 
 export default MostMatches;

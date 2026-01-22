@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 import { useMemo, useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import FieldWrapper from '../FieldWrapper';
 import { useDebounce } from 'use-debounce';
 import dayjs from '@/utils/dayjs';
@@ -8,7 +7,13 @@ import convertDate from '@/utils/convertDate';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Birthday = (props) => {
+type BirthdayProps = {
+    form?: object;
+    field?: object;
+    autoFocus?: boolean;
+};
+
+const Birthday = (props: BirthdayProps) => {
     const { field, form } = props;
     const [mm, setMM] = useState(() => (field.value ? field.value.slice(5, 7) : ''));
     const [dd, setDD] = useState(() => (field.value ? field.value.slice(8, 10) : ''));
@@ -136,12 +141,6 @@ const Birthday = (props) => {
             </div>
         </FieldWrapper>
     );
-};
-
-Birthday.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    autoFocus: PropTypes.bool,
 };
 
 export default Birthday;

@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
@@ -7,19 +6,17 @@ const aroundPages = 1;
 const edgePages = 3;
 const minPages = 10;
 
+type PaginatorProps = {
+    /** total number of pages. If equal 0 then the component shows nothing */
+    total?: number;
+    /** current page */
+    currentPage?: number;
+    /** function called after changing page with params: function(newPage) */
+    onPageChange?: (...args: unknown[]) => unknown;
+};
+
 /** Show page links */
-export default class Paginator extends React.Component {
-    static propTypes = {
-        /** total number of pages. If equal 0 then the component shows nothing */
-        total: PropTypes.number,
-
-        /** current page */
-        currentPage: PropTypes.number,
-
-        /** function called after changing page with params: function(newPage) */
-        onPageChange: PropTypes.func,
-    };
-
+export default class Paginator extends React.Component<PaginatorProps> {
     static defaultProps = {
         total: 0,
         currentPage: 1,

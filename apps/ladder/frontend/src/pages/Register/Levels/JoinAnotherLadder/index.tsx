@@ -1,8 +1,12 @@
-import PropTypes from 'prop-types';
 import { Formik, Field } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
 
-const JoinAnotherLadder = (props) => {
+type JoinAnotherLadderProps = {
+    initialReason?: string;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const JoinAnotherLadder = (props: JoinAnotherLadderProps) => {
     const { initialReason, onSubmit } = props;
 
     const validate = (values) => {
@@ -50,11 +54,6 @@ const JoinAnotherLadder = (props) => {
             }}
         </Formik>
     );
-};
-
-JoinAnotherLadder.propTypes = {
-    initialReason: PropTypes.string,
-    onSubmit: PropTypes.func,
 };
 
 export default JoinAnotherLadder;

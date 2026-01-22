@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
@@ -17,7 +16,11 @@ export const genderOptions = [
     { value: 'female', label: 'Female' },
 ];
 
-const PersonalInfoForm = (props) => {
+type PersonalInfoFormProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const PersonalInfoForm = (props: PersonalInfoFormProps) => {
     const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
@@ -62,10 +65,6 @@ const PersonalInfoForm = (props) => {
             )}
         </Formik>
     );
-};
-
-PersonalInfoForm.propTypes = {
-    onSubmit: PropTypes.func,
 };
 
 export default PersonalInfoForm;

@@ -1,8 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import style from './style.module.scss';
 
-const ScaleToFit = (props) => {
+type ScaleToFitProps = {
+    children?: React.ReactNode;
+    width?: number;
+};
+
+const ScaleToFit = (props: ScaleToFitProps) => {
     const [scale, setScale] = useState(0);
     const [height, setHeight] = useState(0);
     const wrapperRef = useRef();
@@ -36,11 +40,6 @@ const ScaleToFit = (props) => {
             )}
         </div>
     );
-};
-
-ScaleToFit.propTypes = {
-    children: PropTypes.node,
-    width: PropTypes.number,
 };
 
 export default ScaleToFit;

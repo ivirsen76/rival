@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import dayjs from '@/utils/dayjs';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import Tooltip from '@/components/Tooltip';
@@ -13,7 +12,12 @@ import useBreakpoints from '@/utils/useBreakpoints';
 const firstPlayers = 10;
 const tooManyPlayers = 20;
 
-const PlayersLive = (props) => {
+type PlayersLiveProps = {
+    tournament?: object;
+    showDoublesPlayers?: boolean;
+};
+
+const PlayersLive = (props: PlayersLiveProps) => {
     const { tournament, showDoublesPlayers } = props;
     const showAllPlayersForTournaments = useSelector((state) => state.auth.ui.showAllPlayersForTournaments);
     const size = useBreakpoints();
@@ -112,11 +116,6 @@ const PlayersLive = (props) => {
             )}
         </>
     );
-};
-
-PlayersLive.propTypes = {
-    tournament: PropTypes.object,
-    showDoublesPlayers: PropTypes.bool,
 };
 
 export default PlayersLive;

@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { useState, useMemo, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useQuery } from 'react-query';
 import UpsetMatch from '@/components/UpsetMatch';
 import SearchIcon from '@/styles/metronic/icons/duotone/General/Search.svg?react';
@@ -15,7 +14,11 @@ import style from './style.module.scss';
 
 const customDateFormat = (date) => dayjs.tz(date).format('MMM D, YYYY');
 
-const Matches = (props) => {
+type MatchesProps = {
+    user?: object;
+};
+
+const Matches = (props: MatchesProps) => {
     const { user } = props;
     const [search, setSearch] = useState('');
     const [atBottom, setAtBottom] = useState(false);
@@ -130,10 +133,6 @@ const Matches = (props) => {
             </div>
         </div>
     );
-};
-
-Matches.propTypes = {
-    user: PropTypes.object,
 };
 
 Matches.defaultProps = {};

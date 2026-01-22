@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 
-const RenderDelay = (props) => {
+type RenderDelayProps = {
+    children?: React.ReactNode;
+    delay?: number;
+};
+
+const RenderDelay = (props: RenderDelayProps) => {
     const { delay, children } = props;
     const [mounted, setMounted] = useState(false);
 
@@ -11,11 +15,6 @@ const RenderDelay = (props) => {
     }, []);
 
     return mounted ? children : null;
-};
-
-RenderDelay.propTypes = {
-    children: PropTypes.node,
-    delay: PropTypes.number,
 };
 
 RenderDelay.defaultProps = {

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import _get from 'lodash/get';
 import PerformanceChart from './PerformanceChart';
 import Tooltip from '@/components/Tooltip';
@@ -16,7 +15,13 @@ const stages = {
     champion: { color: '#00ff00', render: 'C' },
 };
 
-const Calendar = (props) => {
+type CalendarProps = {
+    data?: object;
+    levelSlug?: string;
+    levelType?: string;
+};
+
+const Calendar = (props: CalendarProps) => {
     const { levelSlug, levelType } = props;
 
     const years = [];
@@ -268,12 +273,6 @@ const Calendar = (props) => {
             </table>
         </div>
     );
-};
-
-Calendar.propTypes = {
-    data: PropTypes.object,
-    levelSlug: PropTypes.string,
-    levelType: PropTypes.string,
 };
 
 Calendar.defaultProps = {};

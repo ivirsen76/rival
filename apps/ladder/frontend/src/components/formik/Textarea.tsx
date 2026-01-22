@@ -1,11 +1,16 @@
 import { useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import FieldWrapper from './FieldWrapper';
 import _omit from 'lodash/omit';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Textarea = (props) => {
+type TextareaProps = {
+    form?: object;
+    field?: object;
+    autoFocus?: boolean;
+};
+
+const Textarea = (props: TextareaProps) => {
     const { field, form } = props;
     const textareaRef = useRef();
     const showError = form.errors[field.name] && form.submitCount > 0;
@@ -44,12 +49,6 @@ const Textarea = (props) => {
             </div>
         </FieldWrapper>
     );
-};
-
-Textarea.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    autoFocus: PropTypes.bool,
 };
 
 export default Textarea;

@@ -1,11 +1,16 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Button from '@/components/Button';
 import { useQueryClient } from 'react-query';
 import axios from 'axios';
 
-const EditPhotoForm = (props) => {
+type EditPhotoFormProps = {
+    slide?: object;
+    initialValues?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const EditPhotoForm = (props: EditPhotoFormProps) => {
     const { slide, initialValues, onSubmit } = props;
     const queryClient = useQueryClient();
 
@@ -33,12 +38,6 @@ const EditPhotoForm = (props) => {
             )}
         </Formik>
     );
-};
-
-EditPhotoForm.propTypes = {
-    slide: PropTypes.object,
-    initialValues: PropTypes.object,
-    onSubmit: PropTypes.func,
 };
 
 EditPhotoForm.defaultProps = {

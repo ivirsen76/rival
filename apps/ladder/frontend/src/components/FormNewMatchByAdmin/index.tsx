@@ -1,11 +1,15 @@
 import { useState, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Select from '@/components/formik/Select';
 import Button from '@/components/Button';
 import FormMatch from '@/components/FormMatch';
 
-const FormNewMatchByAdmin = (props) => {
+type FormNewMatchByAdminProps = {
+    tournament?: object;
+    onAdd?: (...args: unknown[]) => unknown;
+};
+
+const FormNewMatchByAdmin = (props: FormNewMatchByAdminProps) => {
     const { tournament, onAdd } = props;
     const isDoublesTeam = tournament.levelType === 'doubles-team';
 
@@ -60,11 +64,6 @@ const FormNewMatchByAdmin = (props) => {
             )}
         </Formik>
     );
-};
-
-FormNewMatchByAdmin.propTypes = {
-    tournament: PropTypes.object,
-    onAdd: PropTypes.func,
 };
 
 export default FormNewMatchByAdmin;

@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Birthday from '@/components/formik/Birthday';
@@ -39,7 +38,13 @@ export const comeFromOptions = [
     { value: 99, label: 'Other' },
 ];
 
-const RegisterForm = (props) => {
+type RegisterFormProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+    goToLogin?: (...args: unknown[]) => unknown;
+    showComeFrom?: boolean;
+};
+
+const RegisterForm = (props: RegisterFormProps) => {
     const history = useHistory();
     const { settings } = useSettings();
     const { comeFromPartners } = settings;
@@ -339,12 +344,6 @@ const RegisterForm = (props) => {
             )}
         </Formik>
     );
-};
-
-RegisterForm.propTypes = {
-    onSubmit: PropTypes.func,
-    goToLogin: PropTypes.func,
-    showComeFrom: PropTypes.bool,
 };
 
 RegisterForm.defaultProps = {

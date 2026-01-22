@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import PropTypes from 'prop-types';
 import Avatar from '@/components/avataaars';
 import { Formik, Field, Form } from '@/components/formik';
 import Button from '@/components/Button';
@@ -11,7 +10,14 @@ import { colors as hairColors } from '@/components/avataaars/avatar/top/HairColo
 import { colors as beardColors } from '@/components/avataaars/avatar/top/facialHair/Colors';
 import { colors as clothColors } from '@/components/avataaars/avatar/clothes/Colors';
 
-const AvatarBuilder = (props) => {
+type AvatarBuilderProps = {
+    initialValues?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+    onCancel?: (...args: unknown[]) => unknown;
+    isWoman?: boolean;
+};
+
+const AvatarBuilder = (props: AvatarBuilderProps) => {
     const avatar = useRef();
 
     const initialValues = {
@@ -116,13 +122,6 @@ const AvatarBuilder = (props) => {
             )}
         </Formik>
     );
-};
-
-AvatarBuilder.propTypes = {
-    initialValues: PropTypes.object,
-    onSubmit: PropTypes.func,
-    onCancel: PropTypes.func,
-    isWoman: PropTypes.bool,
 };
 
 AvatarBuilder.defaultProps = {

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import UserPicker from '@/components/formik/UserPicker';
 import Input from '@/components/formik/Input';
@@ -17,7 +16,12 @@ export const banDurationOptions = [
     { value: 9999, label: 'Forever' },
 ];
 
-const BanForm = (props) => {
+type BanFormProps = {
+    list?: unknown[];
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const BanForm = (props: BanFormProps) => {
     const { onSubmit, list } = props;
 
     const getDisabledUsers = (value) => {
@@ -47,11 +51,6 @@ const BanForm = (props) => {
             )}
         </Formik>
     );
-};
-
-BanForm.propTypes = {
-    list: PropTypes.array,
-    onSubmit: PropTypes.func,
 };
 
 export default BanForm;

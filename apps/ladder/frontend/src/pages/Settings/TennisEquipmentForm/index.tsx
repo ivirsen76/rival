@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Field, Form } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
@@ -6,7 +5,11 @@ import { updateCurrentUser } from '@/reducers/auth';
 import Button from '@/components/Button';
 import _pick from 'lodash/pick';
 
-const TennisEquipmentForm = (props) => {
+type TennisEquipmentFormProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const TennisEquipmentForm = (props: TennisEquipmentFormProps) => {
     const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
@@ -45,10 +48,6 @@ const TennisEquipmentForm = (props) => {
             )}
         </Formik>
     );
-};
-
-TennisEquipmentForm.propTypes = {
-    onSubmit: PropTypes.func,
 };
 
 export default TennisEquipmentForm;

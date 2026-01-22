@@ -1,10 +1,15 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import TeamNamePicker, { getValidateTeamName } from '@/components/formik/TeamNamePicker';
 import useConfig from '@/utils/useConfig';
 import Button from '@/components/Button';
 
-const CreateTeamForm = (props) => {
+type CreateTeamFormProps = {
+    tournament?: object;
+    player?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const CreateTeamForm = (props: CreateTeamFormProps) => {
     const { tournament, player, onSubmit } = props;
     const playerName = `${player.firstName} ${player.lastName}`;
     const config = useConfig();
@@ -31,12 +36,6 @@ const CreateTeamForm = (props) => {
             )}
         </Formik>
     );
-};
-
-CreateTeamForm.propTypes = {
-    tournament: PropTypes.object,
-    player: PropTypes.object,
-    onSubmit: PropTypes.func,
 };
 
 export default CreateTeamForm;

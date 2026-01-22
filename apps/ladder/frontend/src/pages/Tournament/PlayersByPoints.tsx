@@ -1,5 +1,4 @@
 import { Fragment, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import style from './style.module.scss';
 import { Link } from 'react-router-dom';
 import Tooltip from '@/components/Tooltip';
@@ -52,14 +51,23 @@ const randomLastNames = [
     'Bunning',
 ];
 
+type ListProps = {
+    list?: unknown[];
+    showDoublesPlayers?: boolean;
+    showRankChanges?: boolean;
+    tournament?: object;
+    lineAfterId?: number;
+    lineLabel?: React.ReactNode;
+};
+
 export const List = ({
     list,
     showDoublesPlayers,
     showRankChanges,
     tournament,
     lineAfterId = 0,
-    lineLabel = 'Tournament Line',
-}) => {
+    lineLabel = 'Tournament Line'
+}: ListProps) => {
     const { isOver, isBreak, isParticipation, playingAnotherFinal } = tournament;
     const currentUser = useSelector((state) => state.auth.user);
     const isDoublesTeam = tournament.levelType === 'doubles-team';
@@ -435,16 +443,12 @@ export const List = ({
     );
 };
 
-List.propTypes = {
-    list: PropTypes.array,
-    showDoublesPlayers: PropTypes.bool,
-    showRankChanges: PropTypes.bool,
-    tournament: PropTypes.object,
-    lineAfterId: PropTypes.number,
-    lineLabel: PropTypes.node,
+type PlayersByPointsProps = {
+    tournament?: object;
+    showDoublesPlayers?: boolean;
 };
 
-const PlayersByPoints = (props) => {
+const PlayersByPoints = (props: PlayersByPointsProps) => {
     const { tournament, showDoublesPlayers } = props;
 
     const currentWeek = Math.ceil(dayjs.tz().diff(dayjs.tz(tournament.startDate), 'week', true));
@@ -498,11 +502,6 @@ const PlayersByPoints = (props) => {
             {...lineProps}
         />
     );
-};
-
-PlayersByPoints.propTypes = {
-    tournament: PropTypes.object,
-    showDoublesPlayers: PropTypes.bool,
 };
 
 export default PlayersByPoints;

@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types';
 import Arc from './Arc';
 import { defaultColors } from '../config';
 import style from './style.module.scss';
 
-const Graph = (props) => {
+type GraphProps = {
+    list?: unknown[];
+};
+
+const Graph = (props: GraphProps) => {
     const list = props.list.map((item, index) => ({ color: defaultColors[index], ...item }));
 
     return (
@@ -18,10 +21,6 @@ const Graph = (props) => {
             <Arc list={list} />
         </div>
     );
-};
-
-Graph.propTypes = {
-    list: PropTypes.array,
 };
 
 export default Graph;

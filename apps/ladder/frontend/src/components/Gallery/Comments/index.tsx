@@ -1,5 +1,4 @@
 import { useState, useMemo, useRef } from 'react';
-import PropTypes from 'prop-types';
 import SendIcon from './send.svg?react';
 import SmileIcon from './smile.svg?react';
 import SmileNewIcon from './smileNew.svg?react';
@@ -35,7 +34,20 @@ const insertAtCursor = (input, textToInsert) => {
     document.execCommand('insertText', false, textToInsert);
 };
 
-const Comments = (props) => {
+type CommentsProps = {
+    slide?: object;
+    photo?: object;
+    reactions?: unknown[];
+    comments?: unknown[];
+    users?: object;
+    addReaction?: (...args: unknown[]) => unknown;
+    addComment?: (...args: unknown[]) => unknown;
+    deleteComment?: (...args: unknown[]) => unknown;
+    dragControls?: object;
+    emojiData?: object;
+};
+
+const Comments = (props: CommentsProps) => {
     const {
         slide,
         photo,
@@ -374,19 +386,6 @@ const Comments = (props) => {
             </div>
         </div>
     );
-};
-
-Comments.propTypes = {
-    slide: PropTypes.object,
-    photo: PropTypes.object,
-    reactions: PropTypes.array,
-    comments: PropTypes.array,
-    users: PropTypes.object,
-    addReaction: PropTypes.func,
-    addComment: PropTypes.func,
-    deleteComment: PropTypes.func,
-    dragControls: PropTypes.object,
-    emojiData: PropTypes.object,
 };
 
 Comments.defaultProps = {};

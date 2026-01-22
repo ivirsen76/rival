@@ -1,12 +1,16 @@
 import { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Autosave from '@/components/Autosave';
 import Textarea from '@/components/formik/Textarea';
 import { useQueryClient } from 'react-query';
 import axios from '@/utils/axios';
 
-const PersonalNoteForm = (props) => {
+type PersonalNoteFormProps = {
+    user?: object;
+    hideDescription?: boolean;
+};
+
+const PersonalNoteForm = (props: PersonalNoteFormProps) => {
     const { user, hideDescription } = props;
     const queryClient = useQueryClient();
 
@@ -35,11 +39,6 @@ const PersonalNoteForm = (props) => {
             )}
         </Formik>
     );
-};
-
-PersonalNoteForm.propTypes = {
-    user: PropTypes.object,
-    hideDescription: PropTypes.bool,
 };
 
 export default PersonalNoteForm;

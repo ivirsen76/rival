@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import FieldWrapper from '../FieldWrapper';
 import _omit from 'lodash/omit';
 import axios from 'axios';
@@ -9,7 +8,13 @@ import style from './style.module.scss';
 
 let lastUpdatedAt = '';
 
-const AddressAutocomplete = (props) => {
+type AddressAutocompleteProps = {
+    form?: object;
+    field?: object;
+    onAutocomplete?: (...args: unknown[]) => unknown;
+};
+
+const AddressAutocomplete = (props: AddressAutocompleteProps) => {
     const { field, form, onAutocomplete } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
     const passingProps = _omit(props, ['field', 'form', 'label', 'description', 'onAutocomplete']);
@@ -158,12 +163,6 @@ const AddressAutocomplete = (props) => {
             </div>
         </FieldWrapper>
     );
-};
-
-AddressAutocomplete.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    onAutocomplete: PropTypes.func,
 };
 
 export default AddressAutocomplete;

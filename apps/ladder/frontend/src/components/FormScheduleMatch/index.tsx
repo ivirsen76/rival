@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Button from '@/components/Button';
@@ -9,7 +8,13 @@ import axios from '@/utils/axios';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
-const FormScheduleMatch = (props) => {
+type FormScheduleMatchProps = {
+    match?: object;
+    tournament?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const FormScheduleMatch = (props: FormScheduleMatchProps) => {
     const { match, tournament, onSubmit } = props;
     const config = useConfig();
     const [step, setStep] = useState(() => {
@@ -126,12 +131,6 @@ const FormScheduleMatch = (props) => {
             )}
         </Formik>
     );
-};
-
-FormScheduleMatch.propTypes = {
-    match: PropTypes.object,
-    tournament: PropTypes.object,
-    onSubmit: PropTypes.func,
 };
 
 export default FormScheduleMatch;

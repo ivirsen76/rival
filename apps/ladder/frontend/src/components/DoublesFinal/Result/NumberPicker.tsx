@@ -1,10 +1,14 @@
 import { useRef } from 'react';
-import PropTypes from 'prop-types';
 import Tooltip from '@/components/Tooltip';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const NumberPicker = (props) => {
+type NumberPickerProps = {
+    value?: number;
+    onChange?: (...args: unknown[]) => unknown;
+};
+
+const NumberPicker = (props: NumberPickerProps) => {
     const { value, onChange } = props;
     const tooltipRef = useRef();
 
@@ -50,11 +54,6 @@ const NumberPicker = (props) => {
             )}
         </Tooltip>
     );
-};
-
-NumberPicker.propTypes = {
-    value: PropTypes.number,
-    onChange: PropTypes.func,
 };
 
 export default NumberPicker;

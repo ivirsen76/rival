@@ -1,9 +1,20 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import useUniqueId from '@/utils/useUniqueId';
 import useAppearance from '@/utils/useAppearance';
 
-const Badge = (props) => {
+type BadgeProps = {
+    type?: string;
+    label?: string | number;
+    text?: string;
+    largeText?: string;
+    shape?: string;
+    colorHue?: number;
+    disabled?: boolean;
+    percent?: number;
+    completed?: boolean;
+};
+
+const Badge = (props: BadgeProps) => {
     const { type, label, shape, colorHue, disabled, percent, text, largeText, completed } = props;
     const appearance = useAppearance();
     const isDarkTheme = appearance === 'dark';
@@ -735,18 +746,6 @@ const Badge = (props) => {
             </g> */}
         </svg>
     );
-};
-
-Badge.propTypes = {
-    type: PropTypes.string,
-    label: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    text: PropTypes.string,
-    largeText: PropTypes.string,
-    shape: PropTypes.string,
-    colorHue: PropTypes.number,
-    disabled: PropTypes.bool,
-    percent: PropTypes.number,
-    completed: PropTypes.bool,
 };
 
 Badge.defaultProps = {

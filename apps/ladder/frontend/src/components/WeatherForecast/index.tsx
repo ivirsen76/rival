@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import useSettings from '@/utils/useSettings';
 import Chart from '@/components/Chart';
 import RenderDelay from '@/components/RenderDelay';
@@ -10,7 +9,11 @@ import hslToRgb from '@/utils/hslToRgb';
 import useAppearance from '@/utils/useAppearance';
 import style from './style.module.scss';
 
-const WeatherForecast = (props) => {
+type WeatherForecastProps = {
+    isDelay?: boolean;
+};
+
+const WeatherForecast = (props: WeatherForecastProps) => {
     const { isDelay } = props;
     const { settings } = useSettings();
     const { weather } = settings.settings;
@@ -267,10 +270,6 @@ const WeatherForecast = (props) => {
             </div>
         </div>
     );
-};
-
-WeatherForecast.propTypes = {
-    isDelay: PropTypes.bool,
 };
 
 export default WeatherForecast;

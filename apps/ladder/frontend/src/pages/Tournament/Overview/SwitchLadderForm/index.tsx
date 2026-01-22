@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Button from '@/components/Button';
 import Loader from '@/components/Loader';
@@ -9,7 +8,12 @@ import axios from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 
-const SwitchLadderForm = (props) => {
+type SwitchLadderFormProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+    tournament?: object;
+};
+
+const SwitchLadderForm = (props: SwitchLadderFormProps) => {
     const { tournament, onSubmit } = props;
     const currentUser = useSelector((state) => state.auth.user);
     const { changedCount, joinForFree } = currentUser.tournaments[tournament.id];
@@ -144,11 +148,6 @@ const SwitchLadderForm = (props) => {
             )}
         </Formik>
     );
-};
-
-SwitchLadderForm.propTypes = {
-    onSubmit: PropTypes.func,
-    tournament: PropTypes.object,
 };
 
 export default SwitchLadderForm;

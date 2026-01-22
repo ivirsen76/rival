@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import axios from '@/utils/axios';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '@/components/Button';
@@ -21,7 +20,13 @@ const GO_MESSAGE = 'You are registered for the tournament!';
 const SKIP_MESSAGE = "You've decided to skip the tournament.";
 const WAITING_MESSAGE = 'The Team Captain can change participation status.';
 
-const FinalParticipation = (props) => {
+type FinalParticipationProps = {
+    tournament?: object;
+    onStatusUpdate?: (...args: unknown[]) => unknown;
+    allowUpdate?: boolean;
+};
+
+const FinalParticipation = (props: FinalParticipationProps) => {
     const { tournament, onStatusUpdate, allowUpdate } = props;
     const dispatch = useDispatch();
     const currentUser = useSelector((state) => state.auth.user);
@@ -255,12 +260,6 @@ const FinalParticipation = (props) => {
             })()}
         </div>
     );
-};
-
-FinalParticipation.propTypes = {
-    tournament: PropTypes.object,
-    onStatusUpdate: PropTypes.func,
-    allowUpdate: PropTypes.bool,
 };
 
 FinalParticipation.defaultProps = {

@@ -1,9 +1,13 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import UserPicker from '@/components/formik/UserPicker';
 import Button from '@/components/Button';
 
-const ManagerForm = (props) => {
+type ManagerFormProps = {
+    list?: unknown[];
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const ManagerForm = (props: ManagerFormProps) => {
     const { onSubmit, list } = props;
 
     const getDisabledUsers = (value) => {
@@ -25,11 +29,6 @@ const ManagerForm = (props) => {
             )}
         </Formik>
     );
-};
-
-ManagerForm.propTypes = {
-    list: PropTypes.array,
-    onSubmit: PropTypes.func,
 };
 
 export default ManagerForm;

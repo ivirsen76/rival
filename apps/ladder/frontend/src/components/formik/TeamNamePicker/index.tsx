@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import FieldWrapper from '../FieldWrapper';
 import classnames from 'classnames';
 import { useQuery } from 'react-query';
@@ -21,7 +20,15 @@ export const getValidateTeamName = (config) => (value) => {
     return error;
 };
 
-const TeamNamePicker = (props) => {
+type TeamNamePickerProps = {
+    form?: object;
+    field?: object;
+    label?: React.ReactNode;
+    tournamentId: number;
+    wrapperClassName?: string;
+};
+
+const TeamNamePicker = (props: TeamNamePickerProps) => {
     const { field, form, tournamentId, wrapperClassName } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
     const config = useConfig();
@@ -72,14 +79,6 @@ const TeamNamePicker = (props) => {
             )}
         </div>
     );
-};
-
-TeamNamePicker.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    label: PropTypes.node,
-    tournamentId: PropTypes.number.isRequired,
-    wrapperClassName: PropTypes.string,
 };
 
 TeamNamePicker.defaultProps = {

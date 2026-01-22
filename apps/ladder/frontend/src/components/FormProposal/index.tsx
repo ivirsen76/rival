@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import RadioModern from '@/components/formik/RadioModern';
@@ -53,7 +52,14 @@ const getVisiblePlayers = (stats, values) => {
     return players.size;
 };
 
-const FormProposal = (props) => {
+type FormProposalProps = {
+    initialValues?: object;
+    isPractice?: boolean;
+    onSubmit?: (...args: unknown[]) => unknown;
+    tournament?: object;
+};
+
+const FormProposal = (props: FormProposalProps) => {
     const { initialValues, isPractice, onSubmit, tournament } = props;
     const [confirmed, setConfirmed] = useState(false);
     const tournamentOptions = useTournamentOptions(tournament.id);
@@ -270,13 +276,6 @@ const FormProposal = (props) => {
             }}
         </Formik>
     );
-};
-
-FormProposal.propTypes = {
-    initialValues: PropTypes.object,
-    isPractice: PropTypes.bool,
-    onSubmit: PropTypes.func,
-    tournament: PropTypes.object,
 };
 
 export default FormProposal;

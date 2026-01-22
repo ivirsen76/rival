@@ -1,5 +1,4 @@
 import { useRef, useMemo, useState } from 'react';
-import PropTypes from 'prop-types';
 import Match from '@/components/Match';
 import UpsetMatch from '@/components/UpsetMatch';
 import Proposal from '@/components/Proposal';
@@ -118,7 +117,12 @@ export const getUpcomingMatches = ({ tournament, currentUser }) => {
         .sort(sortByDate);
 };
 
-const Overview = (props) => {
+type OverviewProps = {
+    tournament?: object;
+    reloadTournament?: (...args: unknown[]) => unknown;
+};
+
+const Overview = (props: OverviewProps) => {
     const { tournament, reloadTournament } = props;
     const { players, winner, topUpsetMatches, isStarted, isOver, isBreak, isFinalTournament, cancelFinalTournament } =
         tournament;
@@ -1291,11 +1295,6 @@ const Overview = (props) => {
             </div>
         </div>
     );
-};
-
-Overview.propTypes = {
-    tournament: PropTypes.object,
-    reloadTournament: PropTypes.func,
 };
 
 Overview.defaultProps = {};

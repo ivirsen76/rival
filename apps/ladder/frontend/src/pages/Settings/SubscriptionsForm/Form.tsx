@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Checkbox from '@/components/formik/Checkbox';
 import SchedulePicker from '@/components/formik/SchedulePicker';
@@ -13,7 +12,13 @@ const formatOptions = [
     { value: 99, label: 'Practice' },
 ];
 
-const JustForm = (props) => {
+type JustFormProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+    initialValues?: object;
+    buttonTitle?: string;
+};
+
+const JustForm = (props: JustFormProps) => {
     const user = useSelector((state) => state.auth.user);
     const showCompetitiveProposalsCheckbox = Boolean(!user || user.establishedElo);
 
@@ -96,12 +101,6 @@ const JustForm = (props) => {
             )}
         </Formik>
     );
-};
-
-JustForm.propTypes = {
-    onSubmit: PropTypes.func,
-    initialValues: PropTypes.object,
-    buttonTitle: PropTypes.string,
 };
 
 JustForm.defaultProps = {

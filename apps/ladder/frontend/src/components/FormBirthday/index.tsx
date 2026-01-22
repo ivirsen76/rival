@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types';
 import Button from '@/components/Button';
 import Birthday from '@/components/formik/Birthday';
 import { Formik, Field, Form } from '@/components/formik';
 import convertDate from '@/utils/convertDate';
 import { updateCurrentUser } from '@/reducers/auth';
 
-const FormBirthday = (props) => {
+type FormBirthdayProps = {
+    onSubmit: (...args: unknown[]) => unknown;
+    onCancel?: (...args: unknown[]) => unknown;
+};
+
+const FormBirthday = (props: FormBirthdayProps) => {
     return (
         <Formik
             initialValues={{ birthday: '' }}
@@ -30,11 +34,6 @@ const FormBirthday = (props) => {
             )}
         </Formik>
     );
-};
-
-FormBirthday.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    onCancel: PropTypes.func,
 };
 
 export default FormBirthday;

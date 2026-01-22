@@ -1,9 +1,16 @@
-import PropTypes from 'prop-types';
 import FieldWrapper from './FieldWrapper';
 import _xor from 'lodash/xor';
 import classnames from 'classnames';
 
-const CheckboxArray = (props) => {
+type CheckboxArrayProps = {
+    form?: object;
+    field?: object;
+    options: unknown[];
+    isBlockDescription?: boolean;
+    orientation?: string;
+};
+
+const CheckboxArray = (props: CheckboxArrayProps) => {
     const { field, form, options, orientation, isBlockDescription } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
 
@@ -43,14 +50,6 @@ const CheckboxArray = (props) => {
             ))}
         </FieldWrapper>
     );
-};
-
-CheckboxArray.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    options: PropTypes.array.isRequired,
-    isBlockDescription: PropTypes.bool,
-    orientation: PropTypes.string,
 };
 
 CheckboxArray.defaultProps = {

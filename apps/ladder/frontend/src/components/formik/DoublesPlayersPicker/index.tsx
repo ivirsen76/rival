@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import FieldWrapper from '../FieldWrapper';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
@@ -6,7 +5,14 @@ import classnames from 'classnames';
 import { useSelector } from 'react-redux';
 import style from './style.module.scss';
 
-const DoublesPlayersPicker = (props) => {
+type DoublesPlayersPickerProps = {
+    form?: object;
+    field?: object;
+    partners: unknown[];
+    label?: React.ReactNode;
+};
+
+const DoublesPlayersPicker = (props: DoublesPlayersPickerProps) => {
     const { field, form, partners } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
     const currentUser = useSelector((state) => state.auth.user);
@@ -42,13 +48,6 @@ const DoublesPlayersPicker = (props) => {
             </div>
         </FieldWrapper>
     );
-};
-
-DoublesPlayersPicker.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    partners: PropTypes.array.isRequired,
-    label: PropTypes.node,
 };
 
 DoublesPlayersPicker.defaultProps = {

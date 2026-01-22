@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import pieces from '../pieces';
 import Avatar from '@/components/avataaars';
 import style from '../PiecePicker/style.module.scss';
@@ -31,7 +30,11 @@ const generateRandom = (total = 12) => {
     });
 };
 
-const PiecePicker = (props) => {
+type PiecePickerProps = {
+    setValues: (...args: unknown[]) => unknown;
+};
+
+const PiecePicker = (props: PiecePickerProps) => {
     const { setValues } = props;
     const [list, setList] = useState(() => generateRandom());
 
@@ -58,10 +61,6 @@ const PiecePicker = (props) => {
             </div>
         </div>
     );
-};
-
-PiecePicker.propTypes = {
-    setValues: PropTypes.func.isRequired,
 };
 
 export default PiecePicker;

@@ -1,9 +1,15 @@
-import PropTypes from 'prop-types';
 import FieldWrapper from './FieldWrapper';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const SelectButtons = (props) => {
+type SelectButtonsProps = {
+    form?: object;
+    field?: object;
+    options: unknown[];
+    allowUnset?: boolean;
+};
+
+const SelectButtons = (props: SelectButtonsProps) => {
     const { field, form, options, allowUnset } = props;
 
     const selectOption = (value) => {
@@ -32,13 +38,6 @@ const SelectButtons = (props) => {
             </div>
         </FieldWrapper>
     );
-};
-
-SelectButtons.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    options: PropTypes.array.isRequired,
-    allowUnset: PropTypes.bool,
 };
 
 SelectButtons.defaultProps = {

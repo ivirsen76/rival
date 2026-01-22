@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import RadioModern from '@/components/formik/RadioModern';
 import Button from '@/components/Button';
@@ -24,7 +23,15 @@ const decisionOptions = [
     // { value: 'foreverBan', label: 'Ban user forever' },
 ];
 
-const FormMerge = (props) => {
+type FormMergeProps = {
+    duplicates?: unknown[];
+    userIdTo?: number;
+    userIdFrom?: number;
+    onSubmit?: (...args: unknown[]) => unknown;
+    hide?: (...args: unknown[]) => unknown;
+};
+
+const FormMerge = (props: FormMergeProps) => {
     const { duplicates, userIdTo, userIdFrom, hide } = props;
     const userTo = duplicates.find((item) => item.id === userIdTo);
     const userFrom = duplicates.find((item) => item.id === userIdFrom);
@@ -88,14 +95,6 @@ const FormMerge = (props) => {
             )}
         </Formik>
     );
-};
-
-FormMerge.propTypes = {
-    duplicates: PropTypes.array,
-    userIdTo: PropTypes.number,
-    userIdFrom: PropTypes.number,
-    onSubmit: PropTypes.func,
-    hide: PropTypes.func,
 };
 
 export default FormMerge;

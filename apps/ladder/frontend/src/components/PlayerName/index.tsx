@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 import _omit from 'lodash/omit';
@@ -7,7 +6,16 @@ import Tooltip from '@/components/Tooltip';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const DoublesName = (props) => {
+type DoublesNameProps = {
+    player1?: object;
+    player2?: object;
+    rank1?: number;
+    isLink?: boolean;
+    highlight?: boolean;
+    showContactBadge?: boolean;
+};
+
+const DoublesName = (props: DoublesNameProps) => {
     const { player1, player2, rank1, isLink, highlight, showContactBadge } = props;
     const captain = player1.partners[0];
 
@@ -51,16 +59,23 @@ const DoublesName = (props) => {
     );
 };
 
-DoublesName.propTypes = {
-    player1: PropTypes.object,
-    player2: PropTypes.object,
-    rank1: PropTypes.number,
-    isLink: PropTypes.bool,
-    highlight: PropTypes.bool,
-    showContactBadge: PropTypes.bool,
+type PlayerNameProps = {
+    player1?: object;
+    player2?: object;
+    player3?: object;
+    player4?: object;
+    isLink?: boolean;
+    highlight?: boolean;
+    className?: string;
+    rank1?: number;
+    rank2?: number;
+    elo1?: number;
+    ignorePartners?: boolean;
+    showTeamName?: boolean;
+    showContactBadge?: boolean;
 };
 
-const PlayerName = (props) => {
+const PlayerName = (props: PlayerNameProps) => {
     if (props.showTeamName && props.player1.partners?.length > 1) {
         return <DoublesName {...props} />;
     }
@@ -140,21 +155,6 @@ const PlayerName = (props) => {
     return result;
 };
 
-PlayerName.propTypes = {
-    player1: PropTypes.object,
-    player2: PropTypes.object,
-    player3: PropTypes.object,
-    player4: PropTypes.object,
-    isLink: PropTypes.bool,
-    highlight: PropTypes.bool,
-    className: PropTypes.string,
-    rank1: PropTypes.number,
-    rank2: PropTypes.number,
-    elo1: PropTypes.number,
-    ignorePartners: PropTypes.bool,
-    showTeamName: PropTypes.bool,
-    showContactBadge: PropTypes.bool,
-};
 PlayerName.defaultProps = {
     showTeamName: true,
     highlight: true,

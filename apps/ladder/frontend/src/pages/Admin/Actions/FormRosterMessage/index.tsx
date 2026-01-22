@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Button from '@/components/Button';
 import Input from '@/components/formik/Input';
@@ -19,7 +18,11 @@ const validate = (values) => {
     return errors;
 };
 
-const FormRosterMessage = (props) => {
+type FormRosterMessageProps = {
+    hide?: (...args: unknown[]) => unknown;
+};
+
+const FormRosterMessage = (props: FormRosterMessageProps) => {
     const handleSubmit = async (values) => {
         await axios.put('/api/utils/0', { action: 'sendOneRosterMessage', ...values });
 
@@ -41,10 +44,6 @@ const FormRosterMessage = (props) => {
             )}
         </Formik>
     );
-};
-
-FormRosterMessage.propTypes = {
-    hide: PropTypes.func,
 };
 
 export default FormRosterMessage;

@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import Tooltip from '@/components/Tooltip';
 import CaptainIcon from '@/assets/captain.svg?react';
 import style from './style.module.scss';
 
-const TeamInfo = (props) => {
+type TeamInfoProps = {
+    captain?: object;
+    tournament?: object;
+};
+
+const TeamInfo = (props: TeamInfoProps) => {
     const { captain, tournament } = props;
 
     const stats = (() => {
@@ -91,11 +95,6 @@ const TeamInfo = (props) => {
             </table>
         </div>
     );
-};
-
-TeamInfo.propTypes = {
-    captain: PropTypes.object,
-    tournament: PropTypes.object,
 };
 
 TeamInfo.defaultProps = {};

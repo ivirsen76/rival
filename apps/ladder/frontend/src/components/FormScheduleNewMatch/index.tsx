@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import { useSelector } from 'react-redux';
 import Select from '@/components/formik/Select';
@@ -9,7 +8,14 @@ import FormPickDoublesPlayers from '@/components/FormPickDoublesPlayers';
 import getPlayersName from '@/utils/getPlayersName';
 import hasAnyRole from '@/utils/hasAnyRole';
 
-const JustForm = (props) => {
+type JustFormProps = {
+    values?: object;
+    players?: unknown[];
+    setFieldValue?: (...args: unknown[]) => unknown;
+    currentPlayerId?: number;
+};
+
+const JustForm = (props: JustFormProps) => {
     const { values, players, setFieldValue, currentPlayerId } = props;
 
     useEffect(() => {
@@ -38,14 +44,12 @@ const JustForm = (props) => {
     );
 };
 
-JustForm.propTypes = {
-    values: PropTypes.object,
-    players: PropTypes.array,
-    setFieldValue: PropTypes.func,
-    currentPlayerId: PropTypes.number,
+type FormScheduleNewNewMatchProps = {
+    tournament?: object;
+    onAdd?: (...args: unknown[]) => unknown;
 };
 
-const FormScheduleNewNewMatch = (props) => {
+const FormScheduleNewNewMatch = (props: FormScheduleNewNewMatchProps) => {
     const { tournament, onAdd } = props;
     const [match, setMatch] = useState({ id: 0, type: 'regular' });
     const currentUser = useSelector((state) => state.auth.user);
@@ -147,11 +151,6 @@ const FormScheduleNewNewMatch = (props) => {
             )}
         </Formik>
     );
-};
-
-FormScheduleNewNewMatch.propTypes = {
-    tournament: PropTypes.object,
-    onAdd: PropTypes.func,
 };
 
 export default FormScheduleNewNewMatch;

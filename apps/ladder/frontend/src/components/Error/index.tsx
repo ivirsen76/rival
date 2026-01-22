@@ -1,8 +1,13 @@
-import PropTypes from 'prop-types';
 import Card from '@/components/Card';
 import { Link } from 'react-router-dom';
 
-const Error = (props) => {
+type ErrorProps = {
+    title?: React.ReactNode;
+    message?: React.ReactNode;
+    description?: React.ReactNode;
+};
+
+const Error = (props: ErrorProps) => {
     const { title, message, description } = props;
 
     return (
@@ -21,12 +26,6 @@ const Error = (props) => {
             </div>
         </Card>
     );
-};
-
-Error.propTypes = {
-    title: PropTypes.node,
-    message: PropTypes.node,
-    description: PropTypes.node,
 };
 
 Error.defaultProps = {

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Select from '@/components/formik/Select';
@@ -10,7 +9,13 @@ const typeOptions = [
     { value: 'doubles-team', label: 'Doubles Team' },
 ];
 
-const LevelForm = (props) => {
+type LevelFormProps = {
+    initialValues?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+    hideType?: boolean;
+};
+
+const LevelForm = (props: LevelFormProps) => {
     const { initialValues, onSubmit, hideType } = props;
 
     return (
@@ -32,12 +37,6 @@ const LevelForm = (props) => {
             )}
         </Formik>
     );
-};
-
-LevelForm.propTypes = {
-    initialValues: PropTypes.object,
-    onSubmit: PropTypes.func,
-    hideType: PropTypes.bool,
 };
 
 LevelForm.defaultProps = {

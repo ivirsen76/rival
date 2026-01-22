@@ -1,11 +1,18 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import _round from 'lodash/round';
 import useUniqueId from '@/utils/useUniqueId';
 import pathFromPoints from './pathFromPoints';
 import style from './style.module.scss';
 
-const PerformanceChart = (props) => {
+type PerformanceChartProps = {
+    data?: unknown[];
+    dataKey?: string;
+    minDiff?: number;
+    color?: string;
+    renderLabel?: (...args: unknown[]) => unknown;
+};
+
+const PerformanceChart = (props: PerformanceChartProps) => {
     const { dataKey, minDiff, color, renderLabel } = props;
     const step = 50;
     const strokeWidth = 2;
@@ -123,14 +130,6 @@ const PerformanceChart = (props) => {
             )}
         </svg>
     );
-};
-
-PerformanceChart.propTypes = {
-    data: PropTypes.array,
-    dataKey: PropTypes.string,
-    minDiff: PropTypes.number,
-    color: PropTypes.string,
-    renderLabel: PropTypes.func,
 };
 
 PerformanceChart.defaultProps = {

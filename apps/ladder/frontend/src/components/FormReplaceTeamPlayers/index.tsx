@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Button from '@/components/Button';
 import notification from '@/components/notification';
@@ -6,7 +5,13 @@ import DoublesPlayersPicker from '@/components/formik/DoublesPlayersPicker';
 import { useSelector } from 'react-redux';
 import axios from '@/utils/axios';
 
-const FormReplaceTeamPlayers = (props) => {
+type FormReplaceTeamPlayersProps = {
+    match?: object;
+    players?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const FormReplaceTeamPlayers = (props: FormReplaceTeamPlayersProps) => {
     const { match, players, onSubmit } = props;
     const currentUser = useSelector((state) => state.auth.user);
     const currentPlayer = Object.values(players).find((item) => item.userId === currentUser.id);
@@ -30,12 +35,6 @@ const FormReplaceTeamPlayers = (props) => {
             )}
         </Formik>
     );
-};
-
-FormReplaceTeamPlayers.propTypes = {
-    match: PropTypes.object,
-    players: PropTypes.object,
-    onSubmit: PropTypes.func,
 };
 
 export default FormReplaceTeamPlayers;

@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 import Card from '@/components/Card';
 import Header from '@/components/Header';
 import classnames from 'classnames';
@@ -32,7 +31,11 @@ const groupOptions = [
     { value: 'current', label: 'Current players' },
 ];
 
-const Top = (props) => {
+type TopProps = {
+    match?: object;
+};
+
+const Top = (props: TopProps) => {
     const category = props.match.params.category;
     const history = useHistory();
     const [currentGender, setCurrentGender] = useState('all');
@@ -513,10 +516,6 @@ const Top = (props) => {
             </Card>
         </div>
     );
-};
-
-Top.propTypes = {
-    match: PropTypes.object,
 };
 
 export default Top;

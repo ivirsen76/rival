@@ -1,8 +1,17 @@
-import PropTypes from 'prop-types';
 import { useDebounce } from 'use-debounce';
 import style from './style.module.scss';
 
-const FieldWrapper = (props) => {
+type FieldWrapperProps = {
+    field: object;
+    form: object;
+    renderError?: (...args: unknown[]) => unknown;
+    label?: React.ReactNode;
+    description?: React.ReactNode;
+    wrapperClassName?: string;
+    children?: React.ReactNode;
+};
+
+const FieldWrapper = (props: FieldWrapperProps) => {
     const { field, form, label, description, renderError, wrapperClassName } = props;
     const error = form.errors[field.name];
     const [debouncedError] = useDebounce(error, 100);
@@ -27,16 +36,6 @@ const FieldWrapper = (props) => {
             )}
         </div>
     );
-};
-
-FieldWrapper.propTypes = {
-    field: PropTypes.object.isRequired,
-    form: PropTypes.object.isRequired,
-    renderError: PropTypes.func,
-    label: PropTypes.node,
-    description: PropTypes.node,
-    wrapperClassName: PropTypes.string,
-    children: PropTypes.node,
 };
 
 export default FieldWrapper;

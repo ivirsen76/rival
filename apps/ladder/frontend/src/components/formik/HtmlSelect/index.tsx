@@ -1,11 +1,17 @@
 import { useRef } from 'react';
-import PropTypes from 'prop-types';
 import FieldWrapper from '../FieldWrapper';
 import Tooltip from '@/components/Tooltip';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const HtmlSelect = (props) => {
+type HtmlSelectProps = {
+    form?: object;
+    field?: object;
+    options: unknown[];
+    onChange?: (...args: unknown[]) => unknown;
+};
+
+const HtmlSelect = (props: HtmlSelectProps) => {
     const { field, form, options } = props;
     const tooltipRef = useRef();
 
@@ -57,13 +63,6 @@ const HtmlSelect = (props) => {
             </Tooltip>
         </FieldWrapper>
     );
-};
-
-HtmlSelect.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    options: PropTypes.array.isRequired,
-    onChange: PropTypes.func,
 };
 
 export default HtmlSelect;

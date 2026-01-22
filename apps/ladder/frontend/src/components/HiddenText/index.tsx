@@ -1,10 +1,17 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import PlusIcon from '@/styles/metronic/icons/duotone/Interface/Plus-Square.svg?react';
 import MinusIcon from '@/styles/metronic/icons/duotone/Interface/Minus-Square.svg?react';
 import style from './style.module.scss';
 
-const HiddenText = (props) => {
+type HiddenTextProps = {
+    title?: string;
+    className?: string;
+    contentClassName?: string;
+    children?: React.ReactNode;
+    renderContent?: (...args: unknown[]) => unknown;
+};
+
+const HiddenText = (props: HiddenTextProps) => {
     const [visible, setVisible] = useState(false);
 
     const toggleVisible = (e) => {
@@ -34,14 +41,6 @@ const HiddenText = (props) => {
             {visible && getContent()}
         </div>
     );
-};
-
-HiddenText.propTypes = {
-    title: PropTypes.string,
-    className: PropTypes.string,
-    contentClassName: PropTypes.string,
-    children: PropTypes.node,
-    renderContent: PropTypes.func,
 };
 
 HiddenText.defaultProps = {

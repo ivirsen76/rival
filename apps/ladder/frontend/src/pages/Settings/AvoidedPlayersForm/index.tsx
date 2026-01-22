@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadCurrentUser } from '@/reducers/auth';
 import { Formik, Field, Form } from '@/components/formik';
@@ -10,7 +9,11 @@ import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import Button from '@/components/Button';
 import axios from '@/utils/axios';
 
-const AvoidedPlayersForm = (props) => {
+type AvoidedPlayersFormProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const AvoidedPlayersForm = (props: AvoidedPlayersFormProps) => {
     const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
@@ -73,10 +76,6 @@ const AvoidedPlayersForm = (props) => {
             )}
         </Formik>
     );
-};
-
-AvoidedPlayersForm.propTypes = {
-    onSubmit: PropTypes.func,
 };
 
 export default AvoidedPlayersForm;

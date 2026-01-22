@@ -1,11 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
 const transitionTime = 600;
 
-const Alert = (props) => {
+type AlertProps = {
+    header?: React.ReactNode;
+    message?: React.ReactNode;
+    type?: string;
+    duration?: number;
+    onClose?: (...args: unknown[]) => unknown;
+};
+
+const Alert = (props: AlertProps) => {
     const { header, message, type, duration, onClose } = props;
 
     const [loaded, setLoaded] = useState(false);
@@ -47,14 +54,6 @@ const Alert = (props) => {
             <button type="button" className="btn-close" aria-label="Close" onClick={onClose} />
         </div>
     );
-};
-
-Alert.propTypes = {
-    header: PropTypes.node,
-    message: PropTypes.node,
-    type: PropTypes.string,
-    duration: PropTypes.number,
-    onClose: PropTypes.func,
 };
 
 Alert.defaultProps = {

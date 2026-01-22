@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Modal from '@/components/Modal';
 import dayjs from '@/utils/dayjs';
 import useCurrentWeather from '@/components/WeatherForecast/useCurrentWeather';
@@ -6,7 +5,12 @@ import WeatherForecast from '@/components/WeatherForecast';
 import WeatherAtTime from '@/components/WeatherForecast/WeatherAtTime';
 import style from './style.module.scss';
 
-const Summary = (props) => {
+type SummaryProps = {
+    tournament?: object;
+    showWeather?: boolean;
+};
+
+const Summary = (props: SummaryProps) => {
     const { tournament, showWeather } = props;
     const { isStarted, isOver, isBreak, isFinalTournament } = tournament;
     const currentWeather = useCurrentWeather();
@@ -83,11 +87,6 @@ const Summary = (props) => {
             )}
         </div>
     );
-};
-
-Summary.propTypes = {
-    tournament: PropTypes.object,
-    showWeather: PropTypes.bool,
 };
 
 Summary.defaultProps = {};

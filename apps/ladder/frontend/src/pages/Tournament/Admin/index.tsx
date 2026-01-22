@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import PropTypes from 'prop-types';
 import Card from '@/components/Card';
 import Modal from '@/components/Modal';
 import PlayerName from '@/components/PlayerName';
@@ -14,7 +13,12 @@ import confirmation from '@/utils/confirmation';
 import showLoader from '@/utils/showLoader';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 
-const Admin = (props) => {
+type AdminProps = {
+    tournament?: object;
+    reloadTournament?: (...args: unknown[]) => unknown;
+};
+
+const Admin = (props: AdminProps) => {
     const { tournament, reloadTournament } = props;
 
     const sortedPlayers = useMemo(
@@ -202,11 +206,6 @@ const Admin = (props) => {
             </table>
         </Card>
     );
-};
-
-Admin.propTypes = {
-    tournament: PropTypes.object,
-    reloadTournament: PropTypes.func,
 };
 
 Admin.defaultProps = {};

@@ -1,5 +1,4 @@
 import { Fragment } from 'react';
-import PropTypes from 'prop-types';
 
 function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
     const angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
@@ -10,7 +9,12 @@ function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
     };
 }
 
-const Arc = (props) => {
+type ArcProps = {
+    width?: number;
+    list?: unknown[];
+};
+
+const Arc = (props: ArcProps) => {
     const { list, width } = props;
 
     const circleRadius = 100 - width * list.length + width / 2;
@@ -56,11 +60,6 @@ const Arc = (props) => {
             })}
         </svg>
     );
-};
-
-Arc.propTypes = {
-    width: PropTypes.number,
-    list: PropTypes.array,
 };
 
 Arc.defaultProps = {

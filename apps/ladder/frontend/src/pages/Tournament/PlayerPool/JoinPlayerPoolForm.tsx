@@ -1,8 +1,13 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
 
-const JoinPlayerPoolForm = (props) => {
+type JoinPlayerPoolFormProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+    initialValues?: object;
+    showWarning?: boolean;
+};
+
+const JoinPlayerPoolForm = (props: JoinPlayerPoolFormProps) => {
     const { onSubmit, initialValues, showWarning } = props;
 
     return (
@@ -32,12 +37,6 @@ const JoinPlayerPoolForm = (props) => {
             )}
         </Formik>
     );
-};
-
-JoinPlayerPoolForm.propTypes = {
-    onSubmit: PropTypes.func,
-    initialValues: PropTypes.object,
-    showWarning: PropTypes.bool,
 };
 
 JoinPlayerPoolForm.defaultProps = {

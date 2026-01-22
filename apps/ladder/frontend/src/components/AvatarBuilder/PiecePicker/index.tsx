@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import pieces from '../pieces';
 import Avatar from '@/components/avataaars';
 import Modal from '@/components/Modal';
@@ -7,7 +6,14 @@ import style from './style.module.scss';
 
 const EmptyIcon = () => <div />;
 
-const PiecePicker = (props) => {
+type PiecePickerProps = {
+    form?: object;
+    field?: object;
+    colors?: object;
+    colorField?: string;
+};
+
+const PiecePicker = (props: PiecePickerProps) => {
     const { field, form, colors, colorField } = props;
     const piece = pieces[field.name];
     const Icon = pieces[field.name].icon || EmptyIcon;
@@ -77,13 +83,6 @@ const PiecePicker = (props) => {
             )}
         />
     );
-};
-
-PiecePicker.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    colors: PropTypes.object,
-    colorField: PropTypes.string,
 };
 
 export default PiecePicker;

@@ -1,5 +1,4 @@
 import { useState, useMemo, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import { useSelector } from 'react-redux';
 import Select from '@/components/formik/Select';
@@ -12,7 +11,14 @@ import getPossibleOpponents from './getPossibleOpponents';
 import getPlayersName from '@/utils/getPlayersName';
 import style from './style.module.scss';
 
-const JustForm = (props) => {
+type JustFormProps = {
+    values?: object;
+    players?: unknown[];
+    setFieldValue?: (...args: unknown[]) => unknown;
+    currentPlayerId?: number;
+};
+
+const JustForm = (props: JustFormProps) => {
     const { values, players, setFieldValue, currentPlayerId } = props;
 
     useEffect(() => {
@@ -35,14 +41,13 @@ const JustForm = (props) => {
     );
 };
 
-JustForm.propTypes = {
-    values: PropTypes.object,
-    players: PropTypes.array,
-    setFieldValue: PropTypes.func,
-    currentPlayerId: PropTypes.number,
+type FormNewMatchProps = {
+    tournament?: object;
+    onAdd?: (...args: unknown[]) => unknown;
+    possibleMatches?: unknown[];
 };
 
-const FormNewMatch = (props) => {
+const FormNewMatch = (props: FormNewMatchProps) => {
     const { tournament, onAdd, possibleMatches } = props;
 
     const [showPossibleOpponents, setShowPossibleOpponents] = useState(true);
@@ -173,12 +178,6 @@ const FormNewMatch = (props) => {
             )}
         </Formik>
     );
-};
-
-FormNewMatch.propTypes = {
-    tournament: PropTypes.object,
-    onAdd: PropTypes.func,
-    possibleMatches: PropTypes.array,
 };
 
 FormNewMatch.defaultProps = {

@@ -1,8 +1,11 @@
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Timeline = (props) => {
+type TimelineProps = {
+    totalPlayers?: number;
+};
+
+const Timeline = (props: TimelineProps) => {
     const isRoundOf16 = props.totalPlayers >= 50;
     const days = ['M', 'T', 'W', 'T', 'F', 'S', 'S', 'M', 'T', 'W', 'T', 'F', 'S', 'S'];
 
@@ -41,10 +44,6 @@ const Timeline = (props) => {
             </div>
         </div>
     );
-};
-
-Timeline.propTypes = {
-    totalPlayers: PropTypes.number,
 };
 
 export default Timeline;

@@ -1,10 +1,17 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
 import Tooltip from '@/components/Tooltip';
 import classnames from 'classnames';
 
-const Copy = (props) => {
+type CopyProps = {
+    label?: React.ReactNode;
+    buttonLabel?: string;
+    buttonClassName?: string;
+    stringToCopy?: string;
+    onClick?: (...args: unknown[]) => unknown;
+};
+
+const Copy = (props: CopyProps) => {
     const { label, buttonLabel, buttonClassName, stringToCopy, onClick } = props;
     const [showCopied, setShowCopied] = useState(false);
 
@@ -40,14 +47,6 @@ const Copy = (props) => {
             </Tooltip>
         </div>
     );
-};
-
-Copy.propTypes = {
-    label: PropTypes.node,
-    buttonLabel: PropTypes.string,
-    buttonClassName: PropTypes.string,
-    stringToCopy: PropTypes.string,
-    onClick: PropTypes.func,
 };
 
 Copy.defaultProps = {

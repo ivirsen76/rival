@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { PanelMenu } from 'primereact/panelmenu';
 import LineIcon from '@/styles/metronic/icons/duotune/abstract/abs015.svg?react';
 import ExitIcon from '@/styles/metronic/icons/duotune/arrows/arr043.svg?react';
@@ -20,7 +19,11 @@ import hasAnyRole from '@/utils/hasAnyRole';
 import style from './style.module.scss';
 import './aside.scss';
 
-const SideMenu = (props) => {
+type SideMenuProps = {
+    years?: unknown[];
+};
+
+const SideMenu = (props: SideMenuProps) => {
     const { years } = props;
 
     const [show, setShow] = useState(false);
@@ -254,10 +257,6 @@ const SideMenu = (props) => {
             </RenderInBody>
         </div>
     );
-};
-
-SideMenu.propTypes = {
-    years: PropTypes.array,
 };
 
 export default SideMenu;

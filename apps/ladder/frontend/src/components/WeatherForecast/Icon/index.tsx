@@ -1,8 +1,12 @@
-import PropTypes from 'prop-types';
 import useUniqueId from '@/utils/useUniqueId';
 import style from './style.module.scss';
 
-const Icon = (props) => {
+type IconProps = {
+    type?: string;
+    dayPart?: string;
+};
+
+const Icon = (props: IconProps) => {
     const sunGradientId = useUniqueId();
     const sunGlowId = useUniqueId();
 
@@ -167,11 +171,6 @@ const Icon = (props) => {
             </g>
         </svg>
     );
-};
-
-Icon.propTypes = {
-    type: PropTypes.string,
-    dayPart: PropTypes.string,
 };
 
 Icon.defaultProps = {

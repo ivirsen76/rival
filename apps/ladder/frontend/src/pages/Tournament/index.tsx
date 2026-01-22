@@ -1,5 +1,4 @@
 import { useRef, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import { useQuery, useQueryClient } from 'react-query';
 import Loader from '@/components/Loader';
 import Error from '@/components/Error';
@@ -22,7 +21,11 @@ import Tooltip from '@/components/Tooltip';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
-const Tournament = (props) => {
+type TournamentProps = {
+    match?: object;
+};
+
+const Tournament = (props: TournamentProps) => {
     const { level, season, year } = props.match.params;
     const tournamentUrl = `/api/tournaments/1?year=${year}&season=${season}&level=${level}`;
 
@@ -207,10 +210,6 @@ const Tournament = (props) => {
             </Switch>
         </div>
     );
-};
-
-Tournament.propTypes = {
-    match: PropTypes.object,
 };
 
 Tournament.defaultProps = {};

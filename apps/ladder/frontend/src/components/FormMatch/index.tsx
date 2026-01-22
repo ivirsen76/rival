@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import SetForm from './SetForm';
 import MatchPreview from './MatchPreview';
@@ -77,7 +76,13 @@ export const validate = (values) => {
     return errors;
 };
 
-const FormMatch = (props) => {
+type FormMatchProps = {
+    match?: object;
+    tournament?: object;
+    onUpdate?: (...args: unknown[]) => unknown;
+};
+
+const FormMatch = (props: FormMatchProps) => {
     const { tournament, onUpdate } = props;
     const { players } = tournament;
     const [swipeDirection, setSwipeDirection] = useState('right');
@@ -580,12 +585,6 @@ const FormMatch = (props) => {
             }}
         </Formik>
     );
-};
-
-FormMatch.propTypes = {
-    match: PropTypes.object,
-    tournament: PropTypes.object,
-    onUpdate: PropTypes.func,
 };
 
 FormMatch.defaultProps = {};

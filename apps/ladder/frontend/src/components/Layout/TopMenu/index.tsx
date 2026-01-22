@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import _capitalize from 'lodash/capitalize';
 import { useSelector } from 'react-redux';
 import ExitIcon from '@/styles/metronic/icons/duotune/arrows/arr043.svg?react';
@@ -40,7 +39,11 @@ const iconLink = (item) => {
     );
 };
 
-function TopMenu(props) {
+type TopMenuProps = {
+    years?: unknown[];
+};
+
+function TopMenu(props: TopMenuProps) {
     const { years } = props;
     const user = useSelector((state) => state.auth.user);
 
@@ -216,9 +219,5 @@ function TopMenu(props) {
 
     return <Menubar model={items} />;
 }
-
-TopMenu.propTypes = {
-    years: PropTypes.array,
-};
 
 export default TopMenu;

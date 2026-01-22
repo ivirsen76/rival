@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Card from '@/components/Card';
 import Proposal from '@/components/Proposal';
 import ProposalDoubles from '@/components/ProposalDoubles';
@@ -15,7 +14,12 @@ import checkUserReady from '@/utils/checkUserReady';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
-const Proposals = (props) => {
+type ProposalsProps = {
+    tournament?: object;
+    reloadTournament?: (...args: unknown[]) => unknown;
+};
+
+const Proposals = (props: ProposalsProps) => {
     const { reloadTournament, tournament } = props;
     const { matches, players } = tournament;
     const [matchFilter, setMatchFilter] = useState('all');
@@ -171,11 +175,6 @@ const Proposals = (props) => {
             </div>
         </div>
     );
-};
-
-Proposals.propTypes = {
-    tournament: PropTypes.object,
-    reloadTournament: PropTypes.func,
 };
 
 Proposals.defaultProps = {};

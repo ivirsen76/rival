@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import style from './style.module.scss';
 import MarkerIcon from '@/styles/metronic/icons/duotune/general/gen018.svg?react';
 import ClockIcon from '@/styles/metronic/icons/duotone/Home/Clock.svg?react';
@@ -16,7 +15,15 @@ import Modal from '@/components/Modal';
 import FormDeleteDoublesProposal from '@/components/FormDeleteDoublesProposal';
 import WeatherAtTime from '../WeatherForecast/WeatherAtTime';
 
-const ProposalDoubles = (props) => {
+type ProposalDoublesProps = {
+    tournament?: object;
+    match?: object;
+    onStatusUpdate?: (...args: unknown[]) => unknown;
+    showActions?: boolean;
+    showWeather?: boolean;
+};
+
+const ProposalDoubles = (props: ProposalDoublesProps) => {
     const { match, onStatusUpdate, showActions, tournament, showWeather } = props;
     const { players } = tournament;
     const currentUser = useSelector((state) => state.auth.user);
@@ -223,14 +230,6 @@ const ProposalDoubles = (props) => {
             </div>
         </>
     );
-};
-
-ProposalDoubles.propTypes = {
-    tournament: PropTypes.object,
-    match: PropTypes.object,
-    onStatusUpdate: PropTypes.func,
-    showActions: PropTypes.bool,
-    showWeather: PropTypes.bool,
 };
 
 ProposalDoubles.defaultProps = {

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Html from '@/components/Html';
 import Timeline from './Timeline';
 import dayjs from '@/utils/dayjs';
@@ -39,7 +38,12 @@ const applyVariables = (tournamentEndDate, text) => {
     return adjustedText;
 };
 
-const TournamentText = (props) => {
+type TournamentTextProps = {
+    text?: React.ReactNode;
+    tournament?: object;
+};
+
+const TournamentText = (props: TournamentTextProps) => {
     const { tournament } = props;
     const adjustedText = applyVariables(tournament.endDate, props.text);
 
@@ -53,11 +57,6 @@ const TournamentText = (props) => {
             )}
         </div>
     );
-};
-
-TournamentText.propTypes = {
-    text: PropTypes.node,
-    tournament: PropTypes.object,
 };
 
 export default TournamentText;

@@ -1,5 +1,4 @@
 import { useRef } from 'react';
-import PropTypes from 'prop-types';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import Modal from '@/components/Modal';
@@ -32,7 +31,16 @@ export const getPoints = (score) => {
     );
 };
 
-const RoundRobin = (props) => {
+type RoundRobinProps = {
+    match?: object;
+    player1?: object;
+    player2?: object;
+    player3?: object;
+    player4?: object;
+    onChange?: (...args: unknown[]) => unknown;
+};
+
+const RoundRobin = (props: RoundRobinProps) => {
     const { match, player1, player2, player3, player4 } = props;
 
     const options = [
@@ -132,16 +140,21 @@ const RoundRobin = (props) => {
     );
 };
 
-RoundRobin.propTypes = {
-    match: PropTypes.object,
-    player1: PropTypes.object,
-    player2: PropTypes.object,
-    player3: PropTypes.object,
-    player4: PropTypes.object,
-    onChange: PropTypes.func,
+type ResultProps = {
+    match?: object;
+    players?: object;
+    player1?: object;
+    player2?: object;
+    player3?: object;
+    player4?: object;
+    reloadTournament?: (...args: unknown[]) => unknown;
+    finalSpot?: number;
+    readOnly?: boolean;
+    // number of open slots
+    winnerCount?: number;
 };
 
-const Result = (props) => {
+const Result = (props: ResultProps) => {
     const currentUser = useSelector((state) => state.auth.user);
     const { match, player1, player2, player3, player4, finalSpot, winnerCount, readOnly } = props;
     const tooltipRef = useRef();
@@ -324,21 +337,6 @@ const Result = (props) => {
             ))}
         </div>
     );
-};
-
-Result.propTypes = {
-    match: PropTypes.object,
-    players: PropTypes.object,
-    player1: PropTypes.object,
-    player2: PropTypes.object,
-    player3: PropTypes.object,
-    player4: PropTypes.object,
-    reloadTournament: PropTypes.func,
-    finalSpot: PropTypes.number,
-    readOnly: PropTypes.bool,
-
-    // number of open slots
-    winnerCount: PropTypes.number,
 };
 
 export default Result;

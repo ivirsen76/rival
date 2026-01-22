@@ -1,6 +1,5 @@
 import { useMemo, useState, useEffect } from 'react';
 import Spot from './Spot';
-import PropTypes from 'prop-types';
 import Bracket from './Bracket';
 import classnames from 'classnames';
 import { getInitialPrediction, setWinner, preparePredictionToSave } from './helpers';
@@ -13,7 +12,14 @@ import style from './style.module.scss';
 
 const isByeMatch = (match) => match.challengerId === BYE_ID || match.acceptorId === BYE_ID;
 
-const Bet = (props) => {
+type BetProps = {
+    tournament?: object;
+    matches?: unknown[];
+    players?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const Bet = (props: BetProps) => {
     const { players, tournament, matches, onSubmit } = props;
     const finalMatches = matches.filter((match) => match.type === 'final' && !match.battleId);
 
@@ -202,13 +208,6 @@ const Bet = (props) => {
             )}
         </div>
     );
-};
-
-Bet.propTypes = {
-    tournament: PropTypes.object,
-    matches: PropTypes.array,
-    players: PropTypes.object,
-    onSubmit: PropTypes.func,
 };
 
 export default Bet;

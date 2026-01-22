@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import Loader from '@/components/Loader';
 import Error from '@/components/Error';
 import axios from '@/utils/axios';
 import { useHistory } from 'react-router-dom';
 
-const ShortLink = (props) => {
+type ShortLinkProps = {
+    match?: object;
+};
+
+const ShortLink = (props: ShortLinkProps) => {
     const { name, code } = props.match.params;
     const [error, setError] = useState();
     const history = useHistory();
@@ -28,10 +31,6 @@ const ShortLink = (props) => {
     }
 
     return <Loader loading />;
-};
-
-ShortLink.propTypes = {
-    match: PropTypes.object,
 };
 
 export default ShortLink;

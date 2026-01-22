@@ -1,9 +1,14 @@
 import { useRef, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import _omit from 'lodash/omit';
 import useAppearance from '@/utils/useAppearance';
 
-const EloPreview = (props) => {
+type EloPreviewProps = {
+    data?: unknown[];
+    width?: number;
+    height?: number;
+};
+
+const EloPreview = (props: EloPreviewProps) => {
     const { height, width, data } = props;
     const padding = 4;
     const minGap = 30;
@@ -44,12 +49,6 @@ const EloPreview = (props) => {
     }, [appearance]);
 
     return <canvas ref={canvasRef} {..._omit(props, ['data'])} />;
-};
-
-EloPreview.propTypes = {
-    data: PropTypes.array,
-    width: PropTypes.number,
-    height: PropTypes.number,
 };
 
 EloPreview.defaultProps = {

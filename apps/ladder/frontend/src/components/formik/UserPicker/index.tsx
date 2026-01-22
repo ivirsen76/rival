@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unstable-nested-components */
 import { useState, useRef, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import FieldWrapper from '../FieldWrapper';
 import _debounce from 'lodash/debounce';
 import classnames from 'classnames';
@@ -18,7 +17,16 @@ const getSearchResult = _debounce(async (query, setSearchResult, setLoading) => 
     setLoading(false);
 }, 500);
 
-const UserPicker = (props) => {
+type UserPickerProps = {
+    multiple?: boolean;
+    form?: object;
+    field?: object;
+    autoFocus?: boolean;
+    getDisabledUsers?: (...args: unknown[]) => unknown;
+    renderUser?: (...args: unknown[]) => unknown;
+};
+
+const UserPicker = (props: UserPickerProps) => {
     const { field, form, autoFocus, getDisabledUsers, multiple, renderUser } = props;
     const [search, setSearch] = useState('');
     const [searchResult, setSearchResult] = useState([]);
@@ -323,15 +331,6 @@ const UserPicker = (props) => {
             </div>
         </FieldWrapper>
     );
-};
-
-UserPicker.propTypes = {
-    multiple: PropTypes.bool,
-    form: PropTypes.object,
-    field: PropTypes.object,
-    autoFocus: PropTypes.bool,
-    getDisabledUsers: PropTypes.func,
-    renderUser: PropTypes.func,
 };
 
 export default UserPicker;

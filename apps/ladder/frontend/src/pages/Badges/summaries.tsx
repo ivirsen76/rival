@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { Fragment } from 'react';
 import style from './style.module.scss';
 import InlineMatch from '@/components/InlineMatch';

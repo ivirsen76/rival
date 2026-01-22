@@ -1,6 +1,5 @@
 /* eslint-disable react/no-array-index-key */
 import { useRef } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.module.scss';
 import CommentIcon from '@/styles/metronic/icons/duotone/Interface/Comment.svg?react';
@@ -49,7 +48,27 @@ const isLongName = (player) => {
     return getRelativeStringLength(player.firstName + ' ' + player.lastName) > 15;
 };
 
-const Match = (props) => {
+type MatchProps = {
+    match?: object;
+    challenger?: object;
+    acceptor?: object;
+    players?: object;
+    onUpdate?: (...args: unknown[]) => unknown;
+    onlyTime?: boolean;
+    showWeekDay?: boolean;
+    readOnly?: boolean;
+    isUpcoming?: boolean;
+    hideReplacePlayersAction?: boolean;
+    isReport?: boolean;
+    tournament: object;
+    showHeader?: boolean;
+    emulateMyMatch?: boolean;
+    showInfo?: boolean;
+    showTeamsSign?: boolean;
+    scoreModalInterceptor?: (...args: unknown[]) => unknown;
+};
+
+const Match = (props: MatchProps) => {
     const {
         match,
         onUpdate,
@@ -1108,26 +1127,6 @@ const Match = (props) => {
             </div>
         </div>
     );
-};
-
-Match.propTypes = {
-    match: PropTypes.object,
-    challenger: PropTypes.object,
-    acceptor: PropTypes.object,
-    players: PropTypes.object,
-    onUpdate: PropTypes.func,
-    onlyTime: PropTypes.bool,
-    showWeekDay: PropTypes.bool,
-    readOnly: PropTypes.bool,
-    isUpcoming: PropTypes.bool,
-    hideReplacePlayersAction: PropTypes.bool,
-    isReport: PropTypes.bool,
-    tournament: PropTypes.object.isRequired,
-    showHeader: PropTypes.bool,
-    emulateMyMatch: PropTypes.bool,
-    showInfo: PropTypes.bool,
-    showTeamsSign: PropTypes.bool,
-    scoreModalInterceptor: PropTypes.func,
 };
 
 Match.defaultProps = {

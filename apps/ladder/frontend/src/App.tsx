@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import { Router, Switch, Route as OriginalRoute, Redirect } from 'react-router-dom';

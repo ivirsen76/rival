@@ -1,10 +1,14 @@
 import { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { useDebounce } from 'use-debounce';
 import _isEqual from 'lodash/isEqual';
 import _cloneDeep from 'lodash/cloneDeep';
 
-const Autosave = (props) => {
+type AutosaveProps = {
+    values?: object;
+    callback?: (...args: unknown[]) => unknown;
+};
+
+const Autosave = (props: AutosaveProps) => {
     const { values, callback } = props;
     const [debouncedValues] = useDebounce(values, 3000);
     const savedRef = useRef(values);
@@ -30,11 +34,6 @@ const Autosave = (props) => {
     }, [values]);
 
     return null;
-};
-
-Autosave.propTypes = {
-    values: PropTypes.object,
-    callback: PropTypes.func,
 };
 
 export default Autosave;

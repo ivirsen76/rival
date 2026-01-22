@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import FieldWrapper from '../FieldWrapper';
 import classnames from 'classnames';
 import ClockIcon from '@/styles/metronic/icons/duotone/Home/Clock.svg?react';
@@ -11,7 +10,13 @@ import style from './style.module.scss';
 
 const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
-const TimePicker = (props) => {
+type TimePickerProps = {
+    form?: object;
+    field?: object;
+    options?: object;
+};
+
+const TimePicker = (props: TimePickerProps) => {
     const { field, form, options } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
     const appearance = useAppearance();
@@ -226,12 +231,6 @@ const TimePicker = (props) => {
             </Tooltip>
         </FieldWrapper>
     );
-};
-
-TimePicker.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    options: PropTypes.object,
 };
 
 TimePicker.defaultProps = {

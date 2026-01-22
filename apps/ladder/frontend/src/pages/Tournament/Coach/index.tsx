@@ -1,9 +1,12 @@
-import PropTypes from 'prop-types';
 import Profile from './Profile';
 import Modal from '@/components/Modal';
 import style from './style.module.scss';
 
-const Coach = (props) => {
+type CoachProps = {
+    list?: unknown[];
+};
+
+const Coach = (props: CoachProps) => {
     const { list } = props;
 
     return (
@@ -36,10 +39,6 @@ const Coach = (props) => {
             ))}
         </div>
     );
-};
-
-Coach.propTypes = {
-    list: PropTypes.array,
 };
 
 export default Coach;

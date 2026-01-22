@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Field, Form, useFormikContext } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Textarea from '@/components/formik/Textarea';
@@ -9,7 +8,11 @@ import TeamNamePicker, { getValidateTeamName } from '@/components/formik/TeamNam
 import { useSelector } from 'react-redux';
 import useConfig from '@/utils/useConfig';
 
-const PopulatePartnerName = (props) => {
+type PopulatePartnerNameProps = {
+    poolPlayers?: unknown[];
+};
+
+const PopulatePartnerName = (props: PopulatePartnerNameProps) => {
     const { poolPlayers } = props;
     const { values, setFieldValue } = useFormikContext();
 
@@ -23,11 +26,14 @@ const PopulatePartnerName = (props) => {
     return null;
 };
 
-PopulatePartnerName.propTypes = {
-    poolPlayers: PropTypes.array,
+type TeammateFormProps = {
+    tournamentId?: number;
+    tournaments?: unknown[];
+    onSubmit?: (...args: unknown[]) => unknown;
+    hide?: (...args: unknown[]) => unknown;
 };
 
-const TeammateForm = (props) => {
+const TeammateForm = (props: TeammateFormProps) => {
     const { tournamentId, tournaments, onSubmit, hide } = props;
     const currentUser = useSelector((state) => state.auth.user);
     const config = useConfig();
@@ -186,13 +192,6 @@ const TeammateForm = (props) => {
             )}
         </Formik>
     );
-};
-
-TeammateForm.propTypes = {
-    tournamentId: PropTypes.number,
-    tournaments: PropTypes.array,
-    onSubmit: PropTypes.func,
-    hide: PropTypes.func,
 };
 
 export default TeammateForm;

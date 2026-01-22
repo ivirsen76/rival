@@ -1,11 +1,15 @@
-import PropTypes from 'prop-types';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Button from '@/components/Button';
 import axios from '@/utils/axios';
 import notification from '@/components/notification';
 
-const FormDeleteMatch = (props) => {
+type FormDeleteMatchProps = {
+    onSubmit: (...args: unknown[]) => unknown;
+    match: object;
+};
+
+const FormDeleteMatch = (props: FormDeleteMatchProps) => {
     const { match } = props;
 
     const onSubmit = async (values) => {
@@ -41,11 +45,6 @@ const FormDeleteMatch = (props) => {
             )}
         </Formik>
     );
-};
-
-FormDeleteMatch.propTypes = {
-    onSubmit: PropTypes.func.isRequired,
-    match: PropTypes.object.isRequired,
 };
 
 export default FormDeleteMatch;

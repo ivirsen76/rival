@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import Paginator from '@/components/Paginator';
 import SearchIcon from '@/styles/metronic/icons/duotone/General/Search.svg?react';
 import { useDebounce } from 'use-debounce';
@@ -7,7 +6,23 @@ import classnames from 'classnames';
 import _xor from 'lodash/xor';
 import style from './style.module.scss';
 
-const Table = (props) => {
+type TableProps = {
+    columns?: unknown[];
+    data?: unknown[];
+    perPage?: number;
+    showRowNumber?: boolean;
+    noDataMessage?: string;
+    className?: string;
+    getFilteredData?: (...args: unknown[]) => unknown;
+    orderBy?: string;
+    orderByDir?: string;
+    rowActions?: unknown[];
+    getKey?: (...args: unknown[]) => unknown;
+    getRowClassName?: (...args: unknown[]) => unknown;
+    showTopPaginator?: boolean;
+};
+
+const Table = (props: TableProps) => {
     const {
         columns,
         showRowNumber,
@@ -298,22 +313,6 @@ const Table = (props) => {
             {paginator && <div className="mt-6 d-flex justify-content-start">{paginator}</div>}
         </div>
     );
-};
-
-Table.propTypes = {
-    columns: PropTypes.array,
-    data: PropTypes.array,
-    perPage: PropTypes.number,
-    showRowNumber: PropTypes.bool,
-    noDataMessage: PropTypes.string,
-    className: PropTypes.string,
-    getFilteredData: PropTypes.func,
-    orderBy: PropTypes.string,
-    orderByDir: PropTypes.string,
-    rowActions: PropTypes.array,
-    getKey: PropTypes.func,
-    getRowClassName: PropTypes.func,
-    showTopPaginator: PropTypes.bool,
 };
 
 Table.defaultProps = {

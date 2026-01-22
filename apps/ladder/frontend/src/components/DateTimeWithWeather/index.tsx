@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Field, useFormikContext } from '@/components/formik';
 import TimePicker from '@/components/formik/TimePicker';
 import Modal from '@/components/Modal';
@@ -6,7 +5,12 @@ import WeatherAtTime from '@/components/WeatherForecast/WeatherAtTime';
 import WeatherForecast from '@/components/WeatherForecast';
 import style from './style.module.scss';
 
-const DateTimeWithWeather = (props) => {
+type DateTimeWithWeatherProps = {
+    minDate?: object;
+    maxDate?: object;
+};
+
+const DateTimeWithWeather = (props: DateTimeWithWeatherProps) => {
     const { minDate, maxDate } = props;
     const { values } = useFormikContext();
 
@@ -28,11 +32,6 @@ const DateTimeWithWeather = (props) => {
             ) : null}
         </div>
     );
-};
-
-DateTimeWithWeather.propTypes = {
-    minDate: PropTypes.object,
-    maxDate: PropTypes.object,
 };
 
 export default DateTimeWithWeather;

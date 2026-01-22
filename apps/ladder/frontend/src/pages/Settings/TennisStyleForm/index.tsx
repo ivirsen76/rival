@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Field, Form } from '@/components/formik';
 import Select from '@/components/formik/Select';
@@ -42,7 +41,11 @@ export const shotOptions = [
     { value: 'tweener', label: 'Tweener' },
 ];
 
-const TennisStyleForm = (props) => {
+type TennisStyleFormProps = {
+    onSubmit?: (...args: unknown[]) => unknown;
+};
+
+const TennisStyleForm = (props: TennisStyleFormProps) => {
     const user = useSelector((state) => state.auth.user);
     const dispatch = useDispatch();
 
@@ -94,10 +97,6 @@ const TennisStyleForm = (props) => {
             )}
         </Formik>
     );
-};
-
-TennisStyleForm.propTypes = {
-    onSubmit: PropTypes.func,
 };
 
 export default TennisStyleForm;

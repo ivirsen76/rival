@@ -1,7 +1,10 @@
-import PropTypes from 'prop-types';
 import style from './style.module.scss';
 
-const CancelMessage = (props) => {
+type CancelMessageProps = {
+    tournament?: object;
+};
+
+const CancelMessage = (props: CancelMessageProps) => {
     const { cancelFinalTournamentReason, isFreeSeason, level } = props.tournament;
     const message =
         typeof cancelFinalTournamentReason === 'string' ? [cancelFinalTournamentReason] : cancelFinalTournamentReason;
@@ -22,10 +25,6 @@ const CancelMessage = (props) => {
             )}
         </div>
     );
-};
-
-CancelMessage.propTypes = {
-    tournament: PropTypes.object,
 };
 
 export default CancelMessage;

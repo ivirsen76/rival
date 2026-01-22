@@ -1,7 +1,14 @@
-import PropTypes from 'prop-types';
 import _omit from 'lodash/omit';
 
-const Button = (props) => {
+type ButtonProps = {
+    type?: string;
+    isSubmitting?: boolean;
+    disabled?: boolean;
+    submittingTitle?: React.ReactNode;
+    children?: React.ReactNode;
+};
+
+const Button = (props: ButtonProps) => {
     const passingProps = _omit(props, ['isSubmitting', 'children', 'submittingTitle']);
 
     return (
@@ -15,14 +22,6 @@ const Button = (props) => {
             {props.isSubmitting && props.submittingTitle ? props.submittingTitle : props.children}
         </button>
     );
-};
-
-Button.propTypes = {
-    type: PropTypes.string,
-    isSubmitting: PropTypes.bool,
-    disabled: PropTypes.bool,
-    submittingTitle: PropTypes.node,
-    children: PropTypes.node,
 };
 
 Button.defaultProps = {

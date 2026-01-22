@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Header from './Header';
 import Graph from './Graph';
 import Numbers from './Numbers';
@@ -8,7 +7,14 @@ import ScaleToFit from '@/components/ScaleToFit';
 import { defaultColors } from './config';
 import style from './style.module.scss';
 
-const Stats = (props) => {
+type StatsProps = {
+    match?: object;
+    challenger?: object;
+    acceptor?: object;
+    scaleToFit?: boolean;
+};
+
+const Stats = (props: StatsProps) => {
     const { match, challenger, acceptor, scaleToFit } = props;
     const { stat } = match;
 
@@ -106,13 +112,6 @@ const Stats = (props) => {
     );
 
     return scaleToFit ? <ScaleToFit width={1098}>{children}</ScaleToFit> : children;
-};
-
-Stats.propTypes = {
-    match: PropTypes.object,
-    challenger: PropTypes.object,
-    acceptor: PropTypes.object,
-    scaleToFit: PropTypes.bool,
 };
 
 Stats.defaultProps = {

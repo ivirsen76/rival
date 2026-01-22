@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import style from './style.module.scss';
 
-const Bracket = (props) => {
+type BracketProps = {
+    topFinalSpot?: number;
+    bottomFinalSpot?: number;
+    middleFinalSpot?: number;
+};
+
+const Bracket = (props: BracketProps) => {
     const [top, setTop] = useState('-9999px');
     const [middle, setMiddle] = useState('-9999px');
     const [height, setHeight] = useState('0px');
@@ -32,12 +37,6 @@ const Bracket = (props) => {
             <div className={style.tick} style={{ top: middle }} />
         </div>
     );
-};
-
-Bracket.propTypes = {
-    topFinalSpot: PropTypes.number,
-    bottomFinalSpot: PropTypes.number,
-    middleFinalSpot: PropTypes.number,
 };
 
 export default Bracket;

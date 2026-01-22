@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import Match from '@/components/Match';
-import PropTypes from 'prop-types';
 import TournamentText from '@/components/TournamentText';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
@@ -24,7 +23,16 @@ import notification from '@/components/notification';
 import BotIcon from '@/assets/bot.svg?react';
 import style from './style.module.scss';
 
-const Final = (props) => {
+type FinalProps = {
+    matches?: unknown[];
+    players?: object;
+    reloadTournament?: (...args: unknown[]) => unknown;
+    showTournamentText?: boolean;
+    tournament?: object;
+    isReport?: boolean;
+};
+
+const Final = (props: FinalProps) => {
     const { players, reloadTournament, showTournamentText, tournament, isReport } = props;
     const matches = props.matches
         .filter((match) => match.type === 'final' && !match.battleId)
@@ -494,15 +502,6 @@ const Final = (props) => {
             </div>
         </div>
     );
-};
-
-Final.propTypes = {
-    matches: PropTypes.array,
-    players: PropTypes.object,
-    reloadTournament: PropTypes.func,
-    showTournamentText: PropTypes.bool,
-    tournament: PropTypes.object,
-    isReport: PropTypes.bool,
 };
 
 export default Final;

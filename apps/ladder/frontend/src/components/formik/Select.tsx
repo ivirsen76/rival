@@ -1,9 +1,15 @@
-import PropTypes from 'prop-types';
 import FieldWrapper from './FieldWrapper';
 import _omit from 'lodash/omit';
 import classnames from 'classnames';
 
-const Select = (props) => {
+type SelectProps = {
+    form?: object;
+    field?: object;
+    options: unknown[];
+    onChange?: (...args: unknown[]) => unknown;
+};
+
+const Select = (props: SelectProps) => {
     const { field, form, options, onChange } = props;
     const showError = form.errors[field.name] && form.submitCount > 0;
     const passingProps = _omit(props, [
@@ -42,13 +48,6 @@ const Select = (props) => {
             </select>
         </FieldWrapper>
     );
-};
-
-Select.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    options: PropTypes.array.isRequired,
-    onChange: PropTypes.func,
 };
 
 export default Select;

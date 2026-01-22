@@ -1,9 +1,14 @@
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { defaultColors } from '../config';
 import style from './style.module.scss';
 
-const Numbers = (props) => {
+type NumbersProps = {
+    match?: object;
+    challengerName?: React.ReactNode;
+    acceptorName?: React.ReactNode;
+};
+
+const Numbers = (props: NumbersProps) => {
     const { match, challengerName, acceptorName } = props;
     const { stat } = match;
 
@@ -113,12 +118,6 @@ const Numbers = (props) => {
             </div>
         </div>
     );
-};
-
-Numbers.propTypes = {
-    match: PropTypes.object,
-    challengerName: PropTypes.node,
-    acceptorName: PropTypes.node,
 };
 
 export default Numbers;

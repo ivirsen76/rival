@@ -1,5 +1,4 @@
 import { useMemo, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { Formik, Form } from '@/components/formik';
 import Button from '@/components/Button';
 import PlayerName from '@/components/PlayerName';
@@ -12,7 +11,13 @@ import axios from '@/utils/axios';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import style from './style.module.scss';
 
-const JustForm = (props) => {
+type JustFormProps = {
+    params?: object;
+    players?: object;
+    match?: object;
+};
+
+const JustForm = (props: JustFormProps) => {
     const { params, players, match } = props;
     const { isSubmitting, values, setFieldValue } = params;
     const currentUser = useSelector((state) => state.auth.user);
@@ -166,13 +171,13 @@ const JustForm = (props) => {
     );
 };
 
-JustForm.propTypes = {
-    params: PropTypes.object,
-    players: PropTypes.object,
-    match: PropTypes.object,
+type FormAcceptDoublesProposalProps = {
+    match?: object;
+    onSubmit?: (...args: unknown[]) => unknown;
+    players?: object;
 };
 
-const FormAcceptDoublesProposal = (props) => {
+const FormAcceptDoublesProposal = (props: FormAcceptDoublesProposalProps) => {
     const { match, onSubmit, players } = props;
 
     const acceptProposal = async (values) => {
@@ -199,12 +204,6 @@ const FormAcceptDoublesProposal = (props) => {
             {(params) => <JustForm params={params} players={players} match={match} />}
         </Formik>
     );
-};
-
-FormAcceptDoublesProposal.propTypes = {
-    match: PropTypes.object,
-    onSubmit: PropTypes.func,
-    players: PropTypes.object,
 };
 
 export default FormAcceptDoublesProposal;

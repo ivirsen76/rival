@@ -1,8 +1,15 @@
-import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import style from './style.module.scss';
 
-const Input = (props) => {
+type InputProps = {
+    name?: string;
+    value?: number;
+    onChange?: (...args: unknown[]) => unknown;
+    showErrors?: boolean;
+    maxSetPoints?: number;
+};
+
+const Input = (props: InputProps) => {
     const { name, value, onChange, showErrors, maxSetPoints } = props;
     const gamePoints = new Array(maxSetPoints + 1).fill(0).map((_, index) => index);
 
@@ -20,14 +27,6 @@ const Input = (props) => {
             ))}
         </div>
     );
-};
-
-Input.propTypes = {
-    name: PropTypes.string,
-    value: PropTypes.number,
-    onChange: PropTypes.func,
-    showErrors: PropTypes.bool,
-    maxSetPoints: PropTypes.number,
 };
 
 export default Input;

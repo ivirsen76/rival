@@ -1,10 +1,15 @@
-import PropTypes from 'prop-types';
 import FieldWrapper from '../FieldWrapper';
 import classnames from 'classnames';
 import _xor from 'lodash/xor';
 import style from './style.module.scss';
 
-const ButtonRow = (props) => {
+type ButtonRowProps = {
+    form?: object;
+    field?: object;
+    options: unknown[];
+};
+
+const ButtonRow = (props: ButtonRowProps) => {
     const { field, form, options } = props;
 
     return (
@@ -23,12 +28,6 @@ const ButtonRow = (props) => {
             </div>
         </FieldWrapper>
     );
-};
-
-ButtonRow.propTypes = {
-    form: PropTypes.object,
-    field: PropTypes.object,
-    options: PropTypes.array.isRequired,
 };
 
 export default ButtonRow;

@@ -1,11 +1,20 @@
 import { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import axios from '@/utils/axios';
 import WarningIcon from '@/styles/metronic/icons/duotone/Code/Warning-2.svg?react';
 import notification from '@/components/notification';
 import style from './style.module.scss';
 
-const VerifyEmail = (props) => {
+type VerifyEmailProps = {
+    sendOnMount?: boolean;
+    email: string;
+    password?: string;
+    onSuccess: (...args: unknown[]) => unknown;
+    render?: (...args: unknown[]) => unknown;
+    allowResend?: boolean;
+    verifyCodeCustom?: (...args: unknown[]) => unknown;
+};
+
+const VerifyEmail = (props: VerifyEmailProps) => {
     const { sendOnMount, email, password, onSuccess, render, allowResend, verifyCodeCustom } = props;
     const [code, setCode] = useState('');
     const [error, setError] = useState();
@@ -128,16 +137,6 @@ const VerifyEmail = (props) => {
             {body}
         </div>
     );
-};
-
-VerifyEmail.propTypes = {
-    sendOnMount: PropTypes.bool,
-    email: PropTypes.string.isRequired,
-    password: PropTypes.string,
-    onSuccess: PropTypes.func.isRequired,
-    render: PropTypes.func,
-    allowResend: PropTypes.bool,
-    verifyCodeCustom: PropTypes.func,
 };
 
 VerifyEmail.defaultProps = {

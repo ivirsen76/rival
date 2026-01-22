@@ -18,7 +18,9 @@ import hasAnyRole from '@/utils/hasAnyRole';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
-const Tournament = (props) => {
+type TournamentProps = {};
+
+const Tournament = (props: TournamentProps) => {
     const { path, url } = useRouteMatch();
     const user = useSelector((state) => state.auth.user);
     const config = useConfig();
@@ -89,8 +91,6 @@ const Tournament = (props) => {
         </div>
     );
 };
-
-Tournament.propTypes = {};
 
 Tournament.defaultProps = {};
 

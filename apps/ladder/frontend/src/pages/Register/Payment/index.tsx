@@ -1,6 +1,5 @@
 /* eslint-disable react/no-array-index-key */
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
 import Loader from '@/components/Loader';
 import axios from '@/utils/axios';
 import formatSum from '@/utils/formatSum';
@@ -15,7 +14,11 @@ import getRegisterNotificationProps from '@/utils/getRegisterNotificationProps';
 import { useHistory } from 'react-router-dom';
 import style from './style.module.scss';
 
-const Payment = (props) => {
+type PaymentProps = {
+    fullSettings?: object;
+};
+
+const Payment = (props: PaymentProps) => {
     const { fullSettings } = props;
     const [order, setOrder] = useState(null);
     const dispatch = useDispatch();
@@ -114,10 +117,6 @@ const Payment = (props) => {
             )}
         </Formik>
     );
-};
-
-Payment.propTypes = {
-    fullSettings: PropTypes.object,
 };
 
 export default Payment;
