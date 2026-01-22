@@ -4,7 +4,21 @@ import _omit from 'lodash/omit';
 import dayjs from '../utils/dayjs';
 import generateNews from '../services/news/generateNews';
 import removeUnverifiedAccounts from '../utils/removeUnverifiedAccounts';
-import runActions from '../utils/runActions';
+import runActions, {
+    remindForActivity,
+    remindForTournament,
+    lastDayRemindForTournament,
+    remindForFirstDay,
+    remindForChoosingLadder,
+    seasonIsOver,
+    joinNextSeason,
+    remindForClaimingReward,
+    sendFinalScheduleReminder,
+    requestFeedbackForNoJoin,
+    switchToPercentReferral,
+    sendMissingTeammateReminder,
+    sendHighProjectedTlrWarning,
+} from '../utils/runActions';
 import refundForCanceledTournaments from '../utils/refundForCanceledTournaments';
 
 // import { TextEncoder } from 'util';
@@ -3224,7 +3238,7 @@ describe('cron jobs', () => {
 
             await runQuery(`UPDATE players SET createdAt='${dateFourWeeksAgo}' WHERE id=16`);
 
-            await runActions.remindForActivity(app);
+            await remindForActivity(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
 
             expect(await getNumRecords('emails')).toBe(1);
@@ -3234,7 +3248,7 @@ describe('cron jobs', () => {
             await checkImageUrls(record.html, 1);
 
             // Check that we are not sending reminder once again
-            await runActions.remindForActivity(app);
+            await remindForActivity(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
@@ -3246,7 +3260,7 @@ describe('cron jobs', () => {
             await runQuery(`UPDATE seasons SET endDate='${dateInTenDays}' WHERE id=1`);
             await overrideConfig({ minMatchesToPlanTournament: 1 });
 
-            await runActions.remindForTournament(app);
+            await remindForTournament(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
 
             expect(await getNumRecords('emails')).toBe(1);
@@ -3256,7 +3270,7 @@ describe('cron jobs', () => {
             expect(record.html).toContain('Men 3.5 Ladder');
 
             // Check that we are not sending reminder once again
-            await runActions.remindForTournament(app);
+            await remindForTournament(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
@@ -3268,7 +3282,7 @@ describe('cron jobs', () => {
             await runQuery(`UPDATE seasons SET endDate='${dateInDay}' WHERE id=1`);
             await overrideConfig({ minMatchesToPlanTournament: 2 });
 
-            await runActions.lastDayRemindForTournament(app);
+            await lastDayRemindForTournament(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
 
             expect(await getNumRecords('emails')).toBe(1);
@@ -3280,7 +3294,7 @@ describe('cron jobs', () => {
             expect(record.recipientEmail.split(',').length).toBe(5);
 
             // Check that we are not sending reminder once again
-            await runActions.lastDayRemindForTournament(app);
+            await lastDayRemindForTournament(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
@@ -3291,7 +3305,7 @@ describe('cron jobs', () => {
             await runQuery(`UPDATE players SET readyForFinal=1 WHERE id=1`);
             await overrideConfig({ minMatchesToPlanTournament: 2 });
 
-            await runActions.lastDayRemindForTournament(app);
+            await lastDayRemindForTournament(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
 
             expect(await getNumRecords('emails')).toBe(2);
@@ -3308,7 +3322,7 @@ describe('cron jobs', () => {
             const dateDayAgo = dayjs.tz().subtract(20, 'hour').format('YYYY-MM-DD HH:mm:ss');
             await runQuery(`UPDATE seasons SET startDate='${dateDayAgo}' WHERE id=1`);
 
-            await runActions.remindForFirstDay(app);
+            await remindForFirstDay(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
 
             expect(await getNumRecords('emails')).toBe(1);
@@ -3318,7 +3332,7 @@ describe('cron jobs', () => {
             await checkImageUrls(record.html, 2);
 
             // Check that we are not sending reminder once again
-            await runActions.remindForFirstDay(app);
+            await remindForFirstDay(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
@@ -3330,7 +3344,7 @@ describe('cron jobs', () => {
             await runQuery(`UPDATE users SET createdAt='${dateWeekAgo}'`);
             await runQuery(`UPDATE users SET isVerified=0 WHERE id=3`);
 
-            await runActions.remindForChoosingLadder(app);
+            await remindForChoosingLadder(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
 
             expect(await getNumRecords('emails')).toBe(1);
@@ -3340,7 +3354,7 @@ describe('cron jobs', () => {
             await checkImageUrls(record.html, 1);
 
             // Check that we are not sending reminder twice
-            await runActions.remindForChoosingLadder(app);
+            await remindForChoosingLadder(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
@@ -3351,7 +3365,7 @@ describe('cron jobs', () => {
             const dateDayAgo = dayjs.tz().subtract(1, 'day').format('YYYY-MM-DD HH:mm:ss');
             await runQuery(`UPDATE seasons SET endDate='${dateDayAgo}' WHERE id=1`);
 
-            await runActions.seasonIsOver(app);
+            await seasonIsOver(app);
 
             const record = await expectRecordToExist('emails', {
                 subject: 'End of 2021 Spring Ladder Stats and Friendly Proposals',
@@ -3366,7 +3380,7 @@ describe('cron jobs', () => {
             expect(record.recipientEmail.split(',').length).toBe(7);
 
             // Check that we are not sending summary twice
-            await runActions.seasonIsOver(app);
+            await seasonIsOver(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 25000);
@@ -3383,7 +3397,7 @@ describe('cron jobs', () => {
             await runQuery(`UPDATE users SET createdAt='${dateMonthAgo}', loggedAt='${dateMonthAgo}'`);
             await runQuery(`UPDATE users SET subscribeForReminders=0 WHERE id=9`);
 
-            await runActions.joinNextSeason(app);
+            await joinNextSeason(app);
 
             const record = await expectRecordToExist('emails', {
                 subject: 'Rejoin the Raleigh Tennis Ladder for Free!',
@@ -3393,7 +3407,7 @@ describe('cron jobs', () => {
             expect(record.recipientEmail.split(',').length).toBe(5);
 
             // Check that we are not sending summary twice
-            await runActions.joinNextSeason(app);
+            await joinNextSeason(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
@@ -3408,7 +3422,7 @@ describe('cron jobs', () => {
             await runQuery(`UPDATE users SET subscribeForReminders=0 WHERE id=9`);
             await overrideConfig({ minMatchesToPay: 4 });
 
-            await runActions.joinNextSeason(app);
+            await joinNextSeason(app);
             await new Promise((resolve) => setTimeout(resolve, 5000));
 
             const email1 = await expectRecordToExist('emails', {
@@ -3426,7 +3440,7 @@ describe('cron jobs', () => {
             expect(email2.recipientEmail).toBe('player3@gmail.com');
 
             // Check that we are not sending summary twice
-            await runActions.joinNextSeason(app);
+            await joinNextSeason(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(2);
         }, 10000);
@@ -3438,7 +3452,7 @@ describe('cron jobs', () => {
         it('Should send a reminder about claiming reward', async () => {
             await runQuery(`UPDATE matches SET type="final", finalSpot=1 WHERE id=1`);
 
-            await runActions.remindForClaimingReward(app);
+            await remindForClaimingReward(app);
 
             // runner-up email
             const runnerUpEmail = await expectRecordToExist('emails', {
@@ -3463,7 +3477,7 @@ describe('cron jobs', () => {
             expect(winnerEmail.html).toContain('Runner-Up Trophy');
 
             // Check that we are not sending email twice
-            await runActions.remindForClaimingReward(app);
+            await remindForClaimingReward(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(2);
         }, 10000);
@@ -3472,7 +3486,7 @@ describe('cron jobs', () => {
             await runQuery(`UPDATE seasons SET isFree=1 WHERE id=1`);
             await runQuery(`UPDATE matches SET type="final", finalSpot=1 WHERE id=1`);
 
-            await runActions.remindForClaimingReward(app);
+            await remindForClaimingReward(app);
 
             // winner email
             const winnerEmail = await expectRecordToExist('emails', {
@@ -3497,7 +3511,7 @@ describe('cron jobs', () => {
             expect(runnerUpEmail.html).not.toContain('gift card');
 
             // Check that we are not sending email twice
-            await runActions.remindForClaimingReward(app);
+            await remindForClaimingReward(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(2);
         }, 10000);
@@ -3505,7 +3519,7 @@ describe('cron jobs', () => {
         it('Should not send a reminder for runner-up who lost by default', async () => {
             await runQuery(`UPDATE matches SET type="final", finalSpot=1, wonByDefault=1 WHERE id=1`);
 
-            await runActions.remindForClaimingReward(app);
+            await remindForClaimingReward(app);
 
             // winner email
             await expectRecordToExist('emails', {
@@ -3536,7 +3550,7 @@ describe('cron jobs', () => {
                     playedAt="${dayjs.tz().add(12, 'hour').format('YYYY-MM-DD HH:mm:ss')}",
                     score="6-1 6-1"`);
 
-            await runActions.remindForClaimingReward(app);
+            await remindForClaimingReward(app);
 
             const email = await expectRecordToExist('emails', {
                 subject: 'Claim Your Reward!',
@@ -3552,7 +3566,7 @@ describe('cron jobs', () => {
             await expectNumRecords('emails', { subject: 'Claim Your Reward!' }, 1);
 
             // Check that we are not sending email twice
-            await runActions.remindForClaimingReward(app);
+            await remindForClaimingReward(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
             await expectNumRecords('emails', { subject: 'Claim Your Reward!' }, 1);
         }, 10000);
@@ -3579,7 +3593,7 @@ describe('cron jobs', () => {
                 INSERT INTO matches (initial, challengerId, acceptorId, type, finalSpot, score)
                      VALUES (1, 1, 2, 'final', 3, '6-0 6-0')`);
 
-            await runActions.sendFinalScheduleReminder(app);
+            await sendFinalScheduleReminder(app);
 
             await new Promise((resolve) => setTimeout(resolve, 2000));
             expect(await getNumRecords('emails')).toBe(0);
@@ -3665,7 +3679,7 @@ describe('cron jobs', () => {
             const dateTwoWeeksAgo = dayjs.tz().subtract(2, 'week').subtract(12, 'hour').format('YYYY-MM-DD HH:mm:ss');
             await runQuery(`UPDATE seasons SET startDate='${dateTwoWeeksAgo}' WHERE id=5`);
 
-            await runActions.requestFeedbackForNoJoin(app);
+            await requestFeedbackForNoJoin(app);
 
             await new Promise((resolve) => setTimeout(resolve, 2000));
             expect(await getNumRecords('emails')).toBe(1);
@@ -3684,7 +3698,7 @@ describe('cron jobs', () => {
             }
 
             // Check that we are not sending the email twice
-            await runActions.requestFeedbackForNoJoin(app);
+            await requestFeedbackForNoJoin(app);
             await new Promise((resolve) => setTimeout(resolve, 2000));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
@@ -3694,19 +3708,19 @@ describe('cron jobs', () => {
         it('Should switch to percent referral program', async () => {
             const dateTwoDaysAgo = dayjs.tz().subtract(2, 'day').format('YYYY-MM-DD HH:mm:ss');
 
-            await runActions.switchToPercentReferral(app);
+            await switchToPercentReferral(app);
             await new Promise((resolve) => setTimeout(resolve, 1000));
             expect(await getNumRecords('emails')).toBe(0);
 
             await runQuery(`UPDATE seasons SET isFree=1`);
-            await runActions.switchToPercentReferral(app);
+            await switchToPercentReferral(app);
             await new Promise((resolve) => setTimeout(resolve, 1000));
             expect(await getNumRecords('emails')).toBe(0);
 
             await runQuery(`UPDATE config SET url="richmond"`);
             await runQuery(`UPDATE users SET createdAt='${dateTwoDaysAgo}' WHERE id=1`);
             await runQuery(`UPDATE users SET createdAt='${dateTwoDaysAgo}', refPercent=55 WHERE id=2`);
-            await runActions.switchToPercentReferral(app);
+            await switchToPercentReferral(app);
 
             await new Promise((resolve) => setTimeout(resolve, 1000));
             expect(await getNumRecords('emails')).toBe(1);
@@ -3723,7 +3737,7 @@ describe('cron jobs', () => {
             }
 
             // check that we are not sending twice
-            await runActions.switchToPercentReferral(app);
+            await switchToPercentReferral(app);
             await new Promise((resolve) => setTimeout(resolve, 1000));
             expect(await getNumRecords('emails')).toBe(1);
 
@@ -3744,7 +3758,7 @@ describe('cron jobs', () => {
 
             await runQuery(`UPDATE players SET createdAt="${dateFourDaysAgo}"`);
 
-            await runActions.sendMissingTeammateReminder(app);
+            await sendMissingTeammateReminder(app);
 
             // Check that email notification is sent
             {
@@ -3758,7 +3772,7 @@ describe('cron jobs', () => {
             }
 
             // Check that we are not sending the email twice
-            await runActions.sendMissingTeammateReminder(app);
+            await sendMissingTeammateReminder(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         }, 20000);
@@ -3768,7 +3782,7 @@ describe('cron jobs', () => {
         it('Should send warning about too high TLR and add player to the stronger tournament', async () => {
             await runQuery(`UPDATE matches SET challengerMatches=5, challengerElo=395 WHERE id=1`);
 
-            await runActions.sendHighProjectedTlrWarning(app);
+            await sendHighProjectedTlrWarning(app);
 
             await expectRecordToExist('players', { userId: 1, tournamentId: 3 });
 
@@ -3782,7 +3796,7 @@ describe('cron jobs', () => {
             }
 
             // Check that we are not sending the email twice
-            await runActions.sendMissingTeammateReminder(app);
+            await sendMissingTeammateReminder(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         });
@@ -3790,7 +3804,7 @@ describe('cron jobs', () => {
         it('Should send warning about too high TLR', async () => {
             await runQuery(`UPDATE matches SET acceptorMatches=5, acceptorElo=395 WHERE id=1`);
 
-            await runActions.sendHighProjectedTlrWarning(app);
+            await sendHighProjectedTlrWarning(app);
 
             await expectRecordToExist('players', { userId: 2, tournamentId: 3 });
 
@@ -3804,7 +3818,7 @@ describe('cron jobs', () => {
             }
 
             // Check that we are not sending the email twice
-            await runActions.sendMissingTeammateReminder(app);
+            await sendMissingTeammateReminder(app);
             await new Promise((resolve) => setTimeout(resolve, 500));
             expect(await getNumRecords('emails')).toBe(1);
         });
