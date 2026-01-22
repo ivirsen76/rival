@@ -34,15 +34,15 @@ const SingleAvatar = ({ player, highQuality, isWinner, ...props }: SingleAvatarP
 };
 
 type PlayerAvatarProps = {
-    className: string;
     player1: object;
-    player2: object;
-    player3: object;
-    player4: object;
-    player5: object;
-    isWinner: boolean;
-    highQuality: boolean;
-    showTeamAvatar: boolean;
+    player2?: object;
+    player3?: object;
+    player4?: object;
+    player5?: object;
+    className?: string;
+    isWinner?: boolean;
+    highQuality?: boolean;
+    showTeamAvatar?: boolean;
 };
 
 const PlayerAvatar = (props: PlayerAvatarProps) => {
