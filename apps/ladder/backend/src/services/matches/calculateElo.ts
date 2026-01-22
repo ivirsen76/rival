@@ -1,17 +1,9 @@
 import 'dotenv/config';
-import mysql from 'mysql';
 import NodeCache from 'node-cache';
 import { completeInjuryFullScore, completeInjuryFastScore, getOutcome } from './helpers';
 import dayjs from '../../utils/dayjs';
 import logger from '@rival-tennis-ladder/logger';
-
-const connectionConfig = {
-    host: process.env.TL_DB_HOSTNAME,
-    user: process.env.TL_DB_USERNAME,
-    password: process.env.TL_DB_PASSWORD,
-    database: process.env.TL_DB_NAME,
-    dateStrings: true,
-};
+import { runQuery, closeConnection } from '../../db/connection';
 
 const cache = new NodeCache();
 const CACHE_KEY = 'elo';
@@ -20,18 +12,6 @@ const maxRd = 350;
 const averageRd = 110;
 const timeToResetRd = 365 * 6; // 6 years
 const c2 = (maxRd ** 2 - averageRd ** 2) / timeToResetRd;
-
-const runQuery = async (connection, query) => {
-    return new Promise((resolve, reject) => {
-        connection.query(query, (error, results) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(results);
-            }
-        });
-    });
-};
 
 const getTimeDiff = (date1, date2) => {
     return (new Date(date2) - new Date(date1)) / (24 * 3600 * 1000);
@@ -96,14 +76,11 @@ const getTlr = ({ first, second, outcome, playedAt, eloDiff, multiplier = 1, bas
 };
 
 export const calculateElo = async () => {
-    const connection = mysql.createConnection(connectionConfig);
-    connection.connect();
-
-    const levels = await runQuery(connection, 'SELECT id FROM levels WHERE baseTlr IS NOT NULL AND type="single"');
+    const levels = await runQuery('SELECT id FROM levels WHERE baseTlr IS NOT NULL AND type="single"');
     const levelIds = levels.map((level) => level.id);
 
     if (levelIds.length === 0) {
-        connection.end();
+        closeConnection();
         return;
     }
 
@@ -136,7 +113,6 @@ export const calculateElo = async () => {
 
         const multiLadderMatches = (
             await runQuery(
-                connection,
                 `SELECT id, sameAs FROM matches WHERE score IS NOT NULL AND sameAs is NOT NULL AND playedAt>"${startDate}"`
             )
         ).reduce((obj, item) => {
@@ -146,7 +122,6 @@ export const calculateElo = async () => {
         }, {});
 
         const matches = await runQuery(
-            connection,
             `SELECT m.id,
                     m.challengerId,
                     m.acceptorId,
@@ -178,7 +153,7 @@ export const calculateElo = async () => {
         `
         );
 
-        const players = (await runQuery(connection, `SELECT id, userId FROM players`)).reduce((obj, row) => {
+        const players = (await runQuery(`SELECT id, userId FROM players`)).reduce((obj, row) => {
             obj[row.id] = row.userId;
             return obj;
         }, {});
@@ -273,11 +248,11 @@ export const calculateElo = async () => {
                         acceptorRd=${acceptorRd || 0}
                     WHERE id=${id}`;
 
-                await runQuery(connection, getQuery(match.id));
+                await runQuery(getQuery(match.id));
 
                 if (multiLadderMatches[match.id]) {
                     for (const matchId of multiLadderMatches[match.id]) {
-                        await runQuery(connection, getQuery(matchId));
+                        await runQuery(getQuery(matchId));
                     }
                 }
             }
@@ -286,5 +261,5 @@ export const calculateElo = async () => {
         logger.error(e.message);
     }
 
-    connection.end();
+    closeConnection();
 };

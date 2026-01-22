@@ -1,37 +1,13 @@
-import 'dotenv/config';
-import mysql from 'mysql';
 import dayjs from '../../utils/dayjs';
 import { getPoints } from './helpers';
 import logger from '@rival-tennis-ladder/logger';
+import { runQuery, closeConnection } from '../../db/connection';
 
-const connectionConfig = {
-    host: process.env.TL_DB_HOSTNAME,
-    user: process.env.TL_DB_USERNAME,
-    password: process.env.TL_DB_PASSWORD,
-    database: process.env.TL_DB_NAME,
-    dateStrings: true,
-};
+const getAverageRank = (rank1: number, rank2: number) => Math.floor((rank1 + rank2) / 2);
 
-const getAverageRank = (rank1, rank2) => Math.floor((rank1 + rank2) / 2);
-
-const calculateRank = async (tournamentId) => {
-    const connection = mysql.createConnection(connectionConfig);
-    connection.connect();
-
-    const getQueryResult = (query) => {
-        return new Promise((resolve, reject) => {
-            connection.query(query, (error, results) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(results);
-                }
-            });
-        });
-    };
-
+const calculateRank = async (tournamentId: number) => {
     try {
-        const [{ startDate, endDate, levelType }] = await getQueryResult(`
+        const [{ startDate, endDate, levelType }] = await runQuery(`
             SELECT s.startDate,
                    s.endDate,
                    l.type AS levelType
@@ -45,11 +21,11 @@ const calculateRank = async (tournamentId) => {
 
         // don't recalculate rank if the season has passed
         if (dayjs.tz().isAfter(dayjs.tz(endDate))) {
-            connection.end();
+            closeConnection();
             return;
         }
 
-        const playerList = await getQueryResult(`
+        const playerList = await runQuery(`
             SELECT id,
                    partnerId
               FROM players
@@ -93,7 +69,7 @@ const calculateRank = async (tournamentId) => {
              WHERE m.type="regular" AND m.playedAt IS NOT NULL
           ORDER BY m.playedAt, m.id
         `;
-        const matchList = await getQueryResult(query);
+        const matchList = await runQuery(query);
 
         const currentDate = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
         let end = dayjs.tz(startDate).add(1, 'week');
@@ -133,7 +109,7 @@ const calculateRank = async (tournamentId) => {
                     challenger2Rank !== match.challenger2Rank ||
                     acceptor2Rank !== match.acceptor2Rank
                 ) {
-                    await getQueryResult(
+                    await runQuery(
                         `UPDATE matches
                             SET challengerRank=${challengerRank},
                                 acceptorRank=${acceptorRank},
@@ -173,7 +149,7 @@ const calculateRank = async (tournamentId) => {
                         acceptorPoints !== match.acceptor2Points ||
                         winner !== match.winner
                     ) {
-                        await getQueryResult(
+                        await runQuery(
                             `UPDATE matches
                                 SET challengerRank=${challengerRank},
                                     acceptorRank=${acceptorRank},
@@ -194,7 +170,7 @@ const calculateRank = async (tournamentId) => {
                     acceptorPoints !== match.acceptorPoints ||
                     winner !== match.winner
                 ) {
-                    await getQueryResult(
+                    await runQuery(
                         `UPDATE matches
                             SET challengerRank=${challengerRank},
                                 acceptorRank=${acceptorRank},
@@ -208,7 +184,7 @@ const calculateRank = async (tournamentId) => {
         }
 
         // set rank for final matches
-        const finalMatches = await getQueryResult(`
+        const finalMatches = await runQuery(`
             SELECT m.*
               FROM matches AS m
               JOIN players AS p
@@ -220,7 +196,7 @@ const calculateRank = async (tournamentId) => {
             const challengerRank = match.challengerId ? players[match.challengerId].rank : null;
             const acceptorRank = match.acceptorId ? players[match.acceptorId].rank : null;
             if (challengerRank !== match.challengerRank || acceptorRank !== match.acceptorRank) {
-                await getQueryResult(
+                await runQuery(
                     `UPDATE matches
                         SET challengerRank=${challengerRank},
                             acceptorRank=${acceptorRank}
@@ -229,10 +205,10 @@ const calculateRank = async (tournamentId) => {
             }
         }
     } catch (e) {
-        logger.error(e.message);
+        logger.error((e as Error).message);
     }
 
-    connection.end();
+    closeConnection();
 };
 
 export default calculateRank;

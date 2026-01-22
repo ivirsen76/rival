@@ -1,60 +1,26 @@
-import mysql from 'mysql';
 import _capitalize from 'lodash/capitalize';
 import formatNumber from '../../utils/formatNumber';
 import { getStatsMatches } from '../../utils/sqlConditions';
 import getCombinedConfig from '../../utils/getCombinedConfig';
 import { getPlayerName } from '../users/helpers';
-import 'dotenv/config';
 import dayjs from '../../utils/dayjs';
-
-const connectionConfig = {
-    host: process.env.TL_DB_HOSTNAME,
-    user: process.env.TL_DB_USERNAME,
-    password: process.env.TL_DB_PASSWORD,
-    database: process.env.TL_DB_NAME,
-    dateStrings: true,
-};
+import { runQuery, closeConnection } from '../../db/connection';
 
 const generateNews = async () => {
-    const connection = mysql.createConnection(connectionConfig);
-    connection.connect();
-
     const currentDate = dayjs.tz();
-
-    const getQueryResult = (query, params = []) => {
-        return new Promise((resolve, reject) => {
-            connection.query(query, params, (error, results) => {
-                if (error) {
-                    reject(error);
-                } else {
-                    resolve(results);
-                }
-            });
-        });
-    };
 
     const config = await getCombinedConfig();
     if (config.url === 'demo') {
         return;
     }
 
-    const seasons = await getQueryResult(
-        `
-        SELECT *
-          FROM seasons
-         WHERE startDate<?`,
-        [currentDate.format('YYYY-MM-DD HH:mm:ss')]
-    );
+    const seasons = await runQuery(`SELECT * FROM seasons WHERE startDate<?`, [
+        currentDate.format('YYYY-MM-DD HH:mm:ss'),
+    ]);
 
-    const [firstSeason] = await getQueryResult(
-        `
-        SELECT *
-          FROM seasons
-      ORDER BY startDate
-         LIMIT 0, 1`
-    );
+    const [firstSeason] = await runQuery(`SELECT * FROM seasons ORDER BY startDate LIMIT 0, 1`);
 
-    const currentNews = await getQueryResult('SELECT id FROM news');
+    const currentNews = await runQuery('SELECT id FROM news');
     if (currentNews.length === 0 && firstSeason) {
         // Add first news about creating the ladder
         const date = currentDate.hour(12).minute(0).second(0).format('YYYY-MM-DD HH:mm:ss');
@@ -62,16 +28,10 @@ const generateNews = async () => {
         const seasonName = `${firstSeason.year} ${_capitalize(firstSeason.season)}`;
 
         const content = `<div><p>Great news! Rival Tennis Ladder is coming to the ${config.city} area! Sign up today to participate in your local ladder for the ${seasonName} season beginning on ${startDate}.</p><p>The first season is free for everyone! Register today to start playing!</p></div>`;
-        await getQueryResult(
-            `
-            INSERT INTO news (date, content, isManual)
-                 VALUES (?, ?, 1)
-            `,
-            [date, content]
-        );
+        await runQuery(`INSERT INTO news (date, content, isManual) VALUES (?, ?, 1)`, [date, content]);
     }
 
-    await getQueryResult(`DELETE FROM news WHERE isManual=0`);
+    await runQuery(`DELETE FROM news WHERE isManual=0`);
 
     for (const season of seasons) {
         const seasonName = `${season.year} ${_capitalize(season.season)}`;
@@ -80,7 +40,7 @@ const generateNews = async () => {
         {
             const content = `<div>The season <b>${seasonName}</b> has started.</div>`;
             const date = dayjs.tz(season.startDate).hour(12).minute(0).second(0).format('YYYY-MM-DD HH:mm:ss');
-            await getQueryResult(`INSERT INTO news (date, content) VALUES (?, ?)`, [date, content]);
+            await runQuery(`INSERT INTO news (date, content) VALUES (?, ?)`, [date, content]);
         }
 
         // Don't show the result if season is not over yet
@@ -88,7 +48,7 @@ const generateNews = async () => {
             continue;
         }
 
-        const [counts] = await getQueryResult(`
+        const [counts] = await runQuery(`
             SELECT COUNT(DISTINCT p.userId) AS totalPlayers,
                    COUNT(m.id) AS totalMatches
               FROM tournaments AS t
@@ -99,7 +59,7 @@ const generateNews = async () => {
 
         let winners = '';
         {
-            const captains = await getQueryResult(`
+            const captains = await runQuery(`
                 SELECT p.id, p.teamName
                   FROM players AS p
                   JOIN tournaments AS t ON p.tournamentId=t.id
@@ -113,7 +73,7 @@ const generateNews = async () => {
                 return obj;
             }, {});
 
-            const matches = await getQueryResult(`
+            const matches = await runQuery(`
                 SELECT p.id,
                        p.partnerId,
                        u.firstName,
@@ -129,7 +89,7 @@ const generateNews = async () => {
                   JOIN levels AS l ON t.levelId=l.id
                  WHERE t.seasonId=${season.id} AND m.score IS NOT NULL AND m.finalSpot=1 AND m.battleId IS NULL`);
 
-            const doublesmatches = await getQueryResult(`
+            const doublesmatches = await runQuery(`
                 SELECT u.firstName,
                        u.lastName,
                        l.name AS levelName,
@@ -176,17 +136,11 @@ const generateNews = async () => {
                 .second(0)
                 .format('YYYY-MM-DD HH:mm:ss');
 
-            await getQueryResult(
-                `
-                INSERT INTO news (date, content)
-                     VALUES (?, ?)
-                `,
-                [date, content]
-            );
+            await runQuery(`INSERT INTO news (date, content) VALUES (?, ?)`, [date, content]);
         }
     }
 
-    connection.end();
+    closeConnection();
 };
 
 export default generateNews;

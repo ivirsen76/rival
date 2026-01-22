@@ -1,6 +1,5 @@
 import path from 'path';
 import dotenv from 'dotenv';
-import mysql from 'mysql';
 import redis from 'redis';
 import { execSync } from 'child_process';
 import _map from 'lodash/map';
@@ -10,6 +9,7 @@ import expect from 'expect';
 import colors from 'colors/safe';
 import mkdirp from 'mkdirp';
 import { rimraf } from 'rimraf';
+import { runQueryAndClose } from './connection';
 
 dotenv.config({ path: path.resolve(__dirname, '..', '..', '.env') });
 
@@ -26,14 +26,6 @@ const {
 } = process.env;
 const expectTime = 10000; // time to wait for assertion
 const retryingPause = 200; // pause between retrying
-
-const connectionConfig = {
-    host: TL_DB_HOSTNAME,
-    user: TL_DB_USERNAME,
-    password: TL_DB_PASSWORD,
-    database: TL_DB_NAME,
-    dateStrings: true,
-};
 
 const dbCredentials = ` -h ${TL_DB_HOSTNAME} -u ${TL_DB_USERNAME} `;
 const dumpPath = path.join(TL_TMP_FOLDER, 'dump.sql');
@@ -212,60 +204,32 @@ export const restoreProductionDb = () => {
     });
 };
 
-export const getNumRecords = (table, conditions?) => {
+export const getNumRecords = async (table: string, conditions?) => {
     checkPermissions();
 
     const where = conditions ? 'WHERE ' + getStringConditions(conditions) : '';
     const query = `SELECT count(*) AS cnt FROM ${table} ${where}`;
 
-    return new Promise((resolve, reject) => {
-        const connection = mysql.createConnection(connectionConfig);
-        connection.connect();
-        connection.query(query, (error, results, fields) => {
-            connection.end();
-            if (error) {
-                reject(new Error(error.message));
-            } else {
-                resolve(results[0].cnt);
-            }
-        });
-    });
+    const [{ cnt }] = await runQueryAndClose(query);
+    return cnt;
 };
 
-export const runQuery = (query) => {
+export const runQuery = (query: string) => {
     checkPermissions();
-
-    return new Promise((resolve, reject) => {
-        const connection = mysql.createConnection(connectionConfig);
-        connection.connect();
-        connection.query(query, (error, results, fields) => {
-            connection.end();
-            resolve(results);
-        });
-    });
+    return runQueryAndClose(query);
 };
 
-export const getRecord = (table, conditions) => {
+export const getRecord = async (table: string, conditions) => {
     checkPermissions();
 
     const where = conditions ? 'WHERE ' + getStringConditions(conditions) : '';
     const query = `SELECT * FROM ${table} ${where} LIMIT 0, 1`;
 
-    return new Promise((resolve, reject) => {
-        const connection = mysql.createConnection(connectionConfig);
-        connection.connect();
-        connection.query(query, (error, results, fields) => {
-            connection.end();
-            if (error) {
-                reject(error);
-            } else {
-                resolve(results[0]);
-            }
-        });
-    });
+    const [record] = await runQueryAndClose(query);
+    return record;
 };
 
-export const expectRecordToExist = async (table, conditions, data?) => {
+export const expectRecordToExist = async (table: string, conditions, data?) => {
     checkPermissions();
 
     const before = Date.now();
@@ -298,7 +262,7 @@ export const expectRecordToExist = async (table, conditions, data?) => {
     }
 };
 
-export const expectNumRecords = async (table, conditions, num) => {
+export const expectNumRecords = async (table: string, conditions, num: number) => {
     checkPermissions();
 
     const before = Date.now();

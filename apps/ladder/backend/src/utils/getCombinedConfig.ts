@@ -1,28 +1,6 @@
-import mysql from 'mysql';
 import _omit from 'lodash/omit';
 import 'dotenv/config';
-
-const connectionConfig = {
-    host: process.env.TL_DB_HOSTNAME,
-    user: process.env.TL_DB_USERNAME,
-    password: process.env.TL_DB_PASSWORD,
-    database: process.env.TL_DB_NAME,
-    dateStrings: true,
-};
-const connection = mysql.createConnection(connectionConfig);
-connection.connect();
-
-const runQuery = async (query) => {
-    return new Promise((resolve, reject) => {
-        connection.query(query, (error, results) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(results);
-            }
-        });
-    });
-};
+import { runQuery } from '../db/connection';
 
 const getCombinedConfig = async () => {
     const [row] = await runQuery('SELECT * FROM config');
