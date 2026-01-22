@@ -6,7 +6,7 @@ import style from './style.module.scss';
 type TitleProps = {
     colorHue: number;
     colorLightness: number;
-    className: string;
+    className?: string;
     children: React.ReactNode;
 };
 
