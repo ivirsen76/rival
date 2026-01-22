@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react';
 import { Selector, SkinOption } from '../options';
 

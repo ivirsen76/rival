@@ -1,3 +1,4 @@
+// @ts-nocheck
 const Medal = (props) => {
     return (
         <g transform="translate(0, -3)">

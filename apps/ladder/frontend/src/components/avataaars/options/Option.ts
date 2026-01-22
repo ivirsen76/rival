@@ -1,3 +1,4 @@
+// @ts-nocheck
 export default class Option {
     get key() {
         return this._key;

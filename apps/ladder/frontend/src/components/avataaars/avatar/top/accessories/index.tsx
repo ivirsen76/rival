@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react';
 import Blank from './Blank';
 import Kurt from './Kurt';

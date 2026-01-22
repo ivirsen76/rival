@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Option from './Option';
 
 export { default as Option } from './Option';

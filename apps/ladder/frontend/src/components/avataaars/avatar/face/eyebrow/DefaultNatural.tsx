@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react';
 
 export default class DefaultNatural extends React.Component {

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react';
 import Clothe from './clothes';
 import Graphics from './clothes/Graphics';

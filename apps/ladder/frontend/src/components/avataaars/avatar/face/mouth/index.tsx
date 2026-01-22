@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react';
 import Concerned from './Concerned';
 import Default from './Default';

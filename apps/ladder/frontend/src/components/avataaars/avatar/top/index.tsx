@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react';
 import Eyepatch from './Eyepatch';
 import Hat from './Hat';

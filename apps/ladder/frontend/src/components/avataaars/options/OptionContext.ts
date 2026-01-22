@@ -1,3 +1,4 @@
+// @ts-nocheck
 export default class OptionContext {
     constructor(options) {
         this.stateChangeListeners = new Set();

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react';
 
 export default class EyeRoll extends React.Component {
