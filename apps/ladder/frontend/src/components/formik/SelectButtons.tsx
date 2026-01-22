@@ -3,10 +3,10 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 
 type SelectButtonsProps = {
-    form?: object;
-    field?: object;
+    form: object;
+    field: object;
     options: unknown[];
-    allowUnset?: boolean;
+    allowUnset: boolean;
 };
 
 const SelectButtons = (props: SelectButtonsProps) => {

@@ -49,23 +49,23 @@ const isLongName = (player) => {
 };
 
 type MatchProps = {
-    match?: object;
-    challenger?: object;
-    acceptor?: object;
-    players?: object;
-    onUpdate?: (...args: unknown[]) => unknown;
-    onlyTime?: boolean;
-    showWeekDay?: boolean;
-    readOnly?: boolean;
-    isUpcoming?: boolean;
-    hideReplacePlayersAction?: boolean;
-    isReport?: boolean;
+    match: object;
+    challenger: object;
+    acceptor: object;
+    players: object;
+    onUpdate: (...args: unknown[]) => unknown;
+    onlyTime: boolean;
+    showWeekDay: boolean;
+    readOnly: boolean;
+    isUpcoming: boolean;
+    hideReplacePlayersAction: boolean;
+    isReport: boolean;
     tournament: object;
-    showHeader?: boolean;
-    emulateMyMatch?: boolean;
-    showInfo?: boolean;
-    showTeamsSign?: boolean;
-    scoreModalInterceptor?: (...args: unknown[]) => unknown;
+    showHeader: boolean;
+    emulateMyMatch: boolean;
+    showInfo: boolean;
+    showTeamsSign: boolean;
+    scoreModalInterceptor: (...args: unknown[]) => unknown;
 };
 
 const Match = (props: MatchProps) => {

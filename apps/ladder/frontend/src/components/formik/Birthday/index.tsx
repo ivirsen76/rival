@@ -8,9 +8,9 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 
 type BirthdayProps = {
-    form?: object;
-    field?: object;
-    autoFocus?: boolean;
+    form: object;
+    field: object;
+    autoFocus: boolean;
 };
 
 const Birthday = (props: BirthdayProps) => {

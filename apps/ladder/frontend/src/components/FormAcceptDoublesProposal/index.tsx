@@ -12,9 +12,9 @@ import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import style from './style.module.scss';
 
 type JustFormProps = {
-    params?: object;
-    players?: object;
-    match?: object;
+    params: object;
+    players: object;
+    match: object;
 };
 
 const JustForm = (props: JustFormProps) => {
@@ -172,9 +172,9 @@ const JustForm = (props: JustFormProps) => {
 };
 
 type FormAcceptDoublesProposalProps = {
-    match?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
-    players?: object;
+    match: object;
+    onSubmit: (...args: unknown[]) => unknown;
+    players: object;
 };
 
 const FormAcceptDoublesProposal = (props: FormAcceptDoublesProposalProps) => {

@@ -12,9 +12,9 @@ import { BRACKET_BOT_ID } from '@rival/ladder.backend/src/constants';
 import style from './style.module.scss';
 
 type BetContestProps = {
-    tournament?: object;
-    players?: object;
-    matches?: object;
+    tournament: object;
+    players: object;
+    matches: object;
 };
 
 const BetContest = (props: BetContestProps) => {

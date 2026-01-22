@@ -4,9 +4,9 @@ import { CookieComponent } from './_CookieComponent';
 
 export interface ToggleOptions {
     saveState: boolean;
-    targetState?: string;
-    toggleState?: string;
-    targetToggleMode?: string;
+    targetState: string;
+    toggleState: string;
+    targetToggleMode: string;
 }
 
 const defaultToggleOptions: ToggleOptions = {

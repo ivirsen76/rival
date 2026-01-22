@@ -4,10 +4,10 @@ import dayjs from '@/utils/dayjs';
 import style from './style.module.scss';
 
 type SeasonPickerProps = {
-    settings?: object;
-    updateSettings?: (...args: unknown[]) => unknown;
-    onSubmit?: (...args: unknown[]) => unknown;
-    seasons?: unknown[];
+    settings: object;
+    updateSettings: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
+    seasons: unknown[];
 };
 
 const SeasonPicker = (props: SeasonPickerProps) => {

@@ -3,8 +3,8 @@ import PlayerName from '@/components/PlayerName';
 import classnames from 'classnames';
 
 type MostMatchesProps = {
-    tournament?: object;
-    isReport?: boolean;
+    tournament: object;
+    isReport: boolean;
 };
 
 const MostMatches = (props: MostMatchesProps) => {

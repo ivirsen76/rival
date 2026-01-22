@@ -2,8 +2,8 @@ import { Formik, Field } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
 
 type JoinAnotherLadderProps = {
-    initialReason?: string;
-    onSubmit?: (...args: unknown[]) => unknown;
+    initialReason: string;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const JoinAnotherLadder = (props: JoinAnotherLadderProps) => {

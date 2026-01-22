@@ -4,11 +4,11 @@ import Tooltip from '@/components/Tooltip';
 import classnames from 'classnames';
 
 type CopyProps = {
-    label?: React.ReactNode;
-    buttonLabel?: string;
-    buttonClassName?: string;
-    stringToCopy?: string;
-    onClick?: (...args: unknown[]) => unknown;
+    label: React.ReactNode;
+    buttonLabel: string;
+    buttonClassName: string;
+    stringToCopy: string;
+    onClick: (...args: unknown[]) => unknown;
 };
 
 const Copy = (props: CopyProps) => {

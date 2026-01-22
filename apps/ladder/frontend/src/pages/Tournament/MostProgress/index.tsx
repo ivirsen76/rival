@@ -4,8 +4,8 @@ import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 import style from './style.module.scss';
 
 type MostProgressProps = {
-    tournament?: object;
-    isReport?: boolean;
+    tournament: object;
+    isReport: boolean;
 };
 
 const MostProgress = (props: MostProgressProps) => {

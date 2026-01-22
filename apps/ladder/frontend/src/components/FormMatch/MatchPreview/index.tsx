@@ -8,8 +8,8 @@ import parseScore from '@/components/Match/parseScore';
 import { isFullSetScoreCorrect, isFastSetScoreCorrect } from '@rival/ladder.backend/src/services/matches/helpers';
 
 type MatchPreviewProps = {
-    tournament?: object;
-    match?: object;
+    tournament: object;
+    match: object;
 };
 
 const MatchPreview = (props: MatchPreviewProps) => {

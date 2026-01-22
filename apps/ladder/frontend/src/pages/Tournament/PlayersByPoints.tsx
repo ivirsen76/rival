@@ -52,12 +52,12 @@ const randomLastNames = [
 ];
 
 type ListProps = {
-    list?: unknown[];
-    showDoublesPlayers?: boolean;
-    showRankChanges?: boolean;
-    tournament?: object;
-    lineAfterId?: number;
-    lineLabel?: React.ReactNode;
+    list: unknown[];
+    showDoublesPlayers: boolean;
+    showRankChanges: boolean;
+    tournament: object;
+    lineAfterId: number;
+    lineLabel: React.ReactNode;
 };
 
 export const List = ({
@@ -66,7 +66,7 @@ export const List = ({
     showRankChanges,
     tournament,
     lineAfterId = 0,
-    lineLabel = 'Tournament Line'
+    lineLabel = 'Tournament Line',
 }: ListProps) => {
     const { isOver, isBreak, isParticipation, playingAnotherFinal } = tournament;
     const currentUser = useSelector((state) => state.auth.user);
@@ -444,8 +444,8 @@ export const List = ({
 };
 
 type PlayersByPointsProps = {
-    tournament?: object;
-    showDoublesPlayers?: boolean;
+    tournament: object;
+    showDoublesPlayers: boolean;
 };
 
 const PlayersByPoints = (props: PlayersByPointsProps) => {

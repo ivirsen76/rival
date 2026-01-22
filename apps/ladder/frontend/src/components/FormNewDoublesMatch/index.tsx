@@ -10,11 +10,11 @@ import hasAnyRole from '@/utils/hasAnyRole';
 import style from './style.module.scss';
 
 type JustFormProps = {
-    values?: object;
-    players?: object;
-    playerOptions?: unknown[];
-    setFieldValue?: (...args: unknown[]) => unknown;
-    isAdmin?: boolean;
+    values: object;
+    players: object;
+    playerOptions: unknown[];
+    setFieldValue: (...args: unknown[]) => unknown;
+    isAdmin: boolean;
 };
 
 const JustForm = (props: JustFormProps) => {
@@ -109,8 +109,8 @@ const JustForm = (props: JustFormProps) => {
 };
 
 type FormNewMatchProps = {
-    tournament?: object;
-    onAdd?: (...args: unknown[]) => unknown;
+    tournament: object;
+    onAdd: (...args: unknown[]) => unknown;
 };
 
 const FormNewMatch = (props: FormNewMatchProps) => {

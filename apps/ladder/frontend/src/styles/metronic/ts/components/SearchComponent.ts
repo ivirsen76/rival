@@ -17,7 +17,7 @@ export interface ISearchOptions {
     keypress: boolean; // Enable search on keypress
     enter: boolean; // Enable search on enter key press
     layout: 'menu' | 'inline'; // Use 'menu' or 'inline' layout options to display search results
-    responsive?: number; // Pass integer value or bootstrap compatible breakpoint key(sm,md,lg,xl,xxl) to enable reponsive form mode for device width below the breakpoint value
+    responsive: number; // Pass integer value or bootstrap compatible breakpoint key(sm,md,lg,xl,xxl) to enable reponsive form mode for device width below the breakpoint value
     showOnFocus: boolean; // Always show menu on input focus
 }
 

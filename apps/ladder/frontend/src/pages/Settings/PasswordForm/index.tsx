@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import NotFound from '@/pages/NotFound';
 
 type PasswordFormProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const PasswordForm = (props: PasswordFormProps) => {

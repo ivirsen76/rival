@@ -1,7 +1,7 @@
 import style from './style.module.scss';
 
 type HtmlProps = {
-    content?: string;
+    content: string;
 };
 
 const Html = (props: HtmlProps) => {

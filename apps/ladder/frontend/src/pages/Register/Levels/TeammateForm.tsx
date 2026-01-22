@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import useConfig from '@/utils/useConfig';
 
 type PopulatePartnerNameProps = {
-    poolPlayers?: unknown[];
+    poolPlayers: unknown[];
 };
 
 const PopulatePartnerName = (props: PopulatePartnerNameProps) => {
@@ -27,10 +27,10 @@ const PopulatePartnerName = (props: PopulatePartnerNameProps) => {
 };
 
 type TeammateFormProps = {
-    tournamentId?: number;
-    tournaments?: unknown[];
-    onSubmit?: (...args: unknown[]) => unknown;
-    hide?: (...args: unknown[]) => unknown;
+    tournamentId: number;
+    tournaments: unknown[];
+    onSubmit: (...args: unknown[]) => unknown;
+    hide: (...args: unknown[]) => unknown;
 };
 
 const TeammateForm = (props: TeammateFormProps) => {

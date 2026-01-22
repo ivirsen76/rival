@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 
 type InjuryIconProps = {
-    className?: string;
+    className: string;
 };
 
 const InjuryIcon = (props: InjuryIconProps) => {

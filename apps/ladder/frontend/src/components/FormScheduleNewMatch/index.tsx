@@ -9,10 +9,10 @@ import getPlayersName from '@/utils/getPlayersName';
 import hasAnyRole from '@/utils/hasAnyRole';
 
 type JustFormProps = {
-    values?: object;
-    players?: unknown[];
-    setFieldValue?: (...args: unknown[]) => unknown;
-    currentPlayerId?: number;
+    values: object;
+    players: unknown[];
+    setFieldValue: (...args: unknown[]) => unknown;
+    currentPlayerId: number;
 };
 
 const JustForm = (props: JustFormProps) => {
@@ -45,8 +45,8 @@ const JustForm = (props: JustFormProps) => {
 };
 
 type FormScheduleNewNewMatchProps = {
-    tournament?: object;
-    onAdd?: (...args: unknown[]) => unknown;
+    tournament: object;
+    onAdd: (...args: unknown[]) => unknown;
 };
 
 const FormScheduleNewNewMatch = (props: FormScheduleNewNewMatchProps) => {

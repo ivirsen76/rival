@@ -3,11 +3,11 @@ import _xor from 'lodash/xor';
 import classnames from 'classnames';
 
 type CheckboxArrayProps = {
-    form?: object;
-    field?: object;
+    form: object;
+    field: object;
     options: unknown[];
-    isBlockDescription?: boolean;
-    orientation?: string;
+    isBlockDescription: boolean;
+    orientation: string;
 };
 
 const CheckboxArray = (props: CheckboxArrayProps) => {

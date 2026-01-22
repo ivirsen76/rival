@@ -77,9 +77,9 @@ export const validate = (values) => {
 };
 
 type FormMatchProps = {
-    match?: object;
-    tournament?: object;
-    onUpdate?: (...args: unknown[]) => unknown;
+    match: object;
+    tournament: object;
+    onUpdate: (...args: unknown[]) => unknown;
 };
 
 const FormMatch = (props: FormMatchProps) => {

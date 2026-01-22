@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import style from './style.module.scss';
 
 type ScaleToFitProps = {
-    children?: React.ReactNode;
-    width?: number;
+    children: React.ReactNode;
+    width: number;
 };
 
 const ScaleToFit = (props: ScaleToFitProps) => {

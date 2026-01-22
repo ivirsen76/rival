@@ -10,7 +10,7 @@ import NotFound from '@/pages/NotFound';
 import { loadCurrentUser, updateCurrentUser } from '@/reducers/auth';
 
 type EmailFormProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const EmailForm = (props: EmailFormProps) => {

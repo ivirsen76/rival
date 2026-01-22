@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 
 type RenderDelayProps = {
-    children?: React.ReactNode;
-    delay?: number;
+    children: React.ReactNode;
+    delay: number;
 };
 
 const RenderDelay = (props: RenderDelayProps) => {

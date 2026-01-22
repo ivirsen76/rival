@@ -8,11 +8,11 @@ const minPages = 10;
 
 type PaginatorProps = {
     /** total number of pages. If equal 0 then the component shows nothing */
-    total?: number;
+    total: number;
     /** current page */
-    currentPage?: number;
+    currentPage: number;
     /** function called after changing page with params: function(newPage) */
-    onPageChange?: (...args: unknown[]) => unknown;
+    onPageChange: (...args: unknown[]) => unknown;
 };
 
 /** Show page links */

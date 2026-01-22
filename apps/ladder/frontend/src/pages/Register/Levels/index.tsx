@@ -66,11 +66,11 @@ const renderTeammateDescription = (tournamentId: number, values) => {
 };
 
 type LevelsProps = {
-    settings?: object;
-    updateSettings?: (...args: unknown[]) => unknown;
-    onSubmit?: (...args: unknown[]) => unknown;
-    user?: object;
-    selectedSeason?: object;
+    settings: object;
+    updateSettings: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
+    user: object;
+    selectedSeason: object;
 };
 
 const Levels = (props: LevelsProps) => {

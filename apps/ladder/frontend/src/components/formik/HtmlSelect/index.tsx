@@ -5,10 +5,10 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 
 type HtmlSelectProps = {
-    form?: object;
-    field?: object;
+    form: object;
+    field: object;
     options: unknown[];
-    onChange?: (...args: unknown[]) => unknown;
+    onChange: (...args: unknown[]) => unknown;
 };
 
 const HtmlSelect = (props: HtmlSelectProps) => {

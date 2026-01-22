@@ -5,7 +5,7 @@ import axios from '@/utils/axios';
 import { useHistory } from 'react-router-dom';
 
 type ShortLinkProps = {
-    match?: object;
+    match: object;
 };
 
 const ShortLink = (props: ShortLinkProps) => {

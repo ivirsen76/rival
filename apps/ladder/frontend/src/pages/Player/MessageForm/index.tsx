@@ -6,8 +6,8 @@ import useConfig from '@/utils/useConfig';
 import axios from '@/utils/axios';
 
 type MessageFormProps = {
-    user?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
+    user: object;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const MessageForm = (props: MessageFormProps) => {

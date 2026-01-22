@@ -4,9 +4,9 @@ import useConfig from '@/utils/useConfig';
 import Button from '@/components/Button';
 
 type CreateTeamFormProps = {
-    tournament?: object;
-    player?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
+    tournament: object;
+    player: object;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const CreateTeamForm = (props: CreateTeamFormProps) => {

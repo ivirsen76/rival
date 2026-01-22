@@ -9,8 +9,8 @@ import { useSelector } from 'react-redux';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 
 type SwitchLadderFormProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
-    tournament?: object;
+    onSubmit: (...args: unknown[]) => unknown;
+    tournament: object;
 };
 
 const SwitchLadderForm = (props: SwitchLadderFormProps) => {

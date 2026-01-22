@@ -3,7 +3,7 @@ import Modal from '@/components/Modal';
 import style from './style.module.scss';
 
 type CoachProps = {
-    list?: unknown[];
+    list: unknown[];
 };
 
 const Coach = (props: CoachProps) => {

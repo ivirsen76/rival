@@ -3,9 +3,9 @@ import { defaultColors } from '../config';
 import style from './style.module.scss';
 
 type NumbersProps = {
-    match?: object;
-    challengerName?: React.ReactNode;
-    acceptorName?: React.ReactNode;
+    match: object;
+    challengerName: React.ReactNode;
+    acceptorName: React.ReactNode;
 };
 
 const Numbers = (props: NumbersProps) => {

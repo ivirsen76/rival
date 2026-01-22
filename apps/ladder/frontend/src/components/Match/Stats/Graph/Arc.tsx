@@ -10,8 +10,8 @@ function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
 }
 
 type ArcProps = {
-    width?: number;
-    list?: unknown[];
+    width: number;
+    list: unknown[];
 };
 
 const Arc = (props: ArcProps) => {

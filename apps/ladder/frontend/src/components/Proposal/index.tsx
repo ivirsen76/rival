@@ -26,10 +26,10 @@ import matchFormatOptions from '@rival/ladder.backend/src/services/proposals/mat
 import durationOptions from '@rival/ladder.backend/src/services/proposals/durationOptions';
 
 type FormAcceptProposalProps = {
-    match?: object;
-    tournament?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
-    onCancel?: (...args: unknown[]) => unknown;
+    match: object;
+    tournament: object;
+    onSubmit: (...args: unknown[]) => unknown;
+    onCancel: (...args: unknown[]) => unknown;
 };
 
 const FormAcceptProposal = (props: FormAcceptProposalProps) => {
@@ -107,13 +107,13 @@ const FormAcceptProposal = (props: FormAcceptProposalProps) => {
 };
 
 type ProposalProps = {
-    tournament?: object;
-    match?: object;
-    onStatusUpdate?: (...args: unknown[]) => unknown;
-    showActions?: boolean;
-    showWeather?: boolean;
-    isUpcomingPlayStyle?: boolean;
-    showElo?: boolean;
+    tournament: object;
+    match: object;
+    onStatusUpdate: (...args: unknown[]) => unknown;
+    showActions: boolean;
+    showWeather: boolean;
+    isUpcomingPlayStyle: boolean;
+    showElo: boolean;
 };
 
 const Proposal = (props: ProposalProps) => {

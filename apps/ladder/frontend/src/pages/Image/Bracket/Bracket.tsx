@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react';
 import style from './style.module.scss';
 
 type BracketProps = {
-    topFinalSpot?: number;
-    bottomFinalSpot?: number;
-    middleFinalSpot?: number;
+    topFinalSpot: number;
+    bottomFinalSpot: number;
+    middleFinalSpot: number;
 };
 
 const Bracket = (props: BracketProps) => {

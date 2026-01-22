@@ -3,7 +3,7 @@ import dayjs from '@/utils/dayjs';
 import style from './style.module.scss';
 
 type TimelineProps = {
-    tournament?: object;
+    tournament: object;
 };
 
 const Timeline = (props: TimelineProps) => {

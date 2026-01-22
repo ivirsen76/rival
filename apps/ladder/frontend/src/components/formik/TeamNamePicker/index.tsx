@@ -21,11 +21,11 @@ export const getValidateTeamName = (config) => (value) => {
 };
 
 type TeamNamePickerProps = {
-    form?: object;
-    field?: object;
-    label?: React.ReactNode;
+    form: object;
+    field: object;
+    label: React.ReactNode;
     tournamentId: number;
-    wrapperClassName?: string;
+    wrapperClassName: string;
 };
 
 const TeamNamePicker = (props: TeamNamePickerProps) => {

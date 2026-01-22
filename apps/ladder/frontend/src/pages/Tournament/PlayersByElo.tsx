@@ -15,7 +15,7 @@ import { useSelector } from 'react-redux';
 import style from './style.module.scss';
 
 type PlayersByEloProps = {
-    tournament?: object;
+    tournament: object;
 };
 
 const PlayersByElo = (props: PlayersByEloProps) => {

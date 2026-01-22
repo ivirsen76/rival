@@ -17,7 +17,7 @@ export const genderOptions = [
 ];
 
 type PersonalInfoFormProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const PersonalInfoForm = (props: PersonalInfoFormProps) => {

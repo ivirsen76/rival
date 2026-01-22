@@ -10,9 +10,9 @@ const isLongName = (player) => {
 };
 
 type MatchProps = {
-    match?: object;
-    challenger?: object;
-    acceptor?: object;
+    match: object;
+    challenger: object;
+    acceptor: object;
 };
 
 const Match = (props: MatchProps) => {

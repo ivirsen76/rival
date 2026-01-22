@@ -11,12 +11,12 @@ import {
 import style from './style.module.scss';
 
 type SetFormProps = {
-    values?: object;
-    setValues?: (...args: unknown[]) => unknown;
-    errors?: object;
-    challengerName?: React.ReactNode;
-    acceptorName?: React.ReactNode;
-    goToNextSet?: (...args: unknown[]) => unknown;
+    values: object;
+    setValues: (...args: unknown[]) => unknown;
+    errors: object;
+    challengerName: React.ReactNode;
+    acceptorName: React.ReactNode;
+    goToNextSet: (...args: unknown[]) => unknown;
 };
 
 const SetForm = (props: SetFormProps) => {

@@ -11,7 +11,7 @@ import { useHistory } from 'react-router-dom';
 import { loadCurrentUser } from '@/reducers/auth';
 
 type JoinDoublesProps = {
-    payload?: string;
+    payload: string;
 };
 
 const JoinDoubles = (props: JoinDoublesProps) => {

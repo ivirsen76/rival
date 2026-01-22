@@ -16,11 +16,11 @@ import FormDeleteDoublesProposal from '@/components/FormDeleteDoublesProposal';
 import WeatherAtTime from '../WeatherForecast/WeatherAtTime';
 
 type ProposalDoublesProps = {
-    tournament?: object;
-    match?: object;
-    onStatusUpdate?: (...args: unknown[]) => unknown;
-    showActions?: boolean;
-    showWeather?: boolean;
+    tournament: object;
+    match: object;
+    onStatusUpdate: (...args: unknown[]) => unknown;
+    showActions: boolean;
+    showWeather: boolean;
 };
 
 const ProposalDoubles = (props: ProposalDoublesProps) => {

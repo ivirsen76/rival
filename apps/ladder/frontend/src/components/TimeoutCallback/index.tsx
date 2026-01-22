@@ -3,9 +3,9 @@ import classnames from 'classnames';
 import formatDuration from '@/utils/formatDuration';
 
 type TimeoutCallbackProps = {
-    deadline?: object;
-    onTimeout?: (...args: unknown[]) => unknown;
-    render?: (...args: unknown[]) => unknown;
+    deadline: object;
+    onTimeout: (...args: unknown[]) => unknown;
+    render: (...args: unknown[]) => unknown;
 };
 
 const TimeoutCallback = (props: TimeoutCallbackProps) => {

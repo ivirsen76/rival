@@ -17,8 +17,8 @@ export const banDurationOptions = [
 ];
 
 type BanFormProps = {
-    list?: unknown[];
-    onSubmit?: (...args: unknown[]) => unknown;
+    list: unknown[];
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const BanForm = (props: BanFormProps) => {

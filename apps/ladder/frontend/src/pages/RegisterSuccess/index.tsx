@@ -8,7 +8,7 @@ import getRegisterNotificationProps from '@/utils/getRegisterNotificationProps';
 import { useHistory } from 'react-router-dom';
 
 type RegisterSuccessProps = {
-    match?: object;
+    match: object;
 };
 
 const RegisterSuccess = (props: RegisterSuccessProps) => {

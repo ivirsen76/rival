@@ -4,8 +4,8 @@ import _isEqual from 'lodash/isEqual';
 import _cloneDeep from 'lodash/cloneDeep';
 
 type AutosaveProps = {
-    values?: object;
-    callback?: (...args: unknown[]) => unknown;
+    values: object;
+    callback: (...args: unknown[]) => unknown;
 };
 
 const Autosave = (props: AutosaveProps) => {

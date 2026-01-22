@@ -18,8 +18,8 @@ const validate = (values) => {
 };
 
 type ProfileProps = {
-    coach?: object;
-    hide?: (...args: unknown[]) => unknown;
+    coach: object;
+    hide: (...args: unknown[]) => unknown;
 };
 
 const Profile = (props: ProfileProps) => {

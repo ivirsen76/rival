@@ -13,9 +13,9 @@ import EmailIcon from '@/styles/metronic/icons/duotone/Communication/Mail-at.svg
 import axios from '@/utils/axios';
 
 type PlayerProps = {
-    settings?: object;
-    updateSettings?: (...args: unknown[]) => unknown;
-    onSubmit?: (...args: unknown[]) => unknown;
+    settings: object;
+    updateSettings: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const Player = (props: PlayerProps) => {

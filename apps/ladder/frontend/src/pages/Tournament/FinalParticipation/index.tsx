@@ -21,9 +21,9 @@ const SKIP_MESSAGE = "You've decided to skip the tournament.";
 const WAITING_MESSAGE = 'The Team Captain can change participation status.';
 
 type FinalParticipationProps = {
-    tournament?: object;
-    onStatusUpdate?: (...args: unknown[]) => unknown;
-    allowUpdate?: boolean;
+    tournament: object;
+    onStatusUpdate: (...args: unknown[]) => unknown;
+    allowUpdate: boolean;
 };
 
 const FinalParticipation = (props: FinalParticipationProps) => {

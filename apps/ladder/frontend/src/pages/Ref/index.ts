@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
 type ReferralProps = {
-    history?: object;
-    match?: object;
+    history: object;
+    match: object;
 };
 
 const Referral = (props: ReferralProps) => {

@@ -13,9 +13,9 @@ import axios from '@/utils/axios';
 const currentYear = Number(dayjs.tz().format('YYYY'));
 
 type SeasonFormProps = {
-    initialValues?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
-    isCurrentSeason?: boolean;
+    initialValues: object;
+    onSubmit: (...args: unknown[]) => unknown;
+    isCurrentSeason: boolean;
 };
 
 const SeasonForm = (props: SeasonFormProps) => {

@@ -4,11 +4,11 @@ import { useRef, useLayoutEffect } from 'react';
 import useUniqueId from './useUniqueId';
 
 type ChartProps = {
-    chartType?: string;
-    getData?: (...args: unknown[]) => unknown;
-    data?: unknown[];
-    init?: (...args: unknown[]) => unknown;
-    height?: string;
+    chartType: string;
+    getData: (...args: unknown[]) => unknown;
+    data: unknown[];
+    init: (...args: unknown[]) => unknown;
+    height: string;
 };
 
 const Chart = (props: ChartProps) => {

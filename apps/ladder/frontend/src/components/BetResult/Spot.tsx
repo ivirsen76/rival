@@ -10,13 +10,13 @@ const isLongName = (player) => {
 };
 
 type MatchProps = {
-    match?: object;
-    challenger?: object;
-    acceptor?: object;
-    correctWinner?: boolean;
-    wrongWinner?: boolean;
-    correctScore?: boolean;
-    wrongScore?: boolean;
+    match: object;
+    challenger: object;
+    acceptor: object;
+    correctWinner: boolean;
+    wrongWinner: boolean;
+    correctScore: boolean;
+    wrongScore: boolean;
 };
 
 const Match = (props: MatchProps) => {

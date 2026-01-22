@@ -4,11 +4,11 @@ import style from './style.module.scss';
 type FieldWrapperProps = {
     field: object;
     form: object;
-    renderError?: (...args: unknown[]) => unknown;
-    label?: React.ReactNode;
-    description?: React.ReactNode;
-    wrapperClassName?: string;
-    children?: React.ReactNode;
+    renderError: (...args: unknown[]) => unknown;
+    label: React.ReactNode;
+    description: React.ReactNode;
+    wrapperClassName: string;
+    children: React.ReactNode;
 };
 
 const FieldWrapper = (props: FieldWrapperProps) => {

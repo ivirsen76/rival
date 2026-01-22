@@ -9,9 +9,9 @@ import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
 type FormScheduleMatchProps = {
-    match?: object;
-    tournament?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
+    match: object;
+    tournament: object;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const FormScheduleMatch = (props: FormScheduleMatchProps) => {

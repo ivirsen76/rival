@@ -3,9 +3,9 @@ import _omit from 'lodash/omit';
 import useAppearance from '@/utils/useAppearance';
 
 type EloPreviewProps = {
-    data?: unknown[];
-    width?: number;
-    height?: number;
+    data: unknown[];
+    width: number;
+    height: number;
 };
 
 const EloPreview = (props: EloPreviewProps) => {

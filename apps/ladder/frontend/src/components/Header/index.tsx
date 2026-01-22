@@ -2,9 +2,9 @@ import { Helmet } from 'react-helmet';
 import useConfig from '@/utils/useConfig';
 
 type HeaderProps = {
-    title?: string;
-    description?: string;
-    schema?: object;
+    title: string;
+    description: string;
+    schema: object;
 };
 
 const Header = (props: HeaderProps) => {

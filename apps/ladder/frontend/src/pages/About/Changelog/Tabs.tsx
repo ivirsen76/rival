@@ -2,7 +2,7 @@ import { useState } from 'react';
 import classnames from 'classnames';
 
 type TabsProps = {
-    list?: unknown[];
+    list: unknown[];
 };
 
 const Tabs = (props: TabsProps) => {

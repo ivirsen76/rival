@@ -7,7 +7,7 @@ import formatSum from '@/utils/formatSum';
 import { formatLong } from '@/utils/dayjs';
 
 type ListProps = {
-    seasonId?: number;
+    seasonId: number;
 };
 
 const List = (props: ListProps) => {

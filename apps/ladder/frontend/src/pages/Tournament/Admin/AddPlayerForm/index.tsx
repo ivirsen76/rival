@@ -3,8 +3,8 @@ import UserPicker from '@/components/formik/UserPicker';
 import Button from '@/components/Button';
 
 type AddPlayerFormProps = {
-    sortedPlayers?: unknown[];
-    onSubmit?: (...args: unknown[]) => unknown;
+    sortedPlayers: unknown[];
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const AddPlayerForm = (props: AddPlayerFormProps) => {

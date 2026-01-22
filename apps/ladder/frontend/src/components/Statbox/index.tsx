@@ -4,10 +4,10 @@ import { Squircle } from 'corner-smoothing';
 import style from './style.module.scss';
 
 type TitleProps = {
-    colorHue?: number;
-    colorLightness?: number;
-    className?: string;
-    children?: React.ReactNode;
+    colorHue: number;
+    colorLightness: number;
+    className: string;
+    children: React.ReactNode;
 };
 
 export const Title = (props: TitleProps) => {
@@ -36,15 +36,15 @@ Title.defaultProps = {
 };
 
 type StatBoxProps = {
-    text?: React.ReactNode;
-    label?: React.ReactNode;
-    image?: React.ReactNode;
-    colorHue?: number;
-    colorLightness?: number;
-    even?: boolean;
-    className?: string;
-    isLight?: boolean;
-    children?: React.ReactNode;
+    text: React.ReactNode;
+    label: React.ReactNode;
+    image: React.ReactNode;
+    colorHue: number;
+    colorLightness: number;
+    even: boolean;
+    className: string;
+    isLight: boolean;
+    children: React.ReactNode;
 };
 
 const StatBox = (props: StatBoxProps) => {

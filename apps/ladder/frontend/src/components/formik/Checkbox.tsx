@@ -4,11 +4,11 @@ import _omit from 'lodash/omit';
 import style from './style.module.scss';
 
 type CheckboxProps = {
-    form?: object;
-    field?: object;
-    label?: React.ReactNode;
-    description?: React.ReactNode;
-    className?: string;
+    form: object;
+    field: object;
+    label: React.ReactNode;
+    description: React.ReactNode;
+    className: string;
 };
 
 const Checkbox = (props: CheckboxProps) => {

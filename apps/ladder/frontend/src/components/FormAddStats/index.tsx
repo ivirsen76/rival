@@ -6,8 +6,8 @@ import axios from '@/utils/axios';
 import style from './style.module.scss';
 
 type FormAddStatsProps = {
-    match?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
+    match: object;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const FormAddStats = (props: FormAddStatsProps) => {

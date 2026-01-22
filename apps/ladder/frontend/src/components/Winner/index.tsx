@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 
 type WinnerProps = {
-    player?: object;
+    player: object;
 };
 
 const Winner = (props: WinnerProps) => {

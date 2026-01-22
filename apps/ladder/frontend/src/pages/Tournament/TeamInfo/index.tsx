@@ -5,8 +5,8 @@ import CaptainIcon from '@/assets/captain.svg?react';
 import style from './style.module.scss';
 
 type TeamInfoProps = {
-    captain?: object;
-    tournament?: object;
+    captain: object;
+    tournament: object;
 };
 
 const TeamInfo = (props: TeamInfoProps) => {

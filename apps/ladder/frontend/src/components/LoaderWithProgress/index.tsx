@@ -1,9 +1,9 @@
 import style from './style.module.scss';
 
 type LoaderWithProgressProps = {
-    loading?: boolean;
-    message?: string;
-    percent?: number;
+    loading: boolean;
+    message: string;
+    percent: number;
 };
 
 const LoaderWithProgress = (props: LoaderWithProgressProps) => {

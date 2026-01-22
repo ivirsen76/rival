@@ -7,7 +7,7 @@ import axios from '@/utils/axios';
 import Form from '@/pages/Settings/SubscriptionsForm/Form';
 
 type UnsubscribeProps = {
-    payload?: string;
+    payload: string;
 };
 
 const Unsubscribe = (props: UnsubscribeProps) => {

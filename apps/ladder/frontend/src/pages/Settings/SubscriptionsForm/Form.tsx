@@ -13,9 +13,9 @@ const formatOptions = [
 ];
 
 type JustFormProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
-    initialValues?: object;
-    buttonTitle?: string;
+    onSubmit: (...args: unknown[]) => unknown;
+    initialValues: object;
+    buttonTitle: string;
 };
 
 const JustForm = (props: JustFormProps) => {

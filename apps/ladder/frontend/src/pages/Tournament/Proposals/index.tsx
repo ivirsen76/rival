@@ -15,8 +15,8 @@ import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
 type ProposalsProps = {
-    tournament?: object;
-    reloadTournament?: (...args: unknown[]) => unknown;
+    tournament: object;
+    reloadTournament: (...args: unknown[]) => unknown;
 };
 
 const Proposals = (props: ProposalsProps) => {

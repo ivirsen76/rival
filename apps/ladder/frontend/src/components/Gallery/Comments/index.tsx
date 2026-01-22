@@ -35,16 +35,16 @@ const insertAtCursor = (input, textToInsert) => {
 };
 
 type CommentsProps = {
-    slide?: object;
-    photo?: object;
-    reactions?: unknown[];
-    comments?: unknown[];
-    users?: object;
-    addReaction?: (...args: unknown[]) => unknown;
-    addComment?: (...args: unknown[]) => unknown;
-    deleteComment?: (...args: unknown[]) => unknown;
-    dragControls?: object;
-    emojiData?: object;
+    slide: object;
+    photo: object;
+    reactions: unknown[];
+    comments: unknown[];
+    users: object;
+    addReaction: (...args: unknown[]) => unknown;
+    addComment: (...args: unknown[]) => unknown;
+    deleteComment: (...args: unknown[]) => unknown;
+    dragControls: object;
+    emojiData: object;
 };
 
 const Comments = (props: CommentsProps) => {

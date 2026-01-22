@@ -6,7 +6,7 @@ import Button from '@/components/Button';
 import _pick from 'lodash/pick';
 
 type TennisEquipmentFormProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const TennisEquipmentForm = (props: TennisEquipmentFormProps) => {

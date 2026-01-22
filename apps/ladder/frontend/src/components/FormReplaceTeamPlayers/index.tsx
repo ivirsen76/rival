@@ -6,9 +6,9 @@ import { useSelector } from 'react-redux';
 import axios from '@/utils/axios';
 
 type FormReplaceTeamPlayersProps = {
-    match?: object;
-    players?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
+    match: object;
+    players: object;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const FormReplaceTeamPlayers = (props: FormReplaceTeamPlayersProps) => {

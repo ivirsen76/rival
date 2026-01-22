@@ -2,8 +2,8 @@ import { useMemo } from 'react';
 import Gallery from '@/components/Gallery';
 
 type PhotosProps = {
-    photos?: unknown[];
-    user?: object;
+    photos: unknown[];
+    user: object;
 };
 
 const Photos = (props: PhotosProps) => {

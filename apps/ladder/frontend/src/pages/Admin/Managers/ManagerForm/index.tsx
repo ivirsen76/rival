@@ -3,8 +3,8 @@ import UserPicker from '@/components/formik/UserPicker';
 import Button from '@/components/Button';
 
 type ManagerFormProps = {
-    list?: unknown[];
-    onSubmit?: (...args: unknown[]) => unknown;
+    list: unknown[];
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const ManagerForm = (props: ManagerFormProps) => {

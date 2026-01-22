@@ -4,13 +4,13 @@ import PlayerName from '@/components/PlayerName';
 import style from './style.module.scss';
 
 type InjuryFormProps = {
-    challenger?: object;
-    acceptor?: object;
-    challenger2?: object;
-    acceptor2?: object;
-    injuredPlayerId?: number;
-    onSubmit?: (...args: unknown[]) => unknown;
-    hide?: (...args: unknown[]) => unknown;
+    challenger: object;
+    acceptor: object;
+    challenger2: object;
+    acceptor2: object;
+    injuredPlayerId: number;
+    onSubmit: (...args: unknown[]) => unknown;
+    hide: (...args: unknown[]) => unknown;
 };
 
 const InjuryForm = (props: InjuryFormProps) => {

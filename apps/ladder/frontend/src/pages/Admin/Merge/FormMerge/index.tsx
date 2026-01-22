@@ -24,11 +24,11 @@ const decisionOptions = [
 ];
 
 type FormMergeProps = {
-    duplicates?: unknown[];
-    userIdTo?: number;
-    userIdFrom?: number;
-    onSubmit?: (...args: unknown[]) => unknown;
-    hide?: (...args: unknown[]) => unknown;
+    duplicates: unknown[];
+    userIdTo: number;
+    userIdFrom: number;
+    onSubmit: (...args: unknown[]) => unknown;
+    hide: (...args: unknown[]) => unknown;
 };
 
 const FormMerge = (props: FormMergeProps) => {

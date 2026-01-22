@@ -5,10 +5,10 @@ import { useQueryClient } from 'react-query';
 import axios from 'axios';
 
 type EditCommentFormProps = {
-    commentId?: number;
-    slide?: object;
-    initialValues?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
+    commentId: number;
+    slide: object;
+    initialValues: object;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const EditCommentForm = (props: EditCommentFormProps) => {

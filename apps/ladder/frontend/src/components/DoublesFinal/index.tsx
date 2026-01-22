@@ -8,12 +8,12 @@ import { BYE_ID } from '@rival/ladder.backend/src/constants';
 import style from './style.module.scss';
 
 type DoublesFinalProps = {
-    matches?: unknown[];
-    players?: object;
-    tournament?: object;
-    reloadTournament?: (...args: unknown[]) => unknown;
-    showTournamentText?: boolean;
-    isReport?: boolean;
+    matches: unknown[];
+    players: object;
+    tournament: object;
+    reloadTournament: (...args: unknown[]) => unknown;
+    showTournamentText: boolean;
+    isReport: boolean;
 };
 
 const DoublesFinal = (props: DoublesFinalProps) => {

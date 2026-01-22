@@ -6,8 +6,8 @@ import Mark from './Mark';
 import useAppearance from '@/utils/useAppearance';
 
 type EloHistoryProps = {
-    tournament?: object;
-    eloHistory?: unknown[];
+    tournament: object;
+    eloHistory: unknown[];
 };
 
 const EloHistory = (props: EloHistoryProps) => {

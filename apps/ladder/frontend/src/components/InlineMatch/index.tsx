@@ -13,13 +13,13 @@ const reverseScore = (score) =>
         .join(' ');
 
 type InlineMatchProps = {
-    challenger?: object;
-    acceptor?: object;
-    challenger2?: object;
-    acceptor2?: object;
-    match?: object;
-    columnClassName?: string;
-    extraColumn?: React.ReactNode;
+    challenger: object;
+    acceptor: object;
+    challenger2: object;
+    acceptor2: object;
+    match: object;
+    columnClassName: string;
+    extraColumn: React.ReactNode;
 };
 
 const InlineMatch = (props: InlineMatchProps) => {

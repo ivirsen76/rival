@@ -18,12 +18,12 @@ const getSearchResult = _debounce(async (query, setSearchResult, setLoading) => 
 }, 500);
 
 type UserPickerProps = {
-    multiple?: boolean;
-    form?: object;
-    field?: object;
-    autoFocus?: boolean;
-    getDisabledUsers?: (...args: unknown[]) => unknown;
-    renderUser?: (...args: unknown[]) => unknown;
+    multiple: boolean;
+    form: object;
+    field: object;
+    autoFocus: boolean;
+    getDisabledUsers: (...args: unknown[]) => unknown;
+    renderUser: (...args: unknown[]) => unknown;
 };
 
 const UserPicker = (props: UserPickerProps) => {

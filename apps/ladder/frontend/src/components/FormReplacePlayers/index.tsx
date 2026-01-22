@@ -6,9 +6,9 @@ import notification from '@/components/notification';
 import axios from '@/utils/axios';
 
 type FormReplacePlayersProps = {
-    match?: object;
-    players?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
+    match: object;
+    players: object;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const FormReplacePlayers = (props: FormReplacePlayersProps) => {

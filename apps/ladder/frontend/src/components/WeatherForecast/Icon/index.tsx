@@ -2,8 +2,8 @@ import useUniqueId from '@/utils/useUniqueId';
 import style from './style.module.scss';
 
 type IconProps = {
-    type?: string;
-    dayPart?: string;
+    type: string;
+    dayPart: string;
 };
 
 const Icon = (props: IconProps) => {

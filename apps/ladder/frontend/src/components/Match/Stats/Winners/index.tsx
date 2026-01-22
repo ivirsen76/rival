@@ -2,10 +2,10 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 
 type BarProps = {
-    label?: string;
-    num?: number;
-    total?: number;
-    isBetter?: boolean;
+    label: string;
+    num: number;
+    total: number;
+    isBetter: boolean;
 };
 
 const Bar = (props: BarProps) => {
@@ -26,9 +26,9 @@ const Bar = (props: BarProps) => {
 };
 
 type WinnersProps = {
-    title?: string;
-    data?: unknown[];
-    isGrowing?: boolean;
+    title: string;
+    data: unknown[];
+    isGrowing: boolean;
 };
 
 const Winners = (props: WinnersProps) => {

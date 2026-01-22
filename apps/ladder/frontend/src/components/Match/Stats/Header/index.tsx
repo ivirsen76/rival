@@ -13,11 +13,11 @@ const minutesToTime = (minutes) => {
 };
 
 type HeaderProps = {
-    match?: object;
-    challenger?: object;
-    acceptor?: object;
-    challengerName?: React.ReactNode;
-    acceptorName?: React.ReactNode;
+    match: object;
+    challenger: object;
+    acceptor: object;
+    challengerName: React.ReactNode;
+    acceptorName: React.ReactNode;
 };
 
 const Header = (props: HeaderProps) => {

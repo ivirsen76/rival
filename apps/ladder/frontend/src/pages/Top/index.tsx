@@ -32,7 +32,7 @@ const groupOptions = [
 ];
 
 type TopProps = {
-    match?: object;
+    match: object;
 };
 
 const Top = (props: TopProps) => {

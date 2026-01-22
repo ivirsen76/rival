@@ -2,11 +2,11 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 
 type InputProps = {
-    name?: string;
-    value?: number;
-    onChange?: (...args: unknown[]) => unknown;
-    showErrors?: boolean;
-    maxSetPoints?: number;
+    name: string;
+    value: number;
+    onChange: (...args: unknown[]) => unknown;
+    showErrors: boolean;
+    maxSetPoints: number;
 };
 
 const Input = (props: InputProps) => {

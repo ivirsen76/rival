@@ -1,7 +1,7 @@
 import _round from 'lodash/round';
 
 type LastMatchesEloProps = {
-    data?: unknown[];
+    data: unknown[];
 };
 
 const LastMatchesElo = (props: LastMatchesEloProps) => {

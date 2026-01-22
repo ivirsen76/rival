@@ -4,8 +4,8 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 
 type NumberPickerProps = {
-    value?: number;
-    onChange?: (...args: unknown[]) => unknown;
+    value: number;
+    onChange: (...args: unknown[]) => unknown;
 };
 
 const NumberPicker = (props: NumberPickerProps) => {

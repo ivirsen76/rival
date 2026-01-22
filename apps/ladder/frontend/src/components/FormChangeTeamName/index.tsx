@@ -5,10 +5,10 @@ import TeamNamePicker, { getValidateTeamName } from '@/components/formik/TeamNam
 import useConfig from '@/utils/useConfig';
 
 type FormChangeTeamNameProps = {
-    playerId?: number;
-    tournament?: object;
-    initialValues?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
+    playerId: number;
+    tournament: object;
+    initialValues: object;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const FormChangeTeamName = (props: FormChangeTeamNameProps) => {

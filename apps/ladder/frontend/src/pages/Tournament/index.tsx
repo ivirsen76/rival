@@ -22,7 +22,7 @@ import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
 type TournamentProps = {
-    match?: object;
+    match: object;
 };
 
 const Tournament = (props: TournamentProps) => {

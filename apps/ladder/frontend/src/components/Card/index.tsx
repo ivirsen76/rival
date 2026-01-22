@@ -4,10 +4,10 @@ import style from './style.module.scss';
 import Tooltip from '@/components/Tooltip';
 
 type CardProps = {
-    className?: string;
-    children?: React.ReactNode;
-    tooltip?: React.ReactNode;
-    tooltipProps?: object;
+    className: string;
+    children: React.ReactNode;
+    tooltip: React.ReactNode;
+    tooltipProps: object;
 };
 
 const Card = (props: CardProps) => {

@@ -15,8 +15,8 @@ import _omit from 'lodash/omit';
 import style from './style.module.scss';
 
 type ManageDoublesTeamProps = {
-    tournament?: object;
-    reloadTournament?: (...args: unknown[]) => unknown;
+    tournament: object;
+    reloadTournament: (...args: unknown[]) => unknown;
 };
 
 const ManageDoublesTeam = (props: ManageDoublesTeamProps) => {

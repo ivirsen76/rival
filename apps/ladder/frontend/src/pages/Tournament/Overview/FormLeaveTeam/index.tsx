@@ -7,8 +7,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import dayjs from '@/utils/dayjs';
 
 type FormLeaveTeamProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
-    tournament?: object;
+    onSubmit: (...args: unknown[]) => unknown;
+    tournament: object;
 };
 
 const FormLeaveTeam = (props: FormLeaveTeamProps) => {

@@ -15,7 +15,7 @@ import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
 type PartnerReferralProps = {
-    showShareLinkInstruction?: boolean;
+    showShareLinkInstruction: boolean;
 };
 
 const PartnerReferral = (props: PartnerReferralProps) => {

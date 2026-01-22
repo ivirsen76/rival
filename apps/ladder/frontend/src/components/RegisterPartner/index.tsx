@@ -10,7 +10,7 @@ import PasswordInput from '@/components/formik/PasswordInput';
 import Button from '@/components/Button';
 
 type RegisterPartnerProps = {
-    payload?: string;
+    payload: string;
 };
 
 const RegisterPartner = (props: RegisterPartnerProps) => {

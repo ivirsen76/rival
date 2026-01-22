@@ -6,10 +6,10 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 
 type PickPlayersFormProps = {
-    match?: object;
-    players?: object;
-    isScheduling?: boolean;
-    onSubmit?: (...args: unknown[]) => unknown;
+    match: object;
+    players: object;
+    isScheduling: boolean;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const PickPlayersForm = (props: PickPlayersFormProps) => {

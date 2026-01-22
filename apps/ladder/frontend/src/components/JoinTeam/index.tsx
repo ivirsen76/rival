@@ -4,7 +4,7 @@ import notification from '@/components/notification';
 import axios from '@/utils/axios';
 
 type AcceptTeamMemberProps = {
-    payload?: string;
+    payload: string;
 };
 
 const AcceptTeamMember = (props: AcceptTeamMemberProps) => {

@@ -8,13 +8,13 @@ import useConfig from '@/utils/useConfig';
 import parseScore from '@/components/Match/parseScore';
 
 type MatchProps = {
-    challenger?: object;
-    acceptor?: object;
-    challenger2?: object;
-    acceptor2?: object;
-    match?: object;
-    customDateFormat?: (...args: unknown[]) => unknown;
-    extraData?: React.ReactNode;
+    challenger: object;
+    acceptor: object;
+    challenger2: object;
+    acceptor2: object;
+    match: object;
+    customDateFormat: (...args: unknown[]) => unknown;
+    extraData: React.ReactNode;
 };
 
 const Match = (props: MatchProps) => {

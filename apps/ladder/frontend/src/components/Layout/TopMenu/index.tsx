@@ -40,7 +40,7 @@ const iconLink = (item) => {
 };
 
 type TopMenuProps = {
-    years?: unknown[];
+    years: unknown[];
 };
 
 function TopMenu(props: TopMenuProps) {

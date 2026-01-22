@@ -2,7 +2,7 @@ import Chart from '@/components/Chart';
 import style from './style.module.scss';
 
 type PieChartProps = {
-    data?: unknown[];
+    data: unknown[];
 };
 
 const PieChart = (props: PieChartProps) => {

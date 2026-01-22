@@ -5,9 +5,9 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 
 type TextareaProps = {
-    form?: object;
-    field?: object;
-    autoFocus?: boolean;
+    form: object;
+    field: object;
+    autoFocus: boolean;
 };
 
 const Textarea = (props: TextareaProps) => {

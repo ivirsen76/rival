@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import classnames from 'classnames';
 
 type TabsProps = {
-    list?: unknown[];
+    list: unknown[];
 };
 
 const Tabs = (props: TabsProps) => {

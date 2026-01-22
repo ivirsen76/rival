@@ -3,13 +3,13 @@ import Modal from 'react-bootstrap/Modal';
 import CheckIcon from '@/styles/metronic/icons/duotune/arrows/arr016.svg?react';
 
 type NotificationModalProps = {
-    message?: React.ReactNode;
-    buttonTitle?: string;
-    onHide?: (...args: unknown[]) => unknown;
-    cleanup?: (...args: unknown[]) => unknown;
-    render?: (...args: unknown[]) => unknown;
-    title?: React.ReactNode;
-    modalProps?: object;
+    message: React.ReactNode;
+    buttonTitle: string;
+    onHide: (...args: unknown[]) => unknown;
+    cleanup: (...args: unknown[]) => unknown;
+    render: (...args: unknown[]) => unknown;
+    title: React.ReactNode;
+    modalProps: object;
 };
 
 const NotificationModal = (props: NotificationModalProps) => {

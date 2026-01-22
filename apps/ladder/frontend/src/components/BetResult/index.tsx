@@ -7,11 +7,11 @@ import { BYE_ID } from '@rival/ladder.backend/src/constants';
 import style from './style.module.scss';
 
 type BetResultProps = {
-    players?: object;
-    prediction?: unknown[];
-    predictionPoints?: object;
-    matches?: object;
-    showMaxPoints?: boolean;
+    players: object;
+    prediction: unknown[];
+    predictionPoints: object;
+    matches: object;
+    showMaxPoints: boolean;
 };
 
 const BetResult = (props: BetResultProps) => {

@@ -5,8 +5,8 @@ import Button from '@/components/Button';
 import FormMatch from '@/components/FormMatch';
 
 type FormNewMatchByAdminProps = {
-    tournament?: object;
-    onAdd?: (...args: unknown[]) => unknown;
+    tournament: object;
+    onAdd: (...args: unknown[]) => unknown;
 };
 
 const FormNewMatchByAdmin = (props: FormNewMatchByAdminProps) => {

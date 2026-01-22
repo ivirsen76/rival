@@ -13,8 +13,8 @@ const firstPlayers = 10;
 const tooManyPlayers = 20;
 
 type PlayersLiveProps = {
-    tournament?: object;
-    showDoublesPlayers?: boolean;
+    tournament: object;
+    showDoublesPlayers: boolean;
 };
 
 const PlayersLive = (props: PlayersLiveProps) => {

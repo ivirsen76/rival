@@ -15,8 +15,8 @@ const courtConditions = {
 };
 
 type HoverProps = {
-    weather?: object;
-    courtDryness?: unknown[];
+    weather: object;
+    courtDryness: unknown[];
 };
 
 const Hover = (props: HoverProps) => {

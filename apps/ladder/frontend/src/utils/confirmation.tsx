@@ -8,12 +8,12 @@ const wrapper = document.createElement('div');
 document.body.appendChild(wrapper);
 
 type ConfirmModalProps = {
-    title?: string;
-    message?: string | React.ReactNode;
-    confirmButtonTitle?: string;
-    cancelButtonTitle?: string;
-    resolve?: (...args: unknown[]) => unknown;
-    reject?: (...args: unknown[]) => unknown;
+    title: string;
+    message: string | React.ReactNode;
+    confirmButtonTitle: string;
+    cancelButtonTitle: string;
+    resolve: (...args: unknown[]) => unknown;
+    reject: (...args: unknown[]) => unknown;
 };
 
 const ConfirmModal = (props: ConfirmModalProps) => {

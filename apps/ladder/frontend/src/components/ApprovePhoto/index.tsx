@@ -5,7 +5,7 @@ import axios from '@/utils/axios';
 import style from './style.module.scss';
 
 type ApprovePhotoProps = {
-    payload?: string;
+    payload: string;
 };
 
 const ApprovePhoto = (props: ApprovePhotoProps) => {

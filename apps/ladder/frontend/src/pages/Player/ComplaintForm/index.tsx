@@ -13,8 +13,8 @@ const adjustedReasonOptions = reasonOptions.map((item) => ({
 }));
 
 type ComplaintFormProps = {
-    user?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
+    user: object;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const ComplaintForm = (props: ComplaintFormProps) => {

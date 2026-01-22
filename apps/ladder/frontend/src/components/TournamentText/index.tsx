@@ -39,8 +39,8 @@ const applyVariables = (tournamentEndDate, text) => {
 };
 
 type TournamentTextProps = {
-    text?: React.ReactNode;
-    tournament?: object;
+    text: React.ReactNode;
+    tournament: object;
 };
 
 const TournamentText = (props: TournamentTextProps) => {

@@ -9,9 +9,9 @@ import style from './style.module.scss';
 let lastUpdatedAt = '';
 
 type AddressAutocompleteProps = {
-    form?: object;
-    field?: object;
-    onAutocomplete?: (...args: unknown[]) => unknown;
+    form: object;
+    field: object;
+    onAutocomplete: (...args: unknown[]) => unknown;
 };
 
 const AddressAutocomplete = (props: AddressAutocompleteProps) => {

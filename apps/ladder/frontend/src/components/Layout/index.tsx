@@ -21,9 +21,9 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 
 type LayoutProps = {
-    children?: React.ReactNode;
-    TopBlock?: (...args: unknown[]) => unknown;
-    topBlockClassname?: string;
+    children: React.ReactNode;
+    TopBlock: (...args: unknown[]) => unknown;
+    topBlockClassname: string;
 };
 
 const Layout = (props: LayoutProps) => {

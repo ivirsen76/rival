@@ -10,12 +10,12 @@ const isLongName = (player) => {
 };
 
 type MatchProps = {
-    match?: object;
-    challenger?: object;
-    acceptor?: object;
-    isActive?: boolean;
-    onSelect?: (...args: unknown[]) => unknown;
-    prediction?: object;
+    match: object;
+    challenger: object;
+    acceptor: object;
+    isActive: boolean;
+    onSelect: (...args: unknown[]) => unknown;
+    prediction: object;
 };
 
 const Match = (props: MatchProps) => {

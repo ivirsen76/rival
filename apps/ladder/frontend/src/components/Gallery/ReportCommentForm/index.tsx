@@ -5,8 +5,8 @@ import notification from '@/components/notification';
 import axios from 'axios';
 
 type ReportCommentFormProps = {
-    commentId?: number;
-    onSubmit?: (...args: unknown[]) => unknown;
+    commentId: number;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const ReportCommentForm = (props: ReportCommentFormProps) => {

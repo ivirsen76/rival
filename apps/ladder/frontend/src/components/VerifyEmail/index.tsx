@@ -5,13 +5,13 @@ import notification from '@/components/notification';
 import style from './style.module.scss';
 
 type VerifyEmailProps = {
-    sendOnMount?: boolean;
+    sendOnMount: boolean;
     email: string;
-    password?: string;
+    password: string;
     onSuccess: (...args: unknown[]) => unknown;
-    render?: (...args: unknown[]) => unknown;
-    allowResend?: boolean;
-    verifyCodeCustom?: (...args: unknown[]) => unknown;
+    render: (...args: unknown[]) => unknown;
+    allowResend: boolean;
+    verifyCodeCustom: (...args: unknown[]) => unknown;
 };
 
 const VerifyEmail = (props: VerifyEmailProps) => {

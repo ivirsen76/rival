@@ -6,8 +6,8 @@ import { useQueryClient } from 'react-query';
 import axios from '@/utils/axios';
 
 type PersonalNoteFormProps = {
-    user?: object;
-    hideDescription?: boolean;
+    user: object;
+    hideDescription: boolean;
 };
 
 const PersonalNoteForm = (props: PersonalNoteFormProps) => {

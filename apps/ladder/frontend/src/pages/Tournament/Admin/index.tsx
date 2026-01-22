@@ -14,8 +14,8 @@ import showLoader from '@/utils/showLoader';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 
 type AdminProps = {
-    tournament?: object;
-    reloadTournament?: (...args: unknown[]) => unknown;
+    tournament: object;
+    reloadTournament: (...args: unknown[]) => unknown;
 };
 
 const Admin = (props: AdminProps) => {

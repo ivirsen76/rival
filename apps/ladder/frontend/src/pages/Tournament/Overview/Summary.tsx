@@ -6,8 +6,8 @@ import WeatherAtTime from '@/components/WeatherForecast/WeatherAtTime';
 import style from './style.module.scss';
 
 type SummaryProps = {
-    tournament?: object;
-    showWeather?: boolean;
+    tournament: object;
+    showWeather: boolean;
 };
 
 const Summary = (props: SummaryProps) => {

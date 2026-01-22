@@ -3,7 +3,7 @@ import PasswordInput from '@/components/formik/PasswordInput';
 import Button from '@/components/Button';
 
 type ChangePasswordFormProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const ChangePasswordForm = (props: ChangePasswordFormProps) => {

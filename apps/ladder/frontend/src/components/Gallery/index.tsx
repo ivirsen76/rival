@@ -44,9 +44,9 @@ const TENNIS_BALL_EMOJI_CODE = '1f3be';
 const REM_SIZE = 14;
 
 type GalleryProps = {
-    photos?: unknown[];
-    albumProps?: object;
-    onPhotoDelete?: (...args: unknown[]) => unknown;
+    photos: unknown[];
+    albumProps: object;
+    onPhotoDelete: (...args: unknown[]) => unknown;
 };
 
 const Gallery = (props: GalleryProps) => {

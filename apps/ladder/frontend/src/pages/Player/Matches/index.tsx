@@ -15,7 +15,7 @@ import style from './style.module.scss';
 const customDateFormat = (date) => dayjs.tz(date).format('MMM D, YYYY');
 
 type MatchesProps = {
-    user?: object;
+    user: object;
 };
 
 const Matches = (props: MatchesProps) => {

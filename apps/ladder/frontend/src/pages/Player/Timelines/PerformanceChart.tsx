@@ -5,11 +5,11 @@ import pathFromPoints from './pathFromPoints';
 import style from './style.module.scss';
 
 type PerformanceChartProps = {
-    data?: unknown[];
-    dataKey?: string;
-    minDiff?: number;
-    color?: string;
-    renderLabel?: (...args: unknown[]) => unknown;
+    data: unknown[];
+    dataKey: string;
+    minDiff: number;
+    color: string;
+    renderLabel: (...args: unknown[]) => unknown;
 };
 
 const PerformanceChart = (props: PerformanceChartProps) => {

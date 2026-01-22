@@ -18,17 +18,17 @@ const MIN_BETWEEN = 1;
 const MAX_TIME_TO_CLICK = 500; // in ms. Otherwise it treats as dragging
 
 type BlockProps = {
-    wrapperRef?: object;
-    onChange?: (...args: unknown[]) => unknown;
-    onDelete?: (...args: unknown[]) => unknown;
-    showError?: (...args: unknown[]) => unknown;
-    setSelectedBlock?: (...args: unknown[]) => unknown;
-    index?: number;
-    from?: number;
-    to?: number;
-    point?: object;
-    isSelected?: boolean;
-    field?: object;
+    wrapperRef: object;
+    onChange: (...args: unknown[]) => unknown;
+    onDelete: (...args: unknown[]) => unknown;
+    showError: (...args: unknown[]) => unknown;
+    setSelectedBlock: (...args: unknown[]) => unknown;
+    index: number;
+    from: number;
+    to: number;
+    point: object;
+    isSelected: boolean;
+    field: object;
 };
 
 const Block = (props: BlockProps) => {
@@ -189,9 +189,9 @@ Block.defaultProps = {
 };
 
 type SchedulePickerProps = {
-    form?: object;
-    field?: object;
-    days?: unknown[];
+    form: object;
+    field: object;
+    days: unknown[];
 };
 
 const SchedulePicker = (props: SchedulePickerProps) => {

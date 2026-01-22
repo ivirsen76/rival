@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 
 type MarkProps = {
-    isEmpty?: boolean;
+    isEmpty: boolean;
 };
 
 const Mark = (props: MarkProps) => {

@@ -20,7 +20,7 @@ const yearsOptions = [
 ];
 
 type FormGeneratePartnerLinkProps = {
-    hide?: (...args: unknown[]) => unknown;
+    hide: (...args: unknown[]) => unknown;
 };
 
 const FormGeneratePartnerLink = (props: FormGeneratePartnerLinkProps) => {

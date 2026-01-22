@@ -12,7 +12,7 @@ import {
 import { CookieComponent } from './_CookieComponent';
 
 export interface ScrollOptions {
-    saveState?: boolean;
+    saveState: boolean;
 }
 
 const defaultScrollOptions: ScrollOptions = {

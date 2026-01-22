@@ -1,7 +1,7 @@
 import style from './style.module.scss';
 
 type CancelMessageProps = {
-    tournament?: object;
+    tournament: object;
 };
 
 const CancelMessage = (props: CancelMessageProps) => {

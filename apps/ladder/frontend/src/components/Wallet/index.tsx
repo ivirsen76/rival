@@ -12,8 +12,8 @@ import WalletIcon from '@/styles/metronic/icons/duotone/Shopping/Wallet.svg?reac
 import style from './style.module.scss';
 
 type WalletProps = {
-    userId?: number;
-    isFullWidth?: boolean;
+    userId: number;
+    isFullWidth: boolean;
 };
 
 const Wallet = (props: WalletProps) => {

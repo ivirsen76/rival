@@ -24,12 +24,12 @@ import BotIcon from '@/assets/bot.svg?react';
 import style from './style.module.scss';
 
 type FinalProps = {
-    matches?: unknown[];
-    players?: object;
-    reloadTournament?: (...args: unknown[]) => unknown;
-    showTournamentText?: boolean;
-    tournament?: object;
-    isReport?: boolean;
+    matches: unknown[];
+    players: object;
+    reloadTournament: (...args: unknown[]) => unknown;
+    showTournamentText: boolean;
+    tournament: object;
+    isReport: boolean;
 };
 
 const Final = (props: FinalProps) => {

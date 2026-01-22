@@ -20,7 +20,7 @@ import style from './style.module.scss';
 import './aside.scss';
 
 type SideMenuProps = {
-    years?: unknown[];
+    years: unknown[];
 };
 
 const SideMenu = (props: SideMenuProps) => {

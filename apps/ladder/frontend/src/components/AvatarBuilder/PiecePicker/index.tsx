@@ -7,10 +7,10 @@ import style from './style.module.scss';
 const EmptyIcon = () => <div />;
 
 type PiecePickerProps = {
-    form?: object;
-    field?: object;
-    colors?: object;
-    colorField?: string;
+    form: object;
+    field: object;
+    colors: object;
+    colorField: string;
 };
 
 const PiecePicker = (props: PiecePickerProps) => {

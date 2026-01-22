@@ -53,7 +53,7 @@ import useBreakpoints from '@/utils/useBreakpoints';
 import style from './style.module.scss';
 
 type PlayerProps = {
-    match?: object;
+    match: object;
 };
 
 const Player = (props: PlayerProps) => {

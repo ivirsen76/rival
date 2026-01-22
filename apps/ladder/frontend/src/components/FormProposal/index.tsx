@@ -53,10 +53,10 @@ const getVisiblePlayers = (stats, values) => {
 };
 
 type FormProposalProps = {
-    initialValues?: object;
-    isPractice?: boolean;
-    onSubmit?: (...args: unknown[]) => unknown;
-    tournament?: object;
+    initialValues: object;
+    isPractice: boolean;
+    onSubmit: (...args: unknown[]) => unknown;
+    tournament: object;
 };
 
 const FormProposal = (props: FormProposalProps) => {

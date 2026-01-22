@@ -11,10 +11,10 @@ import { colors as beardColors } from '@/components/avataaars/avatar/top/facialH
 import { colors as clothColors } from '@/components/avataaars/avatar/clothes/Colors';
 
 type AvatarBuilderProps = {
-    initialValues?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
-    onCancel?: (...args: unknown[]) => unknown;
-    isWoman?: boolean;
+    initialValues: object;
+    onSubmit: (...args: unknown[]) => unknown;
+    onCancel: (...args: unknown[]) => unknown;
+    isWoman: boolean;
 };
 
 const AvatarBuilder = (props: AvatarBuilderProps) => {

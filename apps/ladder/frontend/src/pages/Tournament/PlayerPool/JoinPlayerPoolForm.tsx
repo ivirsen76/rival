@@ -2,9 +2,9 @@ import { Formik, Field, Form } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
 
 type JoinPlayerPoolFormProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
-    initialValues?: object;
-    showWarning?: boolean;
+    onSubmit: (...args: unknown[]) => unknown;
+    initialValues: object;
+    showWarning: boolean;
 };
 
 const JoinPlayerPoolForm = (props: JoinPlayerPoolFormProps) => {

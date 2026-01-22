@@ -11,7 +11,7 @@ import classnames from 'classnames';
 import axios from '@/utils/axios';
 
 type PhoneFormProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const PhoneForm = (props: PhoneFormProps) => {

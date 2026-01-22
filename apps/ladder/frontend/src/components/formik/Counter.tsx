@@ -1,8 +1,8 @@
 type CounterProps = {
-    form?: object;
-    field?: object;
-    min?: number;
-    max?: number;
+    form: object;
+    field: object;
+    min: number;
+    max: number;
 };
 
 const Counter = (props: CounterProps) => {

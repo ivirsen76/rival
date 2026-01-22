@@ -5,9 +5,9 @@ import { useSelector } from 'react-redux';
 import DoublesPlayersPicker from '@/components/formik/DoublesPlayersPicker';
 
 type FormReplaceCaptainProps = {
-    hide?: (...args: unknown[]) => unknown;
-    onSubmit?: (...args: unknown[]) => unknown;
-    tournament?: object;
+    hide: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
+    tournament: object;
 };
 
 const FormReplaceCaptain = (props: FormReplaceCaptainProps) => {

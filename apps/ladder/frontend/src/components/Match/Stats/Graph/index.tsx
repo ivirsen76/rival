@@ -3,7 +3,7 @@ import { defaultColors } from '../config';
 import style from './style.module.scss';
 
 type GraphProps = {
-    list?: unknown[];
+    list: unknown[];
 };
 
 const Graph = (props: GraphProps) => {

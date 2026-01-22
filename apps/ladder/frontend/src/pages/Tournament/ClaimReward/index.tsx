@@ -66,14 +66,14 @@ const stateOptions = [
 ];
 
 type FormItselfProps = {
-    setFieldValue?: (...args: unknown[]) => unknown;
-    isChampion?: boolean;
-    isSubmitting?: boolean;
-    handleSubmit?: (...args: unknown[]) => unknown;
-    prize?: number;
-    prizeAsCredit?: number;
-    tournament?: object;
-    trophyAvailabilityDate?: string;
+    setFieldValue: (...args: unknown[]) => unknown;
+    isChampion: boolean;
+    isSubmitting: boolean;
+    handleSubmit: (...args: unknown[]) => unknown;
+    prize: number;
+    prizeAsCredit: number;
+    tournament: object;
+    trophyAvailabilityDate: string;
 };
 
 const FormItself = (props: FormItselfProps) => {
@@ -242,9 +242,9 @@ const FormItself = (props: FormItselfProps) => {
 };
 
 type ClaimRewardProps = {
-    reloadTournament?: (...args: unknown[]) => unknown;
-    isChampion?: boolean;
-    tournament?: object;
+    reloadTournament: (...args: unknown[]) => unknown;
+    isChampion: boolean;
+    tournament: object;
 };
 
 const ClaimReward = (props: ClaimRewardProps) => {

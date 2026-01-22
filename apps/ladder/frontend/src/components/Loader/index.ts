@@ -46,7 +46,7 @@ const deleteId = (id) => {
 let counter = 0;
 
 type LoaderProps = {
-    loading?: boolean;
+    loading: boolean;
 };
 
 const Loader = (props: LoaderProps) => {

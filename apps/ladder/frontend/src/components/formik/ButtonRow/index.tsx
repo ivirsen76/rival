@@ -4,8 +4,8 @@ import _xor from 'lodash/xor';
 import style from './style.module.scss';
 
 type ButtonRowProps = {
-    form?: object;
-    field?: object;
+    form: object;
+    field: object;
     options: unknown[];
 };
 

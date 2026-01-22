@@ -10,10 +10,10 @@ import useMatchPermissions from '@/utils/useMatchPermissions';
 
 type FormDeleteProposalProps = {
     onSubmit: (...args: unknown[]) => unknown;
-    onCancel?: (...args: unknown[]) => unknown;
+    onCancel: (...args: unknown[]) => unknown;
     match: object;
     tournament: object;
-    renderDeletedProposal?: (...args: unknown[]) => unknown;
+    renderDeletedProposal: (...args: unknown[]) => unknown;
 };
 
 const FormDeleteProposal = (props: FormDeleteProposalProps) => {

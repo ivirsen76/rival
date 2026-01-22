@@ -39,9 +39,9 @@ export const comeFromOptions = [
 ];
 
 type RegisterFormProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
-    goToLogin?: (...args: unknown[]) => unknown;
-    showComeFrom?: boolean;
+    onSubmit: (...args: unknown[]) => unknown;
+    goToLogin: (...args: unknown[]) => unknown;
+    showComeFrom: boolean;
 };
 
 const RegisterForm = (props: RegisterFormProps) => {

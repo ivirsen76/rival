@@ -15,7 +15,7 @@ import { useHistory } from 'react-router-dom';
 import style from './style.module.scss';
 
 type PaymentProps = {
-    fullSettings?: object;
+    fullSettings: object;
 };
 
 const Payment = (props: PaymentProps) => {

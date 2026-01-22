@@ -1,7 +1,7 @@
 import { Formik as OriginalFormik } from 'formik';
 
 type FormikProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 export const Formik = (props: FormikProps) => {

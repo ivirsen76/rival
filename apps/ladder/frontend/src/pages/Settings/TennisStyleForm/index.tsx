@@ -42,7 +42,7 @@ export const shotOptions = [
 ];
 
 type TennisStyleFormProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const TennisStyleForm = (props: TennisStyleFormProps) => {

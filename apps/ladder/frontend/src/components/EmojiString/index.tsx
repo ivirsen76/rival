@@ -3,7 +3,7 @@ import emojiRegex from 'emoji-regex-xs';
 import style from './style.module.scss';
 
 type EmojiStringProps = {
-    str?: string;
+    str: string;
 };
 
 const EmojiString = (props: EmojiStringProps) => {

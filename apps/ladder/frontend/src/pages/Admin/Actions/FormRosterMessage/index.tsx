@@ -19,7 +19,7 @@ const validate = (values) => {
 };
 
 type FormRosterMessageProps = {
-    hide?: (...args: unknown[]) => unknown;
+    hide: (...args: unknown[]) => unknown;
 };
 
 const FormRosterMessage = (props: FormRosterMessageProps) => {

@@ -15,8 +15,8 @@ import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import style from './style.module.scss';
 
 type JustFormProps = {
-    formikProps?: object;
-    tournament?: object;
+    formikProps: object;
+    tournament: object;
 };
 
 const JustForm = (props: JustFormProps) => {
@@ -147,9 +147,9 @@ const JustForm = (props: JustFormProps) => {
 };
 
 type FormDoublesProposalProps = {
-    initialValues?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
-    tournament?: object;
+    initialValues: object;
+    onSubmit: (...args: unknown[]) => unknown;
+    tournament: object;
 };
 
 const FormDoublesProposal = (props: FormDoublesProposalProps) => {

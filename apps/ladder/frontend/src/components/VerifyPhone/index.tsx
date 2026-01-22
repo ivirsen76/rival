@@ -10,7 +10,7 @@ import style from './style.module.scss';
 type VerifyPhoneProps = {
     phone: string;
     onSuccess: (...args: unknown[]) => unknown;
-    render?: (...args: unknown[]) => unknown;
+    render: (...args: unknown[]) => unknown;
 };
 
 const VerifyPhone = (props: VerifyPhoneProps) => {

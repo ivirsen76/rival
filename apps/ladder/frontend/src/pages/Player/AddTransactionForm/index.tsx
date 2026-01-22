@@ -13,8 +13,8 @@ const typeOptions = [
 ];
 
 type AddTransactionFormProps = {
-    user?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
+    user: object;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const AddTransactionForm = (props: AddTransactionFormProps) => {

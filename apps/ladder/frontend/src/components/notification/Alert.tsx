@@ -5,11 +5,11 @@ import style from './style.module.scss';
 const transitionTime = 600;
 
 type AlertProps = {
-    header?: React.ReactNode;
-    message?: React.ReactNode;
-    type?: string;
-    duration?: number;
-    onClose?: (...args: unknown[]) => unknown;
+    header: React.ReactNode;
+    message: React.ReactNode;
+    type: string;
+    duration: number;
+    onClose: (...args: unknown[]) => unknown;
 };
 
 const Alert = (props: AlertProps) => {

@@ -83,7 +83,7 @@ const typeOptions = [
 ];
 
 type FormFeedbackProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const FormFeedback = (props: FormFeedbackProps) => {

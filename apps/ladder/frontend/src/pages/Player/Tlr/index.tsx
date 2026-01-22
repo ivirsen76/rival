@@ -5,9 +5,9 @@ import Loader from '@/components/Loader';
 import axios from '@/utils/axios';
 
 type TlrProps = {
-    user?: object;
-    renderTrigger?: (...args: unknown[]) => unknown;
-    tournament?: object;
+    user: object;
+    renderTrigger: (...args: unknown[]) => unknown;
+    tournament: object;
 };
 
 const Tlr = (props: TlrProps) => {

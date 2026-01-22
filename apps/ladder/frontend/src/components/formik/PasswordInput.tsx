@@ -4,8 +4,8 @@ import _omit from 'lodash/omit';
 import classnames from 'classnames';
 
 type PasswordInputProps = {
-    form?: object;
-    field?: object;
+    form: object;
+    field: object;
 };
 
 const PasswordInput = (props: PasswordInputProps) => {

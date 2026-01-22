@@ -3,8 +3,8 @@ import classnames from 'classnames';
 import Chart from '@/components/Chart';
 
 type RivalryProps = {
-    rivalry?: object;
-    user?: object;
+    rivalry: object;
+    user: object;
 };
 
 const Rivalry = (props: RivalryProps) => {

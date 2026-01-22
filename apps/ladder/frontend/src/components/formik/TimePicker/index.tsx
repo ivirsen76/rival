@@ -11,9 +11,9 @@ import style from './style.module.scss';
 const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 type TimePickerProps = {
-    form?: object;
-    field?: object;
-    options?: object;
+    form: object;
+    field: object;
+    options: object;
 };
 
 const TimePicker = (props: TimePickerProps) => {

@@ -6,10 +6,10 @@ import { useSelector } from 'react-redux';
 import style from './style.module.scss';
 
 type DoublesPlayersPickerProps = {
-    form?: object;
-    field?: object;
+    form: object;
+    field: object;
     partners: unknown[];
-    label?: React.ReactNode;
+    label: React.ReactNode;
 };
 
 const DoublesPlayersPicker = (props: DoublesPlayersPickerProps) => {

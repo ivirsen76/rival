@@ -6,8 +6,8 @@ import dayjs from '@/utils/dayjs';
 import CalendarIcon from '@/styles/metronic/icons/duotone/Interface/Calendar.svg?react';
 
 type DatePickerProps = {
-    form?: object;
-    field?: object;
+    form: object;
+    field: object;
 };
 
 const DatePicker = (props: DatePickerProps) => {

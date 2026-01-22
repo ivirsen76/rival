@@ -10,8 +10,8 @@ import VerifyEmail from '@/components/VerifyEmail';
 import EmailIcon from '@/styles/metronic/icons/duotone/Communication/Mail-at.svg?react';
 
 type LoginProps = {
-    goToRegister?: (...args: unknown[]) => unknown;
-    onSubmit?: (...args: unknown[]) => unknown;
+    goToRegister: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const Login = (props: LoginProps) => {

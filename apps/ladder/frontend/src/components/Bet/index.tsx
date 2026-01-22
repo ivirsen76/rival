@@ -13,10 +13,10 @@ import style from './style.module.scss';
 const isByeMatch = (match) => match.challengerId === BYE_ID || match.acceptorId === BYE_ID;
 
 type BetProps = {
-    tournament?: object;
-    matches?: unknown[];
-    players?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
+    tournament: object;
+    matches: unknown[];
+    players: object;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const Bet = (props: BetProps) => {

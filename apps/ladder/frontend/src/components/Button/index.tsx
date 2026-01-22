@@ -1,11 +1,11 @@
 import _omit from 'lodash/omit';
 
 type ButtonProps = {
-    type?: string;
-    isSubmitting?: boolean;
-    disabled?: boolean;
-    submittingTitle?: React.ReactNode;
-    children?: React.ReactNode;
+    type: string;
+    isSubmitting: boolean;
+    disabled: boolean;
+    submittingTitle: React.ReactNode;
+    children: React.ReactNode;
 };
 
 const Button = (props: ButtonProps) => {

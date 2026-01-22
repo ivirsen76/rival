@@ -3,10 +3,10 @@ import _omit from 'lodash/omit';
 import classnames from 'classnames';
 
 type SelectProps = {
-    form?: object;
-    field?: object;
+    form: object;
+    field: object;
     options: unknown[];
-    onChange?: (...args: unknown[]) => unknown;
+    onChange: (...args: unknown[]) => unknown;
 };
 
 const Select = (props: SelectProps) => {

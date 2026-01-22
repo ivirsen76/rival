@@ -6,7 +6,7 @@ import { formatCustom } from '@/utils/dayjs';
 import style from './style.module.scss';
 
 type EmailsProps = {
-    user?: object;
+    user: object;
 };
 
 const Emails = (props: EmailsProps) => {

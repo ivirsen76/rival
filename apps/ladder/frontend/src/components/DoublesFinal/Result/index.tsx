@@ -32,12 +32,12 @@ export const getPoints = (score) => {
 };
 
 type RoundRobinProps = {
-    match?: object;
-    player1?: object;
-    player2?: object;
-    player3?: object;
-    player4?: object;
-    onChange?: (...args: unknown[]) => unknown;
+    match: object;
+    player1: object;
+    player2: object;
+    player3: object;
+    player4: object;
+    onChange: (...args: unknown[]) => unknown;
 };
 
 const RoundRobin = (props: RoundRobinProps) => {
@@ -141,17 +141,17 @@ const RoundRobin = (props: RoundRobinProps) => {
 };
 
 type ResultProps = {
-    match?: object;
-    players?: object;
-    player1?: object;
-    player2?: object;
-    player3?: object;
-    player4?: object;
-    reloadTournament?: (...args: unknown[]) => unknown;
-    finalSpot?: number;
-    readOnly?: boolean;
+    match: object;
+    players: object;
+    player1: object;
+    player2: object;
+    player3: object;
+    player4: object;
+    reloadTournament: (...args: unknown[]) => unknown;
+    finalSpot: number;
+    readOnly: boolean;
     // number of open slots
-    winnerCount?: number;
+    winnerCount: number;
 };
 
 const Result = (props: ResultProps) => {

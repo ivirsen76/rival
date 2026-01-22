@@ -10,7 +10,7 @@ import { logout } from '@/reducers/auth';
 import { useDispatch } from 'react-redux';
 
 type NewPasswordProps = {
-    payload?: string;
+    payload: string;
 };
 
 const NewPassword = (props: NewPasswordProps) => {

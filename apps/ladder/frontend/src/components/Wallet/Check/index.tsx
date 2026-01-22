@@ -3,10 +3,10 @@ import formatSum from '@/utils/formatSum';
 import { formatCustom } from '@/utils/dayjs';
 
 type CheckProps = {
-    payload?: object;
-    sessionId?: string;
-    amount?: number;
-    processedAt?: string;
+    payload: object;
+    sessionId: string;
+    amount: number;
+    processedAt: string;
 };
 
 const Check = (props: CheckProps) => {

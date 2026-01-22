@@ -6,8 +6,8 @@ import WeatherForecast from '@/components/WeatherForecast';
 import style from './style.module.scss';
 
 type DateTimeWithWeatherProps = {
-    minDate?: object;
-    maxDate?: object;
+    minDate: object;
+    maxDate: object;
 };
 
 const DateTimeWithWeather = (props: DateTimeWithWeatherProps) => {

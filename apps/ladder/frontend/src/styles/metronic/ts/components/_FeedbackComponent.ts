@@ -7,10 +7,10 @@ import {
 } from '../_utils/index';
 
 export interface FeedbackOptions {
-    width?: number;
-    placement?: string;
-    content?: string;
-    type?: string;
+    width: number;
+    placement: string;
+    content: string;
+    type: string;
 }
 
 const defaultFeedbackOptions: FeedbackOptions = {

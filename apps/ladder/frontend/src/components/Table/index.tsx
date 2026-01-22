@@ -7,19 +7,19 @@ import _xor from 'lodash/xor';
 import style from './style.module.scss';
 
 type TableProps = {
-    columns?: unknown[];
-    data?: unknown[];
-    perPage?: number;
-    showRowNumber?: boolean;
-    noDataMessage?: string;
-    className?: string;
-    getFilteredData?: (...args: unknown[]) => unknown;
-    orderBy?: string;
-    orderByDir?: string;
-    rowActions?: unknown[];
-    getKey?: (...args: unknown[]) => unknown;
-    getRowClassName?: (...args: unknown[]) => unknown;
-    showTopPaginator?: boolean;
+    columns: unknown[];
+    data: unknown[];
+    perPage: number;
+    showRowNumber: boolean;
+    noDataMessage: string;
+    className: string;
+    getFilteredData: (...args: unknown[]) => unknown;
+    orderBy: string;
+    orderByDir: string;
+    rowActions: unknown[];
+    getKey: (...args: unknown[]) => unknown;
+    getRowClassName: (...args: unknown[]) => unknown;
+    showTopPaginator: boolean;
 };
 
 const Table = (props: TableProps) => {

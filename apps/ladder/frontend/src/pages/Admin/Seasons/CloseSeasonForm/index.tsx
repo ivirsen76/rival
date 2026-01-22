@@ -3,7 +3,7 @@ import Input from '@/components/formik/Input';
 import Button from '@/components/Button';
 
 type CloseSeasonFormProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const CloseSeasonForm = (props: CloseSeasonFormProps) => {

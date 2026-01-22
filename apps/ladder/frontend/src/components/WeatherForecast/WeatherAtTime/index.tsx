@@ -4,7 +4,7 @@ import dayjs from '@/utils/dayjs';
 import style from './style.module.scss';
 
 type WeatherAtTimeProps = {
-    time?: string;
+    time: string;
 };
 
 const WeatherAtTime = (props: WeatherAtTimeProps) => {

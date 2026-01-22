@@ -29,8 +29,8 @@ function saveFile(content, filename) {
 }
 
 type TrophyReportProps = {
-    selectedRows?: unknown[];
-    data?: unknown[];
+    selectedRows: unknown[];
+    data: unknown[];
 };
 
 const TrophyReport = (props: TrophyReportProps) => {
@@ -164,8 +164,8 @@ const TrophyReport = (props: TrophyReportProps) => {
 };
 
 type EmailCopyProps = {
-    selectedRows?: unknown[];
-    data?: unknown[];
+    selectedRows: unknown[];
+    data: unknown[];
 };
 
 const EmailCopy = (props: EmailCopyProps) => {
@@ -193,8 +193,8 @@ const EmailCopy = (props: EmailCopyProps) => {
 };
 
 type UspsSpreadsheetProps = {
-    selectedRows?: unknown[];
-    data?: unknown[];
+    selectedRows: unknown[];
+    data: unknown[];
 };
 
 const UspsSpreadsheet = (props: UspsSpreadsheetProps) => {

@@ -22,7 +22,7 @@ const availableActions = {
 };
 
 type ActionProps = {
-    match?: object;
+    match: object;
 };
 
 const Action = (props: ActionProps) => {

@@ -10,7 +10,7 @@ import style from './style.module.scss';
 const SHOW_BADGES = 5;
 
 type RecentBadgesProps = {
-    user?: object;
+    user: object;
 };
 
 const RecentBadges = (props: RecentBadgesProps) => {

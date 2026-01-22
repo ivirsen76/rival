@@ -4,7 +4,7 @@ import Form from './Form';
 import _pick from 'lodash/pick';
 
 type SubscriptionsFormProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const SubscriptionsForm = (props: SubscriptionsFormProps) => {

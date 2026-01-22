@@ -8,10 +8,10 @@ import { defaultColors } from './config';
 import style from './style.module.scss';
 
 type StatsProps = {
-    match?: object;
-    challenger?: object;
-    acceptor?: object;
-    scaleToFit?: boolean;
+    match: object;
+    challenger: object;
+    acceptor: object;
+    scaleToFit: boolean;
 };
 
 const Stats = (props: StatsProps) => {

@@ -6,7 +6,7 @@ import { useQuery } from 'react-query';
 import dayjs, { formatCustom } from '@/utils/dayjs';
 
 type TrackingProps = {
-    user?: object;
+    user: object;
 };
 
 const Tracking = (props: TrackingProps) => {

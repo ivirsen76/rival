@@ -10,7 +10,7 @@ import Button from '@/components/Button';
 import axios from '@/utils/axios';
 
 type AvoidedPlayersFormProps = {
-    onSubmit?: (...args: unknown[]) => unknown;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const AvoidedPlayersForm = (props: AvoidedPlayersFormProps) => {

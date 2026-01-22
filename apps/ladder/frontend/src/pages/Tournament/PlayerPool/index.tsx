@@ -13,8 +13,8 @@ import JoinPlayerPoolForm from './JoinPlayerPoolForm';
 import CreateTeamForm from './CreateTeamForm';
 
 type PlayerPoolProps = {
-    tournament?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
+    tournament: object;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const PlayerPool = (props: PlayerPoolProps) => {

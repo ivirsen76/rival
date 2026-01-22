@@ -16,9 +16,9 @@ const stages = {
 };
 
 type CalendarProps = {
-    data?: object;
-    levelSlug?: string;
-    levelType?: string;
+    data: object;
+    levelSlug: string;
+    levelType: string;
 };
 
 const Calendar = (props: CalendarProps) => {

@@ -118,8 +118,8 @@ export const getUpcomingMatches = ({ tournament, currentUser }) => {
 };
 
 type OverviewProps = {
-    tournament?: object;
-    reloadTournament?: (...args: unknown[]) => unknown;
+    tournament: object;
+    reloadTournament: (...args: unknown[]) => unknown;
 };
 
 const Overview = (props: OverviewProps) => {

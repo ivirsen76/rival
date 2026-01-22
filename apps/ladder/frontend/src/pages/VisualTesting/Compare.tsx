@@ -10,10 +10,10 @@ const types = [
 ];
 
 type CompareProps = {
-    file?: string;
-    percent?: number;
-    size?: object;
-    onAccept?: (...args: unknown[]) => unknown;
+    file: string;
+    percent: number;
+    size: object;
+    onAccept: (...args: unknown[]) => unknown;
 };
 
 const Compare = (props: CompareProps) => {

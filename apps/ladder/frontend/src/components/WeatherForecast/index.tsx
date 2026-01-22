@@ -10,7 +10,7 @@ import useAppearance from '@/utils/useAppearance';
 import style from './style.module.scss';
 
 type WeatherForecastProps = {
-    isDelay?: boolean;
+    isDelay: boolean;
 };
 
 const WeatherForecast = (props: WeatherForecastProps) => {

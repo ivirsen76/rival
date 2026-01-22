@@ -3,9 +3,9 @@ import _omit from 'lodash/omit';
 import classnames from 'classnames';
 
 type InputProps = {
-    form?: object;
-    field?: object;
-    type?: string;
+    form: object;
+    field: object;
+    type: string;
 };
 
 const Input = (props: InputProps) => {

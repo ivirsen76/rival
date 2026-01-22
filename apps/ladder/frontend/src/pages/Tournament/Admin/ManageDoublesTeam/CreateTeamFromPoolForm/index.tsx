@@ -23,8 +23,8 @@ const validate = (values) => {
 };
 
 type CreateTeamFromPoolFormProps = {
-    tournament?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
+    tournament: object;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const CreateTeamFromPoolForm = (props: CreateTeamFromPoolFormProps) => {

@@ -5,9 +5,9 @@ import { useQueryClient } from 'react-query';
 import axios from 'axios';
 
 type EditPhotoFormProps = {
-    slide?: object;
-    initialValues?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
+    slide: object;
+    initialValues: object;
+    onSubmit: (...args: unknown[]) => unknown;
 };
 
 const EditPhotoForm = (props: EditPhotoFormProps) => {

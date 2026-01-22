@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 
 type TimelineProps = {
-    totalPlayers?: number;
+    totalPlayers: number;
 };
 
 const Timeline = (props: TimelineProps) => {

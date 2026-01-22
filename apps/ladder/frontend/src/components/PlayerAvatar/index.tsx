@@ -5,17 +5,12 @@ import Avatar from '@/components/avataaars';
 import style from './style.module.scss';
 
 type SingleAvatarProps = {
-    player?: object;
-    highQuality?: boolean;
-    isWinner?: boolean;
+    player: object;
+    highQuality: boolean;
+    isWinner: boolean;
 };
 
-const SingleAvatar = ({
-    player,
-    highQuality,
-    isWinner,
-    ...props
-}: SingleAvatarProps) => {
+const SingleAvatar = ({ player, highQuality, isWinner, ...props }: SingleAvatarProps) => {
     if (!player) {
         return <UserIcon {...props} />;
     }
@@ -39,15 +34,15 @@ const SingleAvatar = ({
 };
 
 type PlayerAvatarProps = {
-    className?: string;
-    player1?: object;
-    player2?: object;
-    player3?: object;
-    player4?: object;
-    player5?: object;
-    isWinner?: boolean;
-    highQuality?: boolean;
-    showTeamAvatar?: boolean;
+    className: string;
+    player1: object;
+    player2: object;
+    player3: object;
+    player4: object;
+    player5: object;
+    isWinner: boolean;
+    highQuality: boolean;
+    showTeamAvatar: boolean;
 };
 
 const PlayerAvatar = (props: PlayerAvatarProps) => {

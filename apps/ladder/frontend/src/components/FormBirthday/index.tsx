@@ -6,7 +6,7 @@ import { updateCurrentUser } from '@/reducers/auth';
 
 type FormBirthdayProps = {
     onSubmit: (...args: unknown[]) => unknown;
-    onCancel?: (...args: unknown[]) => unknown;
+    onCancel: (...args: unknown[]) => unknown;
 };
 
 const FormBirthday = (props: FormBirthdayProps) => {

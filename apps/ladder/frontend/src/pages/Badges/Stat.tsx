@@ -13,9 +13,9 @@ import style from './style.module.scss';
 const returnFunc = (value) => value;
 
 type BadgesStatProps = {
-    data?: object;
-    isMyself?: boolean;
-    isLight?: boolean;
+    data: object;
+    isMyself: boolean;
+    isLight: boolean;
 };
 
 const BadgesStat = (props: BadgesStatProps) => {

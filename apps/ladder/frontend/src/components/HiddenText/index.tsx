@@ -4,11 +4,11 @@ import MinusIcon from '@/styles/metronic/icons/duotone/Interface/Minus-Square.sv
 import style from './style.module.scss';
 
 type HiddenTextProps = {
-    title?: string;
-    className?: string;
-    contentClassName?: string;
-    children?: React.ReactNode;
-    renderContent?: (...args: unknown[]) => unknown;
+    title: string;
+    className: string;
+    contentClassName: string;
+    children: React.ReactNode;
+    renderContent: (...args: unknown[]) => unknown;
 };
 
 const HiddenText = (props: HiddenTextProps) => {

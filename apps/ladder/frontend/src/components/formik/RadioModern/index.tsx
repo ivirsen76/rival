@@ -4,13 +4,13 @@ import AnimateHeight from 'react-animate-height';
 import style from './style.module.scss';
 
 type RadioModernProps = {
-    form?: object;
-    field?: object;
-    label?: React.ReactNode;
-    description?: React.ReactNode;
-    options?: unknown[];
-    alwaysShowDescription?: boolean;
-    allowUnselect?: boolean;
+    form: object;
+    field: object;
+    label: React.ReactNode;
+    description: React.ReactNode;
+    options: unknown[];
+    alwaysShowDescription: boolean;
+    allowUnselect: boolean;
 };
 
 const RadioModern = (props: RadioModernProps) => {

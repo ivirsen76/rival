@@ -9,8 +9,8 @@ import { Squircle } from 'corner-smoothing';
 import style from './style.module.scss';
 
 type LevelStatProps = {
-    user?: object;
-    data?: object;
+    user: object;
+    data: object;
 };
 
 const LevelStat = (props: LevelStatProps) => {

@@ -3,8 +3,8 @@ import dayjs from '@/utils/dayjs';
 import formatInterval from './formatInterval';
 
 type WaitTillProps = {
-    children?: React.ReactNode;
-    duration?: number;
+    children: React.ReactNode;
+    duration: number;
 };
 
 const WaitTill = (props: WaitTillProps) => {

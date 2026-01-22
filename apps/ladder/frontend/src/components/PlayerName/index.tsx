@@ -7,12 +7,12 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 
 type DoublesNameProps = {
-    player1?: object;
-    player2?: object;
-    rank1?: number;
-    isLink?: boolean;
-    highlight?: boolean;
-    showContactBadge?: boolean;
+    player1: object;
+    player2: object;
+    rank1: number;
+    isLink: boolean;
+    highlight: boolean;
+    showContactBadge: boolean;
 };
 
 const DoublesName = (props: DoublesNameProps) => {
@@ -60,19 +60,19 @@ const DoublesName = (props: DoublesNameProps) => {
 };
 
 type PlayerNameProps = {
-    player1?: object;
-    player2?: object;
-    player3?: object;
-    player4?: object;
-    isLink?: boolean;
-    highlight?: boolean;
-    className?: string;
-    rank1?: number;
-    rank2?: number;
-    elo1?: number;
-    ignorePartners?: boolean;
-    showTeamName?: boolean;
-    showContactBadge?: boolean;
+    player1: object;
+    player2: object;
+    player3: object;
+    player4: object;
+    isLink: boolean;
+    highlight: boolean;
+    className: string;
+    rank1: number;
+    rank2: number;
+    elo1: number;
+    ignorePartners: boolean;
+    showTeamName: boolean;
+    showContactBadge: boolean;
 };
 
 const PlayerName = (props: PlayerNameProps) => {

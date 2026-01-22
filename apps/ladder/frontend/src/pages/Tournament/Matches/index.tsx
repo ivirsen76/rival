@@ -13,8 +13,8 @@ import checkUserReady from '@/utils/checkUserReady';
 import style from './style.module.scss';
 
 type MatchesProps = {
-    tournament?: object;
-    reloadTournament?: (...args: unknown[]) => unknown;
+    tournament: object;
+    reloadTournament: (...args: unknown[]) => unknown;
 };
 
 const Matches = (props: MatchesProps) => {

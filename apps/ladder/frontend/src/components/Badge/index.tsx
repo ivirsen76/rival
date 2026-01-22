@@ -3,15 +3,15 @@ import useUniqueId from '@/utils/useUniqueId';
 import useAppearance from '@/utils/useAppearance';
 
 type BadgeProps = {
-    type?: string;
-    label?: string | number;
-    text?: string;
-    largeText?: string;
-    shape?: string;
-    colorHue?: number;
-    disabled?: boolean;
-    percent?: number;
-    completed?: boolean;
+    type: string;
+    label: string | number;
+    text: string;
+    largeText: string;
+    shape: string;
+    colorHue: number;
+    disabled: boolean;
+    percent: number;
+    completed: boolean;
 };
 
 const Badge = (props: BadgeProps) => {

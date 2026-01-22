@@ -3,12 +3,12 @@ import Modal from 'react-bootstrap/Modal';
 import _omit from 'lodash/omit';
 
 type ModalComponentProps = {
-    title?: React.ReactNode;
+    title: React.ReactNode;
     renderTrigger: (...args: unknown[]) => unknown;
-    renderBody?: (...args: unknown[]) => unknown;
-    body?: React.ReactNode;
-    footer?: React.ReactNode;
-    hasForm?: boolean;
+    renderBody: (...args: unknown[]) => unknown;
+    body: React.ReactNode;
+    footer: React.ReactNode;
+    hasForm: boolean;
 };
 
 const ModalComponent = (props: ModalComponentProps) => {

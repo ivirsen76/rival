@@ -10,9 +10,9 @@ const typeOptions = [
 ];
 
 type LevelFormProps = {
-    initialValues?: object;
-    onSubmit?: (...args: unknown[]) => unknown;
-    hideType?: boolean;
+    initialValues: object;
+    onSubmit: (...args: unknown[]) => unknown;
+    hideType: boolean;
 };
 
 const LevelForm = (props: LevelFormProps) => {
