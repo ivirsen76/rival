@@ -112,7 +112,7 @@ export default async (app, settings = {}) => {
             .map(getEmailContact);
 
         const teamDetails = (() => {
-            const getName = (userId) => {
+            const getName = (userId: number) => {
                 const user = users.find((item) => item.id === userId);
                 return user ? `<b>${getPlayerName(user)}</b>` : '<span class="open">open</span>';
             };

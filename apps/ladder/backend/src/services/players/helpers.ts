@@ -58,7 +58,7 @@ export const teamNames = [
     'Breaking Baddies',
 ];
 
-export const formatTeamName = (str) => {
+export const formatTeamName = (str: string) => {
     const exceptions = new Set(['The', 'A', 'Of', 'For', 'At', 'As', 'By', 'But', 'From', 'On', 'Out', 'To', 'With']);
 
     return str

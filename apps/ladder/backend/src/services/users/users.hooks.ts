@@ -1148,7 +1148,7 @@ const populateSlug = () => async (context: HookContext) => {
     const { data } = context;
     const sequelize = context.app.get('sequelizeClient');
 
-    const getSlug = (str) => {
+    const getSlug = (str: string) => {
         return str
             .replace(/[^\w-\s]+/g, '')
             .replace(/^\W+/, '')

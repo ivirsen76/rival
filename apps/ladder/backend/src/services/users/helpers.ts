@@ -2,7 +2,7 @@ import _upperFirst from 'lodash/upperFirst';
 import dayjs from '../../utils/dayjs';
 import { getStatsMatches } from '../../utils/sqlConditions';
 
-export const formatPhone = (str) => {
+export const formatPhone = (str: string) => {
     if (!str) {
         return '';
     }
@@ -14,7 +14,7 @@ export const hidePhone = () => {
     return 'XXX-XXX-XXXX';
 };
 
-export const formatUserName = (str) => {
+export const formatUserName = (str: string) => {
     return str
         .split(' ')
         .filter(Boolean)
@@ -65,7 +65,7 @@ export const getEmailContact = (user) => {
     return { name: getPlayerName(user), email: user.email };
 };
 
-export const hideEmail = (str) => {
+export const hideEmail = (str: string) => {
     if (!str) {
         return 'a***@*****.com';
     }
@@ -80,7 +80,7 @@ export const getVerificationCode = () =>
         .toString()
         .slice(0, 6);
 
-export const getWeekNumber = (str) => {
+export const getWeekNumber = (str: string) => {
     // Split date and time, take only the date part
     const [datePart] = str.split(' ');
     const [year, month, day] = datePart.split('-').map(Number);

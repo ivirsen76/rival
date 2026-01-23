@@ -189,7 +189,7 @@ const getHighestTlrStats = () => async (context: HookContext) => {
                m.challenger2Id IS NULL`);
 
     const users = {};
-    const addUser = (userId, elo, date) => {
+    const addUser = (userId: number, elo, date) => {
         if (!users[userId]) {
             users[userId] = {
                 id: userId,

@@ -191,7 +191,7 @@ export const reducer = (state = initialState, action) => {
             const isFast4 = match.matchFormat === 2;
             const isScoreCorrect = isFast4 ? isFastScoreCorrect : isFullScoreCorrect;
 
-            const processUser = (userId) => {
+            const processUser = (userId: number) => {
                 if (!userId) {
                     return;
                 }
