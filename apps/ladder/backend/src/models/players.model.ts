@@ -1,7 +1,8 @@
-import Sequelize from 'sequelize';
+import type { Application } from '@feathersjs/feathers';
+import Sequelize, { QueryOptions } from 'sequelize';
 import getLevelGender from '../utils/getLevelGender';
 
-export default function (app) {
+export default function (app: Application) {
     const sequelizeClient = app.get('sequelizeClient');
     const players = sequelizeClient.define(
         'players',
@@ -29,7 +30,7 @@ export default function (app) {
         },
         {
             hooks: {
-                beforeCount(options) {
+                beforeCount(options: QueryOptions) {
                     options.raw = true;
                 },
             },
@@ -37,14 +38,15 @@ export default function (app) {
     );
 
     // eslint-disable-next-line no-unused-vars
-    players.associate = function (models) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    players.associate = function (models: any) {
         players.hasMany(models.matches, { foreignKey: 'challengerId' });
         players.hasMany(models.matches, { foreignKey: 'acceptorId' });
         players.belongsTo(models.tournaments);
     };
 
     // Populate gender
-    players.afterCreate(async (player, options) => {
+    players.afterCreate(async (player) => {
         const { userId, tournamentId } = player;
         const { users } = sequelizeClient.models;
 

@@ -1,6 +1,7 @@
-import Sequelize from 'sequelize';
+import type { Application } from '@feathersjs/feathers';
+import Sequelize, { QueryOptions } from 'sequelize';
 
-export default function (app) {
+export default function (app: Application) {
     const sequelizeClient = app.get('sequelizeClient');
     const matches = sequelizeClient.define(
         'matches',
@@ -67,14 +68,15 @@ export default function (app) {
         },
         {
             hooks: {
-                beforeCount(options) {
+                beforeCount(options: QueryOptions) {
                     options.raw = true;
                 },
             },
         }
     );
 
-    matches.associate = function (models) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    matches.associate = function (models: any) {
         matches.belongsTo(models.players, { as: 'challenger' });
         matches.belongsTo(models.players, { as: 'acceptor' });
     };

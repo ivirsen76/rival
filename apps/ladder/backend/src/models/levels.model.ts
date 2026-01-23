@@ -1,6 +1,7 @@
-import Sequelize from 'sequelize';
+import type { Application } from '@feathersjs/feathers';
+import Sequelize, { QueryOptions } from 'sequelize';
 
-export default function (app) {
+export default function (app: Application) {
     const sequelizeClient = app.get('sequelizeClient');
     const levels = sequelizeClient.define(
         'levels',
@@ -16,14 +17,15 @@ export default function (app) {
         },
         {
             hooks: {
-                beforeCount(options) {
+                beforeCount(options: QueryOptions) {
                     options.raw = true;
                 },
             },
         }
     );
 
-    levels.associate = function (models) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    levels.associate = function (models: any) {
         levels.belongsToMany(models.seasons, {
             through: 'tournaments',
         });

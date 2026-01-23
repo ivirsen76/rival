@@ -1,8 +1,9 @@
 // See http://docs.sequelizejs.com/en/latest/docs/models-definition/
 // for more of what you can do here.
-import Sequelize from 'sequelize';
+import type { Application } from '@feathersjs/feathers';
+import Sequelize, { QueryOptions } from 'sequelize';
 
-export default function (app) {
+export default function (app: Application) {
     const sequelizeClient = app.get('sequelizeClient');
     const orders = sequelizeClient.define(
         'orders',
@@ -15,14 +16,15 @@ export default function (app) {
         },
         {
             hooks: {
-                beforeCount(options) {
+                beforeCount(options: QueryOptions) {
                     options.raw = true;
                 },
             },
         }
     );
 
-    orders.associate = function (models) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    orders.associate = function (models: any) {
         orders.belongsTo(models.users);
     };
 

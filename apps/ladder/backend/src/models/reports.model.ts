@@ -1,6 +1,7 @@
-import Sequelize from 'sequelize';
+import type { Application } from '@feathersjs/feathers';
+import Sequelize, { QueryOptions } from 'sequelize';
 
-export default function (app) {
+export default function (app: Application) {
     const sequelizeClient = app.get('sequelizeClient');
     const reports = sequelizeClient.define(
         'reports',
@@ -11,14 +12,15 @@ export default function (app) {
         },
         {
             hooks: {
-                beforeCount(options) {
+                beforeCount(options: QueryOptions) {
                     options.raw = true;
                 },
             },
         }
     );
 
-    reports.associate = function (models) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    reports.associate = function (models: any) {
         reports.belongsTo(models.users);
     };
 

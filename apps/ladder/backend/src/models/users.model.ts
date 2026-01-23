@@ -1,6 +1,7 @@
-import Sequelize from 'sequelize';
+import type { Application } from '@feathersjs/feathers';
+import Sequelize, { QueryOptions } from 'sequelize';
 
-export default function (app) {
+export default function (app: Application) {
     const sequelizeClient = app.get('sequelizeClient');
     const users = sequelizeClient.define(
         'users',
@@ -67,7 +68,7 @@ export default function (app) {
         },
         {
             hooks: {
-                beforeCount(options) {
+                beforeCount(options: QueryOptions) {
                     options.raw = true;
                 },
             },
@@ -75,7 +76,8 @@ export default function (app) {
     );
 
     // eslint-disable-next-line no-unused-vars
-    users.associate = function (models) {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    users.associate = function (models: any) {
         users.belongsToMany(models.tournaments, {
             through: 'players',
         });
