@@ -47,5 +47,5 @@ export const up = async ({ context: queryInterface }: { context: QueryInterface 
 };
 
 export const down = async ({ context: queryInterface }: { context: QueryInterface }) => {
-    await queryInterface.bulkDelete('seasons', null, {});
+    await queryInterface.bulkDelete('seasons', {}, {});
 };

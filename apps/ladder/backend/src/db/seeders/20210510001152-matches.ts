@@ -436,5 +436,5 @@ export const up = async ({ context: queryInterface }: { context: QueryInterface 
 };
 
 export const down = async ({ context: queryInterface }: { context: QueryInterface }) => {
-    await queryInterface.bulkDelete('matches', null, {});
+    await queryInterface.bulkDelete('matches', {}, {});
 };
