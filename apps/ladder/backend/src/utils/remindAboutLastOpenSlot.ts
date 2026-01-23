@@ -1,3 +1,4 @@
+import type { Application } from '@feathersjs/feathers';
 import dayjs from './dayjs';
 import lastOpenSlotReminderTemplate from '../emailTemplates/lastOpenSlotReminder';
 import staticConfig from '../config';
@@ -5,11 +6,11 @@ import getCombinedConfig from './getCombinedConfig';
 import { getEmailContact, getPlayerName } from '../services/users/helpers';
 
 // Helpers
-const getConfig = async (sequelize) => {
+const getConfig = async () => {
     const config = await getCombinedConfig();
     return { ...staticConfig, ...config };
 };
-const isActionDone = async (sequelize, name, tableId) => {
+const isActionDone = async (sequelize, name: string, tableId: number) => {
     const [actions] = await sequelize.query(`SELECT * FROM actions WHERE tableId=:tableId AND name=:name`, {
         replacements: { tableId, name },
     });
@@ -17,7 +18,7 @@ const isActionDone = async (sequelize, name, tableId) => {
     return actions.length > 0;
 };
 
-export default async (app, settings = {}) => {
+export default async (app: Application, settings = {}) => {
     const { TL_URL } = process.env;
     const sequelize = app.get('sequelizeClient');
     const { ignoreNightTime } = settings;

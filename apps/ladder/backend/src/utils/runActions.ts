@@ -1,3 +1,4 @@
+import type { Application } from '@feathersjs/feathers';
 import dayjs from './dayjs';
 import logger from '@rival-tennis-ladder/logger';
 import _uniqBy from 'lodash/uniqBy';
@@ -127,7 +128,7 @@ const getImagesFromSvg = async (svgs) => {
     return result;
 };
 
-export const remindForTournament = async (app) => {
+export const remindForTournament = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
 
     const config = await getCombinedConfig();
@@ -225,7 +226,7 @@ export const remindForTournament = async (app) => {
     logger.info(`Tournament reminder sent to ${count} users`);
 };
 
-export const lastDayRemindForTournament = async (app) => {
+export const lastDayRemindForTournament = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
 
     const config = await getCombinedConfig();
@@ -363,7 +364,7 @@ export const lastDayRemindForTournament = async (app) => {
     logger.info(`Last day tournament reminder sent to ${count} users`);
 };
 
-export const remindForFirstDay = async (app) => {
+export const remindForFirstDay = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
 
     const config = await getCombinedConfig();
@@ -426,7 +427,7 @@ export const remindForFirstDay = async (app) => {
     logger.info(`Season first day reminder sent to ${emails.length} users`);
 };
 
-export const requestFeedbackForNoJoin = async (app) => {
+export const requestFeedbackForNoJoin = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
 
     const config = await getCombinedConfig();
@@ -550,7 +551,7 @@ export const requestFeedbackForNoJoin = async (app) => {
     logger.info(`Feedback request sent to ${emails.length} users`);
 };
 
-export const switchToPercentReferral = async (app) => {
+export const switchToPercentReferral = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
 
     const config = await getCombinedConfig();
@@ -634,7 +635,7 @@ export const switchToPercentReferral = async (app) => {
     logger.info(`Percent referral offer sent to ${emails.length} users`);
 };
 
-export const remindForActivity = async (app) => {
+export const remindForActivity = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
     const { users } = sequelize.models;
     const ACTION_NAME = 'activityReminder';
@@ -724,7 +725,7 @@ export const remindForActivity = async (app) => {
     }
 };
 
-export const remindForChoosingLadder = async (app) => {
+export const remindForChoosingLadder = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
     const ACTION_NAME = 'chooseLadderReminder';
 
@@ -801,7 +802,7 @@ export const remindForChoosingLadder = async (app) => {
     }
 };
 
-export const seasonIsOver = async (app) => {
+export const seasonIsOver = async (app: Application) => {
     const { TL_URL } = process.env;
     const sequelize = app.get('sequelizeClient');
     const MIN_MATCHES_PLAYED = process.env.NODE_ENV === 'test' ? 5 : 25;
@@ -1166,7 +1167,7 @@ export const seasonIsOver = async (app) => {
     }
 };
 
-export const joinNextSeason = async (app) => {
+export const joinNextSeason = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
 
     const [prevSeason, nextSeason] = await getCurrentSeasons(sequelize);
@@ -1343,7 +1344,7 @@ export const joinNextSeason = async (app) => {
     });
 };
 
-export const remindForClaimingReward = async (app) => {
+export const remindForClaimingReward = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
 
     const config = await getCombinedConfig();
@@ -1490,7 +1491,7 @@ export const remindForClaimingReward = async (app) => {
     }
 };
 
-export const sendFinalScheduleReminder = async (app) => {
+export const sendFinalScheduleReminder = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
 
     const config = await getCombinedConfig();
@@ -1643,7 +1644,7 @@ export const sendFinalScheduleReminder = async (app) => {
     }
 };
 
-export const generateWordCloud = async (app) => {
+export const generateWordCloud = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
 
     const [[settings]] = await sequelize.query(`SELECT wordcloudUrl FROM settings`);
@@ -1729,7 +1730,7 @@ export const generateWordCloud = async (app) => {
     logger.info(`Wordcloud generated with ${list.length} players`);
 };
 
-export const sendMissingTeammateReminder = async (app) => {
+export const sendMissingTeammateReminder = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
     const config = await getCombinedConfig();
 
@@ -1825,7 +1826,7 @@ ${signature({ config })}
     logger.info(`Reminder for captains without teammates sent to ${captainsWithoutTeammate.length} players`);
 };
 
-export const sendHighProjectedTlrWarning = async (app) => {
+export const sendHighProjectedTlrWarning = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
     const config = await getCombinedConfig();
     const { players } = sequelize.models;
@@ -2032,7 +2033,7 @@ export const sendHighProjectedTlrWarning = async (app) => {
     }
 };
 
-export default async (app) => {
+export default async (app: Application) => {
     const runAction = async (fn) => {
         try {
             await fn(app);

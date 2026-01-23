@@ -1,3 +1,4 @@
+import type { Application } from '@feathersjs/feathers';
 import getCombinedConfig from './getCombinedConfig';
 import _capitalize from 'lodash/capitalize';
 import _pick from 'lodash/pick';
@@ -146,7 +147,7 @@ ${signature({ config })}
     );
 };
 
-const sendGeneralMessage = async (app, candidates) => {
+const sendGeneralMessage = async (app: Application, candidates) => {
     const sequelize = app.get('sequelizeClient');
     const config = await getCombinedConfig();
 
@@ -293,7 +294,7 @@ const sendGeneralMessage = async (app, candidates) => {
     logger.info(`Roster message sent to ${candidates.length} candidates`);
 };
 
-const processAtlanta = async (app) => {
+const processAtlanta = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
 
     const CATEGORY = 'Men';
@@ -323,7 +324,7 @@ const processAtlanta = async (app) => {
     await sendGeneralMessage(app, candidates);
 };
 
-const processAustin = async (app) => {
+const processAustin = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
     const dateTwoMonthsAgo = dayjs.tz().subtract(2, 'month').format('YYYY-MM-DD HH:mm:ss');
 

@@ -1,7 +1,8 @@
+import type { Application } from '@feathersjs/feathers';
 import dayjs from './dayjs';
 import getCombinedConfig from './getCombinedConfig';
 
-export default async (app) => {
+export default async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
 
     // Check config to see if it's not Raleigh

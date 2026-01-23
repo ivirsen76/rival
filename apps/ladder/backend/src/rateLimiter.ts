@@ -1,3 +1,4 @@
+import type { Application } from '@feathersjs/feathers';
 import rateLimit from 'express-rate-limit';
 import _get from 'lodash/get';
 import logger from '@rival-tennis-ladder/logger';
@@ -12,7 +13,7 @@ const getClientIp = (req) => {
     return ip;
 };
 
-export default (app) => {
+export default (app: Application) => {
     if (process.env.NODE_ENV === 'test' || process.env.CI) {
         return;
     }

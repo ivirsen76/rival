@@ -1,10 +1,11 @@
+import type { Application } from '@feathersjs/feathers';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
 import dayjs from './dayjs';
 import getCombinedConfig from './getCombinedConfig';
 
-export default async (app) => {
+export default async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
     const { TL_WEATHER_TEAM_ID, TL_WEATHER_KEY_ID, TL_WEATHER_AUTH_KEY_PATH } = process.env;
 

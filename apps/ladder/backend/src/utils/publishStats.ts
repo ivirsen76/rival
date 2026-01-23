@@ -1,3 +1,4 @@
+import type { Application } from '@feathersjs/feathers';
 import axios from 'axios';
 import qs from 'qs';
 import logger from '@rival-tennis-ladder/logger';
@@ -8,7 +9,7 @@ import { getPlayerName, comeFromOptions } from '../services/users/helpers';
 import { getStatsMatches } from './sqlConditions';
 import getCombinedConfig from './getCombinedConfig';
 
-export default async (app) => {
+export default async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
 
     const { TL_STORE_TOKEN, TL_STORE_URL } = process.env;

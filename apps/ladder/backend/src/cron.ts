@@ -1,3 +1,4 @@
+import type { Application } from '@feathersjs/feathers';
 import cron from 'node-cron';
 import seedrandom from 'seedrandom';
 import removeUnverifiedAccounts from './utils/removeUnverifiedAccounts';
@@ -15,7 +16,7 @@ import { applyNewBadges } from './utils/applyNewBadges';
 import remindAboutLastOpenSlot from './utils/remindAboutLastOpenSlot';
 import sendProposalEmails from './utils/sendProposalEmails';
 
-export default (app) => {
+export default (app: Application) => {
     // use TL_DB_NAME to set the starting random point
     const random = seedrandom(process.env.TL_DB_NAME);
     const sequelize = app.get('sequelizeClient');

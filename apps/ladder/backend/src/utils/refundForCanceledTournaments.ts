@@ -1,3 +1,4 @@
+import type { Application } from '@feathersjs/feathers';
 import dayjs from './dayjs';
 import logger from '@rival-tennis-ladder/logger';
 import refundPaymentForTournamentTemplate from '../emailTemplates/refundPaymentForTournament';
@@ -24,7 +25,7 @@ const getSeasonLevels = async (sequelize, seasonId) => {
     return levels;
 };
 
-export default async (app) => {
+export default async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
     const { payments } = sequelize.models;
 

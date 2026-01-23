@@ -1,7 +1,8 @@
+import type { Application } from '@feathersjs/feathers';
 import dayjs from './dayjs';
 import getCombinedConfig from './getCombinedConfig';
 
-export default async (app) => {
+export default async (app: Application) => {
     if (process.env.TL_ENV === 'production') {
         return;
     }
