@@ -308,7 +308,7 @@ const populateUser = () => async (context: HookContext) => {
             data.phone = hidePhone();
         };
 
-        if (isLoggedIn && context.params.user.roles.includes('admin')) {
+        if (isLoggedIn && context.params.user!.roles.includes('admin')) {
             data.comeFrom = result[0].comeFrom;
             data.comeFromOther = result[0].comeFromOther;
             data.createdAt = result[0].createdAt;
@@ -318,7 +318,7 @@ const populateUser = () => async (context: HookContext) => {
         if (isLoggedIn) {
             const [[row]] = await sequelize.query(
                 'SELECT * FROM userrelations WHERE userId=:userId AND opponentId=:opponentId',
-                { replacements: { userId: context.params.user.id, opponentId: fullUserInfo.id } }
+                { replacements: { userId: context.params.user!.id, opponentId: fullUserInfo.id } }
             );
 
             if (row?.note) {
@@ -330,10 +330,11 @@ const populateUser = () => async (context: HookContext) => {
             if (!isLoggedIn) {
                 return true;
             }
-            if (context.params.user.id === data.id) {
+            const currentUser = context.params.user!;
+            if (currentUser.id === data.id) {
                 return false;
             }
-            if (context.params.user.roles.includes('admin') || context.params.user.roles.includes('manager')) {
+            if (currentUser.roles.includes('admin') || currentUser.roles.includes('manager')) {
                 return false;
             }
 
@@ -357,7 +358,7 @@ const populateUser = () => async (context: HookContext) => {
                     {
                         replacements: {
                             threeWeeksAgo: threeWeeksAgo.format('YYYY-MM-DD HH:mm:ss'),
-                            currentUserId: context.params.user.id,
+                            currentUserId: currentUser.id,
                             viewedUserId: data.id,
                         },
                     }
@@ -371,7 +372,7 @@ const populateUser = () => async (context: HookContext) => {
                        FROM players
                       WHERE userId=:currentUserId AND
                             tournamentId IN (${doublesTeamTournamentIds.join(',')})`,
-                        { replacements: { currentUserId: context.params.user.id } }
+                        { replacements: { currentUserId: currentUser.id } }
                     );
 
                     for (const player of players) {
@@ -450,7 +451,7 @@ const populateUser = () => async (context: HookContext) => {
                 {
                     replacements: {
                         seasonId: currentSeason.id,
-                        currentUserId: context.params.user.id,
+                        currentUserId: currentUser.id,
                         viewedUserId: data.id,
                     },
                 }
@@ -537,7 +538,7 @@ const populateUser = () => async (context: HookContext) => {
                 {
                     replacements: {
                         viewedUserId: data.id,
-                        currentUserId: context.params.user.id,
+                        currentUserId: currentUser.id,
                     },
                 }
             );
@@ -562,7 +563,7 @@ const populateUser = () => async (context: HookContext) => {
                 {
                     replacements: {
                         viewedUserId: data.id,
-                        currentUserId: context.params.user.id,
+                        currentUserId: currentUser.id,
                         seasonId: currentSeason.id,
                     },
                 }
@@ -589,7 +590,7 @@ const populateUser = () => async (context: HookContext) => {
                 {
                     replacements: {
                         viewedUserId: data.id,
-                        currentUserId: context.params.user.id,
+                        currentUserId: currentUser.id,
                         seasonId: currentSeason.id,
                     },
                 }
@@ -609,7 +610,7 @@ const populateUser = () => async (context: HookContext) => {
                         (p.userId=:currentUserId OR p.userId=:viewedUserId)
                GROUP BY tm.teamId
                  HAVING cnt>1`,
-                { replacements: { viewedUserId: data.id, currentUserId: context.params.user.id } }
+                { replacements: { viewedUserId: data.id, currentUserId: currentUser.id } }
             );
             if (commonTeams.length > 0) {
                 return false;

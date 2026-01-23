@@ -14,7 +14,7 @@ import { sendDoublesTeamInvitation, formatTeamName } from '../players/helpers';
 import { POOL_PARTNER_ID } from '../../constants';
 
 const getProcessedOrders = () => async (context: HookContext) => {
-    const userId = context.params.user.id;
+    const userId = context.params.user!.id;
 
     const sequelize = context.app.get('sequelizeClient');
     const [rows] = await sequelize.query(

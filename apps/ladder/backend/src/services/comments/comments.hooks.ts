@@ -24,7 +24,7 @@ const populateComment = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { photos } = sequelize.models;
     const { data } = context;
-    data.userId = context.params.user.id;
+    data.userId = context.params.user!.id;
 
     const photo = await photos.findByPk(data.photoId);
     if (!photo) {

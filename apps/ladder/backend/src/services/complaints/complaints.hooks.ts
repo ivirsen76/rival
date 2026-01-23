@@ -29,7 +29,7 @@ const populateComplaint = () => async (context: HookContext) => {
     }
 
     const { data } = context;
-    data.userId = context.params.user.id;
+    data.userId = context.params.user!.id;
 
     const reason = reasonOptions.find((item) => item.value === data.reason);
     if (!reason) {

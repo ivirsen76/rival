@@ -78,7 +78,7 @@ const completePlayedAt = () => (context: HookContext) => {
 const populateChallengerId = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { players } = context.app.get('sequelizeClient').models;
-    const userId = context.params.user.id;
+    const userId = context.params.user!.id;
 
     const firstTournamentId = context.data.tournaments[0];
     const [[{ startDate, endDate, levelType }]] = await sequelize.query(
@@ -184,7 +184,7 @@ const populateChallengerId = () => async (context: HookContext) => {
 
 const populateAcceptorData = () => async (context: HookContext) => {
     const matchId = Number(context.id);
-    const userId = context.params.user.id;
+    const userId = context.params.user!.id;
 
     const sequelize = context.app.get('sequelizeClient');
     const { players, matches } = context.app.get('sequelizeClient').models;

@@ -22,7 +22,7 @@ const validateCreate = () => (context: HookContext) => {
 const populateUserId = () => (context: HookContext) => {
     const { data } = context;
 
-    data.userId = context.params.user.id;
+    data.userId = context.params.user!.id;
 
     return context;
 };

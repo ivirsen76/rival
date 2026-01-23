@@ -17,7 +17,7 @@ const { TL_ENABLE_REDIS } = process.env;
 export const hasAnyRole = (roles) => (context: HookContext) => {
     roles = typeof roles === 'string' ? [roles] : roles;
 
-    const userRoles = context.params.user.roles.split(',');
+    const userRoles = context.params.user!.roles.split(',');
     if (_intersection(roles, userRoles).length === 0) {
         throw new Forbidden();
     }

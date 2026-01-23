@@ -72,7 +72,7 @@ const completePlayedAt = () => async (context: HookContext) => {
 const populateWinner = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { data } = context;
-    const userId = context.params.user.id;
+    const userId = context.params.user!.id;
 
     const { players } = context.app.get('sequelizeClient').models;
     const isFast4 = data.matchFormat === 2;
