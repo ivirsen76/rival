@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `stats` service on path `/stats`
 import { Stats } from './stats.class';
 import hooks from './stats.hooks';

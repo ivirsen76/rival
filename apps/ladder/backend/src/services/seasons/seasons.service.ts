@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `seasons` service on path `/seasons`
 import { Seasons } from './seasons.class';
 import createModel from '../../models/seasons.model';

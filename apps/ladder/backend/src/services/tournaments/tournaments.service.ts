@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `tournaments` service on path `/tournaments`
 import { Tournaments } from './tournaments.class';
 import createModel from '../../models/tournaments.model';

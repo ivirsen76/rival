@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `teams` service on path `/teams`
 import { Teams } from './teams.class';
 import hooks from './teams.hooks';

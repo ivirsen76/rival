@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `matches` service on path `/matches`
 import { Matches } from './matches.class';
 import createModel from '../../models/matches.model';

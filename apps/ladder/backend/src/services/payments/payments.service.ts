@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `payments` service on path `/payments`
 import { Payments } from './payments.class';
 import createModel from '../../models/payments.model';

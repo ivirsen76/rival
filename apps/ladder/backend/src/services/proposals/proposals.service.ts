@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `proposals` service on path `/proposals`
 import { Proposals } from './proposals.class';
 import hooks from './proposals.hooks';

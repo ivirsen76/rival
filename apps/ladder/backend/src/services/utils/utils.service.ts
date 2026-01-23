@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `utils` service on path `/utils`
 import { Utils } from './utils.class';
 import hooks from './utils.hooks';

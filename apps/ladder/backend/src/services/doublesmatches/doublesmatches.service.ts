@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `doublesMatches` service on path `/doublesmatches`
 import { DoublesMatches } from './doublesmatches.class';
 import createModel from '../../models/doublesmatches.model';

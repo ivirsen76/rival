@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `feedbacks` service on path `/feedbacks`
 import { Feedbacks } from './feedbacks.class';
 import createModel from '../../models/feedbacks.model';

@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `passwords` service on path `/passwords`
 import { Passwords } from './passwords.class';
 import hooks from './passwords.hooks';

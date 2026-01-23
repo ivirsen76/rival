@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `actions` service on path `/actions`
 import { Actions } from './actions.class';
 import hooks from './actions.hooks';

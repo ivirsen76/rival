@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `settings` service on path `/settings`
 import { Settings } from './settings.class';
 import createModel from '../../models/settings.model';

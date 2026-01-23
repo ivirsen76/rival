@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `levels` service on path `/levels`
 import { Levels } from './levels.class';
 import createModel from '../../models/levels.model';

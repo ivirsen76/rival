@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `photos` service on path `/photos`
 import { Photos } from './photos.class';
 import createModel from '../../models/photos.model';

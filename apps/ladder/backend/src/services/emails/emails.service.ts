@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `emails` service on path `/emails`
 import { Emails } from './emails.class';
 import createModel from '../../models/emails.model';

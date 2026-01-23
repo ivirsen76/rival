@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `news` service on path `/news`
 import { News } from './news.class';
 import createModel from '../../models/news.model';

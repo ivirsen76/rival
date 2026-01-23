@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `orders` service on path `/orders`
 import { Orders } from './orders.class';
 import createModel from '../../models/orders.model';

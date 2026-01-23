@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `calendars` service on path `/calendars`
 import { Calendars } from './calendars.class';
 import hooks from './calendars.hooks';

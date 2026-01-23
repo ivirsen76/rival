@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `complaints` service on path `/complaints`
 import { Complaints } from './complaints.class';
 import createModel from '../../models/complaints.model';

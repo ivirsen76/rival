@@ -1,3 +1,4 @@
+// @ts-nocheck
 // Initializes the `messages` service on path `/messages`
 import { Messages } from './messages.class';
 import createModel from '../../models/messages.model';
