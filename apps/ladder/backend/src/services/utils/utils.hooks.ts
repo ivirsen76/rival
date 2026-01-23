@@ -500,7 +500,7 @@ const requestCoachLesson = () => async (context: HookContext) => {
 
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const coachId = Number(context.id);
 
     const [[coach]] = await sequelize.query(`SELECT * FROM coaches WHERE id=:id`, { replacements: { id: coachId } });
@@ -782,7 +782,7 @@ const loginAsPlayer = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
     const userId = Number(context.id);
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const currentTokenPayload = context.params.authentication.payload;
     const privateKey = context.app.get('authentication').secret;
 

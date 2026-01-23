@@ -25,7 +25,7 @@ const validateCreate = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     context.data.senderId = currentUser.id;
 
     const sequelize = context.app.get('sequelizeClient');
@@ -112,7 +112,7 @@ const validateCreate = () => async (context: HookContext) => {
 };
 
 const sendMessage = () => async (context: HookContext) => {
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
     const recipient = await users.findByPk(context.data.recipientId);

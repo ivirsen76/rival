@@ -36,7 +36,7 @@ const populateComment = () => async (context: HookContext) => {
 
 const validateDelete = () => async (context: HookContext) => {
     const commentId = Number(context.id);
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     const sequelize = context.app.get('sequelizeClient');
     const { comments } = sequelize.models;
@@ -58,7 +58,7 @@ const validatePatch = () => async (context: HookContext) => {
     const commentId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { comments } = sequelize.models;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     // Validate data
     {

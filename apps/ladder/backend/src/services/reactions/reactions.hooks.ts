@@ -24,7 +24,7 @@ const populateReaction = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { photos } = sequelize.models;
     const { data } = context;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     data.userId = currentUser.id;
 
     const photo = await photos.findByPk(data.photoId);

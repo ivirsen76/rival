@@ -36,7 +36,7 @@ const populateComplaint = () => async (context: HookContext) => {
         throw new Unprocessable('Invalid request', { errors: { reason: 'The reason is wrong.' } });
     }
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
 
@@ -58,7 +58,7 @@ const sendNewComplaintNotification = () => async (context: HookContext) => {
     const [[settings]] = await sequelize.query(`SELECT newComplaintNotification FROM settings WHERE id=1`);
 
     const opponent = context.params.opponent;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const config = context.params.config;
 
     const emails = getEmailsFromList(settings.newComplaintNotification);
@@ -90,7 +90,7 @@ const avoidPlayer = () => async (context: HookContext) => {
         return context;
     }
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
     const opponent = context.params.opponent;
 

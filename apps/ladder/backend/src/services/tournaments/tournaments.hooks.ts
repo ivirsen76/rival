@@ -25,7 +25,7 @@ const events = new Set();
 const setAgeCompatibleFlag = () => async (context: HookContext) => {
     const { config } = context.params;
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     if (!currentUser?.birthday) {
         return context;
     }

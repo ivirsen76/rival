@@ -46,7 +46,7 @@ const validatePatch = () => (context: HookContext) => {
 };
 
 const checkIfCurrentUser = () => async (context: HookContext) => {
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
@@ -411,7 +411,7 @@ const registerForFree = () => async (context: HookContext) => {
     const { tournaments, joinReason, partners } = context.data;
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const { config } = context.params;
 
     // get all user tournaments
@@ -905,7 +905,7 @@ const claimReward = () => async (context: HookContext) => {
     const { config } = context.params;
     const playerId = Number(context.id);
     const { address, rewardType } = context.data;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     const sequelize = context.app.get('sequelizeClient');
     const { players, users, payments } = sequelize.models;
@@ -1237,7 +1237,7 @@ const quitTournament = () => async (context: HookContext) => {
     await hasAnyRole(['player'])(context);
 
     const playerId = Number(context.id);
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
@@ -1303,7 +1303,7 @@ const setPrediction = () => async (context: HookContext) => {
     await hasAnyRole(['player'])(context);
 
     const playerId = Number(context.id);
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     // Validate the data
     {
@@ -1375,7 +1375,7 @@ const joinDoublesTeam = () => async (context: HookContext) => {
     }
 
     const { config } = context.params;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
     const playerId = Number(action.playerId);
@@ -1485,7 +1485,7 @@ const acceptPlayerFromPool = () => async (context: HookContext) => {
     await hasAnyRole(['player'])(context);
 
     const { config } = context.params;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
@@ -1556,7 +1556,7 @@ const removeFromPlayerPool = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
@@ -1594,7 +1594,7 @@ const moveToPlayerPool = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
@@ -1639,7 +1639,7 @@ const getSuggestedTeamNames = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
     const { tournamentId } = context.data;
 
@@ -1711,7 +1711,7 @@ const changeTeamName = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
 
@@ -1764,7 +1764,7 @@ const replaceCaptain = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
     const { players, users } = sequelize.models;
     const { captainId } = context.data;
@@ -1837,7 +1837,7 @@ const leaveTeam = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
     const { players, users } = sequelize.models;
     const { reason } = context.data;

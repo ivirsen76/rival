@@ -8,7 +8,7 @@ import yup from '../../packages/yup';
 import _isEmpty from 'lodash/isEmpty';
 
 const getPayments = () => async (context: HookContext) => {
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const userId = Number(context.id);
 
     const sequelize = context.app.get('sequelizeClient');

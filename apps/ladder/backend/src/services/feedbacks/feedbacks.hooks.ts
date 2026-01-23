@@ -28,7 +28,7 @@ const populateUserId = () => (context: HookContext) => {
 };
 
 const sendNewFeedbackEmail = () => async (context: HookContext) => {
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const config = context.params.config;
     const sequelize = context.app.get('sequelizeClient');
 

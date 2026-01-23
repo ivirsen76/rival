@@ -166,7 +166,7 @@ const setScore = () => async (context: HookContext) => {
         throwValidationErrors(errors);
     }
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const matchId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { doublesmatches } = context.app.get('sequelizeClient').models;

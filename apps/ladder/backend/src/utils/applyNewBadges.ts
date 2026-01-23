@@ -30,9 +30,14 @@ const getBadgeCode = (badge) => {
 
 export const getUsersStats = async ({
     sequelize,
-    userId = null,
+    userId,
     startDate,
     endDate = dayjs.tz().format('YYYY-MM-DD HH:mm:ss'),
+}: {
+    sequelize: Sequelize;
+    userId?: number;
+    startDate?: string;
+    endDate?: string;
 }) => {
     const store = createStore();
 

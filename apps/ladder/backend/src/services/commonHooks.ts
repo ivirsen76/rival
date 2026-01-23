@@ -262,7 +262,7 @@ export const sendWelcomeEmail =
     };
 
 export const generateBadges = () => async (context: HookContext) => {
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     await updateCurrentWeekUserBadges(context.app, currentUser.id);
 

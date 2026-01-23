@@ -42,7 +42,7 @@ const getPresignedUrlForPhotosUpload = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const { config } = context.params;
     const { files } = context.data;
     const sequelize = context.app.get('sequelizeClient');
@@ -120,7 +120,7 @@ const batchProcess = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const { files } = context.data;
     const sequelize = context.app.get('sequelizeClient');
     const { photos } = sequelize.models;
@@ -271,7 +271,7 @@ const addView = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const photoId = Number(context.id);
     const { photos } = sequelize.models;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     const photo = await photos.findByPk(photoId);
     if (!photo) {
@@ -295,7 +295,7 @@ const validatePatch = () => async (context: HookContext) => {
     const photoId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { photos } = sequelize.models;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     // Validate data
     {
@@ -323,7 +323,7 @@ const validatePatch = () => async (context: HookContext) => {
 
 const validateDelete = () => async (context: HookContext) => {
     const id = Number(context.id);
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     const sequelize = context.app.get('sequelizeClient');
     const { photos } = sequelize.models;
@@ -364,7 +364,7 @@ const changePermissions = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const { permissions } = context.data;
     const sequelize = context.app.get('sequelizeClient');
     const { photos } = sequelize.models;

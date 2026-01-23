@@ -82,7 +82,7 @@ export const getJoinDoublesLink = async (playerId: number, app) => {
 
 export const sendAcceptedTeammateMessage = async (context: HookContext, teammateUserId: number) => {
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const { TL_URL } = process.env;
     const { config } = context.params;
     const { users } = sequelize.models;
@@ -111,7 +111,7 @@ export const sendAcceptedTeammateMessage = async (context: HookContext, teammate
 
 export const sendNewPoolPlayerMessage = async (context: HookContext, playerId: number) => {
     const sequelizeClient = context.app.get('sequelizeClient');
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const { config } = context.params;
     const { players } = sequelizeClient.models;
     const { TL_URL } = process.env;
@@ -188,7 +188,7 @@ export const sendNewPoolPlayerMessage = async (context: HookContext, playerId: n
 
 export const sendDoublesTeamInvitation = async (context: HookContext, tournamentIds: number[], partners) => {
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const { config } = context.params;
     const { TL_URL } = process.env;
 

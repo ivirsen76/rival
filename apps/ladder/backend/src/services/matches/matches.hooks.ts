@@ -713,7 +713,7 @@ const scheduleMatch = () => async (context: HookContext) => {
     let matchId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { matches } = sequelize.models;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     let match;
     if (matchId === 0) {
@@ -809,7 +809,7 @@ const clearResult = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const matchId = Number(context.id);
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     if (!isAdmin(currentUser)) {
         throw new Unprocessable('You are not allowed to clear the match result.');
@@ -885,7 +885,7 @@ const addStats = () => async (context: HookContext) => {
     }
 
     const matchId = Number(context.id);
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     const sequelize = context.app.get('sequelizeClient');
     const { matches, players, users } = sequelize.models;
@@ -1063,7 +1063,7 @@ const sendMatchNotification = () => async (context: HookContext) => {
     // Don't wait for this function to run just to not let user to wait
     (async () => {
         const { TL_URL } = process.env;
-        const currentUser = context.params.user;
+        const currentUser = context.params.user!;
 
         const matchId = context.result.id;
         const matchInfo = await getMatchInfo({ app: context.app, currentUser, matchId });
@@ -1338,7 +1338,7 @@ const removeScheduledMatch = () => async (context: HookContext) => {
     const { app } = context;
     const sequelize = context.app.get('sequelizeClient');
     const matchId = Number(context.id);
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     // Validate
     {
@@ -1428,7 +1428,7 @@ const populateMultipleLadderMatch = () => async (context: HookContext) => {
 
     const matchId = context.result.id;
     const { challengerId, acceptorId } = context.result;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     const challenger = await players.findByPk(challengerId);
     const acceptor = await players.findByPk(acceptorId);
@@ -1594,7 +1594,7 @@ const removeSameMatches = () => async (context: HookContext) => {
 
 const removeMatch = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const { config } = context.params;
     const { matches } = sequelize.models;
     const matchId = Number(context.id);
@@ -1654,7 +1654,7 @@ const removeMatch = () => async (context: HookContext) => {
 
 const replaceTeammates = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const { matches } = sequelize.models;
     const matchId = Number(context.id);
     const { players } = context.data;

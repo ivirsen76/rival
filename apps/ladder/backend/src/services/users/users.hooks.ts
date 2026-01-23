@@ -1,5 +1,6 @@
 import type { Sequelize } from 'sequelize';
 import type { HookContext } from '@feathersjs/feathers';
+import type { User } from '../../types';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { hooks } from '@feathersjs/authentication-local';
@@ -53,7 +54,7 @@ const limitToUser = setField({
 });
 
 // It's not a hook, just a helper
-const getUserBadgesStats = async (user, context) => {
+const getUserBadgesStats = async (user: User, context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { stats, badgesHistory } = await getUsersStats({ sequelize, userId: user.id });
 
@@ -182,7 +183,7 @@ const capitalize =
     };
 
 const validatePatch = () => async (context: HookContext) => {
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
 
@@ -217,7 +218,7 @@ const validatePatch = () => async (context: HookContext) => {
 };
 
 const registerNewEmail = () => async (context: HookContext) => {
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
 
@@ -1105,7 +1106,7 @@ const populateUser = () => async (context: HookContext) => {
 
 const populateAvatar = () => async (context: HookContext) => {
     const { data } = context;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     if (data.avatar && data.avatar.startsWith('<svg')) {
         const buffer = await sharp(Buffer.from(data.avatar)).png({ quality: 50 }).resize(66, 76).toBuffer();
@@ -1126,7 +1127,7 @@ const populateAvatar = () => async (context: HookContext) => {
 
 const populateProfileCompletedAt = () => async (context: HookContext) => {
     const { data } = context;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     if (!currentUser.profileCompletedAt) {
         const hasAbout = Boolean(data.personalInfo);
@@ -1228,7 +1229,7 @@ const populateShowAge = () => async (context: HookContext) => {
 
 const populateHistory = () => async (context: HookContext) => {
     const { data } = context;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     // checking name
     if (data.firstName !== currentUser.firstName || data.lastName !== currentUser.lastName) {
@@ -1461,7 +1462,7 @@ const verifyEmail = () => async (context: HookContext) => {
 const verifyNewEmail = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const { email, verificationCode } = context.data;
 
     const sequelize = context.app.get('sequelizeClient');
@@ -1600,7 +1601,7 @@ const verifyPhone = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
 
     if (process.env.NODE_ENV === 'test' || process.env.CI) {
@@ -1660,7 +1661,7 @@ const validatePhone =
 
         if (isExistingUser) {
             await authenticate('jwt')(context);
-            const currentUser = context.params.user;
+            const currentUser = context.params.user!;
             const sequelize = context.app.get('sequelizeClient');
             const { phone } = context.data;
 
@@ -2603,7 +2604,7 @@ ${h2('Hey, #firstName#!', 'padding-top="10px"')}
 const updateChangelogSeenAt = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
 
@@ -2678,7 +2679,7 @@ const getRegisterHistory = () => async (context: HookContext) => {
 const getReferrals = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
 
     const [users] = await sequelize.query(
@@ -2729,7 +2730,7 @@ const getReferrals = () => async (context: HookContext) => {
 const getPartnerReferrals = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
 
     if (!currentUser.refPercent) {
@@ -2930,7 +2931,7 @@ const getMyBadgesStats = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await limitToUser(context);
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     context.result = {
         data: await getUserBadgesStats(currentUser, context),
@@ -3001,7 +3002,7 @@ const addPersonalNote = () => async (context: HookContext) => {
 
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const { opponentId, note } = context.data;
 
     const foundOpponent = await users.findOne({ where: { id: opponentId } });
@@ -3083,7 +3084,7 @@ const getPhotos = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
 
     const photos = await getSequelizeData(
         sequelize,
@@ -3140,7 +3141,7 @@ const avoidPlayers = () => async (context: HookContext) => {
     }
 
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const { avoidedUsers } = context.data;
 
     const [rows] = await sequelize.query(
@@ -3360,7 +3361,7 @@ const savePaw = () => async (context: HookContext) => {
     }
 
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const currentDateStr = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
 
     const [[paw]] = await sequelize.query(`SELECT id FROM fingerprints WHERE userId=:userId AND whole=:whole`, {
@@ -3407,7 +3408,7 @@ const saveIdentification = () => async (context: HookContext) => {
     }
 
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const currentDateStr = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
 
     const [[identification]] = await sequelize.query(

@@ -388,7 +388,7 @@ const acceptProposal = () => async (context: HookContext) => {
 
 const addDoublesProposal = () => async (context: HookContext) => {
     const { TL_URL } = process.env;
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const sequelize = context.app.get('sequelizeClient');
     const { matches } = sequelize.models;
 
@@ -590,7 +590,7 @@ const addDoublesProposal = () => async (context: HookContext) => {
 };
 
 const acceptDoublesProposal = () => async (context: HookContext) => {
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const matchId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { matches } = sequelize.models;
@@ -834,7 +834,7 @@ ${context.data.reason ? `<mj-text><b>Reason:</b> ${context.data.reason}.</mj-tex
 const removeDoublesProposal = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const matchId = Number(context.id);
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const userId = currentUser.id;
 
     const { players, matches } = sequelize.models;
@@ -996,7 +996,7 @@ const removeDoublesProposal = () => async (context: HookContext) => {
 
 const getVisibleStats = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const { config } = context.params;
 
     const currentDate = dayjs.tz();

@@ -11,7 +11,7 @@ import { getPlayerName, getEmailContact } from '../users/helpers';
 const reportAboutComment = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user;
+    const currentUser = context.params.user!;
     const { message } = context.data;
     const sequelize = context.app.get('sequelizeClient');
     const { reports, comments, users } = sequelize.models;
