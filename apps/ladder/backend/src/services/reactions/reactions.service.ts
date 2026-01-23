@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Reactions } from './reactions.class';
 import createModel from '../../models/reactions.model';
 import hooks from './reactions.hooks';

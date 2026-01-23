@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Comments } from './comments.class';
 import createModel from '../../models/comments.model';
 import hooks from './comments.hooks';

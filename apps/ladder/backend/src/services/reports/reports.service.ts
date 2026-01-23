@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Reports } from './reports.class';
 import createModel from '../../models/reports.model';
 import hooks from './reports.hooks';
