@@ -78,10 +78,7 @@ const sendNewPasswordEmail = () => async (context: HookContext) => {
     await app.service('api/emails').create({
         to: [{ name: fullName, email: context.data.email }],
         subject: 'Password reset',
-        html: newPasswordTemplate(config, {
-            actionLink,
-            fullName,
-        }),
+        html: newPasswordTemplate({ config, actionLink, fullName }),
     });
 
     return context;

@@ -37,6 +37,7 @@ import compareFields from '../../utils/compareFields';
 import { getStatsMatches } from '../../utils/sqlConditions';
 import getMatchInfo from './getMatchInfo';
 import { getPlayerName, getEmailContact, getEmailLink, getPhoneLink } from '../users/helpers';
+import type { User } from '../../types';
 
 const isAdmin = (user) => {
     const roles = user.roles.split(',');
@@ -240,9 +241,7 @@ const sendReferralCredit = () => async (context: HookContext) => {
             context.app.service('api/emails').create({
                 to: [getEmailContact(referrerUser)],
                 subject: `You Just Earned $${config.referralFirstMatchCredit / 100} in Rival Credit!`,
-                html: referralFirstMatchTemplate(config, {
-                    referralName: userFullName,
-                }),
+                html: referralFirstMatchTemplate({ config, referralName: userFullName }),
             });
         });
     }
@@ -347,7 +346,8 @@ const sendEstablishedEloNotification = () => async (context: HookContext) => {
         await context.app.service('api/emails').create({
             to: [getEmailContact(user)],
             subject: "You've Established Your TLR!",
-            html: eloEstablishedTemplate(config, {
+            html: eloEstablishedTemplate({
+                config,
                 elo: formatElo(elo),
                 eloImg,
                 currentLevel: currentLevel.name,
@@ -602,7 +602,7 @@ const checkDuplicatedMatch = () => async (context: HookContext) => {
 
 const replacePlayers = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     const matchId = Number(context.id);
     const { challengerId, acceptorId } = context.data;
@@ -713,7 +713,7 @@ const scheduleMatch = () => async (context: HookContext) => {
     let matchId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { matches } = sequelize.models;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     let match;
     if (matchId === 0) {
@@ -791,7 +791,8 @@ const scheduleMatch = () => async (context: HookContext) => {
             to: matchInfo.emailsWithoutCurrentUser,
             replyTo: getEmailContact(currentUser),
             subject: `Your Match ${isRescheduling ? 'Was Rescheduled' : 'Is Scheduled'}`,
-            html: scheduleMatchTemplate(context.params.config, {
+            html: scheduleMatchTemplate({
+                config: context.params.config,
                 challenger: matchInfo.challengerLinkedName,
                 acceptor: matchInfo.acceptorLinkedName,
                 date,
@@ -809,7 +810,7 @@ const clearResult = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const matchId = Number(context.id);
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     if (!isAdmin(currentUser)) {
         throw new Unprocessable('You are not allowed to clear the match result.');
@@ -885,7 +886,7 @@ const addStats = () => async (context: HookContext) => {
     }
 
     const matchId = Number(context.id);
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     const sequelize = context.app.get('sequelizeClient');
     const { matches, players, users } = sequelize.models;
@@ -1049,10 +1050,11 @@ const addStats = () => async (context: HookContext) => {
     context.app.service('api/emails').create({
         to: [getEmailContact(opponent)],
         subject: `You Have New Match Stats!`,
-        html: newMatchStatReportedTemplate(context.params.config, {
+        html: newMatchStatReportedTemplate({
+            config: context.params.config,
             reporter,
             date: dayjs.tz(match.playedAt).format('MMMM D'),
-            stat,
+            statImageUrl: stat.imageUrl,
         }),
     });
 
@@ -1063,7 +1065,7 @@ const sendMatchNotification = () => async (context: HookContext) => {
     // Don't wait for this function to run just to not let user to wait
     (async () => {
         const { TL_URL } = process.env;
-        const currentUser = context.params.user!;
+        const currentUser = context.params.user as User;
 
         const matchId = context.result.id;
         const matchInfo = await getMatchInfo({ app: context.app, currentUser, matchId });
@@ -1083,7 +1085,8 @@ const sendMatchNotification = () => async (context: HookContext) => {
             await context.app.service('api/emails').create({
                 to: matchInfo.emailsWithoutCurrentUser,
                 subject: `You Have New Match Results!`,
-                html: newMatchReportedTemplate(context.params.config, {
+                html: newMatchReportedTemplate({
+                    config: context.params.config,
                     reporter: getPlayerName(currentUser),
                     date: matchInfo.formattedPlayedAt,
                     isUnavailable: Boolean(matchInfo.match.unavailable),
@@ -1094,7 +1097,7 @@ const sendMatchNotification = () => async (context: HookContext) => {
                     multiLadderMatch: context.result.multiLadderMatch,
                 }),
             });
-        } catch (e) {
+        } catch {
             // do nothing
         }
     })();
@@ -1230,7 +1233,8 @@ const sendNewRivalryNotification = () => async (context: HookContext) => {
                 context.app.service('api/emails').create({
                     to: emails,
                     subject: 'New Rivalry Started!',
-                    html: newRivalryStartedTemplate(context.params.config, {
+                    html: newRivalryStartedTemplate({
+                        config: context.params.config,
                         lead,
                         user,
                         opponent,
@@ -1244,7 +1248,7 @@ const sendNewRivalryNotification = () => async (context: HookContext) => {
             await sequelize.query(`INSERT INTO actions (name) VALUES (:name)`, {
                 replacements: { name: ACTION_NAME },
             });
-        } catch (e) {
+        } catch {
             // do nothing
         }
     })();
@@ -1338,7 +1342,7 @@ const removeScheduledMatch = () => async (context: HookContext) => {
     const { app } = context;
     const sequelize = context.app.get('sequelizeClient');
     const matchId = Number(context.id);
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     // Validate
     {
@@ -1372,7 +1376,8 @@ const removeScheduledMatch = () => async (context: HookContext) => {
         replyTo: getEmailContact(currentUser),
         to: matchInfo.emailsWithoutCurrentUser,
         subject: `${getPlayerName(currentUser)} Deleted Your Scheduled Match`,
-        html: deletedScheduledMatchTemplate(context.params.config, {
+        html: deletedScheduledMatchTemplate({
+            config: context.params.config,
             currentUser,
             reason: context.data.reason,
             playedAt: matchInfo.formattedPlayedAt,
@@ -1428,7 +1433,7 @@ const populateMultipleLadderMatch = () => async (context: HookContext) => {
 
     const matchId = context.result.id;
     const { challengerId, acceptorId } = context.result;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     const challenger = await players.findByPk(challengerId);
     const acceptor = await players.findByPk(acceptorId);
@@ -1594,7 +1599,7 @@ const removeSameMatches = () => async (context: HookContext) => {
 
 const removeMatch = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { config } = context.params;
     const { matches } = sequelize.models;
     const matchId = Number(context.id);
@@ -1654,7 +1659,7 @@ const removeMatch = () => async (context: HookContext) => {
 
 const replaceTeammates = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { matches } = sequelize.models;
     const matchId = Number(context.id);
     const { players } = context.data;

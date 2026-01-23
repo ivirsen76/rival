@@ -8,6 +8,7 @@ import { getEmailsFromList } from '../settings/helpers';
 import { logEvent, generateBadges } from '../commonHooks';
 import striptags from 'striptags';
 import { getEmailContact } from '../users/helpers';
+import type { User } from '../../types';
 
 const validateCreate = () => (context: HookContext) => {
     const errors = validate(context.data);
@@ -28,7 +29,7 @@ const populateUserId = () => (context: HookContext) => {
 };
 
 const sendNewFeedbackEmail = () => async (context: HookContext) => {
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const config = context.params.config;
     const sequelize = context.app.get('sequelizeClient');
 

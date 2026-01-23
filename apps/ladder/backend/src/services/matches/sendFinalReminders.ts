@@ -239,7 +239,8 @@ const sendFinalReminders = async (context: HookContext, tournamentId: number) =>
             context.app.service('api/emails').create({
                 to: matchInfo.emails,
                 subject,
-                html: finalMatchByeTemplate(context.params.config, {
+                html: finalMatchByeTemplate({
+                    config: context.params.config,
                     seedNumber: playerSeed,
                     opponent1,
                     opponent2,

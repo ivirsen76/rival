@@ -6,6 +6,7 @@ import yup from '../../packages/yup';
 import { throwValidationErrors, getSchemaErrors } from '../../helpers';
 import _isEmpty from 'lodash/isEmpty';
 import { logEvent } from '../commonHooks';
+import type { User } from '../../types';
 
 const populateComment = () => async (context: HookContext) => {
     // Validate data
@@ -36,7 +37,7 @@ const populateComment = () => async (context: HookContext) => {
 
 const validateDelete = () => async (context: HookContext) => {
     const commentId = Number(context.id);
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     const sequelize = context.app.get('sequelizeClient');
     const { comments } = sequelize.models;
@@ -58,7 +59,7 @@ const validatePatch = () => async (context: HookContext) => {
     const commentId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { comments } = sequelize.models;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     // Validate data
     {

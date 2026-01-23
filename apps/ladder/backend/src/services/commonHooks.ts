@@ -11,6 +11,7 @@ import { updateCurrentWeekUserBadges } from '../utils/applyNewBadges';
 import { encrypt } from '../utils/crypt';
 import { getPlayerName, getEmailContact } from './users/helpers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
+import type { User } from '../types';
 
 const { TL_ENABLE_REDIS } = process.env;
 
@@ -26,7 +27,7 @@ export const hasAnyRole = (roles) => (context: HookContext) => {
 };
 
 export const populateSlug =
-    (fieldName, slugName = 'slug') =>
+    (fieldName: string, slugName = 'slug') =>
     (context: HookContext) => {
         if (context.data[fieldName]) {
             context.data[slugName] = getSlug(context.data[fieldName]);
@@ -47,21 +48,19 @@ export const trim =
         return context;
     };
 
-export const logEvent =
-    (message, type = 'info') =>
-    (context: HookContext) => {
-        const { user } = context.params;
-        if (user) {
-            message += ` (${getPlayerName(user)} [${user.id}])`;
-        }
+export const logEvent = (message: string) => (context: HookContext) => {
+    const { user } = context.params;
+    if (user) {
+        message += ` (${getPlayerName(user)} [${user.id}])`;
+    }
 
-        logger.info(message);
+    logger.info(message);
 
-        return context;
-    };
+    return context;
+};
 
 export const purgeTournamentCache =
-    (options = {}) =>
+    (options: { tournamentId?: number } = {}) =>
     async (context: HookContext) => {
         if (!TL_ENABLE_REDIS) {
             return context;
@@ -116,7 +115,7 @@ export const purgeUserCache = () => async (context: HookContext) => {
     return context;
 };
 
-export const purgeSeasonCache = () => async (context: HookContext) => {
+export const purgeSeasonCache = (options: { seasonId?: number }) => async (context: HookContext) => {
     if (!TL_ENABLE_REDIS) {
         return context;
     }
@@ -145,7 +144,7 @@ export const purgeSeasonCache = () => async (context: HookContext) => {
     return context;
 };
 
-export const purgeMatchCache = () => async (context: HookContext) => {
+export const purgeMatchCache = (options: { matchId?: number }) => async (context: HookContext) => {
     if (!TL_ENABLE_REDIS) {
         return context;
     }
@@ -181,33 +180,32 @@ export const purgeMatchCache = () => async (context: HookContext) => {
     return context;
 };
 
-export const sendWelcomeEmail =
-    ({ userId }) =>
-    async (context: HookContext) => {
-        const sequelize = context.app.get('sequelizeClient');
-        const { users } = sequelize.models;
+export const sendWelcomeEmail = (options: { userId: number }) => async (context: HookContext) => {
+    const sequelize = context.app.get('sequelizeClient');
+    const { users } = sequelize.models;
+    const { userId } = options;
 
-        const user = await users.findByPk(userId);
-        if (!user) {
-            throw new Unprocessable('There is no user.');
-        }
+    const user = await users.findByPk(userId);
+    if (!user) {
+        throw new Unprocessable('There is no user.');
+    }
 
-        const ACTION_NAME = 'welcomeMessage';
-        const [actions] = await sequelize.query(`SELECT * FROM actions WHERE tableId=:userId AND name=:name`, {
-            replacements: { userId, name: ACTION_NAME },
-        });
-        if (actions.length !== 0) {
-            return;
-        }
+    const ACTION_NAME = 'welcomeMessage';
+    const [actions] = await sequelize.query(`SELECT * FROM actions WHERE tableId=:userId AND name=:name`, {
+        replacements: { userId, name: ACTION_NAME },
+    });
+    if (actions.length !== 0) {
+        return;
+    }
 
-        let seasonName;
-        let isBreak = false;
-        let startDate = '';
+    let seasonName;
+    let isBreak = false;
+    let startDate = '';
 
-        // check if the user just had the first tournament
-        {
-            const [players] = await sequelize.query(
-                `
+    // check if the user just had the first tournament
+    {
+        const [players] = await sequelize.query(
+            `
                     SELECT p.id,
                            p.createdAt,
                            s.year,
@@ -221,48 +219,48 @@ export const sendWelcomeEmail =
                            p.userId=:userId
                   ORDER BY p.createdAt
                      LIMIT 0, 1`,
-                { replacements: { userId } }
-            );
+            { replacements: { userId } }
+        );
 
-            // no new tournaments yet
-            if (players.length !== 1) {
-                return;
-            }
-
-            // he was registered long ago
-            if (dayjs.tz().diff(dayjs.tz(players[0].createdAt), 'day', true) > 1) {
-                return;
-            }
-
-            seasonName = getSeasonName(players[0]);
-            const startDateTz = dayjs.tz(players[0].startDate);
-            if (dayjs.tz().isBefore(startDateTz)) {
-                isBreak = true;
-                startDate = startDateTz.format('MMMM D');
-            }
+        // no new tournaments yet
+        if (players.length !== 1) {
+            return;
         }
 
-        const { city } = context.params.config;
-        context.app.service('api/emails').create({
-            to: [getEmailContact(user)],
-            subject: `Welcome to the ${city} Rival Tennis Ladder!`,
-            html: newRegistrationTemplate(context.params.config, {
-                seasonName,
-                isBreak,
-                startDate,
-                referralCode: user.referralCode,
-            }),
-        });
+        // he was registered long ago
+        if (dayjs.tz().diff(dayjs.tz(players[0].createdAt), 'day', true) > 1) {
+            return;
+        }
 
-        await sequelize.query(`INSERT INTO actions (tableId, name) VALUES (:userId, :name)`, {
-            replacements: { userId, name: ACTION_NAME },
-        });
+        seasonName = getSeasonName(players[0]);
+        const startDateTz = dayjs.tz(players[0].startDate);
+        if (dayjs.tz().isBefore(startDateTz)) {
+            isBreak = true;
+            startDate = startDateTz.format('MMMM D');
+        }
+    }
 
-        return context;
-    };
+    const { city } = context.params.config;
+    context.app.service('api/emails').create({
+        to: [getEmailContact(user)],
+        subject: `Welcome to the ${city} Rival Tennis Ladder!`,
+        html: newRegistrationTemplate({
+            config: context.params.config,
+            seasonName,
+            isBreak,
+            startDate,
+        }),
+    });
+
+    await sequelize.query(`INSERT INTO actions (tableId, name) VALUES (:userId, :name)`, {
+        replacements: { userId, name: ACTION_NAME },
+    });
+
+    return context;
+};
 
 export const generateBadges = () => async (context: HookContext) => {
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     await updateCurrentWeekUserBadges(context.app, currentUser.id);
 
@@ -282,7 +280,7 @@ export const populateSalt = () => async (context: HookContext) => {
 export const optionalAuthenticate = () => async (context: HookContext) => {
     try {
         await authenticate('jwt')(context);
-    } catch (e) {
+    } catch {
         // do nothing
     }
 

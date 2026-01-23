@@ -10,6 +10,7 @@ import { getEmailsFromList } from '../settings/helpers';
 import newComplaintTemplate from '../../emailTemplates/newComplaint';
 import { hasAnyRole } from '../commonHooks';
 import { getEmailContact } from '../users/helpers';
+import type { User } from '../../types';
 
 const populateComplaint = () => async (context: HookContext) => {
     // Validate data
@@ -36,7 +37,7 @@ const populateComplaint = () => async (context: HookContext) => {
         throw new Unprocessable('Invalid request', { errors: { reason: 'The reason is wrong.' } });
     }
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
 
@@ -58,7 +59,7 @@ const sendNewComplaintNotification = () => async (context: HookContext) => {
     const [[settings]] = await sequelize.query(`SELECT newComplaintNotification FROM settings WHERE id=1`);
 
     const opponent = context.params.opponent;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const config = context.params.config;
 
     const emails = getEmailsFromList(settings.newComplaintNotification);
@@ -70,7 +71,8 @@ const sendNewComplaintNotification = () => async (context: HookContext) => {
             to: emails.map((item) => ({ email: item })),
             subject: `New Complaint About Player (${config.city})`,
 
-            html: newComplaintTemplate(context.params.config, {
+            html: newComplaintTemplate({
+                config: context.params.config,
                 reason: reason?.label,
                 description: context.data.description,
                 currentUser,
@@ -90,7 +92,7 @@ const avoidPlayer = () => async (context: HookContext) => {
         return context;
     }
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
     const opponent = context.params.opponent;
 
@@ -115,7 +117,7 @@ const avoidPlayer = () => async (context: HookContext) => {
 
 const getAllComplaints = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     const sequelize = context.app.get('sequelizeClient');
 

@@ -17,6 +17,7 @@ import { getEmailsFromList } from '../settings/helpers';
 import moderatePhotoNotificationTemplate from '../../emailTemplates/moderatePhotoNotification';
 import { getActionLink, decodeAction } from '../../utils/action';
 import { getPlayerName, getEmailContact } from '../users/helpers';
+import type { User } from '../../types';
 
 const getPresignedUrlForPhotosUpload = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
@@ -42,7 +43,7 @@ const getPresignedUrlForPhotosUpload = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { config } = context.params;
     const { files } = context.data;
     const sequelize = context.app.get('sequelizeClient');
@@ -120,7 +121,7 @@ const batchProcess = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { files } = context.data;
     const sequelize = context.app.get('sequelizeClient');
     const { photos } = sequelize.models;
@@ -176,7 +177,8 @@ const batchProcess = () => async (context: HookContext) => {
                             to: emails.map((item) => ({ email: item })),
                             subject: 'Photo is not approved',
 
-                            html: moderatePhotoNotificationTemplate(config, {
+                            html: moderatePhotoNotificationTemplate({
+                                config,
                                 userName,
                                 profileLink: `${TL_URL}/player/${currentUser.slug}`,
                                 photoSrc: sizes.url800,
@@ -271,7 +273,7 @@ const addView = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const photoId = Number(context.id);
     const { photos } = sequelize.models;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     const photo = await photos.findByPk(photoId);
     if (!photo) {
@@ -295,7 +297,7 @@ const validatePatch = () => async (context: HookContext) => {
     const photoId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { photos } = sequelize.models;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     // Validate data
     {
@@ -323,7 +325,7 @@ const validatePatch = () => async (context: HookContext) => {
 
 const validateDelete = () => async (context: HookContext) => {
     const id = Number(context.id);
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     const sequelize = context.app.get('sequelizeClient');
     const { photos } = sequelize.models;
@@ -364,7 +366,7 @@ const changePermissions = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { permissions } = context.data;
     const sequelize = context.app.get('sequelizeClient');
     const { photos } = sequelize.models;

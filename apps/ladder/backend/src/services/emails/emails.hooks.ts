@@ -39,7 +39,7 @@ const stripHeaderFooter = () => (context: HookContext) => {
         if (body) {
             data.html = body.toString();
         }
-    } catch (e) {
+    } catch {
         // do nothing
     }
 
@@ -224,7 +224,7 @@ const sendEmail = () => async (context: HookContext) => {
 
 const sendMessage = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['superadmin'])(context);
+    hasAnyRole(['superadmin'])(context);
 
     // Validate
     {
@@ -252,9 +252,7 @@ const sendMessage = () => async (context: HookContext) => {
     context.app.service('api/emails').create({
         to: emails,
         subject,
-        html: arbitraryMessageTemplate(context.params.config, {
-            message: simplifyHtml(body),
-        }),
+        html: arbitraryMessageTemplate({ config: context.params.config, message: simplifyHtml(body) }),
     });
 
     return context;

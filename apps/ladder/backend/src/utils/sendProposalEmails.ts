@@ -290,7 +290,8 @@ const sendProposalEmails = async (app, forceSending = false) => {
                 replyTo: getEmailContact(proposal),
                 to: emails,
                 subject: `${challengerName} proposed a new ${entity} for ${playedAt}`,
-                html: newProposalTemplate(config, {
+                html: newProposalTemplate({
+                    config,
                     level: proposal.levelName,
                     proposal,
                     proposalPlayer: challengerLinkedName,

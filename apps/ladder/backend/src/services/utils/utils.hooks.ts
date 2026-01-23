@@ -36,10 +36,11 @@ import { encrypt } from '../../utils/crypt';
 import rabbits from './rabbits.json';
 import { faker } from '@faker-js/faker';
 import writeXlsxFile from 'write-excel-file/node';
+import type { User } from '../../types';
 
 const generateBadges = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['superadmin'])(context);
+    hasAnyRole(['superadmin'])(context);
 
     const sequelize = context.app.get('sequelizeClient');
     await applyNewBadges(sequelize, true);
@@ -53,7 +54,7 @@ const generateBadges = () => async (context: HookContext) => {
 
 const generateRabbits = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const doIt = (percent) => Math.random() * 100 < percent;
 
@@ -189,7 +190,7 @@ const generateRabbits = () => async (context: HookContext) => {
 
 const publishUpdates = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const { app } = context;
 
@@ -202,7 +203,7 @@ const publishUpdates = () => async (context: HookContext) => {
 
 const runActionsHook = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const { app } = context;
 
@@ -213,7 +214,7 @@ const runActionsHook = () => async (context: HookContext) => {
 
 const getGlobalStats = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const { TL_STORE_TOKEN, TL_STORE_URL } = process.env;
 
@@ -340,7 +341,7 @@ const getGlobalStats = () => async (context: HookContext) => {
 
 const syncGlobalState = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const { app } = context;
 
@@ -352,7 +353,7 @@ const syncGlobalState = () => async (context: HookContext) => {
 
 const getGlobalPhotos = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const { TL_STORE_TOKEN, TL_STORE_URL } = process.env;
 
@@ -460,7 +461,7 @@ const addLog = () => async (context: HookContext) => {
 
     try {
         await authenticate('jwt')(context);
-    } catch (e) {
+    } catch {
         // do nothing
     }
 
@@ -500,7 +501,7 @@ const requestCoachLesson = () => async (context: HookContext) => {
 
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const coachId = Number(context.id);
 
     const [[coach]] = await sequelize.query(`SELECT * FROM coaches WHERE id=:id`, { replacements: { id: coachId } });
@@ -524,7 +525,7 @@ const requestCoachLesson = () => async (context: HookContext) => {
         to: [getEmailContact(coach)],
         replyTo: getEmailContact(currentUser),
         subject: 'Coach lesson request',
-        html: coachRequestTemplate(config, { coach, message: context.data.message, currentUser }),
+        html: coachRequestTemplate({ config, coach, message: context.data.message, currentUser }),
         priority: 2,
     });
 
@@ -690,7 +691,7 @@ const recalculateElo = () => async (context: HookContext) => {
 
 const getExcelFile = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const { TL_STORE_TOKEN, TL_STORE_URL } = process.env;
 
@@ -756,7 +757,7 @@ const getExcelFile = () => async (context: HookContext) => {
 
 const generatePartnerLink = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const link = await getActionLink({
         payload: {
@@ -777,12 +778,12 @@ const generatePartnerLink = () => async (context: HookContext) => {
 
 const loginAsPlayer = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['superadmin'])(context);
+    hasAnyRole(['superadmin'])(context);
 
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
     const userId = Number(context.id);
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const currentTokenPayload = context.params.authentication.payload;
     const privateKey = context.app.get('authentication').secret;
 
@@ -967,7 +968,7 @@ const uploadCandidates = () => async (context: HookContext) => {
 
 const processRostersHook = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['superadmin'])(context);
+    hasAnyRole(['superadmin'])(context);
 
     const { app } = context;
 
@@ -978,7 +979,7 @@ const processRostersHook = () => async (context: HookContext) => {
 
 const sendOneRosterMessage = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['superadmin'])(context);
+    hasAnyRole(['superadmin'])(context);
 
     const { app } = context;
     const { email } = context.data;
@@ -990,7 +991,7 @@ const sendOneRosterMessage = () => async (context: HookContext) => {
 
 const getTrackingStats = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['superadmin'])(context);
+    hasAnyRole(['superadmin'])(context);
 
     const sequelize = context.app.get('sequelizeClient');
     const dateTwoMonthAgo = dayjs.tz().subtract(2, 'month').format('YYYY-MM-DD HH:mm:ss');

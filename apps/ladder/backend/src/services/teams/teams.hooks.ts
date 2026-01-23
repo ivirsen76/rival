@@ -23,6 +23,7 @@ import renderImage from '../../utils/renderImage';
 import yup from '../../packages/yup';
 import { throwValidationErrors, getSchemaErrors } from '../../helpers';
 import { getPlayerName, getEmailContact } from '../users/helpers';
+import type { User } from '../../types';
 
 const { TL_URL } = process.env;
 
@@ -215,7 +216,7 @@ const getTournamentInfo = async (context: HookContext, tournamentId: number) => 
 const createTeam = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { data } = context;
     const sequelize = context.app.get('sequelizeClient');
 
@@ -298,7 +299,8 @@ const createTeam = () => async (context: HookContext) => {
         context.app.service('api/emails').create({
             to: members.map(getEmailContact),
             subject: `You've Been Added to the ${teamName} Team!`,
-            html: newTeamCreatedTemplate(context.params.config, {
+            html: newTeamCreatedTemplate({
+                config: context.params.config,
                 captainName: getPlayerName(currentUser),
                 teamsUrl,
             }),
@@ -311,7 +313,7 @@ const createTeam = () => async (context: HookContext) => {
 const joinAnyTeam = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
     const { tournamentId, comment } = context.data;
     const { players } = sequelize.models;
@@ -372,7 +374,8 @@ const joinAnyTeam = () => async (context: HookContext) => {
         context.app.service('api/emails').create({
             to: captains.map(getEmailContact),
             subject: `${getPlayerName(currentUser)} Wants to Join a Team!`,
-            html: newTeamMemberCandidateTemplate(context.params.config, {
+            html: newTeamMemberCandidateTemplate({
+                config: context.params.config,
                 playerName: getPlayerName(currentUser),
                 playerFirstName: currentUser.firstName,
                 initialTlr,
@@ -388,7 +391,7 @@ const joinAnyTeam = () => async (context: HookContext) => {
 const askToJoin = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
     const teamId = Number(context.id);
     const { comment } = context.data;
@@ -439,7 +442,8 @@ const askToJoin = () => async (context: HookContext) => {
     context.app.service('api/emails').create({
         to: captains.map(getEmailContact),
         subject: `${getPlayerName(currentUser)} Wants to Join Your Team!`,
-        html: joinTeamTemplate(context.params.config, {
+        html: joinTeamTemplate({
+            config: context.params.config,
             playerName: getPlayerName(currentUser),
             playerFirstName: currentUser.firstName,
             initialTlr,
@@ -454,7 +458,7 @@ const askToJoin = () => async (context: HookContext) => {
 const updateTeam = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { data } = context;
     const teamId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
@@ -544,7 +548,8 @@ const updateTeam = () => async (context: HookContext) => {
         context.app.service('api/emails').create({
             to: deletedMembers.map(getEmailContact),
             subject: `You've Been Removed From the ${teamName} Team`,
-            html: teamMemberDeletedTemplate(context.params.config, {
+            html: teamMemberDeletedTemplate({
+                config: context.params.config,
                 captainName: getPlayerName(currentUser),
                 teamsUrl,
             }),
@@ -563,7 +568,8 @@ const updateTeam = () => async (context: HookContext) => {
         context.app.service('api/emails').create({
             to: addedMembers.map(getEmailContact),
             subject: `You've Been Added to the ${teamName} Team!`,
-            html: newTeamCreatedTemplate(context.params.config, {
+            html: newTeamCreatedTemplate({
+                config: context.params.config,
                 captainName: getPlayerName(currentUser),
                 teamsUrl,
             }),
@@ -576,7 +582,7 @@ const updateTeam = () => async (context: HookContext) => {
 const disbandTeam = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const teamId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { reason } = context.data;
@@ -631,7 +637,8 @@ const disbandTeam = () => async (context: HookContext) => {
         context.app.service('api/emails').create({
             to: members.map(getEmailContact),
             subject: `${getPlayerName(currentUser)} Disbanded the ${teamName} Team`,
-            html: disbandTeamTemplate(context.params.config, {
+            html: disbandTeamTemplate({
+                config: context.params.config,
                 captainName: getPlayerName(currentUser),
                 teamsUrl,
                 reason,
@@ -645,7 +652,7 @@ const disbandTeam = () => async (context: HookContext) => {
 const leaveTeam = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const teamId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { reason } = context.data;
@@ -706,7 +713,8 @@ const leaveTeam = () => async (context: HookContext) => {
     context.app.service('api/emails').create({
         to: captains.map(getEmailContact),
         subject: `${getPlayerName(currentUser)} Left Your Team!`,
-        html: leaveTeamTemplate(context.params.config, {
+        html: leaveTeamTemplate({
+            config: context.params.config,
             memberName: getPlayerName(currentUser),
             isDisbanded: teamInfo.players.length === 2,
             teamsUrl,
@@ -720,7 +728,7 @@ const leaveTeam = () => async (context: HookContext) => {
 const acceptMember = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const teamId = Number(context.id);
     const { playerId } = context.data;
     const sequelize = context.app.get('sequelizeClient');
@@ -764,7 +772,8 @@ const acceptMember = () => async (context: HookContext) => {
     context.app.service('api/emails').create({
         to: members.map(getEmailContact),
         subject: `You've Been Added to the ${teamName} Team!`,
-        html: teamMemberAddedTemplate(context.params.config, {
+        html: teamMemberAddedTemplate({
+            config: context.params.config,
             captainName: getPlayerName(currentUser),
             teamName,
         }),
@@ -776,7 +785,7 @@ const acceptMember = () => async (context: HookContext) => {
 const deleteCandidate = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { playerId } = context.data;
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
@@ -865,7 +874,8 @@ const acceptMemberByLink = () => async (context: HookContext) => {
         context.app.service('api/emails').create({
             to: [getEmailContact(player)],
             subject: `You've Been Added to the ${teamName} Team!`,
-            html: teamMemberAddedTemplate(context.params.config, {
+            html: teamMemberAddedTemplate({
+                config: context.params.config,
                 captainName: getPlayerName(captain),
                 teamName,
             }),
@@ -879,7 +889,7 @@ const invitePlayers = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const teamId = Number(context.id);
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
 
     if (context.data.players.length > 3) {
@@ -949,7 +959,8 @@ const invitePlayers = () => async (context: HookContext) => {
             context.app.service('api/emails').create({
                 to: [getEmailContact(recipient)],
                 subject: `You've Been Invited to the ${teamName} Team!`,
-                html: playerInvitedToTeamTemplate(context.params.config, {
+                html: playerInvitedToTeamTemplate({
+                    config: context.params.config,
                     captainName: getPlayerName(currentUser),
                     teamName,
                     teamsUrl,
@@ -1030,7 +1041,8 @@ const joinTeamByLink = () => async (context: HookContext) => {
         context.app.service('api/emails').create({
             to: [getEmailContact(captain)],
             subject: `${getPlayerName(player)} Joined Your Team!`,
-            html: playerAcceptedInvitationTemplate(context.params.config, {
+            html: playerAcceptedInvitationTemplate({
+                config: context.params.config,
                 playerName: getPlayerName(player),
             }),
         });
@@ -1043,7 +1055,7 @@ const pickPlayersForNextWeek = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const teamId = Number(context.id);
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
 
     if (context.data.players.length > 3) {

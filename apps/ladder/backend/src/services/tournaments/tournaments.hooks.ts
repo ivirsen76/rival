@@ -18,6 +18,7 @@ import { getAge } from '../../utils/helpers';
 import { POOL_PARTNER_ID } from '../../constants';
 import { getEmailContact, getPlayerName } from '../users/helpers';
 import { optionalAuthenticate } from '../commonHooks';
+import type { User } from '../../types';
 
 const cache = new NodeCache({ useClones: false });
 const events = new Set();
@@ -25,7 +26,7 @@ const events = new Set();
 const setAgeCompatibleFlag = () => async (context: HookContext) => {
     const { config } = context.params;
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     if (!currentUser?.birthday) {
         return context;
     }
@@ -464,7 +465,8 @@ const populateTournament = () => async (context: HookContext) => {
                         subject: hasBracketContest
                             ? 'Tournament Matchups and Rival Bracket Battle'
                             : 'Tournament Matchups',
-                        html: bracketsGeneratedTemplate(context.params.config, {
+                        html: bracketsGeneratedTemplate({
+                            config: context.params.config,
                             bracketImage,
                             seasonName: data.season,
                             levelName: data.level,

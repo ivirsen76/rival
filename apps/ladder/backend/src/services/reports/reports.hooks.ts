@@ -7,11 +7,12 @@ import yup from '../../packages/yup';
 import { getEmailsFromList } from '../settings/helpers';
 import commentReportNotificationTemplate from '../../emailTemplates/commentReportNotification';
 import { getPlayerName, getEmailContact } from '../users/helpers';
+import type { User } from '../../types';
 
 const reportAboutComment = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { message } = context.data;
     const sequelize = context.app.get('sequelizeClient');
     const { reports, comments, users } = sequelize.models;
@@ -53,7 +54,8 @@ const reportAboutComment = () => async (context: HookContext) => {
             to: emails.map((item) => ({ email: item })),
             subject: 'New Report About Comment',
 
-            html: commentReportNotificationTemplate(config, {
+            html: commentReportNotificationTemplate({
+                config,
                 userName,
                 author: getPlayerName(author),
                 comment: comment.message,

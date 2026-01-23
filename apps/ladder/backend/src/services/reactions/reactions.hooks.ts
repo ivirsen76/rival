@@ -5,6 +5,7 @@ import { keep, disallow } from 'feathers-hooks-common';
 import yup from '../../packages/yup';
 import { throwValidationErrors, getSchemaErrors } from '../../helpers';
 import _isEmpty from 'lodash/isEmpty';
+import type { User } from '../../types';
 
 const populateReaction = () => async (context: HookContext) => {
     // Validate data
@@ -24,7 +25,7 @@ const populateReaction = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { photos } = sequelize.models;
     const { data } = context;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     data.userId = currentUser.id;
 
     const photo = await photos.findByPk(data.photoId);

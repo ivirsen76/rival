@@ -34,6 +34,7 @@ import { decodeAction } from '../../utils/action';
 import { POOL_PARTNER_ID } from '../../constants';
 import seedrandom from 'seedrandom';
 import axios from 'axios';
+import type { User } from '../../types';
 
 const validatePatch = () => (context: HookContext) => {
     const errors = validate(context.data);
@@ -46,7 +47,7 @@ const validatePatch = () => (context: HookContext) => {
 };
 
 const checkIfCurrentUser = () => async (context: HookContext) => {
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
@@ -288,7 +289,7 @@ const sendFirstDayEmail =
             subject: isFirstDay
                 ? `The ${config.city} ${seasonName} Ladder Begins Today!`
                 : 'You Can Now Start Playing on the Ladder!',
-            html: firstDayReminderTemplate(config, { currentSeason, isFirstDay }),
+            html: firstDayReminderTemplate({ config, currentSeason, isFirstDay }),
             priority: 2,
         });
 
@@ -297,7 +298,7 @@ const sendFirstDayEmail =
 
 const batchAddPlayers = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     // Validate data
     {
@@ -391,7 +392,7 @@ const batchAddPlayers = () => async (context: HookContext) => {
 
 const registerForFree = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['player'])(context);
+    hasAnyRole(['player'])(context);
 
     // Validate data
     {
@@ -411,7 +412,7 @@ const registerForFree = () => async (context: HookContext) => {
     const { tournaments, joinReason, partners } = context.data;
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { config } = context.params;
 
     // get all user tournaments
@@ -589,7 +590,8 @@ const registerForFree = () => async (context: HookContext) => {
             context.app.service('api/emails').create({
                 to: emails.map((email) => ({ email })),
                 subject: `The player joined wrong ladder because of special reason`,
-                html: specialReasonNotificationTemplate(config, {
+                html: specialReasonNotificationTemplate({
+                    config,
                     userName: getPlayerName(currentUser),
                     profileLink: `${TL_URL}/player/${currentUser.slug}`,
                     joinReason,
@@ -823,7 +825,8 @@ const switchTournament = () => async (context: HookContext) => {
             context.app.service('api/emails').create({
                 to: emails.map((item) => ({ email: item })),
                 subject: `${fullName} switched level from ${levelFrom} to ${levelTo}`,
-                html: changeLevelNotificationTemplate(context.params.config, {
+                html: changeLevelNotificationTemplate({
+                    config: context.params.config,
                     userName: fullName,
                     userEmail: user.email,
                     profileLink: `${TL_URL}/player/${user.slug}`,
@@ -887,7 +890,7 @@ const validateRemove = () => async (context: HookContext) => {
 
 const claimReward = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['player'])(context);
+    hasAnyRole(['player'])(context);
 
     // Validate the data
     {
@@ -905,7 +908,7 @@ const claimReward = () => async (context: HookContext) => {
     const { config } = context.params;
     const playerId = Number(context.id);
     const { address, rewardType } = context.data;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     const sequelize = context.app.get('sequelizeClient');
     const { players, users, payments } = sequelize.models;
@@ -1110,7 +1113,8 @@ ${h2('Congratulations, #firstName#!', 'padding-top="10px"')}
         context.app.service('api/emails').create({
             to: [{ email: 'info@tennis-ladder.com' }, { email: 'ivirsen@gmail.com' }],
             subject: isChampion ? 'The champion claimed their reward' : 'The runner-up claimed their reward',
-            html: arbitraryMessageTemplate(config, {
+            html: arbitraryMessageTemplate({
+                config,
                 message: `<b>Name:</b> ${getPlayerName(user)}<br>
 <b>City:</b> ${config.city}<br>
 <b>Ladder:</b> ${levelName}<br>
@@ -1155,7 +1159,7 @@ const purgeRelatedTournaments = () => async (context: HookContext) => {
 
 const activatePlayer = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
@@ -1196,7 +1200,7 @@ const activatePlayer = () => async (context: HookContext) => {
 
 const deactivatePlayer = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
@@ -1234,10 +1238,10 @@ const deactivatePlayer = () => async (context: HookContext) => {
 
 const quitTournament = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['player'])(context);
+    hasAnyRole(['player'])(context);
 
     const playerId = Number(context.id);
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
@@ -1300,10 +1304,10 @@ const quitTournament = () => async (context: HookContext) => {
 
 const setPrediction = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['player'])(context);
+    hasAnyRole(['player'])(context);
 
     const playerId = Number(context.id);
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     // Validate the data
     {
@@ -1359,7 +1363,7 @@ const setPrediction = () => async (context: HookContext) => {
 
 const joinDoublesTeam = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['player'])(context);
+    hasAnyRole(['player'])(context);
 
     let action;
     try {
@@ -1375,7 +1379,7 @@ const joinDoublesTeam = () => async (context: HookContext) => {
     }
 
     const { config } = context.params;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
     const playerId = Number(action.playerId);
@@ -1482,10 +1486,10 @@ const joinDoublesTeam = () => async (context: HookContext) => {
 
 const acceptPlayerFromPool = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['player'])(context);
+    hasAnyRole(['player'])(context);
 
     const { config } = context.params;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
@@ -1554,9 +1558,9 @@ const acceptPlayerFromPool = () => async (context: HookContext) => {
 
 const removeFromPlayerPool = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['player'])(context);
+    hasAnyRole(['player'])(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
@@ -1580,7 +1584,7 @@ const removeFromPlayerPool = () => async (context: HookContext) => {
 
 const moveToPlayerPool = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['player'])(context);
+    hasAnyRole(['player'])(context);
 
     // Validate the data
     {
@@ -1594,7 +1598,7 @@ const moveToPlayerPool = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
@@ -1639,7 +1643,7 @@ const getSuggestedTeamNames = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
     const { tournamentId } = context.data;
 
@@ -1711,7 +1715,7 @@ const changeTeamName = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
 
@@ -1764,7 +1768,7 @@ const replaceCaptain = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
     const { players, users } = sequelize.models;
     const { captainId } = context.data;
@@ -1837,7 +1841,7 @@ const leaveTeam = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
     const { players, users } = sequelize.models;
     const { reason } = context.data;
@@ -1889,7 +1893,7 @@ ${h2('Hello, #firstName#!', 'padding-top="10px"')}
 
 const createTeamFromPool = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     const { config } = context.params;
     const sequelize = context.app.get('sequelizeClient');
@@ -1975,7 +1979,7 @@ ${playerInfo.map(
 
 const movePartner = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['superadmin'])(context);
+    hasAnyRole(['superadmin'])(context);
 
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');

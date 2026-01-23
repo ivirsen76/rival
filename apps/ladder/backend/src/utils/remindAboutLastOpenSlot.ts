@@ -129,7 +129,8 @@ export default async (app: Application, settings = {}) => {
         app.service('api/emails').create({
             to: emails,
             subject: `Just One Player Needed for Upcoming Doubles Match!`,
-            html: lastOpenSlotReminderTemplate(config, {
+            html: lastOpenSlotReminderTemplate({
+                config,
                 proposalDate: playedAt,
                 proposalLocation: match.place,
                 proposalComment: match.comment,

@@ -76,9 +76,7 @@ const issueReferralCredit = async (context: HookContext, user) => {
     context.app.service('api/emails').create({
         to: [getEmailContact(referrerUser)],
         subject: `You Just Earned $${config.referralFirstPaymentCredit / 100} in Rival Credit!`,
-        html: referralFirstPaymentTemplate(config, {
-            referralName: userFullName,
-        }),
+        html: referralFirstPaymentTemplate({ config, referralName: userFullName }),
     });
 };
 
@@ -166,7 +164,8 @@ const processOrder = async (order, context) => {
                         context.app.service('api/emails').create({
                             to: emails.map((email) => ({ email })),
                             subject: `The player joined wrong ladder because of special reason`,
-                            html: specialReasonNotificationTemplate(config, {
+                            html: specialReasonNotificationTemplate({
+                                config,
                                 userName: getPlayerName(user),
                                 profileLink: `${TL_URL}/player/${user.slug}`,
                                 joinReason: item.joinReason,

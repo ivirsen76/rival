@@ -183,7 +183,7 @@ const capitalize =
     };
 
 const validatePatch = () => async (context: HookContext) => {
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
 
@@ -218,7 +218,7 @@ const validatePatch = () => async (context: HookContext) => {
 };
 
 const registerNewEmail = () => async (context: HookContext) => {
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
 
@@ -238,9 +238,7 @@ const registerNewEmail = () => async (context: HookContext) => {
         context.app.service('api/emails').create({
             to: [{ name: fullName, email: context.data.email, force: true }],
             subject: `${code} is your confirmation code`,
-            html: newEmailVerificationTemplate(context.params.config, {
-                verificationCode: code,
-            }),
+            html: newEmailVerificationTemplate({ config: context.params.config, verificationCode: code }),
         });
     }
 
@@ -330,7 +328,7 @@ const populateUser = () => async (context: HookContext) => {
             if (!isLoggedIn) {
                 return true;
             }
-            const currentUser = context.params.user!;
+            const currentUser = context.params.user as User;
             if (currentUser.id === data.id) {
                 return false;
             }
@@ -1107,7 +1105,7 @@ const populateUser = () => async (context: HookContext) => {
 
 const populateAvatar = () => async (context: HookContext) => {
     const { data } = context;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     if (data.avatar && data.avatar.startsWith('<svg')) {
         const buffer = await sharp(Buffer.from(data.avatar)).png({ quality: 50 }).resize(66, 76).toBuffer();
@@ -1128,7 +1126,7 @@ const populateAvatar = () => async (context: HookContext) => {
 
 const populateProfileCompletedAt = () => async (context: HookContext) => {
     const { data } = context;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     if (!currentUser.profileCompletedAt) {
         const hasAbout = Boolean(data.personalInfo);
@@ -1230,7 +1228,7 @@ const populateShowAge = () => async (context: HookContext) => {
 
 const populateHistory = () => async (context: HookContext) => {
     const { data } = context;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     // checking name
     if (data.firstName !== currentUser.firstName || data.lastName !== currentUser.lastName) {
@@ -1325,7 +1323,8 @@ const sendVerificationEmail =
         context.app.service('api/emails').create({
             to: [{ ...getEmailContact(user), force: true }],
             subject: `${userData.verificationCode} is your confirmation code`,
-            html: emailVerificationTemplate(context.params.config, {
+            html: emailVerificationTemplate({
+                config: context.params.config,
                 verificationCode: userData.verificationCode,
             }),
         });
@@ -1427,7 +1426,8 @@ const verifyEmail = () => async (context: HookContext) => {
             context.app.service('api/emails').create({
                 to: emails.map((item) => ({ email: item })),
                 subject: `${fullName}${duplicates.length > 0 ? ' (duplicate)' : ''} signed up to the system`,
-                html: signUpNotificationTemplate(context.params.config, {
+                html: signUpNotificationTemplate({
+                    config: context.params.config,
                     userName: fullName,
                     userEmail: user.email,
                     userPhone: user.phone,
@@ -1448,7 +1448,8 @@ const verifyEmail = () => async (context: HookContext) => {
         context.app.service('api/emails').create({
             to: [getEmailContact(referrerUser)],
             subject: `Your Friend ${referralFullName} Just Signed Up!`,
-            html: referralRegisteredTemplate(config, {
+            html: referralRegisteredTemplate({
+                config,
                 referralName: referralFullName,
                 referralLink: `${process.env.TL_URL}/player/${user.slug}`,
                 refPercent: referrerUser.refPercent,
@@ -1463,7 +1464,7 @@ const verifyEmail = () => async (context: HookContext) => {
 const verifyNewEmail = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { email, verificationCode } = context.data;
 
     const sequelize = context.app.get('sequelizeClient');
@@ -1602,7 +1603,7 @@ const verifyPhone = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
 
     if (process.env.NODE_ENV === 'test' || process.env.CI) {
@@ -1662,7 +1663,7 @@ const validatePhone =
 
         if (isExistingUser) {
             await authenticate('jwt')(context);
-            const currentUser = context.params.user!;
+            const currentUser = context.params.user as User;
             const sequelize = context.app.get('sequelizeClient');
             const { phone } = context.data;
 
@@ -1690,7 +1691,7 @@ const validatePhone =
 
 const getManagers = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const sequelize = context.app.get('sequelizeClient');
 
@@ -1709,7 +1710,7 @@ const getManagers = () => async (context: HookContext) => {
 
 const searchUser = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     const search = context.data.query;
 
@@ -1736,7 +1737,7 @@ const searchUser = () => async (context: HookContext) => {
 
 const assignManagerRole = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const userId = Number(context.data.userId);
     const sequelize = context.app.get('sequelizeClient');
@@ -1769,7 +1770,7 @@ const assignManagerRole = () => async (context: HookContext) => {
 
 const revokeManagerRole = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const userId = Number(context.data.userId);
     const sequelize = context.app.get('sequelizeClient');
@@ -1801,7 +1802,7 @@ const revokeManagerRole = () => async (context: HookContext) => {
 
 const getBanUsers = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const sequelize = context.app.get('sequelizeClient');
     const currentDate = dayjs.tz();
@@ -1824,7 +1825,7 @@ const getBanUsers = () => async (context: HookContext) => {
 
 const addBan = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const schema = yup.object().shape({
         userId: yup.number().required().integer(),
@@ -1870,7 +1871,7 @@ const addBan = () => async (context: HookContext) => {
 
 const removeBan = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const userId = Number(context.id);
 
@@ -1936,7 +1937,7 @@ const changePassword = () => async (context: HookContext) => {
 
 const changeUserPassword = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     // check validation errors
     {
@@ -1964,7 +1965,7 @@ const changeUserPassword = () => async (context: HookContext) => {
 
 const getAllUsers = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     const sequelize = context.app.get('sequelizeClient');
 
@@ -2010,7 +2011,7 @@ const getAllUsers = () => async (context: HookContext) => {
 
 const getDuplicatedUsers = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
@@ -2206,7 +2207,7 @@ const getDuplicatedUsers = () => async (context: HookContext) => {
 
 const mergeUsers = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     // check validation errors
     {
@@ -2605,7 +2606,7 @@ ${h2('Hey, #firstName#!', 'padding-top="10px"')}
 const updateChangelogSeenAt = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
 
@@ -2619,7 +2620,7 @@ const updateChangelogSeenAt = () => async (context: HookContext) => {
 
 const getRecentEmails = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin'])(context);
+    hasAnyRole(['admin'])(context);
 
     const { email } = context.data;
     const sequelize = context.app.get('sequelizeClient');
@@ -2662,7 +2663,7 @@ const getRecentEmails = () => async (context: HookContext) => {
 
 const getRegisterHistory = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['superadmin'])(context);
+    hasAnyRole(['superadmin'])(context);
 
     const userId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
@@ -2680,7 +2681,7 @@ const getRegisterHistory = () => async (context: HookContext) => {
 const getReferrals = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
 
     const [users] = await sequelize.query(
@@ -2731,7 +2732,7 @@ const getReferrals = () => async (context: HookContext) => {
 const getPartnerReferrals = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
 
     if (!currentUser.refPercent) {
@@ -2932,7 +2933,7 @@ const getMyBadgesStats = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await limitToUser(context);
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     context.result = {
         data: await getUserBadgesStats(currentUser, context),
@@ -3003,7 +3004,7 @@ const addPersonalNote = () => async (context: HookContext) => {
 
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { opponentId, note } = context.data;
 
     const foundOpponent = await users.findOne({ where: { id: opponentId } });
@@ -3039,7 +3040,7 @@ const addPersonalNote = () => async (context: HookContext) => {
 
 const disableUser = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['superadmin'])(context);
+    hasAnyRole(['superadmin'])(context);
 
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
@@ -3061,7 +3062,7 @@ const disableUser = () => async (context: HookContext) => {
 
 const restoreUser = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['superadmin'])(context);
+    hasAnyRole(['superadmin'])(context);
 
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
@@ -3085,7 +3086,7 @@ const getPhotos = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
 
     const photos = await getSequelizeData(
         sequelize,
@@ -3142,7 +3143,7 @@ const avoidPlayers = () => async (context: HookContext) => {
     }
 
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { avoidedUsers } = context.data;
 
     const [rows] = await sequelize.query(
@@ -3362,7 +3363,7 @@ const savePaw = () => async (context: HookContext) => {
     }
 
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const currentDateStr = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
 
     const [[paw]] = await sequelize.query(`SELECT id FROM fingerprints WHERE userId=:userId AND whole=:whole`, {
@@ -3409,7 +3410,7 @@ const saveIdentification = () => async (context: HookContext) => {
     }
 
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const currentDateStr = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
 
     const [[identification]] = await sequelize.query(
@@ -3432,7 +3433,7 @@ const saveIdentification = () => async (context: HookContext) => {
 
 const ignoreDuplicatedUsers = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     // check validation errors
     {

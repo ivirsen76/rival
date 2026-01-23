@@ -4,6 +4,7 @@ import { getEmailContact, getPlayerName, getEmailLink, getPhoneLink } from '../u
 import _capitalize from 'lodash/capitalize';
 import { POOL_PARTNER_ID } from '../../constants';
 import type { HookContext } from '@feathersjs/feathers';
+import type { User } from '../../types';
 
 export const teamNames = [
     'Love Gurus',
@@ -82,7 +83,7 @@ export const getJoinDoublesLink = async (playerId: number, app) => {
 
 export const sendAcceptedTeammateMessage = async (context: HookContext, teammateUserId: number) => {
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { TL_URL } = process.env;
     const { config } = context.params;
     const { users } = sequelize.models;
@@ -111,7 +112,7 @@ export const sendAcceptedTeammateMessage = async (context: HookContext, teammate
 
 export const sendNewPoolPlayerMessage = async (context: HookContext, playerId: number) => {
     const sequelizeClient = context.app.get('sequelizeClient');
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { config } = context.params;
     const { players } = sequelizeClient.models;
     const { TL_URL } = process.env;
@@ -188,7 +189,7 @@ export const sendNewPoolPlayerMessage = async (context: HookContext, playerId: n
 
 export const sendDoublesTeamInvitation = async (context: HookContext, tournamentIds: number[], partners) => {
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { config } = context.params;
     const { TL_URL } = process.env;
 

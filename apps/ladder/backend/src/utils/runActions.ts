@@ -208,7 +208,8 @@ export const remindForTournament = async (app: Application) => {
             app.service('api/emails').create({
                 to: emails,
                 subject: `Upcoming Final Tournament for the ${seasonName} Ladder`,
-                html: tournamentReminderTemplate(config, {
+                html: tournamentReminderTemplate({
+                    config,
                     seasonName,
                     link,
                     levelName: level.name,
@@ -334,7 +335,8 @@ export const lastDayRemindForTournament = async (app: Application) => {
                     subject: isRegistered
                         ? `Confirming Your Availability for the ${seasonName} Ladder Tournament`
                         : `Last Chance to Sign Up for the ${seasonName} Ladder Tournament`,
-                    html: lastDayTournamentReminderTemplate(config, {
+                    html: lastDayTournamentReminderTemplate({
+                        config,
                         seasonName,
                         link,
                         levelName: level.name,
@@ -417,7 +419,7 @@ export const remindForFirstDay = async (app: Application) => {
     app.service('api/emails').create({
         to: emails,
         subject: `The ${config.city} ${seasonName} Ladder Begins Today!`,
-        html: firstDayReminderTemplate(config, { currentSeason }),
+        html: firstDayReminderTemplate({ config, currentSeason }),
         priority: 2,
     });
 
@@ -539,7 +541,7 @@ export const requestFeedbackForNoJoin = async (app: Application) => {
         to: emails,
         from: { name: 'Andrew Cole', email: 'andrew.cole@tennis-ladder.com' },
         subject: 'How Can We Improve? Share Your Thoughts!',
-        html: feedbackRequestTemplate(config, { prevSeason, currentSeason }),
+        html: feedbackRequestTemplate({ config, prevSeason, currentSeason }),
         priority: 2,
     });
 
@@ -1150,12 +1152,7 @@ export const seasonIsOver = async (app: Application) => {
     await app.service('api/emails').create({
         to: emails,
         subject: `End of ${getSeasonName(prevSeason)} Ladder Stats and Friendly Proposals`,
-        html: seasonIsOverTemplate(config, {
-            prevSeason,
-            nextSeason,
-            stats,
-            players,
-        }),
+        html: seasonIsOverTemplate({ config, prevSeason, nextSeason, stats, players }),
         priority: 2,
     });
 
@@ -1330,7 +1327,7 @@ export const joinNextSeason = async (app: Application) => {
         await app.service('api/emails').create({
             to: emails,
             subject: reminder.getSubject(isFree),
-            html: joinNextSeasonTemplate(config, { season: nextSeason }),
+            html: joinNextSeasonTemplate({ config, season: nextSeason }),
             priority: 2,
         });
     };
@@ -1470,7 +1467,8 @@ export const remindForClaimingReward = async (app: Application) => {
         await app.service('api/emails').create({
             to: [user].map(getEmailContact),
             subject: `Claim your reward!`,
-            html: claimRewardTemplate(config, {
+            html: claimRewardTemplate({
+                config,
                 levelName: user.levelName,
                 levelLink: user.levelLink,
                 levelType: user.levelType,
@@ -2039,7 +2037,6 @@ export default async (app: Application) => {
         try {
             await fn(app);
         } catch (e) {
-            // do nothing
             if (e.errors) {
                 logger.info(`Action errors: ${JSON.stringify(e.errors)}`);
             }

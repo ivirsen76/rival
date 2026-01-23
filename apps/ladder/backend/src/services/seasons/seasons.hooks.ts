@@ -548,7 +548,7 @@ const getLevelsInfo = () => async (context: HookContext) => {
 
 const getPlayersFromLastSeasons = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     const sequelize = context.app.get('sequelizeClient');
 
@@ -679,7 +679,7 @@ const getPlayersFromLastSeasons = () => async (context: HookContext) => {
 
 const closeSeason = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     // Validate
     {
@@ -739,7 +739,7 @@ const closeSeason = () => async (context: HookContext) => {
 
 const getSeasonStats = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     const sequelize = context.app.get('sequelizeClient');
 
@@ -921,7 +921,7 @@ const getSeasonStats = () => async (context: HookContext) => {
 
 const getSeasonIncomes = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     const { config } = context.params;
     if (!config.isRaleigh) {
@@ -982,7 +982,7 @@ const getSeasonIncomes = () => async (context: HookContext) => {
 
 const getSeasonPayments = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['admin', 'manager'])(context);
+    hasAnyRole(['admin', 'manager'])(context);
 
     const { config } = context.params;
     if (!config.isRaleigh) {

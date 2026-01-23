@@ -94,7 +94,8 @@ export default async (app: Application) => {
             app.service('api/emails').create({
                 to: emails,
                 subject: `You've Been Given $${creditAmount / 100} in Rival Credit!`,
-                html: refundPaymentForTournamentTemplate(config, {
+                html: refundPaymentForTournamentTemplate({
+                    config,
                     levelName: level.name,
                     seasonName: tournamentInfo.data.season,
                     cancelCode: tournamentInfo.data.cancelFinalTournamentCode,

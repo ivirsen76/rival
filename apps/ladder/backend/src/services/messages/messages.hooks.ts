@@ -9,6 +9,7 @@ import dayjs from '../../utils/dayjs';
 import newMessageTemplate from '../../emailTemplates/newMessage';
 import { getStatsMatches } from '../../utils/sqlConditions';
 import { getEmailContact, getPlayerName } from '../users/helpers';
+import type { User } from '../../types';
 
 const validateCreate = () => async (context: HookContext) => {
     // Validate data
@@ -25,7 +26,7 @@ const validateCreate = () => async (context: HookContext) => {
         }
     }
 
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     context.data.senderId = currentUser.id;
 
     const sequelize = context.app.get('sequelizeClient');
@@ -112,7 +113,7 @@ const validateCreate = () => async (context: HookContext) => {
 };
 
 const sendMessage = () => async (context: HookContext) => {
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
     const recipient = await users.findByPk(context.data.recipientId);
@@ -122,7 +123,7 @@ const sendMessage = () => async (context: HookContext) => {
         to: [getEmailContact(recipient)],
         replyTo: getEmailContact(currentUser),
         subject: `${getPlayerName(currentUser)} Sent You a Message!`,
-        html: newMessageTemplate(config, { message: context.data.message, currentUser }),
+        html: newMessageTemplate({ config, message: context.data.message, currentUser }),
         priority: 2,
     });
 

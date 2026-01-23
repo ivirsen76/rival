@@ -6,9 +6,10 @@ import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { getSchemaErrors, throwValidationErrors } from '../../helpers';
 import yup from '../../packages/yup';
 import _isEmpty from 'lodash/isEmpty';
+import type { User } from '../../types';
 
 const getPayments = () => async (context: HookContext) => {
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const userId = Number(context.id);
 
     const sequelize = context.app.get('sequelizeClient');
@@ -17,7 +18,7 @@ const getPayments = () => async (context: HookContext) => {
     const user = await users.findByPk(userId);
 
     if (currentUser.id !== userId && user.referrerUserId !== currentUser.id) {
-        await hasAnyRole(['admin'])(context);
+        hasAnyRole(['admin'])(context);
     }
 
     const [rows] = await sequelize.query(
@@ -44,7 +45,7 @@ const getPayments = () => async (context: HookContext) => {
 
 const addTransaction = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-    await hasAnyRole(['superadmin'])(context);
+    hasAnyRole(['superadmin'])(context);
 
     const userId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');

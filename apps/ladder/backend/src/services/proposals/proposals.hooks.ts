@@ -27,9 +27,18 @@ import {
     getEmailContact,
 } from '../users/helpers';
 import sendProposalEmails from '../../utils/sendProposalEmails';
+import type { User } from '../../types';
 
 // It is not a hook, just a helper
-const sendAcceptedDoublesProposalEmail = ({ context, players, match }) => {
+const sendAcceptedDoublesProposalEmail = ({
+    context,
+    players,
+    match,
+}: {
+    context: HookContext;
+    players: any;
+    match: any;
+}) => {
     const challenger = players[match.challengerId || context.data.challengerId];
     const challenger2 = players[match.challenger2Id || context.data.challenger2Id];
     const acceptor = players[match.acceptorId || context.data.acceptorId];
@@ -45,7 +54,8 @@ const sendAcceptedDoublesProposalEmail = ({ context, players, match }) => {
             email: item.email,
         })),
         subject: `Your upcoming match on ${playedAt}`,
-        html: acceptedDoublesProposalTemplate(context.params.config, {
+        html: acceptedDoublesProposalTemplate({
+            config: context.params.config,
             challenger,
             challenger2,
             acceptor,
@@ -320,7 +330,8 @@ const sendAcceptedProposalEmail = () => async (context: HookContext) => {
         replyTo: getEmailContact(firstAcceptor),
         to: emailsWithoutCurrentUser,
         subject: `${acceptorName} accepted the ${entity} proposal for ${formattedPlayedAt}`,
-        html: acceptedProposalTemplate(context.params.config, {
+        html: acceptedProposalTemplate({
+            config: context.params.config,
             acceptorName: acceptorLinkedName,
             contact: firstAcceptor,
             levelName,
@@ -388,7 +399,7 @@ const acceptProposal = () => async (context: HookContext) => {
 
 const addDoublesProposal = () => async (context: HookContext) => {
     const { TL_URL } = process.env;
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const sequelize = context.app.get('sequelizeClient');
     const { matches } = sequelize.models;
 
@@ -574,7 +585,8 @@ const addDoublesProposal = () => async (context: HookContext) => {
             replyTo: getEmailContact(info),
             to: emails,
             subject: `${proposalPlayer} proposed a new ${isFriendlyProposal ? 'friendly ' : ''}match for ${playedAt}`,
-            html: newProposalTemplate(context.params.config, {
+            html: newProposalTemplate({
+                config: context.params.config,
                 level: info.levelName,
                 proposal: context.data,
                 proposalPlayer,
@@ -590,7 +602,7 @@ const addDoublesProposal = () => async (context: HookContext) => {
 };
 
 const acceptDoublesProposal = () => async (context: HookContext) => {
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const matchId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { matches } = sequelize.models;
@@ -834,7 +846,7 @@ ${context.data.reason ? `<mj-text><b>Reason:</b> ${context.data.reason}.</mj-tex
 const removeDoublesProposal = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const matchId = Number(context.id);
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const userId = currentUser.id;
 
     const { players, matches } = sequelize.models;
@@ -923,7 +935,8 @@ const removeDoublesProposal = () => async (context: HookContext) => {
                     return getEmailContact(users[playerId]);
                 }),
                 subject: `${challengerName} deleted the proposal for ${playedAt}`,
-                html: deletedDoublesProposalTemplate(context.params.config, {
+                html: deletedDoublesProposalTemplate({
+                    config: context.params.config,
                     challengerName,
                     challengerEmail: users[match.challengerId].email,
                     challengerPhone: users[match.challengerId].phone,
@@ -940,7 +953,7 @@ const removeDoublesProposal = () => async (context: HookContext) => {
         await purgeMatchCache({ matchId })(context);
         await matches.destroy({ where: { id: matchId } });
     } else {
-        let columnName;
+        let columnName = '';
         if (challenger2 && challenger2.userId === userId) {
             columnName = 'challenger2Id';
         } else if (acceptor && acceptor.userId === userId) {
@@ -977,7 +990,8 @@ const removeDoublesProposal = () => async (context: HookContext) => {
                         };
                     }),
                 subject: `${refuserName} unaccepted the proposal for ${playedAt}`,
-                html: unacceptedDoublesProposalTemplate(context.params.config, {
+                html: unacceptedDoublesProposalTemplate({
+                    config: context.params.config,
                     refuserName,
                     refuserEmail: refuser.email,
                     refuserPhone: refuser.phone,
@@ -996,7 +1010,7 @@ const removeDoublesProposal = () => async (context: HookContext) => {
 
 const getVisibleStats = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user!;
+    const currentUser = context.params.user as User;
     const { config } = context.params;
 
     const currentDate = dayjs.tz();
