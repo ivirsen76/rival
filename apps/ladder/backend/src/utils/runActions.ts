@@ -1,3 +1,4 @@
+import type { Sequelize } from 'sequelize';
 import type { Application } from '@feathersjs/feathers';
 import dayjs from './dayjs';
 import logger from '@rival-tennis-ladder/logger';
@@ -27,7 +28,7 @@ import { getSeasonTournaments } from '../services/seasons/helpers';
 import getSeasonSvg from './getSeasonSvg';
 import md5 from 'md5';
 
-const getSeasonLevels = async (sequelize, seasonId: number) => {
+const getSeasonLevels = async (sequelize: Sequelize, seasonId: number) => {
     const [levels] = await sequelize.query(
         `
         SELECT l.id, l.slug, l.name, l.type, l.baseTlr, l.minTlr, l.maxTlr
@@ -39,14 +40,14 @@ const getSeasonLevels = async (sequelize, seasonId: number) => {
 
     return levels;
 };
-const isActionDone = async (sequelize, name, tableId) => {
+const isActionDone = async (sequelize: Sequelize, name: string, tableId: number) => {
     const [actions] = await sequelize.query(`SELECT * FROM actions WHERE tableId=:tableId AND name=:name`, {
         replacements: { tableId, name },
     });
 
     return actions.length > 0;
 };
-const getSeasonUsers = async (sequelize, seasonId) => {
+const getSeasonUsers = async (sequelize: Sequelize, seasonId: number) => {
     const [nextSeasonUserIds] = await sequelize.query(
         `
         SELECT p.userId
@@ -56,7 +57,7 @@ const getSeasonUsers = async (sequelize, seasonId) => {
     );
     return new Set(nextSeasonUserIds.map((item) => item.userId));
 };
-const getSeasonRegistrations = async (sequelize, seasonId) => {
+const getSeasonRegistrations = async (sequelize: Sequelize, seasonId: number) => {
     const [[row]] = await sequelize.query(
         `
         SELECT count(*) AS cnt
@@ -66,7 +67,7 @@ const getSeasonRegistrations = async (sequelize, seasonId) => {
     );
     return row.cnt;
 };
-const getCurrentSeasons = async (sequelize) => {
+const getCurrentSeasons = async (sequelize: Sequelize) => {
     const dateMonthAgo = dayjs.tz().subtract(1, 'month');
     const [seasons] = await sequelize.query(
         `SELECT *

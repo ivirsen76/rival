@@ -1,3 +1,4 @@
+import type { Sequelize } from 'sequelize';
 import type { HookContext } from '@feathersjs/feathers';
 import { disallow } from 'feathers-hooks-common';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
@@ -25,7 +26,7 @@ import { getPlayerName, getEmailContact } from '../users/helpers';
 
 const { TL_URL } = process.env;
 
-const getTeamsUrl = async (sequelize, playerId, isFullLink = true) => {
+const getTeamsUrl = async (sequelize: Sequelize, playerId: number, isFullLink = true) => {
     const [teams] = await sequelize.query(
         `
         SELECT s.year,
@@ -49,7 +50,7 @@ const getTeamsUrl = async (sequelize, playerId, isFullLink = true) => {
     return `${isFullLink ? TL_URL : ''}/season/${team.year}/${team.season}/${team.slug}/teams`;
 };
 
-const getTeamsStat = async (sequelize, tournamentId, checkSetupWeek = true) => {
+const getTeamsStat = async (sequelize: Sequelize, tournamentId: number, checkSetupWeek = true) => {
     const [[info]] = await sequelize.query(
         `SELECT s.startDate, t.levelId
            FROM tournaments AS t,
@@ -69,7 +70,7 @@ const getTeamsStat = async (sequelize, tournamentId, checkSetupWeek = true) => {
         }
     }
 
-    const getInitialStats = async (userId) => {
+    const getInitialStats = async (userId: number) => {
         const [[match]] = await sequelize.query(
             `SELECT m.challengerElo,
                     m.challengerMatches,
@@ -160,7 +161,7 @@ const getTeamsStat = async (sequelize, tournamentId, checkSetupWeek = true) => {
     return result;
 };
 
-const getUserInitialTlr = async (sequelize, userId, levelId) => {
+const getUserInitialTlr = async (sequelize: Sequelize, userId: number, levelId: number) => {
     const weekStart = dayjs.tz().isoWeekday(1).hour(0).minute(0).second(0).format('YYYY-MM-DD HH:mm:ss');
 
     const [matches] = await sequelize.query(

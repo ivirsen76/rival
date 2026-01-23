@@ -1,3 +1,4 @@
+import type { Sequelize } from 'sequelize';
 import type { Application } from '@feathersjs/feathers';
 import dayjs from './dayjs';
 import logger from '@rival-tennis-ladder/logger';
@@ -7,12 +8,12 @@ import getCombinedConfig from './getCombinedConfig';
 import { getPlayerName } from '../services/users/helpers';
 
 // Helpers
-const getConfig = async (sequelize) => {
+const getConfig = async () => {
     const config = await getCombinedConfig();
     return { ...staticConfig, ...config };
 };
 
-const getSeasonLevels = async (sequelize, seasonId) => {
+const getSeasonLevels = async (sequelize: Sequelize, seasonId: number) => {
     const [levels] = await sequelize.query(
         `
         SELECT l.id, l.slug, l.name, l.type
@@ -29,7 +30,7 @@ export default async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
     const { payments } = sequelize.models;
 
-    const config = await getConfig(sequelize);
+    const config = await getConfig();
     const { tournamentReminderWeeks } = config;
 
     // Get current season

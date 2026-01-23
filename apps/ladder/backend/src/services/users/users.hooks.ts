@@ -1,3 +1,4 @@
+import type { Sequelize } from 'sequelize';
 import type { HookContext } from '@feathersjs/feathers';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
@@ -136,7 +137,7 @@ const getUserBadgesStats = async (user, context) => {
     };
 };
 
-const getSequelizeData = async (sequelize, ...params) => {
+const getSequelizeData = async (sequelize: Sequelize, ...params) => {
     const [result] = await sequelize.query(...params);
     return result;
 };

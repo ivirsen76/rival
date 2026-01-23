@@ -1,3 +1,4 @@
+import type { Sequelize } from 'sequelize';
 import type { Application } from '@feathersjs/feathers';
 import dayjs from './dayjs';
 import lastOpenSlotReminderTemplate from '../emailTemplates/lastOpenSlotReminder';
@@ -10,7 +11,7 @@ const getConfig = async () => {
     const config = await getCombinedConfig();
     return { ...staticConfig, ...config };
 };
-const isActionDone = async (sequelize, name: string, tableId: number) => {
+const isActionDone = async (sequelize: Sequelize, name: string, tableId: number) => {
     const [actions] = await sequelize.query(`SELECT * FROM actions WHERE tableId=:tableId AND name=:name`, {
         replacements: { tableId, name },
     });
@@ -23,7 +24,7 @@ export default async (app: Application, settings = {}) => {
     const sequelize = app.get('sequelizeClient');
     const { ignoreNightTime } = settings;
 
-    const config = await getConfig(sequelize);
+    const config = await getConfig();
 
     const currentDate = dayjs.tz();
     const hour = currentDate.hour();

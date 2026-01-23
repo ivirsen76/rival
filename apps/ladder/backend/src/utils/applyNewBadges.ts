@@ -1,3 +1,4 @@
+import type { Sequelize } from 'sequelize';
 import { createStore } from '../services/users/badgeStore';
 import dayjs from './dayjs';
 import { getEmailContact, getWeekNumber, getDateByWeekNumber } from '../services/users/helpers';
@@ -448,7 +449,7 @@ export const updateCurrentWeekUserBadges = async (app, userId) => {
     }
 };
 
-export const applyNewBadges = async (sequelize, forceRecalculation) => {
+export const applyNewBadges = async (sequelize: Sequelize, forceRecalculation: boolean) => {
     const { payments } = sequelize.models;
     let startDate = '2000-01-01 00:00:00';
 
