@@ -174,7 +174,7 @@ export const purgeMatchCache = () => async (context: HookContext) => {
         );
 
         if (result.length === 1) {
-            await purgeTournamentCache({ tournamentId: result[0].tournamentId })(context: HookContext);
+            await purgeTournamentCache({ tournamentId: result[0].tournamentId })(context);
         }
     }
 
@@ -281,7 +281,7 @@ export const populateSalt = () => async (context: HookContext) => {
 
 export const optionalAuthenticate = () => async (context: HookContext) => {
     try {
-        await authenticate('jwt')(context: HookContext);
+        await authenticate('jwt')(context);
     } catch (e) {
         // do nothing
     }
