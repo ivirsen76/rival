@@ -136,7 +136,7 @@ const getMostSeasonsStat = () => async (context: HookContext) => {
       ORDER BY s.startDate`);
 
     const users = {};
-    const addUser = (id, seasonId, seasonName) => {
+    const addUser = (id: number, seasonId: number, seasonName: string) => {
         if (!users[id]) {
             users[id] = {
                 id,
@@ -299,7 +299,7 @@ const getMostRivalries = () => async (context: HookContext) => {
                m.challenger2Id IS NULL`);
 
     const users = {};
-    const addUser = (id, opponentId) => {
+    const addUser = (id: number, opponentId: number) => {
         if (!users[id]) {
             users[id] = {
                 id,
@@ -430,7 +430,7 @@ const getLongestRivalries = () => async (context: HookContext) => {
                m.challenger2Id IS NULL`);
 
     const rivalries = {};
-    const addRivalry = (challengerUserId, acceptorUserId, winnerUserId, playedAt) => {
+    const addRivalry = (challengerUserId: number, acceptorUserId: number, winnerUserId: number, playedAt) => {
         const code = [challengerUserId, acceptorUserId].sort((a, b) => a - b).join('-');
         const firstUserId = challengerUserId < acceptorUserId ? challengerUserId : acceptorUserId;
         const secondUserId = challengerUserId > acceptorUserId ? challengerUserId : acceptorUserId;

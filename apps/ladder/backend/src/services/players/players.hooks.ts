@@ -1909,7 +1909,7 @@ const createTeamFromPool = () => async (context: HookContext) => {
     }
 
     const playerInfo = await Promise.all(
-        context.data.players.map(async (playerId) => {
+        context.data.players.map(async (playerId: number) => {
             const player = await players.findByPk(playerId);
             if (player) {
                 player.user = await users.findByPk(player.userId);

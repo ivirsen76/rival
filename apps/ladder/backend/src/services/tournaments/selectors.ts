@@ -381,9 +381,9 @@ export const getPlayerPoints = (data, currentDate) => {
         return obj;
     }, {});
 
-    const getResult = (playerId) => result[captains[playerId] || playerId];
+    const getResult = (playerId: number) => result[captains[playerId] || playerId];
 
-    const addActivityData = (playerId, match) => {
+    const addActivityData = (playerId: number, match) => {
         if (!playerId || !getResult(playerId)) {
             return;
         }

@@ -291,7 +291,7 @@ const sendEstablishedEloNotification = () => async (context: HookContext) => {
     );
 
     // do not wait for it
-    const sendNotification = async (playerId, elo) => {
+    const sendNotification = async (playerId: number, elo: number) => {
         const player = await players.findByPk(playerId);
         const user = await users.findByPk(player.userId);
 

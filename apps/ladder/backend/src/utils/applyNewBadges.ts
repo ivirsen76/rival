@@ -1,3 +1,4 @@
+import type { Application } from '@feathersjs/feathers';
 import type { Sequelize } from 'sequelize';
 import { createStore } from '../services/users/badgeStore';
 import dayjs from './dayjs';
@@ -360,7 +361,7 @@ export const getUsersStats = async ({
     return Object.values(store.getState().users);
 };
 
-export const updateCurrentWeekUserBadges = async (app, userId) => {
+export const updateCurrentWeekUserBadges = async (app: Application, userId: number) => {
     const sequelize = app.get('sequelizeClient');
     const { users, payments } = sequelize.models;
     const config = await getCombinedConfig();

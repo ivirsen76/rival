@@ -557,7 +557,7 @@ const addDoublesProposal = () => async (context: HookContext) => {
             .map(getEmailContact);
 
         const teamDetails = (() => {
-            const getName = (playerId) => {
+            const getName = (playerId: number) => {
                 const player = users.find((user) => user.playerId === playerId);
                 return player ? `<b>${getPlayerName(player)}</b>` : '<span class="open">open</span>';
             };

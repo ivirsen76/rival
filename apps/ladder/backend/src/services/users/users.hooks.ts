@@ -2027,7 +2027,7 @@ const getDuplicatedUsers = () => async (context: HookContext) => {
         cookie: { data: {}, getConfidence: () => 0.95 },
     };
 
-    const addMetric = (code, userId, value) => {
+    const addMetric = (code, userId: number, value) => {
         if (!value || !value.trim() || !metrics[code]) {
             return;
         }
