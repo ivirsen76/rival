@@ -1,12 +1,29 @@
-import type { Config } from '../types';
+import type { Config, Image } from '../types';
 import { normal, h2 } from './normal';
 import dayjs from '../utils/dayjs';
 import { formatPhone } from '../services/users/helpers';
 
-export default (
-    config: Config,
-    { isFinal, opponentTeam, opponentName, opponentEmail, opponentPhone, img, previewText = '' }
-) => {
+type Params = {
+    config: Config;
+    isFinal: boolean;
+    opponentTeam: string;
+    opponentName: string;
+    opponentEmail: string;
+    opponentPhone: string;
+    img: Image;
+    previewText: string;
+};
+
+export default ({
+    config,
+    isFinal,
+    opponentTeam,
+    opponentName,
+    opponentEmail,
+    opponentPhone,
+    img,
+    previewText = '',
+}: Params) => {
     const weekEnd = dayjs.tz().isoWeekday(7).hour(12).format('dddd, MMMM D');
     const sundayInTwoWeeks = dayjs.tz().add(1, 'week').isoWeekday(7).hour(12).format('dddd, MMMM D');
 

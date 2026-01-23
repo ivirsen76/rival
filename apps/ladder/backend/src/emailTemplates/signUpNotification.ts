@@ -1,11 +1,28 @@
-import type { Config } from '../types';
+import type { Config, User } from '../types';
 import { normal } from './normal';
 import { getPlayerName, formatPhone } from '../services/users/helpers';
 
-export default (
-    config: Config,
-    { userName, userEmail, userPhone, profileLink, comeFromInfo, duplicates, previewText }
-) => {
+type Params = {
+    config: Config;
+    userName: string;
+    userEmail: string;
+    userPhone: string;
+    profileLink: string;
+    comeFromInfo: string;
+    duplicates: User[];
+    previewText: string;
+};
+
+export default ({
+    config,
+    userName,
+    userEmail,
+    userPhone,
+    profileLink,
+    comeFromInfo,
+    duplicates,
+    previewText,
+}: Params) => {
     const { TL_URL } = process.env;
 
     return normal(

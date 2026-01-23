@@ -1,7 +1,16 @@
 import type { Config } from '../types';
 import { normal } from './normal';
 
-export default (config: Config, { userName, userEmail, profileLink, levelFrom, levelTo }) =>
+type Params = {
+    config: Config;
+    userName: string;
+    userEmail: string;
+    profileLink: string;
+    levelFrom: string;
+    levelTo: string;
+};
+
+export default ({ config, userName, userEmail, profileLink, levelFrom, levelTo }: Params) =>
     normal(
         `
   <mj-text><b>${userName}</b> switched level from <b>${levelFrom}</b> to <b>${levelTo}</b></mj-text>

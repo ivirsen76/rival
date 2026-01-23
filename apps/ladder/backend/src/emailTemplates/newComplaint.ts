@@ -1,8 +1,18 @@
-import type { Config } from '../types';
+import type { Config, User } from '../types';
 import { normal } from './normal';
 import { getPlayerName } from '../services/users/helpers';
 
-export default (config: Config, { reason, description, currentUser, opponent, avoided, previewText }) => {
+type Params = {
+    config: Config;
+    reason: string;
+    description: string;
+    currentUser: User;
+    opponent: User;
+    avoided: boolean;
+    previewText: string;
+};
+
+export default ({ config, reason, description, currentUser, opponent, avoided, previewText }: Params) => {
     const currentUserName = getPlayerName(currentUser);
     const opponentName = getPlayerName(opponent);
 

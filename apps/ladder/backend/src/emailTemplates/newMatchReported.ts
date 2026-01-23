@@ -1,11 +1,30 @@
-import type { Config } from '../types';
+import type { Config, Image } from '../types';
 import { normal } from './normal';
 import { getListAsString } from '../utils/helpers';
 
-export default (
-    config: Config,
-    { reporter, date, levelName, ladderLink, img, isUnavailable, multiLadderMatch, previewText = '' }
-) =>
+type Params = {
+    config: Config;
+    reporter: string;
+    date: string;
+    levelName: string;
+    ladderLink: string;
+    img: Image;
+    isUnavailable: boolean;
+    multiLadderMatch: string[];
+    previewText: string;
+};
+
+export default ({
+    config,
+    reporter,
+    date,
+    levelName,
+    ladderLink,
+    img,
+    isUnavailable,
+    multiLadderMatch,
+    previewText = '',
+}: Params) =>
     normal(
         `
   <mj-text><b>${reporter}</b> reported the results of your ${

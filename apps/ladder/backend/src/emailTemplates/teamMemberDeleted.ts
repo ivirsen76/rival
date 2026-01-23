@@ -1,7 +1,9 @@
 import type { Config } from '../types';
 import { normal, h2 } from './normal';
 
-export default (config: Config, { captainName, teamsUrl, previewText }) =>
+type Params = { config: Config; captainName: string; teamsUrl: string; previewText: string };
+
+export default ({ config, captainName, teamsUrl, previewText }: Params) =>
     normal(
         `
   ${h2('Hello, #firstName#!', 'padding-top="10px"')}

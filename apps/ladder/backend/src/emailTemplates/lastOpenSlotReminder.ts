@@ -1,10 +1,25 @@
 import type { Config } from '../types';
 import { normal, h2 } from './normal';
 
-export default (
-    config: Config,
-    { proposalDate, proposalLocation, proposalComment, teamDetails, ladderLink, ladderName }
-) => {
+type Params = {
+    config: Config;
+    proposalDate: string;
+    proposalLocation: string;
+    proposalComment: string;
+    teamDetails: string;
+    ladderLink: string;
+    ladderName: string;
+};
+
+export default ({
+    config,
+    proposalDate,
+    proposalLocation,
+    proposalComment,
+    teamDetails,
+    ladderLink,
+    ladderName,
+}: Params) => {
     return normal(
         `
     ${h2('Hello, #firstName#!', 'padding-top="10px"')}

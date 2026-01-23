@@ -3,7 +3,14 @@ import { normal, h2, getImageUrl, thankYou, signature } from './normal';
 
 const { TL_URL } = process.env;
 
-export default (config: Config, { seasonName, isBreak, startDate = '' }) => {
+type Params = {
+    config: Config;
+    seasonName: string;
+    isBreak: boolean;
+    startDate: string;
+};
+
+export default ({ config, seasonName, isBreak, startDate = '' }: Params) => {
     const city = config.city;
 
     const seasonText = `

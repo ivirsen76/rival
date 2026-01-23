@@ -1,9 +1,11 @@
-import type { Config } from '../types';
+import type { Config, Season } from '../types';
 import { normal, h2, thankYou, signature } from './normal';
 import { getSeasonName } from '../services/seasons/helpers';
 import dayjs from '../utils/dayjs';
 
-export default (config: Config, { season }) => {
+type Params = { config: Config; season: Season };
+
+export default ({ config, season }: Params) => {
     const seasonName = getSeasonName(season);
     const seasonStartDate = dayjs.tz(season.startDate).format('MMMM D');
     const { TL_URL } = process.env;

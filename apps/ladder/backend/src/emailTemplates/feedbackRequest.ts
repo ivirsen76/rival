@@ -1,8 +1,10 @@
-import type { Config } from '../types';
+import type { Config, Season } from '../types';
 import { normal, h2, signature } from './normal';
 import { getSeasonName, getShortSeasonName } from '../services/seasons/helpers';
 
-export default (config: Config, { prevSeason, currentSeason }) => {
+type Params = { config: Config; prevSeason: Season; currentSeason: Season };
+
+export default ({ config, prevSeason, currentSeason }: Params) => {
     const prevSeasonName = getSeasonName(prevSeason);
     const currentShortSeasonName = getShortSeasonName(currentSeason);
 

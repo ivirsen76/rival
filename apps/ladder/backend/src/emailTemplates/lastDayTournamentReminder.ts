@@ -1,7 +1,9 @@
 import type { Config } from '../types';
 import { normal, h2 } from './normal';
 
-export default (config: Config, { seasonName, link, levelName, isRegistered }) =>
+type Params = { config: Config; seasonName: string; link: string; levelName: string; isRegistered: boolean };
+
+export default ({ config, seasonName, link, levelName, isRegistered }: Params) =>
     normal(
         `
         ${h2(`Thanks again for participating in the ${seasonName} Ladder!`, 'padding-top="10px"')}

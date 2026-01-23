@@ -1,7 +1,17 @@
 import type { Config } from '../types';
 import { normal, h2 } from './normal';
 
-export default (config: Config, { playerName, playerFirstName, initialTlr, comment, acceptLink, previewText }) =>
+type Params = {
+    config: Config;
+    playerName: string;
+    playerFirstName: string;
+    initialTlr: string;
+    comment: string;
+    acceptLink: string;
+    previewText: string;
+};
+
+export default ({ config, playerName, playerFirstName, initialTlr, comment, acceptLink, previewText }: Params) =>
     normal(
         `
   ${h2('Hello, #firstName#!', 'padding-top="10px"')}

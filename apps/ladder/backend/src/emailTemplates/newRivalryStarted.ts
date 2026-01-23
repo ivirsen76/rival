@@ -1,7 +1,17 @@
-import type { Config } from '../types';
+import type { Config, Image, RivalryHistory, User } from '../types';
 import { normal, h2 } from './normal';
 
-export default (config: Config, { user, opponent, lead, history, img, previewText }) => {
+type Params = {
+    config: Config;
+    user: User;
+    opponent: User;
+    lead: number[];
+    history: RivalryHistory[];
+    img: Image;
+    previewText: string;
+};
+
+export default ({ config, user, opponent, lead, history, img, previewText }: Params) => {
     const profileUrl = `${process.env.TL_URL}/player/${user.slug}`;
     const isLeading = lead[0] > lead[1];
 

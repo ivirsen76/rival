@@ -1,7 +1,9 @@
 import type { Config } from '../types';
 import { normal } from './normal';
 
-export default (config: Config, { actionLink, fullName }) => {
+type Params = { config: Config; actionLink: string; fullName: string };
+
+export default ({ config, actionLink, fullName }: Params) => {
     const contactLink = process.env.TL_URL + '/contacts';
 
     return normal(

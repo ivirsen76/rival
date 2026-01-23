@@ -2,13 +2,12 @@ import type { Config } from '../types';
 import { normal, h2, getImageUrl, signature } from './normal';
 
 export default (config: Config) =>
+    // prettier-ignore
     normal(
         `
 ${h2('Hello, #firstName#!', 'padding-top="10px"')}
 
-<mj-text>We noticed you haven't played any matches yet on ${
-            config.city
-        } Rival Tennis Ladder. We would love to see you on the courts!</mj-text>
+<mj-text>We noticed you haven't played any matches yet on ${config.city} Rival Tennis Ladder. We would love to see you on the courts!</mj-text>
 
 <mj-text>Getting out to play on the Rival Tennis Ladder is easy. Here are some ways to start playing:</mj-text>
 

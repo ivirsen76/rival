@@ -1,10 +1,27 @@
-import type { Config } from '../types';
+import type { Config, Image } from '../types';
 import { normal, h2, signature } from './normal';
 
-export default (
-    config: Config,
-    { elo, eloImg, currentLevel, isLevelSuitable, suggestedLevel, moveDirection, isTournamentRestriction }
-) => {
+type Params = {
+    config: Config;
+    elo: number;
+    eloImg: Image;
+    currentLevel: string;
+    isLevelSuitable: boolean;
+    suggestedLevel: string;
+    moveDirection: string;
+    isTournamentRestriction: boolean;
+};
+
+export default ({
+    config,
+    elo,
+    eloImg,
+    currentLevel,
+    isLevelSuitable,
+    suggestedLevel,
+    moveDirection,
+    isTournamentRestriction,
+}: Params) => {
     const eloUrl = `${process.env.TL_URL}/tlr`;
 
     const suggestedMessage = (() => {

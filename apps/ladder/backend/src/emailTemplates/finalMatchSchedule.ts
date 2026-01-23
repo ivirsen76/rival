@@ -3,19 +3,27 @@ import { normal, h2, signature } from './normal';
 import dayjs from '../utils/dayjs';
 import { formatPhone } from '../services/users/helpers';
 
-export default (
-    config: Config,
-    {
-        seasonEndDate,
-        finalSpot,
-        opponentName,
-        opponentEmail,
-        opponentPhone,
-        fakeCurrentDate,
-        roundsTotal,
-        previewText = '',
-    }
-) => {
+type Params = {
+    config: Config;
+    seasonEndDate: string;
+    finalSpot: number;
+    opponentName: string;
+    opponentEmail: string;
+    opponentPhone: string;
+    fakeCurrentDate: string;
+    roundsTotal: number;
+};
+
+export default ({
+    config,
+    seasonEndDate,
+    finalSpot,
+    opponentName,
+    opponentEmail,
+    opponentPhone,
+    fakeCurrentDate,
+    roundsTotal,
+}: Params) => {
     const isRoundOf16 = finalSpot > 7;
     const isQuarterFinal = finalSpot <= 7 && finalSpot > 3;
     const isSemiFinal = finalSpot <= 3 && finalSpot > 1;
@@ -52,7 +60,7 @@ export default (
         `
 ${h2('Hello, #firstName#!', 'padding-top="10px"')}
 
-<mj-text>We noticed you haven’t scheduled your ${stage} match against <b>${opponentName}</b> yet! Have you reached out to them?</mj-text>
+<mj-text>We noticed you haven't scheduled your ${stage} match against <b>${opponentName}</b> yet! Have you reached out to them?</mj-text>
 
 <mj-text>Here is their information again if you need to contact them:</mj-text>
 

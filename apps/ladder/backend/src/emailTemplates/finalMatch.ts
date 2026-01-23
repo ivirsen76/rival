@@ -1,23 +1,35 @@
-import type { Config } from '../types';
+import type { Config, Image, User } from '../types';
 import { normal, h2, warning, signature } from './normal';
 import dayjs from '../utils/dayjs';
 import { getPlayerName, getEmailLink, getPhoneLink } from '../services/users/helpers';
 
-export default (
-    config: Config,
-    {
-        seasonEndDate,
-        finalSpot,
-        opponent,
-        seasonName,
-        levelName,
-        img,
-        showNewOpponentWarning,
-        fakeCurrentDate,
-        roundsTotal,
-        previewText = '',
-    }
-) => {
+type Params = {
+    config: Config;
+    seasonEndDate: string;
+    finalSpot: number;
+    opponent: User;
+    seasonName: string;
+    levelName: string;
+    img: Image;
+    showNewOpponentWarning: boolean;
+    fakeCurrentDate: string;
+    roundsTotal: number;
+    previewText: string;
+};
+
+export default ({
+    config,
+    seasonEndDate,
+    finalSpot,
+    opponent,
+    seasonName,
+    levelName,
+    img,
+    showNewOpponentWarning,
+    fakeCurrentDate,
+    roundsTotal,
+    previewText = '',
+}: Params) => {
     const isRoundOf16 = finalSpot > 7;
     const isQuarterFinal = finalSpot <= 7 && finalSpot > 3;
     const isSemiFinal = finalSpot <= 3 && finalSpot > 1;

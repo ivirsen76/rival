@@ -1,8 +1,10 @@
-import type { Config } from '../types';
+import type { Config, User } from '../types';
 import { normal, h2 } from './normal';
 import { getPlayerName, getEmailLink, getPhoneLink } from '../services/users/helpers';
 
-export default (config: Config, { message, currentUser }) => {
+type Params = { config: Config; message: string; currentUser: User };
+
+export default ({ config, message, currentUser }: Params) => {
     const { TL_URL } = process.env;
     const profileLink = `${TL_URL}/player/${currentUser.slug}`;
 

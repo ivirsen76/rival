@@ -2,7 +2,17 @@ import type { Config } from '../types';
 import { normal } from './normal';
 import formatElo from '../utils/formatElo';
 
-export default (config: Config, { userName, profileLink, joinReason, elo, level, previewText }) => {
+type Params = {
+    config: Config;
+    userName: string;
+    profileLink: string;
+    joinReason: string;
+    elo: number;
+    level: string;
+    previewText: string;
+};
+
+export default ({ config, userName, profileLink, joinReason, elo, level, previewText }: Params) => {
     return normal(
         `
   <mj-text><a href="${profileLink}"><b>${userName}</b></a> with TLR <b>${formatElo(

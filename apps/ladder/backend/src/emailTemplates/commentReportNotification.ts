@@ -1,7 +1,16 @@
-import type { Config } from '../types';
+import type { Config, User } from '../types';
 import { normal } from './normal';
 
-export default (config: Config, { userName, author, comment, message, previewText }) => {
+type Params = {
+    config: Config;
+    userName: User;
+    author: string;
+    comment: string;
+    message: string;
+    previewText: string;
+};
+
+export default ({ config, userName, author, comment, message, previewText }: Params) => {
     return normal(
         `
   <mj-text><b>${userName}</b> reported on a comment.</mj-text>

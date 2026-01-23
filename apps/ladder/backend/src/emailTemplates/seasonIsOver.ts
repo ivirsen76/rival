@@ -1,11 +1,19 @@
-import type { Config } from '../types';
+import type { Config, Season } from '../types';
 import { normal, h2, h3, getImageUrl, signature } from './normal';
 import { getSeasonName } from '../services/seasons/helpers';
 import dayjs from '../utils/dayjs';
 import formatElo from '../utils/formatElo';
 import { getPlayerName } from '../services/users/helpers';
 
-const renderPlayer = ({ player, title, description, points, formatNumber }) => {
+type PlayerParams = {
+    player: any;
+    title: string;
+    description: string;
+    points: string;
+    formatNumber?: (num: number) => string;
+};
+
+const renderPlayer = ({ player, title, description, points, formatNumber }: PlayerParams) => {
     return `
         <mj-column padding-top="30px" padding-bottom="30px">
             ${h3(title, 'padding-top="0px" padding-bottom="0px" align="center"')}
@@ -18,7 +26,9 @@ const renderPlayer = ({ player, title, description, points, formatNumber }) => {
         </mj-column>`;
 };
 
-export default (config: Config, { prevSeason, nextSeason, stats, players }) => {
+type Params = { config: Config; prevSeason: Season; nextSeason: Season; stats: any; players: any };
+
+export default ({ config, prevSeason, nextSeason, stats, players }: Params) => {
     const prevSeasonName = getSeasonName(prevSeason);
     const nextSeasonName = getSeasonName(nextSeason);
     const weeks = Math.round(dayjs.tz(prevSeason.endDate).diff(dayjs.tz(prevSeason.startDate), 'week', true));

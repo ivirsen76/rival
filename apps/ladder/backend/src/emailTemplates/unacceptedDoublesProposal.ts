@@ -2,7 +2,17 @@ import type { Config } from '../types';
 import { normal } from './normal';
 import { formatPhone } from '../services/users/helpers';
 
-export default (config: Config, { refuserName, refuserEmail, refuserPhone, level, reason, previewText }) =>
+type Params = {
+    config: Config;
+    refuserName: string;
+    refuserEmail: string;
+    refuserPhone: string;
+    level: string;
+    reason: string;
+    previewText: string;
+};
+
+export default ({ config, refuserName, refuserEmail, refuserPhone, level, reason, previewText }: Params) =>
     normal(
         `
   <mj-text><b>${refuserName}</b> unaccepted the proposal for your upcoming match in ${level}.</mj-text>

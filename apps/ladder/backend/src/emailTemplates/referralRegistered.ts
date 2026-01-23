@@ -1,7 +1,16 @@
 import type { Config } from '../types';
 import { normal, h2 } from './normal';
 
-export default (config: Config, { fullName, referralName, referralLink, refPercent, refYears }) => {
+type Params = {
+    config: Config;
+    fullName: string;
+    referralName: string;
+    referralLink: string;
+    refPercent: string;
+    refYears: string;
+};
+
+export default ({ config, fullName, referralName, referralLink, refPercent, refYears }: Params) => {
     const isPartner = Boolean(refPercent);
     const benefitsInfo = isPartner
         ? `<mj-text>You will receive <b>${refPercent}%</b> of all payments for <b>${refYears} years</b> since player registration.</mj-text>`

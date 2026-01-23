@@ -1,7 +1,16 @@
-import type { Config } from '../types';
+import type { Config, Image } from '../types';
 import { normal, h2, signature, getImageUrl } from './normal';
 
-export default (config: Config, { bracketImage, seasonName, levelName, topPlayers, hasBracketContest }) => {
+type Params = {
+    config: Config;
+    bracketImage: Image;
+    seasonName: string;
+    levelName: string;
+    topPlayers: number;
+    hasBracketContest: boolean;
+};
+
+export default ({ config, bracketImage, seasonName, levelName, topPlayers, hasBracketContest }: Params) => {
     const bracketContent = hasBracketContest
         ? `
     ${h2('Rival Bracket Battle!')}

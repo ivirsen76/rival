@@ -1,10 +1,27 @@
-import type { Config } from '../types';
+import type { Config, Proposal } from '../types';
 import { normal, renderProposal } from './normal';
 
-export default (
-    config: Config,
-    { level, proposal, proposalPlayer, proposalLink, isFriendlyProposal, teamDetails, previewText }
-) => {
+type Params = {
+    config: Config;
+    level: string;
+    proposal: Proposal;
+    proposalPlayer: string;
+    proposalLink: string;
+    isFriendlyProposal: boolean;
+    teamDetails: string;
+    previewText: string;
+};
+
+export default ({
+    config,
+    level,
+    proposal,
+    proposalPlayer,
+    proposalLink,
+    isFriendlyProposal,
+    teamDetails,
+    previewText,
+}: Params) => {
     const entity = proposal.practiceType ? 'practice' : isFriendlyProposal ? 'friendly match' : 'match';
 
     return normal(

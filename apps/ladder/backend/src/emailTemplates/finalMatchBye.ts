@@ -1,10 +1,17 @@
 import type { Config } from '../types';
 import { normal, h2, signature } from './normal';
 
-export default (
-    config: Config,
-    { seedNumber, opponent1, opponent2, seasonName, levelName, levelType, previewText = '' }
-) => {
+type Params = {
+    config: Config;
+    seedNumber: number;
+    opponent1: string;
+    opponent2: string;
+    seasonName: string;
+    levelName: string;
+    levelType: string;
+};
+
+export default ({ config, seedNumber, opponent1, opponent2, seasonName, levelName, levelType }: Params) => {
     const isDoublesTeam = levelType === 'doubles-team';
 
     return normal(
