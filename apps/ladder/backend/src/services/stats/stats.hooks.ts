@@ -9,7 +9,7 @@ import isObsoleteBadge from '../users/isObsoleteBadge';
 import { getStatsMatches } from '../../utils/sqlConditions';
 
 // not hook, just a helper
-const getCurrentSeasonUsers = async (context) => {
+const getCurrentSeasonUsers = async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentDate = dayjs.tz();
@@ -40,7 +40,7 @@ const getCurrentSeasonUsers = async (context) => {
 };
 
 // not hook, just a helper
-const getAllUsers = async (context) => {
+const getAllUsers = async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const [users] = await sequelize.query(`

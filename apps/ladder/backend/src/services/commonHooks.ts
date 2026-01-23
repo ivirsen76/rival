@@ -14,7 +14,7 @@ import { authenticate } from '@feathersjs/authentication/lib/hooks';
 
 const { TL_ENABLE_REDIS } = process.env;
 
-export const hasAnyRole = (roles) => (context) => {
+export const hasAnyRole = (roles) => (context: HookContext) => {
     roles = typeof roles === 'string' ? [roles] : roles;
 
     const userRoles = context.params.user.roles.split(',');
@@ -27,7 +27,7 @@ export const hasAnyRole = (roles) => (context) => {
 
 export const populateSlug =
     (fieldName, slugName = 'slug') =>
-    (context) => {
+    (context: HookContext) => {
         if (context.data[fieldName]) {
             context.data[slugName] = getSlug(context.data[fieldName]);
         }
@@ -37,7 +37,7 @@ export const populateSlug =
 
 export const trim =
     (...fields) =>
-    (context) => {
+    (context: HookContext) => {
         for (const field of fields) {
             if (context.data[field] && typeof context.data[field] === 'string') {
                 context.data[field] = context.data[field].trim();
@@ -49,7 +49,7 @@ export const trim =
 
 export const logEvent =
     (message, type = 'info') =>
-    (context) => {
+    (context: HookContext) => {
         const { user } = context.params;
         if (user) {
             message += ` (${getPlayerName(user)} [${user.id}])`;
@@ -62,7 +62,7 @@ export const logEvent =
 
 export const purgeTournamentCache =
     (options = {}) =>
-    async (context) => {
+    async (context: HookContext) => {
         if (!TL_ENABLE_REDIS) {
             return context;
         }
@@ -174,7 +174,7 @@ export const purgeMatchCache = () => async (context: HookContext) => {
         );
 
         if (result.length === 1) {
-            await purgeTournamentCache({ tournamentId: result[0].tournamentId })(context);
+            await purgeTournamentCache({ tournamentId: result[0].tournamentId })(context: HookContext);
         }
     }
 
@@ -183,7 +183,7 @@ export const purgeMatchCache = () => async (context: HookContext) => {
 
 export const sendWelcomeEmail =
     ({ userId }) =>
-    async (context) => {
+    async (context: HookContext) => {
         const sequelize = context.app.get('sequelizeClient');
         const { users } = sequelize.models;
 
@@ -261,7 +261,7 @@ export const sendWelcomeEmail =
         return context;
     };
 
-export const generateBadges = () => async (context) => {
+export const generateBadges = () => async (context: HookContext) => {
     const currentUser = context.params.user;
 
     await updateCurrentWeekUserBadges(context.app, currentUser.id);
@@ -281,7 +281,7 @@ export const populateSalt = () => async (context: HookContext) => {
 
 export const optionalAuthenticate = () => async (context: HookContext) => {
     try {
-        await authenticate('jwt')(context);
+        await authenticate('jwt')(context: HookContext);
     } catch (e) {
         // do nothing
     }

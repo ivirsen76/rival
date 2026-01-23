@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import qs from 'qs';
 import dayjs from '../utils/dayjs';
 
@@ -21,7 +22,7 @@ function getCacheKey(context) {
 
 const load =
     (options = {}) =>
-    (context) => {
+    (context: HookContext) => {
         if (!TL_ENABLE_REDIS) {
             return context;
         }
@@ -62,7 +63,7 @@ const load =
 
 const save =
     (options = {}) =>
-    (context) => {
+    (context: HookContext) => {
         if (!TL_ENABLE_REDIS || context.params.$skipRedisSaveHook) {
             return context;
         }

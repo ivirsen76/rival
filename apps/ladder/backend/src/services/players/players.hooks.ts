@@ -235,7 +235,7 @@ ${score}
 
 const sendFirstDayEmail =
     ({ userIds }) =>
-    async (context) => {
+    async (context: HookContext) => {
         const sequelize = context.app.get('sequelizeClient');
         const { config } = context.params;
 

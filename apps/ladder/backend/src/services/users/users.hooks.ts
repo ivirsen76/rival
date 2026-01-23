@@ -170,7 +170,7 @@ const validateCreate = () => async (context: HookContext) => {
 
 const capitalize =
     (...fields) =>
-    (context) => {
+    (context: HookContext) => {
         for (const field of fields) {
             if (context.data[field] && typeof context.data[field] === 'string') {
                 context.data[field] = formatUserName(context.data[field]);
@@ -1310,7 +1310,7 @@ const generateVerificationCode = () => async (context: HookContext) => {
 
 const sendVerificationEmail =
     (options = {}) =>
-    async (context) => {
+    async (context: HookContext) => {
         const sequelize = context.app.get('sequelizeClient');
         const user = options.user || context.result;
 
@@ -1640,7 +1640,7 @@ const verifyPhone = () => async (context: HookContext) => {
 
 const validatePhone =
     ({ isExistingUser = true } = {}) =>
-    async (context) => {
+    async (context: HookContext) => {
         // Validate data
         {
             const schema = yup.object().shape({
