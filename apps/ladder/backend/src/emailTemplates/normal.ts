@@ -1,4 +1,3 @@
-const { TL_URL } = process.env;
 import mjml2html from 'mjml';
 import fs from 'fs';
 import crypto from 'crypto';
@@ -9,18 +8,17 @@ import dayjs from '../utils/dayjs';
 import practiceTypeOptions from '../services/proposals/practiceTypeOptions';
 import matchFormatOptions from '../services/proposals/matchFormatOptions';
 import durationOptions from '../services/proposals/durationOptions';
+import type { Config, Proposal } from '../types';
 
-const isRequired = () => {
-    throw new Error('Param is required');
-};
+const { TL_URL } = process.env;
 
-export const h2 = (text, attributes = '') =>
+export const h2 = (text: string, attributes = '') =>
     `<mj-text ${attributes} font-size="22px" font-weight="bold" padding-top="40px" padding-bottom="14px" line-height="27px">${text}</mj-text>`;
 
-export const h3 = (text, attributes = '') =>
+export const h3 = (text: string, attributes = '') =>
     `<mj-text ${attributes} font-size="20px" font-weight="bold" padding-top="36px" padding-bottom="12px" line-height="24px">${text}</mj-text>`;
 
-export const warning = (text, attributes = '') =>
+export const warning = (text: string, attributes = '') =>
     `<mj-text container-background-color="#fff3cd" color="#664d03">${text}</mj-text><mj-spacer height="10px" />`;
 
 export const socialLinks = ({ referralCode = '#referralCode#' } = {}) => {
@@ -41,7 +39,7 @@ export const socialLinks = ({ referralCode = '#referralCode#' } = {}) => {
 </mj-social>`;
 };
 
-export const thankYou = ({ config = isRequired(), referralCode = '#referralCode#' } = {}) => {
+export const thankYou = ({ config, referralCode = '#referralCode#' }: { config: Config; referralCode?: string }) => {
     const totalCredit = (config.referralFirstMatchCredit + config.referralFirstPaymentCredit) / 100;
 
     return `${h2('Thank You for Joining!')}
@@ -53,24 +51,24 @@ ${socialLinks({ referralCode })}
 `;
 };
 
-export const signature = ({ config = isRequired() } = {}) => {
+export const signature = ({ config }: { config: Config }) => {
     return `<mj-text>See you on the courts!</mj-text>
      <mj-text font-style="italic">${
          config.isRaleigh ? 'Ken Glanville, Raleigh Ladder Director' : 'Andrew Cole, Co-Founder of Rival Tennis Ladder'
      }</mj-text>`;
 };
 
-export const renderProposal = (proposal) => {
+export const renderProposal = (proposal: Proposal) => {
     const proposalDate = dayjs.tz(proposal.playedAt).format('ddd, MMM D, h:mm A');
     const practiceType =
         proposal.practiceType && proposal.practiceType < 99
-            ? practiceTypeOptions.find((item) => item.value === proposal.practiceType).label
+            ? practiceTypeOptions.find((item) => item.value === proposal.practiceType)?.label
             : null;
     const matchFormat =
         proposal.matchFormat && proposal.matchFormat > 0
-            ? matchFormatOptions.find((item) => item.value === proposal.matchFormat).label
+            ? matchFormatOptions.find((item) => item.value === proposal.matchFormat)?.label
             : null;
-    const duration = proposal.duration ? durationOptions.find((item) => item.value === proposal.duration).label : null;
+    const duration = proposal.duration ? durationOptions.find((item) => item.value === proposal.duration)?.label : null;
 
     return `
         <b>Date:</b> ${proposalDate}<br>
@@ -81,8 +79,8 @@ export const renderProposal = (proposal) => {
         ${proposal.comment ? `<br><b>Comment:</b> ${proposal.comment}` : ''}`;
 };
 
-const imageUrlCache = {};
-export const getImageUrl = (path) => {
+const imageUrlCache: Record<string, string> = {};
+export const getImageUrl = (path: string) => {
     if (imageUrlCache[path]) {
         return imageUrlCache[path];
     }
@@ -114,7 +112,7 @@ export const getImageUrl = (path) => {
     return src;
 };
 
-const renderPreviewText = (text) => {
+const renderPreviewText = (text: string) => {
     const style = 'display:none;max-height:0px;overflow:hidden;font-size:1px;line-height:1px;color:#ffffff;opacity:0;';
 
     return `
@@ -125,7 +123,14 @@ const renderPreviewText = (text) => {
 
 const getTemplate =
     ({ width = 600 } = {}) =>
-    (body, { config, previewText, showSocialIcons = true } = {}) => {
+    (
+        body: string,
+        {
+            config,
+            previewText,
+            showSocialIcons = true,
+        }: { config: Config; previewText?: string; showSocialIcons: boolean }
+    ) => {
         const logoImage = getImageUrl(__dirname + '/images/logo.png');
         const twitterImage = getImageUrl(__dirname + '/images/twitter.png');
         const facebookImage = getImageUrl(__dirname + '/images/facebook.png');
@@ -210,7 +215,7 @@ const getTemplate =
         ).html;
     };
 
-export const simple = (content) => {
+export const simple = (content: string) => {
     return mjml2html(
         `
   <mjml>

@@ -1,4 +1,11 @@
-export default [
+type practiceTypeOptionsType = {
+    value: number;
+    label: string;
+    description?: string;
+    explanation: string;
+};
+
+const practiceTypeOptions: practiceTypeOptionsType[] = [
     {
         value: 1,
         label: 'Ball striking',
@@ -13,3 +20,5 @@ export default [
     },
     { value: 99, label: 'Other (describe in comment)', explanation: 'Other' },
 ];
+
+export default practiceTypeOptions;
