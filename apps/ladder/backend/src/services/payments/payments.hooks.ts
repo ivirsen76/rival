@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { disallow } from 'feathers-hooks-common';
 import { hasAnyRole } from '../commonHooks';
@@ -6,7 +7,7 @@ import { getSchemaErrors, throwValidationErrors } from '../../helpers';
 import yup from '../../packages/yup';
 import _isEmpty from 'lodash/isEmpty';
 
-const getPayments = (options) => async (context) => {
+const getPayments = (options) => async (context: HookContext) => {
     const currentUser = context.params.user;
     const userId = Number(context.id);
 
@@ -41,7 +42,7 @@ const getPayments = (options) => async (context) => {
     return context;
 };
 
-const addTransaction = (options) => async (context) => {
+const addTransaction = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -79,7 +80,7 @@ const addTransaction = (options) => async (context) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context) => {
+const runCustomAction = (options) => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { keep, disallow } from 'feathers-hooks-common';
 import { throwValidationErrors } from '../../helpers';
@@ -8,7 +9,7 @@ import { logEvent, generateBadges } from '../commonHooks';
 import striptags from 'striptags';
 import { getEmailContact } from '../users/helpers';
 
-const validateCreate = (options) => (context) => {
+const validateCreate = (options) => (context: HookContext) => {
     const errors = validate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -18,7 +19,7 @@ const validateCreate = (options) => (context) => {
     return context;
 };
 
-const populateUserId = (options) => (context) => {
+const populateUserId = (options) => (context: HookContext) => {
     const { data } = context;
 
     data.userId = context.params.user.id;
@@ -26,7 +27,7 @@ const populateUserId = (options) => (context) => {
     return context;
 };
 
-const sendNewFeedbackEmail = (options) => async (context) => {
+const sendNewFeedbackEmail = (options) => async (context: HookContext) => {
     const currentUser = context.params.user;
     const config = context.params.config;
     const sequelize = context.app.get('sequelizeClient');

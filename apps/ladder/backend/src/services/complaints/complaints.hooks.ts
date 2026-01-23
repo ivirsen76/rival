@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { keep, disallow } from 'feathers-hooks-common';
@@ -10,7 +11,7 @@ import newComplaintTemplate from '../../emailTemplates/newComplaint';
 import { hasAnyRole } from '../commonHooks';
 import { getEmailContact } from '../users/helpers';
 
-const populateComplaint = (options) => async (context) => {
+const populateComplaint = (options) => async (context: HookContext) => {
     // Validate data
     {
         const schema = yup.object().shape({
@@ -52,7 +53,7 @@ const populateComplaint = (options) => async (context) => {
     return context;
 };
 
-const sendNewComplaintNotification = (options) => async (context) => {
+const sendNewComplaintNotification = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const [[settings]] = await sequelize.query(`SELECT newComplaintNotification FROM settings WHERE id=1`);
 
@@ -82,7 +83,7 @@ const sendNewComplaintNotification = (options) => async (context) => {
     return context;
 };
 
-const avoidPlayer = (options) => async (context) => {
+const avoidPlayer = (options) => async (context: HookContext) => {
     const { avoid } = context.data;
 
     if (!avoid) {
@@ -112,7 +113,7 @@ const avoidPlayer = (options) => async (context) => {
     return context;
 };
 
-const getAllComplaints = (options) => async (context) => {
+const getAllComplaints = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -143,7 +144,7 @@ const getAllComplaints = (options) => async (context) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context) => {
+const runCustomAction = (options) => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

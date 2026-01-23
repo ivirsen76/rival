@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { hooks } from '@feathersjs/authentication-local';
@@ -140,7 +141,7 @@ const getSequelizeData = async (sequelize, ...params) => {
     return result;
 };
 
-const validateCreate = (options) => async (context) => {
+const validateCreate = (options) => async (context: HookContext) => {
     const errors = commonValidate(context.data);
 
     if (!errors.password) {
@@ -179,7 +180,7 @@ const capitalize =
         return context;
     };
 
-const validatePatch = (options) => async (context) => {
+const validatePatch = (options) => async (context: HookContext) => {
     const currentUser = context.params.user;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
@@ -214,7 +215,7 @@ const validatePatch = (options) => async (context) => {
     return context;
 };
 
-const registerNewEmail = (options) => async (context) => {
+const registerNewEmail = (options) => async (context: HookContext) => {
     const currentUser = context.params.user;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
@@ -244,7 +245,7 @@ const registerNewEmail = (options) => async (context) => {
     return context;
 };
 
-const populateUser = (options) => async (context) => {
+const populateUser = (options) => async (context: HookContext) => {
     const userSlug = context.data.slug;
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
@@ -1101,7 +1102,7 @@ const populateUser = (options) => async (context) => {
     return context;
 };
 
-const populateAvatar = (options) => async (context) => {
+const populateAvatar = (options) => async (context: HookContext) => {
     const { data } = context;
     const currentUser = context.params.user;
 
@@ -1122,7 +1123,7 @@ const populateAvatar = (options) => async (context) => {
     return context;
 };
 
-const populateProfileCompletedAt = (options) => async (context) => {
+const populateProfileCompletedAt = (options) => async (context: HookContext) => {
     const { data } = context;
     const currentUser = context.params.user;
 
@@ -1143,7 +1144,7 @@ const populateProfileCompletedAt = (options) => async (context) => {
     return context;
 };
 
-const populateSlug = (options) => async (context) => {
+const populateSlug = (options) => async (context: HookContext) => {
     const { data } = context;
     const sequelize = context.app.get('sequelizeClient');
 
@@ -1194,7 +1195,7 @@ const populateSlug = (options) => async (context) => {
     return context;
 };
 
-const stringifyInformation = (options) => async (context) => {
+const stringifyInformation = (options) => async (context: HookContext) => {
     const { data } = context;
 
     if (data.information) {
@@ -1204,7 +1205,7 @@ const stringifyInformation = (options) => async (context) => {
     return context;
 };
 
-const populateRegisterHistory = (options) => async (context) => {
+const populateRegisterHistory = (options) => async (context: HookContext) => {
     const { data } = context;
 
     try {
@@ -1216,7 +1217,7 @@ const populateRegisterHistory = (options) => async (context) => {
     return context;
 };
 
-const populateShowAge = (options) => async (context) => {
+const populateShowAge = (options) => async (context: HookContext) => {
     if ('showAge' in context.data) {
         context.data.showAge = Boolean(context.data.showAge);
     }
@@ -1224,7 +1225,7 @@ const populateShowAge = (options) => async (context) => {
     return context;
 };
 
-const populateHistory = (options) => async (context) => {
+const populateHistory = (options) => async (context: HookContext) => {
     const { data } = context;
     const currentUser = context.params.user;
 
@@ -1255,7 +1256,7 @@ const populateHistory = (options) => async (context) => {
     return context;
 };
 
-const populateReferral = (options) => async (context) => {
+const populateReferral = (options) => async (context: HookContext) => {
     const { data } = context;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;
@@ -1295,13 +1296,13 @@ const populateReferral = (options) => async (context) => {
     return context;
 };
 
-const populateChangelogSeenAt = (options) => async (context) => {
+const populateChangelogSeenAt = (options) => async (context: HookContext) => {
     context.data.changelogSeenAt = dayjs.tz().format('YYYY-MM-DD HH:mm:ss+00:00');
 
     return context;
 };
 
-const generateVerificationCode = (options) => async (context) => {
+const generateVerificationCode = (options) => async (context: HookContext) => {
     context.data.verificationCode = getVerificationCode();
 
     return context;
@@ -1329,7 +1330,7 @@ const sendVerificationEmail =
         return context;
     };
 
-const verifyEmail = (options) => async (context) => {
+const verifyEmail = (options) => async (context: HookContext) => {
     const { TL_URL } = process.env;
     const { email, verificationCode } = context.data;
     const sequelize = context.app.get('sequelizeClient');
@@ -1456,7 +1457,7 @@ const verifyEmail = (options) => async (context) => {
     return context;
 };
 
-const verifyNewEmail = (options) => async (context) => {
+const verifyNewEmail = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -1515,7 +1516,7 @@ const verifyNewEmail = (options) => async (context) => {
     return context;
 };
 
-const resendVerificationCode = (options) => async (context) => {
+const resendVerificationCode = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const [rows] = await sequelize.query(
@@ -1540,7 +1541,7 @@ const resendVerificationCode = (options) => async (context) => {
     return context;
 };
 
-const sendPhoneVerificationCode = (options) => async (context) => {
+const sendPhoneVerificationCode = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -1573,7 +1574,7 @@ const sendPhoneVerificationCode = (options) => async (context) => {
     return context;
 };
 
-const verifyPhone = (options) => async (context) => {
+const verifyPhone = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const { phone, code } = context.data;
@@ -1684,7 +1685,7 @@ const validatePhone =
         return context;
     };
 
-const getManagers = (options) => async (context) => {
+const getManagers = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -1703,7 +1704,7 @@ const getManagers = (options) => async (context) => {
     return context;
 };
 
-const searchUser = (options) => async (context) => {
+const searchUser = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -1730,7 +1731,7 @@ const searchUser = (options) => async (context) => {
     return context;
 };
 
-const assignManagerRole = (options) => async (context) => {
+const assignManagerRole = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -1763,7 +1764,7 @@ const assignManagerRole = (options) => async (context) => {
     return context;
 };
 
-const revokeManagerRole = (options) => async (context) => {
+const revokeManagerRole = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -1795,7 +1796,7 @@ const revokeManagerRole = (options) => async (context) => {
     return context;
 };
 
-const getBanUsers = (options) => async (context) => {
+const getBanUsers = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -1818,7 +1819,7 @@ const getBanUsers = (options) => async (context) => {
     return context;
 };
 
-const addBan = (options) => async (context) => {
+const addBan = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -1864,7 +1865,7 @@ const addBan = (options) => async (context) => {
     return context;
 };
 
-const removeBan = (options) => async (context) => {
+const removeBan = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -1894,7 +1895,7 @@ const removeBan = (options) => async (context) => {
     return context;
 };
 
-const changePassword = (options) => async (context) => {
+const changePassword = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const { user } = context.params;
@@ -1930,7 +1931,7 @@ const changePassword = (options) => async (context) => {
     return context;
 };
 
-const changeUserPassword = (options) => async (context) => {
+const changeUserPassword = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -1958,7 +1959,7 @@ const changeUserPassword = (options) => async (context) => {
     return context;
 };
 
-const getAllUsers = (options) => async (context) => {
+const getAllUsers = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -2004,7 +2005,7 @@ const getAllUsers = (options) => async (context) => {
     return context;
 };
 
-const getDuplicatedUsers = (options) => async (context) => {
+const getDuplicatedUsers = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -2200,7 +2201,7 @@ const getDuplicatedUsers = (options) => async (context) => {
     return context;
 };
 
-const mergeUsers = (options) => async (context) => {
+const mergeUsers = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -2598,7 +2599,7 @@ ${h2('Hey, #firstName#!', 'padding-top="10px"')}
     return context;
 };
 
-const updateChangelogSeenAt = (options) => async (context) => {
+const updateChangelogSeenAt = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -2613,7 +2614,7 @@ const updateChangelogSeenAt = (options) => async (context) => {
     return context;
 };
 
-const getRecentEmails = (options) => async (context) => {
+const getRecentEmails = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -2656,7 +2657,7 @@ const getRecentEmails = (options) => async (context) => {
     return context;
 };
 
-const getRegisterHistory = (options) => async (context) => {
+const getRegisterHistory = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -2673,7 +2674,7 @@ const getRegisterHistory = (options) => async (context) => {
     return context;
 };
 
-const getReferrals = (options) => async (context) => {
+const getReferrals = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -2724,7 +2725,7 @@ const getReferrals = (options) => async (context) => {
     return context;
 };
 
-const getPartnerReferrals = (options) => async (context) => {
+const getPartnerReferrals = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -2778,7 +2779,7 @@ const getPartnerReferrals = (options) => async (context) => {
     return context;
 };
 
-const getUserSubscriptions = (options) => async (context) => {
+const getUserSubscriptions = (options) => async (context: HookContext) => {
     let action;
     try {
         action = decodeAction(context.data.payload);
@@ -2814,7 +2815,7 @@ const getUserSubscriptions = (options) => async (context) => {
     return context;
 };
 
-const updateUserSubscriptions = (options) => async (context) => {
+const updateUserSubscriptions = (options) => async (context: HookContext) => {
     // check validation errors
     {
         const schema = yup.object().shape({
@@ -2869,7 +2870,7 @@ const updateUserSubscriptions = (options) => async (context) => {
     return context;
 };
 
-const unsubscribe = (options) => async (context) => {
+const unsubscribe = (options) => async (context: HookContext) => {
     // check validation errors
     {
         const schema = yup.object().shape({
@@ -2924,7 +2925,7 @@ const unsubscribe = (options) => async (context) => {
     return context;
 };
 
-const getMyBadgesStats = (options) => async (context) => {
+const getMyBadgesStats = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await limitToUser(context);
 
@@ -2937,7 +2938,7 @@ const getMyBadgesStats = (options) => async (context) => {
     return context;
 };
 
-const getReferrer = (options) => async (context) => {
+const getReferrer = (options) => async (context: HookContext) => {
     // check validation errors
     {
         const schema = yup.object().shape({
@@ -2982,7 +2983,7 @@ const getReferrer = (options) => async (context) => {
     return context;
 };
 
-const addPersonalNote = (options) => async (context) => {
+const addPersonalNote = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     {
@@ -3033,7 +3034,7 @@ const addPersonalNote = (options) => async (context) => {
     return context;
 };
 
-const disableUser = (options) => async (context) => {
+const disableUser = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -3055,7 +3056,7 @@ const disableUser = (options) => async (context) => {
     return context;
 };
 
-const restoreUser = (options) => async (context) => {
+const restoreUser = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -3077,7 +3078,7 @@ const restoreUser = (options) => async (context) => {
     return context;
 };
 
-const getPhotos = (options) => async (context) => {
+const getPhotos = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const sequelize = context.app.get('sequelizeClient');
@@ -3123,7 +3124,7 @@ const getPhotos = (options) => async (context) => {
     return context;
 };
 
-const avoidPlayers = (options) => async (context) => {
+const avoidPlayers = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     {
@@ -3186,7 +3187,7 @@ const avoidPlayers = (options) => async (context) => {
     return context;
 };
 
-const registerPartner = (options) => async (context) => {
+const registerPartner = (options) => async (context: HookContext) => {
     let action;
     try {
         action = decodeAction(context.data.payload);
@@ -3252,7 +3253,7 @@ const registerPartner = (options) => async (context) => {
     return context;
 };
 
-const getUserMatches = (options) => async (context) => {
+const getUserMatches = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const userId = Number(context.id);
 
@@ -3327,7 +3328,7 @@ const getUserMatches = (options) => async (context) => {
     return context;
 };
 
-const savePaw = (options) => async (context) => {
+const savePaw = (options) => async (context: HookContext) => {
     try {
         await authenticate('jwt')(context);
     } catch (e) {
@@ -3387,7 +3388,7 @@ const savePaw = (options) => async (context) => {
     return context;
 };
 
-const saveIdentification = (options) => async (context) => {
+const saveIdentification = (options) => async (context: HookContext) => {
     try {
         await authenticate('jwt')(context);
     } catch (e) {
@@ -3426,7 +3427,7 @@ const saveIdentification = (options) => async (context) => {
     return context;
 };
 
-const ignoreDuplicatedUsers = (options) => async (context) => {
+const ignoreDuplicatedUsers = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -3472,12 +3473,12 @@ const ignoreDuplicatedUsers = (options) => async (context) => {
     return context;
 };
 
-const parseInformation = (options) => async (context) => {
+const parseInformation = (options) => async (context: HookContext) => {
     context.result.information = populateInformation(context.result.information);
     return context;
 };
 
-const runCustomAction = (options) => async (context) => {
+const runCustomAction = (options) => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

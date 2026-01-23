@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import yup from '../../packages/yup';
 import { getSchemaErrors } from '../../helpers';
 import _isEmpty from 'lodash/isEmpty';
@@ -11,7 +12,7 @@ import { getPlayerName } from '../users/helpers';
 
 const { hashPassword } = hooks;
 
-const validateCreate = (options) => async (context) => {
+const validateCreate = (options) => async (context: HookContext) => {
     // validate input
     {
         const schema = yup.object().shape({
@@ -37,7 +38,7 @@ const validateCreate = (options) => async (context) => {
     return context;
 };
 
-const validateUpdate = (options) => async (context) => {
+const validateUpdate = (options) => async (context: HookContext) => {
     // validate input
     {
         const schema = yup.object().shape({
@@ -67,7 +68,7 @@ const validateUpdate = (options) => async (context) => {
     return context;
 };
 
-const sendNewPasswordEmail = (options) => async (context) => {
+const sendNewPasswordEmail = (options) => async (context: HookContext) => {
     const { app } = context;
     const { user, config } = context.params;
 
@@ -86,7 +87,7 @@ const sendNewPasswordEmail = (options) => async (context) => {
     return context;
 };
 
-const changePassword = (options) => async (context) => {
+const changePassword = (options) => async (context: HookContext) => {
     const { password, salt, userId } = context.data;
     const sequelize = context.app.get('sequelizeClient');
 

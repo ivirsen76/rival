@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import dayjs from '../../utils/dayjs';
 import { revertScore } from '../matches/helpers';
@@ -34,7 +35,7 @@ import { POOL_PARTNER_ID } from '../../constants';
 import seedrandom from 'seedrandom';
 import axios from 'axios';
 
-const validatePatch = (options) => (context) => {
+const validatePatch = (options) => (context: HookContext) => {
     const errors = validate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -44,7 +45,7 @@ const validatePatch = (options) => (context) => {
     return context;
 };
 
-const checkIfCurrentUser = (options) => async (context) => {
+const checkIfCurrentUser = (options) => async (context: HookContext) => {
     const currentUser = context.params.user;
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
@@ -106,7 +107,7 @@ const checkIfCurrentUser = (options) => async (context) => {
     return context;
 };
 
-const populateEloHistory = (options) => async (context) => {
+const populateEloHistory = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const userId = Number(context.params.query.userId);
     const { config } = context.params;
@@ -294,7 +295,7 @@ const sendFirstDayEmail =
         return context;
     };
 
-const batchAddPlayers = (options) => async (context) => {
+const batchAddPlayers = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -388,7 +389,7 @@ const batchAddPlayers = (options) => async (context) => {
     return context;
 };
 
-const registerForFree = (options) => async (context) => {
+const registerForFree = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -606,7 +607,7 @@ const registerForFree = (options) => async (context) => {
     return context;
 };
 
-const getPossibleTournaments = (options) => async (context) => {
+const getPossibleTournaments = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const { user, config } = context.params;
@@ -667,7 +668,7 @@ const getPossibleTournaments = (options) => async (context) => {
     return context;
 };
 
-const switchTournament = (options) => async (context) => {
+const switchTournament = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     // Validate the data
@@ -836,7 +837,7 @@ const switchTournament = (options) => async (context) => {
     return context;
 };
 
-const validateRemove = (options) => async (context) => {
+const validateRemove = (options) => async (context: HookContext) => {
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { players } = sequelize.models;
@@ -884,7 +885,7 @@ const validateRemove = (options) => async (context) => {
     return context;
 };
 
-const claimReward = (options) => async (context) => {
+const claimReward = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -1124,7 +1125,7 @@ ${h2('Congratulations, #firstName#!', 'padding-top="10px"')}
     return context;
 };
 
-const purgeRelatedTournaments = (options) => async (context) => {
+const purgeRelatedTournaments = (options) => async (context: HookContext) => {
     const playerId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
 
@@ -1152,7 +1153,7 @@ const purgeRelatedTournaments = (options) => async (context) => {
     return context;
 };
 
-const activatePlayer = (options) => async (context) => {
+const activatePlayer = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -1193,7 +1194,7 @@ const activatePlayer = (options) => async (context) => {
     return context;
 };
 
-const deactivatePlayer = (options) => async (context) => {
+const deactivatePlayer = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -1231,7 +1232,7 @@ const deactivatePlayer = (options) => async (context) => {
     return context;
 };
 
-const quitTournament = (options) => async (context) => {
+const quitTournament = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -1297,7 +1298,7 @@ const quitTournament = (options) => async (context) => {
     return context;
 };
 
-const setPrediction = (options) => async (context) => {
+const setPrediction = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -1356,7 +1357,7 @@ const setPrediction = (options) => async (context) => {
     return context;
 };
 
-const joinDoublesTeam = (options) => async (context) => {
+const joinDoublesTeam = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -1479,7 +1480,7 @@ const joinDoublesTeam = (options) => async (context) => {
     return context;
 };
 
-const acceptPlayerFromPool = (options) => async (context) => {
+const acceptPlayerFromPool = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -1551,7 +1552,7 @@ const acceptPlayerFromPool = (options) => async (context) => {
     return context;
 };
 
-const removeFromPlayerPool = (options) => async (context) => {
+const removeFromPlayerPool = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -1577,7 +1578,7 @@ const removeFromPlayerPool = (options) => async (context) => {
     return context;
 };
 
-const moveToPlayerPool = (options) => async (context) => {
+const moveToPlayerPool = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['player'])(context);
 
@@ -1623,7 +1624,7 @@ const moveToPlayerPool = (options) => async (context) => {
     return context;
 };
 
-const getSuggestedTeamNames = (options) => async (context) => {
+const getSuggestedTeamNames = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     // Validate the data
@@ -1687,7 +1688,7 @@ const getSuggestedTeamNames = (options) => async (context) => {
     return context;
 };
 
-const changeTeamName = (options) => async (context) => {
+const changeTeamName = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const playerId = Number(context.id);
@@ -1745,7 +1746,7 @@ const changeTeamName = (options) => async (context) => {
     return context;
 };
 
-const replaceCaptain = (options) => async (context) => {
+const replaceCaptain = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const playerId = Number(context.id);
@@ -1818,7 +1819,7 @@ const replaceCaptain = (options) => async (context) => {
     return context;
 };
 
-const leaveTeam = (options) => async (context) => {
+const leaveTeam = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const playerId = Number(context.id);
@@ -1886,7 +1887,7 @@ ${h2('Hello, #firstName#!', 'padding-top="10px"')}
     return context;
 };
 
-const createTeamFromPool = (options) => async (context) => {
+const createTeamFromPool = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -1972,7 +1973,7 @@ ${playerInfo.map(
     return context;
 };
 
-const movePartner = (options) => async (context) => {
+const movePartner = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -2022,7 +2023,7 @@ const movePartner = (options) => async (context) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context) => {
+const runCustomAction = (options) => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

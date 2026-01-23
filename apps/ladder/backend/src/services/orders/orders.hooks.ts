@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { disallow } from 'feathers-hooks-common';
 import { calculateNextOrder } from './helpers';
@@ -12,7 +13,7 @@ import { getEmailsFromList } from '../settings/helpers';
 import { sendDoublesTeamInvitation, formatTeamName } from '../players/helpers';
 import { POOL_PARTNER_ID } from '../../constants';
 
-const getProcessedOrders = (options) => async (context) => {
+const getProcessedOrders = (options) => async (context: HookContext) => {
     const userId = context.params.user.id;
 
     const sequelize = context.app.get('sequelizeClient');
@@ -247,7 +248,7 @@ const processOrder = async (order, context) => {
     return result;
 };
 
-const populateOrder = (options) => async (context) => {
+const populateOrder = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { seasons } = sequelize.models;
     const { config, user } = context.params;
@@ -385,7 +386,7 @@ const populateOrder = (options) => async (context) => {
     return context;
 };
 
-const processStripeSession = (options) => async (context) => {
+const processStripeSession = (options) => async (context: HookContext) => {
     const { orders } = context.app.get('sequelizeClient').models;
     const { sessionId } = context.data;
 
@@ -423,7 +424,7 @@ const processStripeSession = (options) => async (context) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context) => {
+const runCustomAction = (options) => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

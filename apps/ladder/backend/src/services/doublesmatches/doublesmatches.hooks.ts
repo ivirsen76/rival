@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { throwValidationErrors } from '../../helpers';
 import _isEmpty from 'lodash/isEmpty';
@@ -156,7 +157,7 @@ const populateNextFinalMatch = async (context, prevMatch) => {
     }
 };
 
-const setScore = (options) => async (context) => {
+const setScore = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const errors = validate(context.data);
@@ -296,7 +297,7 @@ const setScore = (options) => async (context) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context) => {
+const runCustomAction = (options) => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

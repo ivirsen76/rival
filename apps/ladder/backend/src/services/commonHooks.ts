@@ -1,4 +1,4 @@
-const { TL_ENABLE_REDIS } = process.env;
+import type { HookContext } from '@feathersjs/feathers';
 import { Forbidden } from '@feathersjs/errors';
 import { getSlug } from '../helpers';
 import _intersection from 'lodash/intersection';
@@ -11,6 +11,8 @@ import { updateCurrentWeekUserBadges } from '../utils/applyNewBadges';
 import { encrypt } from '../utils/crypt';
 import { getPlayerName, getEmailContact } from './users/helpers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
+
+const { TL_ENABLE_REDIS } = process.env;
 
 export const hasAnyRole = (roles) => (context) => {
     roles = typeof roles === 'string' ? [roles] : roles;
@@ -85,7 +87,7 @@ export const purgeTournamentCache =
         return context;
     };
 
-export const purgeUserCache = (options) => async (context) => {
+export const purgeUserCache = (options) => async (context: HookContext) => {
     if (!TL_ENABLE_REDIS) {
         return context;
     }
@@ -114,7 +116,7 @@ export const purgeUserCache = (options) => async (context) => {
     return context;
 };
 
-export const purgeSeasonCache = (options) => async (context) => {
+export const purgeSeasonCache = (options) => async (context: HookContext) => {
     if (!TL_ENABLE_REDIS) {
         return context;
     }
@@ -143,7 +145,7 @@ export const purgeSeasonCache = (options) => async (context) => {
     return context;
 };
 
-export const purgeMatchCache = (options) => async (context) => {
+export const purgeMatchCache = (options) => async (context: HookContext) => {
     if (!TL_ENABLE_REDIS) {
         return context;
     }
@@ -267,7 +269,7 @@ export const generateBadges = () => async (context) => {
     return context;
 };
 
-export const populateSalt = (options) => async (context) => {
+export const populateSalt = (options) => async (context: HookContext) => {
     const { data } = context;
 
     if (data.password) {
@@ -277,7 +279,7 @@ export const populateSalt = (options) => async (context) => {
     return context;
 };
 
-export const optionalAuthenticate = (options) => async (context) => {
+export const optionalAuthenticate = (options) => async (context: HookContext) => {
     try {
         await authenticate('jwt')(context);
     } catch (e) {

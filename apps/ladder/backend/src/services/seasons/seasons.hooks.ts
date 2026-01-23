@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import hydrate from 'feathers-sequelize/hooks/hydrate';
@@ -17,7 +18,7 @@ import getCustomEmail from '../../emailTemplates/getCustomEmail';
 
 const WEEK_SHIFT = 3; // The payments for last weeks we count as for the next season
 
-const validateCreate = (options) => async (context) => {
+const validateCreate = (options) => async (context: HookContext) => {
     const errors = commonValidate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -52,7 +53,7 @@ const validateCreate = (options) => async (context) => {
     return context;
 };
 
-const populateDates = (options) => async (context) => {
+const populateDates = (options) => async (context: HookContext) => {
     const { data } = context;
 
     data.startDate = dayjs.tz(data.startDate).hour(0).minute(0).second(0).format('YYYY-MM-DD HH:mm:ss+00:00');
@@ -61,7 +62,7 @@ const populateDates = (options) => async (context) => {
     return context;
 };
 
-const populateIsFree = (options) => async (context) => {
+const populateIsFree = (options) => async (context: HookContext) => {
     const { data } = context;
     const sequelize = context.app.get('sequelizeClient');
 
@@ -71,7 +72,7 @@ const populateIsFree = (options) => async (context) => {
     return context;
 };
 
-const validatePatch = (options) => async (context) => {
+const validatePatch = (options) => async (context: HookContext) => {
     const seasonId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { seasons } = sequelize.models;
@@ -179,7 +180,7 @@ const validatePatch = (options) => async (context) => {
     return context;
 };
 
-const getLevels = (options) => (context) => {
+const getLevels = (options) => (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { levels } = sequelize.models;
     context.params.sequelize = {
@@ -193,7 +194,7 @@ const getLevels = (options) => (context) => {
     return context;
 };
 
-const getCurrentSeason = (options) => async (context) => {
+const getCurrentSeason = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
     const currentDate = dayjs.tz();
@@ -366,7 +367,7 @@ const getCurrentSeason = (options) => async (context) => {
     return context;
 };
 
-const getSeasonsToRegister = (options) => async (context) => {
+const getSeasonsToRegister = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
     const currentDate = dayjs.tz();
@@ -450,7 +451,7 @@ const getSeasonsToRegister = (options) => async (context) => {
     return context;
 };
 
-const populateLevelsBasedOnPrevSeason = (options) => async (context) => {
+const populateLevelsBasedOnPrevSeason = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { tournaments } = sequelize.models;
 
@@ -485,7 +486,7 @@ const populateLevelsBasedOnPrevSeason = (options) => async (context) => {
     return context;
 };
 
-const sendNewSeasonNotification = (options) => async (context) => {
+const sendNewSeasonNotification = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
     const season = context.result;
@@ -511,7 +512,7 @@ const sendNewSeasonNotification = (options) => async (context) => {
     return context;
 };
 
-const updateLevels = (options) => async (context) => {
+const updateLevels = (options) => async (context: HookContext) => {
     const levels = context.data.levels;
     const season = context.result;
     season.setLevels(levels);
@@ -519,7 +520,7 @@ const updateLevels = (options) => async (context) => {
     return context;
 };
 
-const getLevelsInfo = (options) => async (context) => {
+const getLevelsInfo = (options) => async (context: HookContext) => {
     const seasonId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
 
@@ -545,7 +546,7 @@ const getLevelsInfo = (options) => async (context) => {
     return context;
 };
 
-const getPlayersFromLastSeasons = (options) => async (context) => {
+const getPlayersFromLastSeasons = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -676,7 +677,7 @@ const getPlayersFromLastSeasons = (options) => async (context) => {
     return context;
 };
 
-const closeSeason = (options) => async (context) => {
+const closeSeason = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -736,7 +737,7 @@ const closeSeason = (options) => async (context) => {
     return context;
 };
 
-const getSeasonStats = (options) => async (context) => {
+const getSeasonStats = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -918,7 +919,7 @@ const getSeasonStats = (options) => async (context) => {
     return context;
 };
 
-const getSeasonIncomes = (options) => async (context) => {
+const getSeasonIncomes = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -979,7 +980,7 @@ const getSeasonIncomes = (options) => async (context) => {
     return context;
 };
 
-const getSeasonPayments = (options) => async (context) => {
+const getSeasonPayments = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -1030,7 +1031,7 @@ const getSeasonPayments = (options) => async (context) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context) => {
+const runCustomAction = (options) => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

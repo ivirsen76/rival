@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { getTournament, getSeeds } from './selectors';
 import redis from '../redisHooks';
@@ -21,7 +22,7 @@ import { optionalAuthenticate } from '../commonHooks';
 const cache = new NodeCache({ useClones: false });
 const events = new Set();
 
-const setAgeCompatibleFlag = (options) => async (context) => {
+const setAgeCompatibleFlag = (options) => async (context: HookContext) => {
     const { config } = context.params;
     const sequelize = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
@@ -55,7 +56,7 @@ const setAgeCompatibleFlag = (options) => async (context) => {
     return context;
 };
 
-const populateTournament = (options) => async (context) => {
+const populateTournament = (options) => async (context: HookContext) => {
     if (context.result) {
         return context;
     }
@@ -496,7 +497,7 @@ const isCacheStale = (data, context) => {
     return !dayjs.tz().isSame(dayjs.tz(data.createdAt), 'day');
 };
 
-const getFinalMatches = (options) => async (context) => {
+const getFinalMatches = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const tournamentId = Number(context.id);
 
@@ -536,7 +537,7 @@ const getFinalMatches = (options) => async (context) => {
     return context;
 };
 
-const getDoublesInfo = (options) => async (context) => {
+const getDoublesInfo = (options) => async (context: HookContext) => {
     let action;
     try {
         action = decodeAction(context.data.payload);
@@ -615,7 +616,7 @@ const getDoublesInfo = (options) => async (context) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context) => {
+const runCustomAction = (options) => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

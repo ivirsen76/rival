@@ -1,10 +1,11 @@
+import type { HookContext } from '@feathersjs/feathers';
 import ical from 'ical-generator';
 import { disallow } from 'feathers-hooks-common';
 import { Unprocessable } from '@feathersjs/errors';
 import dayjs from '../../utils/dayjs';
 import md5 from 'md5';
 
-const getCalendar = (options) => async (context) => {
+const getCalendar = (options) => async (context: HookContext) => {
     const referralCode = context.id;
 
     const sequelize = context.app.get('sequelizeClient');

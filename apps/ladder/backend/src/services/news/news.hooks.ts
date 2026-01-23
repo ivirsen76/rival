@@ -1,4 +1,6 @@
-const orderByDate = (options) => (context) => {
+import type { HookContext } from '@feathersjs/feathers';
+
+const orderByDate = (options) => (context: HookContext) => {
     context.params.sequelize = {
         order: [['date', 'DESC']],
         raw: false,

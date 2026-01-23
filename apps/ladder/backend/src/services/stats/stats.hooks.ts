@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { disallow } from 'feathers-hooks-common';
 import { NotFound } from '@feathersjs/errors';
 import dayjs from '../../utils/dayjs';
@@ -56,7 +57,7 @@ const getAllUsers = async (context) => {
     }, {});
 };
 
-const getMostMatchesStat = (options) => async (context) => {
+const getMostMatchesStat = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -117,7 +118,7 @@ const getMostMatchesStat = (options) => async (context) => {
     return context;
 };
 
-const getMostSeasonsStat = (options) => async (context) => {
+const getMostSeasonsStat = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -168,7 +169,7 @@ const getMostSeasonsStat = (options) => async (context) => {
     return context;
 };
 
-const getHighestTlrStats = (options) => async (context) => {
+const getHighestTlrStats = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -225,7 +226,7 @@ const getHighestTlrStats = (options) => async (context) => {
     return context;
 };
 
-const getMostProgress = (options) => async (context) => {
+const getMostProgress = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -283,7 +284,7 @@ const getMostProgress = (options) => async (context) => {
     return context;
 };
 
-const getMostRivalries = (options) => async (context) => {
+const getMostRivalries = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -334,7 +335,7 @@ const getMostRivalries = (options) => async (context) => {
     return context;
 };
 
-const getMostComebacks = (options) => async (context) => {
+const getMostComebacks = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -409,7 +410,7 @@ const getMostComebacks = (options) => async (context) => {
     return context;
 };
 
-const getLongestRivalries = (options) => async (context) => {
+const getLongestRivalries = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -482,7 +483,7 @@ const getLongestRivalries = (options) => async (context) => {
     return context;
 };
 
-const getMostBadges = (options) => async (context) => {
+const getMostBadges = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const currentUserIds = await getCurrentSeasonUsers(context);
@@ -529,7 +530,7 @@ const getMostBadges = (options) => async (context) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context) => {
+const runCustomAction = (options) => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

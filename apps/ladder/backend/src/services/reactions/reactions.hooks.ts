@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { Unprocessable } from '@feathersjs/errors';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { keep, disallow } from 'feathers-hooks-common';
@@ -5,7 +6,7 @@ import yup from '../../packages/yup';
 import { throwValidationErrors, getSchemaErrors } from '../../helpers';
 import _isEmpty from 'lodash/isEmpty';
 
-const populateReaction = (options) => async (context) => {
+const populateReaction = (options) => async (context: HookContext) => {
     // Validate data
     {
         const schema = yup.object().shape({

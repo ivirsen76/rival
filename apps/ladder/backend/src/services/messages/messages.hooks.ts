@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { keep, disallow } from 'feathers-hooks-common';
 import yup from '../../packages/yup';
@@ -9,7 +10,7 @@ import newMessageTemplate from '../../emailTemplates/newMessage';
 import { getStatsMatches } from '../../utils/sqlConditions';
 import { getEmailContact, getPlayerName } from '../users/helpers';
 
-const validateCreate = (options) => async (context) => {
+const validateCreate = (options) => async (context: HookContext) => {
     // Validate data
     {
         const schema = yup.object().shape({
@@ -110,7 +111,7 @@ const validateCreate = (options) => async (context) => {
     return context;
 };
 
-const sendMessage = (options) => async (context) => {
+const sendMessage = (options) => async (context: HookContext) => {
     const currentUser = context.params.user;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;

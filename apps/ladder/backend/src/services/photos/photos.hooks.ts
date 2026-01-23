@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { keep, disallow } from 'feathers-hooks-common';
@@ -17,7 +18,7 @@ import moderatePhotoNotificationTemplate from '../../emailTemplates/moderatePhot
 import { getActionLink, decodeAction } from '../../utils/action';
 import { getPlayerName, getEmailContact } from '../users/helpers';
 
-const getPresignedUrlForPhotosUpload = (options) => async (context) => {
+const getPresignedUrlForPhotosUpload = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -95,7 +96,7 @@ const getPresignedUrlForPhotosUpload = (options) => async (context) => {
     context.result = await Promise.all(files.map(getPresignedUrl));
 };
 
-const batchProcess = (options) => async (context) => {
+const batchProcess = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -201,7 +202,7 @@ const batchProcess = (options) => async (context) => {
     await generateBadges()(context);
 };
 
-const getReactionsAndComments = (options) => async (context) => {
+const getReactionsAndComments = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const photoId = Number(context.id);
 
@@ -264,7 +265,7 @@ const getReactionsAndComments = (options) => async (context) => {
     return context;
 };
 
-const addView = (options) => async (context) => {
+const addView = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const sequelize = context.app.get('sequelizeClient');
@@ -290,7 +291,7 @@ const addView = (options) => async (context) => {
     return context;
 };
 
-const validatePatch = (options) => async (context) => {
+const validatePatch = (options) => async (context: HookContext) => {
     const photoId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { photos } = sequelize.models;
@@ -320,7 +321,7 @@ const validatePatch = (options) => async (context) => {
     return context;
 };
 
-const validateDelete = (options) => async (context) => {
+const validateDelete = (options) => async (context: HookContext) => {
     const id = Number(context.id);
     const currentUser = context.params.user;
 
@@ -343,7 +344,7 @@ const validateDelete = (options) => async (context) => {
     return context;
 };
 
-const changePermissions = (options) => async (context) => {
+const changePermissions = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -391,7 +392,7 @@ const changePermissions = (options) => async (context) => {
     return context;
 };
 
-const approvePhoto = (options) => async (context) => {
+const approvePhoto = (options) => async (context: HookContext) => {
     let action;
     try {
         action = decodeAction(context.data.payload);
@@ -425,7 +426,7 @@ const approvePhoto = (options) => async (context) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context) => {
+const runCustomAction = (options) => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { throwValidationErrors, getSchemaErrors } from '../../helpers';
@@ -7,7 +8,7 @@ import { getEmailsFromList } from '../settings/helpers';
 import commentReportNotificationTemplate from '../../emailTemplates/commentReportNotification';
 import { getPlayerName, getEmailContact } from '../users/helpers';
 
-const reportAboutComment = (options) => async (context) => {
+const reportAboutComment = (options) => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -64,7 +65,7 @@ const reportAboutComment = (options) => async (context) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context) => {
+const runCustomAction = (options) => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

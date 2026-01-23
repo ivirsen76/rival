@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import commonValidate from './commonValidate';
@@ -59,7 +60,7 @@ const sendAcceptedDoublesProposalEmail = ({ context, players, match }) => {
     });
 };
 
-const validateCreate = (options) => (context) => {
+const validateCreate = (options) => (context: HookContext) => {
     const errors = commonValidate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -69,12 +70,12 @@ const validateCreate = (options) => (context) => {
     return context;
 };
 
-const completePlayedAt = (options) => (context) => {
+const completePlayedAt = (options) => (context: HookContext) => {
     context.data.playedAt += '+00:00';
     return context;
 };
 
-const populateChallengerId = (options) => async (context) => {
+const populateChallengerId = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { players } = context.app.get('sequelizeClient').models;
     const userId = context.params.user.id;
@@ -181,7 +182,7 @@ const populateChallengerId = (options) => async (context) => {
     return context;
 };
 
-const populateAcceptorData = (options) => async (context) => {
+const populateAcceptorData = (options) => async (context: HookContext) => {
     const matchId = Number(context.id);
     const userId = context.params.user.id;
 
@@ -296,7 +297,7 @@ const populateAcceptorData = (options) => async (context) => {
     return context;
 };
 
-const sendAcceptedProposalEmail = (options) => async (context) => {
+const sendAcceptedProposalEmail = (options) => async (context: HookContext) => {
     const { app } = context;
     const matchId = Number(context.id);
     const { matches } = context.app.get('sequelizeClient').models;
@@ -332,7 +333,7 @@ const sendAcceptedProposalEmail = (options) => async (context) => {
     return context;
 };
 
-const createProposal = (options) => async (context) => {
+const createProposal = (options) => async (context: HookContext) => {
     const { data } = context;
     const { challengerIds } = context.params;
     const { matches } = context.app.get('sequelizeClient').models;
@@ -364,7 +365,7 @@ const createProposal = (options) => async (context) => {
     return context;
 };
 
-const acceptProposal = (options) => async (context) => {
+const acceptProposal = (options) => async (context: HookContext) => {
     await populateAcceptorData()(context);
 
     const matchId = Number(context.id);
@@ -385,7 +386,7 @@ const acceptProposal = (options) => async (context) => {
     return context;
 };
 
-const addDoublesProposal = (options) => async (context) => {
+const addDoublesProposal = (options) => async (context: HookContext) => {
     const { TL_URL } = process.env;
     const currentUser = context.params.user;
     const sequelize = context.app.get('sequelizeClient');
@@ -588,7 +589,7 @@ const addDoublesProposal = (options) => async (context) => {
     return context;
 };
 
-const acceptDoublesProposal = (options) => async (context) => {
+const acceptDoublesProposal = (options) => async (context: HookContext) => {
     const currentUser = context.params.user;
     const matchId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
@@ -731,7 +732,7 @@ const acceptDoublesProposal = (options) => async (context) => {
     return context;
 };
 
-const removeProposal = (options) => async (context) => {
+const removeProposal = (options) => async (context: HookContext) => {
     const { app } = context;
     const sequelize = context.app.get('sequelizeClient');
     const matchId = Number(context.id);
@@ -830,7 +831,7 @@ ${context.data.reason ? `<mj-text><b>Reason:</b> ${context.data.reason}.</mj-tex
     return context;
 };
 
-const removeDoublesProposal = (options) => async (context) => {
+const removeDoublesProposal = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const matchId = Number(context.id);
     const currentUser = context.params.user;
@@ -993,7 +994,7 @@ const removeDoublesProposal = (options) => async (context) => {
     return context;
 };
 
-const getVisibleStats = (options) => async (context) => {
+const getVisibleStats = (options) => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
     const { config } = context.params;
@@ -1071,13 +1072,13 @@ const getVisibleStats = (options) => async (context) => {
     return context;
 };
 
-const sendNewProposalEmail = (options) => async (context) => {
+const sendNewProposalEmail = (options) => async (context: HookContext) => {
     if (process.env.TL_ENV !== 'production') {
         await sendProposalEmails(context.app, true);
     }
 };
 
-const runCustomAction = (options) => async (context) => {
+const runCustomAction = (options) => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 
