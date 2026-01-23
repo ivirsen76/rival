@@ -17,7 +17,7 @@ import percentReferralTemplate from '../emailTemplates/percentReferral';
 import getCustomEmail from '../emailTemplates/getCustomEmail';
 import compareFields from './compareFields';
 import renderImage from './renderImage';
-import staticConfig from '../config';
+import { projectedTlrMultipliers } from '../config';
 import invokeLambda from './invokeLambda';
 import { getStatsMatches } from './sqlConditions';
 import getCombinedConfig from './getCombinedConfig';
@@ -26,12 +26,7 @@ import { getSeasonTournaments } from '../services/seasons/helpers';
 import getSeasonSvg from './getSeasonSvg';
 import md5 from 'md5';
 
-// Helpers
-const getConfig = async (sequelize) => {
-    const config = await getCombinedConfig();
-    return { ...staticConfig, ...config };
-};
-const getSeasonLevels = async (sequelize, seasonId) => {
+const getSeasonLevels = async (sequelize, seasonId: number) => {
     const [levels] = await sequelize.query(
         `
         SELECT l.id, l.slug, l.name, l.type, l.baseTlr, l.minTlr, l.maxTlr
@@ -135,7 +130,7 @@ const getImagesFromSvg = async (svgs) => {
 export const remindForTournament = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
-    const config = await getConfig(sequelize);
+    const config = await getCombinedConfig();
     const { tournamentReminderWeeks } = config;
 
     // Check if we close to the tournament
@@ -233,7 +228,7 @@ export const remindForTournament = async (app) => {
 export const lastDayRemindForTournament = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
-    const config = await getConfig(sequelize);
+    const config = await getCombinedConfig();
     const REMINDER_DAYS = 1;
 
     // Check if we 1 day close to the tournament
@@ -371,7 +366,7 @@ export const lastDayRemindForTournament = async (app) => {
 export const remindForFirstDay = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
-    const config = await getConfig(sequelize);
+    const config = await getCombinedConfig();
 
     // Check the current season
     const currentDate = dayjs.tz();
@@ -434,7 +429,7 @@ export const remindForFirstDay = async (app) => {
 export const requestFeedbackForNoJoin = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
-    const config = await getConfig(sequelize);
+    const config = await getCombinedConfig();
     if (config.isRaleigh) {
         return;
     }
@@ -558,7 +553,7 @@ export const requestFeedbackForNoJoin = async (app) => {
 export const switchToPercentReferral = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
-    const config = await getConfig(sequelize);
+    const config = await getCombinedConfig();
     if (!['richmond', 'sanantonio'].includes(config.url)) {
         return;
     }
@@ -644,7 +639,7 @@ export const remindForActivity = async (app) => {
     const { users } = sequelize.models;
     const ACTION_NAME = 'activityReminder';
 
-    const config = await getConfig(sequelize);
+    const config = await getCombinedConfig();
     if (config.isRaleigh) {
         return;
     }
@@ -733,7 +728,7 @@ export const remindForChoosingLadder = async (app) => {
     const sequelize = app.get('sequelizeClient');
     const ACTION_NAME = 'chooseLadderReminder';
 
-    const config = await getConfig(sequelize);
+    const config = await getCombinedConfig();
     if (config.isRaleigh) {
         return;
     }
@@ -811,7 +806,7 @@ export const seasonIsOver = async (app) => {
     const sequelize = app.get('sequelizeClient');
     const MIN_MATCHES_PLAYED = process.env.NODE_ENV === 'test' ? 5 : 25;
 
-    const config = await getConfig(sequelize);
+    const config = await getCombinedConfig();
     const currentDate = dayjs.tz();
 
     const [prevSeason, nextSeason] = await getCurrentSeasons(sequelize);
@@ -1179,7 +1174,7 @@ export const joinNextSeason = async (app) => {
         return;
     }
 
-    const config = await getConfig(sequelize);
+    const config = await getCombinedConfig();
     const currentDate = dayjs.tz();
 
     const REMINDERS = [
@@ -1351,7 +1346,7 @@ export const joinNextSeason = async (app) => {
 export const remindForClaimingReward = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
-    const config = await getConfig(sequelize);
+    const config = await getCombinedConfig();
     if (config.isRaleigh) {
         return;
     }
@@ -1498,7 +1493,7 @@ export const remindForClaimingReward = async (app) => {
 export const sendFinalScheduleReminder = async (app) => {
     const sequelize = app.get('sequelizeClient');
 
-    const config = await getConfig(sequelize);
+    const config = await getCombinedConfig();
 
     // Check the current season
     const currentDate = dayjs.tz();
@@ -1736,7 +1731,7 @@ export const generateWordCloud = async (app) => {
 
 export const sendMissingTeammateReminder = async (app) => {
     const sequelize = app.get('sequelizeClient');
-    const config = await getConfig(sequelize);
+    const config = await getCombinedConfig();
 
     const ACTION_NAME = 'sendNoTeammateReminder';
 
@@ -1832,7 +1827,7 @@ ${signature({ config })}
 
 export const sendHighProjectedTlrWarning = async (app) => {
     const sequelize = app.get('sequelizeClient');
-    const config = await getConfig(sequelize);
+    const config = await getCombinedConfig();
     const { players } = sequelize.models;
     const { TL_URL } = process.env;
 
@@ -1934,7 +1929,7 @@ export const sendHighProjectedTlrWarning = async (app) => {
             return;
         }
 
-        const multiplier = staticConfig.projectedTlrMultipliers[totalMatches];
+        const multiplier = projectedTlrMultipliers[totalMatches];
         if (!multiplier) {
             return;
         }

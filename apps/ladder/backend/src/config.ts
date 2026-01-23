@@ -19,3 +19,9 @@ export const mysqlOptions = {
 };
 
 export const isProduction = process.env.TL_ENV === 'production';
+
+export default {
+    projectedTlrMultipliers,
+    mysqlOptions,
+    isProduction,
+};
