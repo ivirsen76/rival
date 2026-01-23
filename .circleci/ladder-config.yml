@@ -47,6 +47,7 @@ jobs:
         steps:
             - checkout
             - run: *install
+            - run: *setup
 
             # restore dist from shared workspace
             - attach_workspace:
