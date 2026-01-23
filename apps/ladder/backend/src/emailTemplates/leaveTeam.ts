@@ -1,6 +1,7 @@
+import type { Config } from '../types';
 import { normal, h2 } from './normal';
 
-export default (config, { memberName, isDisbanded, teamsUrl, reason, previewText }) =>
+export default (config: Config, { memberName, isDisbanded, teamsUrl, reason, previewText }) =>
     normal(
         `
   ${h2('Hello, #firstName#!', 'padding-top="10px"')}

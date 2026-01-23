@@ -1,6 +1,7 @@
+import type { Config } from '../types';
 import { normal } from './normal';
 
-export default (config, { actionLink, fullName }) => {
+export default (config: Config, { actionLink, fullName }) => {
     const contactLink = process.env.TL_URL + '/contacts';
 
     return normal(

@@ -1,7 +1,8 @@
+import type { Config } from '../types';
 import { normal, h2, signature } from './normal';
 
 export default (
-    config,
+    config: Config,
     { elo, eloImg, currentLevel, isLevelSuitable, suggestedLevel, moveDirection, isTournamentRestriction }
 ) => {
     const eloUrl = `${process.env.TL_URL}/tlr`;

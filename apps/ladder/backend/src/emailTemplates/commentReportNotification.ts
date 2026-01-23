@@ -1,6 +1,7 @@
+import type { Config } from '../types';
 import { normal } from './normal';
 
-export default (config, { userName, author, comment, message, previewText }) => {
+export default (config: Config, { userName, author, comment, message, previewText }) => {
     return normal(
         `
   <mj-text><b>${userName}</b> reported on a comment.</mj-text>

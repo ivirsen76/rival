@@ -1,3 +1,4 @@
+import type { Config } from '../types';
 import { normal, h2, h3, getImageUrl, signature } from './normal';
 import { getSeasonName } from '../services/seasons/helpers';
 import dayjs from '../utils/dayjs';
@@ -17,7 +18,7 @@ const renderPlayer = ({ player, title, description, points, formatNumber }) => {
         </mj-column>`;
 };
 
-export default (config, { prevSeason, nextSeason, stats, players }) => {
+export default (config: Config, { prevSeason, nextSeason, stats, players }) => {
     const prevSeasonName = getSeasonName(prevSeason);
     const nextSeasonName = getSeasonName(nextSeason);
     const weeks = Math.round(dayjs.tz(prevSeason.endDate).diff(dayjs.tz(prevSeason.startDate), 'week', true));

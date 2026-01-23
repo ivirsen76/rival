@@ -1,7 +1,8 @@
+import type { Config } from '../types';
 import { normal, h2, signature } from './normal';
 import { getSeasonName, getShortSeasonName } from '../services/seasons/helpers';
 
-export default (config, { prevSeason, currentSeason }) => {
+export default (config: Config, { prevSeason, currentSeason }) => {
     const prevSeasonName = getSeasonName(prevSeason);
     const currentShortSeasonName = getShortSeasonName(currentSeason);
 

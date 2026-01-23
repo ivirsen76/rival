@@ -1,6 +1,7 @@
+import type { Config } from '../types';
 import { normal, h2 } from './normal';
 
-export default (config, { referralName }) => {
+export default (config: Config, { referralName }) => {
     const walletUrl = `${process.env.TL_URL}/user/wallet`;
     const referralUrl = `${process.env.TL_URL}/user/referral`;
 

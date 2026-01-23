@@ -1,7 +1,8 @@
+import type { Config } from '../types';
 import { normal, renderProposal } from './normal';
 
 export default (
-    config,
+    config: Config,
     { level, proposal, proposalPlayer, proposalLink, isFriendlyProposal, teamDetails, previewText }
 ) => {
     const entity = proposal.practiceType ? 'practice' : isFriendlyProposal ? 'friendly match' : 'match';

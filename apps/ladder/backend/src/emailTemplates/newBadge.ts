@@ -1,8 +1,9 @@
+import type { Config } from '../types';
 import { normal, h2 } from './normal';
 
 const phrases = ['Awesome job', 'Great job', 'Amazing job', 'You crushed it', 'You are unstoppable', 'You are on fire'];
 
-export default (config, { badges }) => {
+export default (config: Config, { badges }) => {
     const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
     const walletUrl = `${process.env.TL_URL}/user/wallet`;
     const badgesUrl = `${process.env.TL_URL}/user/badges`;

@@ -1,9 +1,10 @@
 import { normal } from './normal';
+import type { Config } from '../types';
 
 const getName = (player) => `${player.firstName.slice(0, 1)}. ${player.lastName}`;
 
 export default (
-    config,
+    config: Config,
     { challenger, challenger2, acceptor, acceptor2, level, proposalDate, proposalLocation, previewText }
 ) => {
     // prettier-ignore

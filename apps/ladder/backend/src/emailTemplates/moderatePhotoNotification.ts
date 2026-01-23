@@ -1,6 +1,7 @@
+import type { Config } from '../types';
 import { normal } from './normal';
 
-export default (config, { userName, profileLink, photoSrc, moderationInfo, approveLink, previewText }) => {
+export default (config: Config, { userName, profileLink, photoSrc, moderationInfo, approveLink, previewText }) => {
     return normal(
         `
   <mj-text><a href="${profileLink}"><b>${userName}</b></a> added an inappropriate photo.</mj-text>

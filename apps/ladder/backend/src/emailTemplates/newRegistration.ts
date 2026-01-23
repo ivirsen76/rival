@@ -1,8 +1,9 @@
+import type { Config } from '../types';
 import { normal, h2, getImageUrl, thankYou, signature } from './normal';
 
 const { TL_URL } = process.env;
 
-export default (config, { seasonName, isBreak, startDate = '' }) => {
+export default (config: Config, { seasonName, isBreak, startDate = '' }) => {
     const city = config.city;
 
     const seasonText = `

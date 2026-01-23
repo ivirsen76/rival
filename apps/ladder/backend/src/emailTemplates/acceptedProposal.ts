@@ -1,7 +1,8 @@
+import type { Config } from '../types';
 import { normal, renderProposal } from './normal';
 import { getPlayerName, getEmailLink, getPhoneLink } from '../services/users/helpers';
 
-export default (config, { acceptorName, contact, levelName, levelType, proposal, previewText }) => {
+export default (config: Config, { acceptorName, contact, levelName, levelType, proposal, previewText }) => {
     const entity = proposal.practiceType ? 'practice' : 'match';
 
     return normal(

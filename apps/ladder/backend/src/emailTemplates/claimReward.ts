@@ -1,6 +1,7 @@
+import type { Config } from '../types';
 import { normal, h2 } from './normal';
 
-export default (config, { isWinner, levelName, levelLink, levelType, isFree }) => {
+export default (config: Config, { isWinner, levelName, levelLink, levelType, isFree }) => {
     const prize = (() => {
         if (levelType === 'doubles-team') {
             return config.doublesChampionReward / 100;

@@ -1,7 +1,11 @@
+import type { Config } from '../types';
 import { normal } from './normal';
 import { getPlayerName, formatPhone } from '../services/users/helpers';
 
-export default (config, { userName, userEmail, userPhone, profileLink, comeFromInfo, duplicates, previewText }) => {
+export default (
+    config: Config,
+    { userName, userEmail, userPhone, profileLink, comeFromInfo, duplicates, previewText }
+) => {
     const { TL_URL } = process.env;
 
     return normal(

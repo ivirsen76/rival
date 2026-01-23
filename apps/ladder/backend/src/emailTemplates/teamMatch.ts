@@ -1,9 +1,10 @@
+import type { Config } from '../types';
 import { normal, h2 } from './normal';
 import dayjs from '../utils/dayjs';
 import { formatPhone } from '../services/users/helpers';
 
 export default (
-    config,
+    config: Config,
     { isFinal, opponentTeam, opponentName, opponentEmail, opponentPhone, img, previewText = '' }
 ) => {
     const weekEnd = dayjs.tz().isoWeekday(7).hour(12).format('dddd, MMMM D');

@@ -1,6 +1,7 @@
+import type { Config } from '../types';
 import { normal, h2 } from './normal';
 
-export default (config, { user, opponent, lead, history, img, previewText }) => {
+export default (config: Config, { user, opponent, lead, history, img, previewText }) => {
     const profileUrl = `${process.env.TL_URL}/player/${user.slug}`;
     const isLeading = lead[0] > lead[1];
 

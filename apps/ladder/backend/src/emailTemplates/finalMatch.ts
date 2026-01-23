@@ -1,9 +1,10 @@
+import type { Config } from '../types';
 import { normal, h2, warning, signature } from './normal';
 import dayjs from '../utils/dayjs';
 import { getPlayerName, getEmailLink, getPhoneLink } from '../services/users/helpers';
 
 export default (
-    config,
+    config: Config,
     {
         seasonEndDate,
         finalSpot,

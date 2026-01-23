@@ -1,6 +1,10 @@
+import type { Config } from '../types';
 import { normal, h2, signature } from './normal';
 
-export default (config, { seedNumber, opponent1, opponent2, seasonName, levelName, levelType, previewText = '' }) => {
+export default (
+    config: Config,
+    { seedNumber, opponent1, opponent2, seasonName, levelName, levelType, previewText = '' }
+) => {
     const isDoublesTeam = levelType === 'doubles-team';
 
     return normal(

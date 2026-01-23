@@ -1,6 +1,7 @@
+import type { Config } from '../types';
 import { normal, h2 } from './normal';
 
-export default (config, { playerName, previewText }) =>
+export default (config: Config, { playerName, previewText }) =>
     normal(
         `
   ${h2('Hello, #firstName#!', 'padding-top="10px"')}

@@ -129,7 +129,7 @@ const getTemplate =
             config,
             previewText,
             showSocialIcons = true,
-        }: { config: Config; previewText?: string; showSocialIcons: boolean }
+        }: { config: Config; previewText?: string; showSocialIcons?: boolean }
     ) => {
         const logoImage = getImageUrl(__dirname + '/images/logo.png');
         const twitterImage = getImageUrl(__dirname + '/images/twitter.png');

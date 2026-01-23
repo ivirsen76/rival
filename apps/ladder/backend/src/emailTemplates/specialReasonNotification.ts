@@ -1,7 +1,8 @@
+import type { Config } from '../types';
 import { normal } from './normal';
 import formatElo from '../utils/formatElo';
 
-export default (config, { userName, profileLink, joinReason, elo, level, previewText }) => {
+export default (config: Config, { userName, profileLink, joinReason, elo, level, previewText }) => {
     return normal(
         `
   <mj-text><a href="${profileLink}"><b>${userName}</b></a> with TLR <b>${formatElo(

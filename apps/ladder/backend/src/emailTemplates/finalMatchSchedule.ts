@@ -1,9 +1,10 @@
+import type { Config } from '../types';
 import { normal, h2, signature } from './normal';
 import dayjs from '../utils/dayjs';
 import { formatPhone } from '../services/users/helpers';
 
 export default (
-    config,
+    config: Config,
     {
         seasonEndDate,
         finalSpot,

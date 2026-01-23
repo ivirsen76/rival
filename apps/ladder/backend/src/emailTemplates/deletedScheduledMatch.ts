@@ -1,7 +1,8 @@
+import type { Config } from '../types';
 import { normal } from './normal';
 import { getPlayerName, getEmailLink, getPhoneLink } from '../services/users/helpers';
 
-export default (config, { currentUser, reason, playedAt, previewText }) =>
+export default (config: Config, { currentUser, reason, playedAt, previewText }) =>
     normal(
         `
   <mj-text><b>${getPlayerName(currentUser)}</b> deleted your scheduled match for ${playedAt}.</mj-text>

@@ -1,6 +1,7 @@
+import type { Config } from '../types';
 import { normal } from './normal';
 
-export default (config, { challenger, acceptor, date, location, isRescheduling, previewText }) =>
+export default (config: Config, { challenger, acceptor, date, location, isRescheduling, previewText }) =>
     normal(
         `
   <mj-text><b>${challenger}</b> and <b>${acceptor}</b> ${

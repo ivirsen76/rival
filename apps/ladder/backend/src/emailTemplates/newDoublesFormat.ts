@@ -1,6 +1,7 @@
+import type { Config } from '../types';
 import { normal, h2, signature } from './normal';
 
-export default (config, { isPaidSeason, previewText }) => {
+export default (config: Config, { isPaidSeason, previewText }) => {
     return normal(
         `
   ${h2('Hello, #firstName#!', 'padding-top="10px"')}

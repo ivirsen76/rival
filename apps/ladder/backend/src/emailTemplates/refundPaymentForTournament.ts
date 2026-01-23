@@ -1,6 +1,7 @@
+import type { Config } from '../types';
 import { normal, h2, signature } from './normal';
 
-export default (config, { cancelCode, creditAmount, levelName, seasonName }) => {
+export default (config: Config, { cancelCode, creditAmount, levelName, seasonName }) => {
     const cancelText =
         cancelCode === 'notEnoughMatches'
             ? `<b>fewer than ${config.minMatchesToPlanTournament} matches were played</b> before the final week of the regular season.`

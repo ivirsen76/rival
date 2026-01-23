@@ -1,7 +1,8 @@
+import type { Config } from '../types';
 import { normal, h2, getImageUrl, thankYou, signature } from './normal';
 import { getSeasonName } from '../services/seasons/helpers';
 
-export default (config, { currentSeason, isFirstDay = true }) => {
+export default (config: Config, { currentSeason, isFirstDay = true }) => {
     const { TL_URL } = process.env;
     const seasonName = getSeasonName(currentSeason);
     const gif = '<mj-image src="https://utl.nyc3.digitaloceanspaces.com/animation/novak.gif" alt="Djokovic" />';

@@ -1,8 +1,9 @@
+import type { Config } from '../types';
 import { normal } from './normal';
 import { getListAsString } from '../utils/helpers';
 
 export default (
-    config,
+    config: Config,
     { reporter, date, levelName, ladderLink, img, isUnavailable, multiLadderMatch, previewText = '' }
 ) =>
     normal(

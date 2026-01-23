@@ -1,7 +1,8 @@
+import type { Config } from '../types';
 import { normal } from './normal';
 import { formatPhone } from '../services/users/helpers';
 
-export default (config, { challengerName, challengerEmail, challengerPhone, level, reason, previewText }) =>
+export default (config: Config, { challengerName, challengerEmail, challengerPhone, level, reason, previewText }) =>
     normal(
         `
   <mj-text><b>${challengerName}</b> deleted the proposal for your upcoming match in ${level}.</mj-text>
