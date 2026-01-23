@@ -20,7 +20,7 @@ import { getPlayerName } from '../users/helpers';
 import { base64EncodeEmail } from '../../utils/helpers';
 import { parse } from 'node-html-parser';
 
-const validateCreate = (options) => (context: HookContext) => {
+const validateCreate = () => (context: HookContext) => {
     const errors = validate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -30,7 +30,7 @@ const validateCreate = (options) => (context: HookContext) => {
     return context;
 };
 
-const stripHeaderFooter = (options) => (context: HookContext) => {
+const stripHeaderFooter = () => (context: HookContext) => {
     const { data } = context;
 
     try {
@@ -46,7 +46,7 @@ const stripHeaderFooter = (options) => (context: HookContext) => {
     return context;
 };
 
-const sendEmail = (options) => async (context: HookContext) => {
+const sendEmail = () => async (context: HookContext) => {
     const { TL_SERVICE_URL, TL_SECRET_KEY, TL_SMTP_HOST, TL_SMTP_PORT, TL_SMTP_USER, TL_SMTP_PASS } = process.env;
 
     const { to, subject, text, html, replyTo, priority, trackingCode } = context.data;
@@ -222,7 +222,7 @@ const sendEmail = (options) => async (context: HookContext) => {
     return context;
 };
 
-const sendMessage = (options) => async (context: HookContext) => {
+const sendMessage = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -260,7 +260,7 @@ const sendMessage = (options) => async (context: HookContext) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context: HookContext) => {
+const runCustomAction = () => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

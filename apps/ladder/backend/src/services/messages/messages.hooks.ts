@@ -10,7 +10,7 @@ import newMessageTemplate from '../../emailTemplates/newMessage';
 import { getStatsMatches } from '../../utils/sqlConditions';
 import { getEmailContact, getPlayerName } from '../users/helpers';
 
-const validateCreate = (options) => async (context: HookContext) => {
+const validateCreate = () => async (context: HookContext) => {
     // Validate data
     {
         const schema = yup.object().shape({
@@ -111,7 +111,7 @@ const validateCreate = (options) => async (context: HookContext) => {
     return context;
 };
 
-const sendMessage = (options) => async (context: HookContext) => {
+const sendMessage = () => async (context: HookContext) => {
     const currentUser = context.params.user;
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;

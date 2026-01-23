@@ -211,7 +211,7 @@ const getTournamentInfo = async (context, tournamentId) => {
     return tournamentInfo.data;
 };
 
-const createTeam = (options) => async (context: HookContext) => {
+const createTeam = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -307,7 +307,7 @@ const createTeam = (options) => async (context: HookContext) => {
     return context;
 };
 
-const joinAnyTeam = (options) => async (context: HookContext) => {
+const joinAnyTeam = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -384,7 +384,7 @@ const joinAnyTeam = (options) => async (context: HookContext) => {
     return context;
 };
 
-const askToJoin = (options) => async (context: HookContext) => {
+const askToJoin = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -450,7 +450,7 @@ const askToJoin = (options) => async (context: HookContext) => {
     return context;
 };
 
-const updateTeam = (options) => async (context: HookContext) => {
+const updateTeam = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -572,7 +572,7 @@ const updateTeam = (options) => async (context: HookContext) => {
     return context;
 };
 
-const disbandTeam = (options) => async (context: HookContext) => {
+const disbandTeam = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -641,7 +641,7 @@ const disbandTeam = (options) => async (context: HookContext) => {
     return context;
 };
 
-const leaveTeam = (options) => async (context: HookContext) => {
+const leaveTeam = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -716,7 +716,7 @@ const leaveTeam = (options) => async (context: HookContext) => {
     return context;
 };
 
-const acceptMember = (options) => async (context: HookContext) => {
+const acceptMember = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -772,7 +772,7 @@ const acceptMember = (options) => async (context: HookContext) => {
     return context;
 };
 
-const deleteCandidate = (options) => async (context: HookContext) => {
+const deleteCandidate = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -795,7 +795,7 @@ const deleteCandidate = (options) => async (context: HookContext) => {
     return context;
 };
 
-const acceptMemberByLink = (options) => async (context: HookContext) => {
+const acceptMemberByLink = () => async (context: HookContext) => {
     let action;
     try {
         action = decodeAction(context.data.payload);
@@ -874,7 +874,7 @@ const acceptMemberByLink = (options) => async (context: HookContext) => {
     return context;
 };
 
-const invitePlayers = (options) => async (context: HookContext) => {
+const invitePlayers = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const teamId = Number(context.id);
@@ -963,7 +963,7 @@ const invitePlayers = (options) => async (context: HookContext) => {
     return context;
 };
 
-const joinTeamByLink = (options) => async (context: HookContext) => {
+const joinTeamByLink = () => async (context: HookContext) => {
     let action;
     try {
         action = decodeAction(context.data.payload);
@@ -1038,7 +1038,7 @@ const joinTeamByLink = (options) => async (context: HookContext) => {
     return context;
 };
 
-const pickPlayersForNextWeek = (options) => async (context: HookContext) => {
+const pickPlayersForNextWeek = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const teamId = Number(context.id);
@@ -1080,7 +1080,7 @@ const pickPlayersForNextWeek = (options) => async (context: HookContext) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context: HookContext) => {
+const runCustomAction = () => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

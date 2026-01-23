@@ -157,7 +157,7 @@ const populateNextFinalMatch = async (context, prevMatch) => {
     }
 };
 
-const setScore = (options) => async (context: HookContext) => {
+const setScore = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const errors = validate(context.data);
@@ -297,7 +297,7 @@ const setScore = (options) => async (context: HookContext) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context: HookContext) => {
+const runCustomAction = () => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

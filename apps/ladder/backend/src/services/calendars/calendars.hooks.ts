@@ -5,7 +5,7 @@ import { Unprocessable } from '@feathersjs/errors';
 import dayjs from '../../utils/dayjs';
 import md5 from 'md5';
 
-const getCalendar = (options) => async (context: HookContext) => {
+const getCalendar = () => async (context: HookContext) => {
     const referralCode = context.id;
 
     const sequelize = context.app.get('sequelizeClient');

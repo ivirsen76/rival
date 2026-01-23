@@ -37,7 +37,7 @@ import rabbits from './rabbits.json';
 import { faker } from '@faker-js/faker';
 import writeXlsxFile from 'write-excel-file/node';
 
-const generateBadges = (options) => async (context: HookContext) => {
+const generateBadges = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -51,7 +51,7 @@ const generateBadges = (options) => async (context: HookContext) => {
     return context;
 };
 
-const generateRabbits = (options) => async (context: HookContext) => {
+const generateRabbits = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -187,7 +187,7 @@ const generateRabbits = (options) => async (context: HookContext) => {
     return context;
 };
 
-const publishUpdates = (options) => async (context: HookContext) => {
+const publishUpdates = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -200,7 +200,7 @@ const publishUpdates = (options) => async (context: HookContext) => {
     return context;
 };
 
-const runActionsHook = (options) => async (context: HookContext) => {
+const runActionsHook = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -211,7 +211,7 @@ const runActionsHook = (options) => async (context: HookContext) => {
     return context;
 };
 
-const getGlobalStats = (options) => async (context: HookContext) => {
+const getGlobalStats = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -338,7 +338,7 @@ const getGlobalStats = (options) => async (context: HookContext) => {
     return context;
 };
 
-const syncGlobalState = (options) => async (context: HookContext) => {
+const syncGlobalState = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -350,7 +350,7 @@ const syncGlobalState = (options) => async (context: HookContext) => {
     return context;
 };
 
-const getGlobalPhotos = (options) => async (context: HookContext) => {
+const getGlobalPhotos = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -374,7 +374,7 @@ const getGlobalPhotos = (options) => async (context: HookContext) => {
     return context;
 };
 
-const getActivityStats = (options) => async (context: HookContext) => {
+const getActivityStats = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const dateYearAgo = dayjs.tz().subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
@@ -418,7 +418,7 @@ const getActivityStats = (options) => async (context: HookContext) => {
     return context;
 };
 
-const getMotivationStats = (options) => async (context: HookContext) => {
+const getMotivationStats = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
 
     const [[row]] = await sequelize.query(`SELECT count(*) AS cnt FROM users WHERE isVerified=1`);
@@ -442,7 +442,7 @@ const getMotivationStats = (options) => async (context: HookContext) => {
     return context;
 };
 
-const addLog = (options) => async (context: HookContext) => {
+const addLog = () => async (context: HookContext) => {
     // Validate
     {
         const schema = yup.object().shape({
@@ -482,7 +482,7 @@ const addLog = (options) => async (context: HookContext) => {
     return context;
 };
 
-const requestCoachLesson = (options) => async (context: HookContext) => {
+const requestCoachLesson = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     // Validate
@@ -531,7 +531,7 @@ const requestCoachLesson = (options) => async (context: HookContext) => {
     return context;
 };
 
-const getVisualTestingResult = (options) => async (context: HookContext) => {
+const getVisualTestingResult = () => async (context: HookContext) => {
     // todo: restrict for production use somehow
 
     const screenshotFolder = path.resolve(__dirname, '..', '..', '..', '..', '..', 'screenshots');
@@ -586,7 +586,7 @@ const getVisualTestingResult = (options) => async (context: HookContext) => {
     return context;
 };
 
-const acceptVisualChanges = (options) => async (context: HookContext) => {
+const acceptVisualChanges = () => async (context: HookContext) => {
     // todo: restrict for production use somehow
 
     // Validate
@@ -630,7 +630,7 @@ const acceptVisualChanges = (options) => async (context: HookContext) => {
     return context;
 };
 
-const getHealthInfo = (options) => async (context: HookContext) => {
+const getHealthInfo = () => async (context: HookContext) => {
     const health = {
         weather: true,
     };
@@ -666,7 +666,7 @@ const getHealthInfo = (options) => async (context: HookContext) => {
     return context;
 };
 
-const getCustomInfo = (options) => async (context: HookContext) => {
+const getCustomInfo = () => async (context: HookContext) => {
     const code = context.id;
 
     if (code === 'health') {
@@ -680,7 +680,7 @@ const getCustomInfo = (options) => async (context: HookContext) => {
     }
 };
 
-const recalculateElo = (options) => async (context: HookContext) => {
+const recalculateElo = () => async (context: HookContext) => {
     await calculateElo();
 
     if (!context.result) {
@@ -688,7 +688,7 @@ const recalculateElo = (options) => async (context: HookContext) => {
     }
 };
 
-const getExcelFile = (options) => async (context: HookContext) => {
+const getExcelFile = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -754,7 +754,7 @@ const getExcelFile = (options) => async (context: HookContext) => {
     };
 };
 
-const generatePartnerLink = (options) => async (context: HookContext) => {
+const generatePartnerLink = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin'])(context);
 
@@ -775,7 +775,7 @@ const generatePartnerLink = (options) => async (context: HookContext) => {
     };
 };
 
-const loginAsPlayer = (options) => async (context: HookContext) => {
+const loginAsPlayer = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -813,7 +813,7 @@ const loginAsPlayer = (options) => async (context: HookContext) => {
     };
 };
 
-const uploadRosters = (options) => async (context: HookContext) => {
+const uploadRosters = () => async (context: HookContext) => {
     const { TL_SECURE_KEY } = process.env;
     if (!TL_SECURE_KEY) {
         throw new Error('The secure key is missing');
@@ -862,7 +862,7 @@ const uploadRosters = (options) => async (context: HookContext) => {
     context.result = { status: 'success', finished, failed };
 };
 
-const uploadCandidates = (options) => async (context: HookContext) => {
+const uploadCandidates = () => async (context: HookContext) => {
     const { TL_SECURE_KEY } = process.env;
     if (!TL_SECURE_KEY) {
         throw new Error('The secure key is missing');
@@ -965,7 +965,7 @@ const uploadCandidates = (options) => async (context: HookContext) => {
     context.result = { status: 'success', finished, failed };
 };
 
-const processRostersHook = (options) => async (context: HookContext) => {
+const processRostersHook = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -976,7 +976,7 @@ const processRostersHook = (options) => async (context: HookContext) => {
     return context;
 };
 
-const sendOneRosterMessage = (options) => async (context: HookContext) => {
+const sendOneRosterMessage = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -988,7 +988,7 @@ const sendOneRosterMessage = (options) => async (context: HookContext) => {
     return context;
 };
 
-const getTrackingStats = (options) => async (context: HookContext) => {
+const getTrackingStats = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -1029,7 +1029,7 @@ const getTrackingStats = (options) => async (context: HookContext) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context: HookContext) => {
+const runCustomAction = () => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

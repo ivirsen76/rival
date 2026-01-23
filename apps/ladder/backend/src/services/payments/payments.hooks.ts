@@ -7,7 +7,7 @@ import { getSchemaErrors, throwValidationErrors } from '../../helpers';
 import yup from '../../packages/yup';
 import _isEmpty from 'lodash/isEmpty';
 
-const getPayments = (options) => async (context: HookContext) => {
+const getPayments = () => async (context: HookContext) => {
     const currentUser = context.params.user;
     const userId = Number(context.id);
 
@@ -42,7 +42,7 @@ const getPayments = (options) => async (context: HookContext) => {
     return context;
 };
 
-const addTransaction = (options) => async (context: HookContext) => {
+const addTransaction = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['superadmin'])(context);
 
@@ -80,7 +80,7 @@ const addTransaction = (options) => async (context: HookContext) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context: HookContext) => {
+const runCustomAction = () => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

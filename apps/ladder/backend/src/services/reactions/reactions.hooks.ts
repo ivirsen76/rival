@@ -6,7 +6,7 @@ import yup from '../../packages/yup';
 import { throwValidationErrors, getSchemaErrors } from '../../helpers';
 import _isEmpty from 'lodash/isEmpty';
 
-const populateReaction = (options) => async (context: HookContext) => {
+const populateReaction = () => async (context: HookContext) => {
     // Validate data
     {
         const schema = yup.object().shape({

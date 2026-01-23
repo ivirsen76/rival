@@ -44,7 +44,7 @@ const isAdmin = (user) => {
     return roles.includes('admin') || roles.includes('manager');
 };
 
-const validateCreate = (options) => (context: HookContext) => {
+const validateCreate = () => (context: HookContext) => {
     const errors = validate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -54,7 +54,7 @@ const validateCreate = (options) => (context: HookContext) => {
     return context;
 };
 
-const validatePatch = (options) => (context: HookContext) => {
+const validatePatch = () => (context: HookContext) => {
     const errors = validate({ ...context.data, challengerId: 1, acceptorId: 1 });
 
     if (!_isEmpty(errors)) {
@@ -64,12 +64,12 @@ const validatePatch = (options) => (context: HookContext) => {
     return context;
 };
 
-const completePlayedAt = (options) => async (context: HookContext) => {
+const completePlayedAt = () => async (context: HookContext) => {
     context.data.playedAt += '+00:00';
     return context;
 };
 
-const populateWinner = (options) => async (context: HookContext) => {
+const populateWinner = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { data } = context;
     const userId = context.params.user.id;
@@ -175,7 +175,7 @@ const populateWinner = (options) => async (context: HookContext) => {
     return context;
 };
 
-const sendReferralCredit = (options) => async (context: HookContext) => {
+const sendReferralCredit = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { payments, users, players, matches } = sequelize.models;
     const { config } = context.params;
@@ -250,7 +250,7 @@ const sendReferralCredit = (options) => async (context: HookContext) => {
     return context;
 };
 
-const sendEstablishedEloNotification = (options) => async (context: HookContext) => {
+const sendEstablishedEloNotification = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { users, players, matches } = sequelize.models;
     const { config } = context.params;
@@ -452,7 +452,7 @@ const populateNextFinalMatch = async (context, prevMatch) => {
     }
 };
 
-const populateWinnerForPatch = (options) => async (context: HookContext) => {
+const populateWinnerForPatch = () => async (context: HookContext) => {
     const { data } = context;
     const matchId = Number(context.id);
 
@@ -534,7 +534,7 @@ const populateWinnerForPatch = (options) => async (context: HookContext) => {
     return context;
 };
 
-const updateEloAndRank = (options) => async (context: HookContext) => {
+const updateEloAndRank = () => async (context: HookContext) => {
     const { players, tournaments } = context.app.get('sequelizeClient').models;
 
     const challenger = await players.findOne({
@@ -550,7 +550,7 @@ const updateEloAndRank = (options) => async (context: HookContext) => {
     return context;
 };
 
-const checkDuplicatedMatch = (options) => async (context: HookContext) => {
+const checkDuplicatedMatch = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const { challengerUserId, acceptorUserId, playedAt } = context.data;
@@ -600,7 +600,7 @@ const checkDuplicatedMatch = (options) => async (context: HookContext) => {
     return context;
 };
 
-const replacePlayers = (options) => async (context: HookContext) => {
+const replacePlayers = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -686,7 +686,7 @@ const replacePlayers = (options) => async (context: HookContext) => {
     return context;
 };
 
-const scheduleMatch = (options) => async (context: HookContext) => {
+const scheduleMatch = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -805,7 +805,7 @@ const scheduleMatch = (options) => async (context: HookContext) => {
     return context;
 };
 
-const clearResult = (options) => async (context: HookContext) => {
+const clearResult = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const matchId = Number(context.id);
@@ -865,7 +865,7 @@ const clearResult = (options) => async (context: HookContext) => {
     return context;
 };
 
-const addStats = (options) => async (context: HookContext) => {
+const addStats = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -1059,7 +1059,7 @@ const addStats = (options) => async (context: HookContext) => {
     return context;
 };
 
-const sendMatchNotification = (options) => async (context: HookContext) => {
+const sendMatchNotification = () => async (context: HookContext) => {
     // Don't wait for this function to run just to not let user to wait
     (async () => {
         const { TL_URL } = process.env;
@@ -1102,7 +1102,7 @@ const sendMatchNotification = (options) => async (context: HookContext) => {
     return context;
 };
 
-const sendNewRivalryNotification = (options) => async (context: HookContext) => {
+const sendNewRivalryNotification = () => async (context: HookContext) => {
     // Don't wait for this function to run just to not let user to wait
     (async () => {
         const { TL_URL } = process.env;
@@ -1252,7 +1252,7 @@ const sendNewRivalryNotification = (options) => async (context: HookContext) => 
     return context;
 };
 
-const setPredictionWinner = (options) => async (context: HookContext) => {
+const setPredictionWinner = () => async (context: HookContext) => {
     const match = context.result;
 
     if (match.type !== 'final' || match.finalSpot !== 1 || !match.score) {
@@ -1334,7 +1334,7 @@ const setPredictionWinner = (options) => async (context: HookContext) => {
     return context;
 };
 
-const removeScheduledMatch = (options) => async (context: HookContext) => {
+const removeScheduledMatch = () => async (context: HookContext) => {
     const { app } = context;
     const sequelize = context.app.get('sequelizeClient');
     const matchId = Number(context.id);
@@ -1390,7 +1390,7 @@ const removeScheduledMatch = (options) => async (context: HookContext) => {
     return context;
 };
 
-const generateMatchBadges = (options) => async (context: HookContext) => {
+const generateMatchBadges = () => async (context: HookContext) => {
     const { app } = context;
     const { players } = app.get('sequelizeClient').models;
 
@@ -1413,7 +1413,7 @@ const generateMatchBadges = (options) => async (context: HookContext) => {
     return context;
 };
 
-const populateMultipleLadderMatch = (options) => async (context: HookContext) => {
+const populateMultipleLadderMatch = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { players, tournaments, matches } = sequelize.models;
 
@@ -1521,7 +1521,7 @@ const populateMultipleLadderMatch = (options) => async (context: HookContext) =>
     return context;
 };
 
-const populatePartners = (options) => async (context: HookContext) => {
+const populatePartners = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { players, matches } = sequelize.models;
 
@@ -1566,7 +1566,7 @@ const populatePartners = (options) => async (context: HookContext) => {
     return context;
 };
 
-const removeSameMatches = (options) => async (context: HookContext) => {
+const removeSameMatches = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { id, sameAs } = context.result;
     const { matches } = sequelize.models;
@@ -1592,7 +1592,7 @@ const removeSameMatches = (options) => async (context: HookContext) => {
     return context;
 };
 
-const removeMatch = (options) => async (context: HookContext) => {
+const removeMatch = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
     const { config } = context.params;
@@ -1652,7 +1652,7 @@ const removeMatch = (options) => async (context: HookContext) => {
     return context;
 };
 
-const replaceTeammates = (options) => async (context: HookContext) => {
+const replaceTeammates = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
     const { matches } = sequelize.models;
@@ -1705,7 +1705,7 @@ const replaceTeammates = (options) => async (context: HookContext) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context: HookContext) => {
+const runCustomAction = () => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

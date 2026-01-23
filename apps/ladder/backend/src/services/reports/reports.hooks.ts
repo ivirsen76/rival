@@ -8,7 +8,7 @@ import { getEmailsFromList } from '../settings/helpers';
 import commentReportNotificationTemplate from '../../emailTemplates/commentReportNotification';
 import { getPlayerName, getEmailContact } from '../users/helpers';
 
-const reportAboutComment = (options) => async (context: HookContext) => {
+const reportAboutComment = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const currentUser = context.params.user;
@@ -65,7 +65,7 @@ const reportAboutComment = (options) => async (context: HookContext) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context: HookContext) => {
+const runCustomAction = () => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

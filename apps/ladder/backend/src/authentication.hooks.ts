@@ -7,7 +7,7 @@ import populateInformation from './services/users/populateInformation';
 
 // reset changelogSeenAt if user didn't log in for 3 months
 // we don't want to overwhelm him with new updates
-const resetChangelogSeenAt = (options) => async (context: HookContext) => {
+const resetChangelogSeenAt = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { id, loggedAt } = context.result.user;
 
@@ -25,7 +25,7 @@ const resetChangelogSeenAt = (options) => async (context: HookContext) => {
     return context;
 };
 
-const populateTournaments = (options) => async (context: HookContext) => {
+const populateTournaments = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const userId = context.result.user.id;
     const { config } = context.params;
@@ -293,7 +293,7 @@ const populateTournaments = (options) => async (context: HookContext) => {
     return context;
 };
 
-const checkIfVerified = (options) => async (context: HookContext) => {
+const checkIfVerified = () => async (context: HookContext) => {
     const { user } = context.result;
 
     if (user.deletedAt) {
@@ -317,7 +317,7 @@ const checkIfVerified = (options) => async (context: HookContext) => {
     return context;
 };
 
-const updateLoggedAt = (options) => async (context: HookContext) => {
+const updateLoggedAt = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const userId = context.result.user.id;
     const currentDate = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
@@ -330,7 +330,7 @@ const updateLoggedAt = (options) => async (context: HookContext) => {
     return context;
 };
 
-const errorHandler = (options) => (context: HookContext) => {
+const errorHandler = () => (context: HookContext) => {
     if (context.error) {
         if (context.data.strategy === 'local') {
             logger.info(`Invalid login with email "${context.data.email}"`);

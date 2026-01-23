@@ -12,7 +12,7 @@ import { getPlayerName } from '../users/helpers';
 
 const { hashPassword } = hooks;
 
-const validateCreate = (options) => async (context: HookContext) => {
+const validateCreate = () => async (context: HookContext) => {
     // validate input
     {
         const schema = yup.object().shape({
@@ -38,7 +38,7 @@ const validateCreate = (options) => async (context: HookContext) => {
     return context;
 };
 
-const validateUpdate = (options) => async (context: HookContext) => {
+const validateUpdate = () => async (context: HookContext) => {
     // validate input
     {
         const schema = yup.object().shape({
@@ -68,7 +68,7 @@ const validateUpdate = (options) => async (context: HookContext) => {
     return context;
 };
 
-const sendNewPasswordEmail = (options) => async (context: HookContext) => {
+const sendNewPasswordEmail = () => async (context: HookContext) => {
     const { app } = context;
     const { user, config } = context.params;
 
@@ -87,7 +87,7 @@ const sendNewPasswordEmail = (options) => async (context: HookContext) => {
     return context;
 };
 
-const changePassword = (options) => async (context: HookContext) => {
+const changePassword = () => async (context: HookContext) => {
     const { password, salt, userId } = context.data;
     const sequelize = context.app.get('sequelizeClient');
 

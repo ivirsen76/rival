@@ -4,7 +4,7 @@ import { Unprocessable } from '@feathersjs/errors';
 import { disallow } from 'feathers-hooks-common';
 import { logEvent } from '../commonHooks';
 
-const getLongLink = (options) => async (context: HookContext) => {
+const getLongLink = () => async (context: HookContext) => {
     const { name, code } = context.data;
     const sequelize = context.app.get('sequelizeClient');
 
@@ -21,7 +21,7 @@ const getLongLink = (options) => async (context: HookContext) => {
     return context;
 };
 
-const decodePayload = (options) => async (context: HookContext) => {
+const decodePayload = () => async (context: HookContext) => {
     const { payload } = context.data;
 
     try {

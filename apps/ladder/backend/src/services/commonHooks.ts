@@ -87,7 +87,7 @@ export const purgeTournamentCache =
         return context;
     };
 
-export const purgeUserCache = (options) => async (context: HookContext) => {
+export const purgeUserCache = () => async (context: HookContext) => {
     if (!TL_ENABLE_REDIS) {
         return context;
     }
@@ -116,7 +116,7 @@ export const purgeUserCache = (options) => async (context: HookContext) => {
     return context;
 };
 
-export const purgeSeasonCache = (options) => async (context: HookContext) => {
+export const purgeSeasonCache = () => async (context: HookContext) => {
     if (!TL_ENABLE_REDIS) {
         return context;
     }
@@ -145,7 +145,7 @@ export const purgeSeasonCache = (options) => async (context: HookContext) => {
     return context;
 };
 
-export const purgeMatchCache = (options) => async (context: HookContext) => {
+export const purgeMatchCache = () => async (context: HookContext) => {
     if (!TL_ENABLE_REDIS) {
         return context;
     }
@@ -269,7 +269,7 @@ export const generateBadges = () => async (context) => {
     return context;
 };
 
-export const populateSalt = (options) => async (context: HookContext) => {
+export const populateSalt = () => async (context: HookContext) => {
     const { data } = context;
 
     if (data.password) {
@@ -279,7 +279,7 @@ export const populateSalt = (options) => async (context: HookContext) => {
     return context;
 };
 
-export const optionalAuthenticate = (options) => async (context: HookContext) => {
+export const optionalAuthenticate = () => async (context: HookContext) => {
     try {
         await authenticate('jwt')(context);
     } catch (e) {

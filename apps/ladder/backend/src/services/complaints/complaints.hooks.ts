@@ -11,7 +11,7 @@ import newComplaintTemplate from '../../emailTemplates/newComplaint';
 import { hasAnyRole } from '../commonHooks';
 import { getEmailContact } from '../users/helpers';
 
-const populateComplaint = (options) => async (context: HookContext) => {
+const populateComplaint = () => async (context: HookContext) => {
     // Validate data
     {
         const schema = yup.object().shape({
@@ -53,7 +53,7 @@ const populateComplaint = (options) => async (context: HookContext) => {
     return context;
 };
 
-const sendNewComplaintNotification = (options) => async (context: HookContext) => {
+const sendNewComplaintNotification = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const [[settings]] = await sequelize.query(`SELECT newComplaintNotification FROM settings WHERE id=1`);
 
@@ -83,7 +83,7 @@ const sendNewComplaintNotification = (options) => async (context: HookContext) =
     return context;
 };
 
-const avoidPlayer = (options) => async (context: HookContext) => {
+const avoidPlayer = () => async (context: HookContext) => {
     const { avoid } = context.data;
 
     if (!avoid) {
@@ -113,7 +113,7 @@ const avoidPlayer = (options) => async (context: HookContext) => {
     return context;
 };
 
-const getAllComplaints = (options) => async (context: HookContext) => {
+const getAllComplaints = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     await hasAnyRole(['admin', 'manager'])(context);
 
@@ -144,7 +144,7 @@ const getAllComplaints = (options) => async (context: HookContext) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context: HookContext) => {
+const runCustomAction = () => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

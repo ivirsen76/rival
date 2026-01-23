@@ -7,7 +7,7 @@ import { throwValidationErrors } from '../../helpers';
 import allBananas from '../../bananas';
 import dayjs from '../../utils/dayjs';
 
-const validatePatch = (options) => (context: HookContext) => {
+const validatePatch = () => (context: HookContext) => {
     const errors = validate(context.data);
 
     if (!_isEmpty(errors)) {
@@ -17,7 +17,7 @@ const validatePatch = (options) => (context: HookContext) => {
     return context;
 };
 
-const populateConstants = (options) => async (context: HookContext) => {
+const populateConstants = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
     const { seasons, levels } = sequelize.models;

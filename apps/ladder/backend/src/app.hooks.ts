@@ -6,7 +6,7 @@ import config from './config';
 import logger from '@rival-tennis-ladder/logger';
 import getCombinedConfig from './utils/getCombinedConfig';
 
-const populateConfig = (options) => async (context: HookContext) => {
+const populateConfig = () => async (context: HookContext) => {
     const values = await getCombinedConfig();
 
     context.params.config = {
@@ -17,7 +17,7 @@ const populateConfig = (options) => async (context: HookContext) => {
     return context;
 };
 
-const handleDbErrors = (options) => (context: HookContext) => {
+const handleDbErrors = () => (context: HookContext) => {
     if (context.error && context.error.code === 400 && _isArray(context.error.errors)) {
         const errors = {};
         context.error.errors.forEach((error) => {
@@ -32,7 +32,7 @@ const handleDbErrors = (options) => (context: HookContext) => {
     return context;
 };
 
-const errorHandler = (options) => (context: HookContext) => {
+const errorHandler = () => (context: HookContext) => {
     if (context.error) {
         logger.error(context.error);
     }

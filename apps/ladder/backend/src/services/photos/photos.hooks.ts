@@ -18,7 +18,7 @@ import moderatePhotoNotificationTemplate from '../../emailTemplates/moderatePhot
 import { getActionLink, decodeAction } from '../../utils/action';
 import { getPlayerName, getEmailContact } from '../users/helpers';
 
-const getPresignedUrlForPhotosUpload = (options) => async (context: HookContext) => {
+const getPresignedUrlForPhotosUpload = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -96,7 +96,7 @@ const getPresignedUrlForPhotosUpload = (options) => async (context: HookContext)
     context.result = await Promise.all(files.map(getPresignedUrl));
 };
 
-const batchProcess = (options) => async (context: HookContext) => {
+const batchProcess = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -202,7 +202,7 @@ const batchProcess = (options) => async (context: HookContext) => {
     await generateBadges()(context);
 };
 
-const getReactionsAndComments = (options) => async (context: HookContext) => {
+const getReactionsAndComments = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const photoId = Number(context.id);
 
@@ -265,7 +265,7 @@ const getReactionsAndComments = (options) => async (context: HookContext) => {
     return context;
 };
 
-const addView = (options) => async (context: HookContext) => {
+const addView = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const sequelize = context.app.get('sequelizeClient');
@@ -291,7 +291,7 @@ const addView = (options) => async (context: HookContext) => {
     return context;
 };
 
-const validatePatch = (options) => async (context: HookContext) => {
+const validatePatch = () => async (context: HookContext) => {
     const photoId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { photos } = sequelize.models;
@@ -321,7 +321,7 @@ const validatePatch = (options) => async (context: HookContext) => {
     return context;
 };
 
-const validateDelete = (options) => async (context: HookContext) => {
+const validateDelete = () => async (context: HookContext) => {
     const id = Number(context.id);
     const currentUser = context.params.user;
 
@@ -344,7 +344,7 @@ const validateDelete = (options) => async (context: HookContext) => {
     return context;
 };
 
-const changePermissions = (options) => async (context: HookContext) => {
+const changePermissions = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     // Validate data
@@ -392,7 +392,7 @@ const changePermissions = (options) => async (context: HookContext) => {
     return context;
 };
 
-const approvePhoto = (options) => async (context: HookContext) => {
+const approvePhoto = () => async (context: HookContext) => {
     let action;
     try {
         action = decodeAction(context.data.payload);
@@ -426,7 +426,7 @@ const approvePhoto = (options) => async (context: HookContext) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context: HookContext) => {
+const runCustomAction = () => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 

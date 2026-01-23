@@ -22,7 +22,7 @@ import { optionalAuthenticate } from '../commonHooks';
 const cache = new NodeCache({ useClones: false });
 const events = new Set();
 
-const setAgeCompatibleFlag = (options) => async (context: HookContext) => {
+const setAgeCompatibleFlag = () => async (context: HookContext) => {
     const { config } = context.params;
     const sequelize = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
@@ -56,7 +56,7 @@ const setAgeCompatibleFlag = (options) => async (context: HookContext) => {
     return context;
 };
 
-const populateTournament = (options) => async (context: HookContext) => {
+const populateTournament = () => async (context: HookContext) => {
     if (context.result) {
         return context;
     }
@@ -497,7 +497,7 @@ const isCacheStale = (data, context) => {
     return !dayjs.tz().isSame(dayjs.tz(data.createdAt), 'day');
 };
 
-const getFinalMatches = (options) => async (context: HookContext) => {
+const getFinalMatches = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const tournamentId = Number(context.id);
 
@@ -537,7 +537,7 @@ const getFinalMatches = (options) => async (context: HookContext) => {
     return context;
 };
 
-const getDoublesInfo = (options) => async (context: HookContext) => {
+const getDoublesInfo = () => async (context: HookContext) => {
     let action;
     try {
         action = decodeAction(context.data.payload);
@@ -616,7 +616,7 @@ const getDoublesInfo = (options) => async (context: HookContext) => {
     return context;
 };
 
-const runCustomAction = (options) => async (context: HookContext) => {
+const runCustomAction = () => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
 
