@@ -190,7 +190,7 @@ const getUserInitialTlr = async (sequelize: Sequelize, userId: number, levelId: 
     return match.challengerUserId === userId ? match.challengerElo : match.acceptorElo;
 };
 
-const getTournamentInfo = async (context, tournamentId: number) => {
+const getTournamentInfo = async (context: HookContext, tournamentId: number) => {
     const sequelize = context.app.get('sequelizeClient');
     const [[params]] = await sequelize.query(
         `SELECT s.year, s.season, l.slug

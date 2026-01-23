@@ -376,7 +376,7 @@ const sendEstablishedEloNotification = () => async (context: HookContext) => {
 };
 
 // This is not a hook, just a helper
-const populateNextFinalMatch = async (context, prevMatch) => {
+const populateNextFinalMatch = async (context: HookContext, prevMatch) => {
     const connectedMatch = relationsUp[prevMatch.finalSpot];
     if (!connectedMatch) {
         return;

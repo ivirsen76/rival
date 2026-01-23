@@ -34,7 +34,7 @@ const getProcessedOrders = () => async (context: HookContext) => {
     return context;
 };
 
-const issueReferralCredit = async (context, user) => {
+const issueReferralCredit = async (context: HookContext, user) => {
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
     const { users, payments } = sequelize.models;

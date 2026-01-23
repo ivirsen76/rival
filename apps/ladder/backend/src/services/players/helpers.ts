@@ -3,6 +3,7 @@ import getCustomEmail from '../../emailTemplates/getCustomEmail';
 import { getEmailContact, getPlayerName, getEmailLink, getPhoneLink } from '../users/helpers';
 import _capitalize from 'lodash/capitalize';
 import { POOL_PARTNER_ID } from '../../constants';
+import type { HookContext } from '@feathersjs/feathers';
 
 export const teamNames = [
     'Love Gurus',
@@ -79,7 +80,7 @@ export const getJoinDoublesLink = async (playerId: number, app) => {
     return link;
 };
 
-export const sendAcceptedTeammateMessage = async (context, teammateUserId: number) => {
+export const sendAcceptedTeammateMessage = async (context: HookContext, teammateUserId: number) => {
     const sequelize = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
     const { TL_URL } = process.env;
@@ -108,7 +109,7 @@ export const sendAcceptedTeammateMessage = async (context, teammateUserId: numbe
     });
 };
 
-export const sendNewPoolPlayerMessage = async (context, playerId: number) => {
+export const sendNewPoolPlayerMessage = async (context: HookContext, playerId: number) => {
     const sequelizeClient = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
     const { config } = context.params;
@@ -185,7 +186,7 @@ export const sendNewPoolPlayerMessage = async (context, playerId: number) => {
     });
 };
 
-export const sendDoublesTeamInvitation = async (context, tournamentIds: number[], partners) => {
+export const sendDoublesTeamInvitation = async (context: HookContext, tournamentIds: number[], partners) => {
     const sequelize = context.app.get('sequelizeClient');
     const currentUser = context.params.user;
     const { config } = context.params;

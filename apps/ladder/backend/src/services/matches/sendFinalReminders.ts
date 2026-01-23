@@ -1,3 +1,4 @@
+import type { HookContext } from '@feathersjs/feathers';
 import dayjs from '../../utils/dayjs';
 import finalMatchTemplate from '../../emailTemplates/finalMatch';
 import finalMatchByeTemplate from '../../emailTemplates/finalMatchBye';
@@ -15,7 +16,7 @@ const relationsDown = {
     1: [3, 2],
 };
 
-const sendFinalReminders = async (context, tournamentId) => {
+const sendFinalReminders = async (context: HookContext, tournamentId: number) => {
     const sequelize = context.app.get('sequelizeClient');
     const currentDate = dayjs.tz();
 

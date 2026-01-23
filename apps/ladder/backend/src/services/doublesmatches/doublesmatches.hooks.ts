@@ -33,7 +33,7 @@ const isAdmin = (user) => {
 };
 
 // This is not a hook, just a helper
-const populateNextFinalMatch = async (context, prevMatch) => {
+const populateNextFinalMatch = async (context: HookContext, prevMatch) => {
     const finalMatchConnections = {
         3: {
             finalSpot: 1,
