@@ -47,6 +47,11 @@ jobs:
         steps:
             - checkout
             - run: *install
+
+            # restore dist from shared workspace
+            - attach_workspace:
+                  at: ~/repo
+
             - run: pnpm exec vitest run apps/ladder/backend apps/ladder/frontend
 
     playwright:
@@ -78,6 +83,9 @@ workflows:
     build-test-deploy:
         jobs:
             - build
+            - test:
+                  requires:
+                      - build
             - playwright:
                   requires:
                       - build
