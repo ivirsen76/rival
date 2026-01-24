@@ -8,11 +8,13 @@ import { getJoinDoublesLink } from '../players/helpers';
 import { getPartners } from './helpers';
 import { limitedPromiseAll } from '../../helpers';
 import { projectedTlrMultipliers } from '../../config';
+import type { Config } from '../../types';
 
 const STAT_COUNT = 5;
 const SWITCH_LADDER_DEADLINE_WEEKS = 2;
 
-export const shuffleRange = (array, ranges) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const shuffleRange = (array: any[], ranges: number[][]) => {
     const result = [...array];
 
     // eslint-disable-next-line
@@ -193,11 +195,11 @@ export const getSeeds = (players, isShuffle = false) => {
 };
 
 const getSeasonName = (data) => {
-    const seasonName = SEASON_OPTIONS.find((option) => option.value === data['season.season']).label;
+    const seasonName = SEASON_OPTIONS.find((option) => option.value === data['season.season'])!.label;
     return `${data['season.year']} ${seasonName}`;
 };
 
-const getEloTrend = (data, config) => {
+const getEloTrend = (data, config: Config) => {
     const all = {};
     const seasonEnd = dayjs.tz(data['season.endDate']).format('YYYY-MM-DD HH:mm:ss');
     const dateYearAgo = dayjs
@@ -206,7 +208,7 @@ const getEloTrend = (data, config) => {
         .format('YYYY-MM-DD HH:mm:ss');
     const tournamentId = data.id;
 
-    const addUser = (id) => {
+    const addUser = (id: number) => {
         if (!all[id]) {
             all[id] = {
                 elo: null,
@@ -556,7 +558,7 @@ const getTopUpsetMatches = (data, config) => {
         .slice(0, STAT_COUNT);
 };
 
-const getMostProgress = (data, config) => {
+const getMostProgress = (data, config: Config) => {
     const progress = {};
 
     const userToPlayerId = data.users.reduce((obj, user) => {
@@ -870,7 +872,19 @@ const getTeams = (data, players) => {
     });
 };
 
-const getCancelTournamentStatus = ({ data, config, isOver, isBreak, isStarted }) => {
+const getCancelTournamentStatus = ({
+    data,
+    config,
+    isOver,
+    isBreak,
+    isStarted,
+}: {
+    data;
+    config: Config;
+    isOver: boolean;
+    isBreak: boolean;
+    isStarted: boolean;
+}) => {
     const isDoubles = data['level.type'] === 'doubles';
 
     const deadline = dayjs.tz(data['season.endDate']).subtract(config.tournamentReminderWeeks, 'week');

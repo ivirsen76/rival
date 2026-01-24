@@ -6,6 +6,7 @@ export type User = {
     phone: string;
     slug: string;
     teamName: string;
+    birthday: string;
 };
 
 export type Player = {
@@ -14,6 +15,7 @@ export type Player = {
     isActive: number;
     teamName: string;
     userSlug: string;
+    userId: number;
 };
 
 export type Match = {
@@ -30,6 +32,7 @@ export type Match = {
     unavailable: number;
     matchFormat: number;
     score: string;
+    playedAt: string;
 };
 
 export type Tournament = {
@@ -57,6 +60,7 @@ export type Config = {
     singlesRunnerUpReward: number;
     minMatchesToEstablishTlr: number;
     minMatchesToPlanTournament: number;
+    tournamentReminderWeeks: number;
 };
 
 export type Proposal = {
@@ -102,4 +106,14 @@ export type RivalryHistory = {
     date: string;
     isWinner: boolean;
     score: string;
+};
+
+export type Coach = {
+    id: number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    bullets: string;
+    locationAddress: string;
 };

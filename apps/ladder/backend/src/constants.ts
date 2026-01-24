@@ -1,4 +1,4 @@
-export const SEASON_OPTIONS = [
+export const SEASON_OPTIONS: { value: string; label: string }[] = [
     { value: 'spring', label: 'Spring' },
     { value: 'summer', label: 'Summer' },
     { value: 'fall', label: 'Fall' },

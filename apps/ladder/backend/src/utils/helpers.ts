@@ -52,7 +52,7 @@ export const isProposalFitSchedule = (proposal, schedule) => {
     return schedule.some(([from, to]) => from <= min && to >= max);
 };
 
-export const getAge = (birthday: 'string', now = Date.now()) => {
+export const getAge = (birthday: string, now = Date.now()) => {
     const [y, m, d] = birthday.split('-').map(Number);
     const birth = new Date(y, m - 1, d).getTime();
 
