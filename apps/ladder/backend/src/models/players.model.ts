@@ -1,6 +1,7 @@
 import type { Application } from '@feathersjs/feathers';
 import Sequelize, { QueryOptions } from 'sequelize';
 import getLevelGender from '../utils/getLevelGender';
+import type { Player } from '../types';
 
 export default function (app: Application) {
     const sequelizeClient = app.get('sequelizeClient');
@@ -46,7 +47,7 @@ export default function (app: Application) {
     };
 
     // Populate gender
-    players.afterCreate(async (player) => {
+    players.afterCreate(async (player: Player) => {
         const { userId, tournamentId } = player;
         const { users } = sequelizeClient.models;
 

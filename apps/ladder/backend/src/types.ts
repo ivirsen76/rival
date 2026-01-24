@@ -19,6 +19,7 @@ export type Player = {
     teamName: string;
     userSlug: string;
     userId: number;
+    tournamentId: number;
 };
 
 export type Match = {

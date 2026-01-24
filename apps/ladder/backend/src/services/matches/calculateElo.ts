@@ -258,7 +258,7 @@ export const calculateElo = async () => {
             }
         }
     } catch (e) {
-        logger.error(e.message);
+        logger.error((e as Error).message);
     }
 
     closeConnection();

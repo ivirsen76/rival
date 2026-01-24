@@ -32,7 +32,7 @@ const checkEmail = async (email) => {
             result.message = `Mailbox "${mailbox}" does not exist on "${domain}" domain. Please use a different email.`;
         }
     } catch (e) {
-        logger.error(e.message);
+        logger.error((e as Error).message);
     }
 
     return result;

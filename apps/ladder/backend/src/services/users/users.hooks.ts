@@ -2788,7 +2788,7 @@ const getUserSubscriptions = () => async (context: HookContext) => {
     try {
         action = decodeAction(context.data.payload);
     } catch (e) {
-        throw new Unprocessable(e.message);
+        throw new Unprocessable((e as Error).message);
     }
 
     if (action.name !== 'unsubscribe' && action.name !== 'adjustProposals') {
@@ -2850,7 +2850,7 @@ const updateUserSubscriptions = () => async (context: HookContext) => {
     try {
         action = decodeAction(context.data.payload);
     } catch (e) {
-        throw new Unprocessable(e.message);
+        throw new Unprocessable((e as Error).message);
     }
 
     if (action.name !== 'unsubscribe' && action.name !== 'adjustProposals') {
@@ -3196,7 +3196,7 @@ const registerPartner = () => async (context: HookContext) => {
     try {
         action = decodeAction(context.data.payload);
     } catch (e) {
-        throw new Unprocessable(e.message);
+        throw new Unprocessable((e as Error).message);
     }
 
     if (action.name !== 'registerPartner' || !action.percent || !action.years) {

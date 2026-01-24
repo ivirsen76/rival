@@ -399,7 +399,7 @@ const approvePhoto = () => async (context: HookContext) => {
     try {
         action = decodeAction(context.data.payload);
     } catch (e) {
-        throw new Unprocessable(e.message);
+        throw new Unprocessable((e as Error).message);
     }
 
     if (action.name !== 'approvePhoto') {

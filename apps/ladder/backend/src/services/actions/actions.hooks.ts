@@ -29,7 +29,7 @@ const decodePayload = () => async (context: HookContext) => {
         context.result = result;
         logEvent(`Action call: ${JSON.stringify(result)}`)(context);
     } catch (e) {
-        throw new Unprocessable('Invalid request', { errors: e.message });
+        throw new Unprocessable('Invalid request', { errors: (e as Error).message });
     }
 
     return context;

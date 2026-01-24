@@ -56,7 +56,7 @@ const validateUpdate = () => async (context: HookContext) => {
     try {
         action = decodeAction(context.data.action);
     } catch (e) {
-        throwValidationErrors({ password: e.message });
+        throwValidationErrors({ password: (e as Error).message });
     }
 
     if (action.name !== 'newPassword') {

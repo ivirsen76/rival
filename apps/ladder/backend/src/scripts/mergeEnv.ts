@@ -11,7 +11,7 @@ if (fs.existsSync(dest)) {
     throw new Error('Destination already exists');
 }
 
-const env = {};
+const env: Record<string, string> = {};
 for (const source of sources) {
     const data = fs.readFileSync(source, 'utf8');
     if (data.length > 4000) {

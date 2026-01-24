@@ -41,6 +41,6 @@ export default function (app) {
             }
         });
     } catch (e) {
-        logger.error(e.message);
+        logger.error((e as Error).message);
     }
 }

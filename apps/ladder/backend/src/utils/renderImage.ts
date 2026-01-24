@@ -1,6 +1,6 @@
 import invokeLambda from './invokeLambda';
 
-const renderImage = async (url, options = {}) => {
+const renderImage = async (url: string, options = {}) => {
     if (process.env.NODE_ENV === 'test' && !process.env.TL_EMAILS_AND_IMAGES) {
         return {
             src: `https://nyc3.digitaloceanspaces.com/utl/production/ada3148b518bd4da04671e36231f9c5c763adebd0fc7069e63ed16402949aa8e.png`,
