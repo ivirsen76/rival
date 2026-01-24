@@ -77,6 +77,8 @@
     },
     "devDependencies": {
         "@types/lodash": "^4.17.23",
+        "@types/md5": "^2.3.6",
+        "@types/mjml": "^4.7.4",
         "@types/mysql": "^2.15.27",
         "@types/supertest": "^6.0.3",
         "colors": "^1.4.0",
