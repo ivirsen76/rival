@@ -24,9 +24,10 @@ import photos from './photos/photos.service';
 import comments from './comments/comments.service';
 import reactions from './reactions/reactions.service';
 import reports from './reports/reports.service';
+import type { Application } from '@feathersjs/feathers';
 
 // eslint-disable-next-line no-unused-vars
-export default function (app) {
+export default function (app: Application) {
     app.configure(users);
     app.configure(seasons);
     app.configure(levels);

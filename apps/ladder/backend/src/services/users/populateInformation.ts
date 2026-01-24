@@ -1,7 +1,8 @@
+import type { UserInformation } from '../../types';
 import matchFormatOptions from '../proposals/matchFormatOptions';
 import merge from 'deepmerge';
 
-export const defaultValues = {
+export const defaultValues: UserInformation = {
     subscribeForProposals: {
         playFormats: [...matchFormatOptions.map((item) => item.value), 99],
         onlyNotPlaying: true,
@@ -12,13 +13,10 @@ export const defaultValues = {
     },
 };
 
-export default (information) => {
-    if (!information) {
-        information = {};
-    }
+export default (information: UserInformation) => {
     if (typeof information === 'string') {
         information = JSON.parse(information);
     }
 
-    return merge(defaultValues, information, { arrayMerge: (target, source) => source });
+    return merge(defaultValues, information || {}, { arrayMerge: (_, source) => source });
 };

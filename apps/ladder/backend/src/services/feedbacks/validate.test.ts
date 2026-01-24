@@ -1,3 +1,4 @@
+// @ts-nocheck
 import validate from './validate';
 
 describe('validate()', () => {

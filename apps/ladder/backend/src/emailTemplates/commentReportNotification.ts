@@ -1,16 +1,15 @@
-import type { Config, User } from '../types';
+import type { Config } from '../types';
 import { normal } from './normal';
 
 type Params = {
     config: Config;
-    userName: User;
+    userName: string;
     author: string;
     comment: string;
     message: string;
-    previewText: string;
 };
 
-export default ({ config, userName, author, comment, message, previewText }: Params) => {
+export default ({ config, userName, author, comment, message }: Params) => {
     return normal(
         `
   <mj-text><b>${userName}</b> reported on a comment.</mj-text>
@@ -21,6 +20,6 @@ export default ({ config, userName, author, comment, message, previewText }: Par
   <mj-text padding-bottom="0px">Report:</mj-text>
   <mj-text><div style="border: 1px solid #b3e2fd; padding: 15px; background-color: #ccecfd; border-radius: 5px; color: #005f94; white-space: pre-line;">${message}</div></mj-text>
 `,
-        { config, previewText }
+        { config }
     );
 };

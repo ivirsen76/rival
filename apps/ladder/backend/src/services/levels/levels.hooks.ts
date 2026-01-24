@@ -26,7 +26,7 @@ const populatePosition = () => async (context: HookContext) => {
 };
 
 const orderByPosition = () => async (context: HookContext) => {
-    context.params.query.$sort = { position: 1 };
+    context.params.query!.$sort = { position: 1 };
 
     return context;
 };

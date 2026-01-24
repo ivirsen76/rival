@@ -1,4 +1,24 @@
-const bananas = [
+type Image = {
+    src: string;
+    width: number;
+    height: number;
+};
+
+export type Banana = {
+    name: string;
+    keyword?: string;
+    link: string;
+    images: {
+        square?: Image;
+        normal: Image;
+    };
+    partner: string;
+    cities?: string[];
+    from?: string;
+    to?: string;
+};
+
+const bananas: Banana[] = [
     {
         name: 'ASICS Melbourne',
         link: 'https://www.tennis-warehouse.com/catpage-ASICSMELLP.html',

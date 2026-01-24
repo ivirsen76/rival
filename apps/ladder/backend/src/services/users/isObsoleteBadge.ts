@@ -1,4 +1,4 @@
-export default (code) => {
+export default (code: string) => {
     const obsoleteBadges = new Set(['firstChallenge']);
     if (obsoleteBadges.has(code)) {
         return true;

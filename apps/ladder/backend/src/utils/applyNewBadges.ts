@@ -455,7 +455,7 @@ export const updateCurrentWeekUserBadges = async (app: Application, userId: numb
     }
 };
 
-export const applyNewBadges = async (sequelize: Sequelize, forceRecalculation: boolean) => {
+export const applyNewBadges = async (sequelize: Sequelize, forceRecalculation: boolean = false) => {
     const { payments } = sequelize.models;
     let startDate = '2000-01-01 00:00:00';
 

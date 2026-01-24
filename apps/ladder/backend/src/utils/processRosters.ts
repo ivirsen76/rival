@@ -343,7 +343,7 @@ const processAustin = async (app: Application) => {
     await sendGeneralMessage(app, candidates);
 };
 
-export default async (app, email) => {
+export default async (app: Application, email?: string) => {
     const config = await getCombinedConfig();
 
     if (email) {

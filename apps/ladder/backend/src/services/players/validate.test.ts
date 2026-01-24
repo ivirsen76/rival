@@ -1,3 +1,4 @@
+// @ts-nocheck
 import validate from './validate';
 
 describe('validate()', () => {
@@ -5,7 +6,7 @@ describe('validate()', () => {
         readyForFinal: 2,
     };
 
-    const checkForErrors = (fieldName, values) => {
+    const checkForErrors = (fieldName: string, values) => {
         describe(`${fieldName} errors`, () => {
             for (const value of values) {
                 it(`Should show error for value "${value}" (${typeof value})`, () => {

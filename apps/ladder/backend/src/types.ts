@@ -1,3 +1,14 @@
+export type UserInformation = {
+    subscribeForProposals: {
+        playFormats: number[];
+        onlyNotPlaying: boolean;
+        onlyCompetitive: boolean;
+        onlyAgeCompatible: boolean;
+        onlyMySchedule: boolean;
+        weeklySchedule: [number, number][][];
+    };
+};
+
 export type User = {
     id: number;
     firstName: string;
@@ -11,6 +22,7 @@ export type User = {
     comeFrom: string;
     comeFromOther: string;
     referralCode: string;
+    information: UserInformation;
 };
 
 export type Player = {

@@ -1,4 +1,4 @@
-export default (html) => {
+export default (html: string) => {
     return html
         .replace(/<strong>/g, '<b>')
         .replace(/<\/strong>/g, '</b>')
