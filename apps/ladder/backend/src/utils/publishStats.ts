@@ -8,6 +8,7 @@ import _pick from 'lodash/pick';
 import { getPlayerName, comeFromOptions } from '../services/users/helpers';
 import { getStatsMatches } from './sqlConditions';
 import getCombinedConfig from './getCombinedConfig';
+import { Photo, Season, User } from '../types';
 
 export default async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
@@ -54,18 +55,19 @@ export default async (app: Application) => {
     // publish photos
     {
         const response = await axios.get(`${TL_STORE_URL}/api/photos?filters[city]=${cityId}`, credentials);
-        const uploadedPhotos = response.data.data.reduce((obj, item) => {
+        const uploadedPhotos = (response.data.data as Photo[]).reduce((obj, item) => {
+            // @ts-expect-error - I don't know how to fix it
             obj[item.attributes.url] = item;
             return obj;
-        }, {});
+        }, {}) as Record<string, Photo>;
 
-        const [photos] = await sequelize.query(`
+        const [photos] = (await sequelize.query(`
             SELECT p.*,
                    u.slug AS userSlug
               FROM photos AS p,
                    users AS u
              WHERE p.userId=u.id AND
-                   p.deletedAt IS NULL`);
+                   p.deletedAt IS NULL`)) as [Photo[]];
         const existingUrls = new Set(photos.map((item) => item.url400));
         for (const photo of photos) {
             const existingPhoto = uploadedPhotos[photo.url400];
@@ -125,11 +127,14 @@ export default async (app: Application) => {
         levels: [],
         users: [],
         complaints: [],
+        startDate: '',
     };
 
     // get started date
     {
-        const [seasons] = await sequelize.query('SELECT id, startDate FROM seasons ORDER BY startDate LIMIT 0, 1');
+        const [seasons] = (await sequelize.query(
+            'SELECT id, startDate FROM seasons ORDER BY startDate LIMIT 0, 1'
+        )) as [Season[]];
         if (seasons.length > 0) {
             stats.startDate = dayjs.tz(seasons[0].startDate).format('MMMM YYYY');
         }
@@ -157,7 +162,7 @@ export default async (app: Application) => {
 
     // get users
     {
-        const [users] = await sequelize.query(`SELECT
+        const [users] = (await sequelize.query(`SELECT
                 firstName,
                 lastName,
                 avatar,
@@ -181,7 +186,7 @@ export default async (app: Application) => {
                 appearance
            FROM users
           WHERE isVerified=1 AND
-                roles="player"`);
+                roles="player"`)) as [User[]];
 
         stats.users = users.map((user) => ({
             ..._pick(user, [

@@ -7,6 +7,9 @@ export type User = {
     slug: string;
     teamName: string;
     birthday: string;
+    avatar: string;
+    comeFrom: string;
+    comeFromOther: string;
 };
 
 export type Player = {
@@ -116,4 +119,23 @@ export type Coach = {
     phone: string;
     bullets: string;
     locationAddress: string;
+};
+
+export type Photo = {
+    id: number;
+    userId: number;
+    width: number;
+    height: number;
+    title: string;
+    url400: string;
+    userSlug: string;
+    allowShare: number;
+    allowComments: number;
+    isApproved: number;
+    createdAt: string;
+    attributes: {
+        url: string;
+        title: string;
+        userSlug: string;
+    };
 };
