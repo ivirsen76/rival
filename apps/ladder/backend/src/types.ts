@@ -10,6 +10,7 @@ export type User = {
     avatar: string;
     comeFrom: string;
     comeFromOther: string;
+    referralCode: string;
 };
 
 export type Player = {

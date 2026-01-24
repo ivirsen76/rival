@@ -17,14 +17,14 @@ export const encrypt = (text: string) => {
 export const decrypt = (text: string) => {
     try {
         const parts = text.split(':');
-        const iv = Buffer.from(parts.shift(), 'hex');
+        const iv = Buffer.from(parts.shift() as string, 'hex');
         const encryptedText = Buffer.from(parts.join(':'), 'hex');
         const decipher = crypto.createDecipheriv('aes-256-cbc', Buffer.from(key), iv);
 
         let decrypted = decipher.update(encryptedText);
         decrypted = Buffer.concat([decrypted, decipher.final()]);
         return decrypted.toString();
-    } catch (e) {
+    } catch {
         return '';
     }
 };

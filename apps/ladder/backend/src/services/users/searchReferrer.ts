@@ -1,6 +1,7 @@
+import type { User } from '../../types';
 import { getPlayerName } from './helpers';
 
-export default (list, search) => {
+export default (list: User[], search: string) => {
     let result = [];
 
     if (search.includes('@')) {

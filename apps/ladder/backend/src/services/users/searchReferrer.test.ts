@@ -1,3 +1,4 @@
+import { User } from '../../types';
 import searchReferrer from './searchReferrer';
 
 describe('searchReferrer()', () => {
@@ -84,7 +85,7 @@ describe('searchReferrer()', () => {
         },
     ];
 
-    const variants = [
+    const variants: [string, number[]][] = [
         ['Igor Eremeev', [1]],
         ['igor eremeev', [1]],
         ['igor  eremeev', [1]],
@@ -116,7 +117,7 @@ describe('searchReferrer()', () => {
         const [search, ids] = variant;
 
         it(`Should return right search for "${search}"`, () => {
-            const result = searchReferrer(list, search);
+            const result = searchReferrer(list as User[], search);
             expect(result.map((item) => item.id)).toEqual(ids);
         });
     }
