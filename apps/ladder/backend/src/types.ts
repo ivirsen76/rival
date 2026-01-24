@@ -16,13 +16,13 @@ export type User = {
     email: string;
     phone: string;
     slug: string;
-    teamName: string;
-    birthday: string;
-    avatar: string;
-    comeFrom: string;
-    comeFromOther: string;
-    referralCode: string;
-    information: UserInformation;
+    teamName?: string;
+    birthday?: string;
+    avatar?: string | object;
+    comeFrom?: string;
+    comeFromOther?: string;
+    referralCode?: string;
+    information?: UserInformation;
 };
 
 export type Player = {
@@ -44,6 +44,12 @@ export type Match = {
     acceptorRank: number;
     challengerPoints: number;
     acceptorPoints: number;
+    challengerMatches: number;
+    acceptorMatches: number;
+    challengerElo: number;
+    acceptorElo: number;
+    challengerUserId: number;
+    acceptorUserId: number;
     wonByDefault: number;
     wonByInjury: number;
     unavailable: number;

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import yup from '../../packages/yup';
 import { getSchemaErrors } from '../../helpers';
 

@@ -1179,17 +1179,21 @@ const sendNewRivalryNotification = () => async (context: HookContext) => {
         try {
             const challenger = {
                 id: match.challengerUserId,
-                name: match.challengerFirstName + ' ' + match.challengerLastName,
+                firstName: match.challengerFirstName,
+                lastName: match.challengerLastName,
                 email: match.challengerEmail,
                 avatar: match.challengerAvatar ? JSON.parse(match.challengerAvatar) : null,
                 slug: match.challengerSlug,
+                phone: '',
             };
             const acceptor = {
                 id: match.acceptorUserId,
-                name: match.acceptorFirstName + ' ' + match.acceptorLastName,
+                firstName: match.acceptorFirstName,
+                lastName: match.acceptorLastName,
                 email: match.acceptorEmail,
                 avatar: match.acceptorAvatar ? JSON.parse(match.acceptorAvatar) : null,
                 slug: match.acceptorSlug,
+                phone: '',
             };
 
             for (const user of [challenger, acceptor]) {
@@ -1227,8 +1231,8 @@ const sendNewRivalryNotification = () => async (context: HookContext) => {
                 const props = encodeURIComponent(JSON.stringify({ avatar1: user.avatar, avatar2: opponent.avatar }));
                 const img = await renderImage(`${TL_URL}/image/rivalry?props=${props}`);
 
-                const emails = [{ name: user.name, email: user.email }];
-                const previewText = `New rivalry with ${opponent.name}`;
+                const emails = [getEmailContact(user)];
+                const previewText = `New rivalry with ${getPlayerName(opponent)}`;
 
                 context.app.service('api/emails').create({
                     to: emails,

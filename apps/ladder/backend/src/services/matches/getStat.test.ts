@@ -1,4 +1,4 @@
-import getStat from './getStat';
+import getStat, { Point } from './getStat';
 import pointsExample from './pointsExample.json';
 
 describe('getStat()', () => {
@@ -43,7 +43,7 @@ describe('getStat()', () => {
             },
         };
 
-        expect(getStat(pointsExample)).toEqual(expectedResult);
+        expect(getStat(pointsExample as Point[])).toEqual(expectedResult);
     });
 
     it('Should return right reversed result', () => {
@@ -87,6 +87,6 @@ describe('getStat()', () => {
             },
         };
 
-        expect(getStat(pointsExample, true)).toEqual(expectedResult);
+        expect(getStat(pointsExample as Point[], true)).toEqual(expectedResult);
     });
 });

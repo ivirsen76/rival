@@ -1,6 +1,8 @@
 import _upperFirst from 'lodash/upperFirst';
 import dayjs from '../../utils/dayjs';
 import { getStatsMatches } from '../../utils/sqlConditions';
+import type { Config, Match, User } from '../../types';
+import type { Sequelize } from 'sequelize';
 
 export const formatPhone = (str: string) => {
     if (!str) {
@@ -34,11 +36,11 @@ export const formatUserName = (str: string) => {
         .join(' ');
 };
 
-export const getPlayerName = (players, withLink = false) => {
+export const getPlayerName = (players: User | User[], withLink = false) => {
     const arr = Array.isArray(players) ? players : [players];
 
     const useInitials = arr.length > 1;
-    const getInitials = (player) => player.lastName.slice(0, 1).toUpperCase() + '.';
+    const getInitials = (player: User) => player.lastName.slice(0, 1).toUpperCase() + '.';
 
     return arr
         .map((player) => {
@@ -53,15 +55,15 @@ export const getPlayerName = (players, withLink = false) => {
         .join(' / ');
 };
 
-export const getEmailLink = (user) => {
+export const getEmailLink = (user: User) => {
     return `<a href="mailto:${user.email}">${user.email}</a>`;
 };
 
-export const getPhoneLink = (user) => {
+export const getPhoneLink = (user: User) => {
     return `<a href="sms:${user.phone}">${formatPhone(user.phone)}</a>`;
 };
 
-export const getEmailContact = (user) => {
+export const getEmailContact = (user: User) => {
     return { name: getPlayerName(user), email: user.email };
 };
 
@@ -104,7 +106,7 @@ export const getWeekNumber = (str: string) => {
     return Number(`${yyyy}${mm}${dd}`);
 };
 
-export const getDateByWeekNumber = (num) => {
+export const getDateByWeekNumber = (num: number) => {
     const year = Math.floor(num / 10000);
     const month = Math.floor((num % 10000) / 100);
     const day = Math.floor(num % 100);
@@ -112,7 +114,7 @@ export const getDateByWeekNumber = (num) => {
     return dayjs.tz(`${year}-${month}-${day} 00:00:00`).isoWeekday(1).format('YYYY-MM-DD HH:mm:ss');
 };
 
-export const getTbStats = (match) => {
+export const getTbStats = (match: Match) => {
     const { score, wonByInjury } = match;
     let won = 0;
     let lost = 0;
@@ -133,8 +135,16 @@ export const getTbStats = (match) => {
     return [won, lost];
 };
 
-export const getEstablishedElo = async ({ userId, config, sequelize }) => {
-    const [[match]] = await sequelize.query(
+export const getEstablishedElo = async ({
+    userId,
+    config,
+    sequelize,
+}: {
+    userId: number;
+    config: Config;
+    sequelize: Sequelize;
+}) => {
+    const [[match]] = (await sequelize.query(
         `SELECT m.*,
                 p.id AS playerId
             FROM matches AS m,
@@ -145,7 +155,7 @@ export const getEstablishedElo = async ({ userId, config, sequelize }) => {
                 m.challenger2Id IS NULL
         ORDER BY m.playedAt DESC
             LIMIT 0, 1`
-    );
+    )) as [Match & { playerId: number }][];
 
     let establishedElo;
     if (match) {
@@ -158,7 +168,7 @@ export const getEstablishedElo = async ({ userId, config, sequelize }) => {
     return establishedElo;
 };
 
-export const getEstablishedEloAllUsers = async ({ config, sequelize }) => {
+export const getEstablishedEloAllUsers = async ({ config, sequelize }: { config: Config; sequelize: Sequelize }) => {
     const [matches] = await sequelize.query(
         `SELECT m.challengerMatches,
                 m.challengerElo,
@@ -175,8 +185,8 @@ export const getEstablishedEloAllUsers = async ({ config, sequelize }) => {
                 m.id DESC`
     );
 
-    const result = {};
-    for (const match of matches) {
+    const result: Record<string, number> = {};
+    for (const match of matches as Match[]) {
         if (match.challengerMatches >= config.minMatchesToEstablishTlr && !result[match.challengerUserId]) {
             result[match.challengerUserId] = match.challengerElo;
         }

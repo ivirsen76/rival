@@ -1,3 +1,4 @@
+// @ts-nocheck
 import redis from 'redis';
 import logger from '@rival-tennis-ladder/logger';
 

@@ -29,13 +29,13 @@ const app = express(feathers());
 app.configure(configuration());
 
 // Enchance app to add prefix ability
-app.declareService = (name, ...middlewares) => {
+app.declareService = (name: string, ...middlewares) => {
     const url = app.get('apiPrefix') + '/' + name;
     app.use(url, ...middlewares);
 
     return app.getService(name);
 };
-app.getService = (name) => app.service(app.get('apiPrefix') + '/' + name);
+app.getService = (name: string) => app.service(app.get('apiPrefix') + '/' + name);
 
 app.use(gitcommit());
 
@@ -92,7 +92,7 @@ app.get('/t/click', async (req, res) => {
     let { url } = req.query;
     try {
         // if url starts with / it means it's using the same domain
-        url = url.replace(/^\//, domain);
+        url = (url as string).replace(/^\//, domain);
 
         // eslint-disable-next-line no-new
         new URL(url); // throws if invalid

@@ -1,3 +1,4 @@
+import { getPlayerName } from '../services/users/helpers';
 import type { Config, Image, RivalryHistory, User } from '../types';
 import { normal, h2 } from './normal';
 
@@ -18,11 +19,11 @@ export default ({ config, user, opponent, lead, history, img, previewText }: Par
     return normal(
         `
   ${h2('Hello, #firstName#!', 'padding-top="10px"')}
-  <mj-text>After your most recent match you have a new rival: <b>${opponent.name}</b>!</mj-text>
+  <mj-text>After your most recent match you have a new rival: <b>${getPlayerName(opponent)}</b>!</mj-text>
   <mj-image src="${img.src}" width="${img.width}px" height="${img.height}px" alt="${previewText}" />
-  <mj-text>You establish a new rival when you play an opponent 3 times. You ${isLeading ? 'lead' : 'are behind'} <b>${
-      opponent.name
-  }</b> in the head to head <b>${lead.join('-')}</b>:</mj-text>
+  <mj-text>You establish a new rival when you play an opponent 3 times. You ${isLeading ? 'lead' : 'are behind'} <b>${getPlayerName(
+      opponent
+  )}</b> in the head to head <b>${lead.join('-')}</b>:</mj-text>
   <mj-text>
     <ul style="margin: 0 !important; padding-top: 0px; padding-bottom: 0px;">
       ${history

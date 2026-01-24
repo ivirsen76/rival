@@ -13,11 +13,19 @@ const averageRd = 110;
 const timeToResetRd = 365 * 6; // 6 years
 const c2 = (maxRd ** 2 - averageRd ** 2) / timeToResetRd;
 
-const getTimeDiff = (date1, date2) => {
-    return (new Date(date2) - new Date(date1)) / (24 * 3600 * 1000);
+type Player = {
+    id: number;
+    elo: number;
+    matches: number;
+    prevPlayedAt: string;
+    rd: number;
 };
 
-export const getTotalGames = (score) => {
+const getTimeDiff = (date1: string, date2: string) => {
+    return (+new Date(date2) - +new Date(date1)) / (24 * 3600 * 1000);
+};
+
+export const getTotalGames = (score: string) => {
     const arr = score.match(/\d+/g);
     if (!arr) {
         return 0;
@@ -26,7 +34,7 @@ export const getTotalGames = (score) => {
     return arr.reduce((sum, num) => sum + Number(num), 0);
 };
 
-export const reverseScore = (score) =>
+export const reverseScore = (score: string) =>
     score
         .split(' ')
         .map((set) => set.replace(/^(\d+)-(\d+)$/, '$2-$1'))
@@ -34,20 +42,36 @@ export const reverseScore = (score) =>
 
 const scaleTlrToElo = (10 * 3) / 5;
 
-const eloToTlr = (elo, baseTlr) => {
+const eloToTlr = (elo: number, baseTlr: number) => {
     return baseTlr + (elo - 1500) / scaleTlrToElo;
 };
 
-const tlrToElo = (tlr, baseTlr) => {
+const tlrToElo = (tlr: number, baseTlr: number) => {
     return (tlr - baseTlr) * scaleTlrToElo + 1500;
 };
 
-const getTlr = ({ first, second, outcome, playedAt, eloDiff, multiplier = 1, baseTlr }) => {
+const getTlr = ({
+    first,
+    second,
+    outcome,
+    playedAt,
+    eloDiff,
+    multiplier = 1,
+    baseTlr,
+}: {
+    first: Player;
+    second: Player;
+    outcome: number;
+    playedAt: string;
+    eloDiff?: number;
+    multiplier: number;
+    baseTlr: number;
+}) => {
     const pi = 3.1415926;
     const q = Math.log(10) / 400;
-    const g = (rd) => 1 / Math.sqrt(1 + (3 * q ** 2 * rd ** 2) / pi ** 2);
-    const e = (r, rj, rdj) => 1 / (1 + 10 ** ((-g(rdj) * (r - rj)) / 400));
-    const getK = (rd) => 1.1 - 20 / (maxRd - rd + 20 / 0.4); // confidence in TLR (from 0.7 to 1.1)
+    const g = (rd: number) => 1 / Math.sqrt(1 + (3 * q ** 2 * rd ** 2) / pi ** 2);
+    const e = (r: number, rj: number, rdj: number) => 1 / (1 + 10 ** ((-g(rdj) * (r - rj)) / 400));
+    const getK = (rd: number) => 1.1 - 20 / (maxRd - rd + 20 / 0.4); // confidence in TLR (from 0.7 to 1.1)
 
     const firstElo = tlrToElo(first.elo, baseTlr);
     const secondElo = tlrToElo(second.elo, baseTlr);
@@ -85,6 +109,7 @@ export const calculateElo = async () => {
     }
 
     try {
+        // @ts-expect-error - hard to type it
         const { users, startDate } = (() => {
             if (process.env.NODE_ENV === 'test' || process.env.CI || !cache.has(CACHE_KEY)) {
                 return { users: {}, startDate: '1999-12-12 00:00:00' };
@@ -93,11 +118,7 @@ export const calculateElo = async () => {
             return cache.get(CACHE_KEY);
         })();
 
-        const addUser = (id, baseTlr) => {
-            if (!id || !baseTlr) {
-                return null;
-            }
-
+        const addUser = (id: number, baseTlr: number): Player => {
             if (!users[id]) {
                 users[id] = {
                     id,
@@ -237,7 +258,7 @@ export const calculateElo = async () => {
                 challengerRd !== match.challengerRd ||
                 acceptorRd !== match.acceptorRd
             ) {
-                const getQuery = (id) => `UPDATE matches
+                const getQuery = (id: number) => `UPDATE matches
                     SET challengerElo=${newRoundedChallengerElo},
                         acceptorElo=${newRoundedAcceptorElo},
                         challengerEloChange=${challengerEloChange},
