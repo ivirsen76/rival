@@ -33,8 +33,8 @@ export const revertScore = (score: string) => {
 };
 
 type SetValues = {
-    challengerPoints: number;
-    acceptorPoints: number;
+    challengerPoints: number | null;
+    acceptorPoints: number | null;
     isMatchTieBreak?: boolean;
 };
 export const isFullSetScoreCorrect = (values: SetValues) => {

@@ -9,12 +9,12 @@ export const getSlug = (str: string) => {
         .toLowerCase();
 };
 
-export const getSchemaErrors = (schema, values) => {
-    const errors = {};
+export const getSchemaErrors = (schema: any, values: any) => {
+    const errors: any = {};
 
     try {
         schema.validateSync(values, { abortEarly: false, strict: true });
-    } catch (err) {
+    } catch (err: any) {
         for (const error of err.inner) {
             const field = error.path.replace(/\[.*$/, '');
             if (!errors[field]) {
@@ -26,7 +26,7 @@ export const getSchemaErrors = (schema, values) => {
     return errors;
 };
 
-export const throwValidationErrors = (errors) => {
+export const throwValidationErrors = (errors: any) => {
     throw new Unprocessable('Invalid request', { errors });
 };
 
@@ -64,7 +64,7 @@ export const isEmail = (email: string) => {
     return emailRegex.test(email);
 };
 
-export const limitedPromiseAll = async (arr, func, limit = 10) => {
+export const limitedPromiseAll = async (arr: any[], func: Function, limit = 10) => {
     const results = [];
     for (let i = 0; i < arr.length; i += limit) {
         const batch = arr.slice(i, i + limit);

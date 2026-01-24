@@ -1,4 +1,4 @@
-/* eslint-disable no-loop-func */
+// @ts-nocheck
 import _capitalize from 'lodash/capitalize';
 
 export const calculateNextOrder = (settings) => {
@@ -76,7 +76,7 @@ export const calculateNextOrder = (settings) => {
         }
     }
 
-    const prevBalance = payments.reduce((sum, payment) => sum + payment.amount, 0);
+    const prevBalance = payments.reduce((sum: number, payment) => sum + payment.amount, 0);
     const total = result.reduce((sum, item) => sum - item.cost, 0);
     const newBalance = Math.max(prevBalance - total, 0);
 

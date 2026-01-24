@@ -1,4 +1,6 @@
-export const teamNameOptions = [
+import type { Option } from '../../types';
+
+export const teamNameOptions: Option[] = [
     { value: 1, label: 'Servebots' },
     { value: 2, label: 'Challengers' },
     { value: 3, label: 'Grinders' },
@@ -36,7 +38,7 @@ export const tlrBudget3 = 4800;
 export const minMatches = 10;
 export const maxTeamMembers = 5;
 
-export const getTlrLimit = (players) => {
+export const getTlrLimit = (players: any[]) => {
     const tlrs = players
         .filter((player) => player.weekTlr)
         .map((player) => player.weekTlr)
@@ -49,7 +51,7 @@ export const getTlrLimit = (players) => {
     return 9999;
 };
 
-export const getTeamName = (team) => {
+export const getTeamName = (team: any) => {
     if (team.name === 0) {
         return '';
     }

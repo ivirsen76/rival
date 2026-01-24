@@ -1,4 +1,6 @@
-export const SEASON_OPTIONS: { value: string; label: string }[] = [
+import type { Option } from './types';
+
+export const SEASON_OPTIONS: Option[] = [
     { value: 'spring', label: 'Spring' },
     { value: 'summer', label: 'Summer' },
     { value: 'fall', label: 'Fall' },

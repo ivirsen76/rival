@@ -36,7 +36,7 @@ import { encrypt } from '../../utils/crypt';
 import rabbits from './rabbits.json';
 import { faker } from '@faker-js/faker';
 import writeXlsxFile from 'write-excel-file/node';
-import type { User } from '../../types';
+import type { Photo, Tournament, User } from '../../types';
 
 const generateBadges = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
@@ -56,9 +56,9 @@ const generateRabbits = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     hasAnyRole(['admin'])(context);
 
-    const doIt = (percent) => Math.random() * 100 < percent;
+    const doIt = (percent: number) => Math.random() * 100 < percent;
 
-    const getRandomItemFromArray = (arr) => {
+    const getRandomItemFromArray = (arr: any[]) => {
         const max = arr[arr.length - 1][1];
         const num = Math.random() * max;
 
@@ -95,14 +95,14 @@ const generateRabbits = () => async (context: HookContext) => {
         throw new Unprocessable('Rabbits were already generated.');
     }
 
-    const [tournaments] = await sequelize.query(`
+    const [tournaments] = (await sequelize.query(`
         SELECT t.id,
                t.levelId,
                l.name AS levelName,
                l.type AS levelType
           FROM tournaments AS t
           JOIN levels AS l ON t.levelId=l.id AND l.type!="doubles-team"
-         WHERE t.seasonId=1`);
+         WHERE t.seasonId=1`)) as [Tournament[]];
 
     for (const tournament of tournaments) {
         const isDoubles = tournament.levelType === 'doubles';
@@ -216,13 +216,79 @@ const getGlobalStats = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     hasAnyRole(['admin'])(context);
 
+    type Finalist = {
+        id: string;
+        city: string;
+        name: string;
+        email: string;
+        level: string;
+        result: string;
+        season: string;
+        address: string;
+        levelId: number;
+        isPlayed: boolean;
+        rewardType: string;
+        isChallenger: boolean;
+        rewardAmount: number;
+        // "addressVerification": null,
+        state: string;
+    };
+
+    type HistoryItem = {
+        date: string;
+        activePlayers: number;
+        payments: number;
+    };
+
+    type City = {
+        value: string;
+        label: string;
+    };
+
+    type IncomeCity = {
+        slug: string;
+        name: string;
+    };
+
+    type Income = {
+        name: string;
+        order: number;
+        all: number;
+    };
+
+    type Year = {
+        to: string;
+        from: string;
+        ladders: number;
+        matches: number;
+        paymentsSum: number;
+        activePlayers: number;
+        paymentsCount: number;
+        playersPaidLastYear: number;
+        playersPaidThisYearAgain: number;
+    };
+
+    type GlobalStats = {
+        championships: number;
+        trophies: number;
+        awards: number;
+        cities: City[];
+        finalists: Finalist[];
+        history: HistoryItem[];
+        income: Income[];
+        incomeCities: IncomeCity[];
+        totalMatches: number;
+        totalUsers: number;
+        years: Record<string, Year[]>;
+    };
+
     const { TL_STORE_TOKEN, TL_STORE_URL } = process.env;
 
     const response = await axios.get(`${TL_STORE_URL}/api/cities?populate=*`, {
         headers: { Authorization: `Bearer ${TL_STORE_TOKEN}` },
     });
 
-    const data = {};
+    const data = {} as GlobalStats;
     const currentDate = dayjs();
 
     const actualData = response.data.data.filter((city) => city.attributes.stats && city.attributes.published);
@@ -238,10 +304,10 @@ const getGlobalStats = () => async (context: HookContext) => {
     }
 
     data.finalists = actualData
-        .reduce((arr, city) => {
+        .reduce((arr: Finalist[], city: any) => {
             if (city.attributes.stats.finalists) {
                 arr.push(
-                    ...city.attributes.stats.finalists.map((item) => ({
+                    ...city.attributes.stats.finalists.map((item: any) => ({
                         ...item,
                         state: city.attributes.state.data.attributes.short,
                     }))
@@ -254,7 +320,7 @@ const getGlobalStats = () => async (context: HookContext) => {
 
     data.history = actualData
         .reduce(
-            (arr, city) => {
+            (arr: HistoryItem[], city: any) => {
                 for (let i = 0; i < arr.length; i++) {
                     arr[i].activePlayers +=
                         (city.attributes.stats.activePlayersHistory && city.attributes.stats.activePlayersHistory[i]) ||
@@ -274,7 +340,7 @@ const getGlobalStats = () => async (context: HookContext) => {
         .reverse();
 
     data.incomeCities = [];
-    data.income = actualData.reduce((obj, city) => {
+    data.income = actualData.reduce((obj: any, city: any) => {
         if (!city.attributes.stats.income) {
             return obj;
         }
@@ -288,6 +354,7 @@ const getGlobalStats = () => async (context: HookContext) => {
             }
 
             const name = getSeasonName(season);
+            // @ts-expect-error - season.season wil return the value
             const order = season.year * 10 + nums[season.season];
             obj[name] ||= { name, order, all: 0 };
             obj[name][city.attributes.slug] = Math.round(season.sum / 100);
@@ -298,21 +365,21 @@ const getGlobalStats = () => async (context: HookContext) => {
     }, {});
     data.income = Object.values(data.income).sort((a, b) => a.order - b.order);
 
-    data.totalUsers = actualData.reduce((num, city) => num + city.attributes.stats.totalUsers, 0);
-    data.totalMatches = actualData.reduce((num, city) => num + city.attributes.stats.totalMatches, 0);
+    data.totalUsers = actualData.reduce((num: number, city: any) => num + city.attributes.stats.totalUsers, 0);
+    data.totalMatches = actualData.reduce((num: number, city: any) => num + city.attributes.stats.totalMatches, 0);
 
     data.cities = actualData
-        .reduce((arr, city) => {
+        .reduce((arr: any, city: any) => {
             arr.push({ value: city.attributes.slug, label: city.attributes.name });
             return arr;
         }, [])
-        .sort((a, b) => a.label.localeCompare(b.label));
+        .sort((a: City, b: City) => a.label.localeCompare(b.label)) as City[];
 
-    data.years = actualData.reduce((obj, city) => {
+    data.years = actualData.reduce((obj: any, city: any) => {
         if (!obj.all) {
             obj.all = _cloneDeep(city.attributes.stats.years);
         } else {
-            city.attributes.stats.years.forEach((item, index) => {
+            city.attributes.stats.years.forEach((item: Year, index: number) => {
                 const keys = [
                     'ladders',
                     'matches',
@@ -324,6 +391,7 @@ const getGlobalStats = () => async (context: HookContext) => {
                 ];
 
                 for (const key of keys) {
+                    // @ts-expect-error - all keys are from the type
                     obj.all[index][key] += item[key];
                 }
             });
@@ -364,12 +432,12 @@ const getGlobalPhotos = () => async (context: HookContext) => {
     context.result = {
         status: 'success',
         data: response.data.data
-            .map((item) => ({
+            .map((item: any) => ({
                 id: item.id,
                 ..._omit(item.attributes, ['city']),
                 citySlug: item.attributes.city.data.attributes.slug,
             }))
-            .sort((a, b) => b.createdDate.localeCompare(a.createdDate)),
+            .sort((a: any, b: any) => b.createdDate.localeCompare(a.createdDate)),
     };
 
     return context;
@@ -537,16 +605,16 @@ const getVisualTestingResult = () => async (context: HookContext) => {
 
     const screenshotFolder = path.resolve(__dirname, '..', '..', '..', '..', '..', 'screenshots');
 
-    const getFolderFiles = (folder) => {
+    const getFolderFiles = (folder: string) => {
         return fs.readdirSync(folder).filter((file) => /^vrt-/.test(file));
     };
 
-    const getSizes = async (files) => {
-        const result = {};
+    const getSizes = async (files: string[]) => {
+        const result = {} as Record<string, { width: number; height: number }>;
 
         for (const file of files) {
             const filepath = path.join(screenshotFolder, 'base', file);
-            const image = await sharp(filepath);
+            const image = sharp(filepath);
             const metadata = await image.metadata();
             result[file] = { width: metadata.width, height: metadata.height };
         }
@@ -655,7 +723,7 @@ const getHealthInfo = () => async (context: HookContext) => {
         if (firstDay < oneDayAgo) {
             health.weather = false;
         }
-    } catch (e) {
+    } catch {
         health.weather = false;
     }
 
@@ -784,7 +852,7 @@ const loginAsPlayer = () => async (context: HookContext) => {
     const { users } = sequelize.models;
     const userId = Number(context.id);
     const currentUser = context.params.user as User;
-    const currentTokenPayload = context.params.authentication.payload;
+    const currentTokenPayload = context.params.authentication!.payload;
     const privateKey = context.app.get('authentication').secret;
 
     const user = await users.findByPk(userId);
@@ -884,8 +952,10 @@ const uploadCandidates = () => async (context: HookContext) => {
         throw new Error('Date is wrong');
     }
 
-    const [rows] = await sequelize.query(`SELECT id, hash FROM candidates`);
-    const hashes = rows.reduce((obj, item) => {
+    type Hash = { id: number; hash: string };
+
+    const [rows] = (await sequelize.query(`SELECT id, hash FROM candidates`)) as [Hash[]];
+    const hashes = rows.reduce((obj: any, item) => {
         obj[item.hash] = item.id;
         return obj;
     }, {});
@@ -908,10 +978,10 @@ const uploadCandidates = () => async (context: HookContext) => {
             failed.push(email);
             const candidateId = hashes[hash];
 
-            const [rosters] = await sequelize.query(
+            const [rosters] = (await sequelize.query(
                 `SELECT rosterId FROM candidateroster WHERE candidateId=:candidateId`,
                 { replacements: { candidateId } }
-            );
+            )) as [{ rosterId: number }[]];
             const rosterIds = new Set(rosters.map((item) => item.rosterId));
 
             for (const rosterId of player.rosters) {

@@ -1,3 +1,4 @@
+import type { Match } from '../../types';
 import {
     revertScore,
     getPoints,
@@ -12,9 +13,11 @@ import {
     getOutcome,
 } from './helpers';
 
+type Variant = [number | null, number | null, boolean?];
+
 describe('isFullSetScoreCorrect()', () => {
     describe('Incorrect variants', () => {
-        const variants = [
+        const variants: Variant[] = [
             [null, null],
             [3, null],
             [null, 3],
@@ -39,7 +42,7 @@ describe('isFullSetScoreCorrect()', () => {
     });
 
     describe('Correct variants', () => {
-        const variants = [
+        const variants: Variant[] = [
             [7, 5],
             [4, 6],
             [7, 6],
@@ -63,7 +66,7 @@ describe('isFullSetScoreCorrect()', () => {
 
 describe('isFastSetScoreCorrect()', () => {
     describe('Incorrect variants', () => {
-        const variants = [
+        const variants: Variant[] = [
             [null, null],
             [3, null],
             [null, 3],
@@ -86,7 +89,7 @@ describe('isFastSetScoreCorrect()', () => {
     });
 
     describe('Correct variants', () => {
-        const variants = [
+        const variants: Variant[] = [
             [4, 2],
             [2, 4],
             [4, 3],
@@ -110,7 +113,7 @@ describe('isFastSetScoreCorrect()', () => {
 
 describe('isInjuryFullSetScoreCorrect()', () => {
     describe('Incorrect variants', () => {
-        const variants = [
+        const variants: Variant[] = [
             [null, null],
             [3, null],
             [null, 3],
@@ -131,7 +134,7 @@ describe('isInjuryFullSetScoreCorrect()', () => {
     });
 
     describe('Correct variants', () => {
-        const variants = [
+        const variants: Variant[] = [
             [1, 0],
             [7, 5],
             [4, 6],
@@ -156,7 +159,7 @@ describe('isInjuryFullSetScoreCorrect()', () => {
 
 describe('isInjuryFastSetScoreCorrect()', () => {
     describe('Incorrect variants', () => {
-        const variants = [
+        const variants: Variant[] = [
             [null, null],
             [3, null],
             [null, 3],
@@ -177,7 +180,7 @@ describe('isInjuryFastSetScoreCorrect()', () => {
     });
 
     describe('Correct variants', () => {
-        const variants = [
+        const variants: Variant[] = [
             [1, 0],
             [4, 3],
             [2, 4],
@@ -207,7 +210,7 @@ describe('revertScore()', () => {
 });
 
 describe('getPoints()', () => {
-    const variants = [
+    const variants: { data: Partial<Match>; result: any }[] = [
         {
             data: {
                 challengerId: 1,
@@ -341,7 +344,7 @@ describe('getPoints()', () => {
                 challengerRank: 2,
                 acceptorRank: 9,
                 score: '6-0 6-0',
-                wonByDefault: true,
+                wonByDefault: 1,
             },
             result: {
                 challengerPoints: 20,
@@ -356,7 +359,7 @@ describe('getPoints()', () => {
                 challengerRank: 2,
                 acceptorRank: 9,
                 score: '0-6 0-6',
-                wonByDefault: true,
+                wonByDefault: 1,
             },
             result: {
                 challengerPoints: 0,
@@ -371,7 +374,7 @@ describe('getPoints()', () => {
                 challengerRank: 2,
                 acceptorRank: 9,
                 score: '0-6 0-6',
-                unavailable: true,
+                unavailable: 1,
             },
             result: {
                 challengerPoints: 0,
@@ -387,7 +390,7 @@ describe('getPoints()', () => {
                 acceptorRank: 9,
                 score: '3-6 6-1 2-0',
                 winner: 2,
-                wonByInjury: true,
+                wonByInjury: 1,
             },
             result: {
                 challengerPoints: 14,
@@ -538,7 +541,7 @@ describe('getPoints()', () => {
                 acceptorRank: 9,
                 score: '2-4 2-1', // 2-4 2-4 - completed score
                 winner: 2,
-                wonByInjury: true,
+                wonByInjury: 1,
                 matchFormat: 2,
             },
             result: {
@@ -551,7 +554,7 @@ describe('getPoints()', () => {
 
     for (const variant of variants) {
         it(`Should return right result for score ${variant.data.score}`, () => {
-            expect(getPoints(variant.data)).toEqual(variant.result);
+            expect(getPoints(variant.data as Match)).toEqual(variant.result);
         });
     }
 });

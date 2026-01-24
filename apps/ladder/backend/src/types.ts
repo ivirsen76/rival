@@ -66,6 +66,7 @@ export type Match = {
 };
 
 export type Tournament = {
+    id: number;
     tournamentId: number;
     seasonId: number;
     levelId: number;
@@ -91,6 +92,8 @@ export type Config = {
     minMatchesToEstablishTlr: number;
     minMatchesToPlanTournament: number;
     tournamentReminderWeeks: number;
+    minPlayersForActiveLadder: number;
+    minMatchesForActiveLadder: number;
 };
 
 export type Proposal = {
@@ -109,8 +112,9 @@ export type Image = {
 };
 
 export type Season = {
+    id: number;
     year: number;
-    season: string;
+    season: 'spring' | 'summer' | 'fall' | 'winter';
     startDate: string;
     endDate: string;
 };
@@ -166,4 +170,9 @@ export type Photo = {
         title: string;
         userSlug: string;
     };
+};
+
+export type Option = {
+    value: number | string;
+    label: string;
 };

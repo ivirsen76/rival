@@ -2,8 +2,9 @@ import dayjs from '../../utils/dayjs';
 import { getPoints } from './helpers';
 import logger from '@rival-tennis-ladder/logger';
 import { runQuery, closeConnection } from '../../db/connection';
+import type { Match } from '../../types';
 
-const getAverageRank = (rank1: number, rank2: number) => Math.floor((rank1 + rank2) / 2);
+const getAverageRank = (rank1: number, rank2: number): number => Math.floor((rank1 + rank2) / 2);
 
 const calculateRank = async (tournamentId: number) => {
     try {
@@ -97,8 +98,8 @@ const calculateRank = async (tournamentId: number) => {
             const challengerId = captains[match.challengerId] || match.challengerId;
             const acceptorId = captains[match.acceptorId] || match.acceptorId;
 
-            const challengerRank = players[challengerId].rank;
-            const acceptorRank = acceptorId ? players[acceptorId].rank : null;
+            const challengerRank = players[challengerId].rank as number;
+            const acceptorRank = players[acceptorId].rank as number;
             const challenger2Rank = !isDoublesTeam && match.challenger2Id ? players[match.challenger2Id].rank : null;
             const acceptor2Rank = !isDoublesTeam && match.acceptor2Id ? players[match.acceptor2Id].rank : null;
             if (!match.score) {
@@ -124,7 +125,7 @@ const calculateRank = async (tournamentId: number) => {
                     ...match,
                     challengerRank: isDoubles ? getAverageRank(challengerRank, challenger2Rank) : challengerRank,
                     acceptorRank: isDoubles ? getAverageRank(acceptorRank, acceptor2Rank) : acceptorRank,
-                });
+                } as Match);
 
                 // don't increase points starting from the current week
                 if (currentDate > endString) {

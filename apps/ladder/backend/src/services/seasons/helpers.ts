@@ -1,23 +1,33 @@
+import type { Sequelize } from 'sequelize';
 import { SEASON_OPTIONS } from '../../constants';
+import type { Config, Season } from '../../types';
 
-export const getSeasonName = (data) => {
-    const seasonName = SEASON_OPTIONS.find((option) => option.value === data.season).label;
+export const getSeasonName = (data: Season) => {
+    const seasonName = SEASON_OPTIONS.find((option) => option.value === data.season)!.label;
     return `${data.year} ${seasonName}`;
 };
 
-export const getShortSeasonName = (data) => {
-    const seasonName = SEASON_OPTIONS.find((option) => option.value === data.season).label;
+export const getShortSeasonName = (data: Season) => {
+    const seasonName = SEASON_OPTIONS.find((option) => option.value === data.season)!.label;
     return seasonName;
 };
 
-export const getSeasonTournaments = async ({ seasonId, sequelize, config }) => {
-    const [[season]] = await sequelize.query(`SELECT * FROM seasons WHERE id=:seasonId`, {
+export const getSeasonTournaments = async ({
+    seasonId,
+    sequelize,
+    config,
+}: {
+    seasonId: number;
+    sequelize: Sequelize;
+    config: Config;
+}) => {
+    const [[season]] = (await sequelize.query(`SELECT * FROM seasons WHERE id=:seasonId`, {
         replacements: { seasonId },
-    });
-    const [[prevSeason]] = await sequelize.query(
+    })) as [Season][];
+    const [[prevSeason]] = (await sequelize.query(
         `SELECT * FROM seasons WHERE endDate<:startDate ORDER BY endDate DESC LIMIT 0, 1`,
         { replacements: { startDate: season.startDate } }
-    );
+    )) as [Season][];
 
     const [tournaments] = await sequelize.query(
         `SELECT t.id AS tournamentId,
@@ -45,7 +55,7 @@ export const getSeasonTournaments = async ({ seasonId, sequelize, config }) => {
            GROUP BY t.levelId`,
             { replacements: { seasonId: prevSeason.id } }
         );
-        const [levelMatches] = await sequelize.query(
+        const [levelMatches] = (await sequelize.query(
             `SELECT t.levelId AS id, count(*) AS matchesCount
                FROM matches AS m, players AS p, tournaments AS t
               WHERE m.challengerId=p.id AND
@@ -54,25 +64,25 @@ export const getSeasonTournaments = async ({ seasonId, sequelize, config }) => {
                     t.seasonId=:seasonId
            GROUP BY t.levelId`,
             { replacements: { seasonId: prevSeason.id } }
-        );
-        const levelMatchesObj = levelMatches.reduce((obj, item) => {
+        )) as any;
+        const levelMatchesObj = levelMatches.reduce((obj: any, item: any) => {
             obj[item.id] = item.matchesCount;
             return obj;
         }, {});
 
         levels
             .filter(
-                (level) =>
+                (level: any) =>
                     level.playersCount >= config.minPlayersForActiveLadder &&
                     levelMatchesObj[level.id] &&
                     levelMatchesObj[level.id] >= config.minMatchesForActiveLadder
             )
-            .forEach((level) => {
+            .forEach((level: any) => {
                 activeLevels.add(level.id);
             });
     }
 
-    return tournaments.map((item) => ({
+    return tournaments.map((item: any) => ({
         ...item,
         isActivePlay: activeLevels.has(item.levelId),
         gender: /^Men/i.test(item.levelName) ? 'male' : /^Women/i.test(item.levelName) ? 'female' : 'mixed',

@@ -22,6 +22,9 @@ export default defineConfig([
         },
         rules: {
             '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
+            '@typescript-eslint/no-explicit-any': 'warn',
+            '@typescript-eslint/ban-ts-comment': 'warn',
+            '@typescript-eslint/no-unsafe-function-type': 'warn',
         },
     },
 ]);
