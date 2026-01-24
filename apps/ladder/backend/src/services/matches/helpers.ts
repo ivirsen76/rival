@@ -1,7 +1,8 @@
+import type { Match } from '../../types';
 import dayjs from '../../utils/dayjs';
 import _round from 'lodash/round';
 
-export const isDateThisWeek = (dateAsUtcString) => {
+export const isDateThisWeek = (dateAsUtcString: string) => {
     if (!dateAsUtcString) {
         return false;
     }
@@ -12,7 +13,7 @@ export const isDateThisWeek = (dateAsUtcString) => {
     return date.isValid() && date.isSame(currentDate, 'isoWeek');
 };
 
-export const getLocalDateThisWeek = (desiredDateAsUtcString) => {
+export const getLocalDateThisWeek = (desiredDateAsUtcString: string) => {
     const currentDate = dayjs.tz();
     const minutes = Math.floor(currentDate.minute() / 15) * 15;
     const closestDate = currentDate.minute(minutes).second(0).format('YYYY-MM-DD HH:mm:ss');
@@ -24,14 +25,19 @@ export const getLocalDateThisWeek = (desiredDateAsUtcString) => {
     return closestDate < desiredDateAsUtcString ? closestDate : desiredDateAsUtcString;
 };
 
-export const revertScore = (score) => {
+export const revertScore = (score: string) => {
     return score
         .split(' ')
         .map((set) => set.replace(/(\d+)-(\d+)/, '$2-$1'))
         .join(' ');
 };
 
-export const isFullSetScoreCorrect = (values) => {
+type SetValues = {
+    challengerPoints: number;
+    acceptorPoints: number;
+    isMatchTieBreak?: boolean;
+};
+export const isFullSetScoreCorrect = (values: SetValues) => {
     if (values.challengerPoints === null || values.acceptorPoints === null) {
         return false;
     }
@@ -63,7 +69,7 @@ export const isFullSetScoreCorrect = (values) => {
     return true;
 };
 
-export const isFastSetScoreCorrect = (values) => {
+export const isFastSetScoreCorrect = (values: SetValues) => {
     if (values.challengerPoints === null || values.acceptorPoints === null) {
         return false;
     }
@@ -87,7 +93,7 @@ export const isFastSetScoreCorrect = (values) => {
     return true;
 };
 
-export const isInjuryFullSetScoreCorrect = (values) => {
+export const isInjuryFullSetScoreCorrect = (values: SetValues) => {
     if (values.challengerPoints === null || values.acceptorPoints === null) {
         return false;
     }
@@ -111,7 +117,7 @@ export const isInjuryFullSetScoreCorrect = (values) => {
     return true;
 };
 
-export const isInjuryFastSetScoreCorrect = (values) => {
+export const isInjuryFastSetScoreCorrect = (values: SetValues) => {
     if (values.challengerPoints === null || values.acceptorPoints === null) {
         return false;
     }
@@ -130,7 +136,7 @@ export const isInjuryFastSetScoreCorrect = (values) => {
     return true;
 };
 
-export const completeInjuryFullScore = (score, isFirstWinner = true) => {
+export const completeInjuryFullScore = (score: string, isFirstWinner = true) => {
     // we have to remove empty set at the end
     const sets =
         score === ''
@@ -172,7 +178,7 @@ export const completeInjuryFullScore = (score, isFirstWinner = true) => {
     return result.map((item) => item.join('-')).join(' ');
 };
 
-export const completeInjuryFastScore = (score, isFirstWinner = true) => {
+export const completeInjuryFastScore = (score: string, isFirstWinner = true) => {
     // we have to remove empty set at the end
     const sets =
         score === ''
@@ -211,7 +217,7 @@ export const completeInjuryFastScore = (score, isFirstWinner = true) => {
     return result.map((item) => item.join('-')).join(' ');
 };
 
-export const isFullScoreCorrect = (score, allowMatchTieBreak = true) => {
+export const isFullScoreCorrect = (score: string, allowMatchTieBreak = true) => {
     const sets = score.split(' ').map((set) => set.split('-').map(Number));
 
     const won = sets.map((nums) => nums[0] > nums[1]);
@@ -263,7 +269,7 @@ export const isFullScoreCorrect = (score, allowMatchTieBreak = true) => {
     });
 };
 
-export const isFastScoreCorrect = (score) => {
+export const isFastScoreCorrect = (score: string) => {
     const sets = score.split(' ').map((set) => set.split('-').map(Number));
 
     const won = sets.map((nums) => nums[0] > nums[1]);
@@ -307,7 +313,7 @@ export const isFastScoreCorrect = (score) => {
     });
 };
 
-export const getPoints = (match) => {
+export const getPoints = (match: Match) => {
     const MAX_POINTS = 40;
     const PARTICIPATION_POINTS = 2;
     const CHALLENGER_POINTS = 2;
@@ -381,10 +387,10 @@ export const getPoints = (match) => {
     };
 };
 
-export const getOutcome = (score) => {
+export const getOutcome = (score: string) => {
     const winSetPoints = 0.09;
     const winGamePoints = 0.03;
-    const setPoints = {
+    const setPoints: Record<string, number> = {
         '1-0': winSetPoints + winGamePoints * 1,
         '7-6': winSetPoints + winGamePoints * 0,
         '7-5': winSetPoints + winGamePoints * 2,

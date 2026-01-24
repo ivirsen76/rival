@@ -8,10 +8,41 @@ export type User = {
     teamName: string;
 };
 
+export type Player = {
+    id: number;
+    partnerId: number;
+    isActive: number;
+    teamName: string;
+};
+
 export type Match = {
     id: number;
     challengerId: number;
     acceptorId: number;
+    winner: number;
+    challengerRank: number;
+    acceptorRank: number;
+    challengerPoints: number;
+    acceptorPoints: number;
+    wonByDefault: number;
+    wonByInjury: number;
+    unavailable: number;
+    matchFormat: number;
+    score: string;
+};
+
+export type Tournament = {
+    tournamentId: number;
+    seasonId: number;
+    levelId: number;
+    levelMinTlr: number;
+    levelMaxTlr: number;
+    levelBaseTlr: number;
+    levelType: string;
+    levelName: string;
+    gender: string;
+    isActivePlay: boolean;
+    isFree: number;
 };
 
 export type Config = {

@@ -2,7 +2,6 @@ import path from 'path';
 import dotenv from 'dotenv';
 import redis from 'redis';
 import { execSync } from 'child_process';
-import _map from 'lodash/map';
 import _pick from 'lodash/pick';
 import fs from 'fs';
 import expect from 'expect';
@@ -12,6 +11,8 @@ import { rimraf } from 'rimraf';
 import { runQueryAndClose } from './connection';
 
 dotenv.config({ path: path.resolve(__dirname, '..', '..', '.env') });
+
+type KeyValue = Record<string, string | number>;
 
 const {
     TL_DB_NAME,
@@ -28,11 +29,11 @@ const expectTime = 10000; // time to wait for assertion
 const retryingPause = 200; // pause between retrying
 
 const dbCredentials = ` -h ${TL_DB_HOSTNAME} -u ${TL_DB_USERNAME} `;
-const dumpPath = path.join(TL_TMP_FOLDER, 'dump.sql');
+const dumpPath = path.join(TL_TMP_FOLDER!, 'dump.sql');
 const productionDumpPath = path.join(__dirname, 'production.sql');
 const envPath = path.join(__dirname, '..', '..', '.env');
 
-const throwError = (msg) => {
+const throwError = (msg: string) => {
     console.info(colors.red(msg));
     process.exit(1);
 };
@@ -43,18 +44,20 @@ const checkPermissions = () => {
     }
 };
 
-const getStringConditions = (conditions) =>
-    _map(conditions, (item, key) => {
-        if (key === 'sql') {
-            return item;
-        }
+const getStringConditions = (conditions: KeyValue) =>
+    Object.entries(conditions)
+        .map(([key, item]) => {
+            if (key === 'sql') {
+                return item;
+            }
 
-        if (item === null) {
-            return `${key} IS NULL`;
-        }
+            if (item === null) {
+                return `${key} IS NULL`;
+            }
 
-        return `${key}="${item}"`;
-    }).join(' AND ');
+            return `${key}="${item}"`;
+        })
+        .join(' AND ');
 
 export const cleanScreenshotsFolder = async () => {
     const actualFolder = path.join(__dirname, '../../screenshots/actual');
@@ -102,8 +105,8 @@ const needNewDump = () => {
         return true;
     }
 
-    const getMaxModifiedTime = (dir) =>
-        fs.readdirSync(dir).reduce((max, file) => {
+    const getMaxModifiedTime = (dir: string) =>
+        fs.readdirSync(dir).reduce((max: number, file: string): number => {
             const name = path.join(dir, file);
 
             const stat = fs.statSync(name);
@@ -204,7 +207,7 @@ export const restoreProductionDb = () => {
     });
 };
 
-export const getNumRecords = async (table: string, conditions?) => {
+export const getNumRecords = async (table: string, conditions?: KeyValue) => {
     checkPermissions();
 
     const where = conditions ? 'WHERE ' + getStringConditions(conditions) : '';
@@ -219,7 +222,7 @@ export const runQuery = (query: string) => {
     return runQueryAndClose(query);
 };
 
-export const getRecord = async (table: string, conditions) => {
+export const getRecord = async (table: string, conditions: KeyValue) => {
     checkPermissions();
 
     const where = conditions ? 'WHERE ' + getStringConditions(conditions) : '';
@@ -229,7 +232,7 @@ export const getRecord = async (table: string, conditions) => {
     return record;
 };
 
-export const expectRecordToExist = async (table: string, conditions, data?) => {
+export const expectRecordToExist = async (table: string, conditions: KeyValue, data?: KeyValue) => {
     checkPermissions();
 
     const before = Date.now();
@@ -246,7 +249,7 @@ export const expectRecordToExist = async (table: string, conditions, data?) => {
                 try {
                     expect(_pick(record, Object.keys(data))).toEqual(data);
                 } catch (error) {
-                    throw new Error(`The record in table "${table}" has different data\n\n` + error.message);
+                    throw new Error(`The record in table "${table}" has different data\n\n` + (error as Error).message);
                 }
             }
 
@@ -262,7 +265,7 @@ export const expectRecordToExist = async (table: string, conditions, data?) => {
     }
 };
 
-export const expectNumRecords = async (table: string, conditions, num: number) => {
+export const expectNumRecords = async (table: string, conditions: KeyValue, num: number) => {
     checkPermissions();
 
     const before = Date.now();
@@ -287,6 +290,6 @@ export const expectNumRecords = async (table: string, conditions, num: number) =
     }
 };
 
-export const overrideConfig = async (values) => {
+export const overrideConfig = async (values: KeyValue) => {
     await runQuery(`UPDATE config SET override='${JSON.stringify(values)}'`);
 };

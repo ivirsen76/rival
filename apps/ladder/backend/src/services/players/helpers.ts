@@ -3,8 +3,8 @@ import getCustomEmail from '../../emailTemplates/getCustomEmail';
 import { getEmailContact, getPlayerName, getEmailLink, getPhoneLink } from '../users/helpers';
 import _capitalize from 'lodash/capitalize';
 import { POOL_PARTNER_ID } from '../../constants';
-import type { HookContext } from '@feathersjs/feathers';
-import type { User } from '../../types';
+import type { Application, HookContext } from '@feathersjs/feathers';
+import type { Player, User } from '../../types';
 
 export const teamNames = [
     'Love Gurus',
@@ -75,7 +75,7 @@ export const formatTeamName = (str: string) => {
         });
 };
 
-export const getJoinDoublesLink = async (playerId: number, app) => {
+export const getJoinDoublesLink = async (playerId: number, app: Application) => {
     // link is active for 4 weeks
     const link = await getActionLink({ payload: { name: 'joinDoubles', playerId }, duration: 28 * 24 * 3600, app });
     return link;
@@ -160,10 +160,10 @@ export const sendNewPoolPlayerMessage = async (context: HookContext, playerId: n
         return set;
     }, new Set());
     const captainsWithoutTeammates = allPlayers.filter(
-        (item) => !captainsWithTeammates.has(item.id) && item.isActive === 1 && !item.partnerId
+        (item: Player) => !captainsWithTeammates.has(item.id) && item.isActive === 1 && !item.partnerId
     );
     const otherPlayersFromPool = allPlayers.filter(
-        (item) => item.id !== playerId && item.isActive === 1 && item.partnerId === POOL_PARTNER_ID
+        (item: Player) => item.id !== playerId && item.isActive === 1 && item.partnerId === POOL_PARTNER_ID
     );
 
     const emails = [...captainsWithoutTeammates, ...otherPlayersFromPool].map(getEmailContact);
@@ -278,15 +278,25 @@ export const sendDoublesTeamInvitation = async (context: HookContext, tournament
     }
 };
 
-export const getPlayersUpdates = ({ players, playerId, captainId, replaceCaptain }) => {
+export const getPlayersUpdates = ({
+    players,
+    playerId,
+    captainId,
+    replaceCaptain,
+}: {
+    players: Player[];
+    playerId: number;
+    captainId: number;
+    replaceCaptain: boolean;
+}) => {
     const result = [];
 
     if (captainId === 999999 && replaceCaptain) {
         replaceCaptain = false;
     }
 
-    const player = players.find((item) => item.id === playerId);
-    const captain = players.find((item) => item.id === captainId);
+    const player = players.find((item) => item.id === playerId)!;
+    const captain = players.find((item) => item.id === captainId)!;
     const isPlayerCaptain = !player.partnerId;
 
     if (isPlayerCaptain && playerId === captainId && replaceCaptain) {
@@ -311,10 +321,10 @@ export const getPlayersUpdates = ({ players, playerId, captainId, replaceCaptain
             });
     } else {
         if (isPlayerCaptain) {
-            const newCaptain = players.find((item) => item.partnerId === playerId);
+            const newCaptain = players.find((item) => item.partnerId === playerId)!;
 
             // captain is moving to partner at the same team
-            if (newCaptain && playerId === captainId) {
+            if (playerId === captainId) {
                 result[0].partnerId = newCaptain.id;
             }
 

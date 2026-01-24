@@ -1,6 +1,13 @@
+import type { Tournament } from '../../types';
 import formatElo from '../../utils/formatElo';
 
-export const getSuitableTournaments = (tournaments, elo, gender, registerForFree = false, userTournaments = []) => {
+export const getSuitableTournaments = (
+    tournaments: Tournament[],
+    elo: number,
+    gender: string,
+    registerForFree: boolean = false,
+    userTournaments: number[] = []
+) => {
     const orderedTournaments = tournaments
         .filter((item) => item.gender === gender)
         .sort((a, b) => {
@@ -47,12 +54,18 @@ export const getSuitableTournaments = (tournaments, elo, gender, registerForFree
         }
     }
 
-    ladders.all = tournaments.filter((item) => ladders.all.has(item.tournamentId));
-    ladders.suitable = tournaments.filter((item) => ladders.suitable.has(item.tournamentId));
-    ladders.additional = tournaments.filter((item) => ladders.additional.has(item.tournamentId));
-    ladders.free = registerForFree ? [] : ladders.all.filter((item) => !item.isActivePlay || item.isFree);
+    const result: {
+        all?: Tournament[];
+        suitable?: Tournament[];
+        additional?: Tournament[];
+        free?: Tournament[];
+    } = {};
+    result.all = tournaments.filter((item) => ladders.all.has(item.tournamentId));
+    result.suitable = tournaments.filter((item) => ladders.suitable.has(item.tournamentId));
+    result.additional = tournaments.filter((item) => ladders.additional.has(item.tournamentId));
+    result.free = registerForFree ? [] : result.all.filter((item) => !item.isActivePlay || item.isFree);
 
-    const formatList = (list) => {
+    const formatList = (list: Tournament[]) => {
         if (list.length === 1) {
             return `[${list[0].levelName}]`;
         }
@@ -66,7 +79,7 @@ export const getSuitableTournaments = (tournaments, elo, gender, registerForFree
             .join(', ')}, or [${list[list.length - 1].levelName}]`;
     };
 
-    const suggestedLadders = (list) => {
+    const suggestedLadders = (list: Tournament[]) => {
         if (list.length === 1) {
             return `the [${list[0].levelName}] ladder`;
         }
@@ -81,38 +94,38 @@ export const getSuitableTournaments = (tournaments, elo, gender, registerForFree
         const formattedElo = formatElo(elo);
 
         const freeLadders =
-            ladders.free.filter((ladder) => !userTournaments.includes(ladder.tournamentId)).length === 0
+            result.free.filter((ladder) => !userTournaments.includes(ladder.tournamentId)).length === 0
                 ? ''
                 : ` Due to the low level of activity last season, you can join some ladders for free.`;
 
-        if (ladders.additional.length === 0) {
+        if (result.additional.length === 0) {
             return `Since your [TLR is ${formattedElo}], you're allowed to join only the following ladders. Other ladders are too weak or too strong for you.${freeLadders}`;
         }
 
         const suitableLadders = `Since your [TLR is ${formattedElo}], you should play on ${suggestedLadders(
-            ladders.suitable
+            result.suitable
         )}.`;
         const additionalLadders =
-            ladders.additional.length === 0
+            result.additional.length === 0
                 ? ''
-                : ` However, we will allow you to play on ${suggestedLadders(ladders.additional)} as well.`;
+                : ` However, we will allow you to play on ${suggestedLadders(result.additional)} as well.`;
 
         return `${suitableLadders}${additionalLadders}${freeLadders}`;
     })();
 
-    ladders.all = ladders.all.map((item) => item.tournamentId);
-    ladders.suitable = ladders.suitable.map((item) => item.tournamentId);
-    ladders.additional = ladders.additional.map((item) => item.tournamentId);
-    ladders.free = ladders.free.map((item) => item.tournamentId);
+    const getTournamentId = (item: Tournament) => item.tournamentId;
 
     return {
-        ...ladders,
+        all: result.all.map(getTournamentId),
+        suitable: result.suitable.map(getTournamentId),
+        additional: result.additional.map(getTournamentId),
+        free: result.free.map(getTournamentId),
         text,
     };
 };
 
-export const getPartners = (pairs) => {
-    const result = {};
+export const getPartners = (pairs: number[][]) => {
+    const result: Record<string, number[]> = {};
 
     pairs
         .sort((a, b) => (a[1] === b[1] ? a[0] - b[0] : a[1] - b[1]))
