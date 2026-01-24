@@ -1,3 +1,4 @@
+// @ts-nocheck
 import ms from 'ms';
 import { JWTStrategy } from '@feathersjs/authentication';
 import { NotAuthenticated } from '@feathersjs/errors';

@@ -3,12 +3,12 @@ import { normal, h2, signature } from './normal';
 
 type Params = {
     config: Config;
-    elo: number;
+    elo: string;
     eloImg: Image;
     currentLevel: string;
     isLevelSuitable: boolean;
-    suggestedLevel: string;
-    moveDirection: string;
+    suggestedLevel?: string;
+    moveDirection?: string;
     isTournamentRestriction: boolean;
 };
 

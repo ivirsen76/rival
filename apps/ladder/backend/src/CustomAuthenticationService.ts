@@ -1,6 +1,7 @@
 import { AuthenticationService } from '@feathersjs/authentication';
 
 export default class CustomAuthenticationService extends AuthenticationService {
+    // @ts-expect-error - unknown types
     async getPayload(authResult, params) {
         const { authentication } = authResult;
 

@@ -1,5 +1,6 @@
 import path from 'path';
 import dotenv from 'dotenv';
+// @ts-expect-error - no types for redis
 import redis from 'redis';
 import { execSync } from 'child_process';
 import _pick from 'lodash/pick';
@@ -70,7 +71,7 @@ export const cleanScreenshotsFolder = async () => {
 };
 
 const generateDump = () => {
-    const dumpDir = TL_TMP_FOLDER;
+    const dumpDir = TL_TMP_FOLDER as string;
 
     // Make sure that dumpDir exists
     mkdirp.sync(dumpDir);

@@ -5,8 +5,20 @@ import dayjs from '../../utils/dayjs';
 import _pick from 'lodash/pick';
 import getMatchPermissions from './getMatchPermissions';
 import { reverseScore } from './calculateElo';
+import type { Application } from '@feathersjs/feathers';
+import type { Match, User } from '../../types';
 
-const getMatchInfo = async ({ app, currentUser, matchId, match }) => {
+const getMatchInfo = async ({
+    app,
+    currentUser,
+    matchId,
+    match,
+}: {
+    app: Application;
+    currentUser: User;
+    matchId: number;
+    match?: Match;
+}) => {
     const sequelize = app.get('sequelizeClient');
     const { matches, players } = sequelize.models;
     const { TL_URL } = process.env;

@@ -40,7 +40,35 @@ export type Point = {
     user_edited_attributes: [];
 };
 
-const getStat = (points: Point[], isReversed = false) => {
+type UserStat = {
+    aces: number;
+    backhandForced: number;
+    backhandUnforced: number;
+    backhandWinners: number;
+    breakpointsTotal: number;
+    breakpointsWon: number;
+    firstServeIn: number;
+    firstServeWon: number;
+    forehandForced: number;
+    forehandUnforced: number;
+    forehandWinners: number;
+    normal: number;
+    secondServeWon: number;
+    serveTotal: number;
+    serveUnforced: number;
+    serveWinners: number;
+};
+
+type Stat = {
+    timeTotal: number;
+    challenger: UserStat;
+    acceptor: UserStat;
+    imageUrl?: string;
+    imageWidth?: number;
+    imageHeight?: number;
+};
+
+const getStat = (points: Point[], isReversed = false): Stat => {
     const matchTypes: Record<string, { key: string; player: 'winner' | 'looser' }> = {
         forehand_forced_error: { key: 'forehandForced', player: 'looser' },
         forehand_unforced_error: { key: 'forehandUnforced', player: 'looser' },
@@ -54,7 +82,7 @@ const getStat = (points: Point[], isReversed = false) => {
         normal: { key: 'normal', player: 'winner' },
     };
 
-    const result = {
+    const result: Stat = {
         timeTotal: 0,
         challenger: {
             aces: 0,

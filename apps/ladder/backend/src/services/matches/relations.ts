@@ -1,4 +1,4 @@
-export const relationsUp = {
+export const relationsUp: Record<number, { finalSpot: number; player: 'challengerId' | 'acceptorId' }> = {
     15: { finalSpot: 7, player: 'challengerId' },
     14: { finalSpot: 7, player: 'acceptorId' },
     13: { finalSpot: 6, player: 'challengerId' },
@@ -14,7 +14,8 @@ export const relationsUp = {
     3: { finalSpot: 1, player: 'challengerId' },
     2: { finalSpot: 1, player: 'acceptorId' },
 };
-export const relationsDown = {
+
+export const relationsDown: Record<number, { challengerFinalSpot: number; acceptorFinalSpot: number }> = {
     7: {
         challengerFinalSpot: 15,
         acceptorFinalSpot: 14,

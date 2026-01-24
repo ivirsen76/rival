@@ -19,8 +19,8 @@ const populateConfig = () => async (context: HookContext) => {
 
 const handleDbErrors = () => (context: HookContext) => {
     if (context.error && context.error.code === 400 && _isArray(context.error.errors)) {
-        const errors = {};
-        context.error.errors.forEach((error) => {
+        const errors: any = {};
+        context.error.errors.forEach((error: any) => {
             if (error.path && error.message) {
                 errors[error.path] = _capitalize(error.message);
             }

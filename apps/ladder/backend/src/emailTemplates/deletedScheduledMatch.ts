@@ -7,7 +7,7 @@ type Params = {
     currentUser: User;
     reason: string;
     playedAt: string;
-    previewText: string;
+    previewText?: string;
 };
 
 export default ({ config, currentUser, reason, playedAt, previewText }: Params) =>

@@ -2,8 +2,9 @@ import type { Application } from '@feathersjs/feathers';
 import rateLimit from 'express-rate-limit';
 import _get from 'lodash/get';
 import logger from '@rival-tennis-ladder/logger';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
+// @ts-expect-error - don't know the type for req
 const getClientIp = (req) => {
     const ip = req.headers['x-real-ip'];
     if (!ip || /^127.0.0/.test(ip)) {
@@ -38,7 +39,7 @@ export default (app: Application) => {
         max: (req) => {
             const token = _get(req, 'headers.authorization');
             if (token) {
-                const decoded = jwt.decode(token);
+                const decoded = jwt.decode(token) as JwtPayload;
                 if (!decoded.loginAs && decoded.roles?.includes('superadmin')) {
                     return 60;
                 }
@@ -72,11 +73,11 @@ export default (app: Application) => {
             const ip = getClientIp(req);
 
             try {
-                const token = _get(req, 'headers.authorization');
+                const token = _get(req, 'headers.authorization') as string;
                 const hash = token.split('.')[2];
 
                 return hash.length > 20 ? hash.slice(0, 20) : ip;
-            } catch (e) {
+            } catch {
                 return ip;
             }
         },

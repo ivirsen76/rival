@@ -37,9 +37,10 @@ import compareFields from '../../utils/compareFields';
 import { getStatsMatches } from '../../utils/sqlConditions';
 import getMatchInfo from './getMatchInfo';
 import { getPlayerName, getEmailContact, getEmailLink, getPhoneLink } from '../users/helpers';
-import type { User } from '../../types';
+import type { Level, Match, Player, User } from '../../types';
+import type { Transaction } from 'sequelize';
 
-const isAdmin = (user) => {
+const isAdmin = (user: User) => {
     const roles = user.roles.split(',');
 
     return roles.includes('admin') || roles.includes('manager');
@@ -126,7 +127,7 @@ const populateWinner = () => async (context: HookContext) => {
 
     context.params.tournamentId = tournamentId;
 
-    if (!isAdmin(context.params.user)) {
+    if (!isAdmin(context.params.user as User)) {
         if ([challenger, acceptor, challenger2, acceptor2].some((item) => item && !item.isActive)) {
             throw new Unprocessable('The player is no longer available for matches.');
         }
@@ -164,7 +165,7 @@ const populateWinner = () => async (context: HookContext) => {
     }
 
     // Figure out the winner
-    const challengerSetsWon = completeScore.split(' ').reduce((sum, set) => {
+    const challengerSetsWon = completeScore.split(' ').reduce((sum: number, set: string) => {
         const [first, second] = set.split('-');
         return sum + (+first > +second ? 1 : 0);
     }, 0);
@@ -221,7 +222,7 @@ const sendReferralCredit = () => async (context: HookContext) => {
         }
 
         const userFullName = getPlayerName(user);
-        await sequelize.transaction(async (t) => {
+        await sequelize.transaction(async (t: Transaction) => {
             await payments.create(
                 {
                     userId: referrerUser.id,
@@ -308,7 +309,7 @@ const sendEstablishedEloNotification = () => async (context: HookContext) => {
         const isLevelSuitable = Math.abs(currentLevel.baseTlr - elo) <= SUITABLE_DIFF;
         let suggestedLevel;
         if (!isLevelSuitable) {
-            const [levels] = await sequelize.query(
+            const [levels] = (await sequelize.query(
                 `SELECT l.name,
                         l.slug,
                         l.baseTlr
@@ -319,7 +320,7 @@ const sendEstablishedEloNotification = () => async (context: HookContext) => {
                         l.type="single" AND
                         l.baseTlr IS NOT NULL`,
                 { replacements: { seasonId: currentLevel.seasonId } }
-            );
+            )) as [Level[]];
 
             const genderRegex = /^Men/i.test(currentLevel.name) ? /^Men/i : /^Women/i;
 
@@ -353,7 +354,11 @@ const sendEstablishedEloNotification = () => async (context: HookContext) => {
                 currentLevel: currentLevel.name,
                 isLevelSuitable,
                 suggestedLevel: suggestedLevel?.name,
-                moveDirection: suggestedLevel ? (suggestedLevel.baseTlr > currentLevel.baseTlr ? 'up' : 'down') : null,
+                moveDirection: suggestedLevel
+                    ? suggestedLevel.baseTlr > currentLevel.baseTlr
+                        ? 'up'
+                        : 'down'
+                    : undefined,
                 isTournamentRestriction,
             }),
         });
@@ -376,7 +381,7 @@ const sendEstablishedEloNotification = () => async (context: HookContext) => {
 };
 
 // This is not a hook, just a helper
-const populateNextFinalMatch = async (context: HookContext, prevMatch) => {
+const populateNextFinalMatch = async (context: HookContext, prevMatch: Match) => {
     const connectedMatch = relationsUp[prevMatch.finalSpot];
     if (!connectedMatch) {
         return;
@@ -455,9 +460,10 @@ const populateNextFinalMatch = async (context: HookContext, prevMatch) => {
 const populateWinnerForPatch = () => async (context: HookContext) => {
     const { data } = context;
     const matchId = Number(context.id);
+    const currentUser = context.params.user as User;
 
     const { matches, players } = context.app.get('sequelizeClient').models;
-    const matchInfo = await getMatchInfo({ app: context.app, currentUser: context.params.user, matchId });
+    const matchInfo = await getMatchInfo({ app: context.app, currentUser, matchId });
     const match = await matches.findByPk(matchId);
 
     if (!matchInfo.hasPlayers) {
@@ -517,7 +523,7 @@ const populateWinnerForPatch = () => async (context: HookContext) => {
     }
 
     // Figure out the winner
-    const challengerSetsWon = completeScore.split(' ').reduce((sum, set) => {
+    const challengerSetsWon = completeScore.split(' ').reduce((sum: number, set: string) => {
         const [first, second] = set.split('-');
         return sum + (+first > +second ? 1 : 0);
     }, 0);
@@ -554,18 +560,19 @@ const checkDuplicatedMatch = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
     const { challengerUserId, acceptorUserId, playedAt } = context.data;
-    const userId = context.params.user.id;
+    const currentUser = context.params.user as User;
+    const userId = currentUser.id;
     const dayStart = dayjs.tz(playedAt).hour(0).minute(0).second(0).format('YYYY-MM-DD HH:mm:ss');
     const dayEnd = dayjs.tz(dayStart).add(1, 'day').format('YYYY-MM-DD HH:mm:ss');
 
-    if (!isAdmin(context.params.user)) {
+    if (!isAdmin(currentUser)) {
         if (userId !== challengerUserId && userId !== acceptorUserId) {
             throw new MethodNotAllowed();
         }
     }
 
     const sequelize = context.app.get('sequelizeClient');
-    const [rows] = await sequelize.query(
+    const [rows] = (await sequelize.query(
         `
         SELECT m.id,
                m.score,
@@ -585,7 +592,7 @@ const checkDuplicatedMatch = () => async (context: HookContext) => {
                m.playedAt>:dayStart AND
                m.playedAt<:dayEnd`,
         { replacements: { dayStart, dayEnd } }
-    );
+    )) as [Match[]];
 
     const duplicatedMatch = rows.find(
         (row) =>
@@ -634,10 +641,10 @@ const replacePlayers = () => async (context: HookContext) => {
         ? players.findByPk(match.challengerId)
         : players.findByPk(match.acceptorId));
 
-    const [allPlayers] = await sequelize.query(
+    const [allPlayers] = (await sequelize.query(
         `SELECT id FROM players WHERE tournamentId=:tournamentId AND isActive=1`,
         { replacements: { tournamentId } }
-    );
+    )) as [Player[]];
     const playerIds = new Set(allPlayers.map((item) => item.id));
     if (challengerId && !playerIds.has(challengerId)) {
         throw new Unprocessable('Challenger is not from this tournament');
@@ -646,13 +653,13 @@ const replacePlayers = () => async (context: HookContext) => {
         throw new Unprocessable('Acceptor is not from this tournament');
     }
 
-    const [playingPlayers] = await sequelize.query(
+    const [playingPlayers] = (await sequelize.query(
         `SELECT p.id
            FROM players AS p
           WHERE p.tournamentId=:tournamentId AND
                 (p.id IN (SELECT challengerId FROM matches WHERE type="final") || p.id IN (SELECT acceptorId FROM matches WHERE type="final"))`,
         { replacements: { tournamentId } }
-    );
+    )) as [Player[]];
     const playingPlayersSet = new Set(playingPlayers.map((item) => item.id));
     playingPlayersSet.delete(match.challengerId);
     playingPlayersSet.delete(match.acceptorId);
@@ -715,14 +722,14 @@ const scheduleMatch = () => async (context: HookContext) => {
     const { matches } = sequelize.models;
     const currentUser = context.params.user as User;
 
-    let match;
+    let match: Match;
     if (matchId === 0) {
         match = {
             challengerId: context.data.challengerId,
             acceptorId: context.data.acceptorId,
             challenger2Id: context.data.challenger2Id,
             acceptor2Id: context.data.acceptor2Id,
-        };
+        } as Match;
     } else {
         match = await matches.findByPk(matchId);
         if (!match) {
@@ -745,8 +752,8 @@ const scheduleMatch = () => async (context: HookContext) => {
         throw new Unprocessable('The date is more than a week in the future.');
     }
 
-    const matchInfo = await getMatchInfo({ app: context.app, currentUser: context.params.user, matchId, match });
-    if (!match.playedAt === 0 && !matchInfo.canScheduleMatch) {
+    const matchInfo = await getMatchInfo({ app: context.app, currentUser, matchId, match });
+    if (!match.playedAt && !matchInfo.canScheduleMatch) {
         throw new Unprocessable('You cannot schedule this match.');
     }
     if (match.playedAt && !matchInfo.canRescheduleMatch) {
@@ -797,8 +804,8 @@ const scheduleMatch = () => async (context: HookContext) => {
                 acceptor: matchInfo.acceptorLinkedName,
                 date,
                 location: context.data.place,
-                previewText: `${context.params.config.city}, ${date}, ${context.data.place}`,
                 isRescheduling,
+                previewText: `${context.params.config.city}, ${date}, ${context.data.place}`,
             }),
         });
     }
@@ -1151,7 +1158,7 @@ const sendNewRivalryNotification = () => async (context: HookContext) => {
         }
 
         // Get all rivalry matches
-        const [matches] = await sequelize.query(
+        const [matches] = (await sequelize.query(
             `SELECT m.id,
                 m.challengerId,
                 m.acceptorId,
@@ -1169,7 +1176,7 @@ const sendNewRivalryNotification = () => async (context: HookContext) => {
                 ((pc.userId=:challengerUserId AND pa.userId=:acceptorUserId) OR (pc.userId=:acceptorUserId AND pa.userId=:challengerUserId))
        ORDER BY m.playedAt`,
             { replacements: { challengerUserId: match.challengerUserId, acceptorUserId: match.acceptorUserId } }
-        );
+        )) as [Match[]];
 
         // Rivalry started when 3 matches played
         if (matches.length !== 3) {
@@ -1185,7 +1192,7 @@ const sendNewRivalryNotification = () => async (context: HookContext) => {
                 avatar: match.challengerAvatar ? JSON.parse(match.challengerAvatar) : null,
                 slug: match.challengerSlug,
                 phone: '',
-            };
+            } as User;
             const acceptor = {
                 id: match.acceptorUserId,
                 firstName: match.acceptorFirstName,
@@ -1194,13 +1201,13 @@ const sendNewRivalryNotification = () => async (context: HookContext) => {
                 avatar: match.acceptorAvatar ? JSON.parse(match.acceptorAvatar) : null,
                 slug: match.acceptorSlug,
                 phone: '',
-            };
+            } as User;
 
             for (const user of [challenger, acceptor]) {
                 const opponent = challenger.id === user.id ? acceptor : challenger;
 
                 const lead = matches.reduce(
-                    (arr, item) => {
+                    (arr: [number, number], item) => {
                         const isWinner =
                             (item.challengerId === item.winner && item.challengerUserId === user.id) ||
                             (item.acceptorId === item.winner && item.acceptorUserId === user.id);
@@ -1403,7 +1410,7 @@ const generateMatchBadges = () => async (context: HookContext) => {
     const { app } = context;
     const { players } = app.get('sequelizeClient').models;
 
-    context.usersWithUpdatedBadges = context.usersWithUpdatedBadges || new Set();
+    context.usersWithUpdatedBadges ||= new Set();
 
     // do not wait for it
     (async () => {
@@ -1443,7 +1450,7 @@ const populateMultipleLadderMatch = () => async (context: HookContext) => {
     const acceptor = await players.findByPk(acceptorId);
     const { seasonId } = await tournaments.findByPk(challenger.tournamentId);
 
-    const [rows] = await sequelize.query(
+    const [rows] = (await sequelize.query(
         `SELECT p.id,
                 p.userId,
                 p.tournamentId
@@ -1465,11 +1472,11 @@ const populateMultipleLadderMatch = () => async (context: HookContext) => {
                 acceptorUserId: acceptor.userId,
             },
         }
-    );
+    )) as [Player[]];
 
     const sameTournaments = Object.values(
         rows.reduce((obj, item) => {
-            obj[item.tournamentId] = obj[item.tournamentId] || { id: item.tournamentId, users: {} };
+            obj[item.tournamentId] ||= { id: item.tournamentId, users: {} };
             obj[item.tournamentId].users[item.userId] = item.id;
             return obj;
         }, {})
@@ -1671,12 +1678,9 @@ const replaceTeammates = () => async (context: HookContext) => {
     // Validate
     {
         const schema = yup.object().shape({
-            players: yup.array(yup.number().integer()).length(2),
+            players: yup.array(yup.number().integer()).length(2, 'Pick a teammate'),
         });
         const errors = getSchemaErrors(schema, context.data);
-        if (errors.players) {
-            errors.players = 'Pick a teammate';
-        }
 
         if (!_isEmpty(errors)) {
             throwValidationErrors(errors);
@@ -1688,7 +1692,7 @@ const replaceTeammates = () => async (context: HookContext) => {
         throw new Unprocessable('You cannot do this task.');
     }
 
-    if (players.every((id) => matchInfo.challengerTeamPlayerIds.includes(id))) {
+    if (players.every((id: number) => matchInfo.challengerTeamPlayerIds.includes(id))) {
         await matches.update(
             {
                 challengerId: players[0],
@@ -1696,7 +1700,7 @@ const replaceTeammates = () => async (context: HookContext) => {
             },
             { where: { id: matchId } }
         );
-    } else if (players.every((id) => matchInfo.acceptorTeamPlayerIds.includes(id))) {
+    } else if (players.every((id: number) => matchInfo.acceptorTeamPlayerIds.includes(id))) {
         await matches.update(
             {
                 acceptorId: players[0],

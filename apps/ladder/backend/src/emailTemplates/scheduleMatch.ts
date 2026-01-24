@@ -7,7 +7,7 @@ type Params = {
     acceptor: string;
     date: string;
     location: string;
-    isRescheduling: string;
+    isRescheduling: boolean;
     previewText: string;
 };
 

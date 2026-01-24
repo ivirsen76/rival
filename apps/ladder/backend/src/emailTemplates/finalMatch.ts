@@ -3,7 +3,7 @@ import { normal, h2, warning, signature } from './normal';
 import dayjs from '../utils/dayjs';
 import { getPlayerName, getEmailLink, getPhoneLink } from '../services/users/helpers';
 
-type Params = {
+export type Params = {
     config: Config;
     seasonEndDate: string;
     finalSpot: number;

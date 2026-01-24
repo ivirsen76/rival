@@ -1,30 +1,34 @@
-import finalMatch from './finalMatch';
+import type { Config } from '../types';
+import finalMatch, { Params } from './finalMatch';
 
 describe('Templates test', () => {
-    const config = {
-        city: 'Cary',
-        state: 'NC',
-    };
-
     describe('finalMatch', () => {
-        const params = {
+        const params: Params = {
+            config: {
+                city: 'Cary',
+                state: 'NC',
+            } as Config,
             seasonEndDate: '2022-11-28 00:00:00',
             fakeCurrentDate: '2022-11-28 12:00:00',
             finalSpot: 7,
             opponent: {
+                id: 1,
                 firstName: 'Paul',
                 lastName: 'Pusher',
                 email: 'paul@pusher.com',
                 phone: '919-123-4567',
+                slug: 'whatever',
             },
             seasonName: '2022 Fall',
             levelName: 'Men 4.0',
-            img: { width: 200, height: 50 },
+            img: { src: 'https://some', width: 200, height: 50 },
             roundsTotal: 3,
+            previewText: '',
+            showNewOpponentWarning: false,
         };
 
         it('Should return text for quarterfinal', () => {
-            const text = finalMatch(config, { ...params, finalSpot: 7 });
+            const text = finalMatch({ ...params, finalSpot: 7 });
             expect(text).toContain('2022 Fall Men 4.0');
             expect(text).toContain('Congrats on making the Final Tournament');
             expect(text).toContain('Saturday, December 3');
@@ -35,7 +39,7 @@ describe('Templates test', () => {
         });
 
         it('Should return text for semifinal', () => {
-            const text = finalMatch(config, { ...params, finalSpot: 3 });
+            const text = finalMatch({ ...params, finalSpot: 3 });
             expect(text).toContain('Your Semifinal opponent is ready and waiting!');
             expect(text).toContain('Friday, December 9');
             expect(text).toContain('For your Semifinal match');
@@ -44,7 +48,7 @@ describe('Templates test', () => {
         });
 
         it('Should return text for the final', () => {
-            const text = finalMatch(config, { ...params, finalSpot: 1 });
+            const text = finalMatch({ ...params, finalSpot: 1 });
             expect(text).toContain('You are now in the Finals!');
             expect(text).toContain('Sunday, December 11');
             expect(text).toContain('For your Final match');
@@ -53,7 +57,7 @@ describe('Templates test', () => {
         });
 
         it('Should see that opponent has changed', () => {
-            const text = finalMatch(config, { ...params, finalSpot: 7, showNewOpponentWarning: true });
+            const text = finalMatch({ ...params, finalSpot: 7, showNewOpponentWarning: true });
             expect(text).toContain('Your Quarterfinal opponent has changed!');
             expect(text).not.toContain('Congrats on making the Final Tournament');
         });

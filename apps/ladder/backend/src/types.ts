@@ -16,6 +16,7 @@ export type User = {
     email: string;
     phone: string;
     slug: string;
+    roles: string;
     teamName?: string;
     birthday?: string;
     avatar?: string | object;
@@ -39,6 +40,8 @@ export type Match = {
     id: number;
     challengerId: number;
     acceptorId: number;
+    challenger2Id: number;
+    acceptor2Id: number;
     winner: number;
     challengerRank: number;
     acceptorRank: number;
@@ -48,6 +51,8 @@ export type Match = {
     acceptorMatches: number;
     challengerElo: number;
     acceptorElo: number;
+    challengerSeed: number;
+    acceptorSeed: number;
     challengerUserId: number;
     acceptorUserId: number;
     wonByDefault: number;
@@ -56,6 +61,8 @@ export type Match = {
     matchFormat: number;
     score: string;
     playedAt: string;
+    finalSpot: number;
+    createdAt: string;
 };
 
 export type Tournament = {
@@ -97,8 +104,8 @@ export type Proposal = {
 
 export type Image = {
     src: string;
-    width: string;
-    height: string;
+    width: number;
+    height: number;
 };
 
 export type Season = {
@@ -112,6 +119,7 @@ export type Level = {
     id: number;
     name: string;
     slug: string;
+    baseTlr: number;
 };
 
 export type Badge = {
