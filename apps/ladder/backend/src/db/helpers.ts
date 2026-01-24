@@ -12,7 +12,7 @@ import { runQueryAndClose } from './connection';
 
 dotenv.config({ path: path.resolve(__dirname, '..', '..', '.env') });
 
-type KeyValue = Record<string, string | number>;
+type KeyValue = Record<string, string | number | null>;
 
 const {
     TL_DB_NAME,

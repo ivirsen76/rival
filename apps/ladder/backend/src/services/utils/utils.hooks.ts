@@ -195,7 +195,7 @@ const publishUpdates = () => async (context: HookContext) => {
     const { app } = context;
 
     await generateNextSeason(app);
-    await generateNews(app);
+    await generateNews();
     await publishStats(app);
 
     return context;

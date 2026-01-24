@@ -20,13 +20,8 @@ import runActions, {
     sendHighProjectedTlrWarning,
 } from '../utils/runActions';
 import refundForCanceledTournaments from '../utils/refundForCanceledTournaments';
-
-// import { TextEncoder } from 'util';
-//
-// if (!global.TextEncoder) {
-//     global.TextEncoder = TextEncoder;
-// }
 import remindAboutLastOpenSlot from '../utils/remindAboutLastOpenSlot';
+import type { Server } from 'http';
 
 process.chdir(path.join(__dirname, '..', '..'));
 
@@ -41,14 +36,18 @@ import {
     overrideConfig,
     expectNumRecords,
 } from '../db/helpers';
+import type { Player } from '../types';
 
-let server;
-let request;
+let server: Server;
+let request: supertest.SuperTest<supertest.Test>;
 let count = 0;
 
 beforeAll(() => {
     server = app.listen(4999);
+
+    // @ts-expect-error - supertest request type is hard to describe
     request = supertest(server);
+
     return new Promise((resolve) => server.on('listening', resolve));
 });
 
@@ -72,7 +71,7 @@ beforeEach(async () => {
     }
 }, 10000);
 
-const loginAsPlayer1 = _memoize(async () => {
+const loginAsPlayer1 = _memoize(async (): Promise<string> => {
     const result = await request.post('/api/authentication').send({
         email: 'player1@gmail.com',
         password: 'rival2021tennis',
@@ -82,7 +81,7 @@ const loginAsPlayer1 = _memoize(async () => {
     return result.body.accessToken;
 });
 
-const loginAsPlayer2 = _memoize(async () => {
+const loginAsPlayer2 = _memoize(async (): Promise<string> => {
     const result = await request.post('/api/authentication').send({
         email: 'player2@gmail.com',
         password: 'rival2021tennis',
@@ -92,7 +91,7 @@ const loginAsPlayer2 = _memoize(async () => {
     return result.body.accessToken;
 });
 
-const loginAsPlayer3 = _memoize(async () => {
+const loginAsPlayer3 = _memoize(async (): Promise<string> => {
     const result = await request.post('/api/authentication').send({
         email: 'player3@gmail.com',
         password: 'rival2021tennis',
@@ -102,7 +101,7 @@ const loginAsPlayer3 = _memoize(async () => {
     return result.body.accessToken;
 });
 
-const loginAsPlayer4 = _memoize(async () => {
+const loginAsPlayer4 = _memoize(async (): Promise<string> => {
     const result = await request.post('/api/authentication').send({
         email: 'player4@gmail.com',
         password: 'rival2021tennis',
@@ -112,7 +111,7 @@ const loginAsPlayer4 = _memoize(async () => {
     return result.body.accessToken;
 });
 
-const loginAsPlayer8 = _memoize(async () => {
+const loginAsPlayer8 = _memoize(async (): Promise<string> => {
     const result = await request.post('/api/authentication').send({
         email: 'player8@gmail.com',
         password: 'rival2021tennis',
@@ -122,7 +121,7 @@ const loginAsPlayer8 = _memoize(async () => {
     return result.body.accessToken;
 });
 
-const loginAsInactivePlayer = _memoize(async () => {
+const loginAsInactivePlayer = _memoize(async (): Promise<string> => {
     const result = await request.post('/api/authentication').send({
         email: 'player5@gmail.com',
         password: 'rival2021tennis',
@@ -132,7 +131,7 @@ const loginAsInactivePlayer = _memoize(async () => {
     return result.body.accessToken;
 });
 
-const loginAsManager = _memoize(async () => {
+const loginAsManager = _memoize(async (): Promise<string> => {
     const result = await request.post('/api/authentication').send({
         email: 'manager@gmail.com',
         password: 'rival2021tennis',
@@ -142,7 +141,7 @@ const loginAsManager = _memoize(async () => {
     return result.body.accessToken;
 });
 
-const loginAsAdmin = _memoize(async () => {
+const loginAsAdmin = _memoize(async (): Promise<string> => {
     const result = await request.post('/api/authentication').send({
         email: 'admin@gmail.com',
         password: 'rival2021tennis',
@@ -152,17 +151,53 @@ const loginAsAdmin = _memoize(async () => {
     return result.body.accessToken;
 });
 
-const checkImageUrls = async (html, cnt = 0) => {
+const checkImageUrls = async (html: string, cnt = 0) => {
     const imageRegex = /https:\/\/nyc3\.digitaloceanspaces\.com\/utl\/\w{2,12}\/\w{50,100}\.png/g;
     const match = html.match(imageRegex);
-    expect(match.length).toBe(cnt);
+    if (!match) {
+        expect(cnt).toBe(0);
+    } else {
+        expect(match.length).toBe(cnt);
 
-    for (const url of match) {
-        await supertest('').head(url).expect('Content-Type', 'image/png').expect(200);
+        for (const url of match) {
+            await supertest('').head(url).expect('Content-Type', 'image/png').expect(200);
+        }
     }
 };
 
-const checkPermissions = ({ serviceName, permissions, id, payload, payloadUpdate, beforeEach }) => {
+type PermissionType = {
+    guest?: number;
+    player?: number;
+    player2?: number;
+    manager?: number;
+    admin?: number;
+};
+
+const checkPermissions = ({
+    serviceName,
+    permissions,
+    id,
+    payload,
+    payloadUpdate,
+    beforeEach,
+}: {
+    serviceName: string;
+    permissions: {
+        find?: PermissionType;
+        get?: PermissionType;
+        create?: PermissionType;
+        update?: PermissionType;
+        patch?: PermissionType;
+        delete?: PermissionType;
+    };
+    id?: number;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payload: any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    payloadUpdate?: any;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+    beforeEach?: Function;
+}) => {
     const roleHandler = {
         guest: () => {},
         player: loginAsPlayer1,
@@ -171,29 +206,31 @@ const checkPermissions = ({ serviceName, permissions, id, payload, payloadUpdate
         admin: loginAsAdmin,
     };
 
+    type MethodParams = { code: number; token: 'string' };
+
     const methodHandler = {
-        find: async ({ code, token }) => {
+        find: async ({ code, token }: MethodParams) => {
             if (token) {
                 await request.get(`/api/${serviceName}`).set('Authorization', token).expect(code);
             } else {
                 await request.get(`/api/${serviceName}`).expect(code);
             }
         },
-        get: async ({ code, token }) => {
+        get: async ({ code, token }: MethodParams) => {
             if (token) {
                 await request.get(`/api/${serviceName}/${id}`).set('Authorization', token).expect(code);
             } else {
                 await request.get(`/api/${serviceName}/${id}`).expect(code);
             }
         },
-        create: async ({ code, token }) => {
+        create: async ({ code, token }: MethodParams) => {
             if (token) {
                 await request.post(`/api/${serviceName}`).set('Authorization', token).send(payload).expect(code);
             } else {
                 await request.post(`/api/${serviceName}`).send(payload).expect(code);
             }
         },
-        update: async ({ code, token }) => {
+        update: async ({ code, token }: MethodParams) => {
             if (token) {
                 await request
                     .put(`/api/${serviceName}/${id}`)
@@ -207,14 +244,14 @@ const checkPermissions = ({ serviceName, permissions, id, payload, payloadUpdate
                     .expect(code);
             }
         },
-        patch: async ({ code, token }) => {
+        patch: async ({ code, token }: MethodParams) => {
             if (token) {
                 await request.patch(`/api/${serviceName}/${id}`).set('Authorization', token).send(payload).expect(code);
             } else {
                 await request.patch(`/api/${serviceName}/${id}`).send(payload).expect(code);
             }
         },
-        delete: async ({ code, token }) => {
+        delete: async ({ code, token }: MethodParams) => {
             if (token) {
                 await request.delete(`/api/${serviceName}/${id}`).set('Authorization', token).expect(code);
             } else {
@@ -231,7 +268,9 @@ const checkPermissions = ({ serviceName, permissions, id, payload, payloadUpdate
                         await beforeEach();
                     }
 
+                    // @ts-expect-error roleHandles should exist for this role
                     const token = await roleHandler[role]();
+                    // @ts-expect-error methodHandler should exist for this method
                     await methodHandler[method]({ code, token });
                 });
             }
@@ -972,7 +1011,7 @@ describe('order', () => {
             await request.put('/api/orders/0').send({ action: 'processStripeSession', sessionId }).expect(200);
 
             const newResult = await request.get(url).expect(200);
-            const { players } = newResult.body.data;
+            const players: Player[] = newResult.body.data.players;
             expect(Object.values(players).some((item) => item.userSlug === 'ben-done')).toBe(true);
         });
 
@@ -1482,6 +1521,7 @@ describe('match', () => {
             `);
             const token = await loginAsPlayer1();
             await request
+                // @ts-expect-error query should return object with insert data
                 .patch(`/api/matches/${firstMatch.insertId}`)
                 .set('Authorization', token)
                 .send({ score: '6-1 6-1', playedAt: date + ' 00:01:00' })
@@ -3210,7 +3250,7 @@ describe('cron jobs', () => {
 
     describe('generateNews', () => {
         it('Should generate news', async () => {
-            await generateNews(app);
+            await generateNews();
 
             const total = await getNumRecords('news');
             const manualRecord = await getRecord('news', { isManual: 1 });

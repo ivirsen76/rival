@@ -13,6 +13,7 @@ export type Player = {
     partnerId: number;
     isActive: number;
     teamName: string;
+    userSlug: string;
 };
 
 export type Match = {
