@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { getTbStats, getWeekNumber } from './helpers';
 import _cloneDeep from 'lodash/cloneDeep';
 import _pick from 'lodash/pick';

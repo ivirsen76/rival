@@ -1,11 +1,23 @@
 import { completeInjuryFullScore, completeInjuryFastScore } from '../matches/helpers';
 import { BYE_ID } from '../../constants';
+import type { Match } from '../../types';
 
-export default (matches, prediction) => {
-    const matchesObj = matches.reduce((obj, item) => {
-        obj[item.finalSpot] = item;
-        return obj;
-    }, {});
+export type Prediction = {
+    finalSpot: number;
+    challengerId: number;
+    acceptorId: number;
+    winner?: number;
+    sets?: number;
+};
+
+export default (matches: Match[], prediction: Prediction[]) => {
+    const matchesObj = matches.reduce(
+        (obj, item) => {
+            obj[item.finalSpot] = item;
+            return obj;
+        },
+        {} as Record<number, Match>
+    );
     const possibleWinners = matches.reduce((set, item) => {
         if (item.challengerId) {
             set.add(item.challengerId);

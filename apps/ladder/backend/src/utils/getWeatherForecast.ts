@@ -60,14 +60,14 @@ export default async (app: Application) => {
         { headers: { Authorization: `Bearer ${token}` } }
     );
 
-    const getDateDiff = (date1, date2) => {
-        date1 = new Date(date1).getTime();
-        date2 = new Date(date2).getTime();
+    const getDateDiff = (date1: string, date2: string) => {
+        const date1ms = new Date(date1).getTime();
+        const date2ms = new Date(date2).getTime();
 
-        return Math.round(((date2 - date1) / (24 * 3600 * 1000)) * 100);
+        return Math.round(((date2ms - date1ms) / (24 * 3600 * 1000)) * 100);
     };
 
-    function convertToF(celsius) {
+    function convertToF(celsius: number) {
         return (celsius * 9) / 5 + 32;
     }
 

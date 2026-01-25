@@ -5,7 +5,7 @@ import dayjs from '../utils/dayjs';
 const { TL_ENABLE_REDIS } = process.env;
 const DURATION = 3600 * 24;
 
-function getCacheKey(context) {
+function getCacheKey(context: HookContext) {
     let path = context.path;
     const query = context.params.query || {};
 
@@ -20,8 +20,12 @@ function getCacheKey(context) {
     return path;
 }
 
+type LoadOptions = {
+    isCacheStale?: (data: any) => boolean;
+};
+
 const load =
-    (options = {}) =>
+    (options: LoadOptions = {}) =>
     (context: HookContext) => {
         if (!TL_ENABLE_REDIS) {
             return context;
@@ -40,7 +44,7 @@ const load =
             const key = getCacheKey(context);
             context.params.cacheKey = key;
 
-            client.get(key, (err, reply) => {
+            client.get(key, (err: any, reply: any) => {
                 if (err || !reply) {
                     return resolve(context);
                 }
@@ -49,7 +53,7 @@ const load =
                 if (!data || !data.createdAt) {
                     return resolve(context);
                 }
-                if (options.isCacheStale && options.isCacheStale(data, context)) {
+                if (options.isCacheStale && options.isCacheStale(data)) {
                     return resolve(context);
                 }
 
@@ -61,35 +65,33 @@ const load =
         });
     };
 
-const save =
-    (options = {}) =>
-    (context: HookContext) => {
-        if (!TL_ENABLE_REDIS || context.params.$skipRedisSaveHook) {
-            return context;
-        }
-        // don't use redis if it's coming from the server
-        if (!context.params.provider) {
-            return context;
-        }
-
-        const client = context.app.get('redisClient');
-        if (!client) {
-            return context;
-        }
-
-        const duration = options.duration || DURATION;
-        const { cacheKey } = context.params;
-
-        client.set(
-            cacheKey,
-            JSON.stringify({
-                createdAt: dayjs.tz().format('YYYY-MM-DD HH:mm:ss'),
-                data: context.result,
-            })
-        );
-        client.expire(cacheKey, duration);
-
+const save = () => (context: HookContext) => {
+    if (!TL_ENABLE_REDIS || context.params.$skipRedisSaveHook) {
         return context;
-    };
+    }
+    // don't use redis if it's coming from the server
+    if (!context.params.provider) {
+        return context;
+    }
+
+    const client = context.app.get('redisClient');
+    if (!client) {
+        return context;
+    }
+
+    const duration = DURATION;
+    const { cacheKey } = context.params;
+
+    client.set(
+        cacheKey,
+        JSON.stringify({
+            createdAt: dayjs.tz().format('YYYY-MM-DD HH:mm:ss'),
+            data: context.result,
+        })
+    );
+    client.expire(cacheKey, duration);
+
+    return context;
+};
 
 export default { load, save };

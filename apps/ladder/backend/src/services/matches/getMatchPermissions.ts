@@ -1,3 +1,4 @@
+// @ts-nocheck - TODO
 import { BYE_ID, POOL_PARTNER_ID } from '../../constants';
 
 function hasAnyRole(user, desiredRoles) {

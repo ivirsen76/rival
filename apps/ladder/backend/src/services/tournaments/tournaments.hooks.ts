@@ -1,4 +1,5 @@
-import type { Hook, HookContext } from '@feathersjs/feathers';
+// @ts-nocheck
+import type { HookContext } from '@feathersjs/feathers';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { getTournament, getSeeds } from './selectors';
 import redis from '../redisHooks';
@@ -18,7 +19,7 @@ import { getAge } from '../../utils/helpers';
 import { POOL_PARTNER_ID } from '../../constants';
 import { getEmailContact, getPlayerName } from '../users/helpers';
 import { optionalAuthenticate } from '../commonHooks';
-import type { Coach, Match, Player, User } from '../../types';
+import type { Coach, Level, Match, Player, Tournament, User } from '../../types';
 
 const cache = new NodeCache({ useClones: false });
 const events = new Set();
@@ -31,21 +32,24 @@ const setAgeCompatibleFlag = () => async (context: HookContext) => {
         return context;
     }
 
-    const players: Player[] = Object.values(context.result.data.players);
+    const players: (Player & { isAgeCompatible: boolean })[] = Object.values(context.result.data.players);
     const isTournamentPlayer = players.find((item) => item.userId === currentUser.id);
     if (!isTournamentPlayer) {
         return context;
     }
 
     const userIds = players.map((item) => item.userId);
-    const [rows] = await sequelize.query(
+    const [rows] = (await sequelize.query(
         `SELECT id, birthday FROM users WHERE birthday IS NOT NULL AND id IN (${userIds.join(',')})`
-    );
+    )) as [User[]];
 
-    const ages = rows.reduce((obj, item) => {
-        obj[item.id] = getAge(item.birthday);
-        return obj;
-    }, {});
+    const ages = rows.reduce(
+        (obj, item) => {
+            obj[item.id] = getAge(item.birthday!);
+            return obj;
+        },
+        {} as Record<number, number>
+    );
 
     const currentUserAge = getAge(currentUser.birthday);
     for (const player of players) {
@@ -75,7 +79,16 @@ const populateTournament =
 
         // get tournament info
         {
-            const result = await service.find({
+            type TournamentInfo = Tournament & {
+                'season.startDate': string;
+                'season.year': number;
+                'season.season': string;
+                'level.type': string;
+                prevTournament: TournamentInfo;
+                nextTournament: TournamentInfo;
+            };
+
+            const result = (await service.find({
                 sequelize: {
                     include: [
                         {
@@ -97,7 +110,7 @@ const populateTournament =
                         },
                     ],
                 },
-            });
+            })) as { data: TournamentInfo[] };
 
             result.data.sort((a, b) => a['season.startDate'].localeCompare(b['season.startDate']));
 
@@ -118,7 +131,7 @@ const populateTournament =
 
         // get all season tournaments
         {
-            const [result] = await sequelize.query(
+            const [result] = (await sequelize.query(
                 `SELECT l.name,
                     l.slug
                FROM levels AS l,
@@ -127,7 +140,7 @@ const populateTournament =
                     t.levelId=l.id
            ORDER BY l.position`,
                 { replacements: { seasonId: tournamentInfo.seasonId } }
-            );
+            )) as [Level[]];
             tournamentInfo.allLevels = result;
         }
 
@@ -503,7 +516,7 @@ const populateTournament =
         return context;
     };
 
-const isCacheStale = (data, context) => {
+const isCacheStale = (data: any) => {
     if (!data.createdAt) {
         return true;
     }

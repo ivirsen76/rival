@@ -1,3 +1,4 @@
+// @ts-nocheck - TODO
 import { Unprocessable } from '@feathersjs/errors';
 import { getPlayerName, getEmailContact } from '../users/helpers';
 import { getSeasonName } from '../seasons/helpers';

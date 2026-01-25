@@ -17,7 +17,14 @@ import { getEmailsFromList } from '../settings/helpers';
 import moderatePhotoNotificationTemplate from '../../emailTemplates/moderatePhotoNotification';
 import { getActionLink, decodeAction } from '../../utils/action';
 import { getPlayerName, getEmailContact } from '../users/helpers';
-import type { User } from '../../types';
+import type { PhotoModeration, Reaction, Comment, User } from '../../types';
+
+type PhotoFile = {
+    id: number;
+    key: string;
+    name: string;
+    size: number;
+};
 
 const getPresignedUrlForPhotosUpload = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
@@ -48,10 +55,10 @@ const getPresignedUrlForPhotosUpload = () => async (context: HookContext) => {
     const { files } = context.data;
     const sequelize = context.app.get('sequelizeClient');
 
-    let [existingKeys] = await sequelize.query('SELECT `key` FROM photos WHERE userId=:userId AND deletedAt IS NULL', {
+    const [rows] = (await sequelize.query('SELECT `key` FROM photos WHERE userId=:userId AND deletedAt IS NULL', {
         replacements: { userId: currentUser.id },
-    });
-    existingKeys = existingKeys.reduce((set, item) => {
+    })) as [{ key: string }[]];
+    const existingKeys = rows.reduce((set, item) => {
         set.add(item.key);
         return set;
     }, new Set());
@@ -67,7 +74,7 @@ const getPresignedUrlForPhotosUpload = () => async (context: HookContext) => {
         }
     );
 
-    const getPresignedUrl = async (file) => {
+    const getPresignedUrl = async (file: PhotoFile) => {
         const extension = file.name.replace(/^.*\./, '').toLowerCase();
         const hash = md5(`${config.city.toLowerCase()}-${currentUser.id}-${file.name}-${file.size}`).slice(0, 20);
         const key = `photos/original/${config.city.toLowerCase()}/${currentUser.id}/${hash}.${extension}`;
@@ -128,15 +135,15 @@ const batchProcess = () => async (context: HookContext) => {
     const { config } = context.params;
     const { TL_URL } = process.env;
 
-    let [existingKeys] = await sequelize.query('SELECT `key` FROM photos WHERE userId=:userId AND deletedAt IS NULL', {
+    const [rows] = (await sequelize.query('SELECT `key` FROM photos WHERE userId=:userId AND deletedAt IS NULL', {
         replacements: { userId: currentUser.id },
-    });
-    existingKeys = existingKeys.reduce((set, item) => {
+    })) as [{ key: string }[]];
+    const existingKeys = rows.reduce((set, item) => {
         set.add(item.key);
         return set;
     }, new Set());
 
-    const processPhoto = async (file) => {
+    const processPhoto = async (file: PhotoFile) => {
         if (existingKeys.has(file.key)) {
             return { status: 'error', id: file.id, name: file.name, reason: 'Duplicated photo' };
         }
@@ -185,7 +192,7 @@ const batchProcess = () => async (context: HookContext) => {
                                 moderationInfo: Object.entries(moderationInfo).map(([key, value]) => ({
                                     label: key,
                                     percent: value,
-                                })),
+                                })) as PhotoModeration[],
                                 approveLink,
                             }),
                         });
@@ -194,7 +201,7 @@ const batchProcess = () => async (context: HookContext) => {
             }
 
             return { status: 'success', id: file.id, photoId: photo.id, width, height, ...sizes };
-        } catch (e) {
+        } catch {
             return { status: 'error', id: file.id, name: file.name, reason: 'Unknown error' };
         }
     };
@@ -214,7 +221,7 @@ const getReactionsAndComments = () => async (context: HookContext) => {
         throw new Unprocessable('The photo is not found');
     }
 
-    const [reactions] = await sequelize.query(
+    const [reactions] = (await sequelize.query(
         `
         SELECT r.*,
                u.firstName,
@@ -226,8 +233,8 @@ const getReactionsAndComments = () => async (context: HookContext) => {
          WHERE r.photoId=:photoId
       ORDER BY r.id`,
         { replacements: { photoId } }
-    );
-    const [comments] = await sequelize.query(
+    )) as [(Reaction & User)[]];
+    const [comments] = (await sequelize.query(
         `
         SELECT c.*,
                u.firstName,
@@ -239,20 +246,23 @@ const getReactionsAndComments = () => async (context: HookContext) => {
          WHERE c.photoId=:photoId
       ORDER BY c.id`,
         { replacements: { photoId } }
-    );
+    )) as [(Comment & User)[]];
 
-    const users = [...reactions, ...comments].reduce((obj, item) => {
-        if (!obj[item.userId]) {
-            obj[item.userId] = {
-                id: item.userId,
-                firstName: item.firstName,
-                lastName: item.lastName,
-                slug: item.slug,
-                avatar: item.avatar,
-            };
-        }
-        return obj;
-    }, {});
+    const users = [...reactions, ...comments].reduce(
+        (obj, item) => {
+            if (!obj[item.userId]) {
+                obj[item.userId] = {
+                    id: item.userId,
+                    firstName: item.firstName,
+                    lastName: item.lastName,
+                    slug: item.slug,
+                    avatar: item.avatar,
+                };
+            }
+            return obj;
+        },
+        {} as Record<number, Partial<User>>
+    );
 
     context.result = {
         status: 'success',

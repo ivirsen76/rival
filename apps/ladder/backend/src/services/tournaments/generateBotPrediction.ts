@@ -1,7 +1,9 @@
+// @ts-nocheck
 import { relationsUp } from '../matches/relations';
 import { BYE_ID } from '../../constants';
+import type { Match } from '../../types';
 
-export default (matches, players) => {
+export default (matches: Match[], players) => {
     let total = Math.max(...matches.map((item) => item.finalSpot));
     total = total > 7 ? 15 : total > 3 ? 7 : 3;
 

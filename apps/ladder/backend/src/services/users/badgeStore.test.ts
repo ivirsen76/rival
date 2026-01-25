@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { reducer, initialUsersStats } from './badgeStore';
 import _cloneDeep from 'lodash/cloneDeep';
 import _merge from 'lodash/merge';

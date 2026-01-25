@@ -1,3 +1,4 @@
+// @ts-nocheck
 const processStat = (stat) => {
     const fill = (player, anotherPlayer) => {
         player.firstServeInPercent = Math.round((player.firstServeIn / player.serveTotal) * 100);

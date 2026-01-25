@@ -1,25 +1,26 @@
 import { Unprocessable } from '@feathersjs/errors';
+import type { Point } from './getStat';
 
-const getScore = (points) => {
-    const isGameOver = ([num1, num2]) => {
+const getScore = (points: Point[]) => {
+    const isGameOver = ([num1, num2]: [number, number]) => {
         const max = Math.max(num1, num2);
         const diff = Math.abs(num1 - num2);
 
         return max >= 4 && diff > 1;
     };
-    const isSetOver = ([num1, num2]) => {
+    const isSetOver = ([num1, num2]: [number, number]) => {
         const max = Math.max(num1, num2);
         const diff = Math.abs(num1 - num2);
 
         return max === 7 || (max === 6 && diff > 1);
     };
-    const isTiebreakOver = ([num1, num2]) => {
+    const isTiebreakOver = ([num1, num2]: [number, number]) => {
         const max = Math.max(num1, num2);
         const diff = Math.abs(num1 - num2);
 
         return max >= 7 && diff > 1;
     };
-    const isMatchTiebreakOver = ([num1, num2]) => {
+    const isMatchTiebreakOver = ([num1, num2]: [number, number]) => {
         const max = Math.max(num1, num2);
         const diff = Math.abs(num1 - num2);
 
@@ -27,8 +28,8 @@ const getScore = (points) => {
     };
 
     const score = [];
-    let setScore = [0, 0];
-    let gameScore = [0, 0];
+    let setScore = [0, 0] as [number, number];
+    let gameScore = [0, 0] as [number, number];
     let isMatchTiebreak = false;
     points.forEach((point, index, list) => {
         if (

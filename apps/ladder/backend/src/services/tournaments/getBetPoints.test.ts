@@ -1,3 +1,4 @@
+import type { Match } from '../../types';
 import getBetPoints from './getBetPoints';
 
 describe('getBetPoints()', () => {
@@ -5,7 +6,7 @@ describe('getBetPoints()', () => {
         { finalSpot: 3, challengerId: 1, acceptorId: 2, winner: 1, score: '6-3 6-3' },
         { finalSpot: 2, challengerId: 3, acceptorId: 4, winner: 4, score: '3-5', wonByInjure: true },
         { finalSpot: 1, challengerId: 1, acceptorId: 4 },
-    ];
+    ] as Match[];
 
     it('Should return points for all results guessed', () => {
         const prediction = [
@@ -45,7 +46,7 @@ describe('getBetPoints()', () => {
             { finalSpot: 3, challengerId: 1, acceptorId: 2, winner: 1, score: '6-3 6-3' },
             { finalSpot: 2, challengerId: 3, acceptorId: 4 },
             { finalSpot: 1, challengerId: 1 },
-        ];
+        ] as Match[];
         const prediction = [
             { finalSpot: 3, challengerId: 1, acceptorId: 2, winner: 2, sets: 2 },
             { finalSpot: 2, challengerId: 3, acceptorId: 4, winner: 4, sets: 2 },
@@ -60,7 +61,7 @@ describe('getBetPoints()', () => {
         const matches1 = [
             { finalSpot: 3, challengerId: 1, acceptorId: 2 },
             { finalSpot: 2, challengerId: 3, acceptorId: 4 },
-        ];
+        ] as Match[];
         const prediction = [
             { finalSpot: 4, challengerId: 99999, acceptorId: 1 },
             { finalSpot: 3, challengerId: 1, acceptorId: 2, winner: 2, sets: 2 },

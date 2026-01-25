@@ -1,3 +1,4 @@
+// @ts-nocheck - TODO
 import type { Application } from '@feathersjs/feathers';
 import type { Sequelize } from 'sequelize';
 import { createStore } from '../services/users/badgeStore';

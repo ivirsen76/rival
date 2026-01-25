@@ -7,6 +7,7 @@ export type UserInformation = {
         onlyMySchedule: boolean;
         weeklySchedule: [number, number][][];
     };
+    partnerName: string;
 };
 
 export type User = {
@@ -199,4 +200,18 @@ export type Payment = {
     amount: number;
     createdAt: string;
     orderPayload: any;
+};
+
+export type Reaction = {
+    userId: number;
+    photoId: number;
+    code: string;
+    createdAt: string;
+};
+
+export type Comment = {
+    userId: number;
+    photoId: number;
+    message: string;
+    createdAt: string;
 };

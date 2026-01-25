@@ -15,7 +15,7 @@ import type { User } from '../types';
 
 const { TL_ENABLE_REDIS } = process.env;
 
-export const hasAnyRole = (roles) => (context: HookContext) => {
+export const hasAnyRole = (roles: string | string[]) => (context: HookContext) => {
     roles = typeof roles === 'string' ? [roles] : roles;
 
     const userRoles = context.params.user!.roles.split(',');
@@ -37,7 +37,7 @@ export const populateSlug =
     };
 
 export const trim =
-    (...fields) =>
+    (...fields: string[]) =>
     (context: HookContext) => {
         for (const field of fields) {
             if (context.data[field] && typeof context.data[field] === 'string') {
@@ -49,7 +49,7 @@ export const trim =
     };
 
 export const logEvent = (message: string) => (context: HookContext) => {
-    const { user } = context.params;
+    const user = context.params.user as User;
     if (user) {
         message += ` (${getPlayerName(user)} [${user.id}])`;
     }
@@ -162,7 +162,7 @@ export const purgeMatchCache = (options: { matchId?: number }) => async (context
     const otherMatchIds = match.same
         .split(',')
         .map(Number)
-        .filter((id) => id !== matchId);
+        .filter((id: number) => id !== matchId);
     for (const id of [matchId, ...otherMatchIds]) {
         const [result] = await sequelize.query(
             `SELECT p.tournamentId

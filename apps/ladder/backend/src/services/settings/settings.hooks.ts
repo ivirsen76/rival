@@ -4,8 +4,10 @@ import { keep, disallow } from 'feathers-hooks-common';
 import validate from './validate';
 import _isEmpty from 'lodash/isEmpty';
 import { throwValidationErrors } from '../../helpers';
-import allBananas from '../../bananas';
+import allBananas, { type Banana } from '../../bananas';
 import dayjs from '../../utils/dayjs';
+import type { User } from '../../types';
+import populateInformation from '../users/populateInformation';
 
 const validatePatch = () => (context: HookContext) => {
     const errors = validate(context.data);
@@ -38,12 +40,12 @@ const populateConstants = () => async (context: HookContext) => {
 
     const [[settings]] = await sequelize.query('SELECT * FROM settings WHERE id=1');
 
-    const [partners] = await sequelize.query(
+    const [partners] = (await sequelize.query(
         'SELECT * FROM users WHERE roles LIKE "%partner%" AND information IS NOT NULL'
-    );
+    )) as [User[]];
 
     const comeFromPartners = partners.map((item, index) => {
-        const information = JSON.parse(item.information);
+        const information = populateInformation(item.information);
 
         return {
             value: 1000 + index,
@@ -52,7 +54,7 @@ const populateConstants = () => async (context: HookContext) => {
         };
     });
 
-    const encode = (obj) => Buffer.from(JSON.stringify(obj)).toString('base64').split('').reverse().join('');
+    const encode = (obj: any) => Buffer.from(JSON.stringify(obj)).toString('base64').split('').reverse().join('');
 
     const bananas = (() => {
         // change banana every 1.3 hours (weird number just to rotate through nights)
@@ -72,15 +74,21 @@ const populateConstants = () => async (context: HookContext) => {
                 }
                 return true;
             })
-            .map((item) => ({
-                ...item,
-                link: item.partner === 'tw' ? item.link + '?from=rival' : item.link,
-            }))
-            .reduce((obj, item) => {
-                obj[item.partner] ||= [];
-                obj[item.partner].push(item);
-                return obj;
-            }, {});
+            .map(
+                (item) =>
+                    ({
+                        ...item,
+                        link: item.partner === 'tw' ? item.link + '?from=rival' : item.link,
+                    }) as Banana
+            )
+            .reduce(
+                (obj, item) => {
+                    obj[item.partner] ||= [];
+                    obj[item.partner].push(item);
+                    return obj;
+                },
+                {} as Record<string, Banana[]>
+            );
 
         return Object.values(groups).map((list) => {
             const total = list.length;

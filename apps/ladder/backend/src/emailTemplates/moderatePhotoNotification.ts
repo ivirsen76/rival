@@ -8,7 +8,7 @@ type Params = {
     photoSrc: string;
     moderationInfo: PhotoModeration[];
     approveLink: string;
-    previewText: string;
+    previewText?: string;
 };
 
 export default ({ config, userName, profileLink, photoSrc, moderationInfo, approveLink, previewText }: Params) => {
