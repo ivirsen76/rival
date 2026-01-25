@@ -7,7 +7,7 @@ export type UserInformation = {
         onlyMySchedule: boolean;
         weeklySchedule: [number, number][][];
     };
-    partnerName: string;
+    partnerName?: string;
 };
 
 export type User = {
@@ -31,7 +31,7 @@ export type Player = {
     id: number;
     partnerId: number;
     isActive: number;
-    teamName: string;
+    teamName: string | null;
     userSlug: string;
     userId: number;
     tournamentId: number;

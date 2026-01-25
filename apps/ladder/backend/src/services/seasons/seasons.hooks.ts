@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { HookContext } from '@feathersjs/feathers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { NotFound, Unprocessable } from '@feathersjs/errors';

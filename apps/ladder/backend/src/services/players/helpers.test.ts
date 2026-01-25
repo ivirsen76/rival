@@ -1,3 +1,4 @@
+import type { Player } from '../../types';
 import { teamNames, formatTeamName, getPlayersUpdates, splitAddress } from './helpers';
 
 describe('formatTeamName()', () => {
@@ -28,7 +29,7 @@ describe('getPlayersUpdates()', () => {
         { id: 4, partnerId: null, teamName: 'Fighters' },
         { id: 5, partnerId: 4, teamName: null },
         { id: 6, partnerId: 999999, teamName: null },
-    ];
+    ] as Player[];
 
     it('Should move partner to another team', () => {
         const result = getPlayersUpdates({ players, playerId: 3, captainId: 4, replaceCaptain: false });
@@ -139,9 +140,8 @@ describe('getPlayersUpdates()', () => {
 
     it('Should not affect players', () => {
         const result = getPlayersUpdates({ players, playerId: 1, captainId: 1, replaceCaptain: true });
-        const expectedResult = [];
 
-        expect(result).toEqual(expectedResult);
+        expect(result).toEqual([]);
     });
 });
 

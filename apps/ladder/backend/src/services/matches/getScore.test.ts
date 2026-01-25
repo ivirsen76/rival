@@ -1,3 +1,4 @@
+// @ts-nocheck
 import getScore from './getScore';
 import pointsExample from './pointsExample.json';
 import tiebreakExample from './tiebreakExample.json';

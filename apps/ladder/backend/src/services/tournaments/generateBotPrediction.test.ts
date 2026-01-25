@@ -1,3 +1,4 @@
+import type { Match } from '../../types';
 import generateBotPrediction from './generateBotPrediction';
 
 describe('generateBotPrediction()', () => {
@@ -5,7 +6,7 @@ describe('generateBotPrediction()', () => {
         const matches = [
             { finalSpot: 3, challengerId: 1, acceptorId: 2 },
             { finalSpot: 2, challengerId: 3, acceptorId: 4 },
-        ];
+        ] as Match[];
         const players = {
             1: { elo: { elo: 420 } },
             2: { elo: { elo: 400 } },
@@ -25,7 +26,7 @@ describe('generateBotPrediction()', () => {
         const matches = [
             { finalSpot: 3, challengerId: 1, acceptorId: 2 },
             { finalSpot: 1, challengerId: 0, acceptorId: 3 },
-        ];
+        ] as Match[];
         const players = {
             1: { elo: { elo: 420 } },
             2: { elo: { elo: 400 } },
