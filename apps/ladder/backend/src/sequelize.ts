@@ -1,8 +1,10 @@
 import Sequelize from 'sequelize';
 import { mysqlOptions } from './config';
+import type { Application } from '@feathersjs/feathers';
 
-export default function (app) {
+export default function (app: Application) {
     const connectionString = app.get('mysql');
+    // @ts-expect-error - I guess Sequelize version is different
     const sequelize = new Sequelize(connectionString, mysqlOptions);
     const oldSetup = app.setup;
 

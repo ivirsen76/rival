@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { HookContext } from '@feathersjs/feathers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { throwValidationErrors } from '../../helpers';
@@ -9,9 +10,10 @@ import validate from './validate';
 import { disallow } from 'feathers-hooks-common';
 import { purgeTournamentCache, logEvent } from '../commonHooks';
 import compareFields from '../../utils/compareFields';
+import type { Match, User } from '../../types';
 
 // These are just helpers
-const getPoints = (score) => {
+const getPoints = (score: [number, number][]) => {
     const positions = [
         [0, 0, 0],
         [0, 1, 1],
@@ -26,15 +28,15 @@ const getPoints = (score) => {
     );
 };
 
-const isAdmin = (user) => {
+const isAdmin = (user: User) => {
     const roles = user.roles.split(',');
 
     return roles.includes('admin') || roles.includes('manager');
 };
 
 // This is not a hook, just a helper
-const populateNextFinalMatch = async (context: HookContext, prevMatch) => {
-    const finalMatchConnections = {
+const populateNextFinalMatch = async (context: HookContext, prevMatch: Match) => {
+    const finalMatchConnections: Record<string, { finalSpot: number; players: string[] }> = {
         3: {
             finalSpot: 1,
             players: ['player1', 'player2'],

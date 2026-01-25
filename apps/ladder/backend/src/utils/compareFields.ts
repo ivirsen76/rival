@@ -1,7 +1,7 @@
 import _get from 'lodash/get';
 
 export default (...fields: string[]) =>
-    (a: Record<string, any>, b: Record<string, any>) => {
+    (a: any, b: any) => {
         for (let field of fields) {
             let order = 'asc';
             if (/-desc$/.test(field)) {

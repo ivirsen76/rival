@@ -19,6 +19,7 @@ import dayjs from '../../utils/dayjs';
 import { getPlayerName } from '../users/helpers';
 import { base64EncodeEmail } from '../../utils/helpers';
 import { parse } from 'node-html-parser';
+import type { Recipient, User } from '../../types';
 
 const validateCreate = () => (context: HookContext) => {
     const errors = validate(context.data);
@@ -49,7 +50,8 @@ const stripHeaderFooter = () => (context: HookContext) => {
 const sendEmail = () => async (context: HookContext) => {
     const { TL_SERVICE_URL, TL_SECRET_KEY, TL_SMTP_HOST, TL_SMTP_PORT, TL_SMTP_USER, TL_SMTP_PASS } = process.env;
 
-    const { to, subject, text, html, replyTo, priority, trackingCode } = context.data;
+    const { subject, text, html, replyTo, priority, trackingCode } = context.data;
+    const to = context.data.to as Recipient[];
     const { config } = context.params;
     const noReply = { name: 'Rival Tennis Ladder', email: 'noreply@tennis-ladder.com' };
     const sequelize = context.app.get('sequelizeClient');
@@ -58,14 +60,19 @@ const sendEmail = () => async (context: HookContext) => {
     // get all users
     let allUsers;
     {
-        const [rows] = await sequelize.query('SELECT id, email, firstName, lastName, referralCode FROM users');
-        allUsers = rows.reduce((obj, row) => {
-            obj[row.email] = row;
-            return obj;
-        }, {});
+        const [rows] = (await sequelize.query('SELECT id, email, firstName, lastName, referralCode FROM users')) as [
+            User[],
+        ];
+        allUsers = rows.reduce(
+            (obj, row) => {
+                obj[row.email] = row;
+                return obj;
+            },
+            {} as Record<string, User>
+        );
     }
 
-    const getEmailVariables = (email) => {
+    const getEmailVariables = (email: string) => {
         const user = allUsers[email];
         return user
             ? {
@@ -77,7 +84,7 @@ const sendEmail = () => async (context: HookContext) => {
     };
 
     const currentDateString = dayjs.tz().format('YYYY-MM-DD');
-    const getUnsubscribeEmail = (email) => {
+    const getUnsubscribeEmail = (email: string) => {
         const user = allUsers[email];
         if (!user) {
             const encodedEmail = base64EncodeEmail(email);
@@ -92,13 +99,13 @@ const sendEmail = () => async (context: HookContext) => {
     // get rabbits, disabled users, banned users, and users with wrong emails
     let blockedEmails;
     {
-        const [rows] = await sequelize.query(`
+        const [rows] = (await sequelize.query(`
             SELECT email
               FROM users
              WHERE isWrongEmail=1 OR
                    deletedAt IS NOT NULL OR
                    (banDate IS NOT NULL AND banDate>"${dayjs.tz().format('YYYY-MM-DD HH:mm:ss')}") OR
-                   (comeFrom=99 AND comeFromOther="Rabbit")`);
+                   (comeFrom=99 AND comeFromOther="Rabbit")`)) as [{ email: string }[]];
         blockedEmails = new Set(rows.map((row) => row.email));
     }
 
@@ -119,7 +126,7 @@ const sendEmail = () => async (context: HookContext) => {
     }
 
     // Populate unsubscribe link
-    await limitedPromiseAll(recipients, async (user) => {
+    await limitedPromiseAll(recipients, async (user: Recipient) => {
         if (user.email in allUsers) {
             user.variables['#unsubscribeLink#'] = await getActionLink({
                 payload: { name: 'unsubscribe', email: user.email },
@@ -146,9 +153,9 @@ const sendEmail = () => async (context: HookContext) => {
             return id;
         };
 
-        await limitedPromiseAll(recipients, async (user) => {
+        await limitedPromiseAll(recipients, async (user: Recipient) => {
             user.trackingId = await getTrackingId();
-            user.trackingUrl = process.env.TL_URL;
+            user.trackingUrl = process.env.TL_URL!;
         });
     }
 
@@ -185,6 +192,7 @@ const sendEmail = () => async (context: HookContext) => {
             })();
         } else if (TL_SMTP_HOST && TL_SMTP_HOST !== 'local') {
             const transporter = nodemailer.createTransport({
+                // @ts-expect-error - coming from 3rd party
                 host: TL_SMTP_HOST,
                 port: TL_SMTP_PORT,
                 auth: {
@@ -207,10 +215,13 @@ const sendEmail = () => async (context: HookContext) => {
 
     context.data.recipientEmail = recipients.map((obj) => obj.email).join(',');
     context.data.variables = JSON.stringify(
-        recipients.reduce((obj, item) => {
-            obj[item.email] = item.variables;
-            return obj;
-        }, {})
+        recipients.reduce(
+            (obj, item) => {
+                obj[item.email] = item.variables;
+                return obj;
+            },
+            {} as Record<string, any>
+        )
     );
 
     ['from', 'to', 'subject', 'text', 'html', 'replyTo'].forEach((field) => {

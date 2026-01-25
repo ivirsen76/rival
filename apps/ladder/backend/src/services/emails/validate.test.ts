@@ -10,7 +10,7 @@ describe('validate()', () => {
         text: 'Welcome to the Ladder',
     };
 
-    const checkForErrors = (fieldName, values, checkField) => {
+    const checkForErrors = (fieldName: string, values: any[], checkField?: string) => {
         describe(`${fieldName} errors`, () => {
             for (const value of values) {
                 it(`Should show error for value "${JSON.stringify(value)}" (${typeof value})`, () => {

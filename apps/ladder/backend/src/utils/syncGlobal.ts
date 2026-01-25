@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { Application } from '@feathersjs/feathers';
 import axios from 'axios';
 import logger from '@rival-tennis-ladder/logger';

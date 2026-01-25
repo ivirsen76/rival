@@ -84,6 +84,7 @@
         "@types/mkdirp": "^2.0.0",
         "@types/mysql": "^2.15.27",
         "@types/node-cron": "^3.0.11",
+        "@types/nodemailer": "^7.0.5",
         "@types/qs": "^6.14.0",
         "@types/seedrandom": "^3.0.8",
         "@types/supertest": "^6.0.3",

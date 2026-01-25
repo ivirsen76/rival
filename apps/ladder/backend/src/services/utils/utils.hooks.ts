@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { HookContext } from '@feathersjs/feathers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
@@ -36,7 +37,7 @@ import { encrypt } from '../../utils/crypt';
 import rabbits from './rabbits.json';
 import { faker } from '@faker-js/faker';
 import writeXlsxFile from 'write-excel-file/node';
-import type { Photo, Tournament, User } from '../../types';
+import type { Tournament, User } from '../../types';
 
 const generateBadges = () => async (context: HookContext) => {
     await authenticate('jwt')(context);

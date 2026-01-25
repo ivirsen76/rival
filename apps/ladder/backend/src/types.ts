@@ -25,7 +25,7 @@ export type User = {
     comeFromOther?: string;
     referralCode?: string;
     information?: UserInformation;
-    referrerUserId: number;
+    referrerUserId?: number;
 };
 
 export type Player = {
@@ -53,6 +53,8 @@ export type Match = {
     acceptorMatches: number;
     challengerElo: number;
     acceptorElo: number;
+    challengerEloChange: number;
+    acceptorEloChange: number;
     challengerSeed: number;
     acceptorSeed: number;
     challengerUserId: number;
@@ -215,4 +217,11 @@ export type Comment = {
     photoId: number;
     message: string;
     createdAt: string;
+};
+
+export type Recipient = {
+    email: string;
+    variables: Record<string, string>;
+    trackingId: number;
+    trackingUrl: string;
 };
