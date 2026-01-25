@@ -1,3 +1,4 @@
+// @ts-nocheck
 import validate from './commonValidate';
 import _cloneDeep from 'lodash/cloneDeep';
 import _set from 'lodash/set';

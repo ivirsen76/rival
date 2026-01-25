@@ -1,3 +1,4 @@
+// @ts-nocheck
 import validate from './commonValidate';
 import dayjs from '../../utils/dayjs';
 

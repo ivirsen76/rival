@@ -54,7 +54,7 @@ const validateCreate = () => async (context: HookContext) => {
             throw new Unprocessable('The season is not started yet.');
         }
 
-        const [tournaments] = await sequelize.query(
+        const [tournaments] = (await sequelize.query(
             `SELECT p.tournamentId,
                     count(*) AS cnt
                FROM players AS p,
@@ -65,7 +65,7 @@ const validateCreate = () => async (context: HookContext) => {
                     (p.userId=:userId OR p.userId=:currentUserId)
            GROUP BY p.tournamentId`,
             { replacements: { currentUserId: currentUser.id, userId: recipient.id, seasonId: currentSeason.id } }
-        );
+        )) as [{ tournamentId: number; cnt: number }[]];
 
         const hasTheSameTournament = tournaments.some((item) => item.cnt === 2);
         if (!hasTheSameTournament) {

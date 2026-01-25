@@ -124,11 +124,11 @@ export const getSuitableTournaments = (
     };
 };
 
-export const getPartners = (pairs: number[][]) => {
+export const getPartners = (pairs: [number, number | null][]) => {
     const result: Record<string, number[]> = {};
 
     pairs
-        .sort((a, b) => (a[1] === b[1] ? a[0] - b[0] : a[1] - b[1]))
+        .sort((a, b) => (a[1] === b[1] ? a[0] - b[0] : Number(a[1]) - Number(b[1])))
         .forEach(([id, partnerId]) => {
             if (!partnerId) {
                 result[id] = [id];

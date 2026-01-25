@@ -8,9 +8,19 @@ import dayjs from './dayjs';
 import { normal, h2, signature } from '../emailTemplates/normal';
 import { getSeasonName } from '../services/seasons/helpers';
 import getWeightedItemByIndex from './getWeightedItemByIndex';
+import type { Config } from '../types';
 
 const MAX_MESSAGES_SENT = 3;
 const MESSAGES_PER_DAY = 50;
+
+type Candidate = {
+    id: number;
+    name: string;
+    address: string;
+    email?: string;
+    messages: number;
+    delay?: number;
+};
 
 // Do not remove old items
 // Comment them out when you don't need them anymore. It's necessary for tracking and history observation.
@@ -75,8 +85,8 @@ const emailOptions = [
         id: 5,
         name: 'Image with ladder overview',
         params: {
-            getSubject: (config) => `Want More Tennis Around ${config.city}?`,
-            getImage: (config) =>
+            getSubject: (config: Config) => `Want More Tennis Around ${config.city}?`,
+            getImage: (config: Config) =>
                 `<mj-image src="https://rival-tennis-ladder-images.s3.us-east-2.amazonaws.com/images/45087d640879140d68b00207371d05ad028a805dcff3411897fd8394ad28d74f.png" alt="Overview" href="https://${config.url}.tennis-ladder.com/?utm_source=newsletter&utm_medium=email&utm_campaign=second-image-overview" />`,
         },
     },
@@ -84,8 +94,8 @@ const emailOptions = [
         id: 6,
         name: 'Image with photo collage',
         params: {
-            getSubject: (config) => `Want More Tennis Around ${config.city}? 🎾`,
-            getImage: (config) =>
+            getSubject: (config: Config) => `Want More Tennis Around ${config.city}? 🎾`,
+            getImage: (config: Config) =>
                 `<mj-image src="https://rival-tennis-ladder-images.s3.us-east-2.amazonaws.com/images/photo-collage-1.jpg" alt="Players" href="https://${config.url}.tennis-ladder.com/?utm_source=newsletter&utm_medium=email&utm_campaign=second-image-photos" />`,
         },
     },
@@ -93,12 +103,28 @@ const emailOptions = [
         id: 7,
         name: 'With no image',
         params: {
-            getSubject: (config) => `🎾 Want More Tennis Around ${config.city}?`,
+            getSubject: (config: Config) => `🎾 Want More Tennis Around ${config.city}?`,
         },
     },
 ];
 
-const getGeneralMessage = ({ config, firstName, count, seasonName, isSeasonStarted, totalPlayers, params }) => {
+const getGeneralMessage = ({
+    config,
+    firstName,
+    count,
+    seasonName,
+    isSeasonStarted,
+    totalPlayers,
+    params,
+}: {
+    config: Config;
+    firstName?: string;
+    count: number;
+    seasonName: string;
+    isSeasonStarted: boolean;
+    totalPlayers: number;
+    params: any;
+}) => {
     const { city } = config;
 
     const globalSiteLink = `https://tennis-ladder.com/?utm_source=newsletter&utm_medium=email&utm_campaign=second-index`;
@@ -147,7 +173,7 @@ ${signature({ config })}
     );
 };
 
-const sendGeneralMessage = async (app: Application, candidates) => {
+const sendGeneralMessage = async (app: Application, candidates: Candidate[]) => {
     const sequelize = app.get('sequelizeClient');
     const config = await getCombinedConfig();
 
@@ -201,7 +227,7 @@ const sendGeneralMessage = async (app: Application, candidates) => {
     );
 
     let [userEmails] = await sequelize.query(`SELECT email FROM users`);
-    userEmails = new Set(userEmails.map((item) => item.email.toLowerCase()));
+    userEmails = new Set(userEmails.map((item: { email: string }) => item.email.toLowerCase()));
 
     if (!candidates) {
         [candidates] = await sequelize.query(`
@@ -216,7 +242,7 @@ const sendGeneralMessage = async (app: Application, candidates) => {
              LIMIT 0, 500`);
     }
 
-    const registeredCandidates = [];
+    const registeredCandidates: number[] = [];
     candidates = candidates
         .filter((item) => {
             const email = decrypt(item.address).toLowerCase().trim();
@@ -244,6 +270,7 @@ const sendGeneralMessage = async (app: Application, candidates) => {
     candidates = candidates.map((item, index) => ({
         id: item.id,
         name: item.name,
+        address: item.address,
         email: decrypt(item.address).trim(),
         messages: item.messages,
         delay:
@@ -262,7 +289,7 @@ const sendGeneralMessage = async (app: Application, candidates) => {
 
     let index = 0;
     for (const candidate of candidates) {
-        const firstName = candidate.name ? _capitalize(candidate.name.split(' ')[0]) : null;
+        const firstName = candidate.name ? _capitalize(candidate.name.split(' ')[0]) : undefined;
         const emailOption = getWeightedItemByIndex(emailOptions, index++);
         const trackingCode = `roster-${candidate.messages}-${emailOption.id}`;
         const isTestCandidate = candidate.id === 999999;
@@ -301,7 +328,7 @@ const processAtlanta = async (app: Application) => {
     const PLAYED_BEFORE = '2024-01-01'; // TODO: probably calculate it based on the current date
     const dateTwoMonthsAgo = dayjs.tz().subtract(2, 'month').format('YYYY-MM-DD HH:mm:ss');
 
-    const [candidates] = await sequelize.query(`
+    const [candidates] = (await sequelize.query(`
         SELECT c.id,
                c.name,
                c.address,
@@ -319,7 +346,7 @@ const processAtlanta = async (app: Application) => {
       GROUP BY c.id
         HAVING playedAt<"${PLAYED_BEFORE}"
       ORDER BY c.messages, c.id
-         LIMIT 0, 500`);
+         LIMIT 0, 500`)) as [Candidate[]];
 
     await sendGeneralMessage(app, candidates);
 };
@@ -328,7 +355,7 @@ const processAustin = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
     const dateTwoMonthsAgo = dayjs.tz().subtract(2, 'month').format('YYYY-MM-DD HH:mm:ss');
 
-    const [candidates] = await sequelize.query(`
+    const [candidates] = (await sequelize.query(`
         SELECT id,
                name,
                address,
@@ -338,7 +365,7 @@ const processAustin = async (app: Application) => {
                (messageSentAt IS NULL OR messageSentAt<"${dateTwoMonthsAgo}") AND
                createdAt>"2023"
       ORDER BY messages, id
-         LIMIT 0, 500`);
+         LIMIT 0, 500`)) as [Candidate[]];
 
     await sendGeneralMessage(app, candidates);
 };

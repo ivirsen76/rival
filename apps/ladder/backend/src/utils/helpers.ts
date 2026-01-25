@@ -1,7 +1,8 @@
 import _omit from 'lodash/omit';
+import type { Proposal, Schedule } from '../types';
 
 export const getNumberAsString = (num: number) => {
-    const match = {
+    const match: Record<number, string> = {
         1: 'one',
         2: 'two',
         3: 'three',
@@ -29,7 +30,7 @@ export const base64DecodeEmail = (str: string) => {
     return Buffer.from(base64, 'base64').toString('utf8');
 };
 
-export const isProposalFitSchedule = (proposal, schedule) => {
+export const isProposalFitSchedule = (proposal: Proposal, schedule: Schedule) => {
     const MIN_HOUR = 6;
     const MAX_HOUR = 21;
 
@@ -52,7 +53,7 @@ export const isProposalFitSchedule = (proposal, schedule) => {
     return schedule.some(([from, to]) => from <= min && to >= max);
 };
 
-export const getAge = (birthday: string, now = Date.now()) => {
+export const getAge = (birthday: string, now: number = Date.now()) => {
     const [y, m, d] = birthday.split('-').map(Number);
     const birth = new Date(y, m - 1, d).getTime();
 
@@ -60,10 +61,15 @@ export const getAge = (birthday: string, now = Date.now()) => {
     return (now - birth) / msPerYear;
 };
 
-export const getProposalGroups = (proposalEmails) => {
-    const proposalObj = {};
-    const emailObj = {};
-    const emailProposals = {};
+type ProposalEmail = {
+    id: number;
+    emails: { name: string; email: string }[];
+};
+
+export const getProposalGroups = (proposalEmails: ProposalEmail[]) => {
+    const proposalObj: any = {};
+    const emailObj: any = {};
+    const emailProposals: Record<string, number[]> = {};
 
     for (const item of proposalEmails) {
         proposalObj[item.id] = _omit(item, ['emails']);
@@ -75,10 +81,10 @@ export const getProposalGroups = (proposalEmails) => {
         }
     }
 
-    const groups = {};
+    const groups: any = {};
     for (const [email, ids] of Object.entries(emailProposals)) {
         const key = ids.join('-');
-        groups[key] ||= { proposals: ids.map((id) => proposalObj[id]), emails: [] };
+        groups[key] ||= { proposals: ids.map((id: number) => proposalObj[id]), emails: [] };
         groups[key].emails.push(emailObj[email]);
     }
 

@@ -13,10 +13,14 @@ export const defaultValues: UserInformation = {
     },
 };
 
-export default (information: UserInformation) => {
+export default (information?: string | Record<string, any>) => {
+    if (!information) {
+        return defaultValues;
+    }
+
     if (typeof information === 'string') {
         information = JSON.parse(information);
     }
 
-    return merge(defaultValues, information || {}, { arrayMerge: (_, source) => source });
+    return merge(defaultValues, information as Record<string, any>, { arrayMerge: (_, source) => source });
 };

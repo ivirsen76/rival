@@ -11,9 +11,11 @@ export default async (app: Application) => {
         return;
     }
 
+    type Season = { name: string; date: string };
+
     const BREAK_DURATION_IN_WEEKS = 3;
     const WEEKS_TILL_NEXT_SEASON = config.registrationAheadWeeks + BREAK_DURATION_IN_WEEKS + 0.5;
-    const seasons = [
+    const seasons: Season[] = [
         { name: 'spring', date: '03-27' },
         { name: 'summer', date: '06-26' },
         { name: 'fall', date: '09-25' },
@@ -58,20 +60,20 @@ export default async (app: Application) => {
     // get next season levels
     let levels;
     if (latestSeason) {
-        const [rows] = await sequelize.query(
+        const [rows] = (await sequelize.query(
             `SELECT levelId AS id
                FROM tournaments
                WHERE seasonId=:seasonId`,
             { replacements: { seasonId: latestSeason.id } }
-        );
+        )) as [{ id: number }[]];
         levels = rows.map((row) => row.id);
     } else {
-        const [rows] = await sequelize.query(`SELECT id FROM levels`);
+        const [rows] = (await sequelize.query(`SELECT id FROM levels`)) as [{ id: number }[]];
         levels = rows.map((row) => row.id);
     }
 
     // creating next season
-    const index = seasons.indexOf(nextSeason);
+    const index = seasons.indexOf(nextSeason!);
     const nextIndex = (index + 1) % seasons.length;
     const weeks =
         Math.round(
@@ -83,7 +85,7 @@ export default async (app: Application) => {
 
     app.service('api/seasons').create({
         year: currentYear,
-        season: nextSeason.name,
+        season: nextSeason!.name,
         startDate: startDate.format('YYYY-MM-DD'),
         weeks,
         levels,

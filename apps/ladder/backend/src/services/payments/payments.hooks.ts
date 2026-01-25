@@ -6,7 +6,7 @@ import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { getSchemaErrors, throwValidationErrors } from '../../helpers';
 import yup from '../../packages/yup';
 import _isEmpty from 'lodash/isEmpty';
-import type { User } from '../../types';
+import type { Payment, User } from '../../types';
 
 const getPayments = () => async (context: HookContext) => {
     const currentUser = context.params.user as User;
@@ -21,7 +21,7 @@ const getPayments = () => async (context: HookContext) => {
         hasAnyRole(['admin'])(context);
     }
 
-    const [rows] = await sequelize.query(
+    const [rows] = (await sequelize.query(
         `
         SELECT p.*,
                o.payload AS orderPayload,
@@ -31,7 +31,7 @@ const getPayments = () => async (context: HookContext) => {
          WHERE p.userId=:userId
       ORDER BY p.createdAt DESC, p.amount`,
         { replacements: { userId } }
-    );
+    )) as [Payment[]];
 
     context.result = {
         data: rows.map((row) => ({

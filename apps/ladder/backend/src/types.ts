@@ -66,18 +66,18 @@ export type Match = {
 };
 
 export type Tournament = {
-    id: number;
+    id?: number;
     tournamentId: number;
-    seasonId: number;
-    levelId: number;
+    seasonId?: number;
+    levelId?: number;
     levelMinTlr: number;
     levelMaxTlr: number;
     levelBaseTlr: number;
     levelType: string;
     levelName: string;
-    gender: string;
+    gender?: string;
     isActivePlay: boolean;
-    isFree: number;
+    isFree?: number;
 };
 
 export type Config = {
@@ -94,6 +94,7 @@ export type Config = {
     tournamentReminderWeeks: number;
     minPlayersForActiveLadder: number;
     minMatchesForActiveLadder: number;
+    url: string;
 };
 
 export type Proposal = {
@@ -175,4 +176,15 @@ export type Photo = {
 export type Option = {
     value: number | string;
     label: string;
+};
+
+export type Schedule = [number, number][];
+
+export type Payment = {
+    id: number;
+    type: string;
+    description: string;
+    amount: number;
+    createdAt: string;
+    orderPayload: any;
 };

@@ -6,7 +6,7 @@ import { POOL_PARTNER_ID } from '../../constants';
 import type { Application, HookContext } from '@feathersjs/feathers';
 import type { Player, User } from '../../types';
 
-export const teamNames = [
+export const teamNames: string[] = [
     'Love Gurus',
     'The Coordinators',
     'Court Crushers',
@@ -141,7 +141,7 @@ export const sendNewPoolPlayerMessage = async (context: HookContext, playerId: n
     );
     const doublesLadderLink = `${TL_URL}/season/${tournament.year}/${tournament.season}/${tournament.levelSlug}`;
 
-    const [allPlayers] = await sequelizeClient.query(
+    const [allPlayers] = (await sequelizeClient.query(
         `SELECT p.*,
                 u.firstName,
                 u.lastName,
@@ -151,7 +151,7 @@ export const sendNewPoolPlayerMessage = async (context: HookContext, playerId: n
           WHERE p.tournamentId=:tournamentId AND
                 p.userId=u.id`,
         { replacements: { tournamentId: player.tournamentId } }
-    );
+    )) as [(User & Player)[]];
 
     const captainsWithTeammates = allPlayers.reduce((set, item) => {
         if (item.partnerId) {
@@ -160,10 +160,10 @@ export const sendNewPoolPlayerMessage = async (context: HookContext, playerId: n
         return set;
     }, new Set());
     const captainsWithoutTeammates = allPlayers.filter(
-        (item: Player) => !captainsWithTeammates.has(item.id) && item.isActive === 1 && !item.partnerId
+        (item) => !captainsWithTeammates.has(item.id) && item.isActive === 1 && !item.partnerId
     );
     const otherPlayersFromPool = allPlayers.filter(
-        (item: Player) => item.id !== playerId && item.isActive === 1 && item.partnerId === POOL_PARTNER_ID
+        (item) => item.id !== playerId && item.isActive === 1 && item.partnerId === POOL_PARTNER_ID
     );
 
     const emails = [...captainsWithoutTeammates, ...otherPlayersFromPool].map(getEmailContact);
@@ -187,7 +187,7 @@ export const sendNewPoolPlayerMessage = async (context: HookContext, playerId: n
     });
 };
 
-export const sendDoublesTeamInvitation = async (context: HookContext, tournamentIds: number[], partners) => {
+export const sendDoublesTeamInvitation = async (context: HookContext, tournamentIds: number[], partners: any) => {
     const sequelize = context.app.get('sequelizeClient');
     const currentUser = context.params.user as User;
     const { config } = context.params;

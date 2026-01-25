@@ -18,11 +18,11 @@ export const h2 = (text: string, attributes = '') =>
 export const h3 = (text: string, attributes = '') =>
     `<mj-text ${attributes} font-size="20px" font-weight="bold" padding-top="36px" padding-bottom="12px" line-height="24px">${text}</mj-text>`;
 
-export const warning = (text: string, attributes = '') =>
+export const warning = (text: string) =>
     `<mj-text container-background-color="#fff3cd" color="#664d03">${text}</mj-text><mj-spacer height="10px" />`;
 
 export const socialLinks = ({ referralCode = '#referralCode#' } = {}) => {
-    const emailLink = getEmailLink(TL_URL, referralCode);
+    const emailLink = getEmailLink(TL_URL!, referralCode);
     const instagramLink = 'https://www.instagram.com/rivaltennisladder';
     const facebookLink = 'https://www.facebook.com/rivaltennisladder';
 

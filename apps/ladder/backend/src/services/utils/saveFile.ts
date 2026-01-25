@@ -2,7 +2,7 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import sharp from 'sharp';
 import { S3_BUCKET_NAME } from '../../constants';
 
-const fileTypes = {
+const fileTypes: Record<string, { contentType: string; example: string }> = {
     pdf: {
         contentType: 'application/pdf',
         example: 'https://utl.nyc3.digitaloceanspaces.com/pdf/2022-summer-mens-40-2022-09-16.pdf',
@@ -21,7 +21,7 @@ const fileTypes = {
     },
 };
 
-const saveFile = async (filename, content) => {
+const saveFile = async (filename: string, content: Buffer) => {
     const extension = filename.slice(filename.lastIndexOf('.') + 1);
     const fileType = fileTypes[extension];
     if (!fileType) {

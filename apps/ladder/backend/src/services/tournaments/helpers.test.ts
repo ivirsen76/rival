@@ -210,7 +210,7 @@ describe('getSuitableTournaments()', () => {
 
 describe('getPartners()', () => {
     it('Should return proper partners', () => {
-        const pairs = [
+        const pairs: [number, number | null][] = [
             [2, null],
             [5, 1],
             [3, 1],

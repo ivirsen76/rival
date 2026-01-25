@@ -6,6 +6,7 @@ import refundPaymentForTournamentTemplate from '../emailTemplates/refundPaymentF
 import staticConfig from '../config';
 import getCombinedConfig from './getCombinedConfig';
 import { getPlayerName } from '../services/users/helpers';
+import type { Level } from '../types';
 
 // Helpers
 const getConfig = async () => {
@@ -15,15 +16,14 @@ const getConfig = async () => {
 
 const getSeasonLevels = async (sequelize: Sequelize, seasonId: number) => {
     const [levels] = await sequelize.query(
-        `
-        SELECT l.id, l.slug, l.name, l.type
+        `SELECT l.id, l.slug, l.name, l.type
           FROM tournaments AS t, levels AS l
          WHERE t.levelId=l.id AND t.seasonId=:seasonId
       ORDER BY l.position`,
         { replacements: { seasonId } }
     );
 
-    return levels;
+    return levels as Level[];
 };
 
 export default async (app: Application) => {

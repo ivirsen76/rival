@@ -18,6 +18,7 @@ describe('Templates test', () => {
                 email: 'paul@pusher.com',
                 phone: '919-123-4567',
                 slug: 'whatever',
+                roles: 'player',
             },
             seasonName: '2022 Fall',
             levelName: 'Men 4.0',
