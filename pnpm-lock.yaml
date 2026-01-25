@@ -206,7 +206,7 @@ importers:
         specifier: ^3.0.5
         version: 3.0.5
       sequelize:
-        specifier: 6.6.2
+        specifier: ^6.6.2
         version: 6.6.2(mysql2@3.16.1)
       sharp:
         specifier: ^0.34.5
