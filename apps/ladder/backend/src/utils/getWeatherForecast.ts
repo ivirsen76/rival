@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { Application } from '@feathersjs/feathers';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';

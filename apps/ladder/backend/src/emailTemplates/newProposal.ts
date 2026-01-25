@@ -8,7 +8,7 @@ type Params = {
     proposalPlayer: string;
     proposalLink: string;
     isFriendlyProposal: boolean;
-    teamDetails: string;
+    teamDetails?: string;
     previewText: string;
 };
 
@@ -19,7 +19,7 @@ export default ({
     proposalPlayer,
     proposalLink,
     isFriendlyProposal,
-    teamDetails,
+    teamDetails = '',
     previewText,
 }: Params) => {
     const entity = proposal.practiceType ? 'practice' : isFriendlyProposal ? 'friendly match' : 'match';
@@ -28,7 +28,7 @@ export default ({
         `
   <mj-text><b>${proposalPlayer}</b> proposed a new ${entity} in <a href="${proposalLink}">${level}</a>:</mj-text>
   <mj-text>${renderProposal(proposal)}</mj-text>
-  ${teamDetails || ''}
+  ${teamDetails}
   <mj-text>Getting too many proposal emails? <a href="#adjustProposalsLink#">Adjust frequency</a></mj-text>
 `,
         { config, previewText }

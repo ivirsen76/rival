@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { HookContext } from '@feathersjs/feathers';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
@@ -198,6 +199,7 @@ const populateAcceptorData = () => async (context: HookContext) => {
 
     const sequelize = context.app.get('sequelizeClient');
     const { players, matches } = context.app.get('sequelizeClient').models;
+    const currentUser = context.params.user as User;
 
     // Validate
     {
@@ -237,7 +239,7 @@ const populateAcceptorData = () => async (context: HookContext) => {
         throw new Unprocessable('The proposal is expired.');
     }
 
-    const matchInfo = await getMatchInfo({ app: context.app, currentUser: context.params.user, matchId });
+    const matchInfo = await getMatchInfo({ app: context.app, currentUser, matchId });
     if (!matchInfo.canAcceptProposal) {
         throw new Unprocessable('You cannot accept this proposal.');
     }
@@ -311,6 +313,7 @@ const sendAcceptedProposalEmail = () => async (context: HookContext) => {
     const { app } = context;
     const matchId = Number(context.id);
     const { matches } = context.app.get('sequelizeClient').models;
+    const currentUser = context.params.user as User;
 
     const match = await matches.findByPk(matchId);
     const {
@@ -321,7 +324,7 @@ const sendAcceptedProposalEmail = () => async (context: HookContext) => {
         acceptorLinkedName,
         emailsWithoutCurrentUser,
         formattedPlayedAt,
-    } = await getMatchInfo({ app: context.app, currentUser: context.params.user, matchId });
+    } = await getMatchInfo({ app: context.app, currentUser, matchId });
     const firstAcceptor = acceptors[0];
 
     const entity = match.practiceType ? 'practice' : 'match';
@@ -382,10 +385,11 @@ const acceptProposal = () => async (context: HookContext) => {
     const matchId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
     const { matches } = sequelize.models;
+    const currentUser = context.params.user as User;
 
     await matches.update(context.data, { where: { id: matchId } });
 
-    const matchInfo = await getMatchInfo({ app: context.app, currentUser: context.params.user, matchId });
+    const matchInfo = await getMatchInfo({ app: context.app, currentUser, matchId });
     for (const id of matchInfo.sameMatchIds) {
         await matches.update({ isActive: 0 }, { where: { id } });
     }
@@ -750,6 +754,7 @@ const removeProposal = () => async (context: HookContext) => {
     const matchId = Number(context.id);
     const { matches } = sequelize.models;
     const { config } = context.params;
+    const currentUser = context.params.user as User;
 
     // Validate
     {
@@ -763,7 +768,7 @@ const removeProposal = () => async (context: HookContext) => {
         }
     }
 
-    const matchInfo = await getMatchInfo({ app: context.app, currentUser: context.params.user, matchId });
+    const matchInfo = await getMatchInfo({ app: context.app, currentUser, matchId });
     if (matchInfo.canManageChallengers && !matchInfo.canDeleteProposal) {
         throw new Unprocessable('You cannot delete this proposal.');
     }

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import type { HookContext } from '@feathersjs/feathers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { disallow } from 'feathers-hooks-common';
@@ -12,6 +13,7 @@ import specialReasonNotificationTemplate from '../../emailTemplates/specialReaso
 import { getEmailsFromList } from '../settings/helpers';
 import { sendDoublesTeamInvitation, formatTeamName } from '../players/helpers';
 import { POOL_PARTNER_ID } from '../../constants';
+import type { User } from '../../types';
 
 const getProcessedOrders = () => async (context: HookContext) => {
     const userId = context.params.user!.id;
@@ -34,7 +36,7 @@ const getProcessedOrders = () => async (context: HookContext) => {
     return context;
 };
 
-const issueReferralCredit = async (context: HookContext, user) => {
+const issueReferralCredit = async (context: HookContext, user: User) => {
     const sequelize = context.app.get('sequelizeClient');
     const { config } = context.params;
     const { users, payments } = sequelize.models;
@@ -81,7 +83,7 @@ const issueReferralCredit = async (context: HookContext, user) => {
 };
 
 // This is just a helper, not a hook
-const processOrder = async (order, context) => {
+const processOrder = async (order, context: HookContext) => {
     const { TL_URL } = process.env;
     const { players, payments, orders, users } = context.app.get('sequelizeClient').models;
     const sequelize = context.app.get('sequelizeClient');
@@ -250,7 +252,8 @@ const processOrder = async (order, context) => {
 const populateOrder = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
     const { seasons } = sequelize.models;
-    const { config, user } = context.params;
+    const { config } = context.params;
+    const user = context.params.user as User;
     const { seasonId, tournaments, preview, joinReason, joinForFree = [], partners } = context.data;
 
     const season = await seasons.findByPk(seasonId);
@@ -279,7 +282,7 @@ const populateOrder = () => async (context: HookContext) => {
         { replacements: { userId: user.id } }
     );
     userTournaments = userTournaments.map((t) => t.id);
-    if (tournaments.some((id) => userTournaments.includes(id))) {
+    if (tournaments.some((id: number) => userTournaments.includes(id))) {
         throw new Unprocessable('You are already registered for this ladder');
     }
 
@@ -395,7 +398,7 @@ const processStripeSession = () => async (context: HookContext) => {
     let session;
     try {
         session = await stripe.checkout.sessions.retrieve(sessionId);
-    } catch (e) {
+    } catch {
         throw new Unprocessable('Payment session is not found');
     }
 

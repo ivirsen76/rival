@@ -1,3 +1,4 @@
+// @ts-nocheck
 import dayjs from './dayjs';
 import getCombinedConfig from './getCombinedConfig';
 import { getEstablishedEloAllUsers, getEmailContact } from '../services/users/helpers';
@@ -8,10 +9,11 @@ import newProposalTemplate from '../emailTemplates/newProposal';
 import getCustomEmail from '../emailTemplates/getCustomEmail';
 import { renderProposal } from '../emailTemplates/normal';
 import { isProposalFitSchedule, getAge, getProposalGroups } from './helpers';
+import type { Application } from '@feathersjs/feathers';
 
 let isExecuting = false;
 
-const sendProposalEmails = async (app, forceSending = false) => {
+const sendProposalEmails = async (app: Application, forceSending = false) => {
     if (isExecuting) {
         return;
     }

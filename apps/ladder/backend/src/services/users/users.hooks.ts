@@ -254,7 +254,7 @@ const populateUser = () => async (context: HookContext) => {
     let isLoggedIn = true;
     try {
         await authenticate('jwt')(context);
-    } catch (e) {
+    } catch {
         isLoggedIn = false;
     }
 
@@ -3336,7 +3336,7 @@ const getUserMatches = () => async (context: HookContext) => {
 const savePaw = () => async (context: HookContext) => {
     try {
         await authenticate('jwt')(context);
-    } catch (e) {
+    } catch {
         // return if not logged in
         return;
     }
@@ -3396,7 +3396,7 @@ const savePaw = () => async (context: HookContext) => {
 const saveIdentification = () => async (context: HookContext) => {
     try {
         await authenticate('jwt')(context);
-    } catch (e) {
+    } catch {
         // return if not logged in
         return;
     }

@@ -1019,7 +1019,7 @@ const claimReward = () => async (context: HookContext) => {
                     { addressVerification: JSON.stringify(addressVerification) },
                     { where: { id: playerId } }
                 );
-            } catch (e) {
+            } catch {
                 logEvent(`Wrong address verification: ${address}`)(context);
             }
         }

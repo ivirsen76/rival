@@ -25,6 +25,7 @@ export type User = {
     comeFromOther?: string;
     referralCode?: string;
     information?: UserInformation;
+    referrerUserId: number;
 };
 
 export type Player = {
