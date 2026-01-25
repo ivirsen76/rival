@@ -7,7 +7,7 @@ import _pick from 'lodash/pick';
 import fs from 'fs';
 import expect from 'expect';
 import colors from 'colors/safe';
-import mkdirp from 'mkdirp';
+import { mkdirp } from 'mkdirp';
 import { rimraf } from 'rimraf';
 import { runQueryAndClose } from './connection';
 
