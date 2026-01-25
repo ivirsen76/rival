@@ -5,8 +5,9 @@ import finalMatchByeTemplate from '../../emailTemplates/finalMatchBye';
 import renderImage from '../../utils/renderImage';
 import { getSeasonName } from '../seasons/helpers';
 import getMatchInfo from './getMatchInfo';
+import type { Image, Match, User } from '../../types';
 
-const relationsDown = {
+const relationsDown: Record<number, [number, number]> = {
     7: [15, 14],
     6: [13, 12],
     5: [11, 10],
@@ -29,7 +30,18 @@ const sendFinalReminders = async (context: HookContext, tournamentId: number) =>
         { replacements: { tournamentId } }
     );
 
-    const [matches] = await sequelize.query(
+    type FinalMatch = Match & {
+        levelType: string;
+        levelName: string;
+        challengerTeamName: string;
+        challengerFirstName: string;
+        challengerLastName: string;
+        acceptorTeamName: string;
+        acceptorFirstName: string;
+        acceptorLastName: string;
+    };
+
+    const [matches] = (await sequelize.query(
         `
         SELECT m.id,
                m.challengerId,
@@ -62,16 +74,19 @@ const sendFinalReminders = async (context: HookContext, tournamentId: number) =>
                m.type="final" AND
                m.battleId IS NULL`,
         { replacements: { tournamentId } }
-    );
+    )) as [FinalMatch[]];
 
     if (matches.length === 0) {
         return;
     }
 
-    const finalSpotMatch = matches.reduce((obj, item) => {
-        obj[item.finalSpot] = item;
-        return obj;
-    }, {});
+    const finalSpotMatch = matches.reduce(
+        (obj, item) => {
+            obj[item.finalSpot] = item;
+            return obj;
+        },
+        {} as Record<string, FinalMatch>
+    );
 
     const dateThreeWeeksAgo = currentDate.subtract(3, 'week').format('YYYY-MM-DD HH:mm:ss');
     const decidedMatches = matches.filter(
@@ -101,8 +116,25 @@ const sendFinalReminders = async (context: HookContext, tournamentId: number) =>
     {
         const ACTION_NAME = 'sendFinalMatchReminder';
 
-        const sendEmail = ({ emails, finalSpot, opponent, levelName, img, subject, showNewOpponentWarning }) => {
-            const html = finalMatchTemplate(context.params.config, {
+        const sendEmail = ({
+            emails,
+            finalSpot,
+            opponent,
+            levelName,
+            img,
+            subject,
+            showNewOpponentWarning,
+        }: {
+            emails: string[];
+            finalSpot: number;
+            opponent: User;
+            levelName: string;
+            img: Image;
+            subject: string;
+            showNewOpponentWarning: boolean;
+        }) => {
+            const html = finalMatchTemplate({
+                config: context.params.config,
                 seasonEndDate: currentSeason.endDate,
                 finalSpot,
                 opponent,
@@ -223,7 +255,7 @@ const sendFinalReminders = async (context: HookContext, tournamentId: number) =>
 
             const playerSeed = match.challengerId ? match.challengerSeed : match.acceptorSeed;
 
-            const relatedFinalSpot = relationsDown[match.finalSpot].find((finalSpot) => finalSpotMatch[finalSpot]);
+            const relatedFinalSpot = relationsDown[match.finalSpot].find((finalSpot) => finalSpotMatch[finalSpot])!;
             const relatedMatch = finalSpotMatch[relatedFinalSpot];
             const opponent1 = isDoublesTeam
                 ? relatedMatch.challengerTeamName

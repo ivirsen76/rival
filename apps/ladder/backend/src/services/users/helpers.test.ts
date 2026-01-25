@@ -1,3 +1,4 @@
+import type { Match, User } from '../../types';
 import {
     formatPhone,
     hidePhone,
@@ -11,7 +12,7 @@ import {
 
 describe('formatPhone()', () => {
     it('Should format phone', () => {
-        expect(formatPhone()).toBe('');
+        expect(formatPhone('')).toBe('');
         expect(formatPhone('1234567890')).toBe('123-456-7890');
     });
 });
@@ -26,7 +27,6 @@ describe('hideEmail()', () => {
     it('Should hide email', () => {
         expect(hideEmail('some@gmail.com')).toBe('s***@*****.com');
         expect(hideEmail('')).toBe('a***@*****.com');
-        expect(hideEmail()).toBe('a***@*****.com');
     });
 });
 
@@ -75,25 +75,25 @@ describe('getDateByWeekNumber()', () => {
 
 describe('getTbStats()', () => {
     it('Should return right stats', () => {
-        expect(getTbStats({ score: '7-6 7-6' })).toEqual([2, 0]);
-        expect(getTbStats({ score: '7-6 6-7 1-0' })).toEqual([2, 1]);
-        expect(getTbStats({ score: '7-6 6-7 7-6' })).toEqual([2, 1]);
-        expect(getTbStats({ score: '2-6 6-2 6-4' })).toEqual([0, 0]);
-        expect(getTbStats({ score: '1-0', wonByInjury: true })).toEqual([0, 0]);
-        expect(getTbStats({ score: '7-6 1-0', wonByInjury: true })).toEqual([1, 0]);
-        expect(getTbStats({ score: '7-6 6-7 1-0', wonByInjury: true })).toEqual([1, 1]);
-        expect(getTbStats({ score: '7-6 6-7 7-6', wonByInjury: true })).toEqual([2, 1]);
+        expect(getTbStats({ score: '7-6 7-6' } as Match)).toEqual([2, 0]);
+        expect(getTbStats({ score: '7-6 6-7 1-0' } as Match)).toEqual([2, 1]);
+        expect(getTbStats({ score: '7-6 6-7 7-6' } as Match)).toEqual([2, 1]);
+        expect(getTbStats({ score: '2-6 6-2 6-4' } as Match)).toEqual([0, 0]);
+        expect(getTbStats({ score: '1-0', wonByInjury: 1 } as Match)).toEqual([0, 0]);
+        expect(getTbStats({ score: '7-6 1-0', wonByInjury: 1 } as Match)).toEqual([1, 0]);
+        expect(getTbStats({ score: '7-6 6-7 1-0', wonByInjury: 1 } as Match)).toEqual([1, 1]);
+        expect(getTbStats({ score: '7-6 6-7 7-6', wonByInjury: 1 } as Match)).toEqual([2, 1]);
     });
 });
 
 describe('getPlayerName()', () => {
     it('Should return right players name', () => {
-        expect(getPlayerName({ firstName: 'Some', lastName: 'Guy' })).toBe('Some Guy');
-        expect(getPlayerName([{ firstName: 'Some', lastName: 'Guy' }])).toBe('Some Guy');
+        expect(getPlayerName({ firstName: 'Some', lastName: 'Guy' } as User)).toBe('Some Guy');
+        expect(getPlayerName([{ firstName: 'Some', lastName: 'Guy' } as User])).toBe('Some Guy');
         expect(
             getPlayerName([
-                { firstName: 'Some', lastName: 'Guy' },
-                { firstName: 'Another', lastName: 'Man' },
+                { firstName: 'Some', lastName: 'Guy' } as User,
+                { firstName: 'Another', lastName: 'Man' } as User,
             ])
         ).toBe('Some G. / Another M.');
     });

@@ -4,6 +4,7 @@ import { disallow } from 'feathers-hooks-common';
 import { Unprocessable } from '@feathersjs/errors';
 import dayjs from '../../utils/dayjs';
 import md5 from 'md5';
+import type { Match } from '../../types';
 
 const getCalendar = () => async (context: HookContext) => {
     const referralCode = context.id;
@@ -37,9 +38,20 @@ const getCalendar = () => async (context: HookContext) => {
         throw new Unprocessable('There is no season yet');
     }
 
+    type CalendarMatch = Match & {
+        challengerFirstName: string;
+        challengerLastName: string;
+        acceptorFirstName: string;
+        acceptorLastName: string;
+        challenger2FirstName: string;
+        challenger2LastName: string;
+        acceptor2FirstName: string;
+        acceptor2LastName: string;
+    };
+
     const startDate = dayjs.tz(currentSeason.startDate).format('YYYY-MM-DD HH:mm:ss');
     const userId = foundUser.id;
-    const [matches] = await sequelize.query(
+    const [matches] = (await sequelize.query(
         `
         SELECT m.id,
                m.playedAt,
@@ -59,7 +71,7 @@ const getCalendar = () => async (context: HookContext) => {
                uc2.lastName AS challenger2LastName,
                ua2.id AS acceptor2Id,
                ua2.firstName AS acceptor2FirstName,
-               ua2.lastName AS acceptor2LastName
+               ua2.lastName AS acceptor2LasstName
           FROM matches AS m
           JOIN players AS pc ON m.challengerId=pc.id
           JOIN users AS uc ON pc.userId=uc.id
@@ -76,9 +88,9 @@ const getCalendar = () => async (context: HookContext) => {
                (m.playedAt>:currentDate OR m.score IS NOT NULL) AND
                (pc.userId=:userId OR pa.userId=:userId OR pc2.userId=:userId OR pa2.userId=:userId)`,
         { replacements: { userId, startDate, currentDate } }
-    );
+    )) as [CalendarMatch[]];
 
-    const removeDuplicates = (match) => {
+    const removeDuplicates = (match: CalendarMatch) => {
         if (match.acceptedAt || match.same === '') {
             return true;
         }
@@ -86,7 +98,7 @@ const getCalendar = () => async (context: HookContext) => {
         return match.same.startsWith(`${match.id},`);
     };
 
-    const getEventFromMatch = (match) => {
+    const getEventFromMatch = (match: CalendarMatch) => {
         const start = dayjs.tz(match.playedAt);
         const players = [
             { id: match.challengerId, name: `${match.challengerFirstName} ${match.challengerLastName}` },

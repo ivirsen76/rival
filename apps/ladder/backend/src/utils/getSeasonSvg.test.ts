@@ -1,17 +1,20 @@
-import getSeasonSvg, { getLevelList } from './getSeasonSvg';
+import getSeasonSvg, { getLevelList, SeasonSvgParams } from './getSeasonSvg';
 import _cloneDeep from 'lodash/cloneDeep';
 import { XMLValidator } from 'fast-xml-parser';
+import type { Tournament } from '../types';
+
+type Block = { title: string; description: string };
 
 describe('getSeasonSvg()', () => {
-    const expectBlocks = (svg, blocks) => {
+    const expectBlocks = (svg: string, blocks: Block[]) => {
         // check for svg validity
         const result = XMLValidator.validate(svg);
         expect(result).toBe(true);
 
-        const items = svg.match(/data-(title|description)="([^"]+)"/g);
+        const items = svg.match(/data-(title|description)="([^"]+)"/g) as any;
 
         const expectedBlocks = items
-            .reduce((arr, item) => {
+            .reduce((arr: any, item: any) => {
                 let prevElement = arr[arr.length - 1];
 
                 const isTitle = item.includes('data-title');
@@ -29,7 +32,7 @@ describe('getSeasonSvg()', () => {
 
                 return arr;
             }, [])
-            .map((item) => ({ title: item.title, description: item.description.join(' | ') }));
+            .map((item: any) => ({ title: item.title, description: item.description.join(' | ') }));
 
         expect(blocks).toEqual(expectedBlocks);
     };
@@ -214,7 +217,7 @@ describe('getSeasonSvg()', () => {
         elo: 297,
         matchesPlayed: 13,
         gender: 'male',
-    };
+    } as SeasonSvgParams;
     const totalPlayersText = 'players already joined';
 
     it('Should return right svg', () => {
@@ -390,7 +393,7 @@ describe('getLevelList', () => {
         { levelName: "Men's Team Doubles", levelType: 'doubles-team' },
         { levelName: "Women's 4.5", levelType: 'single' },
         { levelName: "Men's 5.0+", levelType: 'single' },
-    ];
+    ] as Tournament[];
 
     it('Should return all available levels', () => {
         expect(getLevelList(levels)).toEqual(["Men's 3.5-5.0", "Women's 4.0-4.5", "Men's and Women's Doubles"]);

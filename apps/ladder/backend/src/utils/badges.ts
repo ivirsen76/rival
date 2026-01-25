@@ -1,3 +1,4 @@
+// @ts-nocheck TODO
 import formatElo from './formatElo';
 
 export const getSeriesState = (code, levels, value) => {

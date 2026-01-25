@@ -13,7 +13,7 @@ export const encodeBase64 = (str: string) => {
     return Buffer.from(str, 'ascii').toString('base64');
 };
 
-const getHash = (obj, secureKey: string) => {
+const getHash = (obj: Record<string, string>, secureKey: string) => {
     const sorted = Object.entries(obj).sort((a, b) => a[0].localeCompare(b[0]));
     const str = sorted.map((pair) => pair[0] + '=' + pair[1]).join('=') + ':' + secureKey;
 
@@ -21,7 +21,7 @@ const getHash = (obj, secureKey: string) => {
 };
 
 // to cache existing links
-const actionLinks = {};
+const actionLinks: Record<string, string> = {};
 
 // if "app" presents, then create a short link
 export const getActionLink = async ({
@@ -99,7 +99,7 @@ export const decodeAction = (
     currentTimestamp = dayjs.tz().unix(),
     secureKey = process.env.TL_SECURE_KEY
 ) => {
-    let params;
+    const params: Record<string, string> = {};
 
     if (!secureKey) {
         throw new Error('The secure key is missing');
@@ -123,12 +123,11 @@ export const decodeAction = (
             throw new Error();
         }
 
-        params = parts.reduce((obj, part) => {
+        for (const part of parts) {
             const [key, value] = part.split('=');
-            obj[key] = value;
-            return obj;
-        }, {});
-    } catch (e) {
+            params[key] = value;
+        }
+    } catch {
         throw new Error('The link is broken');
     }
 

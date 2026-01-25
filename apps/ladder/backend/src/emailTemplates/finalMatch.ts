@@ -12,9 +12,9 @@ export type Params = {
     levelName: string;
     img: Image;
     showNewOpponentWarning: boolean;
-    fakeCurrentDate: string;
     roundsTotal: number;
-    previewText: string;
+    fakeCurrentDate?: string;
+    previewText?: string;
 };
 
 export default ({

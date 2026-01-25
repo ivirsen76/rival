@@ -1,3 +1,4 @@
+// @ts-nocheck TODO
 import type { Sequelize } from 'sequelize';
 import type { HookContext } from '@feathersjs/feathers';
 import type { User } from '../../types';

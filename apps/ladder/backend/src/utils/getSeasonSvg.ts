@@ -1,12 +1,9 @@
 import formatElo from './formatElo';
 import { getSuitableTournaments } from '../services/tournaments/helpers';
 import _round from 'lodash/round';
+import type { Config, Season, Tournament } from '../types';
 
-const isRequired = () => {
-    throw new Error('Param is required');
-};
-
-export const getLevelList = (levels) => {
+export const getLevelList = (levels: Tournament[]) => {
     const menSingles = levels.filter((level) => level.levelType === 'single' && /^Men/i.test(level.levelName));
     const womenSingles = levels.filter((level) => level.levelType === 'single' && /^Women/i.test(level.levelName));
     const menDoubles = levels.filter((level) => level.levelType === 'doubles-team' && /^Men/i.test(level.levelName));
@@ -22,8 +19,8 @@ export const getLevelList = (levels) => {
         }
 
         const group = singles[0].levelName.split(' ')[0];
-        const range = `${singles[0].levelName.match(/\d\.\d/)[0]}-${
-            singles[singles.length - 1].levelName.match(/\d\.\d/)[0]
+        const range = `${singles[0].levelName.match(/\d\.\d/)![0]}-${
+            singles[singles.length - 1].levelName.match(/\d\.\d/)![0]
         }`;
         result.push(`${group} ${range}`);
     }
@@ -39,7 +36,7 @@ export const getLevelList = (levels) => {
     return result;
 };
 
-const generateSquirclePath = (x, y, width, height) => {
+const generateSquirclePath = (x: number, y: number, width: number, height: number) => {
     const r = Math.min(width, height) * 0.5;
 
     const path = [];
@@ -65,7 +62,23 @@ const generateSquirclePath = (x, y, width, height) => {
     return path.join(' ');
 };
 
-const getBlock = ({ x, y, width, height, title, description, hue }) => {
+const getBlock = ({
+    x,
+    y,
+    width,
+    height,
+    title,
+    description,
+    hue,
+}: {
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    title: string[];
+    description: string[];
+    hue: number;
+}) => {
     const gradientId = `block-${x}-${y}`;
 
     const titleSize = 28;
@@ -138,18 +151,31 @@ ${description
 </g>`;
 };
 
+export type SeasonSvgParams = {
+    season: Season & { name: string; dates: string; weeks: number };
+    levels: Tournament[];
+    config: Config;
+    creditAmount: number;
+    elo: number | null;
+    matchesPlayed: number;
+    currentDate: string;
+    scale: number;
+    totalPlayers: number;
+    gender: 'male' | 'female';
+};
+
 const getSeasonSvg = ({
-    season = isRequired(),
-    levels = isRequired(),
-    config = isRequired(),
+    season,
+    levels,
+    config,
     creditAmount,
     elo,
     matchesPlayed,
-    currentDate = isRequired(),
+    currentDate,
     scale = 1,
     totalPlayers = 0,
     gender = 'male',
-}) => {
+}: SeasonSvgParams) => {
     const isFreeSeason = Boolean(season.isFree);
     const mustPay = !isFreeSeason && matchesPlayed >= config.minMatchesToPay;
     const hasCredit = mustPay && creditAmount > 0;
@@ -172,12 +198,15 @@ const getSeasonSvg = ({
             return allLadders;
         }
 
-        const levelObj = levels.reduce((obj, item) => {
-            obj[item.tournamentId] = item;
-            return obj;
-        }, {});
+        const levelObj = levels.reduce(
+            (obj, item) => {
+                obj[item.tournamentId] = item;
+                return obj;
+            },
+            {} as Record<number, Tournament>
+        );
 
-        const suitableLevels = getSuitableTournaments(levels, elo, gender)
+        const suitableLevels = getSuitableTournaments(levels, elo!, gender)
             .all.slice(0, 3)
             .map((id) => levelObj[id].levelName);
 
@@ -241,7 +270,7 @@ const getSeasonSvg = ({
 
         if (hasElo) {
             blocks.push({
-                title: [`TLR ${formatElo(elo)}`],
+                title: [`TLR ${formatElo(elo!)}`],
                 description: ['You current rating'],
             });
         }

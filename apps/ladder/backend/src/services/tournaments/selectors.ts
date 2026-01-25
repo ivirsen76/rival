@@ -1,3 +1,4 @@
+// @ts-nocheck TODO
 import { SEASON_OPTIONS, POOL_PARTNER_ID } from '../../constants';
 import _pick from 'lodash/pick';
 import _shuffle from 'lodash/shuffle';

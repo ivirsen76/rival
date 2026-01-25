@@ -1,4 +1,6 @@
-const getWeightedItemByIndex = (arr, index) => {
+type Item = { weight?: number; [key: string]: unknown };
+
+const getWeightedItemByIndex = (arr: Item[], index: number) => {
     // Calculate total weight
     const totalWeight = arr.reduce((sum, item) => sum + (item.weight || 1), 0);
 

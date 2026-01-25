@@ -22,13 +22,25 @@ type Candidate = {
     delay?: number;
 };
 
+type EmailOption = {
+    id: number;
+    name: string;
+    params: {
+        getSubject: (config: Config) => string;
+        getPreviewText?: (config: Config) => string;
+        getCta?: (config: Config) => string;
+        getImage?: (config: Config) => string;
+    };
+    weight?: number;
+};
+
 // Do not remove old items
 // Comment them out when you don't need them anymore. It's necessary for tracking and history observation.
 // const previewText1 = 'Enjoy flexible matches and friendly competition! Free entry for new players this season.';
 
 // Do not remove old items
 // Comment them out when you don't need them anymore. It's necessary for tracking and history observation.
-const emailOptions = [
+const emailOptions: EmailOption[] = [
     //     {
     //         id: 1,
     //         name: 'Register Now CTA',
@@ -85,8 +97,8 @@ const emailOptions = [
         id: 5,
         name: 'Image with ladder overview',
         params: {
-            getSubject: (config: Config) => `Want More Tennis Around ${config.city}?`,
-            getImage: (config: Config) =>
+            getSubject: (config) => `Want More Tennis Around ${config.city}?`,
+            getImage: (config) =>
                 `<mj-image src="https://rival-tennis-ladder-images.s3.us-east-2.amazonaws.com/images/45087d640879140d68b00207371d05ad028a805dcff3411897fd8394ad28d74f.png" alt="Overview" href="https://${config.url}.tennis-ladder.com/?utm_source=newsletter&utm_medium=email&utm_campaign=second-image-overview" />`,
         },
     },
@@ -94,8 +106,8 @@ const emailOptions = [
         id: 6,
         name: 'Image with photo collage',
         params: {
-            getSubject: (config: Config) => `Want More Tennis Around ${config.city}? 🎾`,
-            getImage: (config: Config) =>
+            getSubject: (config) => `Want More Tennis Around ${config.city}? 🎾`,
+            getImage: (config) =>
                 `<mj-image src="https://rival-tennis-ladder-images.s3.us-east-2.amazonaws.com/images/photo-collage-1.jpg" alt="Players" href="https://${config.url}.tennis-ladder.com/?utm_source=newsletter&utm_medium=email&utm_campaign=second-image-photos" />`,
         },
     },
@@ -103,7 +115,7 @@ const emailOptions = [
         id: 7,
         name: 'With no image',
         params: {
-            getSubject: (config: Config) => `🎾 Want More Tennis Around ${config.city}?`,
+            getSubject: (config) => `🎾 Want More Tennis Around ${config.city}?`,
         },
     },
 ];
@@ -290,7 +302,7 @@ const sendGeneralMessage = async (app: Application, candidates: Candidate[]) => 
     let index = 0;
     for (const candidate of candidates) {
         const firstName = candidate.name ? _capitalize(candidate.name.split(' ')[0]) : undefined;
-        const emailOption = getWeightedItemByIndex(emailOptions, index++);
+        const emailOption = getWeightedItemByIndex(emailOptions, index++) as EmailOption;
         const trackingCode = `roster-${candidate.messages}-${emailOption.id}`;
         const isTestCandidate = candidate.id === 999999;
 

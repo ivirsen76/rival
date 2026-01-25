@@ -5,6 +5,7 @@ import getCombinedConfig from '../../utils/getCombinedConfig';
 import { getPlayerName } from '../users/helpers';
 import dayjs from '../../utils/dayjs';
 import { runQuery, closeConnection } from '../../db/connection';
+import type { User } from '../../types';
 
 const generateNews = async () => {
     const currentDate = dayjs.tz();
@@ -73,7 +74,16 @@ const generateNews = async () => {
                 return obj;
             }, {});
 
-            const matches = await runQuery(`
+            type Winner = User & {
+                id: number;
+                partnerId: number;
+                levelPosition: number;
+                levelType: string;
+                levelSlug: string;
+                levelName: string;
+            };
+
+            const matches = (await runQuery(`
                 SELECT p.id,
                        p.partnerId,
                        u.firstName,
@@ -87,9 +97,9 @@ const generateNews = async () => {
                   JOIN users AS u ON p.userId=u.id
                   JOIN tournaments AS t ON p.tournamentId=t.id
                   JOIN levels AS l ON t.levelId=l.id
-                 WHERE t.seasonId=${season.id} AND m.score IS NOT NULL AND m.finalSpot=1 AND m.battleId IS NULL`);
+                 WHERE t.seasonId=${season.id} AND m.score IS NOT NULL AND m.finalSpot=1 AND m.battleId IS NULL`)) as Winner[];
 
-            const doublesmatches = await runQuery(`
+            const doublesmatches = (await runQuery(`
                 SELECT u.firstName,
                        u.lastName,
                        l.name AS levelName,
@@ -101,7 +111,7 @@ const generateNews = async () => {
                   JOIN users AS u ON p.userId=u.id
                   JOIN tournaments AS t ON p.tournamentId=t.id
                   JOIN levels AS l ON t.levelId=l.id
-                 WHERE t.seasonId=${season.id} AND dm.score1 IS NOT NULL AND dm.finalSpot=1`);
+                 WHERE t.seasonId=${season.id} AND dm.score1 IS NOT NULL AND dm.finalSpot=1`)) as Winner[];
 
             winners = [...matches, ...doublesmatches]
                 .sort((a, b) => a.levelPosition - b.levelPosition)

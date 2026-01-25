@@ -9,6 +9,7 @@ import { hooks } from '@feathersjs/authentication-local';
 import { disallow } from 'feathers-hooks-common';
 import { populateSalt } from '../commonHooks';
 import { getPlayerName } from '../users/helpers';
+import type { User } from '../../types';
 
 const { hashPassword } = hooks;
 
@@ -52,28 +53,31 @@ const validateUpdate = () => async (context: HookContext) => {
         }
     }
 
+    type NewPasswordAction = { name: string; userId: string };
+
     let action;
     try {
-        action = decodeAction(context.data.action);
+        action = decodeAction(context.data.action) as NewPasswordAction;
     } catch (e) {
         throwValidationErrors({ password: (e as Error).message });
     }
 
-    if (action.name !== 'newPassword') {
+    if (action!.name !== 'newPassword') {
         throwValidationErrors({ password: 'Wrong action' });
     }
 
-    context.data.userId = Number(action.userId);
+    context.data.userId = Number(action!.userId);
 
     return context;
 };
 
 const sendNewPasswordEmail = () => async (context: HookContext) => {
     const { app } = context;
-    const { user, config } = context.params;
+    const { config } = context.params;
+    const currentUser = context.params.user as User;
 
-    const fullName = getPlayerName(user);
-    const actionLink = await getActionLink({ payload: { name: 'newPassword', userId: user.id } });
+    const fullName = getPlayerName(currentUser);
+    const actionLink = await getActionLink({ payload: { name: 'newPassword', userId: currentUser.id } });
 
     await app.service('api/emails').create({
         to: [{ name: fullName, email: context.data.email }],

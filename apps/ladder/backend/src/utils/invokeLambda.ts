@@ -1,6 +1,6 @@
 import { LambdaClient, InvokeCommand } from '@aws-sdk/client-lambda';
 
-export default async (funcName, payload = {}) => {
+export default async (funcName: string, payload: any = {}) => {
     const client = new LambdaClient();
     const command = new InvokeCommand({
         FunctionName: funcName,
@@ -9,7 +9,7 @@ export default async (funcName, payload = {}) => {
     });
 
     const { Payload } = await client.send(command);
-    const result = JSON.parse(Buffer.from(Payload).toString());
+    const result = JSON.parse(Buffer.from(Payload!).toString());
 
     return result;
 };

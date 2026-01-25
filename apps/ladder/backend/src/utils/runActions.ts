@@ -1,3 +1,4 @@
+// @ts-nocheck TODO
 import type { Sequelize } from 'sequelize';
 import type { Application } from '@feathersjs/feathers';
 import dayjs from './dayjs';

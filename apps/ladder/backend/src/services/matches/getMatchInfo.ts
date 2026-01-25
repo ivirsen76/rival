@@ -15,8 +15,8 @@ const getMatchInfo = async ({
     match,
 }: {
     app: Application;
-    currentUser: User;
-    matchId: number;
+    currentUser?: User;
+    matchId?: number;
     match?: Match;
 }) => {
     const sequelize = app.get('sequelizeClient');

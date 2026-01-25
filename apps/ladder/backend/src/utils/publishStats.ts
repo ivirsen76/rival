@@ -1,3 +1,4 @@
+// @ts-nocheck TODO
 import type { Application } from '@feathersjs/feathers';
 import axios from 'axios';
 import qs from 'qs';

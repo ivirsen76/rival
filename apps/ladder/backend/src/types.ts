@@ -59,10 +59,16 @@ export type Match = {
     wonByInjury: number;
     unavailable: number;
     matchFormat: number;
+    practiceType: number;
     score: string;
     playedAt: string;
     finalSpot: number;
     createdAt: string;
+    updatedAt: string;
+    acceptedAt: string;
+    same: string;
+    place: string;
+    comment: string;
 };
 
 export type Tournament = {
@@ -94,6 +100,11 @@ export type Config = {
     tournamentReminderWeeks: number;
     minPlayersForActiveLadder: number;
     minMatchesForActiveLadder: number;
+    minMatchesToPay: number;
+    singlesCost: number;
+    doublesCost: number;
+    earlyRegistrationDiscount: number;
+    additionalLadderDiscount: number;
     url: string;
 };
 
@@ -118,6 +129,7 @@ export type Season = {
     season: 'spring' | 'summer' | 'fall' | 'winter';
     startDate: string;
     endDate: string;
+    isFree: number;
 };
 
 export type Level = {

@@ -1,3 +1,4 @@
+// @ts-nocheck TODO
 import type { HookContext } from '@feathersjs/feathers';
 import { disallow } from 'feathers-hooks-common';
 import { NotFound } from '@feathersjs/errors';
