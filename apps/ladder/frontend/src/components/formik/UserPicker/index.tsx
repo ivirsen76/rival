@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unstable-nested-components */
 import { useState, useRef, useEffect, useCallback } from 'react';
 import FieldWrapper from '../FieldWrapper';
 import _debounce from 'lodash/debounce';

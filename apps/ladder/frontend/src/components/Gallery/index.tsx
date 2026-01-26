@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useMemo, useEffect, useRef, useState, useCallback } from 'react';
 import { Squircle } from 'corner-smoothing';
 import RenderInBody from '@/components/RenderInBody';

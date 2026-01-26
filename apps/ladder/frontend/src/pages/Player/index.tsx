@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unstable-nested-components */
 import { Fragment } from 'react';
 import { useQuery } from 'react-query';
 import Loader from '@/components/Loader';

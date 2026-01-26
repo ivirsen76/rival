@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import { useRef } from 'react';
 import classnames from 'classnames';
 import style from './style.module.scss';

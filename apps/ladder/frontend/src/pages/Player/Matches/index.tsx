@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unstable-nested-components */
 import { useState, useMemo, useRef } from 'react';
 import { useQuery } from 'react-query';
 import UpsetMatch from '@/components/UpsetMatch';

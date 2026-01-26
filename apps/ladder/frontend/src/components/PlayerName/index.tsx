@@ -41,6 +41,7 @@ const DoublesName = (props: DoublesNameProps) => {
                         <div key={partner.id} className="d-flex gap-2 align-items-center">
                             <PlayerAvatar player1={partner} />
                             <div className="text-nowrap">
+                                {/* eslint-disable-next-line no-use-before-define */}
                                 <PlayerName player1={partner} isLink />
                             </div>
                             {showContactBadge && index === 0 && <div className="badge badge-secondary">contact</div>}
