@@ -62,6 +62,7 @@ export const up = async ({ context: queryInterface }: { context: QueryInterface 
                 ...avatar1,
                 information: JSON.stringify({
                     history: { name: [{ value: 'Paul Pusher', date: '2020-12-12 00:00:00' }] },
+                    subscribeForProposals: { onlyNotPlaying: false },
                 }),
                 isPhoneVerified: 1,
                 birthday: '2000-01-01',
@@ -275,6 +276,10 @@ export const up = async ({ context: queryInterface }: { context: QueryInterface 
         ],
         {}
     );
+
+    // Make onlyNotPlaying=false for everybody, otherwise it breaks tests on some days
+    const filter = JSON.stringify({ subscribeForProposals: { onlyNotPlaying: false } });
+    await queryInterface.sequelize.query(`UPDATE users SET information='${filter}' WHERE information IS NULL`);
 };
 
 export const down = async ({ context: queryInterface }: { context: QueryInterface }) => {

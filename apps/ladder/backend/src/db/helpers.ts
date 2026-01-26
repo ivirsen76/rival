@@ -116,7 +116,8 @@ const needNewDump = () => {
             return isDirectory ? Math.max(max, getMaxModifiedTime(name)) : Math.max(max, stat.mtimeMs);
         }, 0);
 
-    const migrationsModifiedTime = getMaxModifiedTime(path.join(__dirname, '..', '..', 'dist', 'db', 'migrations'));
+    const migrationsModifiedTime = getMaxModifiedTime(path.join(__dirname, 'migrations'));
+    const seedersModifiedTime = getMaxModifiedTime(path.join(__dirname, 'seeders'));
     const envModifiedTime = fs.existsSync(envPath) ? fs.statSync(envPath).mtimeMs : 0;
     const dumpModifiedTime = fs.statSync(dumpPath).mtimeMs;
     const timeOneHourAgo = Number(new Date()) - 3600 * 1000;
@@ -124,6 +125,7 @@ const needNewDump = () => {
     // new dump if files are changed or it's been at least one hour since last dump creation
     return (
         dumpModifiedTime < migrationsModifiedTime ||
+        dumpModifiedTime < seedersModifiedTime ||
         dumpModifiedTime < envModifiedTime ||
         dumpModifiedTime < timeOneHourAgo
     );
