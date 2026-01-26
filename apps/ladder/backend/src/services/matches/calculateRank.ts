@@ -99,7 +99,7 @@ const calculateRank = async (tournamentId: number) => {
             const acceptorId = captains[match.acceptorId] || match.acceptorId;
 
             const challengerRank = players[challengerId].rank as number;
-            const acceptorRank = players[acceptorId].rank as number;
+            const acceptorRank = acceptorId ? (players[acceptorId].rank as number) : null;
             const challenger2Rank = !isDoublesTeam && match.challenger2Id ? players[match.challenger2Id].rank : null;
             const acceptor2Rank = !isDoublesTeam && match.acceptor2Id ? players[match.acceptor2Id].rank : null;
             if (!match.score) {
@@ -124,7 +124,7 @@ const calculateRank = async (tournamentId: number) => {
                 const { challengerPoints, acceptorPoints, winner } = getPoints({
                     ...match,
                     challengerRank: isDoubles ? getAverageRank(challengerRank, challenger2Rank) : challengerRank,
-                    acceptorRank: isDoubles ? getAverageRank(acceptorRank, acceptor2Rank) : acceptorRank,
+                    acceptorRank: isDoubles ? getAverageRank(acceptorRank!, acceptor2Rank) : acceptorRank,
                 } as Match);
 
                 // don't increase points starting from the current week
