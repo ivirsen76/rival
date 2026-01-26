@@ -13,9 +13,7 @@ const reasonOptionsMatch = reasonOptions.reduce((obj, item) => {
     return obj;
 }, []);
 
-type ComplaintsProps = {};
-
-const Complaints = (props: ComplaintsProps) => {
+const Complaints = () => {
     const { data: users, isLoading } = useQuery('getAllComplaints', async () => {
         const response = await axios.put('/api/complaints/0', { action: 'getAllComplaints' });
 

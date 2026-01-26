@@ -166,9 +166,7 @@ const ageChartInit =
         bullet.label.text = '{values.valueY.workingValue}%';
     };
 
-type StatsProps = {};
-
-const Stats = (props: StatsProps) => {
+const Stats = () => {
     const { data: stat, isLoading } = useQuery('getSeasonStats', async () => {
         const response = await axios.put('/api/seasons/0', { action: 'getSeasonStats' });
         return response.data.data;

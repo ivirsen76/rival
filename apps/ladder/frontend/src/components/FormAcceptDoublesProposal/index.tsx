@@ -191,7 +191,7 @@ const FormAcceptDoublesProposal = (props: FormAcceptDoublesProposalProps) => {
                     message: 'The proposal has been accepted.',
                 });
             });
-        } catch (e) {
+        } catch {
             // do nothing
         }
     };

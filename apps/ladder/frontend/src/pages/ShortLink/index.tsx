@@ -19,7 +19,7 @@ const ShortLink = (props: ShortLinkProps) => {
                 const result = await axios.put('/api/actions', { name, code });
                 const url = new URL(result.data.url);
                 history.push(url.pathname);
-            } catch (e) {
+            } catch {
                 setError('Link is broken');
             }
         };

@@ -30,9 +30,7 @@ const getFilteredData = (item, filter) => {
     );
 };
 
-type PlayersProps = {};
-
-const Players = (props: PlayersProps) => {
+const Players = () => {
     const { data: users, isLoading } = useQuery(
         'getAllUsers',
         async () => {

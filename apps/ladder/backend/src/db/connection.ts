@@ -32,7 +32,6 @@ export const closeConnection = () => {
     }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const runQuery = async (query: string, params: string[] = []): Promise<Record<string, any>[]> => {
     return new Promise((resolve, reject) => {
         getConnection().query(query, params, (error, results) => {
@@ -45,7 +44,6 @@ export const runQuery = async (query: string, params: string[] = []): Promise<Re
     });
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const runQueryAndClose = async (query: string, params: string[] = []): Promise<Record<string, any>[]> => {
     const result = await runQuery(query, params);
     closeConnection();

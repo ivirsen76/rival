@@ -30,7 +30,6 @@ export default function (app: Application) {
         }
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     emails.associate = function (models: any) {};
 
     return emails;

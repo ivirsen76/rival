@@ -24,7 +24,6 @@ export default function (app: Application) {
         }
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     levels.associate = function (models: any) {
         levels.belongsToMany(models.seasons, {
             through: 'tournaments',

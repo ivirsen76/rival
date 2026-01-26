@@ -99,7 +99,7 @@ export const loadCurrentUser = () => async (dispatch, getState) => {
             localStorage.setItem(tokenName, result.data.accessToken);
             dispatch(setCurrentUser({ user: result.data.user }));
             dispatch(clearHistoryAndSave());
-        } catch (e) {
+        } catch {
             dispatch(logout());
         }
     }

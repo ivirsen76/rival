@@ -75,7 +75,6 @@ export default function (app: Application) {
         }
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     matches.associate = function (models: any) {
         matches.belongsTo(models.players, { as: 'challenger' });
         matches.belongsTo(models.players, { as: 'acceptor' });

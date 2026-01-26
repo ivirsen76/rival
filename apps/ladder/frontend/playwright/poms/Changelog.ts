@@ -1,5 +1,4 @@
-import { expect, type Locator, type Page } from '@playwright/test';
-import { Common } from './Common';
+import { type Locator, type Page } from '@playwright/test';
 
 export class Changelog {
     readonly page: Page;

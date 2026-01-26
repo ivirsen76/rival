@@ -24,7 +24,6 @@ export default function (app: Application) {
         }
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     payments.associate = function (models: any) {
         payments.belongsTo(models.users);
     };

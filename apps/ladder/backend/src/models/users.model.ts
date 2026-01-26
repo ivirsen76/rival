@@ -76,7 +76,7 @@ export default function (app: Application) {
     );
 
     // eslint-disable-next-line no-unused-vars
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
     users.associate = function (models: any) {
         users.belongsToMany(models.tournaments, {
             through: 'players',

@@ -18,9 +18,7 @@ import hasAnyRole from '@/utils/hasAnyRole';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 
-type TournamentProps = {};
-
-const Tournament = (props: TournamentProps) => {
+const Tournament = () => {
     const { path, url } = useRouteMatch();
     const user = useSelector((state) => state.auth.user);
     const config = useConfig();

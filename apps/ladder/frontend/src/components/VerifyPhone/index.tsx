@@ -47,7 +47,7 @@ const VerifyPhone = (props: VerifyPhoneProps) => {
                     code,
                 });
                 await onSuccess();
-            } catch (e) {
+            } catch {
                 setError('Confirmation code is wrong');
             }
 

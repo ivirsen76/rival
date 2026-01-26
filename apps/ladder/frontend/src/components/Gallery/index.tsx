@@ -29,8 +29,8 @@ import useBodyLock from '@/utils/useBodyLock';
 import useHideRegisterButton from '@/utils/useHideRegisterButton';
 import showLoader from '@/utils/showLoader';
 import { Gallery as PhotoswipeGallery, Item } from 'react-photoswipe-gallery';
-import 'react-photo-album/rows.css'; // eslint-disable-line import/no-unresolved
-import 'photoswipe/style.css'; // eslint-disable-line import/no-unresolved
+import 'react-photo-album/rows.css';
+import 'photoswipe/style.css';
 import useEmojiData from './useEmojiData';
 import useConfig from '@/utils/useConfig';
 import notification from '@/components/notification';

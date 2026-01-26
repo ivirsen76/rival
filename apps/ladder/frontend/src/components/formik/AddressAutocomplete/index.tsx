@@ -59,7 +59,7 @@ const AddressAutocomplete = (props: AddressAutocompleteProps) => {
                     setSelected(0);
                     setSuggestions(newSuggestions);
                 }
-            } catch (e) {
+            } catch {
                 reset();
             }
         })();

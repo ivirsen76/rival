@@ -8,9 +8,7 @@ import VerifyEmail from '@/components/VerifyEmail';
 import EmailIcon from '@/styles/metronic/icons/duotone/Communication/Mail-at.svg?react';
 import { authenticate } from '@/reducers/auth';
 
-type AuthenticationProps = {};
-
-const Authentication = (props: AuthenticationProps) => {
+const Authentication = () => {
     const currentUser = useSelector((state) => state.auth.user);
     const [tab, setTab] = useState('register');
     const dispatch = useDispatch();

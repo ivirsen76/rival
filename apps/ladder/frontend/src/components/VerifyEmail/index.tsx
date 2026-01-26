@@ -54,7 +54,7 @@ const VerifyEmail = (props: VerifyEmailProps) => {
                     });
                 }
                 await onSuccess();
-            } catch (e) {
+            } catch {
                 setError('Confirmation code is wrong');
             }
 

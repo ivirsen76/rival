@@ -31,7 +31,6 @@ export default function (app: Application) {
         }
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     doublesMatches.associate = function (models: any) {
         doublesMatches.belongsTo(models.players, { as: 'player1' });
         doublesMatches.belongsTo(models.players, { as: 'player2' });

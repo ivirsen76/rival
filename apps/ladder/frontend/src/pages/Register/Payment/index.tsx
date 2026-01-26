@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import { useState, useEffect } from 'react';
 import Loader from '@/components/Loader';
 import axios from '@/utils/axios';

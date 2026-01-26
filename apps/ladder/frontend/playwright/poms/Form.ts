@@ -1,5 +1,4 @@
 import { type Locator, type Page } from '@playwright/test';
-import { Common } from './Common';
 
 const MIN_HOUR = 6;
 const HOUR_HEIGHT = 24;
@@ -9,8 +8,6 @@ export class Form {
     readonly schedulePicker: Locator;
 
     constructor(page: Page) {
-        const common = new Common(page);
-
         this.page = page;
         this.schedulePicker = page.locator('[data-schedule-picker]');
     }

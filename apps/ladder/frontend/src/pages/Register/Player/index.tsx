@@ -104,7 +104,7 @@ const Player = (props: PlayerProps) => {
                                                 let isLoggedIn = true;
                                                 try {
                                                     await dispatch(authenticate(values.email, values.password));
-                                                } catch (e) {
+                                                } catch {
                                                     isLoggedIn = false;
                                                 }
 

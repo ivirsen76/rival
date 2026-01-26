@@ -28,6 +28,7 @@ const Hover = (props: HoverProps) => {
     const totalDays = weather.days.length;
 
     const changePosition = useCallback(
+        // eslint-disable-next-line react-hooks/use-memo
         _throttle((event) => {
             const wrapper = wrapperRef.current;
             if (!wrapper) {

@@ -27,7 +27,7 @@ const ApprovePhoto = (props: ApprovePhotoProps) => {
                         </div>
                     ),
                 });
-            } catch (e) {
+            } catch {
                 // do nothing
             }
 

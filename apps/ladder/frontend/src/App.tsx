@@ -112,7 +112,7 @@ export default function App() {
                     // We recommend adjusting this value in production
                     tracesSampleRate: 0.1,
                 });
-            } catch (e) {
+            } catch {
                 // do nothing
             }
         }

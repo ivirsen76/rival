@@ -12,7 +12,7 @@ const allowAddPhotos = async () => {
 };
 
 // Skip all tests in CI
-if (process.env.CI || true) {
+if (process.env.CI) {
     test.skip(true, 'Skipping all tests on CI');
 }
 

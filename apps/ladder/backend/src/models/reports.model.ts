@@ -19,7 +19,6 @@ export default function (app: Application) {
         }
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     reports.associate = function (models: any) {
         reports.belongsTo(models.users);
     };

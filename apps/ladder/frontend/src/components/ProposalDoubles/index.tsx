@@ -64,7 +64,7 @@ const ProposalDoubles = (props: ProposalDoublesProps) => {
                     message: 'Your proposal has been deleted.',
                 });
             });
-        } catch (e) {
+        } catch {
             // do nothing
         }
     };

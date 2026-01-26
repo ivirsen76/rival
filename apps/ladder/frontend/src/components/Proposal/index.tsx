@@ -62,6 +62,7 @@ const FormAcceptProposal = (props: FormAcceptProposalProps) => {
                 <Form noValidate>
                     <div className="mb-6">
                         <p>Please confirm you want to accept this proposal.</p>
+                        {/* eslint-disable-next-line no-use-before-define */}
                         <Proposal {...props} showActions={false} />
                     </div>
                     {isDoublesTeam && (

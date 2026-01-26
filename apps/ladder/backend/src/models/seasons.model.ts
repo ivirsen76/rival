@@ -24,7 +24,7 @@ export default function (app: Application) {
     );
 
     // eslint-disable-next-line no-unused-vars
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
     seasons.associate = function (models: any) {
         seasons.belongsToMany(models.levels, {
             through: 'tournaments',

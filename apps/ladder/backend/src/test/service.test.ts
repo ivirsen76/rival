@@ -191,9 +191,9 @@ const checkPermissions = ({
         delete?: PermissionType;
     };
     id?: number;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
     payload: any;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
     payloadUpdate?: any;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     beforeEach?: Function;

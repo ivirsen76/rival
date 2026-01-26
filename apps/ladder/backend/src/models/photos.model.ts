@@ -31,7 +31,6 @@ export default function (app: Application) {
         }
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     photos.associate = function (models: any) {
         photos.belongsTo(models.users);
     };

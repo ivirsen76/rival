@@ -23,7 +23,6 @@ export default function (app: Application) {
         }
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     orders.associate = function (models: any) {
         orders.belongsTo(models.users);
     };

@@ -19,7 +19,6 @@ export default function (app: Application) {
         }
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     reactions.associate = function (models: any) {
         reactions.belongsTo(models.users);
     };

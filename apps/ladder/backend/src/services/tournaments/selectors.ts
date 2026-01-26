@@ -14,7 +14,6 @@ import type { Config } from '../../types';
 const STAT_COUNT = 5;
 const SWITCH_LADDER_DEADLINE_WEEKS = 2;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const shuffleRange = (array: any[], ranges: number[][]) => {
     const result = [...array];
 

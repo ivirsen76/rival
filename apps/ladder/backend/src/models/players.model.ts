@@ -39,7 +39,7 @@ export default function (app: Application) {
     );
 
     // eslint-disable-next-line no-unused-vars
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+
     players.associate = function (models: any) {
         players.hasMany(models.matches, { foreignKey: 'challengerId' });
         players.hasMany(models.matches, { foreignKey: 'acceptorId' });

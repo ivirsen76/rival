@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-autofocus */
 import { useMemo, useState, useEffect, useRef } from 'react';
 import FieldWrapper from '../FieldWrapper';
 import { useDebounce } from 'use-debounce';
