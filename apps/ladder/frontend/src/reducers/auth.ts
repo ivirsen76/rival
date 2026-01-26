@@ -14,7 +14,7 @@ const authSlice = createSlice({
                 if (saved) {
                     return JSON.parse(saved);
                 }
-            } catch (e) {
+            } catch {
                 // do nothing
             }
 
@@ -130,7 +130,7 @@ export const savePaw = () => async (dispatch, getState) => {
         const paw = await getPaw();
         await axios.put('/api/users/0', { action: 'savePaw', ...paw });
         await dispatch(loadCurrentUser());
-    } catch (e) {
+    } catch {
         // do nothing
     }
 };

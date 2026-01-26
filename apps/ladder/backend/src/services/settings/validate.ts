@@ -17,7 +17,7 @@ const checkEmailList = (list) => {
             .forEach((email) => {
                 schema.validateSync({ email });
             });
-    } catch (err) {
+    } catch {
         return false;
     }
 

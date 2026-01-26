@@ -71,7 +71,7 @@ export default async (options) => {
         await new Promise((resolve, reject) => {
             root.render(<ConfirmModal {...options} reject={reject} resolve={resolve} />);
         });
-    } catch (e) {
+    } catch {
         result = false;
     }
 

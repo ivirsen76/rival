@@ -45,7 +45,7 @@ export default (str) => {
         b = Math.round((b + m) * 255);
 
         return 'rgb(' + r + ',' + g + ',' + b + ')';
-    } catch (e) {
+    } catch {
         return 'rgb(255, 255, 255)';
     }
 };

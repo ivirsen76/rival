@@ -26,7 +26,7 @@ export default async () => {
                 gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL),
             ].join('~');
         }
-    } catch (e) {
+    } catch {
         // do nothing
     }
 
