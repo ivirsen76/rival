@@ -507,7 +507,7 @@ const populateTournament =
 
             if (shouldPopulateTournament) {
                 // run this hook once again
-                return populateTournament(options)(context);
+                return populateTournament()(context);
             }
         }
 
