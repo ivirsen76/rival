@@ -559,8 +559,9 @@ test.beforeEach(async ({ login }) => {
         overview,
         proposal,
     }) => {
+        const filter = JSON.stringify({ subscribeForProposals: { onlyNotPlaying: true } });
         const sundayNextWeek = dayjs.tz().add(1, 'week').isoWeekday(7).hour(12).format('YYYY-MM-DD HH:mm:ss');
-        await runQuery(`UPDATE users SET subscribeForProposals=1`);
+        await runQuery(`UPDATE users SET subscribeForProposals=1, information='${filter}'`);
         await runQuery(`UPDATE matches SET playedAt="${sundayNextWeek}" WHERE id=9`);
 
         await page.goto('/season/2021/spring/men-35');
@@ -571,7 +572,7 @@ test.beforeEach(async ({ login }) => {
         await expect(common.alert).toContainText('has been added');
 
         const email = await expectRecordToExist('emails', { recipientEmail: 'player3@gmail.com,player4@gmail.com' });
-        await expect(email.subject).toContain('Ben Done proposed a new match for Sun');
+        expect(email.subject).toContain('Ben Done proposed a new match for Sun');
     });
 
     test('Should send correct emails with competitive proposal filter', async ({
@@ -649,7 +650,7 @@ test.beforeEach(async ({ login }) => {
         await expect(common.alert).toContainText('has been added');
 
         const email = await expectRecordToExist('emails', { recipientEmail: 'player3@gmail.com,player4@gmail.com' });
-        await expect(email.subject).toContain('Ben Done proposed a new match for Sun');
+        expect(email.subject).toContain('Ben Done proposed a new match for Sun');
     });
 
     test('Should send proposal which can satisfy all filters', async ({ page, common, login, overview, proposal }) => {
@@ -683,7 +684,7 @@ test.beforeEach(async ({ login }) => {
         const email = await expectRecordToExist('emails', {
             recipientEmail: 'player2@gmail.com,player3@gmail.com,player4@gmail.com',
         });
-        await expect(email.subject).toContain('Ben Done proposed a new match for Sun');
+        expect(email.subject).toContain('Ben Done proposed a new match for Sun');
     });
 
     test('Should not see the new players proposals for soft-banned user', async ({

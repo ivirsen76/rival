@@ -217,7 +217,7 @@ const getMatchPermissions = ({
     })();
 
     result.canScheduleMatch = (() => {
-        if (!isPlayer && !emulateMyMatch) {
+        if (!isAdmin && !isPlayer && !emulateMyMatch) {
             return false;
         }
         if (match.score || match.playedAt) {
@@ -230,7 +230,7 @@ const getMatchPermissions = ({
             return false;
         }
 
-        return isCurrentUserMatch || isChallengerCaptain || isAcceptorCaptain;
+        return isAdmin || isCurrentUserMatch || isChallengerCaptain || isAcceptorCaptain;
     })();
 
     result.canRescheduleMatch = (() => {

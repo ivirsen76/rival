@@ -385,7 +385,7 @@ export const up = async ({ context: queryInterface }: { context: QueryInterface 
                 place: 'Winston',
                 comment: 'Too late',
                 acceptedAt: '2021-05-03 17:50:47',
-                playedAt: dayjs.tz().add(1, 'week').format('YYYY-MM-DD HH:mm:ss'),
+                playedAt: dayjs.tz().add(6, 'day').format('YYYY-MM-DD HH:mm:ss'),
                 createdAt: '2021-05-04 09:00:00',
                 winner: null,
                 score: null,

@@ -295,7 +295,7 @@ test('Should change subscriptions', async ({ page, common, login, form }) => {
         },
         subscribeForProposals: {
             playFormats: [1, 2],
-            onlyNotPlaying: true,
+            onlyNotPlaying: false,
             onlyCompetitive: false,
             onlyAgeCompatible: true,
             onlyMySchedule: true,
@@ -697,7 +697,7 @@ test('Should be able to unsubscribe from the email link', async ({ page, common,
     expect(information).toMatchObject({
         subscribeForProposals: {
             playFormats: [1, 2],
-            onlyNotPlaying: false,
+            onlyNotPlaying: true,
             onlyCompetitive: true,
             onlyAgeCompatible: true,
             onlyMySchedule: true,
