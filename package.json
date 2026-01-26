@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "format": "prettier --write \"**/*.{ts,tsx}\"",
-        "lint": "eslint .",
+        "lint": "eslint --quiet .",
         "test": "vitest"
     },
     "keywords": [],
