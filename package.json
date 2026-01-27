@@ -6,7 +6,9 @@
     "scripts": {
         "format": "prettier --write \"**/*.{ts,tsx}\"",
         "lint": "eslint --quiet .",
-        "test": "vitest"
+        "tslint": "tsc --project apps/ladder/backend/tsconfig.json --noEmit",
+        "test": "vitest",
+        "check": "npm run lint && npm run tslint && vitest run"
     },
     "keywords": [],
     "author": "",
