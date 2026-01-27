@@ -1,37 +1,19 @@
 version: 2.1
-
 setup: true
-
 orbs:
-    continuation: circleci/continuation@1.1.0
+    continuation: circleci/continuation@2.0.1
 
 jobs:
-  set-param:
-    docker:
-      - image: cimg/node:24.0.1
-    steps:
-      - continuation/continue:
-          parameters: '{ "further": true }'
-          configuration_path: ./config_continue.yml
-    steps:
-      - checkout
-      - run: npm run circleci:params
-      - continuation/continue:
-          configuration_path: ./ladder-config.yml
-          parameters: pipeline-params.json
-
-
-
-workflows:
-  use-my-orb:
-    jobs:
-      - set-param
-
+    generate-config:
+        docker:
+            - image: cimg/node:24.0.1
+        steps:
+            - checkout
+            - run: node .circleci/generate-config.js
+            - continuation/continue:
+                  configuration_path: generated_config.yml
 
 workflows:
     setup:
         jobs:
-            - path-filtering/filter:
-                  base-revision: main
-                  mapping: apps/ladder/.*
-                  config-path: .circleci/ladder-config.yml
+            - generate-config
