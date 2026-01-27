@@ -9,7 +9,7 @@ jobs:
             - image: cimg/node:24.0.1
         steps:
             - checkout
-            - run: node .circleci/generate-config.js
+            - run: node .circleci/generate-config.mjs
             - continuation/continue:
                   configuration_path: generated_config.yml
 
