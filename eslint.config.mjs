@@ -6,7 +6,7 @@ import tseslint from 'typescript-eslint';
 import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
-    { ignores: ['**/dist/**', '**/build/**', '**/avataaars/**', '**/metronic/**'] },
+    { ignores: ['**/dist/**', '**/build/**'] },
     {
         files: ['**/*.{ts,tsx,js,jsx}'],
         extends: [
@@ -42,6 +42,7 @@ export default defineConfig([
             'react-hooks/purity': 'off',
             'react-hooks/set-state-in-effect': 'off',
             'react-refresh/only-export-components': 'off',
+            'prefer-rest-params': 'off',
         },
     },
 ]);
