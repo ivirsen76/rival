@@ -8,18 +8,18 @@ orbs:
 jobs:
     generate-config:
         executor: continuation/default
+        docker:
+            - image: cimg/node:24.0.1
         steps:
             - checkout
-            # - run: node .circleci/generate-config.mjs
+            - run: node .circleci/generate-config.mjs
             - continuation/continue:
-                  configuration_path: .circleci/test-config.yml
+                  configuration_path: .circleci/generated_config.yml
 
 workflows:
-    setup-workflow:
+    setup:
         jobs:
             - generate-config:
                   filters:
-                      branches:
-                          ignore: /.*/
                       tags:
                           only: /.*/
