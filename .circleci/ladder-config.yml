@@ -53,7 +53,7 @@ jobs:
             - attach_workspace:
                   at: ~/repo
 
-            - run: pnpm exec vitest run apps/ladder/backend apps/ladder/frontend
+            - run: pnpm run check
 
     playwright:
         <<: *image
