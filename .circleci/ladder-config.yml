@@ -28,7 +28,7 @@ orbs:
     browser-tools: circleci/browser-tools@1.5.0
 
 jobs:
-    ladder-build:
+    build:
         <<: *node
         steps:
             - checkout
@@ -42,7 +42,7 @@ jobs:
                   paths:
                       - apps/ladder/backend/build
                       - apps/ladder/backend/dist
-    ladder-test:
+    test:
         <<: *image
         steps:
             - checkout
@@ -55,7 +55,7 @@ jobs:
 
             - run: pnpm run check
 
-    ladder-playwright:
+    playwright:
         <<: *image
         parallelism: 8
         steps:
@@ -82,18 +82,18 @@ jobs:
             - run: cd apps/ladder/frontend && pnpm run playwright -- $(cat /tmp/tests-to-run)
 
 workflows:
-    ladder-pipeline:
+    build-test-deploy:
         jobs:
-            - ladder-build:
+            - build:
                   filters:
                       branches:
                           only:
                               - main
                               - dev
                               - test
-            - ladder-test:
+            - test:
                   requires:
-                      - ladder-build
-            - ladder-playwright:
+                      - build
+            - playwright:
                   requires:
-                      - ladder-build
+                      - build
