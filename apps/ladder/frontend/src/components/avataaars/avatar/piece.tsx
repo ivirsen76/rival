@@ -11,7 +11,7 @@ import Mouth from './face/mouth';
 import Nose from './face/nose';
 import Skin from './Skin';
 
-export var AvatarStyle;
+export let AvatarStyle;
 (function (AvatarStyle) {
     AvatarStyle.Circle = 'Circle';
     AvatarStyle.Transparent = 'Transparent';

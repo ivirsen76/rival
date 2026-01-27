@@ -8,7 +8,7 @@ import Skin from './Skin';
 import Top from './top';
 import Medal from './Medal';
 
-export var AvatarStyle;
+export let AvatarStyle;
 (function (AvatarStyle) {
     AvatarStyle.Circle = 'Circle';
     AvatarStyle.Transparent = 'Transparent';
