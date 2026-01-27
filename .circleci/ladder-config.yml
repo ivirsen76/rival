@@ -91,6 +91,12 @@ workflows:
             - test:
                   requires:
                       - build
+                  filters:
+                      tags:
+                          only: /.*/
             - playwright:
                   requires:
                       - build
+                  filters:
+                      tags:
+                          only: /.*/
