@@ -15,9 +15,9 @@ aliases:
       working_directory: ~/repo
 
     - &install |
-        pnpm install --filter @rival/packages --filter "@rival/ladder.*"
+        pnpm install
 
-    - &setup |
+    - &db |
         sudo apt-get update && sudo apt-get install mysql-client redis-server
         mysql -h $TL_DB_HOSTNAME -u $TL_DB_USERNAME -p$TL_DB_PASSWORD -e "CREATE DATABASE $TL_DB_NAME"
 
@@ -47,7 +47,7 @@ jobs:
         steps:
             - checkout
             - run: *install
-            - run: *setup
+            - run: *db
 
             # restore dist from shared workspace
             - attach_workspace:
@@ -61,7 +61,7 @@ jobs:
         steps:
             - checkout
             - run: *install
-            - run: *setup
+            - run: *db
             - run: cd apps/ladder/frontend && pnpm exec playwright install chromium
 
             # restore dist from shared workspace
