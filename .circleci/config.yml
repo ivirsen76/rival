@@ -2,16 +2,6 @@ version: 2.1
 
 setup: true
 
-pipeline:
-    triggers:
-        - type: git
-          name: tags-only
-          filters:
-              branches:
-                  ignore: /.*/
-              tags:
-                  only: /.*/
-
 orbs:
     continuation: circleci/continuation@2.0.1
 
@@ -27,4 +17,9 @@ jobs:
 workflows:
     setup-workflow:
         jobs:
-            - generate-config
+            - generate-config:
+                  filters:
+                      branches:
+                          ignore: /.*/
+                      tags:
+                          only: /.*/
