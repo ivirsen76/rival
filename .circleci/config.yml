@@ -18,10 +18,10 @@ jobs:
 
 workflows:
     setup:
-        filters:
-            branches:
-                ignore: /.*/
-            tags:
-                only: /.*/
         jobs:
-            - generate-config
+            - generate-config:
+                  filters:
+                      branches:
+                          ignore: /.*/
+                      tags:
+                          only: /.*/
