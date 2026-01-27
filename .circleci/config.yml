@@ -1,23 +1,20 @@
 version: 2.1
+
 setup: true
+
 orbs:
-    continuation: circleci/continuation@1
+    continuation: circleci/continuation@2.0.1
 
 jobs:
     generate-config:
         executor: continuation/default
-        docker:
-            - image: cimg/node:24.0.1
         steps:
             - checkout
-            - run: node .circleci/generate-config.mjs
+            # - run: node .circleci/generate-config.mjs
             - continuation/continue:
                   configuration_path: .circleci/ladder-config.yml
 
 workflows:
-    setup:
+    setup-workflow:
         jobs:
-            - generate-config:
-                  filters:
-                      tags:
-                          only: /.*/
+            - generate-config
