@@ -1,0 +1,15 @@
+version: 2.1
+
+jobs:
+    no-op:
+        docker:
+            - image: cimg/base:stable
+        steps:
+            - run:
+                  name: No changes detected
+                  command: echo "No packages were modified. Skipping pipeline execution."
+
+workflows:
+    empty-workflow:
+        jobs:
+            - no-op

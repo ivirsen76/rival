@@ -1,3 +1,4 @@
 /node_modules
 /tmp
+/.circleci/generated_config.yml
 .DS_Store
