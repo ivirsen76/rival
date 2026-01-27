@@ -13,4 +13,9 @@ jobs:
 workflows:
     downstream-workflow:
         jobs:
-            - a-downstream-job
+            - a-downstream-job:
+                  filters:
+                      branches:
+                          ignore: /.*/
+                      tags:
+                          only: /.*/
