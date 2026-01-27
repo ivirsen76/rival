@@ -19,7 +19,5 @@ workflows:
         jobs:
             - generate-config:
                   filters:
-                      branches:
-                          ignore: /.*/
                       tags:
                           only: /.*/
