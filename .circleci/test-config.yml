@@ -1,0 +1,16 @@
+version: 2.1
+
+jobs:
+    a-downstream-job:
+        docker:
+            - image: cimg/base:2024.01 # A basic Docker image
+        steps:
+            - checkout
+            - run:
+                  name: Check parameter value
+                  command: echo "The downstream job is running as intended!"
+
+workflows:
+    downstream-workflow:
+        jobs:
+            - a-downstream-job
