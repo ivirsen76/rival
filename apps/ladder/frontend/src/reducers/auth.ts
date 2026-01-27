@@ -1,9 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type { AppDispatch, RootState } from '../app/store';
 import axios from '@/utils/axios';
 import dayjs from '@/utils/dayjs';
 import getPaw from '../utils/getPaw';
+import type { Config, User } from '@rival/ladder.backend/src/types';
 
 const REGISTER_HISTORY_KEY = 'registerHistory';
+
+type AuthState = {
+    user: (User & { totalMessagesThisWeek: number }) | null;
+    ui: {
+        showAllPlayersForTournaments: number[];
+    };
+    config: Config | null;
+    history: any;
+};
 
 const authSlice = createSlice({
     name: 'auth',
@@ -28,7 +39,7 @@ const authSlice = createSlice({
             },
             config: null,
             history,
-        };
+        } as AuthState;
     },
     reducers: {
         setCurrentUser: (state, action) => {
@@ -50,11 +61,11 @@ const authSlice = createSlice({
             const time = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
             state.history.push({ ...action.payload, time });
         },
-        clearHistory: (state, action) => {
+        clearHistory: (state) => {
             state.history = [];
         },
-        incrementUserMessages: (state, action) => {
-            state.user.totalMessagesThisWeek++;
+        incrementUserMessages: (state) => {
+            state.user!.totalMessagesThisWeek++;
         },
     },
 });
@@ -62,7 +73,7 @@ const authSlice = createSlice({
 export const { setCurrentUser, unsetCurrentUser, setShowAllPlayers, setConfig, incrementUserMessages } =
     authSlice.actions;
 
-export const logout = () => async (dispatch, getState) => {
+export const logout = () => async (dispatch: AppDispatch) => {
     localStorage.removeItem('token');
     localStorage.removeItem('tokenLoginAs');
     dispatch(unsetCurrentUser());
@@ -73,7 +84,7 @@ export const logout = () => async (dispatch, getState) => {
     }
 };
 
-export const addHistoryEventAndSave = (payload) => async (dispatch, getState) => {
+export const addHistoryEventAndSave = (payload) => async (dispatch: AppDispatch, getState: () => RootState) => {
     const { user } = getState().auth;
     if (user) {
         return;
@@ -85,12 +96,12 @@ export const addHistoryEventAndSave = (payload) => async (dispatch, getState) =>
     localStorage.setItem(REGISTER_HISTORY_KEY, JSON.stringify(history));
 };
 
-export const clearHistoryAndSave = () => async (dispatch, getState) => {
+export const clearHistoryAndSave = () => async (dispatch: AppDispatch) => {
     dispatch(authSlice.actions.clearHistory());
     localStorage.removeItem(REGISTER_HISTORY_KEY);
 };
 
-export const loadCurrentUser = () => async (dispatch, getState) => {
+export const loadCurrentUser = () => async (dispatch: AppDispatch) => {
     const tokenName = localStorage.getItem('tokenLoginAs') ? 'tokenLoginAs' : 'token';
     const token = localStorage.getItem(tokenName);
     if (token) {
@@ -107,7 +118,7 @@ export const loadCurrentUser = () => async (dispatch, getState) => {
 
 export const updateCurrentUser =
     (data, { optimisticUpdate = false, saveUser = true } = {}) =>
-    async (dispatch, getState) => {
+    async (dispatch: AppDispatch, getState: () => RootState) => {
         const { user } = getState().auth;
 
         if (optimisticUpdate) {
@@ -125,7 +136,7 @@ export const updateCurrentUser =
         }
     };
 
-export const savePaw = () => async (dispatch, getState) => {
+export const savePaw = () => async (dispatch: AppDispatch) => {
     try {
         const paw = await getPaw();
         await axios.put('/api/users/0', { action: 'savePaw', ...paw });
@@ -135,7 +146,7 @@ export const savePaw = () => async (dispatch, getState) => {
     }
 };
 
-export const authenticate = (email: string, password: string) => async (dispatch, getState) => {
+export const authenticate = (email: string, password: string) => async (dispatch: AppDispatch) => {
     try {
         const result = await axios.post('/api/authentication', { strategy: 'local', email, password });
         localStorage.setItem('token', result.data.accessToken);
