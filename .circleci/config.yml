@@ -12,7 +12,7 @@ jobs:
             - checkout
             - run: node .circleci/generate-config.mjs
             - continuation/continue:
-                  configuration_path: .circleci/generated_config.yml
+                  configuration_path: ./generated_config.yml
 
 workflows:
     setup:

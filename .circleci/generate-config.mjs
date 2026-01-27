@@ -13,4 +13,4 @@ if (/^ladder@/.test(tag)) {
     source = 'ladder-config.yml';
 }
 
-fs.copyFileSync(path.join(__dirname, source), path.join(__dirname, destination));
+fs.copyFileSync(path.join(__dirname, source), destination);
