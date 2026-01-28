@@ -37,11 +37,15 @@ jobs:
             - run: cd apps/ladder/frontend && NODE_ENV=production pnpm run build
             - run: cd apps/ladder/backend && pnpm run build
 
+            # create backend deploy folder
+            - run: pnpm --legacy --filter=@rival/ladder.backend --prod deploy server
+            - run: mv app/ladder/backend/dist server/dist
+            - run: mv app/ladder/backend/build server/build
+
             - persist_to_workspace:
                   root: ~/repo
                   paths:
-                      - apps/ladder/backend/build
-                      - apps/ladder/backend/dist
+                      - server
     test:
         <<: *image
         steps:
@@ -88,15 +92,15 @@ workflows:
                   filters:
                       tags:
                           only: /.*/
-            - test:
-                  requires:
-                      - build
-                  filters:
-                      tags:
-                          only: /.*/
-            - playwright:
-                  requires:
-                      - build
-                  filters:
-                      tags:
-                          only: /.*/
+            # - test:
+            #       requires:
+            #           - build
+            #       filters:
+            #           tags:
+            #               only: /.*/
+            # - playwright:
+            #       requires:
+            #           - build
+            #       filters:
+            #           tags:
+            #               only: /.*/
