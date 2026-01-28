@@ -115,21 +115,23 @@ workflows:
                   filters:
                       tags:
                           only: /.*/
-            # - test:
-            #       requires:
-            #           - build
-            #       filters:
-            #           tags:
-            #               only: /.*/
-            # - playwright:
-            #       requires:
-            #           - build
-            #       filters:
-            #           tags:
-            #               only: /.*/
-            - deploy-dev:
+            - test:
                   requires:
                       - build
                   filters:
                       tags:
                           only: /.*/
+            - playwright:
+                  requires:
+                      - build
+                  filters:
+                      tags:
+                          only: /.*/
+            - deploy-dev:
+                  requires:
+                      - build
+                      - test
+                      - playwright
+                  filters:
+                      tags:
+                          only: /-test$/
