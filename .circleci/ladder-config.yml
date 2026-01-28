@@ -134,4 +134,4 @@ workflows:
                       - playwright
                   filters:
                       tags:
-                          only: /-test$/
+                          only: /.*-test$/
