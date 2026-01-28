@@ -87,6 +87,27 @@ jobs:
             # Run browser tests
             - run: cd apps/ladder/frontend && pnpm run playwright -- $(cat /tmp/tests-to-run)
 
+    deploy:
+        <<: *node
+        steps:
+            - checkout
+
+            # restore build from shared workspace
+            - attach_workspace:
+                  at: ~/
+
+            - setup_remote_docker
+
+            # save last commit hash to a file
+            - run: git rev-parse HEAD > gitcommit
+
+            - run: docker build -f apps/ladder/backend/Dockerfile -t ivirsen/rival .
+            - run: docker login -u ivirsen -p ${DOCKER_PASSWORD}
+            - run: docker push ivirsen/rival
+
+            - run: ssh-keyscan 159.65.32.182 >> ~/.ssh/known_hosts
+            - run: ssh ivirsen@159.65.32.182 < apps/ladder/backend/deploy.sh
+
     deploy-dev:
         <<: *node
         steps:
@@ -127,9 +148,15 @@ workflows:
                   filters:
                       tags:
                           only: /.*/
+            - deploy:
+                  requires:
+                      - test
+                      - playwright
+                  filters:
+                      tags:
+                          only: /.*@\d+\.\d+\.\d+$/
             - deploy-dev:
                   requires:
-                      - build
                       - test
                       - playwright
                   filters:
