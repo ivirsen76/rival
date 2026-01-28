@@ -105,8 +105,8 @@ jobs:
             - run: docker login -u ivirsen -p ${DOCKER_PASSWORD}
             - run: docker push ivirsen/rival:dev
 
-            # - run: ssh-keyscan 159.65.32.182 >> ~/.ssh/known_hosts
-            # - run: ssh ivirsen@159.65.32.182 < deploy-dev.sh
+            - run: ssh-keyscan 159.65.32.182 >> ~/.ssh/known_hosts
+            - run: ssh ivirsen@159.65.32.182 < apps/ladder/backend/deploy-dev.sh
 
 workflows:
     build-test-deploy:
