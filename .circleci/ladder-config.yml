@@ -77,7 +77,7 @@ jobs:
             # Run server
             - run:
                   name: Run server
-                  command: cd apps/ladder/backend && pnpm run start:prod
+                  command: cd ~/deploy && pnpm run start:prod
                   background: true
             - run: sleep 5
 
@@ -100,9 +100,9 @@ workflows:
             #       filters:
             #           tags:
             #               only: /.*/
-            # - playwright:
-            #       requires:
-            #           - build
-            #       filters:
-            #           tags:
-            #               only: /.*/
+            - playwright:
+                  requires:
+                      - build
+                  filters:
+                      tags:
+                          only: /.*/
