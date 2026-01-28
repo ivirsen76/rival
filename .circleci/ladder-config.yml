@@ -39,8 +39,8 @@ jobs:
 
             # create backend deploy folder
             - run: pnpm --legacy --filter=@rival/ladder.backend --prod deploy server
-            - run: mv app/ladder/backend/dist server/dist
-            - run: mv app/ladder/backend/build server/build
+            - run: cp -R apps/ladder/backend/dist server/dist
+            - run: cp -R apps/ladder/backend/build server/build
 
             - persist_to_workspace:
                   root: ~/repo
