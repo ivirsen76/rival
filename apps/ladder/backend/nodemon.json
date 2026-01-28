@@ -1,5 +1,0 @@
-{
-    "events": {
-        "start": "redis-cli FLUSHALL"
-    }
-}
