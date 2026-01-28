@@ -38,14 +38,16 @@ jobs:
             - run: cd apps/ladder/backend && pnpm run build
 
             # create backend deploy folder
-            - run: pnpm --legacy --filter=@rival/ladder.backend --prod deploy server
-            - run: cp -R apps/ladder/backend/dist server/dist
-            - run: cp -R apps/ladder/backend/build server/build
+            - run: pnpm --legacy --filter=@rival/ladder.backend --prod deploy ~/deploy
+            - run: cp -R apps/ladder/backend/dist ~/deploy/dist
+            - run: cp -R apps/ladder/backend/build ~/deploy/build
 
             - persist_to_workspace:
-                  root: ~/repo
+                  root: ~/
                   paths:
-                      - server
+                      - deploy
+                      - repo/apps/ladder/backend/build
+                      - repo/apps/ladder/backend/dist
     test:
         <<: *image
         steps:
@@ -55,7 +57,7 @@ jobs:
 
             # restore dist from shared workspace
             - attach_workspace:
-                  at: ~/repo
+                  at: ~/
 
             - run: pnpm run check
 
@@ -70,7 +72,7 @@ jobs:
 
             # restore dist from shared workspace
             - attach_workspace:
-                  at: ~/repo
+                  at: ~/
 
             # Run server
             - run:
