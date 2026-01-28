@@ -2,7 +2,7 @@ import path from 'path';
 import { execSync } from 'child_process';
 import { QueryInterface } from 'sequelize';
 
-export const up = async (queryInterface: QueryInterface) => {
+export const up = async ({ context: queryInterface }: { context: QueryInterface }) => {
     // Do not run migration if there are other migrations already
     // It will not ruin the production
     const [[row]] = (await queryInterface.sequelize.query(`SELECT count(*) AS cnt FROM _migrations`)) as [
