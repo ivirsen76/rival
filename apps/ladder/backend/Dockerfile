@@ -2,6 +2,7 @@
 # Creating temp image
 # ==========================================
 FROM node:20.19.4-alpine AS base
+
 WORKDIR /app
 
 RUN npm i -g pnpm
@@ -21,10 +22,13 @@ RUN rm -rf /prod/src
 # Creating actual image
 # ==========================================
 FROM node:20.19.4-alpine
+
 WORKDIR /app
+
+RUN npm i -g pnpm
 
 COPY --from=base /prod .
 
-CMD ["npm", "run", "start:prod"]
+CMD ["pnpm", "run", "start:prod"]
 
 EXPOSE 3030
