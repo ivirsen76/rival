@@ -55,7 +55,7 @@ const bananas: Banana[] = [
     },
     {
         name: 'Dunlop FX',
-        link: 'https://www.tennis-warehouse.com/catpage-DUNFXLP.html',
+        link: 'https://www.tennis-warehouse.com/Dunlop_FX_Racquets/catpage-DUNLOPFXRAC.html',
         images: {
             square: {
                 src: 'https://rival-tennis-ladder-images.s3.us-east-2.amazonaws.com/tw/dunlop_fx/square.webp',
