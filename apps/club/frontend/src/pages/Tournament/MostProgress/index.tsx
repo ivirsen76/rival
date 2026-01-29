@@ -1,6 +1,6 @@
 import PlayerAvatar from '@/components/PlayerAvatar';
 import classnames from 'classnames';
-import formatElo from '@rival/ladder.backend/src/utils/formatElo';
+import formatElo from '@rival/club.backend/src/utils/formatElo';
 import style from './style.module.scss';
 
 type MostProgressProps = {

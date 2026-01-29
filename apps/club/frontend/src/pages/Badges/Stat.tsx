@@ -7,7 +7,7 @@ import { formatDate } from '@/utils/dayjs';
 import summaries from './summaries';
 import useSettings from '@/utils/useSettings';
 import _capitalize from 'lodash/capitalize';
-import allBadges from '@rival/ladder.backend/src/utils/badges';
+import allBadges from '@rival/club.backend/src/utils/badges';
 import style from './style.module.scss';
 
 const returnFunc = (value) => value;

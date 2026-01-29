@@ -5,7 +5,7 @@ import {
     getNumRecords,
     runQuery,
     overrideConfig,
-} from '@rival/ladder.backend/src/db/helpers';
+} from '@rival/club.backend/src/db/helpers';
 
 const allowAddPhotos = async () => {
     await overrideConfig({ minMatchesToAddPhotos: 1 });

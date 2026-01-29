@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import classnames from 'classnames';
 import useBreakpoints from '@rival/common/utils/useBreakpoints';
-import compareFields from '@rival/ladder.backend/src/utils/compareFields';
+import compareFields from '@rival/club.backend/src/utils/compareFields';
 import PlayerName from '@/components/PlayerName';
 import style from './usePlayerFilter.module.scss';
 

@@ -2,7 +2,7 @@ import ClockIcon from './Clock.svg?react';
 import Avatar from '@rival/common/components/avataaars';
 import UserIcon from '@/assets/user.svg?react';
 import dayjs from '@/utils/dayjs';
-import formatElo from '@rival/ladder.backend/src/utils/formatElo';
+import formatElo from '@rival/club.backend/src/utils/formatElo';
 import style from './style.module.scss';
 
 const minutesToTime = (minutes) => {

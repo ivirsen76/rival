@@ -1,5 +1,5 @@
 import { test, expect } from './base';
-import dayjs from '@rival/ladder.backend/src/utils/dayjs';
+import dayjs from '@rival/club.backend/src/utils/dayjs';
 import {
     restoreDb,
     expectRecordToExist,
@@ -8,7 +8,7 @@ import {
     getNumRecords,
     cleanRedisCache,
     overrideConfig,
-} from '@rival/ladder.backend/src/db/helpers';
+} from '@rival/club.backend/src/db/helpers';
 import { imageRegex } from './helpers';
 
 test.beforeEach(async ({ page, login }) => {

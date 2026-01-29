@@ -3,7 +3,7 @@ import type { AppDispatch, RootState } from '../app/store';
 import axios from '@/utils/axios';
 import dayjs from '@/utils/dayjs';
 import getPaw from '@rival/common/utils/getPaw';
-import type { Config, User } from '@rival/ladder.backend/src/types';
+import type { Config, User } from '@rival/club.backend/src/types';
 
 const REGISTER_HISTORY_KEY = 'registerHistory';
 

@@ -5,10 +5,10 @@ import {
     getRecord,
     getNumRecords,
     overrideConfig,
-} from '@rival/ladder.backend/src/db/helpers';
+} from '@rival/club.backend/src/db/helpers';
 import { test, expect } from './base';
-import dayjs from '@rival/ladder.backend/src/utils/dayjs';
-import { decrypt } from '@rival/ladder.backend/src/utils/crypt';
+import dayjs from '@rival/club.backend/src/utils/dayjs';
+import { decrypt } from '@rival/club.backend/src/utils/crypt';
 
 const closeCurrentSeason = async () => {
     const dateTwoDaysAgo = dayjs.tz().subtract(2, 'day').format('YYYY-MM-DD HH:mm:ss');

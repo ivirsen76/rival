@@ -3,7 +3,7 @@ import Bracket from './Bracket';
 import Tooltip from '@rival/common/components/Tooltip';
 import getComments from './getComments';
 import classnames from 'classnames';
-import { BYE_ID } from '@rival/ladder.backend/src/constants';
+import { BYE_ID } from '@rival/club.backend/src/constants';
 import style from './style.module.scss';
 
 type BetResultProps = {

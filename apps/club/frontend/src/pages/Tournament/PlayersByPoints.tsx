@@ -8,7 +8,7 @@ import PlayerName from '@/components/PlayerName';
 import Modal from '@/components/Modal';
 import TeamInfo from './TeamInfo';
 import StopIcon from '@rival/common/metronic/icons/duotone/Code/Stop.svg?react';
-import compareFields from '@rival/ladder.backend/src/utils/compareFields';
+import compareFields from '@rival/club.backend/src/utils/compareFields';
 import dayjs from '@/utils/dayjs';
 import { useSelector } from 'react-redux';
 import getTotalProjectedPlayers from './getTotalProjectedPlayers';

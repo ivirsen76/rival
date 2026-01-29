@@ -21,9 +21,9 @@ import checkUserReady from '@/utils/checkUserReady';
 import Button from '@rival/common/components/Button';
 import DoublesPlayersPicker from '@/components/formik/DoublesPlayersPicker';
 import useMatchPermissions from '@/utils/useMatchPermissions';
-import practiceTypeOptions from '@rival/ladder.backend/src/services/proposals/practiceTypeOptions';
-import matchFormatOptions from '@rival/ladder.backend/src/services/proposals/matchFormatOptions';
-import durationOptions from '@rival/ladder.backend/src/services/proposals/durationOptions';
+import practiceTypeOptions from '@rival/club.backend/src/services/proposals/practiceTypeOptions';
+import matchFormatOptions from '@rival/club.backend/src/services/proposals/matchFormatOptions';
+import durationOptions from '@rival/club.backend/src/services/proposals/durationOptions';
 
 type FormAcceptProposalProps = {
     match: object;

@@ -13,11 +13,11 @@ import Tabs from '@rival/common/components/Tabs';
 import axios from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import { getPercentile } from './helpers';
-import formatElo from '@rival/ladder.backend/src/utils/formatElo';
+import formatElo from '@rival/club.backend/src/utils/formatElo';
 import { formatCustom } from '@/utils/dayjs';
 import useConfig from '@/utils/useConfig';
 import useBreakpoints from '@rival/common/utils/useBreakpoints';
-import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
+import formatNumber from '@rival/club.backend/src/utils/formatNumber';
 import style from './style.module.scss';
 
 const genderOptions = [

@@ -4,7 +4,7 @@ import TournamentText from '@/components/TournamentText';
 import classnames from 'classnames';
 import { getDoublesTournamentText } from '@/pages/Tournament/texts';
 import Bracket from '../Final/Bracket';
-import { BYE_ID } from '@rival/ladder.backend/src/constants';
+import { BYE_ID } from '@rival/club.backend/src/constants';
 import style from './style.module.scss';
 
 type DoublesFinalProps = {

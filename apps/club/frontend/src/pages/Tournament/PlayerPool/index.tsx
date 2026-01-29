@@ -3,7 +3,7 @@ import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import Modal from '@/components/Modal';
 import { useSelector } from 'react-redux';
-import compareFields from '@rival/ladder.backend/src/utils/compareFields';
+import compareFields from '@rival/club.backend/src/utils/compareFields';
 import confirmation from '@rival/common/utils/confirmation';
 import axios from '@/utils/axios';
 import style from './style.module.scss';

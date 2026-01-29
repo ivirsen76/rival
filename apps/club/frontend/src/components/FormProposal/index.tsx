@@ -16,9 +16,9 @@ import notification from '@/components/notification';
 import DateTimeWithWeather from '@/components/DateTimeWithWeather';
 import HiddenText from '@rival/common/components/HiddenText';
 import { useSelector } from 'react-redux';
-import practiceTypeOptions from '@rival/ladder.backend/src/services/proposals/practiceTypeOptions';
-import matchFormatOptions from '@rival/ladder.backend/src/services/proposals/matchFormatOptions';
-import durationOptions from '@rival/ladder.backend/src/services/proposals/durationOptions';
+import practiceTypeOptions from '@rival/club.backend/src/services/proposals/practiceTypeOptions';
+import matchFormatOptions from '@rival/club.backend/src/services/proposals/matchFormatOptions';
+import durationOptions from '@rival/club.backend/src/services/proposals/durationOptions';
 import classnames from 'classnames';
 import style from './style.module.scss';
 

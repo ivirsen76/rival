@@ -5,7 +5,7 @@ import DatePicker from '@/components/formik/DatePicker';
 import CheckboxArray from '@/components/formik/CheckboxArray';
 import Button from '@rival/common/components/Button';
 import dayjs from '@/utils/dayjs';
-import { SEASON_OPTIONS } from '@rival/ladder.backend/src/constants';
+import { SEASON_OPTIONS } from '@rival/club.backend/src/constants';
 import useSettings from '@/utils/useSettings';
 import { useQuery } from 'react-query';
 import axios from '@/utils/axios';

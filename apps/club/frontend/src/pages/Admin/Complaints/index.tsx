@@ -5,7 +5,7 @@ import Card from '@rival/common/components/Card';
 import axios from '@/utils/axios';
 import { Link } from 'react-router-dom';
 import { formatDate } from '@/utils/dayjs';
-import reasonOptions from '@rival/ladder.backend/src/services/complaints/reasonOptions';
+import reasonOptions from '@rival/club.backend/src/services/complaints/reasonOptions';
 import style from './style.module.scss';
 
 const reasonOptionsMatch = reasonOptions.reduce((obj, item) => {

@@ -5,7 +5,7 @@ import { useQuery } from 'react-query';
 import Loader from '@rival/common/components/Loader';
 import Error from '@rival/common/components/Error';
 import Chart from '@rival/common/components/Chart';
-import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
+import formatNumber from '@rival/club.backend/src/utils/formatNumber';
 import Tooltip from '@rival/common/components/Tooltip';
 import QuestionIcon from '@rival/common/metronic/icons/duotone/Navigation/Question.svg?react';
 

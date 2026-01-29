@@ -6,7 +6,7 @@ import Select from '@/components/formik/Select';
 import { useQuery } from 'react-query';
 import axios from '@/utils/axios';
 import { useSelector } from 'react-redux';
-import formatElo from '@rival/ladder.backend/src/utils/formatElo';
+import formatElo from '@rival/club.backend/src/utils/formatElo';
 
 type SwitchLadderFormProps = {
     onSubmit: (...args: unknown[]) => unknown;

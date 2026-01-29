@@ -6,7 +6,7 @@ import {
     runQuery,
     getNumRecords,
     overrideConfig,
-} from '@rival/ladder.backend/src/db/helpers';
+} from '@rival/club.backend/src/db/helpers';
 
 test.beforeEach(async ({ page }) => {
     restoreDb();

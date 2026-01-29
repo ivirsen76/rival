@@ -6,7 +6,7 @@ import { getInitialPrediction, setWinner, preparePredictionToSave } from './help
 import showLoader from '@rival/common/utils/showLoader';
 import axios from '@/utils/axios';
 import { useSelector } from 'react-redux';
-import { BYE_ID } from '@rival/ladder.backend/src/constants';
+import { BYE_ID } from '@rival/club.backend/src/constants';
 import notification from '@/components/notification';
 import style from './style.module.scss';
 

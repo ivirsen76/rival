@@ -6,8 +6,8 @@ import {
     expectRecordToExist,
     expectNumRecords,
     overrideConfig,
-} from '@rival/ladder.backend/src/db/helpers';
-import dayjs from '@rival/ladder.backend/src/utils/dayjs';
+} from '@rival/club.backend/src/db/helpers';
+import dayjs from '@rival/club.backend/src/utils/dayjs';
 
 test.beforeEach(async ({ page }) => {
     restoreDb();

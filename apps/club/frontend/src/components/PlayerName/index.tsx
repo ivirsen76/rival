@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import formatElo from '@rival/ladder.backend/src/utils/formatElo';
+import formatElo from '@rival/club.backend/src/utils/formatElo';
 import _omit from 'lodash/omit';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import Tooltip from '@rival/common/components/Tooltip';

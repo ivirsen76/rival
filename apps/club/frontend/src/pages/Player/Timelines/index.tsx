@@ -3,7 +3,7 @@ import PerformanceChart from './PerformanceChart';
 import Tooltip from '@rival/common/components/Tooltip';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
-import formatElo from '@rival/ladder.backend/src/utils/formatElo';
+import formatElo from '@rival/club.backend/src/utils/formatElo';
 import style from './style.module.scss';
 
 const stages = {

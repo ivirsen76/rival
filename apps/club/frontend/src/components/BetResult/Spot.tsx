@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import getRelativeStringLength from '@rival/common/utils/getRelativeStringLength';
-import { BYE_ID } from '@rival/ladder.backend/src/constants';
+import { BYE_ID } from '@rival/club.backend/src/constants';
 import style from './style.module.scss';
 
 const isLongName = (player) => {

@@ -1,11 +1,11 @@
 import { useQuery } from 'react-query';
 import axios from '@/utils/axios';
 import style from './style.module.scss';
-import { BYE_ID } from '@rival/ladder.backend/src/constants';
+import { BYE_ID } from '@rival/club.backend/src/constants';
 import classnames from 'classnames';
 import Spot from './Spot';
 import Bracket from './Bracket';
-import { relationsUp } from '@rival/ladder.backend/src/services/matches/relations';
+import { relationsUp } from '@rival/club.backend/src/services/matches/relations';
 
 const BracketImage = (props) => {
     const searchParams = new URLSearchParams(window.location.search);

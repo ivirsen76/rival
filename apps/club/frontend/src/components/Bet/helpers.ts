@@ -1,7 +1,7 @@
 import _cloneDeep from 'lodash/cloneDeep';
 import _pick from 'lodash/pick';
-import { relationsUp } from '@rival/ladder.backend/src/services/matches/relations';
-import { BYE_ID } from '@rival/ladder.backend/src/constants';
+import { relationsUp } from '@rival/club.backend/src/services/matches/relations';
+import { BYE_ID } from '@rival/club.backend/src/constants';
 
 export const getInitialPrediction = (matches) => {
     const spots = matches.reduce((obj, match) => {

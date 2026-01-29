@@ -8,7 +8,7 @@ import TeamNamePicker, { getValidateTeamName } from '@/components/formik/TeamNam
 import useConfig from '@/utils/useConfig';
 import CaptainIcon from '@/assets/captain.svg?react';
 import { Link } from 'react-router-dom';
-import compareFields from '@rival/ladder.backend/src/utils/compareFields';
+import compareFields from '@rival/club.backend/src/utils/compareFields';
 import axios from '@/utils/axios';
 import style from './style.module.scss';
 

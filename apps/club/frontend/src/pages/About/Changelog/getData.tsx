@@ -4,7 +4,7 @@ import Tabs from './Tabs';
 import Badge from '@/components/Badge';
 import Timeline from './Timeline';
 import Elo from './Elo';
-import allBadges from '@rival/ladder.backend/src/utils/badges';
+import allBadges from '@rival/club.backend/src/utils/badges';
 import AndrewSrc from '../Founders/Andrew.svg';
 import IgorSrc from '../Founders/Igor.svg';
 import { Title } from '@/components/Statbox';

@@ -8,7 +8,7 @@ import showLoader from '@rival/common/utils/showLoader';
 import { useSelector } from 'react-redux';
 import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
 import axios from '@/utils/axios';
-import compareFields from '@rival/ladder.backend/src/utils/compareFields';
+import compareFields from '@rival/club.backend/src/utils/compareFields';
 import style from './style.module.scss';
 
 type JustFormProps = {

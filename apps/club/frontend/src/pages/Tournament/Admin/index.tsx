@@ -11,7 +11,7 @@ import axios from '@/utils/axios';
 import notification from '@/components/notification';
 import confirmation from '@rival/common/utils/confirmation';
 import showLoader from '@rival/common/utils/showLoader';
-import compareFields from '@rival/ladder.backend/src/utils/compareFields';
+import compareFields from '@rival/club.backend/src/utils/compareFields';
 
 type AdminProps = {
     tournament: object;

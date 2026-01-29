@@ -39,7 +39,7 @@ import calendar4 from './calendar04.png';
 import useBreakpoints from '@rival/common/utils/useBreakpoints';
 import Photos from './Photos';
 import log from '@/utils/log';
-import compareFields from '@rival/ladder.backend/src/utils/compareFields';
+import compareFields from '@rival/club.backend/src/utils/compareFields';
 import dayjs from '@/utils/dayjs';
 import style from './style.module.scss';
 

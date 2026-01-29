@@ -1,7 +1,7 @@
 import { test, expect } from './base';
-import { restoreDb, getRecord } from '@rival/ladder.backend/src/db/helpers';
+import { restoreDb, getRecord } from '@rival/club.backend/src/db/helpers';
 
-import { decrypt } from '@rival/ladder.backend/src/utils/crypt';
+import { decrypt } from '@rival/club.backend/src/utils/crypt';
 
 test.beforeEach(async ({ page }) => {
     restoreDb();

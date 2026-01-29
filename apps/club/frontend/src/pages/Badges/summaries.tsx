@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import PieChart from './PieChart';
 import Stats from '@/components/Match/Stats';
 import _capitalize from 'lodash/capitalize';
-import formatElo from '@rival/ladder.backend/src/utils/formatElo';
+import formatElo from '@rival/club.backend/src/utils/formatElo';
 
 const colors = {
     spring: '#adcc42',

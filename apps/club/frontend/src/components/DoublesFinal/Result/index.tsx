@@ -12,8 +12,8 @@ import { formatMiddle } from '@/utils/dayjs';
 import hasAnyRole from '@rival/common/utils/hasAnyRole';
 import Tooltip from '@rival/common/components/Tooltip';
 import OtherIcon from '@rival/common/metronic/icons/duotone/General/Other2.svg?react';
-import compareFields from '@rival/ladder.backend/src/utils/compareFields';
-import { BYE_ID } from '@rival/ladder.backend/src/constants';
+import compareFields from '@rival/club.backend/src/utils/compareFields';
+import { BYE_ID } from '@rival/club.backend/src/constants';
 import style from './style.module.scss';
 
 export const getPoints = (score) => {

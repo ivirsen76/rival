@@ -1,4 +1,4 @@
-import { BYE_ID } from '@rival/ladder.backend/src/constants';
+import { BYE_ID } from '@rival/club.backend/src/constants';
 
 export default (matches, prediction, players) => {
     const result = {};

@@ -7,7 +7,7 @@ import {
     isFastSetScoreCorrect,
     isFullScoreCorrect,
     isFastScoreCorrect,
-} from '@rival/ladder.backend/src/services/matches/helpers';
+} from '@rival/club.backend/src/services/matches/helpers';
 import style from './style.module.scss';
 
 type SetFormProps = {

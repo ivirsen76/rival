@@ -11,7 +11,7 @@ import TwitterIcon from '@/assets/x.svg?react';
 import EmailIcon from '@rival/common/metronic/icons/duotone/Communication/Mail-at.svg?react';
 import { Link } from 'react-router-dom';
 import useConfig from '@/utils/useConfig';
-import { getFacebookLink, getTwitterLink, getEmailLink } from '@rival/ladder.backend/src/social';
+import { getFacebookLink, getTwitterLink, getEmailLink } from '@rival/club.backend/src/social';
 import Header from '@/components/Header';
 import useBreakpoints from '@rival/common/utils/useBreakpoints';
 import classnames from 'classnames';

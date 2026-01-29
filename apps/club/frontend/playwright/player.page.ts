@@ -5,9 +5,9 @@ import {
     expectRecordToExist,
     runQuery,
     overrideConfig,
-} from '@rival/ladder.backend/src/db/helpers';
-import dayjs from '@rival/ladder.backend/src/utils/dayjs';
-import { decrypt } from '@rival/ladder.backend/src/utils/crypt';
+} from '@rival/club.backend/src/db/helpers';
+import dayjs from '@rival/club.backend/src/utils/dayjs';
+import { decrypt } from '@rival/club.backend/src/utils/crypt';
 
 test.beforeEach(async ({ page }) => {
     restoreDb();

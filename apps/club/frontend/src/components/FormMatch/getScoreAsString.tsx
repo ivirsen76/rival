@@ -4,7 +4,7 @@ import {
     isFastSetScoreCorrect,
     isInjuryFullSetScoreCorrect,
     isInjuryFastSetScoreCorrect,
-} from '@rival/ladder.backend/src/services/matches/helpers';
+} from '@rival/club.backend/src/services/matches/helpers';
 
 export default (values) => {
     const isFast4 = values.matchFormat === 2;

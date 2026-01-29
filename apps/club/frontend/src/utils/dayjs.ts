@@ -1,4 +1,4 @@
-import dayjs from '@rival/ladder.backend/src/utils/dayjs';
+import dayjs from '@rival/club.backend/src/utils/dayjs';
 
 const TIMEZONE = process.env.TL_TIMEZONE || window.TL_TIMEZONE || import.meta.env.VITE_TIMEZONE;
 if (!TIMEZONE) {
@@ -7,4 +7,4 @@ if (!TIMEZONE) {
 dayjs.tz.setDefault(TIMEZONE);
 
 export default dayjs;
-export * from '@rival/ladder.backend/src/utils/dayjs';
+export * from '@rival/club.backend/src/utils/dayjs';

@@ -6,9 +6,9 @@ import Modal from '@/components/Modal';
 import BetResult from '../BetResult';
 import BracketsIcon from '@/assets/brackets.svg?react';
 import BotIcon from '@/assets/bot.svg?react';
-import compareFields from '@rival/ladder.backend/src/utils/compareFields';
+import compareFields from '@rival/club.backend/src/utils/compareFields';
 import useBreakpoints from '@rival/common/utils/useBreakpoints';
-import { BRACKET_BOT_ID } from '@rival/ladder.backend/src/constants';
+import { BRACKET_BOT_ID } from '@rival/club.backend/src/constants';
 import style from './style.module.scss';
 
 type BetContestProps = {

@@ -29,7 +29,7 @@ import scoringSquare from './scoring-square.jpg?w=600;1200&format=jpeg&quality=6
 import court from './court.jpg?w=800;1200;1600;2400&format=webp&as=srcset';
 import courtSmall from './courtSmall.jpg?w=800;1200;1600;2400&format=webp&as=srcset';
 import getImageSize from '@rival/common/utils/getImageSize';
-import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
+import formatNumber from '@rival/club.backend/src/utils/formatNumber';
 import gradualRound from '@rival/common/utils/gradualRound';
 import CtaButton from './CtaButton';
 import log from '@/utils/log';

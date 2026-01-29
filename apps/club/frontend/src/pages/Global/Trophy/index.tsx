@@ -8,7 +8,7 @@ import Tooltip from '@rival/common/components/Tooltip';
 import notification from '@/components/notification';
 import copy from 'clipboard-copy';
 import classnames from 'classnames';
-import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
+import formatNumber from '@rival/club.backend/src/utils/formatNumber';
 import saveAsCsv from '@rival/common/utils/saveAsCsv';
 import getRelativeStringLength from '@rival/common/utils/getRelativeStringLength';
 import CheckIcon from '@rival/common/metronic/icons/duotone/Navigation/Check.svg?react';

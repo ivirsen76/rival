@@ -11,7 +11,7 @@ import {
     isInjuryFullSetScoreCorrect,
     isInjuryFastSetScoreCorrect,
     getLocalDateThisWeek,
-} from '@rival/ladder.backend/src/services/matches/helpers';
+} from '@rival/club.backend/src/services/matches/helpers';
 import { Formik, Field, Form } from '@/components/formik';
 import TimePicker from '@/components/formik/TimePicker';
 import HtmlSelect from '@/components/formik/HtmlSelect';
@@ -33,7 +33,7 @@ import FormPickDoublesPlayers from '@/components/FormPickDoublesPlayers';
 import DefaultIcon from '@/assets/default.svg?react';
 import FinishIcon from '@/assets/cup.svg?react';
 import InjuryIcon from '@/components/InjuryIcon';
-import { getListAsString } from '@rival/ladder.backend/src/utils/helpers';
+import { getListAsString } from '@rival/club.backend/src/utils/helpers';
 import style from './style.module.scss';
 
 const matchFormatOptions = [

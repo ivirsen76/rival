@@ -54,7 +54,7 @@ import { loadCurrentUser } from '@/reducers/auth';
 import showLoader from '@rival/common/utils/showLoader';
 import confirmation from '@rival/common/utils/confirmation';
 import checkUserReady from '@/utils/checkUserReady';
-import formatElo from '@rival/ladder.backend/src/utils/formatElo';
+import formatElo from '@rival/club.backend/src/utils/formatElo';
 import useConfig from '@/utils/useConfig';
 import axios from '@/utils/axios';
 import style from './style.module.scss';

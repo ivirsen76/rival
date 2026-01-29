@@ -1,5 +1,5 @@
 import { test, expect } from './base';
-import { restoreProductionDb } from '@rival/ladder.backend/src/db/helpers';
+import { restoreProductionDb } from '@rival/club.backend/src/db/helpers';
 
 test.beforeEach(async ({ page }) => {
     restoreProductionDb();

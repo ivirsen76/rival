@@ -9,9 +9,9 @@ RUN npm i -g pnpm
 
 COPY . .
 
-RUN pnpm --legacy --filter=@rival/ladder.backend --prod deploy /prod
-COPY apps/ladder/backend/dist /prod/dist
-COPY apps/ladder/backend/build /prod/build
+RUN pnpm --legacy --filter=@rival/club.backend --prod deploy /prod
+COPY apps/club/backend/dist /prod/dist
+COPY apps/club/backend/build /prod/build
 COPY gitcommit /prod
 
 # Remove src folder

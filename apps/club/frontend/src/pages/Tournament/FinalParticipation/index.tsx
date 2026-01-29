@@ -14,7 +14,7 @@ import {
     getDoublesTournamentText,
 } from '../texts';
 import confirmation from '@rival/common/utils/confirmation';
-import formatElo from '@rival/ladder.backend/src/utils/formatElo';
+import formatElo from '@rival/club.backend/src/utils/formatElo';
 
 const GO_MESSAGE = 'You are registered for the tournament!';
 const SKIP_MESSAGE = "You've decided to skip the tournament.";

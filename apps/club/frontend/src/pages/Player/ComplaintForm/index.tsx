@@ -4,7 +4,7 @@ import Checkbox from '@/components/formik/Checkbox';
 import RadioModern from '@/components/formik/RadioModern';
 import Button from '@rival/common/components/Button';
 import HiddenText from '@rival/common/components/HiddenText';
-import reasonOptions from '@rival/ladder.backend/src/services/complaints/reasonOptions';
+import reasonOptions from '@rival/club.backend/src/services/complaints/reasonOptions';
 import reasonDescriptions from './reasonDescriptions';
 
 const adjustedReasonOptions = reasonOptions.map((item) => ({

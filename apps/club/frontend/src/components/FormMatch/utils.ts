@@ -1,4 +1,4 @@
-import { isFullSetScoreCorrect, isFastSetScoreCorrect } from '@rival/ladder.backend/src/services/matches/helpers';
+import { isFullSetScoreCorrect, isFastSetScoreCorrect } from '@rival/club.backend/src/services/matches/helpers';
 
 export const isInjuryFullSetScoreIncomplete = (values) => {
     return !isFullSetScoreCorrect(values);

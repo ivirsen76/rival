@@ -5,7 +5,7 @@ import { Formik, Field, Form } from '@/components/formik';
 import PlayerName from '@/components/PlayerName';
 import notification from '@/components/notification';
 import CheckboxArray from '@/components/formik/CheckboxArray';
-import compareFields from '@rival/ladder.backend/src/utils/compareFields';
+import compareFields from '@rival/club.backend/src/utils/compareFields';
 import Button from '@rival/common/components/Button';
 import axios from '@/utils/axios';
 

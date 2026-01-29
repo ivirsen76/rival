@@ -4,7 +4,7 @@ import BadgeStat from '@/pages/Badges/Stat';
 import { formatDate } from '@/utils/dayjs';
 import Statbox from '@/components/Statbox';
 import Modal from '@/components/Modal';
-import allBadges from '@rival/ladder.backend/src/utils/badges';
+import allBadges from '@rival/club.backend/src/utils/badges';
 import style from './style.module.scss';
 
 const SHOW_BADGES = 5;

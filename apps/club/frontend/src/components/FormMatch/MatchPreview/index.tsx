@@ -5,7 +5,7 @@ import PlayerName from '@/components/PlayerName';
 import Tooltip from '@rival/common/components/Tooltip';
 import _isInteger from 'lodash/isInteger';
 import parseScore from '@/components/Match/parseScore';
-import { isFullSetScoreCorrect, isFastSetScoreCorrect } from '@rival/ladder.backend/src/services/matches/helpers';
+import { isFullSetScoreCorrect, isFastSetScoreCorrect } from '@rival/club.backend/src/services/matches/helpers';
 
 type MatchPreviewProps = {
     tournament: object;

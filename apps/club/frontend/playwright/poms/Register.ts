@@ -1,5 +1,5 @@
 import { expect, type Locator, type Page } from '@playwright/test';
-import { expectRecordToExist } from '@rival/ladder.backend/src/db/helpers';
+import { expectRecordToExist } from '@rival/club.backend/src/db/helpers';
 import { Common } from './Common';
 
 export class Register {

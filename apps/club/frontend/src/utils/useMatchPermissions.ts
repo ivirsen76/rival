@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import dayjs from '@/utils/dayjs';
 import useConfig from './useConfig';
 import hasAnyRole from '@rival/common/utils/hasAnyRole';
-import getMatchPermissions from '@rival/ladder.backend/src/services/matches/getMatchPermissions';
+import getMatchPermissions from '@rival/club.backend/src/services/matches/getMatchPermissions';
 
 export const getPermissions = ({
     tournament,

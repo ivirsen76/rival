@@ -19,10 +19,10 @@ import TermsAndConditions from '@/components/TermsAndConditions';
 import { NtrpGuidelinesLink } from '@/components/NtrpGuidelines';
 import JoinAnotherLadder from './JoinAnotherLadder';
 import getRegisterNotificationProps from '@/utils/getRegisterNotificationProps';
-import { getSuitableTournaments } from '@rival/ladder.backend/src/services/tournaments/helpers';
+import { getSuitableTournaments } from '@rival/club.backend/src/services/tournaments/helpers';
 import useStatsigEvents from '@/utils/useStatsigEvents';
 import classnames from 'classnames';
-import formatElo from '@rival/ladder.backend/src/utils/formatElo';
+import formatElo from '@rival/club.backend/src/utils/formatElo';
 import TeammateForm from './TeammateForm';
 import useModal from '@rival/common/utils/useModal';
 

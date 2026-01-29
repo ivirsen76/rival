@@ -36,12 +36,12 @@ import {
     isFastSetScoreCorrect,
     isFullScoreCorrect,
     isFastScoreCorrect,
-} from '@rival/ladder.backend/src/services/matches/helpers';
-import formatElo from '@rival/ladder.backend/src/utils/formatElo';
+} from '@rival/club.backend/src/services/matches/helpers';
+import formatElo from '@rival/club.backend/src/utils/formatElo';
 import useConfig from '@/utils/useConfig';
 import useMatchPermissions from '@/utils/useMatchPermissions';
-import { BYE_ID } from '@rival/ladder.backend/src/constants';
-import matchFormatOptions from '@rival/ladder.backend/src/services/proposals/matchFormatOptions';
+import { BYE_ID } from '@rival/club.backend/src/constants';
+import matchFormatOptions from '@rival/club.backend/src/services/proposals/matchFormatOptions';
 
 const isLongName = (player) => {
     return getRelativeStringLength(player.firstName + ' ' + player.lastName) > 15;
