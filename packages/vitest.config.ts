@@ -2,6 +2,8 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
     test: {
-        projects: ['apps/ladder/*', 'packages'],
+        globals: true,
+        environment: 'happy-dom',
+        exclude: ['node_modules'],
     },
 });
