@@ -1,5 +1,5 @@
 import useSettings from '@/utils/useSettings';
-import Chart from '@/components/Chart';
+import Chart from '@rival/packages/components/Chart';
 import RenderDelay from '@rival/packages/components/RenderDelay';
 import Icon from './Icon';
 import Hover from './Hover';

@@ -8,7 +8,7 @@ import BadgeIcon from '@/assets/badge.svg?react';
 import UserIcon from '@rival/packages/metronic/icons/duotone/General/User.svg?react';
 import ArrowLeft from '@rival/packages/metronic/icons/duotune/arrows/arr002.svg?react';
 import PlayerAvatar from '@/components/PlayerAvatar';
-import hasAnyRole from '@/utils/hasAnyRole';
+import hasAnyRole from '@rival/packages/utils/hasAnyRole';
 import { Link } from 'react-router-dom';
 import { Menubar } from 'primereact/menubar';
 import classnames from 'classnames';

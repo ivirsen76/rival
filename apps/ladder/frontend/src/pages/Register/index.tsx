@@ -14,7 +14,7 @@ import { useQuery } from 'react-query';
 import useConfig from '@/utils/useConfig';
 import dayjs from '@/utils/dayjs';
 import style from './style.module.scss';
-import hasAnyRole from '@/utils/hasAnyRole';
+import hasAnyRole from '@rival/packages/utils/hasAnyRole';
 import axios from '@/utils/axios';
 
 const format = (date) => dayjs.tz(date).format('MMM D');

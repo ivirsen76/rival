@@ -15,7 +15,7 @@ import classnames from 'classnames';
 import Caret from './caret.svg?react';
 import { useHistory } from 'react-router-dom';
 import _capitalize from 'lodash/capitalize';
-import hasAnyRole from '@/utils/hasAnyRole';
+import hasAnyRole from '@rival/packages/utils/hasAnyRole';
 import style from './style.module.scss';
 import './aside.scss';
 

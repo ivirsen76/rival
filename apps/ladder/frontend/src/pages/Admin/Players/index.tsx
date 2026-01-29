@@ -15,7 +15,7 @@ import CheckIcon from '@rival/packages/metronic/icons/duotone/Navigation/Check.s
 import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
 import UpdateIcon from '@rival/packages/metronic/icons/duotone/General/Update.svg?react';
 import { useSelector } from 'react-redux';
-import hasAnyRole from '@/utils/hasAnyRole';
+import hasAnyRole from '@rival/packages/utils/hasAnyRole';
 import confirmation from '@rival/packages/utils/confirmation';
 import showLoader from '@rival/packages/utils/showLoader';
 

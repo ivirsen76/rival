@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import Chart from '@/components/Chart';
+import Chart from '@rival/packages/components/Chart';
 import _findLastIndex from 'lodash/findLastIndex';
 import Tooltip from '@rival/packages/components/Tooltip';
 import Mark from './Mark';

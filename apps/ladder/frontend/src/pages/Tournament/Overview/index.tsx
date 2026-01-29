@@ -40,7 +40,7 @@ import useBreakpoints from '@rival/packages/utils/useBreakpoints';
 import useSettings from '@/utils/useSettings';
 import useUserInterface from '@/utils/useUserInterface';
 import useTabs from '../useTabs';
-import hasAnyRole from '@/utils/hasAnyRole';
+import hasAnyRole from '@rival/packages/utils/hasAnyRole';
 import { useQueryClient } from 'react-query';
 import { Link, useHistory } from 'react-router-dom';
 import classnames from 'classnames';

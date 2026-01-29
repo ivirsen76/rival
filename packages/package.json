@@ -15,6 +15,7 @@
         "react-router-dom": "*"
     },
     "dependencies": {
+        "@amcharts/amcharts4": "^4.10.18",
         "@loadable/component": "^5.15.2",
         "@tippyjs/react": "^4.2.5",
         "bootstrap": "5.3.2",

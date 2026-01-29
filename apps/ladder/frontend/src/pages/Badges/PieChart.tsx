@@ -1,4 +1,4 @@
-import Chart from '@/components/Chart';
+import Chart from '@rival/packages/components/Chart';
 import style from './style.module.scss';
 
 type PieChartProps = {

@@ -1,4 +1,4 @@
-import Loader from '@rival/packages/components/Loader';
+import Loader from '../Loader';
 import { createRoot } from 'react-dom/client';
 
 let isReloading = false;

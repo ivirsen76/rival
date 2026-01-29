@@ -14,7 +14,7 @@ import notification from '@/components/notification';
 import confirmation from '@rival/packages/utils/confirmation';
 import copy from 'clipboard-copy';
 import { useSelector } from 'react-redux';
-import hasAnyRole from '@/utils/hasAnyRole';
+import hasAnyRole from '@rival/packages/utils/hasAnyRole';
 import { marked } from 'marked';
 import classnames from 'classnames';
 import style from './style.module.scss';

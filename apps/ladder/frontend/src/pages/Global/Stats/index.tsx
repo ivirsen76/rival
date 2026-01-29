@@ -4,7 +4,7 @@ import axios from '@/utils/axios';
 import { useQuery } from 'react-query';
 import Loader from '@rival/packages/components/Loader';
 import Error from '@rival/packages/components/Error';
-import Chart from '@/components/Chart';
+import Chart from '@rival/packages/components/Chart';
 import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
 import Tooltip from '@rival/packages/components/Tooltip';
 import QuestionIcon from '@rival/packages/metronic/icons/duotone/Navigation/Question.svg?react';

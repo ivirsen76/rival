@@ -6,7 +6,7 @@ import FormMatch from '@/components/FormMatch';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
-import hasAnyRole from '@/utils/hasAnyRole';
+import hasAnyRole from '@rival/packages/utils/hasAnyRole';
 import style from './style.module.scss';
 
 type JustFormProps = {

@@ -14,7 +14,7 @@ import classnames from 'classnames';
 import _get from 'lodash/get';
 import _pick from 'lodash/pick';
 import NotFound from '@/pages/NotFound';
-import hasAnyRole from '@/utils/hasAnyRole';
+import hasAnyRole from '@rival/packages/utils/hasAnyRole';
 import { useSelector } from 'react-redux';
 import dayjs from '@/utils/dayjs';
 import Tooltip from '@rival/packages/components/Tooltip';

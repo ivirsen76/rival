@@ -6,7 +6,7 @@ import Button from '@rival/packages/components/Button';
 import FormScheduleMatch from '@/components/FormScheduleMatch';
 import FormPickDoublesPlayers from '@/components/FormPickDoublesPlayers';
 import getPlayersName from '@/utils/getPlayersName';
-import hasAnyRole from '@/utils/hasAnyRole';
+import hasAnyRole from '@rival/packages/utils/hasAnyRole';
 
 type JustFormProps = {
     values: object;

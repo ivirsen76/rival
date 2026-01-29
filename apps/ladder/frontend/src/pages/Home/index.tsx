@@ -15,7 +15,7 @@ import style from './style.module.scss';
 import classnames from 'classnames';
 import useBreakpoints from '@rival/packages/utils/useBreakpoints';
 import { useSelector } from 'react-redux';
-import hasAnyRole from '@/utils/hasAnyRole';
+import hasAnyRole from '@rival/packages/utils/hasAnyRole';
 import UserIcon from '@rival/packages/metronic/icons/duotone/General/User.svg?react';
 import BattleIcon from '@/assets/battle.svg?react';
 import JoinAnytime from './joinAnytime.svg?react';

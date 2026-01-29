@@ -5,7 +5,7 @@ import Photos from './Photos';
 import NotFound from '@/pages/NotFound';
 import { Switch, Route, NavLink, useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import hasAnyRole from '@/utils/hasAnyRole';
+import hasAnyRole from '@rival/packages/utils/hasAnyRole';
 import style from './style.module.scss';
 
 const Global = (props) => {

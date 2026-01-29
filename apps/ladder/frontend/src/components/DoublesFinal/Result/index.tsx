@@ -9,7 +9,7 @@ import axios from '@/utils/axios';
 import Button from '@rival/packages/components/Button';
 import classnames from 'classnames';
 import { formatMiddle } from '@/utils/dayjs';
-import hasAnyRole from '@/utils/hasAnyRole';
+import hasAnyRole from '@rival/packages/utils/hasAnyRole';
 import Tooltip from '@rival/packages/components/Tooltip';
 import OtherIcon from '@rival/packages/metronic/icons/duotone/General/Other2.svg?react';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';

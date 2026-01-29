@@ -3,7 +3,7 @@ import history from '../../history';
 import _isEmpty from 'lodash/isEmpty';
 import _set from 'lodash/set';
 import notification from '@/components/notification';
-import reload from '@/components/ReloadOnUpdate';
+import reload from '@rival/packages/components/ReloadOnUpdate';
 
 axios.interceptors.response.use((response) => {
     const serverHash = response.headers['rival-hash'];

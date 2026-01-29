@@ -29,7 +29,7 @@ import {
     shotOptions,
 } from '../Settings/TennisStyleForm';
 import { useDispatch, useSelector } from 'react-redux';
-import hasAnyRole from '@/utils/hasAnyRole';
+import hasAnyRole from '@rival/packages/utils/hasAnyRole';
 import { formatCustom } from '@/utils/dayjs';
 import { comeFromOptions } from '@/components/Authentication/Register';
 import Emails from './Emails';
