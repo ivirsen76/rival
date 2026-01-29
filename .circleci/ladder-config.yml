@@ -56,6 +56,7 @@ jobs:
                       - server
                       - repo/apps/ladder/backend/build
                       - repo/apps/ladder/backend/dist
+                      - repo/projects/dayjs/dist
     test:
         <<: *image
         steps:
