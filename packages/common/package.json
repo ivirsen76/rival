@@ -1,5 +1,5 @@
 {
-    "name": "@rival/packages",
+    "name": "@rival/common",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
