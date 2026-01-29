@@ -1,0 +1,145 @@
+:root {
+    --rival-hue: 212;
+
+    --rival-dark-1: #{rivalDarkBg(0%)};
+    --rival-dark-2: #{rivalDarkBg(10%)};
+    --rival-dark-25: #{rivalDarkBg(13%)};
+    --rival-dark-3: #{rivalDarkBg(20%)};
+    --rival-dark-35: #{rivalDarkBg(23%)};
+    --rival-dark-4: #{rivalDarkBg(30%)};
+    --rival-dark-45: #{rivalDarkBg(33%)};
+    --rival-dark-5: #{rivalDarkBg(40%)};
+    --rival-dark-6: #{rivalDarkBg(50%)};
+    --rival-dark-7: #{rivalDarkBg(60%)};
+
+    --rival-light-1: #{rivalDarkColor(100%)};
+    --rival-light-15: #{rivalDarkColor(93%)};
+    --rival-light-2: #{rivalDarkColor(90%)};
+    --rival-light-3: #{rivalDarkColor(80%)};
+    --rival-light-4: #{rivalDarkColor(70%)};
+    --rival-light-5: #{rivalDarkColor(60%)};
+    --rival-light-6: #{rivalDarkColor(50%)};
+
+    // TODO: maybe use hue=225 as the rest of the site
+    --rival-block-bg-color-1: #ebf1f5;
+    --rival-block-bg-color-2: #f5f8fa;
+
+    --rival-block-color: var(--rival-dark-5);
+
+    --rival-input-solid-bg: #eff2f5;
+    --rival-input-solid-bg-focus: #{darken(#eff2f5, 2%)};
+
+    --bs-page-bg: #eef0f8;
+    --bs-card-bg: #fff;
+
+    // footer
+    --rival-footer-color-1: hsl(130, 5%, 30%);
+    --rival-footer-color-2: hsl(130, 5%, 5%);
+
+    --bs-warning: hsl(47, 100%, 40%);
+    --bs-warning-active: hsl(47, 100%, 37%);
+
+    --custom-emoji-scale: 1;
+    --custom-emoji-margin: 0;
+
+    --rival-grid-icon-column-width: 1.75rem;
+    --rival-grid-column-gap: 0.5rem;
+}
+
+[data-bs-theme='dark'] {
+    --bs-page-bg: var(--rival-dark-1);
+    --bs-card-bg: var(--rival-dark-2);
+
+    --bs-heading-color: var(--rival-light-1);
+    --bs-body-color: var(--rival-light-2);
+
+    --rival-block-bg-color-1: #{rivalDarkBg(18%)};
+    --rival-block-bg-color-2: #{rivalDarkBg(16%)};
+
+    --rival-block-color: var(--rival-light-5);
+
+    --rival-input-solid-bg: #{rivalDarkBg(16%)};
+    --rival-input-solid-bg-focus: #{rivalDarkBg(18%)};
+
+    // footer
+    --rival-footer-color-1: var(--rival-dark-3);
+    --rival-footer-color-2: var(--rival-dark-1);
+
+    --bs-link-color-rgb: 8, 134, 255;
+    --bs-primary: hsl(212, 100%, 52%);
+    --bs-primary-inverse: var(--rival-light-1);
+    --bs-primary-rgb: 8, 134, 255;
+    --bs-text-primary: hsl(212, 100%, 52%);
+    --bs-text-dark: var(--rival-light-5);
+    --bs-text-muted: var(--rival-dark-6);
+    --bs-light: var(--rival-dark-3);
+    --bs-light-active: var(--rival-dark-35);
+    --bs-primary-light: var(--rival-dark-2);
+    --bs-dark: var(--rival-light-3);
+    --bs-dark-inverse: var(--rival-dark-1);
+    --bs-secondary: var(--rival-dark-4);
+    --bs-secondary-inverse: var(--rival-light-2);
+    --bs-secondary-active: var(--rival-dark-45);
+}
+
+.alert-success {
+    --bs-success: #2ea263;
+}
+.alert-primary {
+    [data-bs-theme='light'] & {
+        --bs-primary: #005f94;
+        --bs-primary-light: #ccecfd;
+
+        border-color: #b3e2fd !important;
+    }
+    [data-bs-theme='dark'] & {
+        a {
+            text-decoration: underline dashed;
+
+            &:hover {
+                text-decoration: underline dashed !important;
+            }
+        }
+    }
+}
+.modal {
+    --bs-modal-bg: #fff;
+
+    [data-bs-theme='dark'] & {
+        --bs-modal-bg: var(--rival-dark-2);
+        --bs-modal-border-width: 1px;
+        --bs-modal-border-color: var(--rival-dark-4);
+        --bs-modal-header-border-color: var(--rival-dark-4);
+    }
+}
+.card {
+    --bs-card-bg: #fff;
+
+    [data-bs-theme='dark'] & {
+        --bs-card-bg: var(--rival-dark-2);
+    }
+}
+.form-switch {
+    --rival-input-solid-bg: var(--rival-light-2) !important;
+
+    [data-bs-theme='dark'] & {
+        --rival-input-solid-bg: var(--rival-dark-4) !important;
+    }
+}
+.table-primary {
+    --bs-table-bg: hsl(201, 92%, 93%);
+
+    [data-bs-theme='dark'] & {
+        --bs-table-bg: hsl(var(--rival-hue), 20%, 16%);
+    }
+}
+.pagination {
+    [data-bs-theme='dark'] & {
+        --bs-pagination-bg: var(--rival-dark-3);
+    }
+}
+.form-check-input:checked[type='radio'] {
+    [data-bs-theme='dark'] & {
+        --bs-form-check-bg-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'><circle r='2' fill='%2314191f' /></svg>");
+    }
+}

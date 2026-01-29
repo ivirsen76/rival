@@ -1,0 +1,164 @@
+.card {
+    overflow: hidden;
+
+    @include media-breakpoint-down(xl) {
+        overflow: auto;
+    }
+}
+.wrapper {
+    min-width: 1040px;
+
+    .header {
+        .days {
+            display: flex;
+
+            .day {
+                flex-grow: 1;
+                flex-basis: 0px;
+                text-align: center;
+                padding-bottom: 1rem;
+                position: relative;
+
+                &:not(:last-child) {
+                    border-right: 1px solid #ccc;
+
+                    [data-bs-theme='dark'] & {
+                        border-color: var(--rival-dark-4);
+                    }
+                }
+                .icon {
+                    svg {
+                        width: 80px;
+                        height: 80px;
+                    }
+                }
+                .temp {
+                    display: flex;
+                    justify-content: center;
+                    align-items: flex-end;
+                    line-height: 1;
+                }
+            }
+        }
+    }
+    .courts {
+        display: flex;
+        height: 200px;
+        filter: blur(5px);
+        position: relative;
+        top: -95px;
+
+        .start {
+            position: absolute;
+            top: 0;
+            left: -5px;
+            width: 5px;
+            height: 200px;
+        }
+        .end {
+            position: absolute;
+            top: 0;
+            right: -5px;
+            width: 5px;
+            height: 200px;
+        }
+        .dry {
+            background-color: #00b300;
+        }
+        .warning {
+            background-color: #fabf00;
+        }
+        .wet {
+            background-color: #d5202a;
+        }
+    }
+    .chart {
+        margin-top: -200px;
+        height: 225px;
+        position: relative;
+        z-index: 5;
+    }
+    .footer {
+        margin-top: -25px;
+        margin-bottom: 1.3rem;
+        padding-top: 1.3rem;
+        height: 2.9rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        background-color: var(--bs-card-bg);
+        z-index: 5;
+        position: relative;
+
+        .legend {
+            display: flex;
+            align-items: center;
+
+            .deg {
+                margin-right: 0.5rem;
+                display: flex;
+                align-items: flex-end;
+                line-height: 1;
+            }
+            .dry {
+                margin-right: 0.5rem;
+                display: flex;
+
+                > div {
+                    height: 5px;
+                    width: 1rem;
+
+                    &:nth-child(1) {
+                        background-color: #00b300;
+                    }
+                    &:nth-child(2) {
+                        background-color: #fabf00;
+                    }
+                    &:nth-child(3) {
+                        background-color: #d5202a;
+                    }
+                }
+            }
+            .prep {
+                width: 1.5rem;
+                height: 2.5px;
+                background-color: #00b5ef;
+                margin-right: 0.5rem;
+            }
+            .temp {
+                width: 1.5rem;
+                height: 2.5px;
+                background-color: #d5202a;
+                margin-right: 0.5rem;
+            }
+            .daytime {
+                margin-top: -0.6rem;
+            }
+        }
+    }
+    .daytime {
+        font-size: 1.6rem;
+        font-weight: 500;
+        margin-left: 0.5rem;
+        margin-right: 0.3rem;
+
+        @include media-breakpoint-down(lg) {
+            margin-left: 0.4rem;
+            margin-right: 0.2rem;
+        }
+    }
+    .morning,
+    .night {
+        font-size: 0.9rem;
+        color: #999;
+        margin-bottom: 0.1rem;
+    }
+    .apple svg {
+        display: inline-block;
+        width: 1em !important;
+        height: 1em !important;
+        position: relative;
+        top: -0.125em;
+        margin-right: 0.15rem;
+    }
+}

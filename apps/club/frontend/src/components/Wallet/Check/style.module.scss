@@ -1,0 +1,15 @@
+.order {
+    .row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.2rem 0;
+
+        &.total {
+            border-top: 1px solid #ccc;
+            padding-top: 0.7rem;
+            margin-top: 0.5rem;
+            font-size: 1.35rem;
+            font-weight: 600;
+        }
+    }
+}

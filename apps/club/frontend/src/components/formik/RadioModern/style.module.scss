@@ -1,0 +1,25 @@
+.wrapper {
+    display: grid;
+    grid-gap: 0.8rem;
+    margin-top: 0.5rem;
+
+    .option {
+        .label {
+            display: flex;
+
+            > *:first-child {
+                width: 2.5rem;
+            }
+        }
+        .description {
+            margin-left: 2.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #a1a5b7;
+
+            [data-bs-theme='dark'] & {
+                color: var(--rival-light-5);
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+.list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 280px);
+    gap: 2rem;
+
+    .file {
+        img {
+            cursor: pointer;
+        }
+    }
+}
+.buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+.info {
+    img {
+        max-width: 100%;
+        border: 1px solid #ddd;
+    }
+}
+.modal {
+    width: calc(100% - 2rem);
+    max-width: none;
+
+    @include media-breakpoint-down(sm) {
+        width: auto;
+    }
+}

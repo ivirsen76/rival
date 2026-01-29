@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="244px" height="280px" viewBox="22 15 220 265" version="1.1">
+    <rect stroke-width="12px" x="27.008" y="109.795" width="209.365" height="51.161" rx="10" ry="10"></rect>
+    <rect stroke-width="12px" x="52.326" y="79.019" width="160.182" height="115.673" rx="20" ry="20"></rect>
+    <ellipse stroke-width="12px" fill="currentColor" cx="97.302" cy="124.586" rx="13.487" ry="13.487"></ellipse>
+    <ellipse stroke-width="12px" fill="currentColor" cx="166.797" cy="124.586" rx="13.487" ry="13.487"></ellipse>
+    <path stroke-width="12px" stroke-linecap="round" d="M 109.809 166.408 C 118.856 171.71 143.856 171.791 153.454 166.34"></path>
+    <path stroke-width="12px" d="M 131.568 48.17 L 131.905 77.912"></path>
+    <path stroke-width="12px" d="M 100.829 218.886 L 162.152 218.886 C 178.344 218.886 191.47 231.017 191.47 245.98 L 191.47 273.073 L 71.511 273.073 L 71.511 245.98 C 71.511 231.017 84.637 218.886 100.829 218.886 Z"></path>
+    <ellipse stroke-width="12px" cx="131.752" cy="44.874" rx="15" ry="15"></ellipse>
+</svg>

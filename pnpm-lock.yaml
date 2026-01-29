@@ -42,6 +42,410 @@ importers:
         specifier: ^4.0.17
         version: 4.0.18(@types/node@22.19.7)(happy-dom@12.10.3)(sass@1.97.2)(tsx@4.21.0)
 
+  apps/club/backend:
+    dependencies:
+      '@aws-sdk/client-lambda':
+        specifier: ^3.637.0
+        version: 3.978.0
+      '@aws-sdk/client-s3':
+        specifier: ^3.150.0
+        version: 3.978.0
+      '@aws-sdk/s3-request-presigner':
+        specifier: ^3.673.0
+        version: 3.978.0
+      '@faker-js/faker':
+        specifier: ^7.6.0
+        version: 7.6.0
+      '@feathersjs/authentication':
+        specifier: ^4.5.18
+        version: 4.5.18
+      '@feathersjs/authentication-local':
+        specifier: ^4.5.18
+        version: 4.5.18
+      '@feathersjs/authentication-oauth':
+        specifier: ^4.5.18
+        version: 4.5.18
+      '@feathersjs/configuration':
+        specifier: ^4.5.17
+        version: 4.5.17
+      '@feathersjs/errors':
+        specifier: ^4.5.17
+        version: 4.5.17
+      '@feathersjs/express':
+        specifier: ^4.5.17
+        version: 4.5.18
+      '@feathersjs/feathers':
+        specifier: ^4.5.17
+        version: 4.5.17
+      '@rival-tennis-ladder/logger':
+        specifier: ^4.1.0
+        version: 4.1.0
+      axios:
+        specifier: ^0.21.1
+        version: 0.21.4
+      bcryptjs:
+        specifier: ^3.0.3
+        version: 3.0.3
+      cors:
+        specifier: ^2.8.5
+        version: 2.8.6
+      datauri:
+        specifier: ^4.1.0
+        version: 4.1.0
+      dayjs:
+        specifier: ^1.11.10
+        version: 1.11.19
+      deepmerge:
+        specifier: ^4.3.1
+        version: 4.3.1
+      dotenv:
+        specifier: ^17.2.3
+        version: 17.2.3
+      express-rate-limit:
+        specifier: ^8.2.1
+        version: 8.2.1(express@4.22.1)
+      fast-xml-parser:
+        specifier: ^5.3.2
+        version: 5.3.3
+      feathers-authentication-hooks:
+        specifier: ^1.0.2
+        version: 1.0.2
+      feathers-hooks-common:
+        specifier: ^5.0.5
+        version: 5.0.6
+      feathers-sequelize:
+        specifier: 6.2.0
+        version: 6.2.0
+      helmet:
+        specifier: ^4.5.0
+        version: 4.6.0
+      ical-generator:
+        specifier: ^6.0.0
+        version: 6.0.1(@types/node@22.19.7)(dayjs@1.11.19)(moment-timezone@0.5.48)(moment@2.30.1)
+      jsonwebtoken:
+        specifier: ^9.0.3
+        version: 9.0.3
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.23
+      md5:
+        specifier: ^2.3.0
+        version: 2.3.0
+      mjml:
+        specifier: ^4.15.3
+        version: 4.18.0
+      ms:
+        specifier: ^2.1.3
+        version: 2.1.3
+      mysql:
+        specifier: ^2.18.1
+        version: 2.18.1
+      mysql2:
+        specifier: ^3.16.1
+        version: 3.16.1
+      node-cache:
+        specifier: ^5.1.2
+        version: 5.1.2
+      node-cron:
+        specifier: ^3.0.0
+        version: 3.0.3
+      node-html-parser:
+        specifier: ^5.4.2
+        version: 5.4.2
+      nodemailer:
+        specifier: ^6.6.5
+        version: 6.10.1
+      qs:
+        specifier: ^6.10.1
+        version: 6.14.1
+      redis:
+        specifier: ^3.1.2
+        version: 3.1.2
+      seedrandom:
+        specifier: ^3.0.5
+        version: 3.0.5
+      sequelize:
+        specifier: 6.6.2
+        version: 6.6.2(mysql2@3.16.1)
+      sharp:
+        specifier: ^0.34.5
+        version: 0.34.5
+      stripe:
+        specifier: ^10.2.0
+        version: 10.17.0
+      striptags:
+        specifier: ^3.2.0
+        version: 3.2.0
+      twilio:
+        specifier: ^5.11.2
+        version: 5.12.0
+      umzug:
+        specifier: ^3.8.2
+        version: 3.8.2(@types/node@22.19.7)
+      write-excel-file:
+        specifier: ^1.4.30
+        version: 1.4.30
+      yup:
+        specifier: ^1.7.1
+        version: 1.7.1
+    devDependencies:
+      '@types/express-rate-limit':
+        specifier: ^6.0.2
+        version: 6.0.2(express@4.22.1)
+      '@types/jsonwebtoken':
+        specifier: ^9.0.10
+        version: 9.0.10
+      '@types/lodash':
+        specifier: ^4.17.23
+        version: 4.17.23
+      '@types/md5':
+        specifier: ^2.3.6
+        version: 2.3.6
+      '@types/mjml':
+        specifier: ^4.7.4
+        version: 4.7.4
+      '@types/mkdirp':
+        specifier: ^2.0.0
+        version: 2.0.0
+      '@types/mysql':
+        specifier: ^2.15.27
+        version: 2.15.27
+      '@types/node-cron':
+        specifier: ^3.0.11
+        version: 3.0.11
+      '@types/nodemailer':
+        specifier: ^7.0.5
+        version: 7.0.9
+      '@types/qs':
+        specifier: ^6.14.0
+        version: 6.14.0
+      '@types/seedrandom':
+        specifier: ^3.0.8
+        version: 3.0.8
+      '@types/supertest':
+        specifier: ^6.0.3
+        version: 6.0.3
+      colors:
+        specifier: ^1.4.0
+        version: 1.4.0
+      expect:
+        specifier: ^26.6.2
+        version: 26.6.2
+      mkdirp:
+        specifier: ^3.0.1
+        version: 3.0.1
+      rimraf:
+        specifier: ^5.0.5
+        version: 5.0.10
+      rsync:
+        specifier: ^0.6.1
+        version: 0.6.1
+      supertest:
+        specifier: ^6.1.3
+        version: 6.3.4
+      tsx:
+        specifier: ^4.21.0
+        version: 4.21.0
+
+  apps/club/frontend:
+    dependencies:
+      '@amcharts/amcharts4':
+        specifier: ^4.10.18
+        version: 4.10.40
+      '@emoji-mart/data':
+        specifier: ^1.2.1
+        version: 1.2.1
+      '@emoji-mart/react':
+        specifier: ^1.1.1
+        version: 1.1.1(emoji-mart@5.6.0)(react@18.3.1)
+      '@reduxjs/toolkit':
+        specifier: ^1.5.1
+        version: 1.9.7(react-redux@7.2.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+      '@rival/common':
+        specifier: workspace:*
+        version: link:../../../packages/common
+      '@rival/ladder.backend':
+        specifier: workspace:*
+        version: link:../../ladder/backend
+      '@sentry/react':
+        specifier: ^6.16.1
+        version: 6.19.7(react@18.3.1)
+      '@sentry/tracing':
+        specifier: ^6.16.1
+        version: 6.19.7
+      '@statsig/js-client':
+        specifier: ^3.8.2
+        version: 3.31.2
+      '@types/react-redux':
+        specifier: ^7.1.34
+        version: 7.1.34
+      '@types/react-router-dom':
+        specifier: ^5.3.3
+        version: 5.3.3
+      '@vitejs/plugin-react-swc':
+        specifier: ^4.2.2
+        version: 4.2.2(@swc/helpers@0.5.18)(vite@7.3.1(@types/node@22.19.7)(sass@1.97.2)(tsx@4.21.0))
+      autoprefixer:
+        specifier: ^10.4.16
+        version: 10.4.23(postcss@8.5.6)
+      axios:
+        specifier: ^0.21.1
+        version: 0.21.4
+      bootstrap:
+        specifier: 5.3.2
+        version: 5.3.2(@popperjs/core@2.11.8)
+      classnames:
+        specifier: ^2.3.1
+        version: 2.5.1
+      clipboard-copy:
+        specifier: ^4.0.1
+        version: 4.0.1
+      corner-smoothing:
+        specifier: ^0.1.5
+        version: 0.1.5(react@18.3.1)
+      emoji-mart:
+        specifier: ^5.6.0
+        version: 5.6.0
+      emoji-regex-xs:
+        specifier: ^1.0.0
+        version: 1.0.0
+      flatpickr:
+        specifier: ^4.6.13
+        version: 4.6.13
+      formik:
+        specifier: 2.2.6
+        version: 2.2.6(react@18.3.1)
+      history:
+        specifier: ^4.10.1
+        version: 4.10.1
+      js-cookie:
+        specifier: ^3.0.1
+        version: 3.0.5
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.23
+      marked:
+        specifier: ^16.4.1
+        version: 16.4.2
+      motion:
+        specifier: ^11.11.17
+        version: 11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      photoswipe:
+        specifier: ^5.4.4
+        version: 5.4.4
+      primereact:
+        specifier: ^10.8.3
+        version: 10.9.7(@types/react@19.2.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      prop-types:
+        specifier: ^15.7.2
+        version: 15.8.1
+      react:
+        specifier: ^18.2.0
+        version: 18.3.1
+      react-animate-height:
+        specifier: ^3.2.3
+        version: 3.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-beautiful-dnd:
+        specifier: ^13.1.0
+        version: 13.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-bootstrap:
+        specifier: 2.9.1
+        version: 2.9.1(@types/react@19.2.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-css-transition-replace:
+        specifier: ^4.0.4
+        version: 4.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.3.1(react@18.3.1)
+      react-dropzone:
+        specifier: ^14.2.9
+        version: 14.4.0(react@18.3.1)
+      react-flatpickr:
+        specifier: ^3.10.7
+        version: 3.10.13(react@18.3.1)
+      react-helmet:
+        specifier: ^6.1.0
+        version: 6.1.0(react@18.3.1)
+      react-hotkeys-hook:
+        specifier: ^4.4.1
+        version: 4.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-imask:
+        specifier: ^6.0.7
+        version: 6.6.3(react@18.3.1)
+      react-lazyload:
+        specifier: ^3.2.0
+        version: 3.2.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-photo-album:
+        specifier: ^3.0.2
+        version: 3.4.0(@types/react@19.2.10)(react@18.3.1)
+      react-photoswipe-gallery:
+        specifier: ^3.0.2
+        version: 3.1.1(photoswipe@5.4.4)(prop-types@15.8.1)(react@18.3.1)
+      react-query:
+        specifier: ^3.15.2
+        version: 3.39.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-redux:
+        specifier: ^7.2.3
+        version: 7.2.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-router-dom:
+        specifier: ^5.2.0
+        version: 5.3.4(react@18.3.1)
+      react-router-hash-link:
+        specifier: ^2.4.3
+        version: 2.4.3(react-router-dom@5.3.4(react@18.3.1))(react@18.3.1)
+      react-simple-pull-to-refresh:
+        specifier: ^1.3.3
+        version: 1.3.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-virtuoso:
+        specifier: ^4.14.0
+        version: 4.18.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      sass:
+        specifier: 1.97.2
+        version: 1.97.2
+      use-debounce:
+        specifier: ^7.0.1
+        version: 7.0.1(react@18.3.1)
+    devDependencies:
+      '@playwright/test':
+        specifier: 1.57.0
+        version: 1.57.0
+      '@types/lodash':
+        specifier: ^4.17.23
+        version: 4.17.23
+      '@types/node':
+        specifier: ^22.13.2
+        version: 22.19.7
+      '@types/react':
+        specifier: ^19.2.8
+        version: 19.2.10
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.10)
+      cross-spawn:
+        specifier: ^7.0.3
+        version: 7.0.6
+      dotenv:
+        specifier: ^8.2.0
+        version: 8.6.0
+      happy-dom:
+        specifier: ^12.10.3
+        version: 12.10.3
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      source-map-explorer:
+        specifier: ^2.5.2
+        version: 2.5.3
+      vite:
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.19.7)(sass@1.97.2)(tsx@4.21.0)
+      vite-imagetools:
+        specifier: ^9.0.2
+        version: 9.0.2(rollup@4.57.0)
+      vite-plugin-svgr:
+        specifier: ^4.5.0
+        version: 4.5.0(rollup@4.57.0)(typescript@5.9.3)(vite@7.3.1(@types/node@22.19.7)(sass@1.97.2)(tsx@4.21.0))
+
   apps/ladder/backend:
     dependencies:
       '@aws-sdk/client-lambda':

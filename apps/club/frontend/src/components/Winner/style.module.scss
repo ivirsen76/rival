@@ -1,0 +1,26 @@
+.avatar {
+    font-size: 7.25rem;
+
+    &.doubles {
+        font-size: 5.5rem;
+    }
+}
+.lentaWrapper {
+    position: relative;
+    margin-top: -142px;
+
+    .lenta {
+        width: 280px;
+    }
+    .winner {
+        top: 143px;
+        left: 50%;
+        width: 200px;
+        margin-left: -100px;
+        position: absolute;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        text-shadow: 1px 2px #333;
+    }
+}

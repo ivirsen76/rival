@@ -1,0 +1,21 @@
+$width: 1.6em;
+$height: math.div(38, 33) * $width;
+
+.botIcon {
+    color: var(--rival-dark-4);
+
+    svg {
+        width: $width;
+        height: $height;
+        fill: #fff;
+        stroke: var(--rival-dark-4);
+    }
+    [data-bs-theme='dark'] & {
+        color: var(--rival-light-3);
+
+        svg {
+            fill: var(--rival-dark-2);
+            stroke: var(--rival-light-3);
+        }
+    }
+}

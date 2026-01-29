@@ -1,0 +1,42 @@
+.field {
+    position: relative;
+
+    [data-tippy-root] {
+        left: 0 !important;
+        right: 0 !important;
+    }
+}
+.input {
+    cursor: pointer;
+    padding-right: 2.8rem;
+
+    .placeholder {
+        color: #a1a5b7;
+    }
+}
+.user {
+    display: inline-block;
+    background-color: #e4e6ef;
+    background-color: #fff;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.4rem;
+    margin: 0.2rem 0.4rem 0.2rem 0;
+}
+.searchPanel {
+    padding: 0.4rem;
+}
+.searchResult {
+    margin-top: 1rem;
+    max-height: 20rem;
+    overflow-y: auto;
+
+    .searchResultItem {
+        padding: 0.5rem 0.666rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+
+        &.selected {
+            background-color: #ccecfd;
+        }
+    }
+}

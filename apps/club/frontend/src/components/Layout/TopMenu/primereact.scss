@@ -1,0 +1,90 @@
+.p-menubar {
+    font-size: 1.1rem;
+    font-weight: 500 !important;
+
+    ul,
+    li {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .p-menubar-root-list {
+        gap: 0.25rem;
+    }
+    .p-menuitem {
+        .p-menuitem-content {
+            white-space: nowrap;
+
+            .p-menuitem-link {
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                padding: 0;
+                flex: 0 0 100%;
+                padding: 0.65rem 1rem;
+                outline: none !important;
+                border-radius: 0.475rem;
+                color: #fff;
+                transition: background-color 0.2s ease;
+
+                &:hover {
+                    background-color: #ffffff1a;
+                }
+                .p-menuitem-text {
+                    flex-grow: 1;
+                }
+                .p-submenu-icon {
+                    margin-left: 0.25rem;
+                }
+            }
+        }
+        &.p-menuitem-active > .p-menuitem-content .p-menuitem-link {
+            background-color: #ffffff1a;
+        }
+    }
+    .p-submenu-list {
+        padding: 0.75rem 0.5rem !important;
+        border-radius: 0.475rem;
+        background-color: var(--bs-menu-dropdown-bg-color);
+        box-shadow: var(--bs-menu-dropdown-box-shadow);
+
+        .p-menuitem {
+            .p-menuitem-content {
+                .p-menuitem-link {
+                    color: var(--bs-text-gray-700);
+
+                    .p-submenu-icon {
+                        margin-left: 1rem;
+                        margin-right: -0.5rem;
+                    }
+                    &:hover {
+                        color: var(--bs-primary);
+                        background-color: #ffffff00;
+                    }
+                    // dot symbol
+                    &:before {
+                        content: '';
+                        width: 4px;
+                        height: 4px;
+                        border-radius: 100% !important;
+                        display: inline-block;
+                        background-color: var(--bs-bullet-bg-color);
+                        margin-right: 1rem;
+                    }
+                    &.p-no-bullet:before {
+                        display: none;
+                    }
+                }
+                &:has(+ .p-submenu-list:not(:empty)) {
+                    .p-menuitem-link:before {
+                        display: none;
+                    }
+                }
+            }
+            &.p-menuitem-active > .p-menuitem-content .p-menuitem-link {
+                color: var(--bs-primary);
+                background-color: #ffffff00;
+            }
+        }
+    }
+}

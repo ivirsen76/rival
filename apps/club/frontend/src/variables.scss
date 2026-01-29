@@ -1,0 +1,113 @@
+$font-family-sans-serif: Poppins, Helvetica, 'sans-serif';
+$font-family-emoji:
+    'Twemoji Mozilla',
+    Apple Color Emoji,
+    'Segoe UI Emoji',
+    'Noto Color Emoji',
+    'EmojiOne Color',
+    Poppins;
+
+// font size
+$app-general-root-font-size-desktop: 14px;
+$app-general-root-font-size-tablet: 14px;
+$app-general-root-font-size-mobile: 14px;
+$root-font-size: 14px;
+$root-font-size-lg: 14px;
+$root-font-size-md: 14px;
+
+$font-size-base: 1rem;
+$font-size-sm: $font-size-base * 0.925;
+
+// General
+$body-bg: #eef0f8;
+
+// Form
+$form-label-font-size: 1.075rem;
+$form-label-font-weight: 600;
+
+// Buttons
+$input-btn-padding-y: 0.5rem;
+$input-btn-padding-x: $input-btn-padding-y * 1.333;
+$input-btn-padding-y-sm: math.div($input-btn-padding-y * 3, 4);
+$input-btn-padding-x-sm: $input-btn-padding-y-sm * 1.333;
+$input-btn-padding-y-lg: $input-btn-padding-y * 1.2;
+$input-btn-padding-x-lg: $input-btn-padding-y-lg * 1.8;
+$btn-padding-y: $input-btn-padding-y;
+$btn-padding-x: $btn-padding-y * 2;
+$btn-padding-y-sm: $input-btn-padding-y-sm;
+$btn-padding-x-sm: $btn-padding-y-sm * 2;
+$btn-padding-y-lg: $input-btn-padding-y-lg;
+$btn-padding-x-lg: $btn-padding-y-lg * 2;
+$btn-close-width: 1rem;
+$btn-close-height: 1rem;
+
+$light: #f5f8fa;
+$light-inverse: #7e8299;
+$light-active: #e4e6ef;
+
+// Colors
+$primary: #009ef7;
+$primary-active: #0095e8;
+$primary-light: #f1faff;
+$primary-clarity: rgba($primary, 0.2);
+
+// Secondary colors
+$secondary: #e4e6ef;
+$secondary-active: darken(#e4e6ef, 5%);
+$secondary-light: #e4e6ef;
+$secondary-clarity: rgba($secondary, 0.2);
+
+// Success colors
+$success: #50cd89;
+$success-active: #47be7d;
+$success-light: #e8fff3;
+$success-clarity: rgba($success, 0.2);
+
+// Info colors
+$info: #7239ea;
+$info-active: #5014d0;
+$info-light: #f8f5ff;
+$info-clarity: rgba($info, 0.2);
+
+// Danger colors
+$danger: #f1416c;
+$danger-active: #d9214e;
+$danger-light: #fff5f8;
+$danger-clarity: rgba($danger, 0.2);
+
+// Warning colors
+$warning: #ffc700;
+$warning-active: #f1bc00;
+$warning-light: #fff8dd;
+$warning-clarity: rgba($warning, 0.2);
+
+// Solid input
+$input-solid-bg: var(--rival-input-solid-bg);
+$input-solid-bg-focus: var(--rival-input-solid-bg-focus);
+$form-check-input-bg-solid: var(--rival-input-solid-bg);
+
+// Modal
+$modal-inner-padding: 1.5rem;
+$modal-backdrop-opacity: 0.5;
+$modal-sm: 400px;
+
+// Cards
+$card-border-enabled: false;
+
+// Badges
+$badge-font-weight: 600;
+
+// Forms
+$form-check-label-color: inherit;
+
+// Menu
+$menu-arrow-size: 0.8rem;
+$menu-arrow-space: 0.5rem;
+$menu-item-padding-y: 0;
+
+// Fix dropdown caret
+$caret-vertical-align: 0.15em;
+
+$dropdown-box-shadow: 0px 0px 50px 0px rgba(0, 0, 0, 0.2);
+
+@import '@rival/common/metronic/scss/_init.scss';

@@ -1,0 +1,38 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: 240px auto auto auto auto auto;
+    line-height: 1.1;
+
+    .title {
+        padding: 1rem;
+        background-color: rgba(255, 255, 255, 0.1);
+        text-align: center;
+        margin-bottom: 0.5rem;
+
+        &.left {
+            border-radius: 0.5rem 0 0 0.5rem;
+        }
+        &.right {
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+    }
+    .name {
+        padding: 0.6rem 1rem 0 0;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+
+        * {
+            line-height: 1.1 !important;
+        }
+    }
+    .number {
+        padding: 0.6rem 1rem 0;
+        text-align: center;
+        color: #a6d8f4;
+
+        &.better {
+            color: #f1ec52;
+        }
+    }
+}

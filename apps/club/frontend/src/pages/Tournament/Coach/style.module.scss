@@ -1,0 +1,32 @@
+.wrapper {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-gap: 3rem;
+
+    .block {
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-start;
+
+        .photo {
+            min-width: 6rem;
+            width: 6rem;
+            height: 6rem;
+            border-radius: 1rem;
+            background-size: 100% auto;
+        }
+        .name {
+            margin-bottom: 0.5rem;
+        }
+        .price {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #999;
+        }
+        .location {
+            font-weight: 500;
+            color: #999;
+            line-height: 1.2;
+        }
+    }
+}

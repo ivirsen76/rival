@@ -1,0 +1,79 @@
+.achievements {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+
+    > * {
+        flex-grow: 1;
+    }
+    .column {
+        flex-basis: 45%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        > * {
+            flex-grow: 1;
+        }
+    }
+}
+.graph {
+    margin-top: 1rem;
+    width: 100%;
+    overflow: hidden;
+    transition: all 0.2s;
+    background: #fff;
+    position: relative;
+
+    [data-bs-theme='dark'] & {
+        background: var(--rival-dark-2);
+    }
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.03);
+    }
+    .timelinesScreenshot {
+        width: 100%;
+        aspect-ratio: 367 / 188;
+        background-image: url('./timelines.png');
+        background-size: 100% 100%;
+
+        [data-bs-theme='dark'] & {
+            background-image: url('./timelinesDark.png');
+        }
+    }
+}
+.toggle {
+    transition: all 0.2s;
+
+    &.expanded {
+        transform: rotate(-90deg);
+    }
+}
+.trophy {
+    svg {
+        width: 1.2rem !important;
+        height: 1.2rem !important;
+
+        path {
+            fill: hsl(228, 42%, 50%) !important;
+
+            [data-bs-theme='dark'] & {
+                fill: var(--rival-block-color) !important;
+            }
+        }
+        @include media-breakpoint-down(xl) {
+            width: 1rem !important;
+            height: 1rem !important;
+        }
+    }
+}
+@include media-breakpoint-up(sm) {
+    .audoModalWrapper {
+        display: flex !important;
+    }
+    .timelinesModal {
+        width: auto;
+        max-width: calc(100vw - 1rem);
+    }
+}

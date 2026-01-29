@@ -1,0 +1,48 @@
+.teams {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    align-items: start;
+    gap: 2rem 1rem;
+
+    .team {
+        border: 1px solid transparent;
+        border-radius: 0.5rem 0.5rem 0 0;
+
+        .name {
+            color: #666;
+            font-weight: 700;
+            padding-left: 0.6rem;
+            padding-right: 0.4rem;
+            background-color: var(--rival-block-bg-color-1);
+            border-radius: 0.5rem 0.5rem 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 2.4rem;
+
+            [data-bs-theme='dark'] & {
+                color: var(--rival-block-color);
+            }
+        }
+        .partners {
+            padding: 0.2rem 0;
+            background-color: var(--rival-block-bg-color-2);
+            min-height: 1rem;
+
+            .partner {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.2rem 0.4rem;
+                background-color: var(--rival-block-bg-color-2);
+            }
+        }
+        &.droppable {
+            border-color: var(--rival-light-4);
+
+            [data-bs-theme='dark'] & {
+                border-color: var(--rival-dark-5);
+            }
+        }
+    }
+}

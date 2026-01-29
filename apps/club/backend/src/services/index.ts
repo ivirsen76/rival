@@ -1,0 +1,57 @@
+import users from './users/users.service';
+import seasons from './seasons/seasons.service';
+import levels from './levels/levels.service';
+import tournaments from './tournaments/tournaments.service';
+import players from './players/players.service';
+import matches from './matches/matches.service';
+import proposals from './proposals/proposals.service';
+import actions from './actions/actions.service';
+import emails from './emails/emails.service';
+import passwords from './passwords/passwords.service';
+import settings from './settings/settings.service';
+import payments from './payments/payments.service';
+import orders from './orders/orders.service';
+import stats from './stats/stats.service';
+import news from './news/news.service';
+import utils from './utils/utils.service';
+import feedbacks from './feedbacks/feedbacks.service';
+import doublesMatches from './doublesmatches/doublesmatches.service';
+import calendars from './calendars/calendars.service';
+import teams from './teams/teams.service';
+import complaints from './complaints/complaints.service';
+import messages from './messages/messages.service';
+import photos from './photos/photos.service';
+import comments from './comments/comments.service';
+import reactions from './reactions/reactions.service';
+import reports from './reports/reports.service';
+import type { Application } from '@feathersjs/feathers';
+
+// eslint-disable-next-line no-unused-vars
+export default function (app: Application) {
+    app.configure(users);
+    app.configure(seasons);
+    app.configure(levels);
+    app.configure(tournaments);
+    app.configure(players);
+    app.configure(matches);
+    app.configure(proposals);
+    app.configure(actions);
+    app.configure(emails);
+    app.configure(passwords);
+    app.configure(settings);
+    app.configure(payments);
+    app.configure(orders);
+    app.configure(stats);
+    app.configure(news);
+    app.configure(utils);
+    app.configure(feedbacks);
+    app.configure(doublesMatches);
+    app.configure(calendars);
+    app.configure(teams);
+    app.configure(complaints);
+    app.configure(messages);
+    app.configure(photos);
+    app.configure(comments);
+    app.configure(reactions);
+    app.configure(reports);
+}

@@ -1,0 +1,11 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 1rem;
+    align-items: center;
+
+    .description {
+        font-weight: 500;
+        color: #a1a5b7;
+    }
+}

@@ -1,0 +1,24 @@
+.description {
+    margin: -0.4rem 0 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: hsl(229, 13%, 57%);
+}
+.success {
+    color: #090;
+
+    svg path {
+        fill: #090 !important;
+    }
+}
+.danger {
+    color: hsl(345, 74%, 49%);
+
+    svg path,
+    svg rect {
+        fill: hsl(345, 74%, 49%) !important;
+    }
+}
+.normal {
+    color: hsl(202, 100%, 38%);
+}

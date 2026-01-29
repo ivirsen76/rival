@@ -1,0 +1,16 @@
+.table {
+    background-color: #efeff9 !important;
+
+    [data-bs-theme='dark'] & {
+        background-color: var(--rival-dark-2) !important;
+    }
+}
+.content {
+    border-radius: 0.5rem;
+    background-color: #fff;
+    margin-bottom: 2rem;
+
+    [data-bs-theme='dark'] & {
+        background-color: var(--rival-light-2);
+    }
+}

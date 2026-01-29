@@ -1,0 +1,47 @@
+.wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    display: flex;
+
+    > * {
+        flex-grow: 1;
+        flex-basis: 0;
+        white-space: nowrap;
+    }
+    .matches {
+        > *:not(:last-child) {
+            margin-bottom: 2rem;
+        }
+    }
+    .divider {
+        flex: 0 0 22px;
+        position: relative;
+    }
+    .header {
+        text-align: center;
+        background-color: var(--rival-block-bg-color-2);
+        border-radius: 0.5rem;
+        padding: 0.5rem 0;
+
+        [data-bs-theme='dark'] & {
+            color: var(--rival-block-color) !important;
+        }
+    }
+    .margin7 {
+        margin-top: 9.3rem;
+    }
+    &.one {
+        .margin7 {
+            margin-top: 1rem;
+        }
+        > * {
+            max-width: 25rem;
+        }
+    }
+    &.isReport {
+        .header {
+            background-color: darken(#f5f8fa, 5%);
+            color: #333 !important;
+        }
+    }
+}

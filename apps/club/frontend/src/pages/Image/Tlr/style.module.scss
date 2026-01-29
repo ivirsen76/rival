@@ -1,0 +1,8 @@
+.wrapper {
+    display: inline-block;
+
+    > * {
+        font-size: 10rem !important;
+        line-height: 0.85 !important;
+    }
+}

@@ -1,0 +1,50 @@
+.wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: calc(100% - 20rem);
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    pointer-events: none;
+    color: #fff;
+
+    .registerButton {
+        z-index: 20;
+        position: sticky;
+        bottom: 2rem;
+        margin-right: 2rem;
+        width: 300px;
+        transition: transform 0.3s;
+        pointer-events: auto;
+
+        svg {
+            width: 100%;
+
+            .background {
+                fill: #535963;
+
+                [data-bs-theme='dark'] & {
+                    fill: var(--rival-dark-3);
+                }
+            }
+        }
+        &:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+    }
+    @include media-breakpoint-down(md) {
+        height: calc(100% - 11rem);
+
+        .registerButton {
+            width: 200px;
+            bottom: 1rem;
+            margin-right: 1rem;
+        }
+    }
+}
+:global .rival-hide-register-button :local .wrapper {
+    display: none;
+}

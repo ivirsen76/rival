@@ -1,0 +1,18 @@
+.weatherWrapper {
+    margin-top: -0.2rem;
+    margin-left: 0.5rem;
+    margin-right: -0.5rem;
+    font-size: 1.4rem;
+
+    &:hover {
+        cursor: pointer;
+    }
+}
+.weatherModal {
+    width: calc(100% - 1rem);
+    max-width: 1140px;
+
+    :global .modal-body {
+        padding-bottom: 0;
+    }
+}

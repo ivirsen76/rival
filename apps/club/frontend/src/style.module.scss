@@ -1,0 +1,38 @@
+$aspectRatio: math.div(167, 245);
+
+.modalWidth {
+    max-width: 440px;
+
+    @include media-breakpoint-down(sm) {
+        max-width: none;
+    }
+}
+.newUpdates {
+    text-align: left !important;
+    position: relative;
+    min-height: 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .list {
+        margin-right: 10.5rem;
+        padding-left: 3rem;
+
+        @include media-breakpoint-down(sm) {
+            margin-right: 7.5rem;
+        }
+    }
+    svg {
+        width: 10rem;
+        height: 10rem * $aspectRatio;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+
+        @include media-breakpoint-down(sm) {
+            width: 7rem;
+            height: 7rem * $aspectRatio;
+        }
+    }
+}

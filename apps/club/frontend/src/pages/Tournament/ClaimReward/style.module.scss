@@ -1,0 +1,43 @@
+.wrapper {
+    display: grid;
+    grid-template-columns: 18rem auto;
+    grid-template-rows: auto 1fr;
+
+    &.noForm {
+        grid-template-columns: 12rem auto;
+    }
+    .trophy {
+        margin: 0 4rem 0 2rem;
+        background-image: url('@/assets/trophy.png');
+        background-size: 100% 100%;
+        grid-area: 1 / 1 / 3 / 2;
+        align-self: end;
+        aspect-ratio: 300 / 641;
+    }
+
+    @include media-breakpoint-down(sm) {
+        grid-template-columns: auto !important;
+
+        .trophy {
+            grid-area: auto;
+            margin: 0 auto 1rem;
+            width: 120px;
+        }
+    }
+
+    .address {
+        max-width: 30rem;
+
+        .address1 {
+            display: grid;
+            grid-template-columns: auto 6rem;
+            grid-gap: 1rem;
+        }
+        .address2 {
+            margin-top: -0.6rem;
+            display: grid;
+            grid-template-columns: auto 5rem 6rem;
+            grid-gap: 1rem;
+        }
+    }
+}
