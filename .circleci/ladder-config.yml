@@ -154,7 +154,7 @@ workflows:
                       - playwright
                   filters:
                       tags:
-                          only: /.*@\d+\.\d+\.\d+$/
+                          only: /^ladder@\d+\.\d+\.\d+$/
             - deploy-dev:
                   requires:
                       - test
