@@ -3,7 +3,7 @@ import Modal from '@/components/Modal';
 import notification from '@/components/notification';
 import SeasonForm from './SeasonForm';
 import CloseSeasonForm from './CloseSeasonForm';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import Tooltip from '@rival/packages/components/Tooltip';
 import _capitalize from 'lodash/capitalize';
 import useSettings from '@/utils/useSettings';

@@ -1,4 +1,4 @@
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import TermsAndConditions from '@/components/TermsAndConditions';
 import ScrollToTop from '@/components/ScrollToTop';
 

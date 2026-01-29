@@ -1,4 +1,4 @@
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import { useQuery, useQueryClient } from 'react-query';
 import axios from '@/utils/axios';
 import Loader from '@/components/Loader';

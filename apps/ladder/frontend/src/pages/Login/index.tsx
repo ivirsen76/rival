@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { logout } from '@/reducers/auth';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import Login from '@/components/Authentication/Login';
 
 const LoginPage = (props) => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import notification from '@/components/notification';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import Loader from '@/components/Loader';
 import Error from '@/components/Error';
 import axios from '@/utils/axios';

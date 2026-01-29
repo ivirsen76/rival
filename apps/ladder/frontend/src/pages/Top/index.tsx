@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import Header from '@/components/Header';
 import classnames from 'classnames';
 import { useHistory } from 'react-router-dom';

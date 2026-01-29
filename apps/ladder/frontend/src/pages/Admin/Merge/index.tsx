@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import Loader from '@/components/Loader';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import Table from '@/components/Table';
 import Modal from '@/components/Modal';
 import PlayerName from '@/components/PlayerName';

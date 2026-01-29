@@ -1,4 +1,4 @@
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import AndrewSrc from './Andrew.svg';
 import IgorSrc from './Igor.svg';
 import ScrollToTop from '@/components/ScrollToTop';

@@ -1,7 +1,7 @@
 import Table from '@/components/Table';
 import { useQuery, useQueryClient } from 'react-query';
 import Loader from '@/components/Loader';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import Modal from '@/components/Modal';
 import notification from '@/components/notification';
 import ChangePasswordForm from './ChangePasswordForm';

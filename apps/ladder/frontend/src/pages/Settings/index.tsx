@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateCurrentUser } from '@/reducers/auth';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import Modal from '@/components/Modal';
 import Tooltip from '@rival/packages/components/Tooltip';
 import PlayerAvatar from '@/components/PlayerAvatar';

@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import notification from '@/components/notification';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import axios from '@/utils/axios';
 import { authenticate } from '@/reducers/auth';
 import { useHistory } from 'react-router-dom';

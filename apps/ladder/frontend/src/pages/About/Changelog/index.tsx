@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import style from './style.module.scss';
 import ScrollToTop from '@/components/ScrollToTop';
 import getData from './getData';

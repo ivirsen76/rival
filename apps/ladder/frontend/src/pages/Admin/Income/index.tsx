@@ -1,4 +1,4 @@
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import Modal from '@/components/Modal';
 import { useQuery } from 'react-query';
 import axios from '@/utils/axios';

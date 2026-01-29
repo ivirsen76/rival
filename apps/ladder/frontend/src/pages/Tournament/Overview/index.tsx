@@ -3,7 +3,7 @@ import Match from '@/components/Match';
 import UpsetMatch from '@/components/UpsetMatch';
 import Proposal from '@/components/Proposal';
 import ProposalDoubles from '@/components/ProposalDoubles';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import Copy from '@/components/Copy';
 import Final from '@/components/Final';
 import Tooltip from '@rival/packages/components/Tooltip';

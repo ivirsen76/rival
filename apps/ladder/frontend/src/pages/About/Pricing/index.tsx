@@ -1,4 +1,4 @@
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import ScrollToTop from '@/components/ScrollToTop';
 import Header from '@/components/Header';
 import useConfig from '@/utils/useConfig';

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import { Formik, Field, Form } from '@/components/formik';
 import CheckboxArray from '@/components/formik/CheckboxArray';
 import Input from '@/components/formik/Input';

@@ -3,7 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Formik, Field, Form } from '@/components/formik';
 import PasswordInput from '@/components/formik/PasswordInput';
 import Button from '@/components/Button';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import notification from '@/components/notification';
 import axios from '@/utils/axios';
 import { logout } from '@/reducers/auth';

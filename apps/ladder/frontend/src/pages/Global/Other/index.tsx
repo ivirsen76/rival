@@ -1,4 +1,4 @@
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import axios from '@/utils/axios';
 import showLoader from '@/utils/showLoader';
 

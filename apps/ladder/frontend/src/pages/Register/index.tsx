@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import Loader from '@/components/Loader';
 import Error from '@/components/Error';
 import Player from './Player';

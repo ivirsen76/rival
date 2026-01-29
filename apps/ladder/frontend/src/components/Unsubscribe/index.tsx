@@ -1,4 +1,4 @@
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import _omit from 'lodash/omit';
 import { useQuery } from 'react-query';
 import Loader from '@/components/Loader';

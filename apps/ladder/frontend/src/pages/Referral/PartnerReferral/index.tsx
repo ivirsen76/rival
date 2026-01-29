@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import Copy from '@/components/Copy';
 import { useQuery } from 'react-query';
 import Loader from '@/components/Loader';

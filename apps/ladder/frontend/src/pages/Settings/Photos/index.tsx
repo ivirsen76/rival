@@ -1,6 +1,6 @@
 import { useCallback, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import _omit from 'lodash/omit';
 import { Redirect } from 'react-router-dom';
 import classnames from 'classnames';

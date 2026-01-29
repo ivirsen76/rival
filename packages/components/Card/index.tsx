@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import _pick from 'lodash/pick';
 import style from './style.module.scss';
-import Tooltip from '@rival/packages/components/Tooltip';
+import Tooltip from '../Tooltip';
 
 type CardProps = {
     className: string;

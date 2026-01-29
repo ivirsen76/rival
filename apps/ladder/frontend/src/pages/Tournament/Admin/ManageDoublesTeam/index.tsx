@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import Card from '@/components/Card';
+import Card from '@rival/packages/components/Card';
 import Modal from '@/components/Modal';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
