@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import { Formik, Form } from '@/components/formik';
 import Button from '@/components/Button';
 import notification from '@/components/notification';
-import WalletIcon from '@/styles/metronic/icons/duotone/Shopping/Wallet.svg?react';
+import WalletIcon from '@rival/packages/metronic/icons/duotone/Shopping/Wallet.svg?react';
 import { loadCurrentUser } from '@/reducers/auth';
 import { useDispatch } from 'react-redux';
 import getRegisterNotificationProps from '@/utils/getRegisterNotificationProps';

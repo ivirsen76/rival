@@ -8,7 +8,7 @@ import Modal from '@/components/Modal';
 import PlayerName from '@/components/PlayerName';
 import { formatDate } from '@/utils/dayjs';
 import Wallet from '@/components/Wallet';
-import WalletIcon from '@/styles/metronic/icons/duotone/Shopping/Wallet.svg?react';
+import WalletIcon from '@rival/packages/metronic/icons/duotone/Shopping/Wallet.svg?react';
 import formatSum from '@/utils/formatSum';
 import axios from '@/utils/axios';
 import useConfig from '@/utils/useConfig';

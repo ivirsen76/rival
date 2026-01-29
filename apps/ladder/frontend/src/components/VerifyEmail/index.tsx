@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from '@/utils/axios';
-import WarningIcon from '@/styles/metronic/icons/duotone/Code/Warning-2.svg?react';
+import WarningIcon from '@rival/packages/metronic/icons/duotone/Code/Warning-2.svg?react';
 import notification from '@/components/notification';
 import style from './style.module.scss';
 

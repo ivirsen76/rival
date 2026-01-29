@@ -2,7 +2,7 @@ import { useState, useMemo, useRef } from 'react';
 import SendIcon from './send.svg?react';
 import SmileIcon from './smile.svg?react';
 import SmileNewIcon from './smileNew.svg?react';
-import OtherIcon from '@/styles/metronic/icons/duotone/General/Other2.svg?react';
+import OtherIcon from '@rival/packages/metronic/icons/duotone/General/Other2.svg?react';
 import { Formik, Field, Form } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
 import PlayerAvatar from '@/components/PlayerAvatar';

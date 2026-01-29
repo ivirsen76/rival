@@ -1,6 +1,6 @@
 import { useQueryClient } from 'react-query';
 import axios from '@/utils/axios';
-import MoveIcon from '@/styles/metronic/icons/duotone/Navigation/Arrows-v.svg?react';
+import MoveIcon from '@rival/packages/metronic/icons/duotone/Navigation/Arrows-v.svg?react';
 import Modal from '@/components/Modal';
 import Card from '@/components/Card';
 import Tooltip from '@rival/packages/components/Tooltip';

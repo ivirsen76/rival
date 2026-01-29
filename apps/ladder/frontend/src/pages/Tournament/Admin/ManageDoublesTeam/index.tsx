@@ -7,7 +7,7 @@ import CreateTeamFromPoolForm from './CreateTeamFromPoolForm';
 import FormChangeTeamName from '@/components/FormChangeTeamName';
 import notification from '@/components/notification';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import EditIcon from '@/styles/metronic/icons/duotone/General/Edit.svg?react';
+import EditIcon from '@rival/packages/metronic/icons/duotone/General/Edit.svg?react';
 import classnames from 'classnames';
 import axios from '@/utils/axios';
 import movePartner from './movePartner';

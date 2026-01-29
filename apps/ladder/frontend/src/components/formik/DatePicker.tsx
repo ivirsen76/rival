@@ -3,7 +3,7 @@ import _omit from 'lodash/omit';
 import classnames from 'classnames';
 import Flatpickr from 'react-flatpickr';
 import dayjs from '@/utils/dayjs';
-import CalendarIcon from '@/styles/metronic/icons/duotone/Interface/Calendar.svg?react';
+import CalendarIcon from '@rival/packages/metronic/icons/duotone/Interface/Calendar.svg?react';
 
 type DatePickerProps = {
     form: object;

@@ -1,7 +1,7 @@
 import { useState, useMemo, useRef } from 'react';
 import { useQuery } from 'react-query';
 import UpsetMatch from '@/components/UpsetMatch';
-import SearchIcon from '@/styles/metronic/icons/duotone/General/Search.svg?react';
+import SearchIcon from '@rival/packages/metronic/icons/duotone/General/Search.svg?react';
 import Loader from '@/components/Loader';
 import { Virtuoso } from 'react-virtuoso';
 import { useDebounce } from 'use-debounce';

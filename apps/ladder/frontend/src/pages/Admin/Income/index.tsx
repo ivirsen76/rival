@@ -6,7 +6,7 @@ import Loader from '@/components/Loader';
 import Table from '@/components/Table';
 import List from './List';
 import formatSum from '@/utils/formatSum';
-import WalletIcon from '@/styles/metronic/icons/duotone/Shopping/Wallet.svg?react';
+import WalletIcon from '@rival/packages/metronic/icons/duotone/Shopping/Wallet.svg?react';
 
 const Income = (props) => {
     const { data: incomes, isLoading } = useQuery('getSeasonIncomes', async () => {

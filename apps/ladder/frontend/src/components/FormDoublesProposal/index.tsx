@@ -9,7 +9,7 @@ import notification from '@/components/notification';
 import dayjs from '@/utils/dayjs';
 import confirmation from '@/utils/confirmation';
 import { useSelector } from 'react-redux';
-import CloseIcon from '@/styles/metronic/icons/duotone/Navigation/Close.svg?react';
+import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
 import axios from '@/utils/axios';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import style from './style.module.scss';

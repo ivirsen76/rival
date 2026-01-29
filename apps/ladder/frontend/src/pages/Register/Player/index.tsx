@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import Button from '@/components/Button';
 import Register from '@/components/Authentication/Register';
 import VerifyEmail from '@/components/VerifyEmail';
-import EmailIcon from '@/styles/metronic/icons/duotone/Communication/Mail-at.svg?react';
+import EmailIcon from '@rival/packages/metronic/icons/duotone/Communication/Mail-at.svg?react';
 import axios from '@/utils/axios';
 
 type PlayerProps = {

@@ -10,7 +10,7 @@ import formatPhone from '@/utils/formatPhone';
 import FormMerge from './FormMerge';
 import axios from '@/utils/axios';
 import classnames from 'classnames';
-import WarningIcon from '@/styles/metronic/icons/duotone/Code/Warning-1-circle.svg?react';
+import WarningIcon from '@rival/packages/metronic/icons/duotone/Code/Warning-1-circle.svg?react';
 import _uniqBy from 'lodash/uniqBy';
 import confirmation from '@/utils/confirmation';
 import showLoader from '@/utils/showLoader';

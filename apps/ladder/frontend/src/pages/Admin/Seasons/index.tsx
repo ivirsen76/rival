@@ -9,7 +9,7 @@ import _capitalize from 'lodash/capitalize';
 import useSettings from '@/utils/useSettings';
 import { useQueryClient } from 'react-query';
 import dayjs from '@/utils/dayjs';
-import CloseIcon from '@/styles/metronic/icons/duotone/Navigation/Close.svg?react';
+import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
 
 const Seasons = (props) => {
     const queryClient = useQueryClient();

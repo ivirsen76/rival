@@ -1,12 +1,12 @@
 import _capitalize from 'lodash/capitalize';
 import { useSelector } from 'react-redux';
-import ExitIcon from '@/styles/metronic/icons/duotune/arrows/arr043.svg?react';
-import SettingsIcon from '@/styles/metronic/icons/duotone/Interface/Cog.svg?react';
-import DollarIcon from '@/styles/metronic/icons/duotone/Shopping/Dollar.svg?react';
+import ExitIcon from '@rival/packages/metronic/icons/duotune/arrows/arr043.svg?react';
+import SettingsIcon from '@rival/packages/metronic/icons/duotone/Interface/Cog.svg?react';
+import DollarIcon from '@rival/packages/metronic/icons/duotone/Shopping/Dollar.svg?react';
 import HornIcon from '@/assets/horn.svg?react';
 import BadgeIcon from '@/assets/badge.svg?react';
-import UserIcon from '@/styles/metronic/icons/duotone/General/User.svg?react';
-import ArrowLeft from '@/styles/metronic/icons/duotune/arrows/arr002.svg?react';
+import UserIcon from '@rival/packages/metronic/icons/duotone/General/User.svg?react';
+import ArrowLeft from '@rival/packages/metronic/icons/duotune/arrows/arr002.svg?react';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import hasAnyRole from '@/utils/hasAnyRole';
 import { Link } from 'react-router-dom';

@@ -5,7 +5,7 @@ import Button from '@/components/Button';
 import FormMatch from '@/components/FormMatch';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
-import CloseIcon from '@/styles/metronic/icons/duotone/Navigation/Close.svg?react';
+import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
 import hasAnyRole from '@/utils/hasAnyRole';
 import style from './style.module.scss';
 

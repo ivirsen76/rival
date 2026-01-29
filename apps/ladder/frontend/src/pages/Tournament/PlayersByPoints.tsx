@@ -7,7 +7,7 @@ import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import Modal from '@/components/Modal';
 import TeamInfo from './TeamInfo';
-import StopIcon from '@/styles/metronic/icons/duotone/Code/Stop.svg?react';
+import StopIcon from '@rival/packages/metronic/icons/duotone/Code/Stop.svg?react';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import dayjs from '@/utils/dayjs';
 import { useSelector } from 'react-redux';

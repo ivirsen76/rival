@@ -7,7 +7,7 @@ import Levels from './Levels';
 import Season from './Season';
 import Payment from './Payment';
 import Header from '@/components/Header';
-import FlagIcon from '@/styles/metronic/icons/duotune/maps/map001.svg?react';
+import FlagIcon from '@rival/packages/metronic/icons/duotune/maps/map001.svg?react';
 import SeasonIcon from '@/assets/season.svg?react';
 import { useSelector } from 'react-redux';
 import { useQuery } from 'react-query';

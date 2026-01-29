@@ -8,7 +8,7 @@ import CloseIcon from './close.svg?react';
 import LeftIcon from './leftArrow.svg?react';
 import RightIcon from './rightArrow.svg?react';
 import CommentIcon from './comment.svg?react';
-import OtherIcon from '@/styles/metronic/icons/duotone/General/Other2.svg?react';
+import OtherIcon from '@rival/packages/metronic/icons/duotone/General/Other2.svg?react';
 import { useQuery, useQueryClient } from 'react-query';
 import Comments from './Comments';
 import { useSelector, useDispatch } from 'react-redux';
