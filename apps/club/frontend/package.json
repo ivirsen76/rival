@@ -15,7 +15,7 @@
         "migrate:undo": "cd src/server && node_modules/.bin/sequelize-cli db:migrate:undo",
         "migrate:undo:all": "cd src/server && node_modules/.bin/sequelize-cli db:migrate:undo:all",
         "seed": "cd src/server && node_modules/.bin/sequelize-cli db:seed:all",
-        "build": "vite build",
+        "build": "NODE_ENV=production vite build",
         "lint": "tsc --noEmit --project tsconfig.app.json",
         "check": "vitest run",
         "check:staged": "src/scripts/lint-staged.js && src/scripts/test-staged.js",

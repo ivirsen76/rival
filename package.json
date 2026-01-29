@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "format": "prettier --write \"**/*.{ts,tsx}\"",
+        "build": "pnpm -r run build",
         "lint": "eslint --quiet .",
         "tslint": "tsc --project apps/ladder/backend/tsconfig.json --noEmit",
         "test": "vitest",
