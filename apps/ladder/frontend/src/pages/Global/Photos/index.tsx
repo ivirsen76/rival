@@ -5,7 +5,7 @@ import axios from '@/utils/axios';
 import { useQuery } from 'react-query';
 import { RowsPhotoAlbum } from 'react-photo-album';
 import { Squircle } from 'corner-smoothing';
-import Paginator from '@/components/Paginator';
+import Paginator from '@rival/packages/components/Paginator';
 
 const PHOTOS_PER_PAGE = 25;
 

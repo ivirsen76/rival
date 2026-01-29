@@ -1,5 +1,5 @@
 import GamePicker from './GamePicker';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import classnames from 'classnames';
 import getScoreAsString from './getScoreAsString';
 import {

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import dayjs from '@/utils/dayjs';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import QuestionIcon from '@/styles/metronic/icons/duotone/Navigation/Question.svg?react';
 import { List } from './PlayersByPoints';
 import { useSelector, useDispatch } from 'react-redux';

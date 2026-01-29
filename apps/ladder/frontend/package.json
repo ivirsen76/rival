@@ -44,7 +44,6 @@
         "@sentry/react": "^6.16.1",
         "@sentry/tracing": "^6.16.1",
         "@statsig/js-client": "^3.8.2",
-        "@tippyjs/react": "^4.2.5",
         "@types/react-redux": "^7.1.34",
         "@types/react-router-dom": "^5.3.3",
         "@vitejs/plugin-react-swc": "^4.2.2",

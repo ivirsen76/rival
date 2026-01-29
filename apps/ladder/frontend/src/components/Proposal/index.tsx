@@ -14,7 +14,7 @@ import notification from '@/components/notification';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import Modal from '@/components/Modal';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import FormDeleteProposal from '@/components/FormDeleteProposal';
 import WeatherAtTime from '../WeatherForecast/WeatherAtTime';
 import checkUserReady from '@/utils/checkUserReady';

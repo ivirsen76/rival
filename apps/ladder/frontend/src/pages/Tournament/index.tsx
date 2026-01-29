@@ -17,7 +17,7 @@ import NotFound from '@/pages/NotFound';
 import hasAnyRole from '@/utils/hasAnyRole';
 import { useSelector } from 'react-redux';
 import dayjs from '@/utils/dayjs';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 

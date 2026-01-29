@@ -4,7 +4,7 @@ import { useQuery } from 'react-query';
 import Loader from '@/components/Loader';
 import Error from '@/components/Error';
 import Table from '@/components/Table';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import notification from '@/components/notification';
 import copy from 'clipboard-copy';
 import classnames from 'classnames';

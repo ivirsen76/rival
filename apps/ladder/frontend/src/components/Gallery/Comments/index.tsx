@@ -10,7 +10,7 @@ import PlayerName from '@/components/PlayerName';
 import EmojiString from '@/components/EmojiString';
 import Loader from '@/components/Loader';
 import Modal from '@/components/Modal';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import Picker from '@emoji-mart/react';
 import { Squircle } from 'corner-smoothing';
 import timeAgo from '@/utils/timeAgo';

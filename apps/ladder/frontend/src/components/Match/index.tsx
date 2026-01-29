@@ -15,7 +15,7 @@ import FormReplacePlayers from '@/components/FormReplacePlayers';
 import FormReplaceTeamPlayers from '@/components/FormReplaceTeamPlayers';
 import FormAddStats from '@/components/FormAddStats';
 import notification from '@/components/notification';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import FormDeleteProposal from '@/components/FormDeleteProposal';
 import FormDeleteMatch from '@/components/FormDeleteMatch';
 import FormDeleteDoublesProposal from '@/components/FormDeleteDoublesProposal';

@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import Chart from '@/components/Chart';
 import _findLastIndex from 'lodash/findLastIndex';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import Mark from './Mark';
 import useAppearance from '@/utils/useAppearance';
 

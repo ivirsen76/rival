@@ -1,4 +1,4 @@
-import Html from '@/components/Html';
+import Html from '@rival/packages/components/Html';
 import Timeline from './Timeline';
 import dayjs from '@/utils/dayjs';
 

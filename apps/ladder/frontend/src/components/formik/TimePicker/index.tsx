@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import ClockIcon from '@/styles/metronic/icons/duotone/Home/Clock.svg?react';
 import ArrowUpIcon from '@/styles/metronic/icons/duotone/Navigation/Angle-up.svg?react';
 import ArrowDownIcon from '@/styles/metronic/icons/duotone/Navigation/Angle-down.svg?react';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import useAppearance from '@/utils/useAppearance';
 import dayjs from '@/utils/dayjs';
 import style from './style.module.scss';

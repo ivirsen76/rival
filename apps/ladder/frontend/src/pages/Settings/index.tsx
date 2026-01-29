@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { updateCurrentUser } from '@/reducers/auth';
 import Card from '@/components/Card';
 import Modal from '@/components/Modal';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import TennisStyleForm, {

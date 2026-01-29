@@ -1,7 +1,7 @@
 import { Fragment, useMemo } from 'react';
 import style from './style.module.scss';
 import { Link } from 'react-router-dom';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import classnames from 'classnames';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';

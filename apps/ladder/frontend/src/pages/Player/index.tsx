@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import Loader from '@/components/Loader';
 import Card from '@/components/Card';
 import Modal from '@/components/Modal';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import Header from '@/components/Header';
 import Rivalry from './Rivalry';
 import Photos from './Photos';

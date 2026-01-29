@@ -1,6 +1,6 @@
 import Spot from './Spot';
 import Bracket from './Bracket';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import getComments from './getComments';
 import classnames from 'classnames';
 import { BYE_ID } from '@rival/ladder.backend/src/constants';

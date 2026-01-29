@@ -1,5 +1,5 @@
 import { useRef, useCallback, useMemo, useState, useEffect } from 'react';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import Icon from '../Icon';
 import _throttle from 'lodash/throttle';
 import WindIcon from './wind.svg?react';

@@ -4,7 +4,7 @@ import notification from '@/components/notification';
 import SeasonForm from './SeasonForm';
 import CloseSeasonForm from './CloseSeasonForm';
 import Card from '@/components/Card';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import _capitalize from 'lodash/capitalize';
 import useSettings from '@/utils/useSettings';
 import { useQueryClient } from 'react-query';

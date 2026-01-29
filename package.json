@@ -10,6 +10,12 @@
         "test": "vitest",
         "check": "npm run lint && npm run tslint && vitest run"
     },
+    "pnpm": {
+        "overrides": {
+            "react": "^18.2.0",
+            "react-dom": "^18.2.0"
+        }
+    },
     "keywords": [],
     "author": "",
     "license": "ISC",

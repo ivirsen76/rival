@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import EloPreview from './EloPreview';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import { Link } from 'react-router-dom';
 import WarningIcon from '@/styles/metronic/icons/duotone/Code/Warning-1-circle.svg?react';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';

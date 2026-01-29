@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import CloseIcon from '@/styles/metronic/icons/duotone/Navigation/Close.svg?react';
 import ArrowDownIcon from '@/styles/metronic/icons/duotone/Navigation/Angle-down.svg?react';
 import SearchIcon from '@/styles/metronic/icons/duotone/General/Search.svg?react';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import axios from '@/utils/axios';
 import { formatDate } from '@/utils/dayjs';
 import style from './style.module.scss';

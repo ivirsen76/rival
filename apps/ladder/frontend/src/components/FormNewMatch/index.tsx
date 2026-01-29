@@ -6,7 +6,7 @@ import Button from '@/components/Button';
 import FormMatch from '@/components/FormMatch';
 import userIcon from '@/assets/user.svg';
 import QuestionIcon from '@/styles/metronic/icons/duotone/Navigation/Question.svg?react';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import getPossibleOpponents from './getPossibleOpponents';
 import getPlayersName from '@/utils/getPlayersName';
 import style from './style.module.scss';

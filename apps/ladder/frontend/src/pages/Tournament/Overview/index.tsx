@@ -6,7 +6,7 @@ import ProposalDoubles from '@/components/ProposalDoubles';
 import Card from '@/components/Card';
 import Copy from '@/components/Copy';
 import Final from '@/components/Final';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import DoublesFinal from '@/components/DoublesFinal';
 import Winner from '@/components/Winner';
 import Modal from '@/components/Modal';

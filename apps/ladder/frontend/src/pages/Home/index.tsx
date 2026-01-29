@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useQuery } from 'react-query';
 import Loader from '@/components/Loader';
 import Card from '@/components/Card';
-import Html from '@/components/Html';
+import Html from '@rival/packages/components/Html';
 import Header from '@/components/Header';
 import WeatherForecast from '@/components/WeatherForecast';
 import { Link } from 'react-router-dom';

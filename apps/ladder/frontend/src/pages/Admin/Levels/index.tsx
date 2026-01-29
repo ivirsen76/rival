@@ -3,7 +3,7 @@ import axios from '@/utils/axios';
 import MoveIcon from '@/styles/metronic/icons/duotone/Navigation/Arrows-v.svg?react';
 import Modal from '@/components/Modal';
 import Card from '@/components/Card';
-import Tooltip from '@/components/Tooltip';
+import Tooltip from '@rival/packages/components/Tooltip';
 import notification from '@/components/notification';
 import LevelForm from './LevelForm';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
