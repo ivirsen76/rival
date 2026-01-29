@@ -21,6 +21,13 @@ aliases:
         sudo apt-get update && sudo apt-get install mysql-client redis-server
         mysql -h $TL_DB_HOSTNAME -u $TL_DB_USERNAME -p$TL_DB_PASSWORD -e "CREATE DATABASE $TL_DB_NAME"
 
+    # Check if tests should be skipped
+    - &maybeSkip |
+        COMMIT_MSG=$(git log -1 --pretty=%B)
+        if echo "$COMMIT_MSG" | grep -iq "\[skip-tests\]"; then
+          circleci-agent step halt
+        fi
+
 version: 2.1
 
 orbs:
@@ -52,6 +59,7 @@ jobs:
         <<: *image
         steps:
             - checkout
+            - run: *maybeSkip
             - run: *install
             - run: *db
 
@@ -66,6 +74,7 @@ jobs:
         parallelism: 8
         steps:
             - checkout
+            - run: *maybeSkip
             - run: *install
             - run: *db
             - run: cd apps/ladder/frontend && pnpm exec playwright install chromium
