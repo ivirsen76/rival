@@ -41,6 +41,7 @@ jobs:
             - checkout
             - run: sudo apt-get update && sudo apt-get install -y rsync # install rsync
             - run: *install
+            - run: cd packages/dayjs && pnpm run build
             - run: cd apps/ladder/frontend && NODE_ENV=production pnpm run build
             - run: cd apps/ladder/backend && pnpm run build
 
