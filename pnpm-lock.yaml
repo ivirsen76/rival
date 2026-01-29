@@ -261,12 +261,12 @@ importers:
       '@reduxjs/toolkit':
         specifier: ^1.5.1
         version: 1.9.7(react-redux@7.2.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+      '@rival/club.backend':
+        specifier: workspace:*
+        version: link:../backend
       '@rival/common':
         specifier: workspace:*
         version: link:../../../packages/common
-      '@rival/ladder.backend':
-        specifier: workspace:*
-        version: link:../../ladder/backend
       '@sentry/react':
         specifier: ^6.16.1
         version: 6.19.7(react@18.3.1)
