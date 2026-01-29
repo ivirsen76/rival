@@ -39,7 +39,7 @@
         "@emoji-mart/react": "^1.1.1",
         "@reduxjs/toolkit": "^1.5.1",
         "@rival/ladder.backend": "workspace:*",
-        "@rival/packages": "workspace:*",
+        "@rival/common": "workspace:*",
         "@sentry/react": "^6.16.1",
         "@sentry/tracing": "^6.16.1",
         "@statsig/js-client": "^3.8.2",
