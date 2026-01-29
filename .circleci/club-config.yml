@@ -1,0 +1,117 @@
+aliases:
+    - &image
+      docker:
+          - image: cimg/node:20.19.4-browsers
+          - image: cimg/mysql:5.7.38
+            environment:
+                MYSQL_ROOT_PASSWORD: password
+          - image: cimg/redis:6.2.7
+      working_directory: ~/repo
+      executor: node/default
+
+    - &node
+      docker:
+          - image: cimg/node:20.19.4
+      working_directory: ~/repo
+
+    - &install |
+        pnpm install
+
+    - &db |
+        sudo apt-get update && sudo apt-get install mysql-client redis-server
+        mysql -h $TL_DB_HOSTNAME -u $TL_DB_USERNAME -p$TL_DB_PASSWORD -e "CREATE DATABASE $TL_DB_NAME"
+
+    # Check if tests should be skipped
+    - &maybeSkip |
+        COMMIT_MSG=$(git log -1 --pretty=%B)
+        if echo "$COMMIT_MSG" | grep -iq "\[skip-tests\]"; then
+          circleci-agent step halt
+        fi
+
+version: 2.1
+
+orbs:
+    node: circleci/node@5.0.2
+    browser-tools: circleci/browser-tools@1.5.0
+
+jobs:
+    build:
+        <<: *node
+        steps:
+            - checkout
+            - run: sudo apt-get update && sudo apt-get install -y rsync # install rsync
+            - run: *install
+            - run: cd apps/club/frontend && NODE_ENV=production pnpm run build
+            - run: cd apps/club/backend && pnpm run build
+
+            # create backend deploy folder
+            - run: pnpm --legacy --filter=@rival/club.backend --prod deploy ~/server
+            - run: cp -R apps/club/backend/dist ~/server/dist
+            - run: cp -R apps/club/backend/build ~/server/build
+
+            - persist_to_workspace:
+                  root: ~/
+                  paths:
+                      - server
+                      - repo/apps/club/backend/build
+                      - repo/apps/club/backend/dist
+    test:
+        <<: *image
+        steps:
+            - checkout
+            - run: *maybeSkip
+            - run: *install
+            - run: *db
+
+            # restore dist from shared workspace
+            - attach_workspace:
+                  at: ~/
+
+            - run: pnpm run check
+
+    playwright:
+        <<: *image
+        parallelism: 8
+        steps:
+            - checkout
+            - run: *maybeSkip
+            - run: *install
+            - run: *db
+            - run: cd apps/club/frontend && pnpm exec playwright install chromium
+
+            # restore dist from shared workspace
+            - attach_workspace:
+                  at: ~/
+
+            # Run server
+            - run:
+                  name: Run server
+                  command: cd ~/server && pnpm run start:prod
+                  background: true
+            - run: sleep 5
+
+            - run:
+                  command: |
+                      circleci tests glob "apps/club/frontend/playwright/**/*.page.ts" | circleci tests split --split-by=filesize > /tmp/tests-to-run
+            # Run browser tests
+            - run: cd apps/club/frontend && pnpm run playwright -- $(cat /tmp/tests-to-run)
+
+workflows:
+    build-test-deploy:
+        jobs:
+            - build:
+                  filters:
+                      tags:
+                          only: /.*/
+            - test:
+                  requires:
+                      - build
+                  filters:
+                      tags:
+                          only: /.*/
+            - playwright:
+                  requires:
+                      - build
+                  filters:
+                      tags:
+                          only: /.*/
