@@ -304,9 +304,6 @@ importers:
       '@emoji-mart/react':
         specifier: ^1.1.1
         version: 1.1.1(emoji-mart@5.6.0)(react@18.2.0)
-      '@loadable/component':
-        specifier: ^5.15.2
-        version: 5.16.7(react@18.2.0)
       '@reduxjs/toolkit':
         specifier: ^1.5.1
         version: 1.9.7(react-redux@7.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
@@ -498,6 +495,9 @@ importers:
   packages:
 
     dependencies:
+      '@loadable/component':
+        specifier: ^5.15.2
+        version: 5.16.7(react@18.2.0)
       '@tippyjs/react':
         specifier: ^4.2.5
         version: 4.2.6(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -516,6 +516,9 @@ importers:
       prop-types:
         specifier: ^15.7.2
         version: 15.8.1
+      react-bootstrap:
+        specifier: 2.9.1
+        version: 2.9.1(@types/react@19.2.8)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-router-dom:
         specifier: ^5.2.0
         version: 5.3.4(react@18.2.0)

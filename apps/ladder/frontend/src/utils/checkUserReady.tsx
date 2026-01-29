@@ -1,8 +1,8 @@
 import notification from '@/components/notification';
-import confirmation from '@/utils/confirmation';
+import confirmation from '@rival/packages/utils/confirmation';
 import FormBirthday from '@/components/FormBirthday';
 import { setCurrentUser } from '@/reducers/auth';
-import formatPhone from '@/utils/formatPhone';
+import formatPhone from '@rival/packages/utils/formatPhone';
 import VerifyPhone from '@/components/VerifyPhone';
 
 const checkForBirthday = async () => {

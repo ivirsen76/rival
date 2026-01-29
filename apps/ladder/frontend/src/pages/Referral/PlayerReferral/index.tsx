@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 import useConfig from '@/utils/useConfig';
 import { getFacebookLink, getTwitterLink, getEmailLink } from '@rival/ladder.backend/src/social';
 import Header from '@/components/Header';
-import useBreakpoints from '@/utils/useBreakpoints';
+import useBreakpoints from '@rival/packages/utils/useBreakpoints';
 import classnames from 'classnames';
 import style from './style.module.scss';
 

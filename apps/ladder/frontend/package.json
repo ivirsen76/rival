@@ -37,7 +37,6 @@
         "@amcharts/amcharts4": "^4.10.18",
         "@emoji-mart/data": "^1.2.1",
         "@emoji-mart/react": "^1.1.1",
-        "@loadable/component": "^5.15.2",
         "@reduxjs/toolkit": "^1.5.1",
         "@rival/ladder.backend": "workspace:*",
         "@rival/packages": "workspace:*",

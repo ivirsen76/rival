@@ -4,7 +4,7 @@ import notification from '@/components/notification';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import AddressAutocomplete from '@/components/formik/AddressAutocomplete';
-import obfuscateLabel from '@/utils/obfuscateLabel';
+import obfuscateLabel from '@rival/packages/utils/obfuscateLabel';
 import Select from '@/components/formik/Select';
 import Button from '@rival/packages/components/Button';
 import useConfig from '@/utils/useConfig';

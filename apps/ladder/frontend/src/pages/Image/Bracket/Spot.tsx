@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
-import getRelativeStringLength from '@/utils/getRelativeStringLength';
+import getRelativeStringLength from '@rival/packages/utils/getRelativeStringLength';
 import { BYE_ID } from '@rival/ladder.backend/src/constants';
 import style from './style.module.scss';
 

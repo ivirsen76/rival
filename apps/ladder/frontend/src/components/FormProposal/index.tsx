@@ -8,7 +8,7 @@ import SelectButtons from '@/components/formik/SelectButtons';
 import DoublesPlayersPicker from '@/components/formik/DoublesPlayersPicker';
 import Button from '@rival/packages/components/Button';
 import dayjs from '@/utils/dayjs';
-import confirmation from '@/utils/confirmation';
+import confirmation from '@rival/packages/utils/confirmation';
 import useTournamentOptions from './useTournamentOptions';
 import useVisibleStats from './useVisibleStats';
 import axios from '@/utils/axios';

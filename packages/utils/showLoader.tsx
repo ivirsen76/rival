@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import Loader from '@rival/packages/components/Loader';
+import Loader from '../components/Loader';
 
 // Add div to the body where we will render the confirm modal
 const wrapper = document.createElement('div');

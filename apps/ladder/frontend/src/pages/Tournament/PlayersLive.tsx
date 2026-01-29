@@ -7,7 +7,7 @@ import { List } from './PlayersByPoints';
 import { useSelector, useDispatch } from 'react-redux';
 import { setShowAllPlayers } from '@/reducers/auth';
 import ArrowDownIcon from '@rival/packages/metronic/icons/duotone/Navigation/Angle-down.svg?react';
-import useBreakpoints from '@/utils/useBreakpoints';
+import useBreakpoints from '@rival/packages/utils/useBreakpoints';
 
 const firstPlayers = 10;
 const tooManyPlayers = 20;

@@ -1,8 +1,8 @@
-import useBreakpoints from '@/utils/useBreakpoints';
+import useBreakpoints from '@rival/packages/utils/useBreakpoints';
 import ScrollToTop from '@rival/packages/components/ScrollToTop';
 import Header from '@/components/Header';
 import { NtrpGuidelinesLink } from '@/components/NtrpGuidelines';
-import getImageSize from '@/utils/getImageSize';
+import getImageSize from '@rival/packages/utils/getImageSize';
 import player from './player.jpg?w=1200;2400&format=jpeg&quality=60&as=metadata';
 import style from './style.module.scss';
 

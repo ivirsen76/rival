@@ -13,7 +13,7 @@ import useConfig from '@/utils/useConfig';
 import useSettings from '@/utils/useSettings';
 import style from './style.module.scss';
 import classnames from 'classnames';
-import useBreakpoints from '@/utils/useBreakpoints';
+import useBreakpoints from '@rival/packages/utils/useBreakpoints';
 import { useSelector } from 'react-redux';
 import hasAnyRole from '@/utils/hasAnyRole';
 import UserIcon from '@rival/packages/metronic/icons/duotone/General/User.svg?react';
@@ -28,9 +28,9 @@ import playerOnClay from './player-on-clay.jpg?w=1200;2400&format=jpeg&quality=6
 import scoringSquare from './scoring-square.jpg?w=600;1200&format=jpeg&quality=60&as=metadata';
 import court from './court.jpg?w=800;1200;1600;2400&format=webp&as=srcset';
 import courtSmall from './courtSmall.jpg?w=800;1200;1600;2400&format=webp&as=srcset';
-import getImageSize from '@/utils/getImageSize';
+import getImageSize from '@rival/packages/utils/getImageSize';
 import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
-import gradualRound from '@/utils/gradualRound';
+import gradualRound from '@rival/packages/utils/gradualRound';
 import CtaButton from './CtaButton';
 import log from '@/utils/log';
 

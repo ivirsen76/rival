@@ -13,7 +13,7 @@ import {
     getSinglesTournament16Text,
     getDoublesTournamentText,
 } from '../texts';
-import confirmation from '@/utils/confirmation';
+import confirmation from '@rival/packages/utils/confirmation';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 
 const GO_MESSAGE = 'You are registered for the tournament!';

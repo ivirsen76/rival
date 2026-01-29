@@ -20,9 +20,9 @@ import { motion } from 'motion/react';
 import EditCommentForm from '../EditCommentForm';
 import ReportCommentForm from '../ReportCommentForm';
 import classnames from 'classnames';
-import useBreakpoints from '@/utils/useBreakpoints';
+import useBreakpoints from '@rival/packages/utils/useBreakpoints';
 import useAppearance from '@/utils/useAppearance';
-import useOutsideClick from '@/utils/useOutsideClick';
+import useOutsideClick from '@rival/packages/utils/useOutsideClick';
 import style from './style.module.scss';
 
 const formatDate = (date) => formatCustom(date, 'MMM\xa0D, YYYY, h:mm A');

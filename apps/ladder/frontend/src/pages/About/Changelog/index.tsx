@@ -8,7 +8,7 @@ import axios from '@/utils/axios';
 import { loadCurrentUser } from '@/reducers/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import useConfig from '@/utils/useConfig';
-import useLazyImages from '@/utils/useLazyImages';
+import useLazyImages from '@rival/packages/utils/useLazyImages';
 import Header from '@/components/Header';
 
 const Changelog = (props) => {

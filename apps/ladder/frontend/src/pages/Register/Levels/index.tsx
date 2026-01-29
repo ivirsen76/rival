@@ -24,7 +24,7 @@ import useStatsigEvents from '@/utils/useStatsigEvents';
 import classnames from 'classnames';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 import TeammateForm from './TeammateForm';
-import useModal from '@/utils/useModal';
+import useModal from '@rival/packages/utils/useModal';
 
 const renderTeammateDescription = (tournamentId: number, values) => {
     const partnerInfo = values.partners[`partner-${tournamentId}`];

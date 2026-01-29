@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import classnames from 'classnames';
-import useBreakpoints from '@/utils/useBreakpoints';
+import useBreakpoints from '@rival/packages/utils/useBreakpoints';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import PlayerName from '@/components/PlayerName';
 import style from './usePlayerFilter.module.scss';

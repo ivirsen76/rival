@@ -5,7 +5,7 @@ import axios from '@/utils/axios';
 import Loader from '@rival/packages/components/Loader';
 import Table from '@rival/packages/components/Table';
 import List from './List';
-import formatSum from '@/utils/formatSum';
+import formatSum from '@rival/packages/utils/formatSum';
 import WalletIcon from '@rival/packages/metronic/icons/duotone/Shopping/Wallet.svg?react';
 
 const Income = (props) => {

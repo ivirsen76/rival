@@ -16,7 +16,7 @@ import Loader from '@rival/packages/components/Loader';
 import Button from '@rival/packages/components/Button';
 import notification from '@/components/notification';
 import useConfig from '@/utils/useConfig';
-import formatSize from '@/utils/formatSize';
+import formatSize from '@rival/packages/utils/formatSize';
 import style from './style.module.scss';
 
 let counter = 1;

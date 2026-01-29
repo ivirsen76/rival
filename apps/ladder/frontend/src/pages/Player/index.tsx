@@ -18,7 +18,7 @@ import EmailIcon from '@rival/packages/metronic/icons/duotone/Communication/Mail
 import AngryIcon from './angry.svg?react';
 import EnvelopeIcon from '@rival/packages/metronic/icons/duotone/Interface/Envelope.svg?react';
 import MarkerIcon from '@rival/packages/metronic/icons/duotune/general/gen018.svg?react';
-import formatPhone from '@/utils/formatPhone';
+import formatPhone from '@rival/packages/utils/formatPhone';
 import NotFound from '@/pages/NotFound';
 import axios from '@/utils/axios';
 import {
@@ -48,7 +48,7 @@ import LastMatchesElo from './LastMatchesElo';
 import useConfig from '@/utils/useConfig';
 import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
 import { Squircle } from 'corner-smoothing';
-import useBreakpoints from '@/utils/useBreakpoints';
+import useBreakpoints from '@rival/packages/utils/useBreakpoints';
 import style from './style.module.scss';
 
 type PlayerProps = {

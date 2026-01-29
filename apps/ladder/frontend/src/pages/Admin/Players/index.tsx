@@ -7,7 +7,7 @@ import notification from '@/components/notification';
 import ChangePasswordForm from './ChangePasswordForm';
 import axios from '@/utils/axios';
 import { Link } from 'react-router-dom';
-import formatPhone from '@/utils/formatPhone';
+import formatPhone from '@rival/packages/utils/formatPhone';
 import LockIcon from '@rival/packages/metronic/icons/duotone/Interface/Lock.svg?react';
 import { formatDate } from '@/utils/dayjs';
 import { comeFromOptions } from '@/components/Authentication/Register';
@@ -16,8 +16,8 @@ import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.s
 import UpdateIcon from '@rival/packages/metronic/icons/duotone/General/Update.svg?react';
 import { useSelector } from 'react-redux';
 import hasAnyRole from '@/utils/hasAnyRole';
-import confirmation from '@/utils/confirmation';
-import showLoader from '@/utils/showLoader';
+import confirmation from '@rival/packages/utils/confirmation';
+import showLoader from '@rival/packages/utils/showLoader';
 
 const getFilteredData = (item, filter) => {
     filter = filter.toLowerCase();

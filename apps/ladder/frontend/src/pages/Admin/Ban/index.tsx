@@ -6,10 +6,10 @@ import Modal from '@/components/Modal';
 import notification from '@/components/notification';
 import BanForm from './BanForm';
 import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
-import confirmation from '@/utils/confirmation';
+import confirmation from '@rival/packages/utils/confirmation';
 import { formatDate } from '@/utils/dayjs';
 import { Link } from 'react-router-dom';
-import showLoader from '@/utils/showLoader';
+import showLoader from '@rival/packages/utils/showLoader';
 
 const Ban = (props) => {
     const queryClient = useQueryClient();

@@ -1,4 +1,4 @@
-import useUniqueId from '@/utils/useUniqueId';
+import useUniqueId from '@rival/packages/utils/useUniqueId';
 import style from './style.module.scss';
 
 type IconProps = {

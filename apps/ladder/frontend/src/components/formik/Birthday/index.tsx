@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect, useRef } from 'react';
 import FieldWrapper from '../FieldWrapper';
 import { useDebounce } from 'use-debounce';
 import dayjs from '@/utils/dayjs';
-import convertDate from '@/utils/convertDate';
+import convertDate from '@rival/packages/utils/convertDate';
 import classnames from 'classnames';
 import style from './style.module.scss';
 

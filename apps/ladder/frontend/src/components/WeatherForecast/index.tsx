@@ -5,7 +5,7 @@ import Icon from './Icon';
 import Hover from './Hover';
 import dayjs from '@/utils/dayjs';
 import AppleIcon from './apple.svg?react';
-import hslToRgb from '@/utils/hslToRgb';
+import hslToRgb from '@rival/packages/utils/hslToRgb';
 import useAppearance from '@/utils/useAppearance';
 import style from './style.module.scss';
 

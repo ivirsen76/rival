@@ -11,7 +11,7 @@ import axios from '@/utils/axios';
 import _uniq from 'lodash/uniq';
 import Loader from '@rival/packages/components/Loader';
 import notification from '@/components/notification';
-import confirmation from '@/utils/confirmation';
+import confirmation from '@rival/packages/utils/confirmation';
 import copy from 'clipboard-copy';
 import { useSelector } from 'react-redux';
 import hasAnyRole from '@/utils/hasAnyRole';

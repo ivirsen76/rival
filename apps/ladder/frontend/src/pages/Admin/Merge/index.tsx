@@ -6,14 +6,14 @@ import Table from '@rival/packages/components/Table';
 import Modal from '@/components/Modal';
 import PlayerName from '@/components/PlayerName';
 import { formatDate } from '@/utils/dayjs';
-import formatPhone from '@/utils/formatPhone';
+import formatPhone from '@rival/packages/utils/formatPhone';
 import FormMerge from './FormMerge';
 import axios from '@/utils/axios';
 import classnames from 'classnames';
 import WarningIcon from '@rival/packages/metronic/icons/duotone/Code/Warning-1-circle.svg?react';
 import _uniqBy from 'lodash/uniqBy';
-import confirmation from '@/utils/confirmation';
-import showLoader from '@/utils/showLoader';
+import confirmation from '@rival/packages/utils/confirmation';
+import showLoader from '@rival/packages/utils/showLoader';
 import useTabs from '../../Tournament/useTabs';
 import style from './style.module.scss';
 

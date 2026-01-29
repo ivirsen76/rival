@@ -8,7 +8,7 @@ import _pick from 'lodash/pick';
 import Select from '@/components/formik/Select';
 import Textarea from '@/components/formik/Textarea';
 import Checkbox from '@/components/formik/Checkbox';
-import convertDate from '@/utils/convertDate';
+import convertDate from '@rival/packages/utils/convertDate';
 
 export const genderOptions = [
     { value: '', label: '-- Choose --' },

@@ -19,14 +19,14 @@ import Tooltip from '@rival/packages/components/Tooltip';
 import FormDeleteProposal from '@/components/FormDeleteProposal';
 import FormDeleteMatch from '@/components/FormDeleteMatch';
 import FormDeleteDoublesProposal from '@/components/FormDeleteDoublesProposal';
-import confirmation from '@/utils/confirmation';
+import confirmation from '@rival/packages/utils/confirmation';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import Stats from './Stats';
 import axios from '@/utils/axios';
-import showLoader from '@/utils/showLoader';
+import showLoader from '@rival/packages/utils/showLoader';
 import useScoreUpdated from './useScoreUpdated';
-import getRelativeStringLength from '@/utils/getRelativeStringLength';
+import getRelativeStringLength from '@rival/packages/utils/getRelativeStringLength';
 import parseScore from './parseScore';
 import getPointsCalculation from './getPointsCalculation';
 import {

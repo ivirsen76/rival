@@ -5,7 +5,7 @@ import useSettings from '@/utils/useSettings';
 import ChatIcon from '@rival/packages/metronic/icons/duotone/Communication/Chat6.svg?react';
 import { useSelector } from 'react-redux';
 import testImage from './clay.jpg';
-import useBreakpoints from '@/utils/useBreakpoints';
+import useBreakpoints from '@rival/packages/utils/useBreakpoints';
 import Modal from '@/components/Modal';
 import FormFeedback from '@/components/FormFeedback';
 import RegisterButton from '@/components/RegisterButton';

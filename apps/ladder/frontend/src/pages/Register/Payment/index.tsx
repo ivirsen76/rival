@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Loader from '@rival/packages/components/Loader';
 import axios from '@/utils/axios';
-import formatSum from '@/utils/formatSum';
+import formatSum from '@rival/packages/utils/formatSum';
 import classnames from 'classnames';
 import { Formik, Form } from '@/components/formik';
 import Button from '@rival/packages/components/Button';

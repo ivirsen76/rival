@@ -9,8 +9,8 @@ import StopIcon from '@rival/packages/metronic/icons/duotone/Code/Stop.svg?react
 import UpdateIcon from '@rival/packages/metronic/icons/duotone/General/Update.svg?react';
 import axios from '@/utils/axios';
 import notification from '@/components/notification';
-import confirmation from '@/utils/confirmation';
-import showLoader from '@/utils/showLoader';
+import confirmation from '@rival/packages/utils/confirmation';
+import showLoader from '@rival/packages/utils/showLoader';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 
 type AdminProps = {

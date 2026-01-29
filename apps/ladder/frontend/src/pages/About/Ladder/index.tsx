@@ -1,11 +1,11 @@
-import useBreakpoints from '@/utils/useBreakpoints';
+import useBreakpoints from '@rival/packages/utils/useBreakpoints';
 import ScrollToTop from '@rival/packages/components/ScrollToTop';
 import Header from '@/components/Header';
 import { NtrpGuidelinesLink } from '@/components/NtrpGuidelines';
 import { Link } from 'react-router-dom';
 import useConfig from '@/utils/useConfig';
 import racket from './racket.jpg?w=1200;2400&format=jpeg&quality=60&as=metadata';
-import getImageSize from '@/utils/getImageSize';
+import getImageSize from '@rival/packages/utils/getImageSize';
 import style from './style.module.scss';
 
 const Contacts = (props) => {

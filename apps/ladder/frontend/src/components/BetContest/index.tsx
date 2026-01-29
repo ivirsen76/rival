@@ -7,7 +7,7 @@ import BetResult from '../BetResult';
 import BracketsIcon from '@/assets/brackets.svg?react';
 import BotIcon from '@/assets/bot.svg?react';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
-import useBreakpoints from '@/utils/useBreakpoints';
+import useBreakpoints from '@rival/packages/utils/useBreakpoints';
 import { BRACKET_BOT_ID } from '@rival/ladder.backend/src/constants';
 import style from './style.module.scss';
 

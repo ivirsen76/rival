@@ -6,7 +6,7 @@ import Check from './Check';
 import { useQuery } from 'react-query';
 import { formatCustom } from '@/utils/dayjs';
 import classnames from 'classnames';
-import formatSum from '@/utils/formatSum';
+import formatSum from '@rival/packages/utils/formatSum';
 import FileIcon from '@rival/packages/metronic/icons/duotone/Files/File.svg?react';
 import WalletIcon from '@rival/packages/metronic/icons/duotone/Shopping/Wallet.svg?react';
 import style from './style.module.scss';

@@ -4,7 +4,7 @@ import Button from '@rival/packages/components/Button';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import notification from '@/components/notification';
-import showLoader from '@/utils/showLoader';
+import showLoader from '@rival/packages/utils/showLoader';
 import { useSelector } from 'react-redux';
 import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
 import axios from '@/utils/axios';

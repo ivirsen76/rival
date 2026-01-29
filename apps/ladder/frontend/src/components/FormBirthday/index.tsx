@@ -1,7 +1,7 @@
 import Button from '@rival/packages/components/Button';
 import Birthday from '@/components/formik/Birthday';
 import { Formik, Field, Form } from '@/components/formik';
-import convertDate from '@/utils/convertDate';
+import convertDate from '@rival/packages/utils/convertDate';
 import { updateCurrentUser } from '@/reducers/auth';
 
 type FormBirthdayProps = {

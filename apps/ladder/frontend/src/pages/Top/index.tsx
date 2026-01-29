@@ -16,7 +16,7 @@ import { getPercentile } from './helpers';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 import { formatCustom } from '@/utils/dayjs';
 import useConfig from '@/utils/useConfig';
-import useBreakpoints from '@/utils/useBreakpoints';
+import useBreakpoints from '@rival/packages/utils/useBreakpoints';
 import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
 import style from './style.module.scss';
 

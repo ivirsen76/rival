@@ -9,7 +9,7 @@ import PlayerName from '@/components/PlayerName';
 import { formatDate } from '@/utils/dayjs';
 import Wallet from '@/components/Wallet';
 import WalletIcon from '@rival/packages/metronic/icons/duotone/Shopping/Wallet.svg?react';
-import formatSum from '@/utils/formatSum';
+import formatSum from '@rival/packages/utils/formatSum';
 import axios from '@/utils/axios';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';

@@ -1,4 +1,4 @@
-import loadable from '@/utils/loadable';
+import loadable from '@rival/packages/utils/loadable';
 
 // Just to preload lazy bundles
 const Chart = loadable(() => import(/* webpackPrefetch: true */ './lazy.jsx'), { fallback: null });

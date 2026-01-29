@@ -6,7 +6,7 @@ import Modal from '@/components/Modal';
 import notification from '@/components/notification';
 import ManagerForm from './ManagerForm';
 import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
-import confirmation from '@/utils/confirmation';
+import confirmation from '@rival/packages/utils/confirmation';
 import { Link } from 'react-router-dom';
 
 const Managers = () => {

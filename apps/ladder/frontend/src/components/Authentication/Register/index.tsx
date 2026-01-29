@@ -19,7 +19,7 @@ import Cookies from 'js-cookie';
 import { useDebounce } from 'use-debounce';
 import axios from '@/utils/axios';
 import { useSelector } from 'react-redux';
-import convertDate from '@/utils/convertDate';
+import convertDate from '@rival/packages/utils/convertDate';
 import style from './style.module.scss';
 
 export const comeFromOptions = [

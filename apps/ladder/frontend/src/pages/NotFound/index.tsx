@@ -1,7 +1,7 @@
 import Card from '@rival/packages/components/Card';
 import { Link } from 'react-router-dom';
 import brokenBall from './brokenBall.jpg?w=1200&format=jpeg&quality=60&as=metadata';
-import useBreakpoints from '@/utils/useBreakpoints';
+import useBreakpoints from '@rival/packages/utils/useBreakpoints';
 import classnames from 'classnames';
 import style from './style.module.scss';
 

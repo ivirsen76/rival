@@ -3,7 +3,7 @@ import Spot from './Spot';
 import Bracket from './Bracket';
 import classnames from 'classnames';
 import { getInitialPrediction, setWinner, preparePredictionToSave } from './helpers';
-import showLoader from '@/utils/showLoader';
+import showLoader from '@rival/packages/utils/showLoader';
 import axios from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import { BYE_ID } from '@rival/ladder.backend/src/constants';

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import classnames from 'classnames';
-import formatDuration from '@/utils/formatDuration';
+import formatDuration from '@rival/packages/utils/formatDuration';
 
 type TimeoutCallbackProps = {
     deadline: object;

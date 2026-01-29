@@ -7,7 +7,7 @@ import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import notification from '@/components/notification';
 import dayjs from '@/utils/dayjs';
-import confirmation from '@/utils/confirmation';
+import confirmation from '@rival/packages/utils/confirmation';
 import { useSelector } from 'react-redux';
 import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
 import axios from '@/utils/axios';

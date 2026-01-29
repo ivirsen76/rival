@@ -22,7 +22,7 @@ import PlayerName from '@/components/PlayerName';
 import axios from '@/utils/axios';
 import ReactCSSTransitionReplace from 'react-css-transition-replace';
 import { useSelector } from 'react-redux';
-import confirmation from '@/utils/confirmation';
+import confirmation from '@rival/packages/utils/confirmation';
 import { formatCustom } from '@/utils/dayjs';
 import getScoreAsString from './getScoreAsString';
 import InjuryForm from './InjuryForm';

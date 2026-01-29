@@ -3,7 +3,7 @@ import axios from '@/utils/axios';
 import Loader from '@rival/packages/components/Loader';
 import Table from '@rival/packages/components/Table';
 import PlayerName from '@/components/PlayerName';
-import formatSum from '@/utils/formatSum';
+import formatSum from '@rival/packages/utils/formatSum';
 import { formatLong } from '@/utils/dayjs';
 
 type ListProps = {

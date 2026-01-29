@@ -4,7 +4,7 @@ import WarningIcon from '@rival/packages/metronic/icons/duotone/Code/Warning-2.s
 import PhoneIcon from '@rival/packages/metronic/icons/duotone/Interface/Phone.svg?react';
 import notification from '@/components/notification';
 import WaitTill from '@/components/WaitTill';
-import formatPhone from '@/utils/formatPhone';
+import formatPhone from '@rival/packages/utils/formatPhone';
 import style from './style.module.scss';
 
 type VerifyPhoneProps = {
