@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Field, Form } from '@/components/formik';
 import Select from '@/components/formik/Select';
 import { updateCurrentUser } from '@/reducers/auth';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import _pick from 'lodash/pick';
 
 export const dominantHandOptions = [

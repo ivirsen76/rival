@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Card from '@rival/packages/components/Card';
 import style from './style.module.scss';
-import ScrollToTop from '@/components/ScrollToTop';
+import ScrollToTop from '@rival/packages/components/ScrollToTop';
 import getData from './getData';
 import dayjs from '@/utils/dayjs';
 import axios from '@/utils/axios';

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Card from '@rival/packages/components/Card';
-import Loader from '@/components/Loader';
-import Error from '@/components/Error';
+import Loader from '@rival/packages/components/Loader';
+import Error from '@rival/packages/components/Error';
 import Player from './Player';
 import Levels from './Levels';
 import Season from './Season';

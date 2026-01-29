@@ -8,7 +8,7 @@ import Textarea from '@/components/formik/Textarea';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import EmojiString from '@/components/EmojiString';
-import Loader from '@/components/Loader';
+import Loader from '@rival/packages/components/Loader';
 import Modal from '@/components/Modal';
 import Tooltip from '@rival/packages/components/Tooltip';
 import Picker from '@emoji-mart/react';

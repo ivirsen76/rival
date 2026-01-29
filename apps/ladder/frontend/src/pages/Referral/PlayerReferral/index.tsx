@@ -1,8 +1,8 @@
 import Card from '@rival/packages/components/Card';
-import Loader from '@/components/Loader';
+import Loader from '@rival/packages/components/Loader';
 import axios from '@/utils/axios';
-import Table from '@/components/Table';
-import Copy from '@/components/Copy';
+import Table from '@rival/packages/components/Table';
+import Copy from '@rival/packages/components/Copy';
 import { useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
 import { formatCustom } from '@/utils/dayjs';

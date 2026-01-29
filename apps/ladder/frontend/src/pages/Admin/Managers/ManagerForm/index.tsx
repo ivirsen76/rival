@@ -1,6 +1,6 @@
 import { Formik, Field, Form } from '@/components/formik';
 import UserPicker from '@/components/formik/UserPicker';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 
 type ManagerFormProps = {
     list: unknown[];

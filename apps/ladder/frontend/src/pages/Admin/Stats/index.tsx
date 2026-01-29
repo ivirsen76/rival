@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import Loader from '@/components/Loader';
+import Loader from '@rival/packages/components/Loader';
 import Card from '@rival/packages/components/Card';
 import Chart from '@/components/Chart';
 import axios from '@/utils/axios';

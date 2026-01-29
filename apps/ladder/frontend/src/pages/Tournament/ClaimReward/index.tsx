@@ -6,7 +6,7 @@ import Input from '@/components/formik/Input';
 import AddressAutocomplete from '@/components/formik/AddressAutocomplete';
 import obfuscateLabel from '@/utils/obfuscateLabel';
 import Select from '@/components/formik/Select';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import useConfig from '@/utils/useConfig';
 import dayjs from '@/utils/dayjs';
 import style from './style.module.scss';

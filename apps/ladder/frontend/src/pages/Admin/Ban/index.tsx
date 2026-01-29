@@ -1,7 +1,7 @@
 import Card from '@rival/packages/components/Card';
 import { useQuery, useQueryClient } from 'react-query';
 import axios from '@/utils/axios';
-import Loader from '@/components/Loader';
+import Loader from '@rival/packages/components/Loader';
 import Modal from '@/components/Modal';
 import notification from '@/components/notification';
 import BanForm from './BanForm';

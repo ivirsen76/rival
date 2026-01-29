@@ -1,5 +1,5 @@
 import { Formik, Field, Form } from '@/components/formik';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import axios from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import DoublesPlayersPicker from '@/components/formik/DoublesPlayersPicker';

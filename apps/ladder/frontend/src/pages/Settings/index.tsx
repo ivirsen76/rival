@@ -25,8 +25,8 @@ import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.s
 import WarningIcon from '@rival/packages/metronic/icons/duotone/Code/Warning-1-circle.svg?react';
 import formatPhone from '@/utils/formatPhone';
 import Header from '@/components/Header';
-import HiddenText from '@/components/HiddenText';
-import Copy from '@/components/Copy';
+import HiddenText from '@rival/packages/components/HiddenText';
+import Copy from '@rival/packages/components/Copy';
 import { Redirect } from 'react-router-dom';
 import loadable from '@/utils/loadable';
 import classnames from 'classnames';

@@ -1,6 +1,6 @@
 import useSettings from '@/utils/useSettings';
 import Chart from '@/components/Chart';
-import RenderDelay from '@/components/RenderDelay';
+import RenderDelay from '@rival/packages/components/RenderDelay';
 import Icon from './Icon';
 import Hover from './Hover';
 import dayjs from '@/utils/dayjs';

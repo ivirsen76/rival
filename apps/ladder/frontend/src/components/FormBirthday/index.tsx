@@ -1,4 +1,4 @@
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import Birthday from '@/components/formik/Birthday';
 import { Formik, Field, Form } from '@/components/formik';
 import convertDate from '@/utils/convertDate';

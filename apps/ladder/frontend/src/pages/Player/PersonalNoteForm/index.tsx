@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Formik, Field, Form } from '@/components/formik';
-import Autosave from '@/components/Autosave';
+import Autosave from '@rival/packages/components/Autosave';
 import Textarea from '@/components/formik/Textarea';
 import { useQueryClient } from 'react-query';
 import axios from '@/utils/axios';

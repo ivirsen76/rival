@@ -1,9 +1,9 @@
 import { useSelector } from 'react-redux';
 import Card from '@rival/packages/components/Card';
-import Copy from '@/components/Copy';
+import Copy from '@rival/packages/components/Copy';
 import { useQuery } from 'react-query';
-import Loader from '@/components/Loader';
-import Table from '@/components/Table';
+import Loader from '@rival/packages/components/Loader';
+import Table from '@rival/packages/components/Table';
 import Modal from '@/components/Modal';
 import PlayerName from '@/components/PlayerName';
 import { formatDate } from '@/utils/dayjs';

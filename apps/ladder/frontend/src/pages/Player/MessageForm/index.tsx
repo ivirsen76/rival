@@ -1,6 +1,6 @@
 import { Formik, Field, Form } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import { useSelector } from 'react-redux';
 import useConfig from '@/utils/useConfig';
 import axios from '@/utils/axios';

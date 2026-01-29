@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
-import Paginator from '@rival/packages/components/Paginator';
-import SearchIcon from '@rival/packages/metronic/icons/duotone/General/Search.svg?react';
+import Paginator from '../Paginator';
+import SearchIcon from '../../metronic/icons/duotone/General/Search.svg?react';
 import { useDebounce } from 'use-debounce';
 import classnames from 'classnames';
 import _xor from 'lodash/xor';

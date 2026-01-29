@@ -1,5 +1,5 @@
 import originLoadable from '@loadable/component';
-import Loader from '@/components/Loader';
+import Loader from '@rival/packages/components/Loader';
 
 export default (func, params = {}) =>
     originLoadable(func, {

@@ -1,9 +1,9 @@
 import Card from '@rival/packages/components/Card';
 import axios from '@/utils/axios';
 import { useQuery } from 'react-query';
-import Loader from '@/components/Loader';
-import Error from '@/components/Error';
-import Table from '@/components/Table';
+import Loader from '@rival/packages/components/Loader';
+import Error from '@rival/packages/components/Error';
+import Table from '@rival/packages/components/Table';
 import Tooltip from '@rival/packages/components/Tooltip';
 import notification from '@/components/notification';
 import copy from 'clipboard-copy';

@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
-import Loader from '@/components/Loader';
+import Loader from '@rival/packages/components/Loader';
 import Card from '@rival/packages/components/Card';
-import Table from '@/components/Table';
+import Table from '@rival/packages/components/Table';
 import Modal from '@/components/Modal';
 import PlayerName from '@/components/PlayerName';
 import { formatDate } from '@/utils/dayjs';

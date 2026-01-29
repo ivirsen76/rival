@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { Formik, Field, Form } from '@/components/formik';
 import { useSelector } from 'react-redux';
 import Select from '@/components/formik/Select';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import FormScheduleMatch from '@/components/FormScheduleMatch';
 import FormPickDoublesPlayers from '@/components/FormPickDoublesPlayers';
 import getPlayersName from '@/utils/getPlayersName';

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import log from '@/utils/log';
 import { Formik, Field, Form } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import axios from '@/utils/axios';
 import notification from '@/components/notification';
 import style from './style.module.scss';

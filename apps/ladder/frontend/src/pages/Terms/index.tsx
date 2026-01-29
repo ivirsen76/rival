@@ -1,6 +1,6 @@
 import Card from '@rival/packages/components/Card';
 import TermsAndConditions from '@/components/TermsAndConditions';
-import ScrollToTop from '@/components/ScrollToTop';
+import ScrollToTop from '@rival/packages/components/ScrollToTop';
 
 const Terms = (props) => {
     return (

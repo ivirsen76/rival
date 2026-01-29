@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Formik, Field, Form } from '@/components/formik';
 import PasswordInput from '@/components/formik/PasswordInput';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import Card from '@rival/packages/components/Card';
 import notification from '@/components/notification';
 import axios from '@/utils/axios';

@@ -7,6 +7,7 @@ settings:
 overrides:
   react: ^18.2.0
   react-dom: ^18.2.0
+  react-router-dom: ^5.2.0
 
 importers:
 
@@ -506,9 +507,21 @@ importers:
       classnames:
         specifier: ^2.3.1
         version: 2.5.1
+      clipboard-copy:
+        specifier: ^4.0.1
+        version: 4.0.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      prop-types:
+        specifier: ^15.7.2
+        version: 15.8.1
+      react-router-dom:
+        specifier: ^5.2.0
+        version: 5.3.4(react@18.2.0)
+      use-debounce:
+        specifier: ^7.0.1
+        version: 7.0.1(react@18.2.0)
 
     devDependencies:
       '@types/react':
@@ -4924,7 +4937,7 @@ packages:
     resolution: {integrity: sha512-NU7GWc265m92xh/aYD79Vr1W+zAIXDWp3L2YZOYP4rCqPnJ6LI6vh3+rKgkidtYijozHclaEQTAHaAaMWPVI4A==}
     peerDependencies:
       react: ^18.2.0
-      react-router-dom: '>=4'
+      react-router-dom: ^5.2.0
 
   react-router@5.3.4:
     resolution: {integrity: sha512-Ys9K+ppnJah3QuaRiLxk+jDWOR1MekYQrlytiXxC1RyfbdsZkS5pvKAzCCr031xHixZwpnsYNT5xysdFHQaYsA==}

@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import Loader from '@/components/Loader';
+import Loader from '@rival/packages/components/Loader';
 import axios from '@/utils/axios';
 import formatSum from '@/utils/formatSum';
 import classnames from 'classnames';
 import { Formik, Form } from '@/components/formik';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import notification from '@/components/notification';
 import WalletIcon from '@rival/packages/metronic/icons/duotone/Shopping/Wallet.svg?react';
 import { loadCurrentUser } from '@/reducers/auth';

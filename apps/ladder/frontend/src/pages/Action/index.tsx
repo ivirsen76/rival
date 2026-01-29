@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import Loader from '@/components/Loader';
-import Error from '@/components/Error';
+import Loader from '@rival/packages/components/Loader';
+import Error from '@rival/packages/components/Error';
 import NewPassword from '@/components/NewPassword';
 import Unsubscribe from '@/components/Unsubscribe';
 import ApprovePhoto from '@/components/ApprovePhoto';

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import pieces from '../pieces';
-import Avatar from '@/components/avataaars';
+import Avatar from '@rival/packages/components/avataaars';
 import style from '../PiecePicker/style.module.scss';
 
 let counter = 0;

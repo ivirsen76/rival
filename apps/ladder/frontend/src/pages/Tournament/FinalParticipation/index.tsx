@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import axios from '@/utils/axios';
 import { useSelector, useDispatch } from 'react-redux';
-import Button from '@/components/Button';
-import Loader from '@/components/Loader';
+import Button from '@rival/packages/components/Button';
+import Loader from '@rival/packages/components/Loader';
 import Modal from '@/components/Modal';
 import TournamentText from '@/components/TournamentText';
 import CancelMessage from '@/components/CancelMessage';

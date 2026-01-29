@@ -3,7 +3,7 @@ import Graph from './Graph';
 import Numbers from './Numbers';
 import Winners from './Winners';
 import PlayerName from '@/components/PlayerName';
-import ScaleToFit from '@/components/ScaleToFit';
+import ScaleToFit from '@rival/packages/components/ScaleToFit';
 import { defaultColors } from './config';
 import style from './style.module.scss';
 

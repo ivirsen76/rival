@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Formik, Form } from '@/components/formik';
 import { useSelector } from 'react-redux';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import FormMatch from '@/components/FormMatch';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';

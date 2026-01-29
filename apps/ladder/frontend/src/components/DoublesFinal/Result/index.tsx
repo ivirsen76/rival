@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import NumberPicker from './NumberPicker';
 import { Formik, Form } from '@/components/formik';
 import axios from '@/utils/axios';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import classnames from 'classnames';
 import { formatMiddle } from '@/utils/dayjs';
 import hasAnyRole from '@/utils/hasAnyRole';

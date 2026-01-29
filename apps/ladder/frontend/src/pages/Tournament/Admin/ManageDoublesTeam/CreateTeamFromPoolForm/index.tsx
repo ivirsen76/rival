@@ -3,7 +3,7 @@ import { Formik, Field, Form } from '@/components/formik';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import CheckboxArray from '@/components/formik/CheckboxArray';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import TeamNamePicker, { getValidateTeamName } from '@/components/formik/TeamNamePicker';
 import useConfig from '@/utils/useConfig';
 import CaptainIcon from '@/assets/captain.svg?react';

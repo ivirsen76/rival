@@ -1,5 +1,5 @@
 import useBreakpoints from '@/utils/useBreakpoints';
-import ScrollToTop from '@/components/ScrollToTop';
+import ScrollToTop from '@rival/packages/components/ScrollToTop';
 import Header from '@/components/Header';
 import { NtrpGuidelinesLink } from '@/components/NtrpGuidelines';
 import { Link } from 'react-router-dom';

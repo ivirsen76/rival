@@ -1,6 +1,6 @@
-import Loader from '@/components/Loader';
+import Loader from '@rival/packages/components/Loader';
 import axios from '@/utils/axios';
-import Table from '@/components/Table';
+import Table from '@rival/packages/components/Table';
 import Modal from '@/components/Modal';
 import Check from './Check';
 import { useQuery } from 'react-query';

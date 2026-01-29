@@ -1,5 +1,5 @@
-import Loader from '@/components/Loader';
-import Table from '@/components/Table';
+import Loader from '@rival/packages/components/Loader';
+import Table from '@rival/packages/components/Table';
 import axios from '@/utils/axios';
 import formatDuration from '@/utils/formatDuration';
 import { useQuery } from 'react-query';

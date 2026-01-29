@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Formik, Field, Form } from '@/components/formik';
 import Select from '@/components/formik/Select';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import FormMatch from '@/components/FormMatch';
 
 type FormNewMatchByAdminProps = {

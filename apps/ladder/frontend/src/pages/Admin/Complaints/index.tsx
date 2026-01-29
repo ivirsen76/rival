@@ -1,6 +1,6 @@
-import Table from '@/components/Table';
+import Table from '@rival/packages/components/Table';
 import { useQuery } from 'react-query';
-import Loader from '@/components/Loader';
+import Loader from '@rival/packages/components/Loader';
 import Card from '@rival/packages/components/Card';
 import axios from '@/utils/axios';
 import { Link } from 'react-router-dom';

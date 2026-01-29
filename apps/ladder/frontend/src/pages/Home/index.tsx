@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useQuery } from 'react-query';
-import Loader from '@/components/Loader';
+import Loader from '@rival/packages/components/Loader';
 import Card from '@rival/packages/components/Card';
 import Html from '@rival/packages/components/Html';
 import Header from '@/components/Header';

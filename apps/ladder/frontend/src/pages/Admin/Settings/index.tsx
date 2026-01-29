@@ -1,10 +1,10 @@
 import Card from '@rival/packages/components/Card';
 import { useQuery, useQueryClient } from 'react-query';
 import axios from '@/utils/axios';
-import Loader from '@/components/Loader';
+import Loader from '@rival/packages/components/Loader';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import notification from '@/components/notification';
 import useConfig from '@/utils/useConfig';
 

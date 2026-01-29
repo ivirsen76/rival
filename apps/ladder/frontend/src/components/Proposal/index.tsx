@@ -18,7 +18,7 @@ import Tooltip from '@rival/packages/components/Tooltip';
 import FormDeleteProposal from '@/components/FormDeleteProposal';
 import WeatherAtTime from '../WeatherForecast/WeatherAtTime';
 import checkUserReady from '@/utils/checkUserReady';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import DoublesPlayersPicker from '@/components/formik/DoublesPlayersPicker';
 import useMatchPermissions from '@/utils/useMatchPermissions';
 import practiceTypeOptions from '@rival/ladder.backend/src/services/proposals/practiceTypeOptions';

@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import axios from '@/utils/axios';
-import Loader from '@/components/Loader';
-import Table from '@/components/Table';
+import Loader from '@rival/packages/components/Loader';
+import Table from '@rival/packages/components/Table';
 import PlayerName from '@/components/PlayerName';
 import formatSum from '@/utils/formatSum';
 import { formatLong } from '@/utils/dayjs';

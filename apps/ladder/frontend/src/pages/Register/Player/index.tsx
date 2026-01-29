@@ -6,7 +6,7 @@ import Input from '@/components/formik/Input';
 import PasswordInput from '@/components/formik/PasswordInput';
 import notification from '@/components/notification';
 import { Link } from 'react-router-dom';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import Register from '@/components/Authentication/Register';
 import VerifyEmail from '@/components/VerifyEmail';
 import EmailIcon from '@rival/packages/metronic/icons/duotone/Communication/Mail-at.svg?react';

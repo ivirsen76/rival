@@ -1,6 +1,6 @@
 import * as ReactDOMServer from 'react-dom/server';
 import pieces from '@/components/AvatarBuilder/pieces';
-import Avatar from '@/components/avataaars';
+import Avatar from '@rival/packages/components/avataaars';
 
 let counter = 0;
 

@@ -2,7 +2,7 @@ import { Formik, Field, Form } from '@/components/formik';
 import UserPicker from '@/components/formik/UserPicker';
 import Input from '@/components/formik/Input';
 import Select from '@/components/formik/Select';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 
 export const banDurationOptions = [
     { value: 1, label: '1 day' },

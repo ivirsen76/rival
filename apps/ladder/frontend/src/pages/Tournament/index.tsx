@@ -1,7 +1,7 @@
 import { useRef, useMemo } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
-import Loader from '@/components/Loader';
-import Error from '@/components/Error';
+import Loader from '@rival/packages/components/Loader';
+import Error from '@rival/packages/components/Error';
 import Header from '@/components/Header';
 import Overview from './Overview';
 import Matches from './Matches';

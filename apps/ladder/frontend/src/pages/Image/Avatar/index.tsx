@@ -1,4 +1,4 @@
-import AvatarComponent from '@/components/avataaars';
+import AvatarComponent from '@rival/packages/components/avataaars';
 import UserIcon from '@/assets/user.svg?react';
 import style from './style.module.scss';
 

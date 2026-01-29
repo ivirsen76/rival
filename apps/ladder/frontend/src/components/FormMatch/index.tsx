@@ -16,7 +16,7 @@ import { Formik, Field, Form } from '@/components/formik';
 import TimePicker from '@/components/formik/TimePicker';
 import HtmlSelect from '@/components/formik/HtmlSelect';
 import Select from '@/components/formik/Select';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import notification from '@/components/notification';
 import PlayerName from '@/components/PlayerName';
 import axios from '@/utils/axios';

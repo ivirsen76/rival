@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { Formik, Field, Form } from '@/components/formik';
 import { useSelector } from 'react-redux';
 import Select from '@/components/formik/Select';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import FormMatch from '@/components/FormMatch';
 import userIcon from '@/assets/user.svg';
 import QuestionIcon from '@rival/packages/metronic/icons/duotone/Navigation/Question.svg?react';

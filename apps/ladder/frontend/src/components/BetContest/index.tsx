@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import Table from '@/components/Table';
+import Table from '@rival/packages/components/Table';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import Modal from '@/components/Modal';

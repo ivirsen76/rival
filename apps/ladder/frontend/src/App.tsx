@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import { Router, Switch, Route as OriginalRoute, Redirect } from 'react-router-dom';
 import loadable from '@/utils/loadable';
-import Loader from '@/components/Loader';
+import Loader from '@rival/packages/components/Loader';
 import notification from '@/components/notification';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import AppearanceChecker from '@/components/AppearanceChecker';

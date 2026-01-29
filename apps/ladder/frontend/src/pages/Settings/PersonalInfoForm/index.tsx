@@ -3,7 +3,7 @@ import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Birthday from '@/components/formik/Birthday';
 import { updateCurrentUser } from '@/reducers/auth';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import _pick from 'lodash/pick';
 import Select from '@/components/formik/Select';
 import Textarea from '@/components/formik/Textarea';

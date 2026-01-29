@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import { useQuery } from 'react-query';
-import Loader from '@/components/Loader';
+import Loader from '@rival/packages/components/Loader';
 import Card from '@rival/packages/components/Card';
 import Modal from '@/components/Modal';
 import Tooltip from '@rival/packages/components/Tooltip';

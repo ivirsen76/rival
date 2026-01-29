@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import PasswordInput from '@/components/formik/PasswordInput';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 
 type RegisterPartnerProps = {
     payload: string;

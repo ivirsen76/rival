@@ -1,5 +1,5 @@
 import { Formik, Field, Form } from '@/components/formik';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import axios from '@/utils/axios';
 import TeamNamePicker, { getValidateTeamName } from '@/components/formik/TeamNamePicker';
 import useConfig from '@/utils/useConfig';

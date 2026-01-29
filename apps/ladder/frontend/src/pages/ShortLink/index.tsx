@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import Loader from '@/components/Loader';
-import Error from '@/components/Error';
+import Loader from '@rival/packages/components/Loader';
+import Error from '@rival/packages/components/Error';
 import axios from '@/utils/axios';
 import { useHistory } from 'react-router-dom';
 

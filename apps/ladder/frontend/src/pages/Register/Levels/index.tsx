@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Formik, Field, Form } from '@/components/formik';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import Modal from '@/components/Modal';
 import Checkbox from '@/components/formik/Checkbox';
 import FieldWrapper from '@/components/formik/FieldWrapper';

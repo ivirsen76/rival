@@ -1,6 +1,6 @@
 import { useMemo, useEffect } from 'react';
 import { Formik, Form } from '@/components/formik';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import notification from '@/components/notification';

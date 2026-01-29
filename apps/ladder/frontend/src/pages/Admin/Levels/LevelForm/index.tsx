@@ -1,7 +1,7 @@
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Select from '@/components/formik/Select';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 
 const typeOptions = [
     { value: 'single', label: 'Single' },

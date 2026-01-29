@@ -1,5 +1,5 @@
 import useBreakpoints from '@/utils/useBreakpoints';
-import ScrollToTop from '@/components/ScrollToTop';
+import ScrollToTop from '@rival/packages/components/ScrollToTop';
 import Header from '@/components/Header';
 import useConfig from '@/utils/useConfig';
 import scoring from './scoring.jpg?w=1200;2400&format=jpeg&quality=60&as=metadata';

@@ -1,5 +1,5 @@
 import Card from '@rival/packages/components/Card';
-import ScrollToTop from '@/components/ScrollToTop';
+import ScrollToTop from '@rival/packages/components/ScrollToTop';
 
 const Terms = (props) => {
     let number = 1;

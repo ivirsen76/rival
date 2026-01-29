@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import copy from 'clipboard-copy';
-import Tooltip from '@rival/packages/components/Tooltip';
+import Tooltip from '../Tooltip';
 import classnames from 'classnames';
 
 type CopyProps = {

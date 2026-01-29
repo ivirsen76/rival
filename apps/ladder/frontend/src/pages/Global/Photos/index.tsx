@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import Card from '@rival/packages/components/Card';
-import Loader from '@/components/Loader';
+import Loader from '@rival/packages/components/Loader';
 import axios from '@/utils/axios';
 import { useQuery } from 'react-query';
 import { RowsPhotoAlbum } from 'react-photo-album';

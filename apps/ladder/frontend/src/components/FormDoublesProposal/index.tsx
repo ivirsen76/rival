@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import DateTimeWithWeather from '@/components/DateTimeWithWeather';
-import Button from '@/components/Button';
+import Button from '@rival/packages/components/Button';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import notification from '@/components/notification';
