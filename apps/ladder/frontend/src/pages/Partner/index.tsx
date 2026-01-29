@@ -1,6 +1,6 @@
 import NotFound from '@/pages/NotFound';
 import { useSelector } from 'react-redux';
-import hasAnyRole from '@rival/packages/utils/hasAnyRole';
+import hasAnyRole from '@rival/common/utils/hasAnyRole';
 import PartnerReferral from '../Referral/PartnerReferral';
 
 const Partner = (props) => {

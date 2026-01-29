@@ -2,8 +2,8 @@ import { Formik, Field, Form } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
 import Checkbox from '@/components/formik/Checkbox';
 import RadioModern from '@/components/formik/RadioModern';
-import Button from '@rival/packages/components/Button';
-import HiddenText from '@rival/packages/components/HiddenText';
+import Button from '@rival/common/components/Button';
+import HiddenText from '@rival/common/components/HiddenText';
 import reasonOptions from '@rival/ladder.backend/src/services/complaints/reasonOptions';
 import reasonDescriptions from './reasonDescriptions';
 

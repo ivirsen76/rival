@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import Tooltip from '@rival/packages/components/Tooltip';
+import Tooltip from '@rival/common/components/Tooltip';
 import classnames from 'classnames';
 import style from './style.module.scss';
 

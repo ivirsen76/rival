@@ -1,6 +1,6 @@
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import axios from '@/utils/axios';
-import showLoader from '@rival/packages/utils/showLoader';
+import showLoader from '@rival/common/utils/showLoader';
 
 const Other = (props) => {
     const downloadExcel = async (e) => {

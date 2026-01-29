@@ -1,7 +1,7 @@
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
-import Button from '@rival/packages/components/Button';
-import HiddenText from '@rival/packages/components/HiddenText';
+import Button from '@rival/common/components/Button';
+import HiddenText from '@rival/common/components/HiddenText';
 import axios from '@/utils/axios';
 import style from './style.module.scss';
 

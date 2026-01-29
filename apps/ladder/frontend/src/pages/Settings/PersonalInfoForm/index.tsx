@@ -3,12 +3,12 @@ import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Birthday from '@/components/formik/Birthday';
 import { updateCurrentUser } from '@/reducers/auth';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 import _pick from 'lodash/pick';
 import Select from '@/components/formik/Select';
 import Textarea from '@/components/formik/Textarea';
 import Checkbox from '@/components/formik/Checkbox';
-import convertDate from '@rival/packages/utils/convertDate';
+import convertDate from '@rival/common/utils/convertDate';
 
 export const genderOptions = [
     { value: '', label: '-- Choose --' },

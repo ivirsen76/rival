@@ -3,13 +3,13 @@ import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import Birthday from '@/components/formik/Birthday';
 import PasswordInput from '@/components/formik/PasswordInput';
-import Button from '@rival/packages/components/Button';
-import Loader from '@rival/packages/components/Loader';
+import Button from '@rival/common/components/Button';
+import Loader from '@rival/common/components/Loader';
 import { Link, useHistory } from 'react-router-dom';
 import { IMaskInput } from 'react-imask';
-import SearchIcon from '@rival/packages/metronic/icons/duotone/General/Search.svg?react';
-import CheckIcon from '@rival/packages/metronic/icons/duotone/Navigation/Check.svg?react';
-import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
+import SearchIcon from '@rival/common/metronic/icons/duotone/General/Search.svg?react';
+import CheckIcon from '@rival/common/metronic/icons/duotone/Navigation/Check.svg?react';
+import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
 import FieldWrapper from '@/components/formik/FieldWrapper';
 import classnames from 'classnames';
 import Select from '@/components/formik/Select';
@@ -19,7 +19,7 @@ import Cookies from 'js-cookie';
 import { useDebounce } from 'use-debounce';
 import axios from '@/utils/axios';
 import { useSelector } from 'react-redux';
-import convertDate from '@rival/packages/utils/convertDate';
+import convertDate from '@rival/common/utils/convertDate';
 import style from './style.module.scss';
 
 export const comeFromOptions = [

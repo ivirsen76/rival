@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { PanelMenu } from 'primereact/panelmenu';
-import LineIcon from '@rival/packages/metronic/icons/duotune/abstract/abs015.svg?react';
-import ExitIcon from '@rival/packages/metronic/icons/duotune/arrows/arr043.svg?react';
-import SettingsIcon from '@rival/packages/metronic/icons/duotone/Interface/Cog.svg?react';
-import DollarIcon from '@rival/packages/metronic/icons/duotone/Shopping/Dollar.svg?react';
+import LineIcon from '@rival/common/metronic/icons/duotune/abstract/abs015.svg?react';
+import ExitIcon from '@rival/common/metronic/icons/duotune/arrows/arr043.svg?react';
+import SettingsIcon from '@rival/common/metronic/icons/duotone/Interface/Cog.svg?react';
+import DollarIcon from '@rival/common/metronic/icons/duotone/Shopping/Dollar.svg?react';
 import HornIcon from '@/assets/horn.svg?react';
 import BadgeIcon from '@/assets/badge.svg?react';
-import UserIcon from '@rival/packages/metronic/icons/duotone/General/User.svg?react';
-import EnterIcon from '@rival/packages/metronic/icons/duotune/arrows/arr042.svg?react';
+import UserIcon from '@rival/common/metronic/icons/duotone/General/User.svg?react';
+import EnterIcon from '@rival/common/metronic/icons/duotune/arrows/arr042.svg?react';
 import RenderInBody from '@/components/RenderInBody';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import { useSelector } from 'react-redux';
@@ -15,7 +15,7 @@ import classnames from 'classnames';
 import Caret from './caret.svg?react';
 import { useHistory } from 'react-router-dom';
 import _capitalize from 'lodash/capitalize';
-import hasAnyRole from '@rival/packages/utils/hasAnyRole';
+import hasAnyRole from '@rival/common/utils/hasAnyRole';
 import style from './style.module.scss';
 import './aside.scss';
 

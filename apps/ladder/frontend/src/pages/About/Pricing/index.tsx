@@ -1,9 +1,9 @@
-import Card from '@rival/packages/components/Card';
-import ScrollToTop from '@rival/packages/components/ScrollToTop';
+import Card from '@rival/common/components/Card';
+import ScrollToTop from '@rival/common/components/ScrollToTop';
 import Header from '@/components/Header';
 import useConfig from '@/utils/useConfig';
 import { useQuery } from 'react-query';
-import Loader from '@rival/packages/components/Loader';
+import Loader from '@rival/common/components/Loader';
 import FirstSeasonFree from './free-first-season.svg?react';
 import style from './style.module.scss';
 

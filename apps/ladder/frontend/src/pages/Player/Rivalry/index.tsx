@@ -1,6 +1,6 @@
 import { formatDate } from '@/utils/dayjs';
 import classnames from 'classnames';
-import Chart from '@rival/packages/components/Chart';
+import Chart from '@rival/common/components/Chart';
 
 type RivalryProps = {
     rivalry: object;

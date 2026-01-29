@@ -1,7 +1,7 @@
-import useBreakpoints from '@rival/packages/utils/useBreakpoints';
+import useBreakpoints from '@rival/common/utils/useBreakpoints';
 import Header from '@/components/Header';
 import contacts from './contacts.jpg?w=1200;2400&format=jpeg&quality=60&as=metadata';
-import getImageSize from '@rival/packages/utils/getImageSize';
+import getImageSize from '@rival/common/utils/getImageSize';
 import style from './style.module.scss';
 
 const Contacts = (props) => {

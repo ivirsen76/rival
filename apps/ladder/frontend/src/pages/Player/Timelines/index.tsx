@@ -1,6 +1,6 @@
 import _get from 'lodash/get';
 import PerformanceChart from './PerformanceChart';
-import Tooltip from '@rival/packages/components/Tooltip';
+import Tooltip from '@rival/common/components/Tooltip';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';

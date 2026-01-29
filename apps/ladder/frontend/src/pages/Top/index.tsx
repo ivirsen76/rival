@@ -1,22 +1,22 @@
 import { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import Header from '@/components/Header';
 import classnames from 'classnames';
 import { useHistory } from 'react-router-dom';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
-import Loader from '@rival/packages/components/Loader';
-import Table from '@rival/packages/components/Table';
-import HiddenText from '@rival/packages/components/HiddenText';
-import Tabs from '@rival/packages/components/Tabs';
+import Loader from '@rival/common/components/Loader';
+import Table from '@rival/common/components/Table';
+import HiddenText from '@rival/common/components/HiddenText';
+import Tabs from '@rival/common/components/Tabs';
 import axios from '@/utils/axios';
 import { useSelector } from 'react-redux';
 import { getPercentile } from './helpers';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 import { formatCustom } from '@/utils/dayjs';
 import useConfig from '@/utils/useConfig';
-import useBreakpoints from '@rival/packages/utils/useBreakpoints';
+import useBreakpoints from '@rival/common/utils/useBreakpoints';
 import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
 import style from './style.module.scss';
 

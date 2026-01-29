@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from '@/utils/axios';
-import WarningIcon from '@rival/packages/metronic/icons/duotone/Code/Warning-2.svg?react';
-import PhoneIcon from '@rival/packages/metronic/icons/duotone/Interface/Phone.svg?react';
+import WarningIcon from '@rival/common/metronic/icons/duotone/Code/Warning-2.svg?react';
+import PhoneIcon from '@rival/common/metronic/icons/duotone/Interface/Phone.svg?react';
 import notification from '@/components/notification';
 import WaitTill from '@/components/WaitTill';
-import formatPhone from '@rival/packages/utils/formatPhone';
+import formatPhone from '@rival/common/utils/formatPhone';
 import style from './style.module.scss';
 
 type VerifyPhoneProps = {

@@ -1,14 +1,14 @@
-import Loader from '@rival/packages/components/Loader';
+import Loader from '@rival/common/components/Loader';
 import axios from '@/utils/axios';
-import Table from '@rival/packages/components/Table';
+import Table from '@rival/common/components/Table';
 import Modal from '@/components/Modal';
 import Check from './Check';
 import { useQuery } from 'react-query';
 import { formatCustom } from '@/utils/dayjs';
 import classnames from 'classnames';
-import formatSum from '@rival/packages/utils/formatSum';
-import FileIcon from '@rival/packages/metronic/icons/duotone/Files/File.svg?react';
-import WalletIcon from '@rival/packages/metronic/icons/duotone/Shopping/Wallet.svg?react';
+import formatSum from '@rival/common/utils/formatSum';
+import FileIcon from '@rival/common/metronic/icons/duotone/Files/File.svg?react';
+import WalletIcon from '@rival/common/metronic/icons/duotone/Shopping/Wallet.svg?react';
 import style from './style.module.scss';
 
 type WalletProps = {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import AngleLeftIcon from '@rival/packages/metronic/icons/duotone/Navigation/Angle-left.svg?react';
+import AngleLeftIcon from '@rival/common/metronic/icons/duotone/Navigation/Angle-left.svg?react';
 import CupIcon from './cup.svg?react';
 import classnames from 'classnames';
 import Statbox from '@/components/Statbox';

@@ -1,4 +1,4 @@
-import Loader from '@rival/packages/components/Loader';
+import Loader from '@rival/common/components/Loader';
 import Modal from '@/components/Modal';
 import { useQuery, useQueryClient } from 'react-query';
 import Compare from './Compare';

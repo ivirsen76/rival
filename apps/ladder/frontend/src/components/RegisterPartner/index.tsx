@@ -1,13 +1,13 @@
 import { useDispatch } from 'react-redux';
 import notification from '@/components/notification';
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import axios from '@/utils/axios';
 import { authenticate } from '@/reducers/auth';
 import { useHistory } from 'react-router-dom';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import PasswordInput from '@/components/formik/PasswordInput';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 
 type RegisterPartnerProps = {
     payload: string;

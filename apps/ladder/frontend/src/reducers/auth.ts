@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { AppDispatch, RootState } from '../app/store';
 import axios from '@/utils/axios';
 import dayjs from '@/utils/dayjs';
-import getPaw from '@rival/packages/utils/getPaw';
+import getPaw from '@rival/common/utils/getPaw';
 import type { Config, User } from '@rival/ladder.backend/src/types';
 
 const REGISTER_HISTORY_KEY = 'registerHistory';

@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
-import Tooltip from '@rival/packages/components/Tooltip';
+import Tooltip from '@rival/common/components/Tooltip';
 import { formatMiddle } from '@/utils/dayjs';
 import useConfig from '@/utils/useConfig';
 import parseScore from '@/components/Match/parseScore';

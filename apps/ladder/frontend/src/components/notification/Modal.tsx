@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import CheckIcon from '@rival/packages/metronic/icons/duotune/arrows/arr016.svg?react';
+import CheckIcon from '@rival/common/metronic/icons/duotune/arrows/arr016.svg?react';
 
 type NotificationModalProps = {
     message: React.ReactNode;

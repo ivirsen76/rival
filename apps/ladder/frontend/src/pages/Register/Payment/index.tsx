@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
-import Loader from '@rival/packages/components/Loader';
+import Loader from '@rival/common/components/Loader';
 import axios from '@/utils/axios';
-import formatSum from '@rival/packages/utils/formatSum';
+import formatSum from '@rival/common/utils/formatSum';
 import classnames from 'classnames';
 import { Formik, Form } from '@/components/formik';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 import notification from '@/components/notification';
-import WalletIcon from '@rival/packages/metronic/icons/duotone/Shopping/Wallet.svg?react';
+import WalletIcon from '@rival/common/metronic/icons/duotone/Shopping/Wallet.svg?react';
 import { loadCurrentUser } from '@/reducers/auth';
 import { useDispatch } from 'react-redux';
 import getRegisterNotificationProps from '@/utils/getRegisterNotificationProps';

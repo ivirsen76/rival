@@ -4,10 +4,10 @@ import { authenticate } from '@/reducers/auth';
 import { Formik, Field, Form } from '@/components/formik';
 import Input from '@/components/formik/Input';
 import PasswordInput from '@/components/formik/PasswordInput';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 import notification from '@/components/notification';
 import VerifyEmail from '@/components/VerifyEmail';
-import EmailIcon from '@rival/packages/metronic/icons/duotone/Communication/Mail-at.svg?react';
+import EmailIcon from '@rival/common/metronic/icons/duotone/Communication/Mail-at.svg?react';
 
 type LoginProps = {
     goToRegister: (...args: unknown[]) => unknown;

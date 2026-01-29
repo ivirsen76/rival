@@ -1,18 +1,18 @@
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import axios from '@/utils/axios';
 import { useQuery } from 'react-query';
-import Loader from '@rival/packages/components/Loader';
-import Error from '@rival/packages/components/Error';
-import Table from '@rival/packages/components/Table';
-import Tooltip from '@rival/packages/components/Tooltip';
+import Loader from '@rival/common/components/Loader';
+import Error from '@rival/common/components/Error';
+import Table from '@rival/common/components/Table';
+import Tooltip from '@rival/common/components/Tooltip';
 import notification from '@/components/notification';
 import copy from 'clipboard-copy';
 import classnames from 'classnames';
 import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
-import saveAsCsv from '@rival/packages/utils/saveAsCsv';
-import getRelativeStringLength from '@rival/packages/utils/getRelativeStringLength';
-import CheckIcon from '@rival/packages/metronic/icons/duotone/Navigation/Check.svg?react';
-import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
+import saveAsCsv from '@rival/common/utils/saveAsCsv';
+import getRelativeStringLength from '@rival/common/utils/getRelativeStringLength';
+import CheckIcon from '@rival/common/metronic/icons/duotone/Navigation/Check.svg?react';
+import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
 
 const rewardOptions = {
     gift: 'Gift card',

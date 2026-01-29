@@ -1,7 +1,7 @@
 import UserIcon from '@/assets/user.svg?react';
 import PossibleUserIcon from '@/assets/possibleUser.svg?react';
 import classnames from 'classnames';
-import Avatar from '@rival/packages/components/avataaars';
+import Avatar from '@rival/common/components/avataaars';
 import style from './style.module.scss';
 
 type SingleAvatarProps = {

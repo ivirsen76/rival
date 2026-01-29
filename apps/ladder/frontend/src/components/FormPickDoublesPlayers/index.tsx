@@ -1,6 +1,6 @@
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 import { Formik, Form } from '@/components/formik';
 import classnames from 'classnames';
 import style from './style.module.scss';

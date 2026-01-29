@@ -1,16 +1,16 @@
 import { useMemo } from 'react';
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import Modal from '@/components/Modal';
 import PlayerName from '@/components/PlayerName';
 import AddPlayerForm from './AddPlayerForm';
 import ManageDoublesTeam from './ManageDoublesTeam';
-import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
-import StopIcon from '@rival/packages/metronic/icons/duotone/Code/Stop.svg?react';
-import UpdateIcon from '@rival/packages/metronic/icons/duotone/General/Update.svg?react';
+import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
+import StopIcon from '@rival/common/metronic/icons/duotone/Code/Stop.svg?react';
+import UpdateIcon from '@rival/common/metronic/icons/duotone/General/Update.svg?react';
 import axios from '@/utils/axios';
 import notification from '@/components/notification';
-import confirmation from '@rival/packages/utils/confirmation';
-import showLoader from '@rival/packages/utils/showLoader';
+import confirmation from '@rival/common/utils/confirmation';
+import showLoader from '@rival/common/utils/showLoader';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 
 type AdminProps = {

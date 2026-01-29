@@ -1,7 +1,7 @@
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import _omit from 'lodash/omit';
 import { useQuery } from 'react-query';
-import Loader from '@rival/packages/components/Loader';
+import Loader from '@rival/common/components/Loader';
 import notification from '@/components/notification';
 import axios from '@/utils/axios';
 import Form from '@/pages/Settings/SubscriptionsForm/Form';

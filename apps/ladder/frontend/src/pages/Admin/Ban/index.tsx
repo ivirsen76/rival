@@ -1,15 +1,15 @@
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import { useQuery, useQueryClient } from 'react-query';
 import axios from '@/utils/axios';
-import Loader from '@rival/packages/components/Loader';
+import Loader from '@rival/common/components/Loader';
 import Modal from '@/components/Modal';
 import notification from '@/components/notification';
 import BanForm from './BanForm';
-import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
-import confirmation from '@rival/packages/utils/confirmation';
+import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
+import confirmation from '@rival/common/utils/confirmation';
 import { formatDate } from '@/utils/dayjs';
 import { Link } from 'react-router-dom';
-import showLoader from '@rival/packages/utils/showLoader';
+import showLoader from '@rival/common/utils/showLoader';
 
 const Ban = (props) => {
     const queryClient = useQueryClient();

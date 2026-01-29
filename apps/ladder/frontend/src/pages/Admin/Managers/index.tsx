@@ -1,12 +1,12 @@
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import { useQuery, useQueryClient } from 'react-query';
 import axios from '@/utils/axios';
-import Loader from '@rival/packages/components/Loader';
+import Loader from '@rival/common/components/Loader';
 import Modal from '@/components/Modal';
 import notification from '@/components/notification';
 import ManagerForm from './ManagerForm';
-import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
-import confirmation from '@rival/packages/utils/confirmation';
+import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
+import confirmation from '@rival/common/utils/confirmation';
 import { Link } from 'react-router-dom';
 
 const Managers = () => {

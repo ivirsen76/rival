@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form } from '@/components/formik';
 import PasswordInput from '@/components/formik/PasswordInput';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 import axios from '@/utils/axios';
 import notification from '@/components/notification';
 import { useSelector } from 'react-redux';

@@ -1,12 +1,12 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Formik, Form } from '@/components/formik';
 import { useSelector } from 'react-redux';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 import FormMatch from '@/components/FormMatch';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
-import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
-import hasAnyRole from '@rival/packages/utils/hasAnyRole';
+import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
+import hasAnyRole from '@rival/common/utils/hasAnyRole';
 import style from './style.module.scss';
 
 type JustFormProps = {

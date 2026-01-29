@@ -4,7 +4,7 @@ import PlayerName from '@/components/PlayerName';
 import UpsetMatch from '@/components/UpsetMatch';
 import classnames from 'classnames';
 import { formatDate } from '@/utils/dayjs';
-import useBreakpoints from '@rival/packages/utils/useBreakpoints';
+import useBreakpoints from '@rival/common/utils/useBreakpoints';
 
 const reverseScore = (score) =>
     score

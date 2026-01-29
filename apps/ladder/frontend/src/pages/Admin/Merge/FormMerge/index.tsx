@@ -1,6 +1,6 @@
 import { Formik, Field, Form } from '@/components/formik';
 import RadioModern from '@/components/formik/RadioModern';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 import PlayerName from '@/components/PlayerName';
 import notification from '@/components/notification';
 import axios from '@/utils/axios';

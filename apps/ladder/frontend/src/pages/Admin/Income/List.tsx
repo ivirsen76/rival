@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query';
 import axios from '@/utils/axios';
-import Loader from '@rival/packages/components/Loader';
-import Table from '@rival/packages/components/Table';
+import Loader from '@rival/common/components/Loader';
+import Table from '@rival/common/components/Table';
 import PlayerName from '@/components/PlayerName';
-import formatSum from '@rival/packages/utils/formatSum';
+import formatSum from '@rival/common/utils/formatSum';
 import { formatLong } from '@/utils/dayjs';
 
 type ListProps = {

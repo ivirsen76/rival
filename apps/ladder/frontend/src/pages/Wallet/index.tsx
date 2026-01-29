@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import NotFound from '@/pages/NotFound';
 import Wallet from '@/components/Wallet';
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import Header from '@/components/Header';
 
 const Payments = (props) => {

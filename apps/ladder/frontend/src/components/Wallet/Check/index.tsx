@@ -1,5 +1,5 @@
 import style from './style.module.scss';
-import formatSum from '@rival/packages/utils/formatSum';
+import formatSum from '@rival/common/utils/formatSum';
 import { formatCustom } from '@/utils/dayjs';
 
 type CheckProps = {

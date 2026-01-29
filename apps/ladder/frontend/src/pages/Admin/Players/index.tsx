@@ -1,23 +1,23 @@
-import Table from '@rival/packages/components/Table';
+import Table from '@rival/common/components/Table';
 import { useQuery, useQueryClient } from 'react-query';
-import Loader from '@rival/packages/components/Loader';
-import Card from '@rival/packages/components/Card';
+import Loader from '@rival/common/components/Loader';
+import Card from '@rival/common/components/Card';
 import Modal from '@/components/Modal';
 import notification from '@/components/notification';
 import ChangePasswordForm from './ChangePasswordForm';
 import axios from '@/utils/axios';
 import { Link } from 'react-router-dom';
-import formatPhone from '@rival/packages/utils/formatPhone';
-import LockIcon from '@rival/packages/metronic/icons/duotone/Interface/Lock.svg?react';
+import formatPhone from '@rival/common/utils/formatPhone';
+import LockIcon from '@rival/common/metronic/icons/duotone/Interface/Lock.svg?react';
 import { formatDate } from '@/utils/dayjs';
 import { comeFromOptions } from '@/components/Authentication/Register';
-import CheckIcon from '@rival/packages/metronic/icons/duotone/Navigation/Check.svg?react';
-import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
-import UpdateIcon from '@rival/packages/metronic/icons/duotone/General/Update.svg?react';
+import CheckIcon from '@rival/common/metronic/icons/duotone/Navigation/Check.svg?react';
+import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
+import UpdateIcon from '@rival/common/metronic/icons/duotone/General/Update.svg?react';
 import { useSelector } from 'react-redux';
-import hasAnyRole from '@rival/packages/utils/hasAnyRole';
-import confirmation from '@rival/packages/utils/confirmation';
-import showLoader from '@rival/packages/utils/showLoader';
+import hasAnyRole from '@rival/common/utils/hasAnyRole';
+import confirmation from '@rival/common/utils/confirmation';
+import showLoader from '@rival/common/utils/showLoader';
 
 const getFilteredData = (item, filter) => {
     filter = filter.toLowerCase();

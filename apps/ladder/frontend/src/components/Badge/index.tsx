@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import useUniqueId from '@rival/packages/utils/useUniqueId';
+import useUniqueId from '@rival/common/utils/useUniqueId';
 import useAppearance from '@/utils/useAppearance';
 
 type BadgeProps = {

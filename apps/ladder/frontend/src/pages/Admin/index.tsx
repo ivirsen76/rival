@@ -14,7 +14,7 @@ import Tracking from './Tracking';
 import NotFound from '@/pages/NotFound';
 import { Switch, Route, NavLink, useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import hasAnyRole from '@rival/packages/utils/hasAnyRole';
+import hasAnyRole from '@rival/common/utils/hasAnyRole';
 import useConfig from '@/utils/useConfig';
 import style from './style.module.scss';
 

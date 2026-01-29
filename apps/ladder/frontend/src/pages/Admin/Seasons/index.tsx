@@ -3,13 +3,13 @@ import Modal from '@/components/Modal';
 import notification from '@/components/notification';
 import SeasonForm from './SeasonForm';
 import CloseSeasonForm from './CloseSeasonForm';
-import Card from '@rival/packages/components/Card';
-import Tooltip from '@rival/packages/components/Tooltip';
+import Card from '@rival/common/components/Card';
+import Tooltip from '@rival/common/components/Tooltip';
 import _capitalize from 'lodash/capitalize';
 import useSettings from '@/utils/useSettings';
 import { useQueryClient } from 'react-query';
 import dayjs from '@/utils/dayjs';
-import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
+import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
 
 const Seasons = (props) => {
     const queryClient = useQueryClient();

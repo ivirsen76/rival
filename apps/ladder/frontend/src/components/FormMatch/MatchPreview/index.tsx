@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import style from './style.module.scss';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
-import Tooltip from '@rival/packages/components/Tooltip';
+import Tooltip from '@rival/common/components/Tooltip';
 import _isInteger from 'lodash/isInteger';
 import parseScore from '@/components/Match/parseScore';
 import { isFullSetScoreCorrect, isFastSetScoreCorrect } from '@rival/ladder.backend/src/services/matches/helpers';

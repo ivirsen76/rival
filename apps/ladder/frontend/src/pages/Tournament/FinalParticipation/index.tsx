@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import axios from '@/utils/axios';
 import { useSelector, useDispatch } from 'react-redux';
-import Button from '@rival/packages/components/Button';
-import Loader from '@rival/packages/components/Loader';
+import Button from '@rival/common/components/Button';
+import Loader from '@rival/common/components/Loader';
 import Modal from '@/components/Modal';
 import TournamentText from '@/components/TournamentText';
 import CancelMessage from '@/components/CancelMessage';
@@ -13,7 +13,7 @@ import {
     getSinglesTournament16Text,
     getDoublesTournamentText,
 } from '../texts';
-import confirmation from '@rival/packages/utils/confirmation';
+import confirmation from '@rival/common/utils/confirmation';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 
 const GO_MESSAGE = 'You are registered for the tournament!';

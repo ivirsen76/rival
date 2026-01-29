@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Field, Form } from '@/components/formik';
 import Textarea from '@/components/formik/Textarea';
 import { updateCurrentUser } from '@/reducers/auth';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 import _pick from 'lodash/pick';
 
 type TennisEquipmentFormProps = {

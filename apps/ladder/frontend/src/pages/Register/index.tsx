@@ -1,20 +1,20 @@
 import { useState } from 'react';
-import Card from '@rival/packages/components/Card';
-import Loader from '@rival/packages/components/Loader';
-import Error from '@rival/packages/components/Error';
+import Card from '@rival/common/components/Card';
+import Loader from '@rival/common/components/Loader';
+import Error from '@rival/common/components/Error';
 import Player from './Player';
 import Levels from './Levels';
 import Season from './Season';
 import Payment from './Payment';
 import Header from '@/components/Header';
-import FlagIcon from '@rival/packages/metronic/icons/duotune/maps/map001.svg?react';
+import FlagIcon from '@rival/common/metronic/icons/duotune/maps/map001.svg?react';
 import SeasonIcon from '@/assets/season.svg?react';
 import { useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
 import useConfig from '@/utils/useConfig';
 import dayjs from '@/utils/dayjs';
 import style from './style.module.scss';
-import hasAnyRole from '@rival/packages/utils/hasAnyRole';
+import hasAnyRole from '@rival/common/utils/hasAnyRole';
 import axios from '@/utils/axios';
 
 const format = (date) => dayjs.tz(date).format('MMM D');

@@ -1,12 +1,12 @@
 import { useMemo, useEffect } from 'react';
 import { Formik, Form } from '@/components/formik';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import notification from '@/components/notification';
-import showLoader from '@rival/packages/utils/showLoader';
+import showLoader from '@rival/common/utils/showLoader';
 import { useSelector } from 'react-redux';
-import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
+import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
 import axios from '@/utils/axios';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import style from './style.module.scss';

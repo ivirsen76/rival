@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import _round from 'lodash/round';
-import useUniqueId from '@rival/packages/utils/useUniqueId';
+import useUniqueId from '@rival/common/utils/useUniqueId';
 import pathFromPoints from './pathFromPoints';
 import style from './style.module.scss';
 

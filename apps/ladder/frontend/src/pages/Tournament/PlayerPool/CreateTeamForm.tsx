@@ -1,7 +1,7 @@
 import { Formik, Field, Form } from '@/components/formik';
 import TeamNamePicker, { getValidateTeamName } from '@/components/formik/TeamNamePicker';
 import useConfig from '@/utils/useConfig';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 
 type CreateTeamFormProps = {
     tournament: object;

@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import { Formik, Field, Form } from '@/components/formik';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 import Modal from '@/components/Modal';
 import Checkbox from '@/components/formik/Checkbox';
 import FieldWrapper from '@/components/formik/FieldWrapper';
@@ -24,7 +24,7 @@ import useStatsigEvents from '@/utils/useStatsigEvents';
 import classnames from 'classnames';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 import TeammateForm from './TeammateForm';
-import useModal from '@rival/packages/utils/useModal';
+import useModal from '@rival/common/utils/useModal';
 
 const renderTeammateDescription = (tournamentId: number, values) => {
     const partnerInfo = values.partners[`partner-${tournamentId}`];

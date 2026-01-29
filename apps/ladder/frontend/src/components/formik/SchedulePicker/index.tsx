@@ -4,9 +4,9 @@ import useTooltipError from './useTooltipError';
 import classnames from 'classnames';
 import _cloneDeep from 'lodash/cloneDeep';
 import mergeBlocks from './mergeBlocks';
-import useBreakpoints from '@rival/packages/utils/useBreakpoints';
-import Tooltip from '@rival/packages/components/Tooltip';
-import CloseIcon from '@rival/packages/metronic/icons/duotone/Navigation/Close.svg?react';
+import useBreakpoints from '@rival/common/utils/useBreakpoints';
+import Tooltip from '@rival/common/components/Tooltip';
+import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
 import style from './style.module.scss';
 
 const MIN_HOUR = 6;

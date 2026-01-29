@@ -1,5 +1,5 @@
 import Result from './Result';
-import HiddenText from '@rival/packages/components/HiddenText';
+import HiddenText from '@rival/common/components/HiddenText';
 import TournamentText from '@/components/TournamentText';
 import classnames from 'classnames';
 import { getDoublesTournamentText } from '@/pages/Tournament/texts';

@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import Modal from '@/components/Modal';
 import PlayerName from '@/components/PlayerName';
 import PlayerAvatar from '@/components/PlayerAvatar';
@@ -7,7 +7,7 @@ import CreateTeamFromPoolForm from './CreateTeamFromPoolForm';
 import FormChangeTeamName from '@/components/FormChangeTeamName';
 import notification from '@/components/notification';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import EditIcon from '@rival/packages/metronic/icons/duotone/General/Edit.svg?react';
+import EditIcon from '@rival/common/metronic/icons/duotone/General/Edit.svg?react';
 import classnames from 'classnames';
 import axios from '@/utils/axios';
 import movePartner from './movePartner';

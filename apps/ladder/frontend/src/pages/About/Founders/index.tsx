@@ -1,7 +1,7 @@
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import AndrewSrc from './Andrew.svg';
 import IgorSrc from './Igor.svg';
-import ScrollToTop from '@rival/packages/components/ScrollToTop';
+import ScrollToTop from '@rival/common/components/ScrollToTop';
 import Header from '@/components/Header';
 import style from './style.module.scss';
 

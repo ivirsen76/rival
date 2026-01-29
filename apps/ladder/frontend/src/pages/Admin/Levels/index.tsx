@@ -1,9 +1,9 @@
 import { useQueryClient } from 'react-query';
 import axios from '@/utils/axios';
-import MoveIcon from '@rival/packages/metronic/icons/duotone/Navigation/Arrows-v.svg?react';
+import MoveIcon from '@rival/common/metronic/icons/duotone/Navigation/Arrows-v.svg?react';
 import Modal from '@/components/Modal';
-import Card from '@rival/packages/components/Card';
-import Tooltip from '@rival/packages/components/Tooltip';
+import Card from '@rival/common/components/Card';
+import Tooltip from '@rival/common/components/Tooltip';
 import notification from '@/components/notification';
 import LevelForm from './LevelForm';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';

@@ -1,6 +1,6 @@
 import { Formik, Field, Form } from '@/components/formik';
 import FieldWrapper from '@/components/formik/FieldWrapper';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 import VerifyPhone from '@/components/VerifyPhone';
 import notification from '@/components/notification';
 import { useSelector, useDispatch } from 'react-redux';

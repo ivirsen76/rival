@@ -1,6 +1,6 @@
 import { Formik, Field, Form } from '@/components/formik';
 import PasswordInput from '@/components/formik/PasswordInput';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 
 type ChangePasswordFormProps = {
     onSubmit: (...args: unknown[]) => unknown;

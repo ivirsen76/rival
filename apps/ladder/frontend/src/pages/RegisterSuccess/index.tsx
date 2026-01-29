@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Loader from '@rival/packages/components/Loader';
+import Loader from '@rival/common/components/Loader';
 import notification from '@/components/notification';
 import axios from '@/utils/axios';
 import { useDispatch } from 'react-redux';

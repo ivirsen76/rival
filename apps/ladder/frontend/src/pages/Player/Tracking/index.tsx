@@ -1,7 +1,7 @@
-import Loader from '@rival/packages/components/Loader';
-import Table from '@rival/packages/components/Table';
+import Loader from '@rival/common/components/Loader';
+import Table from '@rival/common/components/Table';
 import axios from '@/utils/axios';
-import formatDuration from '@rival/packages/utils/formatDuration';
+import formatDuration from '@rival/common/utils/formatDuration';
 import { useQuery } from 'react-query';
 import dayjs, { formatCustom } from '@/utils/dayjs';
 

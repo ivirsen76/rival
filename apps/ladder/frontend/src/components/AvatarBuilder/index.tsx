@@ -1,14 +1,14 @@
 import { useRef } from 'react';
-import Avatar from '@rival/packages/components/avataaars';
+import Avatar from '@rival/common/components/avataaars';
 import { Formik, Field, Form } from '@/components/formik';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 import PiecePicker from './PiecePicker';
 import Random from './Random';
 import Modal from '@/components/Modal';
 import style from './style.module.scss';
-import { colors as hairColors } from '@rival/packages/components/avataaars/avatar/top/HairColor';
-import { colors as beardColors } from '@rival/packages/components/avataaars/avatar/top/facialHair/Colors';
-import { colors as clothColors } from '@rival/packages/components/avataaars/avatar/clothes/Colors';
+import { colors as hairColors } from '@rival/common/components/avataaars/avatar/top/HairColor';
+import { colors as beardColors } from '@rival/common/components/avataaars/avatar/top/facialHair/Colors';
+import { colors as clothColors } from '@rival/common/components/avataaars/avatar/clothes/Colors';
 
 type AvatarBuilderProps = {
     initialValues: object;

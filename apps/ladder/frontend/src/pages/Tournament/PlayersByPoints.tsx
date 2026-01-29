@@ -1,13 +1,13 @@
 import { Fragment, useMemo } from 'react';
 import style from './style.module.scss';
 import { Link } from 'react-router-dom';
-import Tooltip from '@rival/packages/components/Tooltip';
+import Tooltip from '@rival/common/components/Tooltip';
 import classnames from 'classnames';
 import PlayerAvatar from '@/components/PlayerAvatar';
 import PlayerName from '@/components/PlayerName';
 import Modal from '@/components/Modal';
 import TeamInfo from './TeamInfo';
-import StopIcon from '@rival/packages/metronic/icons/duotone/Code/Stop.svg?react';
+import StopIcon from '@rival/common/metronic/icons/duotone/Code/Stop.svg?react';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import dayjs from '@/utils/dayjs';
 import { useSelector } from 'react-redux';

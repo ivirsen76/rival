@@ -2,11 +2,11 @@ import { useState, useMemo, useEffect } from 'react';
 import { Formik, Field, Form } from '@/components/formik';
 import { useSelector } from 'react-redux';
 import Select from '@/components/formik/Select';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 import FormScheduleMatch from '@/components/FormScheduleMatch';
 import FormPickDoublesPlayers from '@/components/FormPickDoublesPlayers';
 import getPlayersName from '@/utils/getPlayersName';
-import hasAnyRole from '@rival/packages/utils/hasAnyRole';
+import hasAnyRole from '@rival/common/utils/hasAnyRole';
 
 type JustFormProps = {
     values: object;

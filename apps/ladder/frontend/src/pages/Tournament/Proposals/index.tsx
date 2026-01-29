@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import Proposal from '@/components/Proposal';
 import ProposalDoubles from '@/components/ProposalDoubles';
 import classnames from 'classnames';

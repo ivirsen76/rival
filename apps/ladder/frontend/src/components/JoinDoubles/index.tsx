@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import notification from '@/components/notification';
-import Card from '@rival/packages/components/Card';
-import Loader from '@rival/packages/components/Loader';
-import Error from '@rival/packages/components/Error';
+import Card from '@rival/common/components/Card';
+import Loader from '@rival/common/components/Loader';
+import Error from '@rival/common/components/Error';
 import axios from '@/utils/axios';
 import Authentication from '@/components/Authentication';
 import getRegisterNotificationProps from '@/utils/getRegisterNotificationProps';

@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import axios from '@/utils/axios';
 import { useQuery } from 'react-query';
-import Loader from '@rival/packages/components/Loader';
-import Error from '@rival/packages/components/Error';
-import Chart from '@rival/packages/components/Chart';
+import Loader from '@rival/common/components/Loader';
+import Error from '@rival/common/components/Error';
+import Chart from '@rival/common/components/Chart';
 import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
-import Tooltip from '@rival/packages/components/Tooltip';
-import QuestionIcon from '@rival/packages/metronic/icons/duotone/Navigation/Question.svg?react';
+import Tooltip from '@rival/common/components/Tooltip';
+import QuestionIcon from '@rival/common/metronic/icons/duotone/Navigation/Question.svg?react';
 
 const GlobalStats = (props) => {
     const [selectedCity, setSelectedCity] = useState('all');

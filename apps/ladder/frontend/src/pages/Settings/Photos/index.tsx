@@ -1,6 +1,6 @@
 import { useCallback, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import _omit from 'lodash/omit';
 import { Redirect } from 'react-router-dom';
 import classnames from 'classnames';
@@ -9,14 +9,14 @@ import axios from 'axios';
 import { Formik, Field, Form } from '@/components/formik';
 import Checkbox from '@/components/formik/Checkbox';
 import Textarea from '@/components/formik/Textarea';
-import LoaderWithProgress from '@rival/packages/components/LoaderWithProgress';
+import LoaderWithProgress from '@rival/common/components/LoaderWithProgress';
 import Gallery from '@/components/Gallery';
 import { useQuery, useQueryClient } from 'react-query';
-import Loader from '@rival/packages/components/Loader';
-import Button from '@rival/packages/components/Button';
+import Loader from '@rival/common/components/Loader';
+import Button from '@rival/common/components/Button';
 import notification from '@/components/notification';
 import useConfig from '@/utils/useConfig';
-import formatSize from '@rival/packages/utils/formatSize';
+import formatSize from '@rival/common/utils/formatSize';
 import style from './style.module.scss';
 
 let counter = 1;

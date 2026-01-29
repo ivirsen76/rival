@@ -1,5 +1,5 @@
 import { Formik, Field, Form } from '@/components/formik';
-import Button from '@rival/packages/components/Button';
+import Button from '@rival/common/components/Button';
 import Input from '@/components/formik/Input';
 import axios from '@/utils/axios';
 import notification from '@/components/notification';

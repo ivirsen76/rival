@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import dayjs from '@/utils/dayjs';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
-import Tooltip from '@rival/packages/components/Tooltip';
-import QuestionIcon from '@rival/packages/metronic/icons/duotone/Navigation/Question.svg?react';
+import Tooltip from '@rival/common/components/Tooltip';
+import QuestionIcon from '@rival/common/metronic/icons/duotone/Navigation/Question.svg?react';
 import { List } from './PlayersByPoints';
 import { useSelector, useDispatch } from 'react-redux';
 import { setShowAllPlayers } from '@/reducers/auth';
-import ArrowDownIcon from '@rival/packages/metronic/icons/duotone/Navigation/Angle-down.svg?react';
-import useBreakpoints from '@rival/packages/utils/useBreakpoints';
+import ArrowDownIcon from '@rival/common/metronic/icons/duotone/Navigation/Angle-down.svg?react';
+import useBreakpoints from '@rival/common/utils/useBreakpoints';
 
 const firstPlayers = 10;
 const tooManyPlayers = 20;

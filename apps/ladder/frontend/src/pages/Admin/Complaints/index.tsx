@@ -1,7 +1,7 @@
-import Table from '@rival/packages/components/Table';
+import Table from '@rival/common/components/Table';
 import { useQuery } from 'react-query';
-import Loader from '@rival/packages/components/Loader';
-import Card from '@rival/packages/components/Card';
+import Loader from '@rival/common/components/Loader';
+import Card from '@rival/common/components/Card';
 import axios from '@/utils/axios';
 import { Link } from 'react-router-dom';
 import { formatDate } from '@/utils/dayjs';

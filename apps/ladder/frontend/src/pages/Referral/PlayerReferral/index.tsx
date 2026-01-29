@@ -1,19 +1,19 @@
-import Card from '@rival/packages/components/Card';
-import Loader from '@rival/packages/components/Loader';
+import Card from '@rival/common/components/Card';
+import Loader from '@rival/common/components/Loader';
 import axios from '@/utils/axios';
-import Table from '@rival/packages/components/Table';
-import Copy from '@rival/packages/components/Copy';
+import Table from '@rival/common/components/Table';
+import Copy from '@rival/common/components/Copy';
 import { useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
 import { formatCustom } from '@/utils/dayjs';
-import FacebookIcon from '@rival/packages/metronic/icons/duotune/social/soc004.svg?react';
+import FacebookIcon from '@rival/common/metronic/icons/duotune/social/soc004.svg?react';
 import TwitterIcon from '@/assets/x.svg?react';
-import EmailIcon from '@rival/packages/metronic/icons/duotone/Communication/Mail-at.svg?react';
+import EmailIcon from '@rival/common/metronic/icons/duotone/Communication/Mail-at.svg?react';
 import { Link } from 'react-router-dom';
 import useConfig from '@/utils/useConfig';
 import { getFacebookLink, getTwitterLink, getEmailLink } from '@rival/ladder.backend/src/social';
 import Header from '@/components/Header';
-import useBreakpoints from '@rival/packages/utils/useBreakpoints';
+import useBreakpoints from '@rival/common/utils/useBreakpoints';
 import classnames from 'classnames';
 import style from './style.module.scss';
 

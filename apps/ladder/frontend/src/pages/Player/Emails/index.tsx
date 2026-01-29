@@ -1,5 +1,5 @@
-import Loader from '@rival/packages/components/Loader';
-import Table from '@rival/packages/components/Table';
+import Loader from '@rival/common/components/Loader';
+import Table from '@rival/common/components/Table';
 import axios from '@/utils/axios';
 import { useQuery } from 'react-query';
 import { formatCustom } from '@/utils/dayjs';

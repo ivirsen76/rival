@@ -1,9 +1,9 @@
 import { Fragment } from 'react';
 import { useQuery } from 'react-query';
-import Loader from '@rival/packages/components/Loader';
-import Card from '@rival/packages/components/Card';
+import Loader from '@rival/common/components/Loader';
+import Card from '@rival/common/components/Card';
 import Modal from '@/components/Modal';
-import Tooltip from '@rival/packages/components/Tooltip';
+import Tooltip from '@rival/common/components/Tooltip';
 import Header from '@/components/Header';
 import Rivalry from './Rivalry';
 import Photos from './Photos';
@@ -13,12 +13,12 @@ import ComplaintForm from './ComplaintForm';
 import MessageForm from './MessageForm';
 import Matches from './Matches';
 import { Link } from 'react-router-dom';
-import PhoneIcon from '@rival/packages/metronic/icons/duotone/Interface/Phone.svg?react';
-import EmailIcon from '@rival/packages/metronic/icons/duotone/Communication/Mail-at.svg?react';
+import PhoneIcon from '@rival/common/metronic/icons/duotone/Interface/Phone.svg?react';
+import EmailIcon from '@rival/common/metronic/icons/duotone/Communication/Mail-at.svg?react';
 import AngryIcon from './angry.svg?react';
-import EnvelopeIcon from '@rival/packages/metronic/icons/duotone/Interface/Envelope.svg?react';
-import MarkerIcon from '@rival/packages/metronic/icons/duotune/general/gen018.svg?react';
-import formatPhone from '@rival/packages/utils/formatPhone';
+import EnvelopeIcon from '@rival/common/metronic/icons/duotone/Interface/Envelope.svg?react';
+import MarkerIcon from '@rival/common/metronic/icons/duotune/general/gen018.svg?react';
+import formatPhone from '@rival/common/utils/formatPhone';
 import NotFound from '@/pages/NotFound';
 import axios from '@/utils/axios';
 import {
@@ -29,7 +29,7 @@ import {
     shotOptions,
 } from '../Settings/TennisStyleForm';
 import { useDispatch, useSelector } from 'react-redux';
-import hasAnyRole from '@rival/packages/utils/hasAnyRole';
+import hasAnyRole from '@rival/common/utils/hasAnyRole';
 import { formatCustom } from '@/utils/dayjs';
 import { comeFromOptions } from '@/components/Authentication/Register';
 import Emails from './Emails';
@@ -48,7 +48,7 @@ import LastMatchesElo from './LastMatchesElo';
 import useConfig from '@/utils/useConfig';
 import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
 import { Squircle } from 'corner-smoothing';
-import useBreakpoints from '@rival/packages/utils/useBreakpoints';
+import useBreakpoints from '@rival/common/utils/useBreakpoints';
 import style from './style.module.scss';
 
 type PlayerProps = {

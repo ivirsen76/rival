@@ -1,5 +1,5 @@
 import ClockIcon from './Clock.svg?react';
-import Avatar from '@rival/packages/components/avataaars';
+import Avatar from '@rival/common/components/avataaars';
 import UserIcon from '@/assets/user.svg?react';
 import dayjs from '@/utils/dayjs';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';

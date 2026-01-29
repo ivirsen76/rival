@@ -1,12 +1,12 @@
-import Card from '@rival/packages/components/Card';
+import Card from '@rival/common/components/Card';
 import Modal from '@/components/Modal';
 import { useQuery } from 'react-query';
 import axios from '@/utils/axios';
-import Loader from '@rival/packages/components/Loader';
-import Table from '@rival/packages/components/Table';
+import Loader from '@rival/common/components/Loader';
+import Table from '@rival/common/components/Table';
 import List from './List';
-import formatSum from '@rival/packages/utils/formatSum';
-import WalletIcon from '@rival/packages/metronic/icons/duotone/Shopping/Wallet.svg?react';
+import formatSum from '@rival/common/utils/formatSum';
+import WalletIcon from '@rival/common/metronic/icons/duotone/Shopping/Wallet.svg?react';
 
 const Income = (props) => {
     const { data: incomes, isLoading } = useQuery('getSeasonIncomes', async () => {

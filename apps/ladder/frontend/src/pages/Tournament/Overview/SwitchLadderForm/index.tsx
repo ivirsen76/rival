@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { Formik, Field, Form } from '@/components/formik';
-import Button from '@rival/packages/components/Button';
-import Loader from '@rival/packages/components/Loader';
+import Button from '@rival/common/components/Button';
+import Loader from '@rival/common/components/Loader';
 import Select from '@/components/formik/Select';
 import { useQuery } from 'react-query';
 import axios from '@/utils/axios';

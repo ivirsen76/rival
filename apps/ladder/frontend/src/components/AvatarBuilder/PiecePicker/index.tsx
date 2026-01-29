@@ -1,5 +1,5 @@
 import pieces from '../pieces';
-import Avatar from '@rival/packages/components/avataaars';
+import Avatar from '@rival/common/components/avataaars';
 import Modal from '@/components/Modal';
 import classnames from 'classnames';
 import style from './style.module.scss';
