@@ -2,7 +2,7 @@
 import { Unprocessable } from '@feathersjs/errors';
 import { getPlayerName, getEmailContact } from '../users/helpers';
 import { getSeasonName } from '../seasons/helpers';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import _pick from 'lodash/pick';
 import getMatchPermissions from './getMatchPermissions';
 import { reverseScore } from './calculateElo';

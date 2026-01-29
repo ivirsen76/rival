@@ -1,7 +1,7 @@
 // @ts-nocheck
 import yup from '../../packages/yup';
 import { getSchemaErrors } from '../../helpers';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { getAge } from '../../utils/helpers';
 
 const nameRegex = /^[a-zA-Z-.' ]+$/;

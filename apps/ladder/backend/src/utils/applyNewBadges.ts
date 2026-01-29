@@ -2,7 +2,7 @@
 import type { Application } from '@feathersjs/feathers';
 import type { Sequelize } from 'sequelize';
 import { createStore } from '../services/users/badgeStore';
-import dayjs from './dayjs';
+import dayjs from '@rival/dayjs';
 import { getEmailContact, getWeekNumber, getDateByWeekNumber } from '../services/users/helpers';
 import { badges as allBadges } from './badges';
 import renderImage from './renderImage';

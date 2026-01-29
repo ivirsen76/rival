@@ -1,7 +1,7 @@
 // @ts-nocheck - TODO
 import type { Sequelize } from 'sequelize';
 import type { Application } from '@feathersjs/feathers';
-import dayjs from './dayjs';
+import dayjs from '@rival/dayjs';
 import lastOpenSlotReminderTemplate from '../emailTemplates/lastOpenSlotReminder';
 import staticConfig from '../config';
 import getCombinedConfig from './getCombinedConfig';

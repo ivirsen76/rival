@@ -1,5 +1,5 @@
 import type { Application } from '@feathersjs/feathers';
-import dayjs from './dayjs';
+import dayjs from '@rival/dayjs';
 import getCombinedConfig from './getCombinedConfig';
 
 export default async (app: Application) => {

@@ -3,7 +3,7 @@ import formatNumber from '../../utils/formatNumber';
 import { getStatsMatches } from '../../utils/sqlConditions';
 import getCombinedConfig from '../../utils/getCombinedConfig';
 import { getPlayerName } from '../users/helpers';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { runQuery, closeConnection } from '../../db/connection';
 import type { User } from '../../types';
 

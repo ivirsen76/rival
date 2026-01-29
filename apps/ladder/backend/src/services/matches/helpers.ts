@@ -1,5 +1,5 @@
 import type { Match } from '../../types';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import _round from 'lodash/round';
 
 export const isDateThisWeek = (dateAsUtcString: string) => {

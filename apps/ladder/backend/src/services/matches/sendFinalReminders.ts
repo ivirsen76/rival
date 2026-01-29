@@ -1,5 +1,5 @@
 import type { HookContext } from '@feathersjs/feathers';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import finalMatchTemplate from '../../emailTemplates/finalMatch';
 import finalMatchByeTemplate from '../../emailTemplates/finalMatchBye';
 import renderImage from '../../utils/renderImage';

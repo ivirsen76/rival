@@ -15,7 +15,7 @@ import getWeatherForecast from '../../utils/getWeatherForecast';
 import axios from 'axios';
 import compareFields from '../../utils/compareFields';
 import saveFile from './saveFile';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import sharp from 'sharp';
 import _isEmpty from 'lodash/isEmpty';
 import _omit from 'lodash/omit';

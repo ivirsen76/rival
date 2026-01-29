@@ -1,6 +1,6 @@
 import type { HookContext } from '@feathersjs/feathers';
 import qs from 'qs';
-import dayjs from '../utils/dayjs';
+import dayjs from '@rival/dayjs';
 
 const { TL_ENABLE_REDIS } = process.env;
 const DURATION = 3600 * 24;

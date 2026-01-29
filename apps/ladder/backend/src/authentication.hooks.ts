@@ -1,7 +1,7 @@
 // @ts-nocheck - TODO
 import type { HookContext } from '@feathersjs/feathers';
 import { Unprocessable } from '@feathersjs/errors';
-import dayjs, { formatDate } from './utils/dayjs';
+import dayjs, { formatDate } from '@rival/dayjs';
 import logger from '@rival-tennis-ladder/logger';
 import { getStatsMatches } from './utils/sqlConditions';
 import populateInformation from './services/users/populateInformation';

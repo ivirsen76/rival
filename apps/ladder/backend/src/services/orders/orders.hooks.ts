@@ -5,7 +5,7 @@ import { disallow } from 'feathers-hooks-common';
 import { calculateNextOrder } from './helpers';
 import { getPlayerName, getEmailContact, getEstablishedElo } from '../users/helpers';
 import Stripe from 'stripe';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { purgeTournamentCache, sendWelcomeEmail } from '../commonHooks';
 import referralFirstPaymentTemplate from '../../emailTemplates/referralFirstPayment';

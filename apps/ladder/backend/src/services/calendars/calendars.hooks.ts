@@ -2,7 +2,7 @@ import type { HookContext } from '@feathersjs/feathers';
 import ical from 'ical-generator';
 import { disallow } from 'feathers-hooks-common';
 import { Unprocessable } from '@feathersjs/errors';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import md5 from 'md5';
 import type { Match } from '../../types';
 

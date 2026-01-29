@@ -1,6 +1,6 @@
 import type { Sequelize } from 'sequelize';
 import type { Application } from '@feathersjs/feathers';
-import dayjs from './dayjs';
+import dayjs from '@rival/dayjs';
 import logger from '@rival-tennis-ladder/logger';
 import refundPaymentForTournamentTemplate from '../emailTemplates/refundPaymentForTournament';
 import staticConfig from '../config';

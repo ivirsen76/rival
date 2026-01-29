@@ -1,7 +1,7 @@
 // @ts-nocheck TODO
 import type { Sequelize } from 'sequelize';
 import type { Application } from '@feathersjs/feathers';
-import dayjs from './dayjs';
+import dayjs from '@rival/dayjs';
 import logger from '@rival-tennis-ladder/logger';
 import _uniqBy from 'lodash/uniqBy';
 import { getSeasonName } from '../services/seasons/helpers';

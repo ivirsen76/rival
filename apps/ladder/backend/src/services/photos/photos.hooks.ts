@@ -11,7 +11,7 @@ import _isEmpty from 'lodash/isEmpty';
 import invokeLambda from '../../utils/invokeLambda';
 import md5 from 'md5';
 import _pick from 'lodash/pick';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { logEvent, generateBadges } from '../commonHooks';
 import { getEmailsFromList } from '../settings/helpers';
 import moderatePhotoNotificationTemplate from '../../emailTemplates/moderatePhotoNotification';

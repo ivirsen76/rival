@@ -1,5 +1,5 @@
 import type { Application } from '@feathersjs/feathers';
-import dayjs from './dayjs';
+import dayjs from '@rival/dayjs';
 import logger from '@rival-tennis-ladder/logger';
 
 export default async (app: Application) => {

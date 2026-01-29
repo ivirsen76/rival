@@ -1,6 +1,6 @@
 import _omit from 'lodash/omit';
 import md5 from 'md5';
-import dayjs from './dayjs';
+import dayjs from '@rival/dayjs';
 import { generateReferralCode } from '../helpers';
 
 import 'dotenv/config';

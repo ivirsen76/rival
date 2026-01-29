@@ -3,7 +3,7 @@ import type { Application } from '@feathersjs/feathers';
 import axios from 'axios';
 import qs from 'qs';
 import logger from '@rival-tennis-ladder/logger';
-import dayjs from './dayjs';
+import dayjs from '@rival/dayjs';
 import { getSeasonName } from '../services/seasons/helpers';
 import _pick from 'lodash/pick';
 import { getPlayerName, comeFromOptions } from '../services/users/helpers';

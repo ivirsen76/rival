@@ -1,6 +1,6 @@
 import bananas from './bananas';
 import supertest from 'supertest';
-import dayjs from './utils/dayjs';
+import dayjs from '@rival/dayjs';
 
 const yesterday = dayjs.tz().subtract(1, 'day').format('YYYY-MM-DD');
 

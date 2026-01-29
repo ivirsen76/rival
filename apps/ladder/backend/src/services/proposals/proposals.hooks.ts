@@ -7,7 +7,7 @@ import _isEmpty from 'lodash/isEmpty';
 import _pick from 'lodash/pick';
 import _uniq from 'lodash/uniq';
 import _intersection from 'lodash/intersection';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { getAge } from '../../utils/helpers';
 import { keep, disallow } from 'feathers-hooks-common';
 import { purgeTournamentCache, purgeMatchCache, logEvent, generateBadges } from '../commonHooks';

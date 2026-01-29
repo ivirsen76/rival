@@ -3,7 +3,7 @@ import type { HookContext } from '@feathersjs/feathers';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { getTournament, getSeeds } from './selectors';
 import redis from '../redisHooks';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { disallow } from 'feathers-hooks-common';
 import calculateRank from '../matches/calculateRank';
 import sendFinalReminders from '../matches/sendFinalReminders';

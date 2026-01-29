@@ -1,7 +1,7 @@
 // @ts-nocheck
 import type { HookContext } from '@feathersjs/feathers';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { revertScore } from '../matches/helpers';
 import { keep } from 'feathers-hooks-common';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';

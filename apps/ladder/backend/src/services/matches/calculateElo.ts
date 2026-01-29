@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import NodeCache from 'node-cache';
 import { completeInjuryFullScore, completeInjuryFastScore, getOutcome } from './helpers';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import logger from '@rival-tennis-ladder/logger';
 import { runQuery, closeConnection } from '../../db/connection';
 

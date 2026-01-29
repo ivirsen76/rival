@@ -15,7 +15,7 @@ import yup from '../../packages/yup';
 import simplifyHtml from './simplifyHtml';
 import { getActionLink } from '../../utils/action';
 import md5 from 'md5';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { getPlayerName } from '../users/helpers';
 import { base64EncodeEmail } from '../../utils/helpers';
 import { parse } from 'node-html-parser';

@@ -1,4 +1,4 @@
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 
 export type Point = {
     pid: number;

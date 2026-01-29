@@ -6,7 +6,7 @@ import {
     runQuery,
     overrideConfig,
 } from '@rival/ladder.backend/src/db/helpers';
-import dayjs from '@rival/ladder.backend/src/utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { decrypt } from '@rival/ladder.backend/src/utils/crypt';
 
 test.beforeEach(async ({ page }) => {

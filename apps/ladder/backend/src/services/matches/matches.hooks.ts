@@ -5,7 +5,7 @@ import { NotFound, Unprocessable, MethodNotAllowed } from '@feathersjs/errors';
 import { calculateElo } from './calculateElo';
 import calculateRank from './calculateRank';
 import { keep, disallow } from 'feathers-hooks-common';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import validate from './validate';
 import _isEmpty from 'lodash/isEmpty';
 import _pick from 'lodash/pick';

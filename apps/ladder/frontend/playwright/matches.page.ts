@@ -1,5 +1,5 @@
 import { test, expect } from './base';
-import dayjs from '@rival/ladder.backend/src/utils/dayjs';
+import dayjs from '@rival/dayjs';
 import {
     restoreDb,
     expectRecordToExist,

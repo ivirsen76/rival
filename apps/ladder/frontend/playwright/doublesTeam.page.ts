@@ -8,7 +8,7 @@ import {
     expectNumRecords,
 } from '@rival/ladder.backend/src/db/helpers';
 import { getActionLink } from '@rival/ladder.backend/src/utils/action';
-import dayjs from '@rival/ladder.backend/src/utils/dayjs';
+import dayjs from '@rival/dayjs';
 
 const closeCurrentSeason = async () => {
     const dateTwoDaysAgo = dayjs.tz().subtract(2, 'day').format('YYYY-MM-DD HH:mm:ss');

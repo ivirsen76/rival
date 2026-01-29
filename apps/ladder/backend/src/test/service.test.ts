@@ -1,7 +1,7 @@
 import path from 'path';
 import _memoize from 'lodash/memoize';
 import _omit from 'lodash/omit';
-import dayjs from '../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import generateNews from '../services/news/generateNews';
 import removeUnverifiedAccounts from '../utils/removeUnverifiedAccounts';
 import runActions, {

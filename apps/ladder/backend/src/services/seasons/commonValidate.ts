@@ -2,7 +2,7 @@
 import { SEASON_OPTIONS } from '../../constants';
 import yup from '../../packages/yup';
 import { getSchemaErrors } from '../../helpers';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 
 export default (values) => {
     const currentYear = new Date().getFullYear();

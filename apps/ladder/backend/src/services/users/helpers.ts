@@ -1,5 +1,5 @@
 import _upperFirst from 'lodash/upperFirst';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { getStatsMatches } from '../../utils/sqlConditions';
 import type { Config, Match, User } from '../../types';
 import type { Sequelize } from 'sequelize';

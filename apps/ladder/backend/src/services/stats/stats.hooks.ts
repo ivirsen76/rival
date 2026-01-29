@@ -2,7 +2,7 @@
 import type { HookContext } from '@feathersjs/feathers';
 import { disallow } from 'feathers-hooks-common';
 import { NotFound } from '@feathersjs/errors';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import compareFields from '../../utils/compareFields';
 import { getSeasonName } from '../seasons/helpers';
 import { isFullScoreCorrect, isFastScoreCorrect } from '../matches/helpers';

@@ -1,6 +1,6 @@
 // @ts-nocheck
 import validate from './validate';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 
 describe('validate()', () => {
     const correctValues = {

@@ -3,7 +3,7 @@ import type { Application } from '@feathersjs/feathers';
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
-import dayjs from './dayjs';
+import dayjs from '@rival/dayjs';
 import getCombinedConfig from './getCombinedConfig';
 
 export default async (app: Application) => {

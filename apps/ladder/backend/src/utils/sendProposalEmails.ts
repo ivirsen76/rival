@@ -1,5 +1,5 @@
 // @ts-nocheck
-import dayjs from './dayjs';
+import dayjs from '@rival/dayjs';
 import getCombinedConfig from './getCombinedConfig';
 import { getEstablishedEloAllUsers, getEmailContact } from '../services/users/helpers';
 import { POOL_PARTNER_ID } from '../constants';

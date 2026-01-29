@@ -18,7 +18,7 @@ import _difference from 'lodash/difference';
 import _pick from 'lodash/pick';
 import _isEmpty from 'lodash/isEmpty';
 import { getTeamName, getTlrLimit, minMatches } from './helpers';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { getActionLink, decodeAction } from '../../utils/action';
 import renderImage from '../../utils/renderImage';
 import yup from '../../packages/yup';

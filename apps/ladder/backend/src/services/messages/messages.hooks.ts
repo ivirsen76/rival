@@ -5,7 +5,7 @@ import yup from '../../packages/yup';
 import { throwValidationErrors, getSchemaErrors } from '../../helpers';
 import _isEmpty from 'lodash/isEmpty';
 import { Unprocessable } from '@feathersjs/errors';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import newMessageTemplate from '../../emailTemplates/newMessage';
 import { getStatsMatches } from '../../utils/sqlConditions';
 import { getEmailContact, getPlayerName } from '../users/helpers';

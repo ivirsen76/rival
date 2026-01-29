@@ -1,4 +1,4 @@
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { getPoints } from './helpers';
 import logger from '@rival-tennis-ladder/logger';
 import { runQuery, closeConnection } from '../../db/connection';

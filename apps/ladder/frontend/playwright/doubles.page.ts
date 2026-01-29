@@ -8,7 +8,7 @@ import {
     overrideConfig,
 } from '@rival/ladder.backend/src/db/helpers';
 
-import dayjs from '@rival/ladder.backend/src/utils/dayjs';
+import dayjs from '@rival/dayjs';
 
 test.beforeEach(async ({ page }) => {
     restoreDb();

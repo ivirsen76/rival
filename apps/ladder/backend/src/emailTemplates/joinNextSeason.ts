@@ -1,7 +1,7 @@
 import type { Config, Season } from '../types';
 import { normal, h2, thankYou, signature } from './normal';
 import { getSeasonName } from '../services/seasons/helpers';
-import dayjs from '../utils/dayjs';
+import dayjs from '@rival/dayjs';
 
 type Params = { config: Config; season: Season };
 

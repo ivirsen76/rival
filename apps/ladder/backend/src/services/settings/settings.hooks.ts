@@ -5,7 +5,7 @@ import validate from './validate';
 import _isEmpty from 'lodash/isEmpty';
 import { throwValidationErrors } from '../../helpers';
 import allBananas, { type Banana } from '../../bananas';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import type { User } from '../../types';
 import populateInformation from '../users/populateInformation';
 

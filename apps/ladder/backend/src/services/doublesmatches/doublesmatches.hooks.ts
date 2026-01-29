@@ -5,7 +5,7 @@ import { throwValidationErrors } from '../../helpers';
 import _isEmpty from 'lodash/isEmpty';
 import _omit from 'lodash/omit';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import validate from './validate';
 import { disallow } from 'feathers-hooks-common';
 import { purgeTournamentCache, logEvent } from '../commonHooks';

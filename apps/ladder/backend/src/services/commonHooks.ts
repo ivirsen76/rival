@@ -5,7 +5,7 @@ import _intersection from 'lodash/intersection';
 import { Unprocessable } from '@feathersjs/errors';
 import logger from '@rival-tennis-ladder/logger';
 import newRegistrationTemplate from '../emailTemplates/newRegistration';
-import dayjs from '../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { getSeasonName } from './seasons/helpers';
 import { updateCurrentWeekUserBadges } from '../utils/applyNewBadges';
 import { encrypt } from '../utils/crypt';

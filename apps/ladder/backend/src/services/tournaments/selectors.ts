@@ -2,7 +2,7 @@
 import { SEASON_OPTIONS, POOL_PARTNER_ID } from '../../constants';
 import _pick from 'lodash/pick';
 import _shuffle from 'lodash/shuffle';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import processStat from '../matches/processStat';
 import getBetPoints from './getBetPoints';
 import { getJoinDoublesLink } from '../players/helpers';

@@ -1,5 +1,5 @@
 import * as yup from 'yup';
-import dayjs from '../utils/dayjs';
+import dayjs from '@rival/dayjs';
 
 yup.addMethod(yup.string, 'isValidDate', function (msg) {
     return this.test('isValidDate', msg || 'The date is wrong.', (value) => dayjs(value).isValid());

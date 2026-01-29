@@ -4,7 +4,7 @@ import crypto from 'crypto';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { getEmailLink } from '../social';
 import { S3_BUCKET_NAME } from '../constants';
-import dayjs from '../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import practiceTypeOptions from '../services/proposals/practiceTypeOptions';
 import matchFormatOptions from '../services/proposals/matchFormatOptions';
 import durationOptions from '../services/proposals/durationOptions';

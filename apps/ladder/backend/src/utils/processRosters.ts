@@ -4,7 +4,7 @@ import _capitalize from 'lodash/capitalize';
 import _pick from 'lodash/pick';
 import { decrypt, encrypt } from './crypt';
 import logger from '@rival-tennis-ladder/logger';
-import dayjs from './dayjs';
+import dayjs from '@rival/dayjs';
 import { normal, h2, signature } from '../emailTemplates/normal';
 import { getSeasonName } from '../services/seasons/helpers';
 import getWeightedItemByIndex from './getWeightedItemByIndex';

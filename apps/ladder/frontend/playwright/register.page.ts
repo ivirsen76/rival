@@ -7,7 +7,7 @@ import {
     overrideConfig,
 } from '@rival/ladder.backend/src/db/helpers';
 import { test, expect } from './base';
-import dayjs from '@rival/ladder.backend/src/utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { decrypt } from '@rival/ladder.backend/src/utils/crypt';
 
 const closeCurrentSeason = async () => {

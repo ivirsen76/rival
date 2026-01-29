@@ -7,7 +7,7 @@ import _isEmpty from 'lodash/isEmpty';
 import { hasAnyRole, purgeSeasonCache } from '../commonHooks';
 import { unless, isProvider } from 'feathers-hooks-common';
 import commonValidate from './commonValidate';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { getAge } from '../../utils/helpers';
 import { getSeasonName, getSeasonTournaments } from './helpers';
 import { getSchemaErrors, throwValidationErrors } from '../../helpers';

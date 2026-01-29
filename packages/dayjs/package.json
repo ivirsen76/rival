@@ -1,0 +1,23 @@
+{
+    "name": "@rival/dayjs",
+    "version": "1.0.0",
+    "private": true,
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "require": "./dist/index.js",
+            "import": "./src/index.ts",
+            "types": "./dist/index.d.ts"
+        }
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.json"
+    },
+    "dependencies": {
+        "dayjs": "^1.11.19"
+    },
+    "devDependencies": {
+        "@types/node": "^22.19.7"
+    }
+}

@@ -1,6 +1,6 @@
 import type { Config } from '../types';
 import { normal, h2, signature } from './normal';
-import dayjs from '../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { formatPhone } from '../services/users/helpers';
 
 type Params = {

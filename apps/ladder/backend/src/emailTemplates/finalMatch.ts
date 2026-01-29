@@ -1,6 +1,6 @@
 import type { Config, Image, User } from '../types';
 import { normal, h2, warning, signature } from './normal';
-import dayjs from '../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { getPlayerName, getEmailLink, getPhoneLink } from '../services/users/helpers';
 
 export type Params = {

@@ -19,7 +19,7 @@ import _uniqWith from 'lodash/uniqWith';
 import _omit from 'lodash/omit';
 import _pick from 'lodash/pick';
 import _set from 'lodash/set';
-import dayjs from '../../utils/dayjs';
+import dayjs from '@rival/dayjs';
 import { getAge } from '../../utils/helpers';
 import newEmailVerificationTemplate from '../../emailTemplates/newEmailVerification';
 import emailVerificationTemplate from '../../emailTemplates/emailVerification';

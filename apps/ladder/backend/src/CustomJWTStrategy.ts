@@ -2,7 +2,7 @@
 import ms from 'ms';
 import { JWTStrategy } from '@feathersjs/authentication';
 import { NotAuthenticated } from '@feathersjs/errors';
-import dayjs from './utils/dayjs';
+import dayjs from '@rival/dayjs';
 
 export default class CustomJWTStrategy extends JWTStrategy {
     async authenticate(authentication, params) {
