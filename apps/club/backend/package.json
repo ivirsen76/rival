@@ -19,6 +19,7 @@
         "seed": "node dist/db/seed.js",
         "build": "tsc --noCheck && rsync -av --exclude='*.ts' src/ dist/",
         "lint": "tsc --noEmit",
+        "test": "vitest run",
         "start": "NODE_CONFIG_DIR=./dist/config node dist/",
         "start:prod": "pnpm run migrate && pnpm run start"
     },
