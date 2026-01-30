@@ -252,12 +252,6 @@ importers:
       '@amcharts/amcharts4':
         specifier: ^4.10.18
         version: 4.10.40
-      '@emoji-mart/data':
-        specifier: ^1.2.1
-        version: 1.2.1
-      '@emoji-mart/react':
-        specifier: ^1.1.1
-        version: 1.1.1(emoji-mart@5.6.0)(react@18.2.0)
       '@reduxjs/toolkit':
         specifier: ^1.5.1
         version: 1.9.7(react-redux@7.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
@@ -288,9 +282,6 @@ importers:
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.23(postcss@8.5.6)
-      axios:
-        specifier: ^0.21.1
-        version: 0.21.4
       bootstrap:
         specifier: 5.3.2
         version: 5.3.2(@popperjs/core@2.11.8)
@@ -303,18 +294,9 @@ importers:
       corner-smoothing:
         specifier: ^0.1.5
         version: 0.1.5(react@18.2.0)
-      emoji-mart:
-        specifier: ^5.6.0
-        version: 5.6.0
-      emoji-regex-xs:
-        specifier: ^1.0.0
-        version: 1.0.0
       flatpickr:
         specifier: ^4.6.13
         version: 4.6.13
-      formik:
-        specifier: 2.2.6
-        version: 2.2.6(react@18.2.0)
       history:
         specifier: ^4.10.1
         version: 4.10.1
@@ -327,12 +309,6 @@ importers:
       marked:
         specifier: ^16.4.1
         version: 16.4.2
-      motion:
-        specifier: ^11.11.17
-        version: 11.18.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      photoswipe:
-        specifier: ^5.4.4
-        version: 5.4.4
       primereact:
         specifier: ^10.8.3
         version: 10.9.7(@types/react@19.2.10)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -342,15 +318,9 @@ importers:
       react:
         specifier: 18.2.0
         version: 18.2.0
-      react-animate-height:
-        specifier: ^3.2.3
-        version: 3.2.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-beautiful-dnd:
         specifier: ^13.1.0
         version: 13.1.1(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
-      react-bootstrap:
-        specifier: 2.9.1
-        version: 2.9.1(@types/react@19.2.10)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       react-css-transition-replace:
         specifier: ^4.0.4
         version: 4.0.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -360,9 +330,6 @@ importers:
       react-dropzone:
         specifier: ^14.2.9
         version: 14.4.0(react@18.2.0)
-      react-flatpickr:
-        specifier: ^3.10.7
-        version: 3.10.13(react@18.2.0)
       react-helmet:
         specifier: ^6.1.0
         version: 6.1.0(react@18.2.0)
@@ -378,9 +345,6 @@ importers:
       react-photo-album:
         specifier: ^3.0.2
         version: 3.4.0(@types/react@19.2.10)(react@18.2.0)
-      react-photoswipe-gallery:
-        specifier: ^3.0.2
-        version: 3.1.1(photoswipe@5.4.4)(prop-types@15.8.1)(react@18.2.0)
       react-query:
         specifier: ^3.15.2
         version: 3.39.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
