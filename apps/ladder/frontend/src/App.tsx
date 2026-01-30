@@ -8,7 +8,7 @@ import GoogleAnalytics from '@rival/common/components/GoogleAnalytics';
 import AppearanceChecker from '@/components/AppearanceChecker';
 import EmojiMultiplierCalculator from '@rival/common/components/EmojiMultiplierCalculator';
 import RouteChecker from '@/components/RouteChecker';
-import history from './history';
+import history from '@rival/common/history';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadCurrentUser, setConfig, savePaw } from '@/reducers/auth';
 import useSettings from '@rival/common/utils/useSettings';

@@ -50,7 +50,6 @@
         "clipboard-copy": "^4.0.1",
         "corner-smoothing": "^0.1.5",
         "flatpickr": "^4.6.13",
-        "history": "^4.10.1",
         "js-cookie": "^3.0.1",
         "lodash": "^4.17.21",
         "marked": "^16.4.1",

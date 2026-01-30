@@ -297,9 +297,6 @@ importers:
       flatpickr:
         specifier: ^4.6.13
         version: 4.6.13
-      history:
-        specifier: ^4.10.1
-        version: 4.10.1
       js-cookie:
         specifier: ^3.0.1
         version: 3.0.5
@@ -665,9 +662,6 @@ importers:
       flatpickr:
         specifier: ^4.6.13
         version: 4.6.13
-      history:
-        specifier: ^4.10.1
-        version: 4.10.1
       js-cookie:
         specifier: ^3.0.1
         version: 3.0.5
@@ -822,6 +816,9 @@ importers:
       formik:
         specifier: 2.2.6
         version: 2.2.6(react@18.2.0)
+      history:
+        specifier: ^4.10.1
+        version: 4.10.1
       lodash:
         specifier: ^4.17.21
         version: 4.17.23

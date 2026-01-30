@@ -1,5 +1,5 @@
 import axios from 'axios';
-import history from '../../apps/ladder/frontend/src/history';
+import history from './history';
 import _isEmpty from 'lodash/isEmpty';
 import _set from 'lodash/set';
 import notification from './components/notification';
