@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import notification from '@/components/notification';
+import notification from '@rival/common/components/notification';
 import Card from '@rival/common/components/Card';
 import Loader from '@rival/common/components/Loader';
 import Error from '@rival/common/components/Error';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import Authentication from '@/components/Authentication';
 import getRegisterNotificationProps from '@/utils/getRegisterNotificationProps';
 import { useHistory } from 'react-router-dom';

@@ -8,7 +8,7 @@ import AcceptTeamMember from '@/components/AcceptTeamMember';
 import JoinDoubles from '@/components/JoinDoubles';
 import JoinTeam from '@/components/JoinTeam';
 import RegisterPartner from '@/components/RegisterPartner';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 
 const availableActions = {
     newPassword: { component: NewPassword },

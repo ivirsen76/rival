@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '@rival/common/components/Button';
 import Loader from '@rival/common/components/Loader';
-import Modal from '@/components/Modal';
+import Modal from '@rival/common/components/Modal';
 import TournamentText from '@/components/TournamentText';
 import CancelMessage from '@/components/CancelMessage';
 import { loadCurrentUser } from '@/reducers/auth';

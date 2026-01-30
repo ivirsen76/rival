@@ -1,6 +1,6 @@
 import Button from '@rival/common/components/Button';
-import Birthday from '@/components/formik/Birthday';
-import { Formik, Field, Form } from '@/components/formik';
+import Birthday from '@rival/common/components/formik/Birthday';
+import { Formik, Field, Form } from '@rival/common/components/formik';
 import convertDate from '@rival/common/utils/convertDate';
 import { updateCurrentUser } from '@/reducers/auth';
 

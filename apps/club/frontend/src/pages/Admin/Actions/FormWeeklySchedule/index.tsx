@@ -1,5 +1,5 @@
-import { Formik, Field, Form } from '@/components/formik';
-import SchedulePicker from '@/components/formik/SchedulePicker';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import SchedulePicker from '@rival/common/components/formik/SchedulePicker';
 
 const FormWeeklySchedule = (props) => {
     const handleSubmit = async (values) => {

@@ -1,10 +1,10 @@
-import { Formik, Field, Form } from '@/components/formik';
-import Input from '@/components/formik/Input';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Input from '@rival/common/components/formik/Input';
 import Button from '@rival/common/components/Button';
-import axios from '@/utils/axios';
-import notification from '@/components/notification';
+import axios from '@rival/common/axios';
+import notification from '@rival/common/components/notification';
 import { useSelector, useDispatch } from 'react-redux';
-import VerifyEmail from '@/components/VerifyEmail';
+import VerifyEmail from '@rival/common/components/VerifyEmail';
 import EmailIcon from '@rival/common/metronic/icons/duotone/Communication/Mail-at.svg?react';
 import NotFound from '@/pages/NotFound';
 import { loadCurrentUser, updateCurrentUser } from '@/reducers/auth';

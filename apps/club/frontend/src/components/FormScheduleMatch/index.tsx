@@ -1,11 +1,11 @@
 import { useState } from 'react';
-import { Formik, Field, Form } from '@/components/formik';
-import Input from '@/components/formik/Input';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Input from '@rival/common/components/formik/Input';
 import Button from '@rival/common/components/Button';
-import DateTimeWithWeather from '@/components/DateTimeWithWeather';
-import dayjs from '@/utils/dayjs';
-import axios from '@/utils/axios';
-import useConfig from '@/utils/useConfig';
+import DateTimeWithWeather from '@rival/common/components/DateTimeWithWeather';
+import dayjs from '@rival/common/dayjs';
+import axios from '@rival/common/axios';
+import useConfig from '@rival/common/utils/useConfig';
 import style from './style.module.scss';
 
 type FormScheduleMatchProps = {

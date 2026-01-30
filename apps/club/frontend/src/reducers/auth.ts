@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { AppDispatch, RootState } from '../app/store';
-import axios from '@/utils/axios';
-import dayjs from '@/utils/dayjs';
+import axios from '@rival/common/axios';
+import dayjs from '@rival/common/dayjs';
 import getPaw from '@rival/common/utils/getPaw';
 import type { Config, User } from '@rival/club.backend/src/types';
 

@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import Card from '@rival/common/components/Card';
 import Loader from '@rival/common/components/Loader';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import { useQuery } from 'react-query';
 import { RowsPhotoAlbum } from 'react-photo-album';
 import { Squircle } from 'corner-smoothing';

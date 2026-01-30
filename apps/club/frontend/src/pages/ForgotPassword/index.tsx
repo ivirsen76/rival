@@ -1,10 +1,10 @@
-import { Formik, Field, Form } from '@/components/formik';
-import Input from '@/components/formik/Input';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Input from '@rival/common/components/formik/Input';
 import Button from '@rival/common/components/Button';
-import notification from '@/components/notification';
+import notification from '@rival/common/components/notification';
 import Card from '@rival/common/components/Card';
 import { useHistory } from 'react-router-dom';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 
 const Logout = (props) => {
     const history = useHistory();

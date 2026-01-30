@@ -1,29 +1,31 @@
 import { useCallback, useState, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Card from '@rival/common/components/Card';
 import _omit from 'lodash/omit';
 import { Redirect } from 'react-router-dom';
 import classnames from 'classnames';
 import { useDropzone } from 'react-dropzone';
-import axios from 'axios';
-import { Formik, Field, Form } from '@/components/formik';
-import Checkbox from '@/components/formik/Checkbox';
-import Textarea from '@/components/formik/Textarea';
+import axios from '@rival/common/axios';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Checkbox from '@rival/common/components/formik/Checkbox';
+import Textarea from '@rival/common/components/formik/Textarea';
 import LoaderWithProgress from '@rival/common/components/LoaderWithProgress';
-import Gallery from '@/components/Gallery';
+import Gallery from '@rival/common/components/Gallery';
 import { useQuery, useQueryClient } from 'react-query';
 import Loader from '@rival/common/components/Loader';
 import Button from '@rival/common/components/Button';
-import notification from '@/components/notification';
-import useConfig from '@/utils/useConfig';
+import notification from '@rival/common/components/notification';
+import useConfig from '@rival/common/utils/useConfig';
 import formatSize from '@rival/common/utils/formatSize';
 import style from './style.module.scss';
+import { setCurrentUser } from '@/reducers/auth';
 
 let counter = 1;
 
 const Settings = (props) => {
     const [uploadStatus, setUploadStatus] = useState({});
     const currentUser = useSelector((state) => state.auth.user);
+    const dispatch = useDispatch();
     const queryClient = useQueryClient();
     const config = useConfig();
 
@@ -377,6 +379,7 @@ const Settings = (props) => {
                                         photos={photosWithAuthor}
                                         albumProps={{ targetRowHeight: (width) => (width < 600 ? 100 : 150) }}
                                         onPhotoDelete={onPhotoDelete}
+                                        setCurrentUser={(values) => dispatch(setCurrentUser(values))}
                                     />
                                 </div>
                             )}

@@ -1,8 +1,8 @@
-import { Formik, Field, Form } from '@/components/formik';
+import { Formik, Field, Form } from '@rival/common/components/formik';
 import Button from '@rival/common/components/Button';
-import Input from '@/components/formik/Input';
-import axios from '@/utils/axios';
-import notification from '@/components/notification';
+import Input from '@rival/common/components/formik/Input';
+import axios from '@rival/common/axios';
+import notification from '@rival/common/components/notification';
 
 const validate = (values) => {
     const errors = {};

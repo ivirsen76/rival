@@ -1,7 +1,7 @@
 // @ts-nocheck - TODO
 import type { HookContext } from '@feathersjs/feathers';
 import { Unprocessable } from '@feathersjs/errors';
-import dayjs, { formatDate } from './utils/dayjs';
+import dayjs from './utils/dayjs';
 import logger from '@rival-tennis-ladder/logger';
 import { getStatsMatches } from './utils/sqlConditions';
 import populateInformation from './services/users/populateInformation';
@@ -311,7 +311,9 @@ const checkIfVerified = () => async (context: HookContext) => {
 
     if (user.banDate && dayjs.tz().isBefore(dayjs.tz(user.banDate))) {
         throw new Unprocessable('Invalid request', {
-            errors: { email: `You are banned till ${formatDate(user.banDate)}. Reason: ${user.banReason}` },
+            errors: {
+                email: `You are banned till ${dayjs.tz(user.banDate).format('MMM\xa0D, YYYY')}. Reason: ${user.banReason}`,
+            },
         });
     }
 

@@ -1,7 +1,7 @@
-import PlayerName from '@/components/PlayerName';
-import PlayerAvatar from '@/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
 import Button from '@rival/common/components/Button';
-import { Formik, Form } from '@/components/formik';
+import { Formik, Form } from '@rival/common/components/formik';
 import classnames from 'classnames';
 import style from './style.module.scss';
 

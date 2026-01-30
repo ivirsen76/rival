@@ -1,13 +1,13 @@
 import { useMemo, useEffect } from 'react';
-import { Formik, Form } from '@/components/formik';
+import { Formik, Form } from '@rival/common/components/formik';
 import Button from '@rival/common/components/Button';
-import PlayerName from '@/components/PlayerName';
-import PlayerAvatar from '@/components/PlayerAvatar';
-import notification from '@/components/notification';
+import PlayerName from '@rival/common/components/PlayerName';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import notification from '@rival/common/components/notification';
 import showLoader from '@rival/common/utils/showLoader';
 import { useSelector } from 'react-redux';
 import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import compareFields from '@rival/club.backend/src/utils/compareFields';
 import style from './style.module.scss';
 

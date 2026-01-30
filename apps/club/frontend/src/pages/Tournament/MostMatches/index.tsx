@@ -1,5 +1,5 @@
-import PlayerAvatar from '@/components/PlayerAvatar';
-import PlayerName from '@/components/PlayerName';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
 import classnames from 'classnames';
 
 type MostMatchesProps = {

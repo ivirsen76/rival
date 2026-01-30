@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import Tabs from './Tabs';
-import Badge from '@/components/Badge';
+import Badge from '@rival/common/components/Badge';
 import Timeline from './Timeline';
 import Elo from './Elo';
 import allBadges from '@rival/club.backend/src/utils/badges';
 import AndrewSrc from '../Founders/Andrew.svg';
 import IgorSrc from '../Founders/Igor.svg';
-import { Title } from '@/components/Statbox';
+import { Title } from '@rival/common/components/Statbox';
 import { HashLink } from 'react-router-hash-link';
 import RacketToLogo from './RacketToLogo';
 import BallToLogo from './BallToLogo';

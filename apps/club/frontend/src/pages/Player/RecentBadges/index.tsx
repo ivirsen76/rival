@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import Badge from '@/components/Badge';
+import Badge from '@rival/common/components/Badge';
 import BadgeStat from '@/pages/Badges/Stat';
-import { formatDate } from '@/utils/dayjs';
-import Statbox from '@/components/Statbox';
-import Modal from '@/components/Modal';
+import { formatDate } from '@rival/common/dayjs';
+import Statbox from '@rival/common/components/Statbox';
+import Modal from '@rival/common/components/Modal';
 import allBadges from '@rival/club.backend/src/utils/badges';
 import style from './style.module.scss';
 

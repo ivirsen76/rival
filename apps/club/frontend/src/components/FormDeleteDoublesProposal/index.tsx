@@ -1,9 +1,9 @@
-import { Formik, Field, Form } from '@/components/formik';
-import Input from '@/components/formik/Input';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Input from '@rival/common/components/formik/Input';
 import Button from '@rival/common/components/Button';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import { useSelector } from 'react-redux';
-import notification from '@/components/notification';
+import notification from '@rival/common/components/notification';
 
 type FormDeleteDoublesProposalProps = {
     onSubmit: (...args: unknown[]) => unknown;

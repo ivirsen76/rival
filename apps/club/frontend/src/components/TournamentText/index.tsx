@@ -1,6 +1,6 @@
 import Html from '@rival/common/components/Html';
 import Timeline from './Timeline';
-import dayjs from '@/utils/dayjs';
+import dayjs from '@rival/common/dayjs';
 
 const applyVariables = (tournamentEndDate, text) => {
     const endDate = dayjs.tz(tournamentEndDate).add(12, 'hour');

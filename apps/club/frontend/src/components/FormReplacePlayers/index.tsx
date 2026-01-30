@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { Formik, Field, Form } from '@/components/formik';
-import Select from '@/components/formik/Select';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Select from '@rival/common/components/formik/Select';
 import Button from '@rival/common/components/Button';
-import notification from '@/components/notification';
-import axios from '@/utils/axios';
+import notification from '@rival/common/components/notification';
+import axios from '@rival/common/axios';
 
 type FormReplacePlayersProps = {
     match: object;

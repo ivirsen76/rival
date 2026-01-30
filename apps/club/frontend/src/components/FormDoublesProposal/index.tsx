@@ -1,16 +1,16 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Formik, Field, Form } from '@/components/formik';
-import Input from '@/components/formik/Input';
-import DateTimeWithWeather from '@/components/DateTimeWithWeather';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Input from '@rival/common/components/formik/Input';
+import DateTimeWithWeather from '@rival/common/components/DateTimeWithWeather';
 import Button from '@rival/common/components/Button';
-import PlayerAvatar from '@/components/PlayerAvatar';
-import PlayerName from '@/components/PlayerName';
-import notification from '@/components/notification';
-import dayjs from '@/utils/dayjs';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
+import notification from '@rival/common/components/notification';
+import dayjs from '@rival/common/dayjs';
 import confirmation from '@rival/common/utils/confirmation';
 import { useSelector } from 'react-redux';
 import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import compareFields from '@rival/club.backend/src/utils/compareFields';
 import style from './style.module.scss';
 

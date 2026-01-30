@@ -2,9 +2,9 @@ import { useState } from 'react';
 import AngleLeftIcon from '@rival/common/metronic/icons/duotone/Navigation/Angle-left.svg?react';
 import CupIcon from './cup.svg?react';
 import classnames from 'classnames';
-import Statbox from '@/components/Statbox';
+import Statbox from '@rival/common/components/Statbox';
 import Timelines from '../Timelines';
-import Modal from '@/components/Modal';
+import Modal from '@rival/common/components/Modal';
 import { Squircle } from 'corner-smoothing';
 import style from './style.module.scss';
 

@@ -2,9 +2,9 @@ import Table from '@rival/common/components/Table';
 import { useQuery } from 'react-query';
 import Loader from '@rival/common/components/Loader';
 import Card from '@rival/common/components/Card';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import { Link } from 'react-router-dom';
-import { formatDate } from '@/utils/dayjs';
+import { formatDate } from '@rival/common/dayjs';
 import reasonOptions from '@rival/club.backend/src/services/complaints/reasonOptions';
 import style from './style.module.scss';
 

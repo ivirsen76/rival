@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { Formik, Field, Form } from '@/components/formik';
-import PasswordInput from '@/components/formik/PasswordInput';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import PasswordInput from '@rival/common/components/formik/PasswordInput';
 import Button from '@rival/common/components/Button';
 import Card from '@rival/common/components/Card';
-import notification from '@/components/notification';
-import axios from '@/utils/axios';
+import notification from '@rival/common/components/notification';
+import axios from '@rival/common/axios';
 import { logout } from '@/reducers/auth';
 import { useDispatch } from 'react-redux';
 

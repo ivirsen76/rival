@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import { NtrpGuidelinesLink } from '@/components/NtrpGuidelines';
+import { NtrpGuidelinesLink } from '@rival/common/components/NtrpGuidelines';
 
 export default {
     aggressive:

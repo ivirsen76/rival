@@ -1,9 +1,9 @@
 import style from './style.module.scss';
-import PlayerAvatar from '@/components/PlayerAvatar';
-import PlayerName from '@/components/PlayerName';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
 import UpsetMatch from '@/components/UpsetMatch';
 import classnames from 'classnames';
-import { formatDate } from '@/utils/dayjs';
+import { formatDate } from '@rival/common/dayjs';
 import useBreakpoints from '@rival/common/utils/useBreakpoints';
 
 const reverseScore = (score) =>

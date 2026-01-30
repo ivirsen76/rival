@@ -1,10 +1,10 @@
-import { Formik, Field, Form } from '@/components/formik';
-import RadioModern from '@/components/formik/RadioModern';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import RadioModern from '@rival/common/components/formik/RadioModern';
 import Button from '@rival/common/components/Button';
-import PlayerName from '@/components/PlayerName';
-import notification from '@/components/notification';
-import axios from '@/utils/axios';
-import dayjs from '@/utils/dayjs';
+import PlayerName from '@rival/common/components/PlayerName';
+import notification from '@rival/common/components/notification';
+import axios from '@rival/common/axios';
+import dayjs from '@rival/common/dayjs';
 
 const decisionOptions = [
     { value: 'nothing', label: 'Nothing', maxCheatingAttempts: -1 },

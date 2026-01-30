@@ -7,7 +7,7 @@ import HornIcon from '@/assets/horn.svg?react';
 import BadgeIcon from '@/assets/badge.svg?react';
 import UserIcon from '@rival/common/metronic/icons/duotone/General/User.svg?react';
 import ArrowLeft from '@rival/common/metronic/icons/duotune/arrows/arr002.svg?react';
-import PlayerAvatar from '@/components/PlayerAvatar';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
 import hasAnyRole from '@rival/common/utils/hasAnyRole';
 import { Link } from 'react-router-dom';
 import { Menubar } from 'primereact/menubar';

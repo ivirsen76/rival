@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import classnames from 'classnames';
-import PlayerName from '@/components/PlayerName';
+import PlayerName from '@rival/common/components/PlayerName';
 import style from './style.module.scss';
 
 type InjuryFormProps = {

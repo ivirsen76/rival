@@ -5,7 +5,7 @@ import App from './App';
 import store from './app/store';
 import { Provider } from 'react-redux';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 
 axios.defaults.baseURL = window.TL_SERVER_URL || import.meta.env.VITE_SERVER_URL || '';
 

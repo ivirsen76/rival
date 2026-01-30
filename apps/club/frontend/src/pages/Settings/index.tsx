@@ -2,10 +2,10 @@ import { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateCurrentUser } from '@/reducers/auth';
 import Card from '@rival/common/components/Card';
-import Modal from '@/components/Modal';
+import Modal from '@rival/common/components/Modal';
 import Tooltip from '@rival/common/components/Tooltip';
-import PlayerAvatar from '@/components/PlayerAvatar';
-import PlayerName from '@/components/PlayerName';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
 import TennisStyleForm, {
     dominantHandOptions,
     forehandStyleOptions,
@@ -40,10 +40,10 @@ import useBreakpoints from '@rival/common/utils/useBreakpoints';
 import Photos from './Photos';
 import log from '@/utils/log';
 import compareFields from '@rival/club.backend/src/utils/compareFields';
-import dayjs from '@/utils/dayjs';
+import dayjs from '@rival/common/dayjs';
 import style from './style.module.scss';
 
-const AvatarBuilder = loadable(() => import('@/components/AvatarBuilder'));
+const AvatarBuilder = loadable(() => import('@rival/common/components/AvatarBuilder'));
 
 const arrToObj = (arr) =>
     arr.reduce((obj, item) => {

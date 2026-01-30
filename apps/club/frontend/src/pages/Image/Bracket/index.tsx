@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import style from './style.module.scss';
 import { BYE_ID } from '@rival/club.backend/src/constants';
 import classnames from 'classnames';

@@ -2,9 +2,9 @@ import { useState } from 'react';
 import Login from './Login';
 import Register from './Register';
 import { useSelector, useDispatch } from 'react-redux';
-import axios from '@/utils/axios';
-import notification from '@/components/notification';
-import VerifyEmail from '@/components/VerifyEmail';
+import axios from '@rival/common/axios';
+import notification from '@rival/common/components/notification';
+import VerifyEmail from '@rival/common/components/VerifyEmail';
 import EmailIcon from '@rival/common/metronic/icons/duotone/Communication/Mail-at.svg?react';
 import { authenticate } from '@/reducers/auth';
 

@@ -1,15 +1,15 @@
 import { useMemo } from 'react';
-import { Formik, Field, Form } from '@/components/formik';
-import PlayerName from '@/components/PlayerName';
-import PlayerAvatar from '@/components/PlayerAvatar';
-import CheckboxArray from '@/components/formik/CheckboxArray';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import PlayerName from '@rival/common/components/PlayerName';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import CheckboxArray from '@rival/common/components/formik/CheckboxArray';
 import Button from '@rival/common/components/Button';
-import TeamNamePicker, { getValidateTeamName } from '@/components/formik/TeamNamePicker';
-import useConfig from '@/utils/useConfig';
+import TeamNamePicker, { getValidateTeamName } from '@rival/common/components/formik/TeamNamePicker';
+import useConfig from '@rival/common/utils/useConfig';
 import CaptainIcon from '@/assets/captain.svg?react';
 import { Link } from 'react-router-dom';
 import compareFields from '@rival/club.backend/src/utils/compareFields';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import style from './style.module.scss';
 
 const validate = (values) => {

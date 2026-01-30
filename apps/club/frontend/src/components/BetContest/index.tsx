@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import Table from '@rival/common/components/Table';
-import PlayerAvatar from '@/components/PlayerAvatar';
-import PlayerName from '@/components/PlayerName';
-import Modal from '@/components/Modal';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
+import Modal from '@rival/common/components/Modal';
 import BetResult from '../BetResult';
 import BracketsIcon from '@/assets/brackets.svg?react';
 import BotIcon from '@/assets/bot.svg?react';

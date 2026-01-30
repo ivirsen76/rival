@@ -1,7 +1,7 @@
-import { Formik, Field, Form } from '@/components/formik';
-import Textarea from '@/components/formik/Textarea';
-import Checkbox from '@/components/formik/Checkbox';
-import RadioModern from '@/components/formik/RadioModern';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Textarea from '@rival/common/components/formik/Textarea';
+import Checkbox from '@rival/common/components/formik/Checkbox';
+import RadioModern from '@rival/common/components/formik/RadioModern';
 import Button from '@rival/common/components/Button';
 import HiddenText from '@rival/common/components/HiddenText';
 import reasonOptions from '@rival/club.backend/src/services/complaints/reasonOptions';

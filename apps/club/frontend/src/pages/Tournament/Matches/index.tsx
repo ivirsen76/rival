@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import Match from '@/components/Match';
 import Card from '@rival/common/components/Card';
-import Modal from '@/components/Modal';
+import Modal from '@rival/common/components/Modal';
 import classnames from 'classnames';
 import FormNewMatch from '@/components/FormNewMatch';
 import FormNewDoublesMatch from '@/components/FormNewDoublesMatch';

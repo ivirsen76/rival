@@ -1,10 +1,10 @@
 import { useQuery } from 'react-query';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import Loader from '@rival/common/components/Loader';
 import Table from '@rival/common/components/Table';
-import PlayerName from '@/components/PlayerName';
+import PlayerName from '@rival/common/components/PlayerName';
 import formatSum from '@rival/common/utils/formatSum';
-import { formatLong } from '@/utils/dayjs';
+import { formatLong } from '@rival/common/dayjs';
 
 type ListProps = {
     seasonId: number;

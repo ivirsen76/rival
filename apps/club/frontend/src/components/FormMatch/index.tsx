@@ -12,18 +12,18 @@ import {
     isInjuryFastSetScoreCorrect,
     getLocalDateThisWeek,
 } from '@rival/club.backend/src/services/matches/helpers';
-import { Formik, Field, Form } from '@/components/formik';
-import TimePicker from '@/components/formik/TimePicker';
-import HtmlSelect from '@/components/formik/HtmlSelect';
-import Select from '@/components/formik/Select';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import TimePicker from '@rival/common/components/formik/TimePicker';
+import HtmlSelect from '@rival/common/components/formik/HtmlSelect';
+import Select from '@rival/common/components/formik/Select';
 import Button from '@rival/common/components/Button';
-import notification from '@/components/notification';
-import PlayerName from '@/components/PlayerName';
-import axios from '@/utils/axios';
+import notification from '@rival/common/components/notification';
+import PlayerName from '@rival/common/components/PlayerName';
+import axios from '@rival/common/axios';
 import ReactCSSTransitionReplace from 'react-css-transition-replace';
 import { useSelector } from 'react-redux';
 import confirmation from '@rival/common/utils/confirmation';
-import { formatCustom } from '@/utils/dayjs';
+import { formatCustom } from '@rival/common/dayjs';
 import getScoreAsString from './getScoreAsString';
 import InjuryForm from './InjuryForm';
 import _isEqual from 'lodash/isEqual';

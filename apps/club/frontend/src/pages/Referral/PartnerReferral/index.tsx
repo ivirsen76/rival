@@ -4,14 +4,14 @@ import Copy from '@rival/common/components/Copy';
 import { useQuery } from 'react-query';
 import Loader from '@rival/common/components/Loader';
 import Table from '@rival/common/components/Table';
-import Modal from '@/components/Modal';
-import PlayerName from '@/components/PlayerName';
-import { formatDate } from '@/utils/dayjs';
+import Modal from '@rival/common/components/Modal';
+import PlayerName from '@rival/common/components/PlayerName';
+import { formatDate } from '@rival/common/dayjs';
 import Wallet from '@/components/Wallet';
 import WalletIcon from '@rival/common/metronic/icons/duotone/Shopping/Wallet.svg?react';
 import formatSum from '@rival/common/utils/formatSum';
-import axios from '@/utils/axios';
-import useConfig from '@/utils/useConfig';
+import axios from '@rival/common/axios';
+import useConfig from '@rival/common/utils/useConfig';
 import style from './style.module.scss';
 
 type PartnerReferralProps = {

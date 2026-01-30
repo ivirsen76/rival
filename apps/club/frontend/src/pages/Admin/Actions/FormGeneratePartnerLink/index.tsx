@@ -1,9 +1,9 @@
-import { Formik, Field, Form } from '@/components/formik';
+import { Formik, Field, Form } from '@rival/common/components/formik';
 import Button from '@rival/common/components/Button';
-import Select from '@/components/formik/Select';
+import Select from '@rival/common/components/formik/Select';
 import Copy from '@rival/common/components/Copy';
-import axios from '@/utils/axios';
-import notification from '@/components/notification';
+import axios from '@rival/common/axios';
+import notification from '@rival/common/components/notification';
 
 const percentOptions = [
     { value: 10, label: '10%' },

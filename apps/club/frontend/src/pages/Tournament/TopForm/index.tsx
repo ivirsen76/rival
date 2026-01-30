@@ -1,4 +1,4 @@
-import PlayerAvatar from '@/components/PlayerAvatar';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
 import compareFields from '@rival/club.backend/src/utils/compareFields';
 import formatElo from '@rival/club.backend/src/utils/formatElo';
 import style from './style.module.scss';

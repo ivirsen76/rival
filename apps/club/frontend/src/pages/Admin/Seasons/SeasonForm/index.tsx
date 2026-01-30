@@ -1,14 +1,14 @@
-import { Formik, Field, Form } from '@/components/formik';
-import Input from '@/components/formik/Input';
-import Select from '@/components/formik/Select';
-import DatePicker from '@/components/formik/DatePicker';
-import CheckboxArray from '@/components/formik/CheckboxArray';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Input from '@rival/common/components/formik/Input';
+import Select from '@rival/common/components/formik/Select';
+import DatePicker from '@rival/common/components/formik/DatePicker';
+import CheckboxArray from '@rival/common/components/formik/CheckboxArray';
 import Button from '@rival/common/components/Button';
-import dayjs from '@/utils/dayjs';
+import dayjs from '@rival/common/dayjs';
 import { SEASON_OPTIONS } from '@rival/club.backend/src/constants';
-import useSettings from '@/utils/useSettings';
+import useSettings from '@rival/common/utils/useSettings';
 import { useQuery } from 'react-query';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 
 const currentYear = Number(dayjs.tz().format('YYYY'));
 

@@ -28,25 +28,4 @@ if (TIMEZONE) {
     dayjs.tz.setDefault(TIMEZONE);
 }
 
-export const formatLong = (date: string) => {
-    const days = {
-        0: 'Sun',
-        1: 'Mon',
-        2: 'Tue',
-        3: 'Wed',
-        4: 'Thu',
-        5: 'Fri',
-        6: 'Sat',
-    };
-
-    const localDate = dayjs.tz(date);
-    const day = localDate.day();
-
-    return days[day] + localDate.format(', MMM D, h:mm A');
-};
-export const formatMiddle = (date: string) => dayjs.tz(date).format('MMM D, h:mm A');
-export const formatShort = (date: string) => dayjs.tz(date).format('h:mm A');
-export const formatDate = (date: string) => dayjs.tz(date).format('MMM\xa0D, YYYY');
-export const formatCustom = (date: string, str: string) => dayjs.tz(date).format(str);
-
 export default dayjs;

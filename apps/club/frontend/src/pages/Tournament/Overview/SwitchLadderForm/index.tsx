@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-import { Formik, Field, Form } from '@/components/formik';
+import { Formik, Field, Form } from '@rival/common/components/formik';
 import Button from '@rival/common/components/Button';
 import Loader from '@rival/common/components/Loader';
-import Select from '@/components/formik/Select';
+import Select from '@rival/common/components/formik/Select';
 import { useQuery } from 'react-query';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import { useSelector } from 'react-redux';
 import formatElo from '@rival/club.backend/src/utils/formatElo';
 

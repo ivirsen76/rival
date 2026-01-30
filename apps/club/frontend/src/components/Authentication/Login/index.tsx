@@ -1,12 +1,12 @@
 import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import { authenticate } from '@/reducers/auth';
-import { Formik, Field, Form } from '@/components/formik';
-import Input from '@/components/formik/Input';
-import PasswordInput from '@/components/formik/PasswordInput';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Input from '@rival/common/components/formik/Input';
+import PasswordInput from '@rival/common/components/formik/PasswordInput';
 import Button from '@rival/common/components/Button';
-import notification from '@/components/notification';
-import VerifyEmail from '@/components/VerifyEmail';
+import notification from '@rival/common/components/notification';
+import VerifyEmail from '@rival/common/components/VerifyEmail';
 import EmailIcon from '@rival/common/metronic/icons/duotone/Communication/Mail-at.svg?react';
 
 type LoginProps = {

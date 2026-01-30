@@ -1,14 +1,14 @@
-import axios from '@/utils/axios';
-import Modal from '@/components/Modal';
-import notification from '@/components/notification';
+import axios from '@rival/common/axios';
+import Modal from '@rival/common/components/Modal';
+import notification from '@rival/common/components/notification';
 import SeasonForm from './SeasonForm';
 import CloseSeasonForm from './CloseSeasonForm';
 import Card from '@rival/common/components/Card';
 import Tooltip from '@rival/common/components/Tooltip';
 import _capitalize from 'lodash/capitalize';
-import useSettings from '@/utils/useSettings';
+import useSettings from '@rival/common/utils/useSettings';
 import { useQueryClient } from 'react-query';
-import dayjs from '@/utils/dayjs';
+import dayjs from '@rival/common/dayjs';
 import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
 
 const Seasons = (props) => {

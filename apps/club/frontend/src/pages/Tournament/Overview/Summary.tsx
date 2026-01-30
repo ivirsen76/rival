@@ -1,8 +1,8 @@
-import Modal from '@/components/Modal';
-import dayjs from '@/utils/dayjs';
-import useCurrentWeather from '@/components/WeatherForecast/useCurrentWeather';
-import WeatherForecast from '@/components/WeatherForecast';
-import WeatherAtTime from '@/components/WeatherForecast/WeatherAtTime';
+import Modal from '@rival/common/components/Modal';
+import dayjs from '@rival/common/dayjs';
+import useCurrentWeather from '@rival/common/components/WeatherForecast/useCurrentWeather';
+import WeatherForecast from '@rival/common/components/WeatherForecast';
+import WeatherAtTime from '@rival/common/components/WeatherForecast/WeatherAtTime';
 import style from './style.module.scss';
 
 type SummaryProps = {

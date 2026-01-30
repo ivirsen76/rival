@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 import _omit from 'lodash/omit';
-import useAppearance from '@/utils/useAppearance';
+import useAppearance from '@rival/common/utils/useAppearance';
 
 type EloPreviewProps = {
     data: unknown[];

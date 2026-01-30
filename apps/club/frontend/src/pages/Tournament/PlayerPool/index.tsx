@@ -1,14 +1,14 @@
 import { useMemo } from 'react';
-import PlayerAvatar from '@/components/PlayerAvatar';
-import PlayerName from '@/components/PlayerName';
-import Modal from '@/components/Modal';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
+import Modal from '@rival/common/components/Modal';
 import { useSelector } from 'react-redux';
 import compareFields from '@rival/club.backend/src/utils/compareFields';
 import confirmation from '@rival/common/utils/confirmation';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import style from './style.module.scss';
 import showLoader from '@rival/common/utils/showLoader';
-import notification from '@/components/notification';
+import notification from '@rival/common/components/notification';
 import JoinPlayerPoolForm from './JoinPlayerPoolForm';
 import CreateTeamForm from './CreateTeamForm';
 

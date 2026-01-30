@@ -1,4 +1,4 @@
-import { formatDate } from '@/utils/dayjs';
+import { formatDate } from '@rival/common/dayjs';
 import classnames from 'classnames';
 import Chart from '@rival/common/components/Chart';
 

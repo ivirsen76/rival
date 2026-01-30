@@ -7,23 +7,23 @@ import OtherIcon from '@rival/common/metronic/icons/duotone/General/Other2.svg?r
 import MarkerIcon from '@rival/common/metronic/icons/duotune/general/gen018.svg?react';
 import BattleIcon from '@/assets/battle1.svg?react';
 import PointsIcon from './points.svg?react';
-import { formatShort, formatMiddle, formatLong } from '@/utils/dayjs';
-import Modal from '@/components/Modal';
+import { formatShort, formatMiddle, formatLong } from '@rival/common/dayjs';
+import Modal from '@rival/common/components/Modal';
 import FormMatch from '@/components/FormMatch';
 import FormScheduleMatch from '@/components/FormScheduleMatch';
 import FormReplacePlayers from '@/components/FormReplacePlayers';
 import FormReplaceTeamPlayers from '@/components/FormReplaceTeamPlayers';
 import FormAddStats from '@/components/FormAddStats';
-import notification from '@/components/notification';
+import notification from '@rival/common/components/notification';
 import Tooltip from '@rival/common/components/Tooltip';
 import FormDeleteProposal from '@/components/FormDeleteProposal';
 import FormDeleteMatch from '@/components/FormDeleteMatch';
 import FormDeleteDoublesProposal from '@/components/FormDeleteDoublesProposal';
 import confirmation from '@rival/common/utils/confirmation';
-import PlayerAvatar from '@/components/PlayerAvatar';
-import PlayerName from '@/components/PlayerName';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
 import Stats from './Stats';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import showLoader from '@rival/common/utils/showLoader';
 import useScoreUpdated from './useScoreUpdated';
 import getRelativeStringLength from '@rival/common/utils/getRelativeStringLength';
@@ -38,7 +38,7 @@ import {
     isFastScoreCorrect,
 } from '@rival/club.backend/src/services/matches/helpers';
 import formatElo from '@rival/club.backend/src/utils/formatElo';
-import useConfig from '@/utils/useConfig';
+import useConfig from '@rival/common/utils/useConfig';
 import useMatchPermissions from '@/utils/useMatchPermissions';
 import { BYE_ID } from '@rival/club.backend/src/constants';
 import matchFormatOptions from '@rival/club.backend/src/services/proposals/matchFormatOptions';

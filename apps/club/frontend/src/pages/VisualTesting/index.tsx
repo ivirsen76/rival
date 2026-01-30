@@ -1,8 +1,8 @@
 import Loader from '@rival/common/components/Loader';
-import Modal from '@/components/Modal';
+import Modal from '@rival/common/components/Modal';
 import { useQuery, useQueryClient } from 'react-query';
 import Compare from './Compare';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import style from './style.module.scss';
 
 const VisualTesting = () => {

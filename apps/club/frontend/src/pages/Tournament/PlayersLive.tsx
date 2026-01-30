@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import dayjs from '@/utils/dayjs';
+import dayjs from '@rival/common/dayjs';
 import compareFields from '@rival/club.backend/src/utils/compareFields';
 import Tooltip from '@rival/common/components/Tooltip';
 import QuestionIcon from '@rival/common/metronic/icons/duotone/Navigation/Question.svg?react';

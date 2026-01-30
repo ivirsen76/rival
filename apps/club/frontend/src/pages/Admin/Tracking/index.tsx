@@ -3,10 +3,10 @@ import { useQuery } from 'react-query';
 import Loader from '@rival/common/components/Loader';
 import Card from '@rival/common/components/Card';
 import Chart from '@rival/common/components/Chart';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import _xor from 'lodash/xor';
 import classnames from 'classnames';
-import dayjs from '@/utils/dayjs';
+import dayjs from '@rival/common/dayjs';
 
 const percentChartInit =
     () =>

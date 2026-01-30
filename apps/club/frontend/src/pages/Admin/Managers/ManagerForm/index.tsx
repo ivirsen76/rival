@@ -1,5 +1,5 @@
-import { Formik, Field, Form } from '@/components/formik';
-import UserPicker from '@/components/formik/UserPicker';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import UserPicker from '@rival/common/components/formik/UserPicker';
 import Button from '@rival/common/components/Button';
 
 type ManagerFormProps = {

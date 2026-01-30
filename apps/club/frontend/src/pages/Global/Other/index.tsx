@@ -1,5 +1,5 @@
 import Card from '@rival/common/components/Card';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import showLoader from '@rival/common/utils/showLoader';
 
 const Other = (props) => {

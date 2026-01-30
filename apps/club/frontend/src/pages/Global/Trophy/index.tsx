@@ -1,11 +1,11 @@
 import Card from '@rival/common/components/Card';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import { useQuery } from 'react-query';
 import Loader from '@rival/common/components/Loader';
 import Error from '@rival/common/components/Error';
 import Table from '@rival/common/components/Table';
 import Tooltip from '@rival/common/components/Tooltip';
-import notification from '@/components/notification';
+import notification from '@rival/common/components/notification';
 import copy from 'clipboard-copy';
 import classnames from 'classnames';
 import formatNumber from '@rival/club.backend/src/utils/formatNumber';

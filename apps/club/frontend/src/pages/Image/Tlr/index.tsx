@@ -1,4 +1,4 @@
-import { Title } from '@/components/Statbox';
+import { Title } from '@rival/common/components/Statbox';
 import style from './style.module.scss';
 
 const TlrImage = (props) => {

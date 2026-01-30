@@ -2,7 +2,7 @@ import Header from './Header';
 import Graph from './Graph';
 import Numbers from './Numbers';
 import Winners from './Winners';
-import PlayerName from '@/components/PlayerName';
+import PlayerName from '@rival/common/components/PlayerName';
 import ScaleToFit from '@rival/common/components/ScaleToFit';
 import { defaultColors } from './config';
 import style from './style.module.scss';

@@ -1,5 +1,5 @@
-import { Formik, Field, Form } from '@/components/formik';
-import Textarea from '@/components/formik/Textarea';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Textarea from '@rival/common/components/formik/Textarea';
 
 type JoinPlayerPoolFormProps = {
     onSubmit: (...args: unknown[]) => unknown;
