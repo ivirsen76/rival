@@ -11,8 +11,7 @@ import CommentIcon from './comment.svg?react';
 import OtherIcon from '../../metronic/icons/duotone/General/Other2.svg?react';
 import { useQuery, useQueryClient } from 'react-query';
 import Comments from './Comments';
-import { useSelector, useDispatch } from 'react-redux';
-import { setCurrentUser } from '@/reducers/auth';
+import { useSelector } from 'react-redux';
 import classnames from 'classnames';
 import timeAgo from '../../utils/timeAgo';
 import { formatCustom } from '../../dayjs';
@@ -46,10 +45,11 @@ type GalleryProps = {
     photos: unknown[];
     albumProps: object;
     onPhotoDelete: (...args: unknown[]) => unknown;
+    setCurrentUser: Function;
 };
 
 const Gallery = (props: GalleryProps) => {
-    const { photos, albumProps, onPhotoDelete } = props;
+    const { photos, albumProps, onPhotoDelete, setCurrentUser } = props;
     const lightboxInstance = useRef();
     const settings = useRef({ showComments: false });
     const [isOpen, setIsOpen] = useState(false);
@@ -64,7 +64,6 @@ const Gallery = (props: GalleryProps) => {
     const commentsDragControls = useDragControls();
     const emojiData = useEmojiData();
     const config = useConfig();
-    const dispatch = useDispatch();
     useBodyLock(isOpen);
     useHideRegisterButton(isOpen);
 
@@ -253,7 +252,7 @@ const Gallery = (props: GalleryProps) => {
         });
 
         // increase total comments today
-        await dispatch(setCurrentUser({ user: { totalCommentsToday: currentUser.totalCommentsToday + 1 } }));
+        await setCurrentUser({ user: { totalCommentsToday: currentUser.totalCommentsToday + 1 } });
 
         // allow react to render new item in the list
         await new Promise((resolve) => setTimeout(resolve, 0));

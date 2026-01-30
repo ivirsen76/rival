@@ -1,5 +1,5 @@
 import { useCallback, useState, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Card from '@rival/common/components/Card';
 import _omit from 'lodash/omit';
 import { Redirect } from 'react-router-dom';
@@ -18,12 +18,14 @@ import notification from '@rival/common/components/notification';
 import useConfig from '@rival/common/utils/useConfig';
 import formatSize from '@rival/common/utils/formatSize';
 import style from './style.module.scss';
+import { setCurrentUser } from '@/reducers/auth';
 
 let counter = 1;
 
 const Settings = (props) => {
     const [uploadStatus, setUploadStatus] = useState({});
     const currentUser = useSelector((state) => state.auth.user);
+    const dispatch = useDispatch();
     const queryClient = useQueryClient();
     const config = useConfig();
 
@@ -377,6 +379,7 @@ const Settings = (props) => {
                                         photos={photosWithAuthor}
                                         albumProps={{ targetRowHeight: (width) => (width < 600 ? 100 : 150) }}
                                         onPhotoDelete={onPhotoDelete}
+                                        setCurrentUser={(values) => dispatch(setCurrentUser(values))}
                                     />
                                 </div>
                             )}
