@@ -41,7 +41,8 @@ jobs:
             - checkout
             - run: sudo apt-get update && sudo apt-get install -y rsync # install rsync
             - run: *install
-            - run: pnpm run build
+            - run: cd apps/club/frontend && pnpm run build
+            - run: cd apps/club/backend && pnpm run build
 
             # create backend deploy folder
             - run: pnpm --legacy --filter=@rival/club.backend --prod deploy ~/server
@@ -52,8 +53,6 @@ jobs:
                   root: ~/
                   paths:
                       - server
-                      - repo/apps/ladder/backend/build
-                      - repo/apps/ladder/backend/dist
                       - repo/apps/club/backend/build
                       - repo/apps/club/backend/dist
     test:
@@ -69,6 +68,9 @@ jobs:
                   at: ~/
 
             - run: pnpm run check
+            - run: cd packages/common && pnpm run test
+            - run: cd apps/club/frontend && pnpm run test
+            - run: cd apps/club/backend && pnpm run test
 
     playwright:
         <<: *image
