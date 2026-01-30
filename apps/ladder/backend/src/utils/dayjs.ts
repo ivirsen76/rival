@@ -9,8 +9,9 @@ import isoWeek from 'dayjs/plugin/isoWeek';
 import isBetween from 'dayjs/plugin/isBetween';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
+const isNode = Boolean(process.env.TL_DB_NAME);
 const TIMEZONE = process.env.TL_TIMEZONE;
-if (!TIMEZONE) {
+if (isNode && !TIMEZONE) {
     throw new Error('Timezone is not set in env variables');
 }
 
@@ -23,6 +24,8 @@ dayjs.extend(isSameOrBefore);
 dayjs.extend(isoWeek);
 dayjs.extend(isBetween);
 dayjs.extend(customParseFormat);
-dayjs.tz.setDefault(TIMEZONE);
+if (TIMEZONE) {
+    dayjs.tz.setDefault(TIMEZONE);
+}
 
 export default dayjs;
