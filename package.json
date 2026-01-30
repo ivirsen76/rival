@@ -6,10 +6,10 @@
     "scripts": {
         "format": "prettier --write \"**/*.{ts,tsx}\"",
         "build": "pnpm -r run build",
-        "lint": "eslint --quiet .",
+        "eslint": "eslint --quiet .",
         "tslint": "tsc --project apps/ladder/backend/tsconfig.json --noEmit",
-        "test": "vitest",
-        "check": "npm run lint && npm run tslint"
+        "lint": "npm run eslint && npm run tslint",
+        "test": "vitest"
     },
     "pnpm": {
         "overrides": {

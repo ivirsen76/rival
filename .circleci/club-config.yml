@@ -67,7 +67,7 @@ jobs:
             - attach_workspace:
                   at: ~/
 
-            - run: pnpm run check
+            - run: pnpm run lint
             - run: cd packages/common && pnpm run test
             - run: cd apps/club/frontend && pnpm run test
             - run: cd apps/club/backend && pnpm run test
