@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useCallback } from 'react';
-import { Formik, Field, Form, useFormikContext } from '@/components/formik';
-import Input from '@/components/formik/Input';
-import Textarea from '@/components/formik/Textarea';
-import PlayerName from '@/components/PlayerName';
-import RadioModern from '@/components/formik/RadioModern';
-import TeamNamePicker, { getValidateTeamName } from '@/components/formik/TeamNamePicker';
+import { Formik, Field, Form, useFormikContext } from '@rival/common/components/formik';
+import Input from '@rival/common/components/formik/Input';
+import Textarea from '@rival/common/components/formik/Textarea';
+import PlayerName from '@rival/common/components/PlayerName';
+import RadioModern from '@rival/common/components/formik/RadioModern';
+import TeamNamePicker, { getValidateTeamName } from '@rival/common/components/formik/TeamNamePicker';
 import { useSelector } from 'react-redux';
-import useConfig from '@/utils/useConfig';
+import useConfig from '@rival/common/utils/useConfig';
 
 type PopulatePartnerNameProps = {
     poolPlayers: unknown[];

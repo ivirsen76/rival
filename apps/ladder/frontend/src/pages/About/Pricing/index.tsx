@@ -1,7 +1,7 @@
 import Card from '@rival/common/components/Card';
 import ScrollToTop from '@rival/common/components/ScrollToTop';
 import Header from '@/components/Header';
-import useConfig from '@/utils/useConfig';
+import useConfig from '@rival/common/utils/useConfig';
 import { useQuery } from 'react-query';
 import Loader from '@rival/common/components/Loader';
 import FirstSeasonFree from './free-first-season.svg?react';

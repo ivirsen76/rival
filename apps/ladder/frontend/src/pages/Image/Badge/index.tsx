@@ -1,4 +1,4 @@
-import Badge from '@/components/Badge';
+import Badge from '@rival/common/components/Badge';
 import style from './style.module.scss';
 
 const BadgeImage = (props) => {

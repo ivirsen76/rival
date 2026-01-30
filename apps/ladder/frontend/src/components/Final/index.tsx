@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import Match from '@/components/Match';
 import TournamentText from '@/components/TournamentText';
-import PlayerAvatar from '@/components/PlayerAvatar';
-import PlayerName from '@/components/PlayerName';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
 import Bracket from './Bracket';
 import classnames from 'classnames';
 import {
@@ -14,12 +14,12 @@ import { useSelector } from 'react-redux';
 import Bet from '@/components/Bet';
 import BetResult from '@/components/BetResult';
 import BetContest from '@/components/BetContest';
-import TimeoutCallback from '@/components/TimeoutCallback';
-import Modal from '@/components/Modal';
+import TimeoutCallback from '@rival/common/components/TimeoutCallback';
+import Modal from '@rival/common/components/Modal';
 import { relationsUp, relationsDown } from '@rival/ladder.backend/src/services/matches/relations';
 import { BYE_ID, BRACKET_BOT_ID } from '@rival/ladder.backend/src/constants';
-import dayjs from '@/utils/dayjs';
-import notification from '@/components/notification';
+import dayjs from '@rival/common/dayjs';
+import notification from '@rival/common/components/notification';
 import BotIcon from '@/assets/bot.svg?react';
 import style from './style.module.scss';
 

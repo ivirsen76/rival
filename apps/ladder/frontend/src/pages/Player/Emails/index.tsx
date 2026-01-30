@@ -1,8 +1,8 @@
 import Loader from '@rival/common/components/Loader';
 import Table from '@rival/common/components/Table';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import { useQuery } from 'react-query';
-import { formatCustom } from '@/utils/dayjs';
+import { formatCustom } from '@rival/common/dayjs';
 import style from './style.module.scss';
 
 type EmailsProps = {

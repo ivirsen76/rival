@@ -1,6 +1,6 @@
-import { Formik, Field, Form } from '@/components/formik';
-import Input from '@/components/formik/Input';
-import Select from '@/components/formik/Select';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Input from '@rival/common/components/formik/Input';
+import Select from '@rival/common/components/formik/Select';
 import Button from '@rival/common/components/Button';
 
 const typeOptions = [

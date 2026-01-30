@@ -1,16 +1,16 @@
 import { useMemo } from 'react';
 import EloPreview from './EloPreview';
-import PlayerAvatar from '@/components/PlayerAvatar';
-import PlayerName from '@/components/PlayerName';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
 import Tooltip from '@rival/common/components/Tooltip';
 import { Link } from 'react-router-dom';
 import WarningIcon from '@rival/common/metronic/icons/duotone/Code/Warning-1-circle.svg?react';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 import classnames from 'classnames';
-import useAppearance from '@/utils/useAppearance';
+import useAppearance from '@rival/common/utils/useAppearance';
 import Tlr from '../Player/Tlr';
-import useConfig from '@/utils/useConfig';
+import useConfig from '@rival/common/utils/useConfig';
 import { useSelector } from 'react-redux';
 import style from './style.module.scss';
 

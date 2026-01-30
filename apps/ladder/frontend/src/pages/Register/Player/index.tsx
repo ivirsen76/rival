@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { logout, authenticate } from '@/reducers/auth';
-import { Formik, Field, Form } from '@/components/formik';
-import Input from '@/components/formik/Input';
-import PasswordInput from '@/components/formik/PasswordInput';
-import notification from '@/components/notification';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Input from '@rival/common/components/formik/Input';
+import PasswordInput from '@rival/common/components/formik/PasswordInput';
+import notification from '@rival/common/components/notification';
 import { Link } from 'react-router-dom';
 import Button from '@rival/common/components/Button';
 import Register from '@/components/Authentication/Register';
-import VerifyEmail from '@/components/VerifyEmail';
+import VerifyEmail from '@rival/common/components/VerifyEmail';
 import EmailIcon from '@rival/common/metronic/icons/duotone/Communication/Mail-at.svg?react';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 
 type PlayerProps = {
     settings: object;

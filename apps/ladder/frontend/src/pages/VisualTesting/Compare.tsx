@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import classnames from 'classnames';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import style from './style.module.scss';
 
 const types = [

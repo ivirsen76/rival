@@ -2,8 +2,8 @@ import Card from '@rival/common/components/Card';
 import _omit from 'lodash/omit';
 import { useQuery } from 'react-query';
 import Loader from '@rival/common/components/Loader';
-import notification from '@/components/notification';
-import axios from '@/utils/axios';
+import notification from '@rival/common/components/notification';
+import axios from '@rival/common/axios';
 import Form from '@/pages/Settings/SubscriptionsForm/Form';
 
 type UnsubscribeProps = {

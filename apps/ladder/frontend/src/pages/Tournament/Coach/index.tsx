@@ -1,5 +1,5 @@
 import Profile from './Profile';
-import Modal from '@/components/Modal';
+import Modal from '@rival/common/components/Modal';
 import style from './style.module.scss';
 
 type CoachProps = {

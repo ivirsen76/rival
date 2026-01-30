@@ -1,14 +1,14 @@
 import { useSelector } from 'react-redux';
-import axios from '@/utils/axios';
-import notification from '@/components/notification';
-import { Formik, Field, Form } from '@/components/formik';
-import Input from '@/components/formik/Input';
-import AddressAutocomplete from '@/components/formik/AddressAutocomplete';
+import axios from '@rival/common/axios';
+import notification from '@rival/common/components/notification';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Input from '@rival/common/components/formik/Input';
+import AddressAutocomplete from '@rival/common/components/formik/AddressAutocomplete';
 import obfuscateLabel from '@rival/common/utils/obfuscateLabel';
-import Select from '@/components/formik/Select';
+import Select from '@rival/common/components/formik/Select';
 import Button from '@rival/common/components/Button';
-import useConfig from '@/utils/useConfig';
-import dayjs from '@/utils/dayjs';
+import useConfig from '@rival/common/utils/useConfig';
+import dayjs from '@rival/common/dayjs';
 import style from './style.module.scss';
 
 const stateOptions = [

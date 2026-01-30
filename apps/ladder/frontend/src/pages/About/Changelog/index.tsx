@@ -3,11 +3,11 @@ import Card from '@rival/common/components/Card';
 import style from './style.module.scss';
 import ScrollToTop from '@rival/common/components/ScrollToTop';
 import getData from './getData';
-import dayjs from '@/utils/dayjs';
-import axios from '@/utils/axios';
+import dayjs from '@rival/common/dayjs';
+import axios from '@rival/common/axios';
 import { loadCurrentUser } from '@/reducers/auth';
 import { useSelector, useDispatch } from 'react-redux';
-import useConfig from '@/utils/useConfig';
+import useConfig from '@rival/common/utils/useConfig';
 import useLazyImages from '@rival/common/utils/useLazyImages';
 import Header from '@/components/Header';
 

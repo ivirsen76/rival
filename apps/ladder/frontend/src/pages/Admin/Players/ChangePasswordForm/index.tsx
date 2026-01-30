@@ -1,5 +1,5 @@
-import { Formik, Field, Form } from '@/components/formik';
-import PasswordInput from '@/components/formik/PasswordInput';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import PasswordInput from '@rival/common/components/formik/PasswordInput';
 import Button from '@rival/common/components/Button';
 
 type ChangePasswordFormProps = {

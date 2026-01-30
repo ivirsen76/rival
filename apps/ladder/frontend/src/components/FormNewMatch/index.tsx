@@ -1,14 +1,14 @@
 import { useState, useMemo, useEffect } from 'react';
-import { Formik, Field, Form } from '@/components/formik';
+import { Formik, Field, Form } from '@rival/common/components/formik';
 import { useSelector } from 'react-redux';
-import Select from '@/components/formik/Select';
+import Select from '@rival/common/components/formik/Select';
 import Button from '@rival/common/components/Button';
 import FormMatch from '@/components/FormMatch';
 import userIcon from '@/assets/user.svg';
 import QuestionIcon from '@rival/common/metronic/icons/duotone/Navigation/Question.svg?react';
 import Tooltip from '@rival/common/components/Tooltip';
 import getPossibleOpponents from './getPossibleOpponents';
-import getPlayersName from '@/utils/getPlayersName';
+import getPlayersName from '@rival/common/utils/getPlayersName';
 import style from './style.module.scss';
 
 type JustFormProps = {

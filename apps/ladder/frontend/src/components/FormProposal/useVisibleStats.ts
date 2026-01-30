@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 
 export default () => {
     const currentUser = useSelector((state) => state.auth.user);

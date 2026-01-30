@@ -1,10 +1,10 @@
 import classnames from 'classnames';
 import style from './style.module.scss';
-import PlayerName from '@/components/PlayerName';
-import PlayerAvatar from '@/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
 import Tooltip from '@rival/common/components/Tooltip';
-import { formatMiddle } from '@/utils/dayjs';
-import useConfig from '@/utils/useConfig';
+import { formatMiddle } from '@rival/common/dayjs';
+import useConfig from '@rival/common/utils/useConfig';
 import parseScore from '@/components/Match/parseScore';
 
 type MatchProps = {

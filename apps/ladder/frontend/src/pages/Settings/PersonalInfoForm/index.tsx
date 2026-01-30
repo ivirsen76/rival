@@ -1,13 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { Formik, Field, Form } from '@/components/formik';
-import Input from '@/components/formik/Input';
-import Birthday from '@/components/formik/Birthday';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Input from '@rival/common/components/formik/Input';
+import Birthday from '@rival/common/components/formik/Birthday';
 import { updateCurrentUser } from '@/reducers/auth';
 import Button from '@rival/common/components/Button';
 import _pick from 'lodash/pick';
-import Select from '@/components/formik/Select';
-import Textarea from '@/components/formik/Textarea';
-import Checkbox from '@/components/formik/Checkbox';
+import Select from '@rival/common/components/formik/Select';
+import Textarea from '@rival/common/components/formik/Textarea';
+import Checkbox from '@rival/common/components/formik/Checkbox';
 import convertDate from '@rival/common/utils/convertDate';
 
 export const genderOptions = [

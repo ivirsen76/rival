@@ -7,11 +7,11 @@ import LazyLoad, { forceCheck } from 'react-lazyload';
 import usePlayerFilter from '../usePlayerFilter';
 import FormProposal from '@/components/FormProposal';
 import FormDoublesProposal from '@/components/FormDoublesProposal';
-import Modal from '@/components/Modal';
-import dayjs from '@/utils/dayjs';
+import Modal from '@rival/common/components/Modal';
+import dayjs from '@rival/common/dayjs';
 import { useSelector } from 'react-redux';
 import checkUserReady from '@/utils/checkUserReady';
-import useConfig from '@/utils/useConfig';
+import useConfig from '@rival/common/utils/useConfig';
 import style from './style.module.scss';
 
 type ProposalsProps = {

@@ -1,4 +1,4 @@
-import dayjs from '@/utils/dayjs';
+import dayjs from '@rival/common/dayjs';
 
 export default (possibleMatches, currentPlayerId, currentDate = dayjs.tz().format('YYYY-MM-DD HH:mm:ss')) => {
     const opponents = new Set();

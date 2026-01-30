@@ -1,5 +1,5 @@
-import { Formik, Field } from '@/components/formik';
-import Textarea from '@/components/formik/Textarea';
+import { Formik, Field } from '@rival/common/components/formik';
+import Textarea from '@rival/common/components/formik/Textarea';
 
 type JoinAnotherLadderProps = {
     initialReason: string;

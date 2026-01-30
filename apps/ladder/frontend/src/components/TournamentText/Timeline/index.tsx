@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import dayjs from '@/utils/dayjs';
+import dayjs from '@rival/common/dayjs';
 import style from './style.module.scss';
 
 type TimelineProps = {

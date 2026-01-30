@@ -3,22 +3,22 @@ import Layout from '@/components/Layout';
 import { Router, Switch, Route as OriginalRoute, Redirect } from 'react-router-dom';
 import loadable from '@rival/common/utils/loadable';
 import Loader from '@rival/common/components/Loader';
-import notification from '@/components/notification';
-import GoogleAnalytics from '@/components/GoogleAnalytics';
+import notification from '@rival/common/components/notification';
+import GoogleAnalytics from '@rival/common/components/GoogleAnalytics';
 import AppearanceChecker from '@/components/AppearanceChecker';
-import EmojiMultiplierCalculator from '@/components/EmojiMultiplierCalculator';
+import EmojiMultiplierCalculator from '@rival/common/components/EmojiMultiplierCalculator';
 import RouteChecker from '@/components/RouteChecker';
 import history from './history';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadCurrentUser, setConfig, savePaw } from '@/reducers/auth';
-import useSettings from './utils/useSettings';
+import useSettings from '@rival/common/utils/useSettings';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import { getUnseenUpdates } from '@/selectors/auth';
 import NewUpdatesImage from '@/assets/newUpdates.svg?react';
 import { useQuery } from 'react-query';
 import saveIdentification from './utils/saveIdentification';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import style from './style.module.scss';
 
 // Pages

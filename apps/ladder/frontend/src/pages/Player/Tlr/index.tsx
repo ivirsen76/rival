@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import EloHistory from '../../Tournament/EloHistory';
-import Modal from '@/components/Modal';
+import Modal from '@rival/common/components/Modal';
 import Loader from '@rival/common/components/Loader';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 
 type TlrProps = {
     user: object;

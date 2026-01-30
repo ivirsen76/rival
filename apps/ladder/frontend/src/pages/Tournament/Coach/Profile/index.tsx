@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import log from '@/utils/log';
-import { Formik, Field, Form } from '@/components/formik';
-import Textarea from '@/components/formik/Textarea';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Textarea from '@rival/common/components/formik/Textarea';
 import Button from '@rival/common/components/Button';
-import axios from '@/utils/axios';
-import notification from '@/components/notification';
+import axios from '@rival/common/axios';
+import notification from '@rival/common/components/notification';
 import style from './style.module.scss';
 
 const validate = (values) => {

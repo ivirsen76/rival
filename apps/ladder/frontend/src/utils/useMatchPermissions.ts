@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
-import dayjs from '@/utils/dayjs';
-import useConfig from './useConfig';
+import dayjs from '@rival/common/dayjs';
+import useConfig from '@rival/common/utils/useConfig';
 import hasAnyRole from '@rival/common/utils/hasAnyRole';
 import getMatchPermissions from '@rival/ladder.backend/src/services/matches/getMatchPermissions';
 

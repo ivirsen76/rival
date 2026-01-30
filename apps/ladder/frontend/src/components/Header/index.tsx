@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet';
-import useConfig from '@/utils/useConfig';
+import useConfig from '@rival/common/utils/useConfig';
 
 type HeaderProps = {
     title: string;

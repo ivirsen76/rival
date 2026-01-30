@@ -11,11 +11,11 @@ import FlagIcon from '@rival/common/metronic/icons/duotune/maps/map001.svg?react
 import SeasonIcon from '@/assets/season.svg?react';
 import { useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
-import useConfig from '@/utils/useConfig';
-import dayjs from '@/utils/dayjs';
+import useConfig from '@rival/common/utils/useConfig';
+import dayjs from '@rival/common/dayjs';
 import style from './style.module.scss';
 import hasAnyRole from '@rival/common/utils/hasAnyRole';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 
 const format = (date) => dayjs.tz(date).format('MMM D');
 

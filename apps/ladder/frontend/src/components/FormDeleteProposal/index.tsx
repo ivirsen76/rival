@@ -1,11 +1,11 @@
-import { Formik, Field, Form } from '@/components/formik';
-import Input from '@/components/formik/Input';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Input from '@rival/common/components/formik/Input';
 import Button from '@rival/common/components/Button';
-import PlayerName from '@/components/PlayerName';
+import PlayerName from '@rival/common/components/PlayerName';
 import WarningIcon from '@rival/common/metronic/icons/duotone/Code/Warning-2.svg?react';
-import axios from '@/utils/axios';
-import notification from '@/components/notification';
-import dayjs from '@/utils/dayjs';
+import axios from '@rival/common/axios';
+import notification from '@rival/common/components/notification';
+import dayjs from '@rival/common/dayjs';
 import useMatchPermissions from '@/utils/useMatchPermissions';
 
 type FormDeleteProposalProps = {

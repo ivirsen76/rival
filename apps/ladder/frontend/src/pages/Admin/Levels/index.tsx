@@ -1,13 +1,13 @@
 import { useQueryClient } from 'react-query';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import MoveIcon from '@rival/common/metronic/icons/duotone/Navigation/Arrows-v.svg?react';
-import Modal from '@/components/Modal';
+import Modal from '@rival/common/components/Modal';
 import Card from '@rival/common/components/Card';
 import Tooltip from '@rival/common/components/Tooltip';
-import notification from '@/components/notification';
+import notification from '@rival/common/components/notification';
 import LevelForm from './LevelForm';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-import useSettings from '@/utils/useSettings';
+import useSettings from '@rival/common/utils/useSettings';
 
 const reorder = (list, startIndex, endIndex) => {
     const result = [...list];

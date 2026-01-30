@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
-import { Formik, Field, Form } from '@/components/formik';
+import { Formik, Field, Form } from '@rival/common/components/formik';
 import Autosave from '@rival/common/components/Autosave';
-import Textarea from '@/components/formik/Textarea';
+import Textarea from '@rival/common/components/formik/Textarea';
 import { useQueryClient } from 'react-query';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 
 type PersonalNoteFormProps = {
     user: object;

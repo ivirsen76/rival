@@ -1,8 +1,8 @@
-import { Formik, Field, Form } from '@/components/formik';
+import { Formik, Field, Form } from '@rival/common/components/formik';
 import Button from '@rival/common/components/Button';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import { useSelector } from 'react-redux';
-import DoublesPlayersPicker from '@/components/formik/DoublesPlayersPicker';
+import DoublesPlayersPicker from '@rival/common/components/formik/DoublesPlayersPicker';
 
 type FormReplaceCaptainProps = {
     hide: (...args: unknown[]) => unknown;

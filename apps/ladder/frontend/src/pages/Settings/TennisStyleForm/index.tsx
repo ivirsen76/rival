@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { Formik, Field, Form } from '@/components/formik';
-import Select from '@/components/formik/Select';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Select from '@rival/common/components/formik/Select';
 import { updateCurrentUser } from '@/reducers/auth';
 import Button from '@rival/common/components/Button';
 import _pick from 'lodash/pick';

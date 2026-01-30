@@ -1,13 +1,13 @@
 import { useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadCurrentUser } from '@/reducers/auth';
-import { Formik, Field, Form } from '@/components/formik';
-import PlayerName from '@/components/PlayerName';
-import notification from '@/components/notification';
-import CheckboxArray from '@/components/formik/CheckboxArray';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import PlayerName from '@rival/common/components/PlayerName';
+import notification from '@rival/common/components/notification';
+import CheckboxArray from '@rival/common/components/formik/CheckboxArray';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
 import Button from '@rival/common/components/Button';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 
 type AvoidedPlayersFormProps = {
     onSubmit: (...args: unknown[]) => unknown;

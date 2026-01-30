@@ -1,7 +1,7 @@
 import Card from '@rival/common/components/Card';
-import Modal from '@/components/Modal';
+import Modal from '@rival/common/components/Modal';
 import { useQuery } from 'react-query';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import Loader from '@rival/common/components/Loader';
 import Table from '@rival/common/components/Table';
 import List from './List';

@@ -1,5 +1,5 @@
-import PlayerAvatar from '@/components/PlayerAvatar';
-import PlayerName from '@/components/PlayerName';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
 import Tooltip from '@rival/common/components/Tooltip';
 import CaptainIcon from '@/assets/captain.svg?react';
 import style from './style.module.scss';

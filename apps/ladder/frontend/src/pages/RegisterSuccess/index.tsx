@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Loader from '@rival/common/components/Loader';
-import notification from '@/components/notification';
-import axios from '@/utils/axios';
+import notification from '@rival/common/components/notification';
+import axios from '@rival/common/axios';
 import { useDispatch } from 'react-redux';
 import { loadCurrentUser } from '@/reducers/auth';
 import getRegisterNotificationProps from '@/utils/getRegisterNotificationProps';

@@ -16,9 +16,9 @@ import _pick from 'lodash/pick';
 import NotFound from '@/pages/NotFound';
 import hasAnyRole from '@rival/common/utils/hasAnyRole';
 import { useSelector } from 'react-redux';
-import dayjs from '@/utils/dayjs';
+import dayjs from '@rival/common/dayjs';
 import Tooltip from '@rival/common/components/Tooltip';
-import useConfig from '@/utils/useConfig';
+import useConfig from '@rival/common/utils/useConfig';
 import style from './style.module.scss';
 
 type TournamentProps = {

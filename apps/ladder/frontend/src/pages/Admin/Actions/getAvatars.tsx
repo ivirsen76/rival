@@ -1,5 +1,5 @@
 import * as ReactDOMServer from 'react-dom/server';
-import pieces from '@/components/AvatarBuilder/pieces';
+import pieces from '@rival/common/components/AvatarBuilder/pieces';
 import Avatar from '@rival/common/components/avataaars';
 
 let counter = 0;

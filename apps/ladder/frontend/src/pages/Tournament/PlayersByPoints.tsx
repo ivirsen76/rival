@@ -3,13 +3,13 @@ import style from './style.module.scss';
 import { Link } from 'react-router-dom';
 import Tooltip from '@rival/common/components/Tooltip';
 import classnames from 'classnames';
-import PlayerAvatar from '@/components/PlayerAvatar';
-import PlayerName from '@/components/PlayerName';
-import Modal from '@/components/Modal';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
+import Modal from '@rival/common/components/Modal';
 import TeamInfo from './TeamInfo';
 import StopIcon from '@rival/common/metronic/icons/duotone/Code/Stop.svg?react';
 import compareFields from '@rival/ladder.backend/src/utils/compareFields';
-import dayjs from '@/utils/dayjs';
+import dayjs from '@rival/common/dayjs';
 import { useSelector } from 'react-redux';
 import getTotalProjectedPlayers from './getTotalProjectedPlayers';
 

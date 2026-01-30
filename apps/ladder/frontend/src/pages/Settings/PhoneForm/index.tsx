@@ -1,14 +1,14 @@
-import { Formik, Field, Form } from '@/components/formik';
-import FieldWrapper from '@/components/formik/FieldWrapper';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import FieldWrapper from '@rival/common/components/formik/FieldWrapper';
 import Button from '@rival/common/components/Button';
-import VerifyPhone from '@/components/VerifyPhone';
-import notification from '@/components/notification';
+import VerifyPhone from '@rival/common/components/VerifyPhone';
+import notification from '@rival/common/components/notification';
 import { useSelector, useDispatch } from 'react-redux';
 import NotFound from '@/pages/NotFound';
 import { setCurrentUser } from '@/reducers/auth';
 import { IMaskInput } from 'react-imask';
 import classnames from 'classnames';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 
 type PhoneFormProps = {
     onSubmit: (...args: unknown[]) => unknown;

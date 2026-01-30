@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 import Loader from '@rival/common/components/Loader';
 import Header from '@/components/Header';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import Stat from './Stat';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';

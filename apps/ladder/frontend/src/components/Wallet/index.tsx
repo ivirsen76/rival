@@ -1,10 +1,10 @@
 import Loader from '@rival/common/components/Loader';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import Table from '@rival/common/components/Table';
-import Modal from '@/components/Modal';
+import Modal from '@rival/common/components/Modal';
 import Check from './Check';
 import { useQuery } from 'react-query';
-import { formatCustom } from '@/utils/dayjs';
+import { formatCustom } from '@rival/common/dayjs';
 import classnames from 'classnames';
 import formatSum from '@rival/common/utils/formatSum';
 import FileIcon from '@rival/common/metronic/icons/duotone/Files/File.svg?react';

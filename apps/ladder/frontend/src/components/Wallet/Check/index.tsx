@@ -1,6 +1,6 @@
 import style from './style.module.scss';
 import formatSum from '@rival/common/utils/formatSum';
-import { formatCustom } from '@/utils/dayjs';
+import { formatCustom } from '@rival/common/dayjs';
 
 type CheckProps = {
     payload: object;

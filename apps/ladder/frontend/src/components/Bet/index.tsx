@@ -4,10 +4,10 @@ import Bracket from './Bracket';
 import classnames from 'classnames';
 import { getInitialPrediction, setWinner, preparePredictionToSave } from './helpers';
 import showLoader from '@rival/common/utils/showLoader';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import { useSelector } from 'react-redux';
 import { BYE_ID } from '@rival/ladder.backend/src/constants';
-import notification from '@/components/notification';
+import notification from '@rival/common/components/notification';
 import style from './style.module.scss';
 
 const isByeMatch = (match) => match.challengerId === BYE_ID || match.acceptorId === BYE_ID;

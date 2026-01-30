@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 import { useQuery } from 'react-query';
 import Loader from '@rival/common/components/Loader';
 import Card from '@rival/common/components/Card';
-import Modal from '@/components/Modal';
+import Modal from '@rival/common/components/Modal';
 import Tooltip from '@rival/common/components/Tooltip';
 import Header from '@/components/Header';
 import Rivalry from './Rivalry';
@@ -20,7 +20,7 @@ import EnvelopeIcon from '@rival/common/metronic/icons/duotone/Interface/Envelop
 import MarkerIcon from '@rival/common/metronic/icons/duotune/general/gen018.svg?react';
 import formatPhone from '@rival/common/utils/formatPhone';
 import NotFound from '@/pages/NotFound';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import {
     dominantHandOptions,
     forehandStyleOptions,
@@ -30,22 +30,22 @@ import {
 } from '../Settings/TennisStyleForm';
 import { useDispatch, useSelector } from 'react-redux';
 import hasAnyRole from '@rival/common/utils/hasAnyRole';
-import { formatCustom } from '@/utils/dayjs';
+import { formatCustom } from '@rival/common/dayjs';
 import { comeFromOptions } from '@/components/Authentication/Register';
 import Emails from './Emails';
 import Tracking from './Tracking';
 import AddTransactionForm from './AddTransactionForm';
 import Wallet from '@/components/Wallet';
 import PersonalNoteForm from './PersonalNoteForm';
-import PlayerAvatar from '@/components/PlayerAvatar';
-import PlayerName from '@/components/PlayerName';
-import notification from '@/components/notification';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
+import notification from '@rival/common/components/notification';
 import { loadCurrentUser, incrementUserMessages } from '@/reducers/auth';
-import Statbox from '@/components/Statbox';
+import Statbox from '@rival/common/components/Statbox';
 import formatElo from '@rival/ladder.backend/src/utils/formatElo';
 import Tlr from './Tlr';
 import LastMatchesElo from './LastMatchesElo';
-import useConfig from '@/utils/useConfig';
+import useConfig from '@rival/common/utils/useConfig';
 import formatNumber from '@rival/ladder.backend/src/utils/formatNumber';
 import { Squircle } from 'corner-smoothing';
 import useBreakpoints from '@rival/common/utils/useBreakpoints';

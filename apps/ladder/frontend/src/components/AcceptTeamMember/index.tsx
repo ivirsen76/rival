@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import notification from '@/components/notification';
-import axios from '@/utils/axios';
+import notification from '@rival/common/components/notification';
+import axios from '@rival/common/axios';
 
 type AcceptTeamMemberProps = {
     payload: string;

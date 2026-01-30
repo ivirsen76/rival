@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Card from '@rival/common/components/Card';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import { useQuery } from 'react-query';
 import Loader from '@rival/common/components/Loader';
 import Error from '@rival/common/components/Error';

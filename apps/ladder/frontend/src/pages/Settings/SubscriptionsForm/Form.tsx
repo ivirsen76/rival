@@ -1,7 +1,7 @@
-import { Formik, Field, Form } from '@/components/formik';
-import Checkbox from '@/components/formik/Checkbox';
-import SchedulePicker from '@/components/formik/SchedulePicker';
-import ButtonRow from '@/components/formik/ButtonRow';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Checkbox from '@rival/common/components/formik/Checkbox';
+import SchedulePicker from '@rival/common/components/formik/SchedulePicker';
+import ButtonRow from '@rival/common/components/formik/ButtonRow';
 import Button from '@rival/common/components/Button';
 import _pick from 'lodash/pick';
 import matchFormatOptions from '@rival/ladder.backend/src/services/proposals/matchFormatOptions';

@@ -1,12 +1,12 @@
 import Card from '@rival/common/components/Card';
 import { useQuery, useQueryClient } from 'react-query';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import Loader from '@rival/common/components/Loader';
-import { Formik, Field, Form } from '@/components/formik';
-import Input from '@/components/formik/Input';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Input from '@rival/common/components/formik/Input';
 import Button from '@rival/common/components/Button';
-import notification from '@/components/notification';
-import useConfig from '@/utils/useConfig';
+import notification from '@rival/common/components/notification';
+import useConfig from '@rival/common/utils/useConfig';
 
 const Settings = (props) => {
     const queryClient = useQueryClient();

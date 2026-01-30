@@ -2,18 +2,18 @@ import style from './style.module.scss';
 import MarkerIcon from '@rival/common/metronic/icons/duotune/general/gen018.svg?react';
 import ClockIcon from '@rival/common/metronic/icons/duotone/Home/Clock.svg?react';
 import CommentIcon from '@rival/common/metronic/icons/duotone/Interface/Comment.svg?react';
-import dayjs, { formatLong } from '@/utils/dayjs';
+import dayjs, { formatLong } from '@rival/common/dayjs';
 import { useSelector } from 'react-redux';
-import axios from '@/utils/axios';
-import notification from '@/components/notification';
-import PlayerAvatar from '@/components/PlayerAvatar';
-import PlayerName from '@/components/PlayerName';
+import axios from '@rival/common/axios';
+import notification from '@rival/common/components/notification';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import PlayerName from '@rival/common/components/PlayerName';
 import FormAcceptDoublesProposal from '@/components/FormAcceptDoublesProposal';
 import showLoader from '@rival/common/utils/showLoader';
 import useConfirmation from '@rival/common/utils/useConfirmation';
-import Modal from '@/components/Modal';
+import Modal from '@rival/common/components/Modal';
 import FormDeleteDoublesProposal from '@/components/FormDeleteDoublesProposal';
-import WeatherAtTime from '../WeatherForecast/WeatherAtTime';
+import WeatherAtTime from '@rival/common/components/WeatherForecast/WeatherAtTime';
 
 type ProposalDoublesProps = {
     tournament: object;

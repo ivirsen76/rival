@@ -2,7 +2,7 @@ import * as am4core from '@amcharts/amcharts4/core';
 import am4themesAnimated from '@amcharts/amcharts4/themes/animated';
 import am4themesDark from '@amcharts/amcharts4/themes/dark';
 import { useEffect } from 'react';
-import useAppearance from '@/utils/useAppearance';
+import useAppearance from '@rival/common/utils/useAppearance';
 import { useHotkeys } from 'react-hotkeys-hook';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateCurrentUser } from '@/reducers/auth';

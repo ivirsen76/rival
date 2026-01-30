@@ -3,7 +3,7 @@ import Chart from '@rival/common/components/Chart';
 import _findLastIndex from 'lodash/findLastIndex';
 import Tooltip from '@rival/common/components/Tooltip';
 import Mark from './Mark';
-import useAppearance from '@/utils/useAppearance';
+import useAppearance from '@rival/common/utils/useAppearance';
 
 type EloHistoryProps = {
     tournament: object;

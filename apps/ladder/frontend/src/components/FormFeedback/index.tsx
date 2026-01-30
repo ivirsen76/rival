@@ -1,8 +1,8 @@
-import { Formik, Field, Form } from '@/components/formik';
+import { Formik, Field, Form } from '@rival/common/components/formik';
 import Button from '@rival/common/components/Button';
-import Textarea from '@/components/formik/Textarea';
-import axios from '@/utils/axios';
-import notification from '@/components/notification';
+import Textarea from '@rival/common/components/formik/Textarea';
+import axios from '@rival/common/axios';
+import notification from '@rival/common/components/notification';
 import style from './style.module.scss';
 
 const typeOptions = [

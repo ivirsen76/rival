@@ -1,4 +1,4 @@
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import Cookies from 'js-cookie';
 
 export default async () => {

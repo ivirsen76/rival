@@ -1,9 +1,9 @@
-import notification from '@/components/notification';
+import notification from '@rival/common/components/notification';
 import confirmation from '@rival/common/utils/confirmation';
 import FormBirthday from '@/components/FormBirthday';
 import { setCurrentUser } from '@/reducers/auth';
 import formatPhone from '@rival/common/utils/formatPhone';
-import VerifyPhone from '@/components/VerifyPhone';
+import VerifyPhone from '@rival/common/components/VerifyPhone';
 
 const checkForBirthday = async () => {
     const currentUser = window.tl.store.getState().auth.user;

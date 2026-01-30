@@ -1,9 +1,9 @@
 import Loader from '@rival/common/components/Loader';
 import Table from '@rival/common/components/Table';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 import formatDuration from '@rival/common/utils/formatDuration';
 import { useQuery } from 'react-query';
-import dayjs, { formatCustom } from '@/utils/dayjs';
+import dayjs, { formatCustom } from '@rival/common/dayjs';
 
 type TrackingProps = {
     user: object;

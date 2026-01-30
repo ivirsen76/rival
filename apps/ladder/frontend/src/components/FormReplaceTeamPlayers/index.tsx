@@ -1,9 +1,9 @@
-import { Formik, Field, Form } from '@/components/formik';
+import { Formik, Field, Form } from '@rival/common/components/formik';
 import Button from '@rival/common/components/Button';
-import notification from '@/components/notification';
-import DoublesPlayersPicker from '@/components/formik/DoublesPlayersPicker';
+import notification from '@rival/common/components/notification';
+import DoublesPlayersPicker from '@rival/common/components/formik/DoublesPlayersPicker';
 import { useSelector } from 'react-redux';
-import axios from '@/utils/axios';
+import axios from '@rival/common/axios';
 
 type FormReplaceTeamPlayersProps = {
     match: object;

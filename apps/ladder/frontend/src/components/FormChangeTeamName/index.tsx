@@ -1,8 +1,8 @@
-import { Formik, Field, Form } from '@/components/formik';
+import { Formik, Field, Form } from '@rival/common/components/formik';
 import Button from '@rival/common/components/Button';
-import axios from '@/utils/axios';
-import TeamNamePicker, { getValidateTeamName } from '@/components/formik/TeamNamePicker';
-import useConfig from '@/utils/useConfig';
+import axios from '@rival/common/axios';
+import TeamNamePicker, { getValidateTeamName } from '@rival/common/components/formik/TeamNamePicker';
+import useConfig from '@rival/common/utils/useConfig';
 
 type FormChangeTeamNameProps = {
     playerId: number;

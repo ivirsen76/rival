@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 import TopMenu from './TopMenu';
 import SideMenu from './SideMenu';
-import useSettings from '@/utils/useSettings';
+import useSettings from '@rival/common/utils/useSettings';
 import ChatIcon from '@rival/common/metronic/icons/duotone/Communication/Chat6.svg?react';
 import { useSelector } from 'react-redux';
 import testImage from './clay.jpg';
 import useBreakpoints from '@rival/common/utils/useBreakpoints';
-import Modal from '@/components/Modal';
+import Modal from '@rival/common/components/Modal';
 import FormFeedback from '@/components/FormFeedback';
 import RegisterButton from '@/components/RegisterButton';
 import RivalLogo from '@/assets/logo.svg?react';
@@ -14,9 +14,9 @@ import Facebook from './Facebook';
 import Twitter from './Twitter';
 import Instagram from './Instagram';
 import PullToRefresh from 'react-simple-pull-to-refresh';
-import dayjs from '@/utils/dayjs';
+import dayjs from '@rival/common/dayjs';
 import bg from './bg.jpg?w=1200';
-import useAppearance from '@/utils/useAppearance';
+import useAppearance from '@rival/common/utils/useAppearance';
 import classnames from 'classnames';
 import style from './style.module.scss';
 

@@ -1,4 +1,4 @@
-import dayjs from '@/utils/dayjs';
+import dayjs from '@rival/common/dayjs';
 
 // get notification props after successful registration in the ladder
 export default ({ message, buttonTitle = 'Go to the Ladder', ladderUrl, season }) => {

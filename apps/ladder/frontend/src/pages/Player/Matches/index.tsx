@@ -5,8 +5,8 @@ import SearchIcon from '@rival/common/metronic/icons/duotone/General/Search.svg?
 import Loader from '@rival/common/components/Loader';
 import { Virtuoso } from 'react-virtuoso';
 import { useDebounce } from 'use-debounce';
-import axios from '@/utils/axios';
-import dayjs from '@/utils/dayjs';
+import axios from '@rival/common/axios';
+import dayjs from '@rival/common/dayjs';
 import classnames from 'classnames';
 import ArrowIcon from './arrow.svg?react';
 import style from './style.module.scss';

@@ -1,10 +1,10 @@
 import { Fragment } from 'react';
 import style from './style.module.scss';
 import InlineMatch from '@/components/InlineMatch';
-import PlayerAvatar from '@/components/PlayerAvatar';
-import Modal from '@/components/Modal';
-import { Title } from '@/components/Statbox';
-import dayjs, { formatDate } from '@/utils/dayjs';
+import PlayerAvatar from '@rival/common/components/PlayerAvatar';
+import Modal from '@rival/common/components/Modal';
+import { Title } from '@rival/common/components/Statbox';
+import dayjs, { formatDate } from '@rival/common/dayjs';
 import ChartIcon from '@rival/common/metronic/icons/duotone/Shopping/Chart-bar1.svg?react';
 import classnames from 'classnames';
 import { Link } from 'react-router-dom';

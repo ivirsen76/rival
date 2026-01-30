@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import Gallery from '@/components/Gallery';
+import Gallery from '@rival/common/components/Gallery';
 
 type PhotosProps = {
     photos: unknown[];

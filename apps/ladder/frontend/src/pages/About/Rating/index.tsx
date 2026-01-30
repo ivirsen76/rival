@@ -1,7 +1,7 @@
 import useBreakpoints from '@rival/common/utils/useBreakpoints';
 import ScrollToTop from '@rival/common/components/ScrollToTop';
 import Header from '@/components/Header';
-import { NtrpGuidelinesLink } from '@/components/NtrpGuidelines';
+import { NtrpGuidelinesLink } from '@rival/common/components/NtrpGuidelines';
 import getImageSize from '@rival/common/utils/getImageSize';
 import player from './player.jpg?w=1200;2400&format=jpeg&quality=60&as=metadata';
 import style from './style.module.scss';

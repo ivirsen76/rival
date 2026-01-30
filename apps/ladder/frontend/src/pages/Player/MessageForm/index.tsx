@@ -1,9 +1,9 @@
-import { Formik, Field, Form } from '@/components/formik';
-import Textarea from '@/components/formik/Textarea';
+import { Formik, Field, Form } from '@rival/common/components/formik';
+import Textarea from '@rival/common/components/formik/Textarea';
 import Button from '@rival/common/components/Button';
 import { useSelector } from 'react-redux';
-import useConfig from '@/utils/useConfig';
-import axios from '@/utils/axios';
+import useConfig from '@rival/common/utils/useConfig';
+import axios from '@rival/common/axios';
 
 type MessageFormProps = {
     user: object;

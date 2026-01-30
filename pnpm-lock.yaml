@@ -8,6 +8,8 @@ overrides:
   '@amcharts/amcharts4': ^4.10.18
   react: ^18.2.0
   react-dom: ^18.2.0
+  react-query: ^3.15.2
+  react-redux: ^7.2.9
   react-router-dom: ^5.2.0
 
 importers:
@@ -385,7 +387,7 @@ importers:
         specifier: ^3.15.2
         version: 3.39.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-redux:
-        specifier: ^7.2.3
+        specifier: ^7.2.9
         version: 7.2.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-router-dom:
         specifier: ^5.2.0
@@ -656,12 +658,6 @@ importers:
       '@amcharts/amcharts4':
         specifier: ^4.10.18
         version: 4.10.40
-      '@emoji-mart/data':
-        specifier: ^1.2.1
-        version: 1.2.1
-      '@emoji-mart/react':
-        specifier: ^1.1.1
-        version: 1.1.1(emoji-mart@5.6.0)(react@18.3.1)
       '@reduxjs/toolkit':
         specifier: ^1.5.1
         version: 1.9.7(react-redux@7.2.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
@@ -692,9 +688,6 @@ importers:
       autoprefixer:
         specifier: ^10.4.16
         version: 10.4.23(postcss@8.5.6)
-      axios:
-        specifier: ^0.21.1
-        version: 0.21.4
       bootstrap:
         specifier: 5.3.2
         version: 5.3.2(@popperjs/core@2.11.8)
@@ -707,18 +700,9 @@ importers:
       corner-smoothing:
         specifier: ^0.1.5
         version: 0.1.5(react@18.3.1)
-      emoji-mart:
-        specifier: ^5.6.0
-        version: 5.6.0
-      emoji-regex-xs:
-        specifier: ^1.0.0
-        version: 1.0.0
       flatpickr:
         specifier: ^4.6.13
         version: 4.6.13
-      formik:
-        specifier: 2.2.6
-        version: 2.2.6(react@18.3.1)
       history:
         specifier: ^4.10.1
         version: 4.10.1
@@ -731,12 +715,6 @@ importers:
       marked:
         specifier: ^16.4.1
         version: 16.4.2
-      motion:
-        specifier: ^11.11.17
-        version: 11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      photoswipe:
-        specifier: ^5.4.4
-        version: 5.4.4
       primereact:
         specifier: ^10.8.3
         version: 10.9.7(@types/react@19.2.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -746,15 +724,9 @@ importers:
       react:
         specifier: ^18.2.0
         version: 18.3.1
-      react-animate-height:
-        specifier: ^3.2.3
-        version: 3.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-beautiful-dnd:
         specifier: ^13.1.0
         version: 13.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      react-bootstrap:
-        specifier: 2.9.1
-        version: 2.9.1(@types/react@19.2.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-css-transition-replace:
         specifier: ^4.0.4
         version: 4.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -764,9 +736,6 @@ importers:
       react-dropzone:
         specifier: ^14.2.9
         version: 14.4.0(react@18.3.1)
-      react-flatpickr:
-        specifier: ^3.10.7
-        version: 3.10.13(react@18.3.1)
       react-helmet:
         specifier: ^6.1.0
         version: 6.1.0(react@18.3.1)
@@ -782,14 +751,11 @@ importers:
       react-photo-album:
         specifier: ^3.0.2
         version: 3.4.0(@types/react@19.2.10)(react@18.3.1)
-      react-photoswipe-gallery:
-        specifier: ^3.0.2
-        version: 3.1.1(photoswipe@5.4.4)(prop-types@15.8.1)(react@18.3.1)
       react-query:
         specifier: ^3.15.2
         version: 3.39.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-redux:
-        specifier: ^7.2.3
+        specifier: ^7.2.9
         version: 7.2.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-router-dom:
         specifier: ^5.2.0
@@ -855,12 +821,21 @@ importers:
       '@amcharts/amcharts4':
         specifier: ^4.10.18
         version: 4.10.40
+      '@emoji-mart/data':
+        specifier: ^1.2.1
+        version: 1.2.1
+      '@emoji-mart/react':
+        specifier: ^1.1.1
+        version: 1.1.1(emoji-mart@5.6.0)(react@18.3.1)
       '@loadable/component':
         specifier: ^5.15.2
         version: 5.16.7(react@18.3.1)
       '@tippyjs/react':
         specifier: ^4.2.5
         version: 4.2.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      axios:
+        specifier: ^0.21.1
+        version: 0.21.4
       bootstrap:
         specifier: 5.3.2
         version: 5.3.2(@popperjs/core@2.11.8)
@@ -870,15 +845,54 @@ importers:
       clipboard-copy:
         specifier: ^4.0.1
         version: 4.0.1
+      corner-smoothing:
+        specifier: ^0.1.5
+        version: 0.1.5(react@18.3.1)
+      dayjs:
+        specifier: ^1.11.10
+        version: 1.11.19
+      emoji-mart:
+        specifier: ^5.6.0
+        version: 5.6.0
+      emoji-regex-xs:
+        specifier: ^1.0.0
+        version: 1.0.0
+      formik:
+        specifier: 2.2.6
+        version: 2.2.6(react@18.3.1)
       lodash:
         specifier: ^4.17.21
         version: 4.17.23
+      motion:
+        specifier: ^11.11.17
+        version: 11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      photoswipe:
+        specifier: ^5.4.4
+        version: 5.4.4
       prop-types:
         specifier: ^15.7.2
         version: 15.8.1
+      react-animate-height:
+        specifier: ^3.2.3
+        version: 3.2.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-bootstrap:
         specifier: 2.9.1
         version: 2.9.1(@types/react@19.2.10)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-flatpickr:
+        specifier: ^3.10.7
+        version: 3.10.13(react@18.3.1)
+      react-photo-album:
+        specifier: ^3.0.2
+        version: 3.4.0(@types/react@19.2.10)(react@18.3.1)
+      react-photoswipe-gallery:
+        specifier: ^3.0.2
+        version: 3.1.1(photoswipe@5.4.4)(prop-types@15.8.1)(react@18.3.1)
+      react-query:
+        specifier: ^3.15.2
+        version: 3.39.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-redux:
+        specifier: ^7.2.9
+        version: 7.2.9(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react-router-dom:
         specifier: ^5.2.0
         version: 5.3.4(react@18.3.1)
@@ -886,6 +900,9 @@ importers:
         specifier: ^7.0.1
         version: 7.0.1(react@18.3.1)
     devDependencies:
+      '@types/lodash':
+        specifier: ^4.17.23
+        version: 4.17.23
       '@types/react':
         specifier: ^19.2.5
         version: 19.2.10
@@ -1756,7 +1773,7 @@ packages:
     resolution: {integrity: sha512-t7v8ZPxhhKgOKtU+uyJT13lu4vL7az5aFi4IdoDs/eS548edn2M8Ik9h8fxgvMjGoAUVFSt6ZC1P5cWmQ014QQ==}
     peerDependencies:
       react: ^18.2.0
-      react-redux: ^7.2.1 || ^8.0.2
+      react-redux: ^7.2.9
     peerDependenciesMeta:
       react:
         optional: true

@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import Badge from '@/components/Badge';
-import Modal from '@/components/Modal';
+import Badge from '@rival/common/components/Badge';
+import Modal from '@rival/common/components/Modal';
 import classnames from 'classnames';
-import Statbox from '@/components/Statbox';
-import { formatDate } from '@/utils/dayjs';
+import Statbox from '@rival/common/components/Statbox';
+import { formatDate } from '@rival/common/dayjs';
 import summaries from './summaries';
-import useSettings from '@/utils/useSettings';
+import useSettings from '@rival/common/utils/useSettings';
 import _capitalize from 'lodash/capitalize';
 import allBadges from '@rival/ladder.backend/src/utils/badges';
 import style from './style.module.scss';
