@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.44)
 # Database: tennisclub
-# Generation Time: 2026-01-31 20:26:33 +0000
+# Generation Time: 2026-01-31 21:21:02 +0000
 # ************************************************************
 
 
@@ -68,74 +68,6 @@ DELIMITER ;;
 /*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `badges_OnInsert` BEFORE INSERT ON `badges` FOR EACH ROW SET NEW.createdAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York'), NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York') */;;
 /*!50003 SET SESSION SQL_MODE="IGNORE_SPACE,ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION" */;;
 /*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `badges_OnUpdate` BEFORE UPDATE ON `badges` FOR EACH ROW SET NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York') */;;
-DELIMITER ;
-/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
-
-
-# Dump of table battles
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `battles`;
-
-CREATE TABLE `battles` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `team1` int(11) DEFAULT NULL,
-  `team2` int(11) DEFAULT NULL,
-  `week` int(11) NOT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
-  `type` varchar(255) NOT NULL DEFAULT 'regular',
-  `finalSpot` int(11) DEFAULT NULL,
-  `team1Seed` int(11) NOT NULL DEFAULT '0',
-  `team2Seed` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `team1` (`team1`),
-  KEY `team2` (`team2`),
-  CONSTRAINT `battles_ibfk_1` FOREIGN KEY (`team1`) REFERENCES `teams` (`id`),
-  CONSTRAINT `battles_ibfk_2` FOREIGN KEY (`team2`) REFERENCES `teams` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DELIMITER ;;
-/*!50003 SET SESSION SQL_MODE="IGNORE_SPACE,ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `battles_OnInsert` BEFORE INSERT ON `battles` FOR EACH ROW SET NEW.createdAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York'), NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York') */;;
-/*!50003 SET SESSION SQL_MODE="IGNORE_SPACE,ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `battles_OnUpdate` BEFORE UPDATE ON `battles` FOR EACH ROW SET NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York') */;;
-DELIMITER ;
-/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
-
-
-# Dump of table coaches
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `coaches`;
-
-CREATE TABLE `coaches` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstName` varchar(255) NOT NULL,
-  `lastName` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `photo` varchar(255) DEFAULT NULL,
-  `price` int(11) DEFAULT NULL,
-  `bullets` text,
-  `description` text,
-  `locationImage` varchar(255) DEFAULT NULL,
-  `locationName` varchar(255) DEFAULT NULL,
-  `locationAddress` varchar(255) DEFAULT NULL,
-  `isActive` tinyint(1) NOT NULL DEFAULT '0',
-  `activeTill` datetime DEFAULT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DELIMITER ;;
-/*!50003 SET SESSION SQL_MODE="IGNORE_SPACE,ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `coaches_OnInsert` BEFORE INSERT ON `coaches` FOR EACH ROW SET NEW.createdAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York'), NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York') */;;
-/*!50003 SET SESSION SQL_MODE="IGNORE_SPACE,ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `coaches_OnUpdate` BEFORE UPDATE ON `coaches` FOR EACH ROW SET NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York') */;;
 DELIMITER ;
 /*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
 
@@ -406,8 +338,6 @@ CREATE TABLE `matches` (
   `wonByInjury` tinyint(1) NOT NULL DEFAULT '0',
   `swingMatchId` varchar(255) DEFAULT NULL,
   `statAddedBy` int(11) DEFAULT NULL,
-  `unavailable` tinyint(1) NOT NULL DEFAULT '0',
-  `battleId` int(11) DEFAULT NULL,
   `isCompetitive` tinyint(1) NOT NULL DEFAULT '0',
   `isAgeCompatible` tinyint(1) NOT NULL DEFAULT '0',
   `challengerRd` int(11) DEFAULT NULL,
@@ -426,10 +356,8 @@ CREATE TABLE `matches` (
   KEY `matches_created_at` (`createdAt`),
   KEY `matches_accepted_at` (`acceptedAt`),
   KEY `matches_played_at` (`playedAt`),
-  KEY `matches_battleId_foreign_idx` (`battleId`),
   KEY `matches_same_as` (`sameAs`),
   CONSTRAINT `matches_acceptor2Id_foreign_idx` FOREIGN KEY (`acceptor2Id`) REFERENCES `players` (`id`),
-  CONSTRAINT `matches_battleId_foreign_idx` FOREIGN KEY (`battleId`) REFERENCES `battles` (`id`),
   CONSTRAINT `matches_challenger2Id_foreign_idx` FOREIGN KEY (`challenger2Id`) REFERENCES `players` (`id`),
   CONSTRAINT `matches_ibfk_1` FOREIGN KEY (`challengerId`) REFERENCES `players` (`id`),
   CONSTRAINT `matches_ibfk_2` FOREIGN KEY (`acceptorId`) REFERENCES `players` (`id`),
@@ -731,66 +659,6 @@ DELIMITER ;;
 /*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `shortlinks_OnInsert` BEFORE INSERT ON `shortlinks` FOR EACH ROW SET NEW.createdAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York'), NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York') */;;
 /*!50003 SET SESSION SQL_MODE="IGNORE_SPACE,ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION" */;;
 /*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `shortlinks_OnUpdate` BEFORE UPDATE ON `shortlinks` FOR EACH ROW SET NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York') */;;
-DELIMITER ;
-/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
-
-
-# Dump of table teammembers
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `teammembers`;
-
-CREATE TABLE `teammembers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `playerId` int(11) DEFAULT NULL,
-  `teamId` int(11) DEFAULT NULL,
-  `role` varchar(255) NOT NULL DEFAULT 'member',
-  `isActive` tinyint(1) NOT NULL DEFAULT '1',
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `playerId` (`playerId`),
-  KEY `teamId` (`teamId`),
-  CONSTRAINT `teammembers_ibfk_1` FOREIGN KEY (`playerId`) REFERENCES `players` (`id`),
-  CONSTRAINT `teammembers_ibfk_2` FOREIGN KEY (`teamId`) REFERENCES `teams` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DELIMITER ;;
-/*!50003 SET SESSION SQL_MODE="IGNORE_SPACE,ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `teammembers_OnInsert` BEFORE INSERT ON `teammembers` FOR EACH ROW SET NEW.createdAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York'), NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York') */;;
-/*!50003 SET SESSION SQL_MODE="IGNORE_SPACE,ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `teammembers_OnUpdate` BEFORE UPDATE ON `teammembers` FOR EACH ROW SET NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York') */;;
-DELIMITER ;
-/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
-
-
-# Dump of table teams
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `teams`;
-
-CREATE TABLE `teams` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tournamentId` int(11) DEFAULT NULL,
-  `name` int(11) NOT NULL,
-  `customName` varchar(255) DEFAULT NULL,
-  `invitedPlayers` varchar(255) DEFAULT NULL,
-  `invitedAt` datetime DEFAULT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
-  `playingNextWeek` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `tournamentId` (`tournamentId`),
-  CONSTRAINT `teams_ibfk_1` FOREIGN KEY (`tournamentId`) REFERENCES `tournaments` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DELIMITER ;;
-/*!50003 SET SESSION SQL_MODE="IGNORE_SPACE,ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `teams_OnInsert` BEFORE INSERT ON `teams` FOR EACH ROW SET NEW.createdAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York'), NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York') */;;
-/*!50003 SET SESSION SQL_MODE="IGNORE_SPACE,ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `teams_OnUpdate` BEFORE UPDATE ON `teams` FOR EACH ROW SET NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York') */;;
 DELIMITER ;
 /*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
 
