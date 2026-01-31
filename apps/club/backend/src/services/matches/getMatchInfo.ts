@@ -233,7 +233,6 @@ const getMatchInfo = async ({
             'challengerSeed',
             'acceptorSeed',
             'wonByDefault',
-            'unavailable',
             'wonByInjury',
         ]),
         players: users.reduce((obj, item) => {

@@ -35,7 +35,7 @@ type FinalProps = {
 const Final = (props: FinalProps) => {
     const { players, reloadTournament, showTournamentText, tournament, isReport } = props;
     const matches = props.matches
-        .filter((match) => match.type === 'final' && !match.battleId)
+        .filter((match) => match.type === 'final')
         .reduce((obj, match) => {
             obj[match.finalSpot] = match;
             return obj;

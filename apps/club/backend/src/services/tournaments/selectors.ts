@@ -227,7 +227,7 @@ const getEloTrend = (data, config: Config) => {
         if (match.playedAt > seasonEnd && match.tournamentId !== tournamentId) {
             continue;
         }
-        if (match.wonByDefault || match.unavailable) {
+        if (match.wonByDefault) {
             continue;
         }
 
@@ -343,7 +343,7 @@ const getHighTlrRestrictions = (data, config) => {
 };
 
 export const getPlayerPoints = (data, currentDate) => {
-    const matches = data.matches.filter((match) => match.score && match.type === 'regular' && match.unavailable === 0);
+    const matches = data.matches.filter((match) => match.score && match.type === 'regular');
     const seasonEnd = dayjs.tz(data['season.endDate']);
     const currentDateString = dayjs.tz(currentDate).format('YYYY-MM-DD HH:mm:ss');
     const isLive = seasonEnd.format('YYYY-MM-DD HH:mm:ss') > currentDateString;
@@ -549,7 +549,6 @@ const getTopUpsetMatches = (data, config) => {
                 match.score &&
                 !match.wonByDefault &&
                 !match.wonByInjury &&
-                !match.unavailable &&
                 match.challengerMatches > config.minMatchesToEstablishTlr &&
                 match.acceptorMatches > config.minMatchesToEstablishTlr &&
                 getEloDifference(match) <= -20
@@ -721,148 +720,8 @@ const getTournamentLinks = (tournament) => {
 };
 
 const getWinner = (data) => {
-    const lastMatch = data.matches.find(
-        (match) => match.type === 'final' && !match.battleId && match.finalSpot === 1 && match.score
-    );
+    const lastMatch = data.matches.find((match) => match.type === 'final' && match.finalSpot === 1 && match.score);
     return lastMatch ? lastMatch.winner : 0;
-};
-
-const getBattles = (data) => {
-    const teamMatches = data.matches.filter((match) => match.initial === 5 && match.score);
-
-    return data.battles.map((battle) => {
-        let matches1 = 0;
-        let matches2 = 0;
-        let points1 = 0;
-        let points2 = 0;
-
-        const battleMatches = teamMatches.filter((match) => match.battleId === battle.id);
-        for (const match of battleMatches) {
-            const isThreeSets = match.score.split(' ').length === 3;
-
-            if (match.challengerId === match.winner) {
-                points1 += 3;
-                matches1++;
-            } else {
-                points2 += 3;
-                matches2++;
-            }
-
-            if (isThreeSets) {
-                points1 += match.challengerId === match.winner ? 0 : 1;
-                points2 += match.challengerId === match.winner ? 1 : 0;
-            }
-        }
-
-        if (matches1 >= 2) {
-            points1++;
-        }
-        if (matches2 >= 2) {
-            points2++;
-        }
-
-        return {
-            ...battle,
-            matches1,
-            matches2,
-            points1,
-            points2,
-        };
-    });
-};
-
-const getTeams = (data, players) => {
-    const currentDate = dayjs.tz();
-    const startDate = dayjs.tz(data['season.startDate']);
-    const currentWeek = Math.ceil(currentDate.diff(startDate, 'week', true));
-
-    const battles = getBattles(data);
-    const battlesObj = battles.reduce((obj, battle) => {
-        obj[battle.id] = battle;
-        return obj;
-    }, {});
-
-    const teamPoints = data.matches
-        .filter((match) => match.initial === 5 && match.score)
-        .reduce((obj, match) => {
-            const { team1, team2, type } = battlesObj[match.battleId];
-            if (type !== 'regular') {
-                return obj;
-            }
-
-            const isThreeSets = match.score.split(' ').length === 3;
-
-            obj[team1] = obj[team1] || { matchesPlayed: 0, battlesWon: 0, matchesWon: 0, setsWon: 0, bye: 0, total: 0 };
-            obj[team2] = obj[team2] || { matchesPlayed: 0, battlesWon: 0, matchesWon: 0, setsWon: 0, bye: 0, total: 0 };
-
-            obj[team1].matchesPlayed++;
-            obj[team2].matchesPlayed++;
-
-            if (match.challengerId === match.winner) {
-                obj[team1].matchesWon++;
-                obj[team1].setsWon += 2;
-
-                if (isThreeSets) {
-                    obj[team2].setsWon++;
-                }
-            } else {
-                obj[team2].matchesWon++;
-                obj[team2].setsWon += 2;
-
-                if (isThreeSets) {
-                    obj[team1].setsWon++;
-                }
-            }
-
-            return obj;
-        }, {});
-
-    for (const battle of battles) {
-        const { team1, team2, week, type } = battle;
-
-        if (type !== 'regular' || week > currentWeek) {
-            continue;
-        }
-
-        teamPoints[team1] = teamPoints[team1] || { battlesWon: 0, matchesWon: 0, setsWon: 0, bye: 0, total: 0 };
-        teamPoints[team2] = teamPoints[team2] || { battlesWon: 0, matchesWon: 0, setsWon: 0, bye: 0, total: 0 };
-
-        teamPoints[team1].battlesWon += battle.matches1 >= 2 ? 1 : 0;
-        teamPoints[team2].battlesWon += battle.matches2 >= 2 ? 1 : 0;
-        teamPoints[team1].bye += team2 ? 0 : 5;
-
-        teamPoints[team1].total =
-            teamPoints[team1].battlesWon +
-            teamPoints[team1].matchesWon +
-            teamPoints[team1].setsWon +
-            teamPoints[team1].bye;
-        teamPoints[team2].total =
-            teamPoints[team2].battlesWon +
-            teamPoints[team2].matchesWon +
-            teamPoints[team2].setsWon +
-            teamPoints[team2].bye;
-    }
-
-    return data.teams.map((team) => {
-        const minPlayers = process.env.NODE_ENV === 'test' ? 2 : 3;
-        const isReady = team.players.length >= minPlayers;
-        const averageTlr = isReady
-            ? Math.floor(
-                  team.players
-                      .map((player) => players[player.id].weekTlr)
-                      .sort((a, b) => b - a)
-                      .slice(0, 3)
-                      .reduce((sum, item) => sum + item) / 3
-              )
-            : 0;
-
-        return {
-            ...team,
-            isReady,
-            averageTlr,
-            points: teamPoints[team.id],
-        };
-    });
 };
 
 const getCancelTournamentStatus = ({
@@ -880,9 +739,7 @@ const getCancelTournamentStatus = ({
 }) => {
     const deadline = dayjs.tz(data['season.endDate']).subtract(config.tournamentReminderWeeks, 'week');
     const deadlineStr = deadline.format('YYYY-MM-DD HH:mm:ss');
-    const matchesBeforeDeadline = data.matches.filter(
-        (match) => match.score && match.unavailable === 0 && match.playedAt < deadlineStr
-    ).length;
+    const matchesBeforeDeadline = data.matches.filter((match) => match.score && match.playedAt < deadlineStr).length;
 
     const captainPlayerIds = new Set(data.users.map((user) => user.players.partnerId));
     const playersBeforeDeadline = data.users.filter((user) => {
@@ -952,7 +809,6 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
     const mostMatches = getMostMatches(data);
     const topForm = getTopForm(data, config);
     const playingAnotherFinal = getPlayingAnotherFinal(data);
-    const battles = getBattles(data);
     const highTlrRestrictions = getHighTlrRestrictions(data, config);
 
     const pickMatchFields = (match) => ({
@@ -986,13 +842,11 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
             'score',
             'wonByDefault',
             'wonByInjury',
-            'unavailable',
             'playedAt',
             'acceptedAt',
             'rejectedAt',
             'createdAt',
             'tournamentId',
-            'battleId',
             'challenger2Id',
             'challenger2Elo',
             'challenger2EloChange',
@@ -1019,8 +873,8 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
     const isOver = currentDate.isAfter(endDate);
     const isParticipation = !isOver && currentDate.isAfter(participationDate);
     const isBreak = isOver && (!data.nextSeason || currentDate.isBefore(dayjs.tz(data.nextSeason.startDate)));
-    const isFinalTournament = data.matches.some((match) => match.type === 'final' && !match.battleId);
-    const finalMatches = data.matches.filter((match) => match.type === 'final' && !match.battleId);
+    const isFinalTournament = data.matches.some((match) => match.type === 'final');
+    const finalMatches = data.matches.filter((match) => match.type === 'final');
 
     const partnerIds = isDoublesTeam
         ? getPartners(
@@ -1113,15 +967,6 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
         });
     }
 
-    const teams = getTeams(data, players);
-
-    const hasTeams = (() => {
-        // Disable teams for now
-        return false;
-    })();
-
-    const hasBattles = data.battles.length > 0;
-
     const botPrediction = data.botPrediction ? JSON.parse(data.botPrediction) : null;
     const botPredictionPoints = botPrediction ? getBetPoints(finalMatches, botPrediction) : {};
 
@@ -1144,7 +989,6 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
         allLevels: data.allLevels,
         startDate: data['season.startDate'],
         endDate: data['season.endDate'],
-        coaches: data.coaches,
         seasonCloseReason: data['season.closeReason'],
         tooLateToSwitchLadder: isOver || endDate.diff(currentDate, 'week', true) < SWITCH_LADDER_DEADLINE_WEEKS,
         hasPredictionContest: Boolean(botPrediction),
@@ -1153,7 +997,6 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
         predictionWinner: data.predictionWinner,
         players,
         winner: getWinner(data),
-        teams,
         isStarted,
         isOver,
         isParticipation,
@@ -1186,8 +1029,6 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
         prevTournament: getTournamentLinks(data.prevTournament),
         nextTournament: getTournamentLinks(data.nextTournament),
         hasTeams,
-        hasBattles,
-        battles,
         currentWeek: Math.ceil(currentDate.diff(startDate, 'week', true)),
         totalWeeks: Math.ceil(endDate.subtract(12, 'hour').diff(startDate, 'week', true)),
     };

@@ -849,7 +849,6 @@ export const seasonIsOver = async (app: Application) => {
                    p.tournamentId=t.id AND
                    t.seasonId=:seasonId AND
                    m.score IS NOT NULL AND
-                   m.unavailable=0 AND
                    m.type="regular"`,
             { replacements: { seasonId: prevSeason.id } }
         );
@@ -904,7 +903,6 @@ export const seasonIsOver = async (app: Application) => {
                    pc.tournamentId=t.id AND
                    t.seasonId=:seasonId AND
                    m.score IS NOT NULL AND
-                   m.unavailable=0 AND
                    m.type="regular"`,
             { replacements: { seasonId: prevSeason.id } }
         );
@@ -1288,7 +1286,6 @@ export const sendFinalScheduleReminder = async (app: Application) => {
           JOIN seasons AS s ON t.seasonId=s.id
          WHERE m.type="final" AND
                m.score IS NULL AND
-               m.battleId IS NULL AND
                m.playedAt IS NULL AND
                s.id=:seasonId AND
                m.updatedAt<:date`,
@@ -1338,7 +1335,6 @@ export const sendFinalScheduleReminder = async (app: Application) => {
                    players AS p
              WHERE (m.challengerId=p.id || m.acceptorId=p.id) AND
                    m.type="final" AND
-                   m.battleId IS NULL AND
                    p.tournamentId=:tournamentId
           ORDER BY m.finalSpot DESC
              LIMIT 0, 1`,

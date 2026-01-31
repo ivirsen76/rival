@@ -248,7 +248,6 @@ describe('getPlayerPoints()', () => {
                     score: '6-4 6-4',
                     type: 'regular',
                     playedAt: '2021-04-30 10:22:47',
-                    unavailable: 0,
                 },
                 {
                     id: 1,
@@ -260,7 +259,6 @@ describe('getPlayerPoints()', () => {
                     score: '6-4 6-4',
                     type: 'regular',
                     playedAt: '2021-04-27 10:22:47',
-                    unavailable: 0,
                 },
                 {
                     id: 1,
@@ -272,7 +270,6 @@ describe('getPlayerPoints()', () => {
                     score: '6-4 6-4',
                     type: 'regular',
                     playedAt: '2021-04-24 10:22:47',
-                    unavailable: 0,
                 },
                 {
                     id: 1,
@@ -284,7 +281,6 @@ describe('getPlayerPoints()', () => {
                     score: '6-4 6-4',
                     type: 'regular',
                     playedAt: '2021-04-22 14:22:47',
-                    unavailable: 0,
                 },
                 {
                     id: 1,
@@ -296,7 +292,6 @@ describe('getPlayerPoints()', () => {
                     score: '6-4 6-4',
                     type: 'regular',
                     playedAt: '2021-04-22 10:22:47',
-                    unavailable: 0,
                 },
             ],
         };
@@ -385,7 +380,6 @@ describe('getPlayerPoints()', () => {
                     score: '6-4 6-4',
                     type: 'regular',
                     playedAt: '2021-04-02 10:22:47',
-                    unavailable: 0,
                 },
             ],
         };
@@ -491,7 +485,6 @@ describe('getPlayerPoints()', () => {
                     score: '6-4 6-4',
                     type: 'regular',
                     playedAt: '2021-05-02 23:59:59',
-                    unavailable: 0,
                 },
                 {
                     id: 1,
@@ -503,7 +496,6 @@ describe('getPlayerPoints()', () => {
                     score: '6-4 6-4',
                     type: 'regular',
                     playedAt: '2021-04-02 10:00:00',
-                    unavailable: 0,
                 },
             ],
         };

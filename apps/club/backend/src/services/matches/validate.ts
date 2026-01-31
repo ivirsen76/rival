@@ -11,7 +11,6 @@ export default (values) => {
         score: yup.string().required(),
         wonByDefault: yup.boolean(),
         wonByInjury: yup.boolean(),
-        unavailable: yup.boolean(),
         playedAt: yup
             .string()
             .required('Date is required.')

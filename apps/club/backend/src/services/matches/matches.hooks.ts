@@ -91,11 +91,7 @@ const populateWinner = () => async (context: HookContext) => {
         throw new Unprocessable('The score for default match is wrong');
     }
 
-    if (data.unavailable && !['6-0 6-0', '0-6 0-6'].includes(data.score)) {
-        throw new Unprocessable('The score for unavailable match is wrong');
-    }
-
-    if ((data.wonByDefault ? 1 : 0) + (data.wonByInjury ? 1 : 0) + (data.unavailable ? 1 : 0) > 1) {
+    if ((data.wonByDefault ? 1 : 0) + (data.wonByInjury ? 1 : 0) > 1) {
         throw new Unprocessable('Too many checkboxes');
     }
 
@@ -185,7 +181,7 @@ const sendEstablishedEloNotification = () => async (context: HookContext) => {
     const currentDate = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
     const match = await matches.findByPk(matchId);
 
-    if (match.wonByDefault || match.unavailable || match.challenger2Id || !match.score) {
+    if (match.wonByDefault || match.challenger2Id || !match.score) {
         return context;
     }
 
@@ -323,7 +319,6 @@ const populateNextFinalMatch = async (context: HookContext, prevMatch: Match) =>
           WHERE (m.challengerId=p.id OR m.challengerId IS NULL AND m.acceptorId=p.id) AND
                 p.tournamentId=:tournamentId AND
                 m.type="final" AND
-                m.battleId IS NULL AND
                 m.finalSpot=:finalSpot`,
         { replacements: { tournamentId, finalSpot: connectedMatch.finalSpot } }
     );
@@ -395,11 +390,7 @@ const populateWinnerForPatch = () => async (context: HookContext) => {
         throw new Unprocessable('The score for default match is wrong');
     }
 
-    if (data.unavailable && !['6-0 6-0', '0-6 0-6'].includes(data.score)) {
-        throw new Unprocessable('The score for unavailable match is wrong');
-    }
-
-    if ((data.wonByDefault ? 1 : 0) + (data.wonByInjury ? 1 : 0) + (data.unavailable ? 1 : 0) > 1) {
+    if ((data.wonByDefault ? 1 : 0) + (data.wonByInjury ? 1 : 0) > 1) {
         throw new Unprocessable('Too many checkboxes');
     }
 
@@ -505,7 +496,6 @@ const checkDuplicatedMatch = () => async (context: HookContext) => {
           JOIN levels AS l ON t.levelId=l.id AND l.type="single"
          WHERE m.score IS NOT NULL AND
                m.sameAs IS NULL AND
-               m.unavailable=0 AND
                m.playedAt>:dayStart AND
                m.playedAt<:dayEnd`,
         { replacements: { dayStart, dayEnd } }
@@ -771,8 +761,7 @@ const clearResult = () => async (context: HookContext) => {
                    swingMatchId=NULL,
                    statAddedBy=NULL,
                    wonByDefault=0,
-                   wonByInjury=0,
-                   unavailable=0
+                   wonByInjury=0
              WHERE id=:matchId`,
         { replacements: { matchId } }
     );
@@ -1005,7 +994,6 @@ const sendMatchNotification = () => async (context: HookContext) => {
                     config: context.params.config,
                     reporter: getPlayerName(currentUser),
                     date: matchInfo.formattedPlayedAt,
-                    isUnavailable: Boolean(matchInfo.match.unavailable),
                     levelName: matchInfo.levelName,
                     ladderLink: matchInfo.ladderLink,
                     img,
@@ -1666,7 +1654,6 @@ export default {
                 'playedAt',
                 'wonByDefault',
                 'wonByInjury',
-                'unavailable',
                 'winner',
                 'type',
                 'matchFormat'
@@ -1686,7 +1673,6 @@ export default {
                 'playedAt',
                 'wonByDefault',
                 'wonByInjury',
-                'unavailable',
                 'winner',
                 'matchFormat'
             ),

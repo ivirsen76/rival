@@ -484,7 +484,7 @@ export const reducer = (state = initialState, action) => {
                     currentLevel.maxPoints = Math.max(currentLevel.maxPoints, stats.sum.maxPoints[match.tournamentId]);
                 }
 
-                if (match.type === 'final' && !match.battleId) {
+                if (match.type === 'final') {
                     let finalSpot = match.finalSpot;
                     if (match.finalSpot === 1 && isWinner) {
                         finalSpot = 0;

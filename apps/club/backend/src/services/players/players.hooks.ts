@@ -769,7 +769,6 @@ const switchTournament = () => async (context: HookContext) => {
             SELECT id
               FROM matches
              WHERE score IS NOT NULL AND
-                   unavailable=0 AND
                    (challengerId=:playerId || acceptorId=:playerId)`,
         { replacements: { playerId: currentPlayer.id } }
     );
@@ -1039,7 +1038,6 @@ const quitTournament = () => async (context: HookContext) => {
         `SELECT id
            FROM matches
           WHERE score IS NOT NULL AND
-                unavailable=0 AND
                 (challengerId=:playerId || acceptorId=:playerId)`,
         { replacements: { playerId } }
     );

@@ -318,7 +318,7 @@ export const getPoints = (match: Match) => {
     const PARTICIPATION_POINTS = 2;
     const CHALLENGER_POINTS = 2;
 
-    const { challengerId, acceptorId, challengerRank, acceptorRank, wonByDefault, unavailable, matchFormat } = match;
+    const { challengerId, acceptorId, challengerRank, acceptorRank, wonByDefault, matchFormat } = match;
 
     const isFast4 = matchFormat === 2;
     const isScoreCorrect = isFast4 ? isFastScoreCorrect : isFullScoreCorrect;
@@ -358,10 +358,6 @@ export const getPoints = (match: Match) => {
 
     return {
         challengerPoints: (() => {
-            if (unavailable) {
-                return 0;
-            }
-
             if (wonByDefault) {
                 return isChallengerWon ? 20 : 0;
             }
@@ -371,10 +367,6 @@ export const getPoints = (match: Match) => {
                 : looserPoints + PARTICIPATION_POINTS + CHALLENGER_POINTS;
         })(),
         acceptorPoints: (() => {
-            if (unavailable) {
-                return 0;
-            }
-
             if (wonByDefault) {
                 return isChallengerWon ? 0 : 20;
             }

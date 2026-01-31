@@ -97,7 +97,7 @@ const generateNews = async () => {
                   JOIN users AS u ON p.userId=u.id
                   JOIN tournaments AS t ON p.tournamentId=t.id
                   JOIN levels AS l ON t.levelId=l.id
-                 WHERE t.seasonId=${season.id} AND m.score IS NOT NULL AND m.finalSpot=1 AND m.battleId IS NULL`)) as Winner[];
+                 WHERE t.seasonId=${season.id} AND m.score IS NOT NULL AND m.finalSpot=1`)) as Winner[];
 
             winners = matches
                 .sort((a, b) => a.levelPosition - b.levelPosition)

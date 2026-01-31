@@ -21,7 +21,7 @@ type BetProps = {
 
 const Bet = (props: BetProps) => {
     const { players, tournament, matches, onSubmit } = props;
-    const finalMatches = matches.filter((match) => match.type === 'final' && !match.battleId);
+    const finalMatches = matches.filter((match) => match.type === 'final');
 
     const [currentSpot, setCurrentSpot] = useState(() => Math.max(...finalMatches.map((item) => item.finalSpot)));
     const [position, setPosition] = useState({ left: 0, top: 0 });

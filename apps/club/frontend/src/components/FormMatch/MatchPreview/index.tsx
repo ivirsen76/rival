@@ -21,11 +21,7 @@ const MatchPreview = (props: MatchPreviewProps) => {
     const sets = parseScore(match.score);
     const isPlayed = Boolean(match.score);
     const showPoints =
-        match.type === 'regular' &&
-        isPlayed &&
-        _isInteger(match.challengerPoints) &&
-        _isInteger(match.acceptorPoints) &&
-        !match.unavailable;
+        match.type === 'regular' && isPlayed && _isInteger(match.challengerPoints) && _isInteger(match.acceptorPoints);
 
     const challenger = players[match.challengerId];
     const challenger2 = players[match.challenger2Id];
@@ -35,13 +31,6 @@ const MatchPreview = (props: MatchPreviewProps) => {
     const defaultBadge = (
         <td>
             <div className={'badge badge-warning ms-2 ' + style.default}>Default</div>
-        </td>
-    );
-    const unavailableBadge = (
-        <td>
-            <div className={'badge badge-warning ms-2 ' + style.unavailable} data-unavailable-sign>
-                Unavailable
-            </div>
         </td>
     );
 
@@ -77,9 +66,6 @@ const MatchPreview = (props: MatchPreviewProps) => {
                             {(() => {
                                 if (match.wonByDefault) {
                                     return match.winner === match.challengerId ? <td /> : defaultBadge;
-                                }
-                                if (match.unavailable) {
-                                    return match.winner === match.challengerId ? <td /> : unavailableBadge;
                                 }
 
                                 const injuryInfo =
@@ -136,9 +122,6 @@ const MatchPreview = (props: MatchPreviewProps) => {
                             {(() => {
                                 if (match.wonByDefault) {
                                     return match.winner === match.acceptorId ? <td /> : defaultBadge;
-                                }
-                                if (match.unavailable) {
-                                    return match.winner === match.acceptorId ? <td /> : unavailableBadge;
                                 }
 
                                 const injuryInfo =

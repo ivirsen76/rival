@@ -30,7 +30,6 @@ const getMatchPermissions = ({
     const isDoublesTeam = levelType === 'doubles-team';
     const isPlayer = hasAnyRole(currentUser, ['player']);
     const isAdmin = hasAnyRole(currentUser, ['admin', 'manager']);
-    const isRegularTeamMatch = match.initial === 5 && !isTournamentOver;
     const hasAllPlayers = (() => {
         if (!challenger || !acceptor) {
             return false;
@@ -137,9 +136,6 @@ const getMatchPermissions = ({
             return false;
         }
         if (match.type === 'final') {
-            return false;
-        }
-        if (isRegularTeamMatch) {
             return false;
         }
         if (!hasAllPlayers) {
@@ -254,7 +250,7 @@ const getMatchPermissions = ({
             return false;
         }
 
-        return (isThisWeek && !isTournamentOver) || match.type === 'final' || isRegularTeamMatch;
+        return (isThisWeek && !isTournamentOver) || match.type === 'final';
     })();
 
     result.canEditScore = (() => {
@@ -275,7 +271,7 @@ const getMatchPermissions = ({
         if (!match.score) {
             return false;
         }
-        if (match.unavailable || match.wonByInjury) {
+        if (match.wonByInjury) {
             return false;
         }
         if (isDoublesTeam) {
@@ -297,7 +293,7 @@ const getMatchPermissions = ({
         if (!hasPlayers) {
             return false;
         }
-        if (match.score || !isThisWeek || isRegularTeamMatch) {
+        if (match.score || !isThisWeek) {
             return false;
         }
         if (!match.place) {

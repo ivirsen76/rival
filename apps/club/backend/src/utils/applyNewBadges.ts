@@ -160,7 +160,6 @@ export const getUsersStats = async ({
                    m.score,
                    m.type,
                    m.finalSpot,
-                   m.battleId,
                    m.wonByDefault,
                    m.wonByInjury,
                    m.initial,
@@ -187,7 +186,6 @@ export const getUsersStats = async ({
               JOIN levels AS l ON l.id=t.levelId
              WHERE m.score IS NOT NULL AND
                    m.sameAs IS NULL AND
-                   m.unavailable=0 AND
                    m.playedAt IS NOT NULL AND
                    m.playedAt>:startDate AND
                    m.playedAt<=:endDate`,

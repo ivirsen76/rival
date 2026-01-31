@@ -62,7 +62,6 @@ type MatchProps = {
     showHeader: boolean;
     emulateMyMatch: boolean;
     showInfo: boolean;
-    showTeamsSign: boolean;
     scoreModalInterceptor: (...args: unknown[]) => unknown;
 };
 
@@ -81,7 +80,6 @@ const Match = (props: MatchProps) => {
         showHeader,
         emulateMyMatch,
         showInfo,
-        showTeamsSign,
         scoreModalInterceptor,
     } = props;
     const {
@@ -112,16 +110,10 @@ const Match = (props: MatchProps) => {
     const sets = parseScore(match.score);
     const isDoublesTeam = tournament.levelType === 'doubles-team';
     const isPlayed = match.score && match.playedAt;
-    const showPoints =
-        isPlayed &&
-        match.challengerPoints !== null &&
-        match.acceptorPoints !== null &&
-        (match.initial !== 5 || match.unavailable !== 1);
+    const showPoints = isPlayed && match.challengerPoints !== null && match.acceptorPoints !== null;
     const hasBye = challenger.id === BYE_ID || acceptor.id === BYE_ID;
     const hasPlayers = !hasBye && challenger.id !== 0 && acceptor.id !== 0;
-    const isRegularTeamMatch = match.initial === 5 && !isTournamentOver;
-    const showPointsCalculation =
-        !isTournamentOver && match.score && !match.wonByDefault && !match.battleId && match.type === 'regular';
+    const showPointsCalculation = !isTournamentOver && match.score && !match.wonByDefault && match.type === 'regular';
     const isChallengerWon = challenger.partnerIds
         ? challenger.partnerIds.includes(match.winner)
         : match.winner === match.challengerId;
@@ -709,14 +701,6 @@ const Match = (props: MatchProps) => {
         </td>
     );
 
-    const unavailableBadge = (
-        <td>
-            <div className={'badge badge-warning ms-2 ' + style.unavailable} data-unavailable-sign>
-                Unavailable
-            </div>
-        </td>
-    );
-
     const showMatchLocation = match.type === 'final' && match.playedAt && !match.score && match.place;
 
     const injuryBadge = (
@@ -737,13 +721,6 @@ const Match = (props: MatchProps) => {
                             <Tooltip content={match.place}>
                                 <div className={'ms-1 ' + style.location} data-final-match-location={match.id}>
                                     <MarkerIcon />
-                                </div>
-                            </Tooltip>
-                        )}
-                        {isRegularTeamMatch && showTeamsSign && (
-                            <Tooltip content="Teams match">
-                                <div className={'ms-2 ' + style.teamMatch} data-teams-match={match.id}>
-                                    T
                                 </div>
                             </Tooltip>
                         )}
@@ -914,7 +891,7 @@ const Match = (props: MatchProps) => {
                                     isChallengerWon && style.win,
                                     isChallengerWon && isScoreUpdated && style.animateWinner
                                 )}
-                                {...((match.wonByDefault || match.unavailable || match.wonByInjury) && isChallengerWon
+                                {...((match.wonByDefault || match.wonByInjury) && isChallengerWon
                                     ? { colSpan: 2 }
                                     : {})}
                             >
@@ -927,8 +904,7 @@ const Match = (props: MatchProps) => {
                                     }
 
                                     const rank = match.type === 'final' ? match.challengerSeed : match.challengerRank;
-                                    const isShort =
-                                        (match.type === 'final' || isRegularTeamMatch) && isLongName(challenger);
+                                    const isShort = match.type === 'final' && isLongName(challenger);
 
                                     return (
                                         <PlayerName
@@ -952,9 +928,6 @@ const Match = (props: MatchProps) => {
                                     return isChallengerWon ? null : defaultBadge;
                                 }
 
-                                if (match.unavailable) {
-                                    return isChallengerWon ? null : unavailableBadge;
-                                }
                                 const injuryInfo = match.wonByInjury && isAcceptorWon ? injuryBadge : null;
 
                                 return (
@@ -1013,9 +986,7 @@ const Match = (props: MatchProps) => {
                                     isAcceptorWon && style.win,
                                     isAcceptorWon && isScoreUpdated && style.animateWinner
                                 )}
-                                {...((match.wonByDefault || match.unavailable || match.wonByInjury) && isAcceptorWon
-                                    ? { colSpan: 2 }
-                                    : {})}
+                                {...((match.wonByDefault || match.wonByInjury) && isAcceptorWon ? { colSpan: 2 } : {})}
                             >
                                 {(() => {
                                     if (acceptor.id === BYE_ID) {
@@ -1026,8 +997,7 @@ const Match = (props: MatchProps) => {
                                     }
 
                                     const rank = match.type === 'final' ? match.acceptorSeed : match.acceptorRank;
-                                    const isShort =
-                                        (match.type === 'final' || isRegularTeamMatch) && isLongName(acceptor);
+                                    const isShort = match.type === 'final' && isLongName(acceptor);
 
                                     return (
                                         <PlayerName
@@ -1046,10 +1016,6 @@ const Match = (props: MatchProps) => {
                             {(() => {
                                 if (match.wonByDefault) {
                                     return isAcceptorWon ? null : defaultBadge;
-                                }
-
-                                if (match.unavailable) {
-                                    return isAcceptorWon ? null : unavailableBadge;
                                 }
                                 const injuryInfo = match.wonByInjury && isChallengerWon ? injuryBadge : null;
 
@@ -1104,7 +1070,6 @@ Match.defaultProps = {
     showHeader: true,
     emulateMyMatch: false,
     showInfo: true,
-    showTeamsSign: true,
 };
 
 export default Match;

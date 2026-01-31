@@ -9,27 +9,14 @@ type Params = {
     levelName: string;
     ladderLink: string;
     img: Image;
-    isUnavailable: boolean;
     multiLadderMatch: string[];
     previewText: string;
 };
 
-export default ({
-    config,
-    reporter,
-    date,
-    levelName,
-    ladderLink,
-    img,
-    isUnavailable,
-    multiLadderMatch,
-    previewText = '',
-}: Params) =>
+export default ({ config, reporter, date, levelName, ladderLink, img, multiLadderMatch, previewText = '' }: Params) =>
     normal(
         `
-  <mj-text><b>${reporter}</b> reported the results of your ${
-      isUnavailable ? 'Teams ' : ''
-  }match on <b>${date}</b>.</mj-text>
+  <mj-text><b>${reporter}</b> reported the results of your match on <b>${date}</b>.</mj-text>
   <mj-image src="${img.src}" width="${img.width}px" height="${img.height}px" alt="${previewText}" />
   ${
       multiLadderMatch

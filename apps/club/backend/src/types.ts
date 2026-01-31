@@ -57,7 +57,6 @@ export type Match = {
     acceptorUserId: number;
     wonByDefault: number;
     wonByInjury: number;
-    unavailable: number;
     matchFormat: number;
     practiceType: number;
     score: string;
@@ -145,16 +144,6 @@ export type RivalryHistory = {
     date: string;
     isWinner: boolean;
     score: string;
-};
-
-export type Coach = {
-    id: number;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    bullets: string;
-    locationAddress: string;
 };
 
 export type Photo = {

@@ -10,7 +10,6 @@ describe('validate()', () => {
         playedAt: dayjs.tz().format('YYYY-MM-DD HH:mm:ss'),
         wonByDefault: false,
         wonByInjury: false,
-        unavailable: false,
     };
 
     const checkForErrors = (fieldName, values) => {
@@ -41,5 +40,4 @@ describe('validate()', () => {
     ]);
     checkForErrors('wonByDefault', ['', 'wrong', 100]);
     checkForErrors('wonByInjury', ['', 'wrong', 100]);
-    checkForErrors('unavailable', ['', 'wrong', 100]);
 });

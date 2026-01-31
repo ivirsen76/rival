@@ -34,7 +34,6 @@ const Matches = (props: MatchesProps) => {
         return tournament.matches.filter(
             (match) =>
                 match.type === 'regular' &&
-                !match.unavailable &&
                 match.acceptorId &&
                 match.playedAt &&
                 (matchFilter === 'played' ? match.score : !match.score) &&

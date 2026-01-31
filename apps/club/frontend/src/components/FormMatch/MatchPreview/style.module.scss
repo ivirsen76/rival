@@ -70,13 +70,9 @@
         }
     }
     .default,
-    .unavailable,
     .injury {
         height: 1.75rem;
         display: flex;
         align-items: center;
-    }
-    .unavailable {
-        background-color: #ff8400 !important;
     }
 }

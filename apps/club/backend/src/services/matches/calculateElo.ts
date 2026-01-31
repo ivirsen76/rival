@@ -152,7 +152,6 @@ export const calculateElo = async () => {
                     m.acceptorElo,
                     m.wonByDefault,
                     m.wonByInjury,
-                    m.unavailable,
                     m.type,
                     m.playedAt,
                     m.challengerRd,
@@ -201,7 +200,7 @@ export const calculateElo = async () => {
             let challengerRd = maxRd;
             let acceptorRd = maxRd;
 
-            if (!match.wonByDefault && !match.unavailable) {
+            if (!match.wonByDefault) {
                 const score = (() => {
                     let result = match.score;
                     if (match.wonByInjury) {
@@ -237,7 +236,7 @@ export const calculateElo = async () => {
             const prevRoundedChallengerElo = Math.round(challenger.elo);
             const newRoundedChallengerElo = Math.round(newChallengerElo);
             const challengerEloChange = newRoundedChallengerElo - prevRoundedChallengerElo;
-            if (!match.wonByDefault && !match.unavailable) {
+            if (!match.wonByDefault) {
                 challenger.elo = newChallengerElo;
                 challenger.prevPlayedAt = match.playedAt;
                 challenger.matches++;
@@ -246,7 +245,7 @@ export const calculateElo = async () => {
             const prevRoundedAcceptorElo = Math.round(acceptor.elo);
             const newRoundedAcceptorElo = Math.round(newAcceptorElo);
             const acceptorEloChange = newRoundedAcceptorElo - prevRoundedAcceptorElo;
-            if (!match.wonByDefault && !match.unavailable) {
+            if (!match.wonByDefault) {
                 acceptor.elo = newAcceptorElo;
                 acceptor.prevPlayedAt = match.playedAt;
                 acceptor.matches++;

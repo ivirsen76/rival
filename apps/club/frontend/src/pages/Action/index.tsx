@@ -4,17 +4,13 @@ import Error from '@rival/common/components/Error';
 import NewPassword from '@/components/NewPassword';
 import Unsubscribe from '@/components/Unsubscribe';
 import ApprovePhoto from '@/components/ApprovePhoto';
-import AcceptTeamMember from '@/components/AcceptTeamMember';
 import JoinDoubles from '@/components/JoinDoubles';
-import JoinTeam from '@/components/JoinTeam';
 import axios from '@rival/common/axios';
 
 const availableActions = {
     newPassword: { component: NewPassword },
     unsubscribe: { component: Unsubscribe },
     adjustProposals: { component: Unsubscribe }, // using different name just to track usage
-    acceptTeamMember: { component: AcceptTeamMember },
-    acceptTeamInvitation: { component: JoinTeam },
     approvePhoto: { component: ApprovePhoto },
     joinDoubles: { component: JoinDoubles },
 };

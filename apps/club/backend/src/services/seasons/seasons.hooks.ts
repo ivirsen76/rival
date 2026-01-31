@@ -234,7 +234,7 @@ const getCurrentSeason = () => async (context: HookContext) => {
                FROM tournaments AS t
                JOIN levels AS l ON l.id=t.levelId
           LEFT JOIN players AS p ON p.tournamentId=t.id
-          LEFT JOIN matches AS m ON m.challengerId=p.id AND m.score IS NOT NULL AND m.unavailable=0
+          LEFT JOIN matches AS m ON m.challengerId=p.id AND m.score IS NOT NULL
               WHERE t.seasonId=${season.id}
            GROUP BY t.id, t.levelId
            ORDER BY l.position`

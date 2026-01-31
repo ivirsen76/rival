@@ -3,5 +3,5 @@ export const getStatsMatches = (alias = '') => {
         alias += '.';
     }
 
-    return `${alias}score IS NOT NULL AND ${alias}sameAs IS NULL AND ${alias}unavailable=0 AND ${alias}wonByDefault=0`;
+    return `${alias}score IS NOT NULL AND ${alias}sameAs IS NULL AND ${alias}wonByDefault=0`;
 };

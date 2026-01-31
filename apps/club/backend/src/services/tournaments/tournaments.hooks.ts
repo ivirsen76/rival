@@ -8,7 +8,6 @@ import { disallow } from 'feathers-hooks-common';
 import calculateRank from '../matches/calculateRank';
 import sendFinalReminders from '../matches/sendFinalReminders';
 import compareFields from '../../utils/compareFields';
-import _pick from 'lodash/pick';
 import NodeCache from 'node-cache';
 import generateBotPrediction from './generateBotPrediction';
 import renderImage from '../../utils/renderImage';
@@ -19,7 +18,7 @@ import { getAge } from '../../utils/helpers';
 import { POOL_PARTNER_ID } from '../../constants';
 import { getEmailContact, getPlayerName } from '../users/helpers';
 import { optionalAuthenticate } from '../commonHooks';
-import type { Coach, Level, Match, Player, Tournament, User } from '../../types';
+import type { Level, Match, Player, Tournament, User } from '../../types';
 
 const cache = new NodeCache({ useClones: false });
 const events = new Set();
@@ -207,67 +206,6 @@ const populateTournament =
             tournamentInfo.playingAnotherFinal = result;
         }
 
-        // get teams
-        {
-            const [result] = await sequelize.query(
-                `SELECT tm.playerId,
-                    tm.role,
-                    t.id,
-                    t.name,
-                    t.customName,
-                    t.invitedPlayers,
-                    t.invitedAt,
-                    t.playingNextWeek,
-                    t.createdAt
-               FROM teams AS t,
-                    teammembers AS tm
-              WHERE t.tournamentId=:id AND
-                    tm.teamId=t.id
-           ORDER BY t.createdAt, tm.id`,
-                { replacements: { id: tournamentInfo.id } }
-            );
-            tournamentInfo.teams = result.reduce((arr, item) => {
-                const player = { id: item.playerId, role: item.role };
-
-                if (arr.length > 0 && arr[arr.length - 1].id === item.id) {
-                    arr[arr.length - 1].players.push(player);
-                    if (!item.playingNextWeek && arr[arr.length - 1].playingNextWeek.length < 3) {
-                        arr[arr.length - 1].playingNextWeek.push(player.id);
-                    }
-                } else {
-                    arr.push({
-                        ..._pick(item, ['id', 'createdAt', 'name', 'customName']),
-                        canInvite: !item.invitedAt || !dayjs.tz().isSame(dayjs.tz(item.invitedAt), 'day'),
-                        invitedPlayers: item.invitedPlayers ? item.invitedPlayers.split(',').map(Number) : [],
-                        players: [player],
-                        playingNextWeek: item.playingNextWeek
-                            ? item.playingNextWeek.split(',').map(Number)
-                            : [player.id],
-                    });
-                }
-
-                return arr;
-            }, []);
-        }
-
-        // get battles
-        {
-            const [result] = await sequelize.query(
-                `SELECT b.id,
-                    b.team1,
-                    b.team2,
-                    b.week,
-                    b.type
-               FROM battles AS b,
-                    teams AS t
-              WHERE b.team1=t.id AND
-                    t.tournamentId=:id
-           ORDER BY b.week, b.id`,
-                { replacements: { id: tournamentInfo.id } }
-            );
-            tournamentInfo.battles = result;
-        }
-
         // get matches
         {
             const [result] = await sequelize.query(
@@ -333,22 +271,6 @@ const populateTournament =
             }
         }
 
-        // get coaches
-        {
-            const [result] = await sequelize.query(
-                `SELECT *
-            FROM coaches
-           WHERE isActive=1 AND
-                 (activeTill IS NULL OR activeTill>:currentDate)`,
-                { replacements: { currentDate: dayjs.tz().format('YYYY-MM-DD HH:mm:ss') } }
-            );
-            tournamentInfo.coaches = result.map((coach: Coach) => ({
-                ...coach,
-                bullets: coach.bullets ? JSON.parse(coach.bullets) : [],
-                locationAddress: coach.locationAddress ? JSON.parse(coach.locationAddress) : [],
-            }));
-        }
-
         // get warnings about high TLR
         {
             const [result] = await sequelize.query('SELECT tableId FROM actions WHERE name="highProjectedTlrWarning"');
@@ -378,7 +300,7 @@ const populateTournament =
             let shouldPopulateTournament = false;
             let hasBracketContest = false;
 
-            const hasFinalMatches = tournamentInfo.matches.some((match) => match.type === 'final' && !match.battleId);
+            const hasFinalMatches = tournamentInfo.matches.some((match) => match.type === 'final');
             if (!hasFinalMatches) {
                 const allPlayers = Object.values(data.players);
                 const finalSize = data.playersBeforeDeadline >= 75 ? 16 : data.playersBeforeDeadline >= 50 ? 12 : 8;
@@ -520,8 +442,7 @@ const getFinalMatches = () => async (context: HookContext) => {
                 players AS p
           WHERE (m.challengerId=p.id OR m.challengerId IS NULL AND m.acceptorId=p.id) AND
                 p.tournamentId=:tournamentId AND
-                m.type="final" AND
-                m.battleId IS NULL
+                m.type="final"
        ORDER BY m.finalSpot DESC`,
         { replacements: { tournamentId } }
     );

@@ -71,8 +71,7 @@ const sendFinalReminders = async (context: HookContext, tournamentId: number) =>
           JOIN tournaments AS t ON (pc.tournamentId=t.id || pa.tournamentId=t.id)
           JOIN levels AS l ON t.levelId=l.id
          WHERE t.id=:tournamentId AND
-               m.type="final" AND
-               m.battleId IS NULL`,
+               m.type="final"`,
         { replacements: { tournamentId } }
     )) as [FinalMatch[]];
 

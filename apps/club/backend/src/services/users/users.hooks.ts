@@ -116,7 +116,6 @@ const getUserBadgesStats = async (user: User, context: HookContext) => {
          LEFT JOIN players AS pc2 ON m.challenger2Id=pc2.id
          LEFT JOIN players AS pa2 ON m.acceptor2Id=pa2.id
              WHERE m.wonByDefault=0 AND
-                   m.unavailable=0 AND
                    (pc.userId=:id OR pa.userId=:id OR pc2.userId=:id OR pa2.userId=:id)`,
             { replacements: { id: user.id } }
         );
@@ -524,23 +523,6 @@ const populateUser = () => async (context: HookContext) => {
                 return false;
             }
 
-            // Check common teams
-            const commonTeams = await getSequelizeData(
-                sequelize,
-                `SELECT tm.teamId,
-                        COUNT(*) AS cnt
-                   FROM players AS p,
-                        teammembers AS tm
-                  WHERE p.id=tm.playerId AND
-                        (p.userId=:currentUserId OR p.userId=:viewedUserId)
-               GROUP BY tm.teamId
-                 HAVING cnt>1`,
-                { replacements: { viewedUserId: data.id, currentUserId: currentUser.id } }
-            );
-            if (commonTeams.length > 0) {
-                return false;
-            }
-
             return true;
         })();
 
@@ -723,7 +705,6 @@ const populateUser = () => async (context: HookContext) => {
                        m.finalSpot,
                        m.wonByDefault,
                        m.wonByInjury,
-                       m.battleId,
                        pc.tournamentId,
                        pc.userId AS challengerUserId,
                        pa.userId AS acceptorUserId,
@@ -768,7 +749,6 @@ const populateUser = () => async (context: HookContext) => {
                    m.finalSpot,
                    m.wonByDefault,
                    m.wonByInjury,
-                   m.battleId,
                    pc.tournamentId,
                    pc.userId AS challengerUserId,
                    pa.userId AS acceptorUserId,
@@ -839,7 +819,7 @@ const populateUser = () => async (context: HookContext) => {
                         : match.acceptor2Matches >= config.minMatchesToEstablishTlr;
 
             const stage =
-                match.type === 'regular' || match.battleId
+                match.type === 'regular'
                     ? 'regular'
                     : match.finalSpot > 7
                       ? 'roundOf16'
@@ -922,7 +902,7 @@ const populateUser = () => async (context: HookContext) => {
             stat[match.levelId].won += isWinner ? 1 : 0;
             stat[match.levelId].lost += isWinner ? 0 : 1;
 
-            if (match.type === 'final' && !match.battleId) {
+            if (match.type === 'final') {
                 if (match.finalSpot <= 7) {
                     stat[match.levelId].stages.quarterfinal.add(match.seasonId);
                 }

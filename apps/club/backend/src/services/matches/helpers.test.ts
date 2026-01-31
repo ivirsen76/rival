@@ -373,21 +373,6 @@ describe('getPoints()', () => {
                 acceptorId: 2,
                 challengerRank: 2,
                 acceptorRank: 9,
-                score: '0-6 0-6',
-                unavailable: 1,
-            },
-            result: {
-                challengerPoints: 0,
-                acceptorPoints: 0,
-                winner: 2,
-            },
-        },
-        {
-            data: {
-                challengerId: 1,
-                acceptorId: 2,
-                challengerRank: 2,
-                acceptorRank: 9,
                 score: '3-6 6-1 2-0',
                 winner: 2,
                 wonByInjury: 1,

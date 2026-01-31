@@ -116,7 +116,6 @@ const sendProposalEmails = async (app: Application, forceSending = false) => {
               LEFT JOIN players AS pc2 ON m.challenger2Id=pc2.id
               LEFT JOIN players AS pa2 ON m.acceptor2Id=pa2.id
                   WHERE m.wonByDefault=0 AND
-                        m.unavailable=0 AND
                         m.acceptedAt IS NOT NULL AND
                         m.playedAt>:date`,
                 { replacements: { date: currentDate.format('YYYY-MM-DD') + ' 00:00:00' } }

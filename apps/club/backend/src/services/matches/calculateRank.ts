@@ -58,7 +58,6 @@ const calculateRank = async (tournamentId: number) => {
                    m.playedAt,
                    m.score,
                    m.wonByDefault,
-                   m.unavailable,
                    m.wonByInjury,
                    m.matchFormat
               FROM matches AS m

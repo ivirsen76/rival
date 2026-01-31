@@ -14,7 +14,6 @@ import sharp from 'sharp';
 import _isEmpty from 'lodash/isEmpty';
 import { getSchemaErrors, throwValidationErrors } from '../../helpers';
 import yup from '../../packages/yup';
-import coachRequestTemplate from '../../emailTemplates/coachRequest';
 import fs from 'fs';
 import path from 'path';
 import { calculateElo } from '../matches/calculateElo';
@@ -167,55 +166,6 @@ const addLog = () => async (context: HookContext) => {
     );
 
     context.result = { status: 'success' };
-
-    return context;
-};
-
-const requestCoachLesson = () => async (context: HookContext) => {
-    await authenticate('jwt')(context);
-
-    // Validate
-    {
-        const schema = yup.object().shape({
-            message: yup.string().required().max(1000),
-        });
-
-        const errors = getSchemaErrors(schema, context.data);
-
-        if (!_isEmpty(errors)) {
-            throwValidationErrors(errors);
-        }
-    }
-
-    const sequelize = context.app.get('sequelizeClient');
-    const { config } = context.params;
-    const currentUser = context.params.user as User;
-    const coachId = Number(context.id);
-
-    const [[coach]] = await sequelize.query(`SELECT * FROM coaches WHERE id=:id`, { replacements: { id: coachId } });
-
-    if (!coach) {
-        throw new Unprocessable('Coach is not found.');
-    }
-
-    if (!coach.isActive) {
-        throw new Unprocessable('Coach is no longer available.');
-    }
-
-    if (coach.activeTill) {
-        const currentDate = dayjs.tz();
-        if (currentDate.isAfter(dayjs.tz(coach.activeTill))) {
-            throw new Unprocessable('Coach is no longer available.');
-        }
-    }
-
-    context.app.service('api/emails').create({
-        to: [getEmailContact(coach)],
-        replyTo: getEmailContact(currentUser),
-        subject: 'Coach lesson request',
-        html: coachRequestTemplate({ config, coach, message: context.data.message, currentUser }),
-        priority: 2,
-    });
 
     return context;
 };
@@ -497,8 +447,6 @@ const runCustomAction = () => async (context: HookContext) => {
         await getMotivationStats()(context);
     } else if (action === 'addLog') {
         await addLog()(context);
-    } else if (action === 'requestCoachLesson') {
-        await requestCoachLesson()(context);
     } else if (action === 'getVisualTestingResult') {
         await getVisualTestingResult()(context);
     } else if (action === 'acceptVisualChanges') {

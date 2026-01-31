@@ -116,14 +116,10 @@
         }
     }
     .default,
-    .unavailable,
     .injury {
         height: 1.75rem;
         display: flex;
         align-items: center;
-    }
-    .unavailable {
-        background-color: #ff8400 !important;
     }
     &.isReport {
         color: #333;
@@ -153,19 +149,6 @@
     font-weight: 500;
     font-size: 0.9rem;
     margin-right: 0.5rem;
-    cursor: default;
-}
-.teamMatch {
-    border-radius: 0.5rem;
-    background-color: hsl(202, 100%, 48%);
-    width: 1.4rem;
-    height: 1.4rem;
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    color: #fff;
-    font-weight: 700;
-    font-size: 0.9rem;
     cursor: default;
 }
 @keyframes bounceIn1 {

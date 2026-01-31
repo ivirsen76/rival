@@ -19,7 +19,6 @@ import PlayersLive from '../PlayersLive';
 import MostProgress from '../MostProgress';
 import MostMatches from '../MostMatches';
 import TopForm from '../TopForm';
-import Coach from '../Coach';
 import PlayerPool from '../PlayerPool';
 import FinalParticipation from '../FinalParticipation';
 import notification from '@rival/common/components/notification';
@@ -168,14 +167,13 @@ const Overview = (props: OverviewProps) => {
             .tz(tournament.endDate)
             .subtract(settings.config.tournamentReminderWeeks, 'week')
             .format('YYYY-MM-DD HH:mm:ss');
-        const finalMatchesLocal = tournament.matches.filter((match) => match.type === 'final' && !match.battleId);
+        const finalMatchesLocal = tournament.matches.filter((match) => match.type === 'final');
         const finalMatch = finalMatchesLocal.find((match) => match.finalSpot === 1);
 
         const currentMatches = tournament.matches
             .filter(
                 (match) =>
                     match.type === 'regular' &&
-                    !match.unavailable &&
                     match.acceptedAt &&
                     match.playedAt &&
                     match.playedAt > twoDaysAgoString &&
@@ -357,7 +355,6 @@ const Overview = (props: OverviewProps) => {
 
     const showAllProposals = showAll || isLarge || proposals.length <= tooManyProposals;
     const visibleProposals = showAllProposals ? proposals : proposals.slice(0, firstProposals);
-    const showCoaches = (isLive || isBreak) && isMyTournament && tournament.coaches && tournament.coaches.length > 0;
 
     const ActualFormNewMatch = FormNewMatch;
     const ActualFormProposal = FormProposal;
@@ -1185,14 +1182,6 @@ const Overview = (props: OverviewProps) => {
                                 ) : (
                                     <div>No matches {matchesDay}.</div>
                                 )}
-                            </div>
-                        </Card>
-                    )}
-                    {showCoaches && (
-                        <Card>
-                            <h3>Tennis Coaches</h3>
-                            <div>
-                                <Coach list={tournament.coaches} />
                             </div>
                         </Card>
                     )}
