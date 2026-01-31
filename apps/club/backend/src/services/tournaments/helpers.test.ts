@@ -43,7 +43,7 @@ describe('getSuitableTournaments()', () => {
     };
     const men3540 = {
         levelName: "Men's 3.5/4.0 DBLS",
-        levelType: 'doubles',
+        levelType: 'doubles-team',
         levelBaseTlr: 375,
         levelMinTlr: 300,
         levelMaxTlr: 450,

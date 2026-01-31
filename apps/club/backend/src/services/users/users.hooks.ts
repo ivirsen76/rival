@@ -475,38 +475,6 @@ const populateUser = () => async (context: HookContext) => {
                 }
             }
 
-            // Check open doubles proposals
-            const doublesTournamentIds = tournaments
-                .filter((item) => item.levelType === 'doubles')
-                .map((item) => item.id);
-            if (doublesTournamentIds.length > 0) {
-                const proposals = await getSequelizeData(
-                    sequelize,
-                    `
-                    SELECT m.id
-                      FROM matches AS m
-                      JOIN players AS pc ON m.challengerId=pc.id
-                 LEFT JOIN players AS pa ON m.acceptorId=pa.id
-                 LEFT JOIN players AS pc2 ON m.challenger2Id=pc2.id
-                 LEFT JOIN players AS pa2 ON m.acceptor2Id=pa2.id
-                     WHERE pc.tournamentId IN (${doublesTournamentIds.join(',')}) AND
-                           (pc.userId=:viewedUserId OR pa.userId=:viewedUserId OR pc2.userId=:viewedUserId OR pa2.userId=:viewedUserId) AND
-                           m.initial=1 AND
-                           m.acceptedAt IS NULL AND
-                           m.playedAt>:currentDate
-                `,
-                    {
-                        replacements: {
-                            viewedUserId: data.id,
-                            currentDate: currentDate.format('YYYY-MM-DD HH:mm:ss'),
-                        },
-                    }
-                );
-                if (proposals.length > 0) {
-                    return false;
-                }
-            }
-
             // Check your matches
             const matches = await getSequelizeData(
                 sequelize,
@@ -553,33 +521,6 @@ const populateUser = () => async (context: HookContext) => {
                 }
             );
             if (singleFinalMatches.length > 0) {
-                return false;
-            }
-
-            // Check doubles final tournament opponents
-            const doublesFinalMatches = await getSequelizeData(
-                sequelize,
-                `
-                SELECT dm.id
-                  FROM doublesmatches AS dm
-                  JOIN players AS p1 ON dm.player1Id=p1.id
-                  JOIN players AS p2 ON dm.player2Id=p2.id
-                  JOIN players AS p3 ON dm.player3Id=p3.id
-                  JOIN players AS p4 ON dm.player4Id=p4.id
-                  JOIN tournaments AS t ON p1.tournamentId=t.id
-                 WHERE t.seasonId=:seasonId AND
-                       (p1.userId=:viewedUserId OR p2.userId=:viewedUserId OR p3.userId=:viewedUserId OR p4.userId=:viewedUserId) AND
-                       (p1.userId=:currentUserId OR p2.userId=:currentUserId OR p3.userId=:currentUserId OR p4.userId=:currentUserId)
-            `,
-                {
-                    replacements: {
-                        viewedUserId: data.id,
-                        currentUserId: currentUser.id,
-                        seasonId: currentSeason.id,
-                    },
-                }
-            );
-            if (doublesFinalMatches.length > 0) {
                 return false;
             }
 
@@ -996,52 +937,6 @@ const populateUser = () => async (context: HookContext) => {
                     }
                 }
             }
-        }
-
-        const doublesFinalMatches = await getSequelizeData(
-            sequelize,
-            `
-            SELECT dm.player1Id,
-                   dm.player2Id,
-                   dm.player3Id,
-                   dm.player4Id,
-                   p1.userId AS user1Id,
-                   p2.userId AS user2Id,
-                   p3.userId AS user3Id,
-                   p4.userId AS user4Id,
-                   t.levelId,
-                   t.seasonId,
-                   dm.winner,
-                   dm.finalSpot,
-                   s.year,
-                   s.season
-              FROM doublesmatches AS dm
-              JOIN players AS p1 ON dm.player1Id=p1.id
-              JOIN players AS p2 ON dm.player2Id=p2.id
-              JOIN players AS p3 ON dm.player3Id=p3.id
-              JOIN players AS p4 ON dm.player4Id=p4.id
-              JOIN tournaments AS t ON p1.tournamentId=t.id
-              JOIN seasons AS s ON t.seasonId=s.id
-             WHERE p1.userId=:userId OR p2.userId=:userId OR p3.userId=:userId OR p4.userId=:userId
-        `,
-            { replacements: { userId } }
-        );
-
-        for (const match of doublesFinalMatches) {
-            const num = match.user1Id === userId ? 1 : match.user2Id === userId ? 2 : match.user3Id === userId ? 3 : 4;
-            const isWinner = match.winner === match[`player${num}Id`];
-            const stage = match.finalSpot > 1 ? 'semifinal' : !isWinner ? 'final' : 'champion';
-
-            // populate timeline
-            {
-                const { year, season } = match;
-
-                const currentSeason = stat[match.levelId].timelines.years[year].seasons[season];
-                currentSeason.result = stages[stage] > stages[currentSeason.result] ? stage : currentSeason.result;
-            }
-
-            // Populate stages
-            stat[match.levelId].stages[stage].add(match.seasonId);
         }
 
         rivalries = Object.values(rivalries).filter((rivalry) => rivalry.total >= 3);

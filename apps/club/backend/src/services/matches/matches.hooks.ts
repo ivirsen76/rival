@@ -990,10 +990,6 @@ const sendMatchNotification = () => async (context: HookContext) => {
         const matchId = context.result.id;
         const matchInfo = await getMatchInfo({ app: context.app, currentUser, matchId });
 
-        if (matchInfo.levelType === 'doubles') {
-            return;
-        }
-
         try {
             const props = encodeURIComponent(JSON.stringify(matchInfo.imageProps));
             const img = await renderImage(`${TL_URL}/image/match?props=${props}`);

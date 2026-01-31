@@ -18,7 +18,6 @@ import notification from '@rival/common/components/notification';
 import Tooltip from '@rival/common/components/Tooltip';
 import FormDeleteProposal from '@/components/FormDeleteProposal';
 import FormDeleteMatch from '@/components/FormDeleteMatch';
-import FormDeleteDoublesProposal from '@/components/FormDeleteDoublesProposal';
 import confirmation from '@rival/common/utils/confirmation';
 import PlayerAvatar from '@rival/common/components/PlayerAvatar';
 import PlayerName from '@rival/common/components/PlayerName';
@@ -111,7 +110,6 @@ const Match = (props: MatchProps) => {
 
     const isTournamentOver = Boolean(tournament?.isOver);
     const sets = parseScore(match.score);
-    const isDoubles = tournament.levelType === 'doubles';
     const isDoublesTeam = tournament.levelType === 'doubles-team';
     const isPlayed = match.score && match.playedAt;
     const showPoints =
@@ -135,7 +133,7 @@ const Match = (props: MatchProps) => {
     const isSetScoreCorrect = isFast4 ? isFastSetScoreCorrect : isFullSetScoreCorrect;
     const isScoreCorrect = isFast4 ? isFastScoreCorrect : isFullScoreCorrect;
 
-    const ActualFormDeleteProposal = isDoubles ? FormDeleteDoublesProposal : FormDeleteProposal;
+    const ActualFormDeleteProposal = FormDeleteProposal;
 
     const clearMatchResult = async () => {
         const confirm = await confirmation({
@@ -240,7 +238,7 @@ const Match = (props: MatchProps) => {
     };
 
     const getEloContent = () => {
-        if (isDoubles || isDoublesTeam || !isPlayed) {
+        if (isDoublesTeam || !isPlayed) {
             return null;
         }
 
@@ -316,13 +314,9 @@ const Match = (props: MatchProps) => {
             return false;
         }
 
-        const getAverageRank = (rank1, rank2) => Math.floor((rank1 + rank2) / 2);
-
         const calc = getPointsCalculation({
-            challengerRank: isDoubles
-                ? getAverageRank(match.challengerRank, match.challenger2Rank)
-                : match.challengerRank,
-            acceptorRank: isDoubles ? getAverageRank(match.acceptorRank, match.acceptor2Rank) : match.acceptorRank,
+            challengerRank: match.challengerRank,
+            acceptorRank: match.acceptorRank,
             score: match.wonByInjury ? completeInjuryScore(match.score, isChallengerWon) : match.score,
         });
 
@@ -346,7 +340,7 @@ const Match = (props: MatchProps) => {
         };
 
         const looserName = (() => {
-            if (!isDoubles && !isDoublesTeam) {
+            if (!isDoublesTeam) {
                 return isChallengerWon ? players[match.acceptorId].firstName : players[match.challengerId].firstName;
             }
 
@@ -826,7 +820,7 @@ const Match = (props: MatchProps) => {
                                             </span>
                                         </Tooltip>
                                     )}
-                                    {showInfo && !isDoubles && !isDoublesTeam && (
+                                    {showInfo && !isDoublesTeam && (
                                         <Tooltip content={getEloContent()}>
                                             <button type="button" className="btn btn-link btn-color-muted p-0">
                                                 TLR
@@ -835,7 +829,7 @@ const Match = (props: MatchProps) => {
                                     )}
                                 </>
                             )}
-                            {hasPlayers && !isPlayed && !isDoubles && !isDoublesTeam && showInfo && (
+                            {hasPlayers && !isPlayed && !isDoublesTeam && showInfo && (
                                 <Tooltip content={getEloPrediction()}>
                                     <button type="button" className="btn btn-link btn-color-muted p-0">
                                         TLR
@@ -925,18 +919,6 @@ const Match = (props: MatchProps) => {
                                     : {})}
                             >
                                 {(() => {
-                                    if (isDoubles) {
-                                        return (
-                                            <PlayerName
-                                                player1={challenger}
-                                                player2={challenger2}
-                                                rank1={match.challengerRank}
-                                                rank2={match.challenger2Rank}
-                                                isLink={isUpcoming}
-                                            />
-                                        );
-                                    }
-
                                     if (challenger.id === BYE_ID) {
                                         return '(BYE)';
                                     }
@@ -1036,17 +1018,6 @@ const Match = (props: MatchProps) => {
                                     : {})}
                             >
                                 {(() => {
-                                    if (isDoubles) {
-                                        return (
-                                            <PlayerName
-                                                player1={acceptor}
-                                                player2={acceptor2}
-                                                rank1={match.acceptorRank}
-                                                rank2={match.acceptor2Rank}
-                                                isLink={isUpcoming}
-                                            />
-                                        );
-                                    }
                                     if (acceptor.id === BYE_ID) {
                                         return '(BYE)';
                                     }

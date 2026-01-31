@@ -55,16 +55,6 @@ export const up = async ({ context: queryInterface }: { context: QueryInterface 
                 maxTlr: 300,
             },
             {
-                id: 6,
-                name: 'Men Doubles',
-                slug: 'men-40-dbls',
-                position: 6,
-                type: 'doubles',
-                baseTlr: 400,
-                minTlr: 350,
-                maxTlr: 450,
-            },
-            {
                 id: 7,
                 name: 'Men Team Doubles',
                 slug: 'men-40-dbls-team',

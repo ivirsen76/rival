@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import Card from '@rival/common/components/Card';
 import Proposal from '@/components/Proposal';
-import ProposalDoubles from '@/components/ProposalDoubles';
 import classnames from 'classnames';
 import LazyLoad, { forceCheck } from 'react-lazyload';
 import usePlayerFilter from '../usePlayerFilter';
 import FormProposal from '@/components/FormProposal';
-import FormDoublesProposal from '@/components/FormDoublesProposal';
 import Modal from '@rival/common/components/Modal';
 import dayjs from '@rival/common/dayjs';
 import { useSelector } from 'react-redux';
@@ -95,13 +93,12 @@ const Proposals = (props: ProposalsProps) => {
         !currentUser.tournaments[tournament.id]?.needPartner &&
         !currentUser.tournaments[tournament.id]?.partnerId
     );
-    const isDoubles = tournament.levelType === 'doubles';
-    const ActualProposal = isDoubles ? ProposalDoubles : Proposal;
-    const ActualFormProposal = isDoubles ? FormDoublesProposal : FormProposal;
+    const ActualProposal = Proposal;
+    const ActualFormProposal = FormProposal;
 
     return (
         <div className={style.wrapper}>
-            <div className={classnames(style.list, { [style.doubles]: isDoubles })}>
+            <div className={style.list}>
                 <Card>
                     <div className="d-flex justify-content-between align-items-center mb-6">
                         <h3 className="m-0">

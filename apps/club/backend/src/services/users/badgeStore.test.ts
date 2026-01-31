@@ -295,7 +295,7 @@ describe('reducer', () => {
                 type: 'ADD_MATCH',
                 payload: {
                     ...defaultPayload,
-                    levelType: 'doubles',
+                    levelType: 'doubles-team',
                 },
             });
 

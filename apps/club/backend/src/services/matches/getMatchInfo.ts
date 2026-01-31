@@ -59,7 +59,6 @@ const getMatchInfo = async ({
     const playerIds = [];
     const challengerPlayerIds = [];
     const acceptorPlayerIds = [];
-    const isDoubles = info.levelType === 'doubles';
     const isDoublesTeam = info.levelType === 'doubles-team';
     const challengerTeamPlayerIds = [];
     const acceptorTeamPlayerIds = [];
@@ -214,15 +213,7 @@ const getMatchInfo = async ({
         .map(Number)
         .filter((id) => id && id !== matchId);
 
-    const hasPlayers = (() => {
-        if (!match.challengerId || !match.acceptorId) {
-            return false;
-        }
-        if (isDoubles) {
-            return Boolean(match.challenger2Id && match.acceptor2Id);
-        }
-        return true;
-    })();
+    const hasPlayers = Boolean(match.challengerId && match.acceptorId);
 
     const imageProps = {
         match: _pick(match, [

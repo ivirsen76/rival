@@ -31,7 +31,6 @@ const MatchPreview = (props: MatchPreviewProps) => {
     const challenger2 = players[match.challenger2Id];
     const acceptor = players[match.acceptorId];
     const acceptor2 = players[match.acceptor2Id];
-    const isDoubles = tournament.levelType === 'doubles';
 
     const defaultBadge = (
         <td>
@@ -61,11 +60,7 @@ const MatchPreview = (props: MatchPreviewProps) => {
                     <tbody>
                         <tr>
                             <td>
-                                {isDoubles ? (
-                                    <PlayerAvatar player1={challenger} player2={challenger2} />
-                                ) : (
-                                    <PlayerAvatar player1={challenger} />
-                                )}
+                                <PlayerAvatar player1={challenger} />
                             </td>
                             <td
                                 className={classnames(style.player, 'lh-sm', {
@@ -73,20 +68,11 @@ const MatchPreview = (props: MatchPreviewProps) => {
                                 })}
                                 {...(match.wonByInjury && match.winner === match.acceptorId ? {} : { colSpan: 2 })}
                             >
-                                {isDoubles ? (
-                                    <PlayerName
-                                        player1={challenger}
-                                        player2={challenger2}
-                                        rank1={match.challengerRank}
-                                        rank2={match.challenger2Rank}
-                                    />
-                                ) : (
-                                    <PlayerName
-                                        player1={challenger}
-                                        rank1={match.type === 'final' ? match.challengerSeed : match.challengerRank}
-                                        highlight={false}
-                                    />
-                                )}
+                                <PlayerName
+                                    player1={challenger}
+                                    rank1={match.type === 'final' ? match.challengerSeed : match.challengerRank}
+                                    highlight={false}
+                                />
                             </td>
                             {(() => {
                                 if (match.wonByDefault) {
@@ -133,11 +119,7 @@ const MatchPreview = (props: MatchPreviewProps) => {
                         </tr>
                         <tr>
                             <td>
-                                {isDoubles ? (
-                                    <PlayerAvatar player1={acceptor} player2={acceptor2} />
-                                ) : (
-                                    <PlayerAvatar player1={acceptor} />
-                                )}
+                                <PlayerAvatar player1={acceptor} />
                             </td>
                             <td
                                 className={classnames(style.player, 'lh-sm', {
@@ -145,20 +127,11 @@ const MatchPreview = (props: MatchPreviewProps) => {
                                 })}
                                 {...(match.wonByInjury && match.winner === match.challengerId ? {} : { colSpan: 2 })}
                             >
-                                {isDoubles ? (
-                                    <PlayerName
-                                        player1={acceptor}
-                                        player2={acceptor2}
-                                        rank1={match.acceptorRank}
-                                        rank2={match.acceptor2Rank}
-                                    />
-                                ) : (
-                                    <PlayerName
-                                        player1={acceptor}
-                                        rank1={match.type === 'final' ? match.acceptorSeed : match.acceptorRank}
-                                        highlight={false}
-                                    />
-                                )}
+                                <PlayerName
+                                    player1={acceptor}
+                                    rank1={match.type === 'final' ? match.acceptorSeed : match.acceptorRank}
+                                    highlight={false}
+                                />
                             </td>
                             {(() => {
                                 if (match.wonByDefault) {

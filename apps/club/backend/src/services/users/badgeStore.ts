@@ -253,12 +253,11 @@ export const reducer = (state = initialState, action) => {
                             : match.challengerElo - match.challengerEloChange;
                     const resultedTlr = isChallenger ? match.challengerElo : match.acceptorElo;
 
-                    const isDoubles = match.levelType === 'doubles';
                     const isDoublesTeam = match.levelType === 'doubles-team';
                     const matchesPlayed = isChallenger ? match.challengerMatches : match.acceptorMatches;
                     const opponentMatchesPlayed = isChallenger ? match.acceptorMatches : match.challengerMatches;
 
-                    if (!isDoubles && match.levelBaseTlr) {
+                    if (match.levelBaseTlr) {
                         if (matchesPlayed === state.config.minMatchesToEstablishTlr) {
                             stats.startingTlr = resultedTlr;
                         }
@@ -313,10 +312,10 @@ export const reducer = (state = initialState, action) => {
                     }
 
                     if (!stats.playedSinglesDoubles) {
-                        if ((isDoubles || isDoublesTeam) && match.seasonId === stats.sum.playedSinglesSeasonId) {
+                        if (isDoublesTeam && match.seasonId === stats.sum.playedSinglesSeasonId) {
                             stats.playedSinglesDoubles = true;
                         }
-                        if (!isDoubles && !isDoublesTeam && match.seasonId === stats.sum.playedDoublesSeasonId) {
+                        if (!isDoublesTeam && match.seasonId === stats.sum.playedDoublesSeasonId) {
                             stats.playedSinglesDoubles = true;
                         }
                     }
@@ -415,7 +414,7 @@ export const reducer = (state = initialState, action) => {
                             }
                         }
                     }
-                    if (!isDoubles) {
+                    {
                         const opponent = role === 'challenger' ? 'acceptor' : 'challenger';
                         const opponentUserId = match[`${opponent}UserId`];
                         stats.sum.rivalries[opponentUserId] ||= [0, ''];
@@ -476,11 +475,7 @@ export const reducer = (state = initialState, action) => {
                         stats.sum.prevMatchWonAt = match.playedAt;
                     }
                     stats.sum.prevWeekNumber = currentWeekNumber;
-                    if (isDoubles) {
-                        stats.sum.playedDoublesSeasonId = match.seasonId;
-                    } else {
-                        stats.sum.playedSinglesSeasonId = match.seasonId;
-                    }
+                    stats.sum.playedSinglesSeasonId = match.seasonId;
                 }
 
                 if (match.type === 'regular') {

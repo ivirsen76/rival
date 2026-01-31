@@ -4,7 +4,7 @@ import validate from './commonValidate';
 describe('validate()', () => {
     const correctValues = {
         name: 'Men new',
-        type: 'doubles',
+        type: 'doubles-team',
     };
 
     const checkForErrors = (fieldName, values) => {

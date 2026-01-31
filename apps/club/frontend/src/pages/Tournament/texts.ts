@@ -65,13 +65,3 @@ export const getSinglesTournament16Text = (entity = 'player') => `
     <b>Semifinalists</b> will play on Saturday, $saturday2.<br>
     <b>Finalists</b> will play on Sunday, $sunday2.
 </p>`;
-
-export const getDoublesTournamentText = () => `
-<p>The Top 4 players who sign up for the tournament are playing.</p>
-
-<h3>Draw</h3>
-<p>The Final Tournament bracket will automatically generate at midnight on Sunday, $sunday0.</p>
-
-<h3>Time</h3>
-<p><b>Final match</b> will be on Sunday, $sunday1, at 3 PM</p>
-<p>The match will have three Doubles rounds, where four players will rotate teams in a Round Robin format. Each team will play 8 games (24 total), and the ladder winner is the player who wins the most games.</p>`;

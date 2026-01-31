@@ -13,7 +13,6 @@ import stats from './stats/stats.service';
 import news from './news/news.service';
 import utils from './utils/utils.service';
 import feedbacks from './feedbacks/feedbacks.service';
-import doublesMatches from './doublesmatches/doublesmatches.service';
 import calendars from './calendars/calendars.service';
 import teams from './teams/teams.service';
 import complaints from './complaints/complaints.service';
@@ -41,7 +40,6 @@ export default function (app: Application) {
     app.configure(news);
     app.configure(utils);
     app.configure(feedbacks);
-    app.configure(doublesMatches);
     app.configure(calendars);
     app.configure(teams);
     app.configure(complaints);

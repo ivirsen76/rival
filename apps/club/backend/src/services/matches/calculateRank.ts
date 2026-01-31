@@ -4,8 +4,6 @@ import logger from '@rival-tennis-ladder/logger';
 import { runQuery, closeConnection } from '../../db/connection';
 import type { Match } from '../../types';
 
-const getAverageRank = (rank1: number, rank2: number): number => Math.floor((rank1 + rank2) / 2);
-
 const calculateRank = async (tournamentId: number) => {
     try {
         const [{ startDate, endDate, levelType }] = await runQuery(`
@@ -17,7 +15,6 @@ const calculateRank = async (tournamentId: number) => {
               JOIN levels AS l ON t.levelId=l.id
              WHERE t.id=${tournamentId}
         `);
-        const isDoubles = levelType === 'doubles';
         const isDoublesTeam = levelType === 'doubles-team';
 
         // don't recalculate rank if the season has passed
@@ -123,48 +120,17 @@ const calculateRank = async (tournamentId: number) => {
                 // Match
                 const { challengerPoints, acceptorPoints, winner } = getPoints({
                     ...match,
-                    challengerRank: isDoubles ? getAverageRank(challengerRank, challenger2Rank) : challengerRank,
-                    acceptorRank: isDoubles ? getAverageRank(acceptorRank!, acceptor2Rank) : acceptorRank,
+                    challengerRank,
+                    acceptorRank,
                 } as Match);
 
                 // don't increase points starting from the current week
                 if (currentDate > endString) {
                     players[challengerId].points += challengerPoints;
                     players[acceptorId].points += acceptorPoints;
-
-                    if (isDoubles) {
-                        players[match.challenger2Id].points += challengerPoints;
-                        players[match.acceptor2Id].points += acceptorPoints;
-                    }
                 }
 
-                if (isDoubles) {
-                    if (
-                        challengerRank !== match.challengerRank ||
-                        acceptorRank !== match.acceptorRank ||
-                        challengerPoints !== match.challengerPoints ||
-                        acceptorPoints !== match.acceptorPoints ||
-                        challenger2Rank !== match.challenger2Rank ||
-                        acceptor2Rank !== match.acceptor2Rank ||
-                        challengerPoints !== match.challenger2Points ||
-                        acceptorPoints !== match.acceptor2Points ||
-                        winner !== match.winner
-                    ) {
-                        await runQuery(
-                            `UPDATE matches
-                                SET challengerRank=${challengerRank},
-                                    acceptorRank=${acceptorRank},
-                                    challengerPoints=${challengerPoints},
-                                    acceptorPoints=${acceptorPoints},
-                                    challenger2Rank=${challenger2Rank},
-                                    acceptor2Rank=${acceptor2Rank},
-                                    challenger2Points=${challengerPoints},
-                                    acceptor2Points=${acceptorPoints},
-                                    winner=${winner}
-                              WHERE id=${match.id}`
-                        );
-                    }
-                } else if (
+                if (
                     challengerRank !== match.challengerRank ||
                     acceptorRank !== match.acceptorRank ||
                     challengerPoints !== match.challengerPoints ||

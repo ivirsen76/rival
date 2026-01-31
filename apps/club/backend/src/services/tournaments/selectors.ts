@@ -721,13 +721,6 @@ const getTournamentLinks = (tournament) => {
 };
 
 const getWinner = (data) => {
-    const isDoubles = data['level.type'] === 'doubles';
-
-    if (isDoubles) {
-        const finalMatch = data.doublesMatches.findLast((match) => match.finalSpot === 1);
-        return finalMatch ? finalMatch.winner : 0;
-    }
-
     const lastMatch = data.matches.find(
         (match) => match.type === 'final' && !match.battleId && match.finalSpot === 1 && match.score
     );
@@ -885,8 +878,6 @@ const getCancelTournamentStatus = ({
     isBreak: boolean;
     isStarted: boolean;
 }) => {
-    const isDoubles = data['level.type'] === 'doubles';
-
     const deadline = dayjs.tz(data['season.endDate']).subtract(config.tournamentReminderWeeks, 'week');
     const deadlineStr = deadline.format('YYYY-MM-DD HH:mm:ss');
     const matchesBeforeDeadline = data.matches.filter(
@@ -931,7 +922,7 @@ const getCancelTournamentStatus = ({
             const readyUsersCount = data.users.filter(
                 (user) => user?.players.isActive && user?.players.readyForFinal === 1
             ).length;
-            const minPlayers = isDoubles ? 4 : config.minPlayersToRunTournament;
+            const minPlayers = config.minPlayersToRunTournament;
             if (readyUsersCount < minPlayers) {
                 cancelFinalTournamentCode = 'notEnoughTournamentPlayers';
                 return `No tournament is scheduled for the ${data['level.name']} Ladder because it requires at least ${minPlayers} registered players.`;
@@ -952,7 +943,6 @@ const getCancelTournamentStatus = ({
 };
 
 export const getTournament = async ({ data, includeEmail, config, app }) => {
-    const isDoubles = data['level.type'] === 'doubles';
     const isDoublesTeam = data['level.type'] === 'doubles-team';
 
     const playerPoints = getPlayerPoints(data);
@@ -1029,9 +1019,7 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
     const isOver = currentDate.isAfter(endDate);
     const isParticipation = !isOver && currentDate.isAfter(participationDate);
     const isBreak = isOver && (!data.nextSeason || currentDate.isBefore(dayjs.tz(data.nextSeason.startDate)));
-    const isFinalTournament = isDoubles
-        ? data.doublesMatches.length > 0
-        : data.matches.some((match) => match.type === 'final' && !match.battleId);
+    const isFinalTournament = data.matches.some((match) => match.type === 'final' && !match.battleId);
     const finalMatches = data.matches.filter((match) => match.type === 'final' && !match.battleId);
 
     const partnerIds = isDoublesTeam
@@ -1191,7 +1179,6 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
                 return true;
             })
             .map(pickMatchFields),
-        doublesMatches: data.doublesMatches,
         topUpsetMatches: topUpsetMatches.map(pickMatchFields),
         mostProgress,
         mostMatches,

@@ -27,7 +27,6 @@ const getMatchPermissions = ({
     const hasChallengers = Boolean(challenger || challenger2);
     const hasAcceptors = Boolean(acceptor || acceptor2);
     const hasPlayers = !hasBye && hasChallengers && hasAcceptors;
-    const isDoubles = levelType === 'doubles';
     const isDoublesTeam = levelType === 'doubles-team';
     const isPlayer = hasAnyRole(currentUser, ['player']);
     const isAdmin = hasAnyRole(currentUser, ['admin', 'manager']);
@@ -36,7 +35,7 @@ const getMatchPermissions = ({
         if (!challenger || !acceptor) {
             return false;
         }
-        if (isDoubles || isDoublesTeam) {
+        if (isDoublesTeam) {
             if (!challenger2 || !acceptor2) {
                 return false;
             }
@@ -223,9 +222,6 @@ const getMatchPermissions = ({
         if (match.score || match.playedAt) {
             return false;
         }
-        if (isDoubles) {
-            return false;
-        }
         if (!hasPlayers) {
             return false;
         }
@@ -238,9 +234,6 @@ const getMatchPermissions = ({
             return false;
         }
         if (match.score || !match.playedAt) {
-            return false;
-        }
-        if (isDoubles) {
             return false;
         }
         if (!hasPlayers) {
@@ -285,7 +278,7 @@ const getMatchPermissions = ({
         if (match.unavailable || match.wonByInjury) {
             return false;
         }
-        if (isDoubles || isDoublesTeam) {
+        if (isDoublesTeam) {
             return false;
         }
 

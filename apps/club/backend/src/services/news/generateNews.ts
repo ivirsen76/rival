@@ -99,21 +99,7 @@ const generateNews = async () => {
                   JOIN levels AS l ON t.levelId=l.id
                  WHERE t.seasonId=${season.id} AND m.score IS NOT NULL AND m.finalSpot=1 AND m.battleId IS NULL`)) as Winner[];
 
-            const doublesmatches = (await runQuery(`
-                SELECT u.firstName,
-                       u.lastName,
-                       l.name AS levelName,
-                       l.slug AS levelSlug,
-                       l.type AS levelType,
-                       l.position AS levelPosition
-                  FROM doublesmatches AS dm
-                  JOIN players AS p ON dm.winner=p.id
-                  JOIN users AS u ON p.userId=u.id
-                  JOIN tournaments AS t ON p.tournamentId=t.id
-                  JOIN levels AS l ON t.levelId=l.id
-                 WHERE t.seasonId=${season.id} AND dm.score1 IS NOT NULL AND dm.finalSpot=1`)) as Winner[];
-
-            winners = [...matches, ...doublesmatches]
+            winners = matches
                 .sort((a, b) => a.levelPosition - b.levelPosition)
                 .map((match) => {
                     const winner = (() => {

@@ -94,7 +94,6 @@ const FormMatch = (props: FormMatchProps) => {
     const acceptor = players[match.acceptorId];
     const acceptor2 = players[match.acceptor2Id];
 
-    const isDoubles = tournament.levelType === 'doubles';
     const isDoublesTeam = tournament.levelType === 'doubles-team';
     const challengerName = <PlayerName player1={challenger} player2={challenger2} />;
     const acceptorName = <PlayerName player1={acceptor} player2={acceptor2} />;
@@ -123,7 +122,7 @@ const FormMatch = (props: FormMatchProps) => {
                 ...(values.wonByInjury
                     ? { winner: values.injuredPlayerId === match.challengerId ? match.acceptorId : match.challengerId }
                     : {}),
-                ...(isDoubles || isDoublesTeam
+                ...(isDoublesTeam
                     ? {
                           challengerId: match.challengerId,
                           challenger2Id: match.challenger2Id,
@@ -133,7 +132,7 @@ const FormMatch = (props: FormMatchProps) => {
                     : {}),
             });
         } else {
-            if (!isDoubles && !isDoublesTeam) {
+            if (!isDoublesTeam) {
                 const response = await axios.put('/api/matches/0', {
                     action: 'checkDuplicatedMatch',
                     challengerUserId: challenger.userId,
@@ -219,7 +218,6 @@ const FormMatch = (props: FormMatchProps) => {
     };
 
     const playedAt = getLocalDateThisWeek(match.playedAt);
-    const getAverageRank = (rank1, rank2) => Math.floor((rank1 + rank2) / 2);
 
     const onChangeMatchFormat = (value, values, setValues) => {
         setSwipeDirection('left');
@@ -326,19 +324,17 @@ const FormMatch = (props: FormMatchProps) => {
             ),
         },
     ];
-    if (!isDoubles) {
-        resultOptions.push({
-            value: 'injury',
-            label: (
-                <div className={style.matchResult}>
-                    <div className={style.icon}>
-                        <InjuryIcon />
-                    </div>
-                    {isDoublesTeam ? 'Team retired' : 'Player retired'}
+    resultOptions.push({
+        value: 'injury',
+        label: (
+            <div className={style.matchResult}>
+                <div className={style.icon}>
+                    <InjuryIcon />
                 </div>
-            ),
-        });
-    }
+                {isDoublesTeam ? 'Team retired' : 'Player retired'}
+            </div>
+        ),
+    });
 
     const initialScore = [
         [null, null],
@@ -426,12 +422,8 @@ const FormMatch = (props: FormMatchProps) => {
                               }
                             : {}),
                         score: currentScore,
-                        challengerRank: isDoubles
-                            ? getAverageRank(challenger.stats.rank, challenger2.stats.rank)
-                            : (challengerCaptain || challenger).stats.rank,
-                        acceptorRank: isDoubles
-                            ? getAverageRank(acceptor.stats.rank, acceptor2.stats.rank)
-                            : (acceptorCaptain || acceptor).stats.rank,
+                        challengerRank: (challengerCaptain || challenger).stats.rank,
+                        acceptorRank: (acceptorCaptain || acceptor).stats.rank,
                     }),
                 };
                 const availableSets = getAvailableSets(values.score, isFast4, values.wonByInjury);

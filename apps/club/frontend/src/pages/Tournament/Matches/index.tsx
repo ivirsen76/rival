@@ -23,7 +23,6 @@ const Matches = (props: MatchesProps) => {
     const [matchFilter, setMatchFilter] = useState('played');
     const { selected, playerFilter } = usePlayerFilter({ players });
     const currentUser = useSelector((state) => state.auth.user);
-    const isDoubles = tournament.levelType === 'doubles';
     const isDoublesTeam = tournament.levelType === 'doubles-team';
 
     const upcomingMatches = getUpcomingMatches({ tournament, currentUser });
@@ -55,7 +54,7 @@ const Matches = (props: MatchesProps) => {
         !currentUser.tournaments[tournament.id]?.needPartner &&
         !currentUser.tournaments[tournament.id]?.partnerId
     );
-    const ActualFormNewMatch = isDoubles ? FormNewDoublesMatch : FormNewMatch;
+    const ActualFormNewMatch = FormNewMatch;
 
     return (
         <div className={style.wrapper}>
@@ -85,7 +84,7 @@ const Matches = (props: MatchesProps) => {
                     {playerFilter}
                 </Card>
             </div>
-            <div className={classnames(style.list, { [style.doubles]: isDoubles || isDoublesTeam })}>
+            <div className={classnames(style.list, { [style.doubles]: isDoublesTeam })}>
                 <Card className={style.matches}>
                     <div className="d-flex justify-content-between align-items-center mb-6">
                         <h3 className="m-0">

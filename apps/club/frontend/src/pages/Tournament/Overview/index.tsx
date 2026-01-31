@@ -2,16 +2,13 @@ import { useRef, useMemo, useState } from 'react';
 import Match from '@/components/Match';
 import UpsetMatch from '@/components/UpsetMatch';
 import Proposal from '@/components/Proposal';
-import ProposalDoubles from '@/components/ProposalDoubles';
 import Card from '@rival/common/components/Card';
 import Copy from '@rival/common/components/Copy';
 import Final from '@/components/Final';
 import Tooltip from '@rival/common/components/Tooltip';
-import DoublesFinal from '@/components/DoublesFinal';
 import Winner from '@rival/common/components/Winner';
 import Modal from '@rival/common/components/Modal';
 import FormProposal from '@/components/FormProposal';
-import FormDoublesProposal from '@/components/FormDoublesProposal';
 import FormNewMatch from '@/components/FormNewMatch';
 import FormNewDoublesMatch from '@/components/FormNewDoublesMatch';
 import FormNewMatchByAdmin from '@/components/FormNewMatchByAdmin';
@@ -75,7 +72,6 @@ export const getUpcomingMatches = ({ tournament, currentUser }) => {
     }
 
     const currentDate = dayjs.tz();
-    const isDoubles = tournament.levelType === 'doubles';
     const { players } = tournament;
     const currentPlayerId = currentUser?.tournaments[tournament.id]?.playerId;
     const partners = players[currentPlayerId]?.partners;
@@ -89,9 +85,6 @@ export const getUpcomingMatches = ({ tournament, currentUser }) => {
                 return false;
             }
             if (!match.challengerId || !match.acceptorId) {
-                return false;
-            }
-            if (isDoubles && (!match.challenger2Id || !match.acceptor2Id)) {
                 return false;
             }
 
@@ -139,7 +132,6 @@ const Overview = (props: OverviewProps) => {
 
     const isLive = isStarted && !isOver;
     const isSingle = tournament.levelType === 'single';
-    const isDoubles = tournament.levelType === 'doubles';
     const isDoublesTeam = tournament.levelType === 'doubles-team';
     const currentPlayerId = currentUser?.tournaments[tournament.id]?.playerId;
     const currentPlayer = players[currentPlayerId];
@@ -179,8 +171,6 @@ const Overview = (props: OverviewProps) => {
             .format('YYYY-MM-DD HH:mm:ss');
         const finalMatchesLocal = tournament.matches.filter((match) => match.type === 'final' && !match.battleId);
         const finalMatch = finalMatchesLocal.find((match) => match.finalSpot === 1);
-        const doublesFinalMatch =
-            tournament.doublesMatches && tournament.doublesMatches.find((match) => match.finalSpot === 1);
 
         const currentMatches = tournament.matches
             .filter(
@@ -224,17 +214,10 @@ const Overview = (props: OverviewProps) => {
                 if (isDoublesTeam) {
                     return finalMatch?.score && currentPlayer?.partnerIds.includes(finalMatch.winner);
                 }
-                if (isDoubles) {
-                    return doublesFinalMatch && doublesFinalMatch.winner === currentPlayerId;
-                }
 
                 return finalMatch?.score && finalMatch.winner === currentPlayerId;
             })(),
             isRunnerUp: (() => {
-                if (isDoubles) {
-                    return doublesFinalMatch && doublesFinalMatch.runnerUp === currentPlayerId;
-                }
-
                 return (
                     !isDoublesTeam &&
                     finalMatch &&
@@ -316,7 +299,7 @@ const Overview = (props: OverviewProps) => {
         options: [
             ...(isLive ? [{ value: 'live', label: 'Live' }] : []),
             { value: 'points', label: 'Rank' },
-            ...(isDoubles || isDoublesTeam ? [] : [{ value: 'elo', label: 'TLR' }]),
+            ...(isDoublesTeam ? [] : [{ value: 'elo', label: 'TLR' }]),
         ],
         className: 'me-4',
     });
@@ -377,9 +360,9 @@ const Overview = (props: OverviewProps) => {
     const visibleProposals = showAllProposals ? proposals : proposals.slice(0, firstProposals);
     const showCoaches = (isLive || isBreak) && isMyTournament && tournament.coaches && tournament.coaches.length > 0;
 
-    const ActualFormNewMatch = isDoubles ? FormNewDoublesMatch : FormNewMatch;
-    const ActualFormProposal = isDoubles ? FormDoublesProposal : FormProposal;
-    const ActualProposal = isDoubles ? ProposalDoubles : Proposal;
+    const ActualFormNewMatch = FormNewMatch;
+    const ActualFormProposal = FormProposal;
+    const ActualProposal = Proposal;
     const ActualFormNewMatchByAdmin = isDoubles ? FormNewDoublesMatch : FormNewMatchByAdmin;
 
     const showRulesReminders = isMyTournament && isLive && !isDoublesTeamPlayerPool && !learnedTheRules;
@@ -805,21 +788,6 @@ const Overview = (props: OverviewProps) => {
 
     const renderFinal = () => {
         if (isFinalTournament) {
-            if (isDoubles) {
-                return (
-                    <Card>
-                        <DoublesFinal
-                            matches={tournament.doublesMatches}
-                            players={players}
-                            reloadTournament={reloadTournament}
-                            showTournamentText={isBreak}
-                            tournament={tournament}
-                        />
-                    </Card>
-                );
-            }
-
-            // if single
             return (
                 <Card>
                     <Final

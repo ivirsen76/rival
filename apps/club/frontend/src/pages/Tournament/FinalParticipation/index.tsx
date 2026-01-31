@@ -7,12 +7,7 @@ import Modal from '@rival/common/components/Modal';
 import TournamentText from '@/components/TournamentText';
 import CancelMessage from '@/components/CancelMessage';
 import { loadCurrentUser } from '@/reducers/auth';
-import {
-    getSinglesTournament8Text,
-    getSinglesTournament12Text,
-    getSinglesTournament16Text,
-    getDoublesTournamentText,
-} from '../texts';
+import { getSinglesTournament8Text, getSinglesTournament12Text, getSinglesTournament16Text } from '../texts';
 import confirmation from '@rival/common/utils/confirmation';
 import formatElo from '@rival/club.backend/src/utils/formatElo';
 
@@ -33,7 +28,6 @@ const FinalParticipation = (props: FinalParticipationProps) => {
     const [loading, setLoading] = useState(false);
 
     const { playerId, readyForFinal, seasonId } = currentUser.tournaments[tournament.id];
-    const isDoubles = tournament.levelType === 'doubles';
     const isDoublesTeam = tournament.levelType === 'doubles-team';
     const isTop12 = tournament.playersBeforeDeadline >= 50;
     const isTop16 = tournament.playersBeforeDeadline >= 75;
@@ -64,24 +58,16 @@ const FinalParticipation = (props: FinalParticipationProps) => {
         setLoading(false);
     };
 
-    const playerNumber = (() => {
-        if (isDoubles) {
-            return 4;
-        }
-
-        return isTop16 ? 16 : isTop12 ? 12 : 8;
-    })();
+    const playerNumber = isTop16 ? 16 : isTop12 ? 12 : 8;
 
     const tournamentText = (() => {
         const entity = isDoublesTeam ? 'team' : 'player';
 
-        return isDoubles
-            ? getDoublesTournamentText(entity)
-            : isTop16
-              ? getSinglesTournament16Text(entity)
-              : isTop12
-                ? getSinglesTournament12Text(entity)
-                : getSinglesTournament8Text(entity);
+        return isTop16
+            ? getSinglesTournament16Text(entity)
+            : isTop12
+              ? getSinglesTournament12Text(entity)
+              : getSinglesTournament8Text(entity);
     })();
 
     let tournamentRules;

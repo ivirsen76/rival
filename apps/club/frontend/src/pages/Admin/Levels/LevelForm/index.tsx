@@ -5,7 +5,6 @@ import Button from '@rival/common/components/Button';
 
 const typeOptions = [
     { value: 'single', label: 'Single' },
-    { value: 'doubles', label: 'Doubles' },
     { value: 'doubles-team', label: 'Doubles Team' },
 ];
 

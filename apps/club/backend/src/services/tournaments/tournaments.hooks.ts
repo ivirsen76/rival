@@ -127,7 +127,6 @@ const populateTournament =
             tournamentInfo.nextTournament = result.data[index + 1];
         }
         const isSingles = tournamentInfo['level.type'] === 'single';
-        const isDoubles = tournamentInfo['level.type'] === 'doubles';
 
         // get all season tournaments
         {
@@ -281,19 +280,6 @@ const populateTournament =
                 { replacements: { id: tournamentInfo.id } }
             );
             tournamentInfo.matches = result;
-        }
-
-        // get doubles matches
-        if (isDoubles) {
-            const [result] = await sequelize.query(
-                `SELECT dm.*
-               FROM doublesmatches AS dm,
-                    players AS p
-              WHERE (dm.player1Id=p.id OR dm.player4Id=p.id) AND
-                    p.tournamentId=:id`,
-                { replacements: { id: tournamentInfo.id } }
-            );
-            tournamentInfo.doublesMatches = result;
         }
 
         // get elo

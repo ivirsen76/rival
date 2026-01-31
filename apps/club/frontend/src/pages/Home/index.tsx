@@ -215,7 +215,7 @@ const Home = (props) => {
     const getLevelGroups = (levels) => {
         const result = levels.reduce((obj, level) => {
             let key = 'men';
-            if (['doubles', 'doubles-team'].includes(level.levelType)) {
+            if (level.levelType === 'doubles-team') {
                 key = 'doubles';
             } else if (level.levelName.includes('Women')) {
                 key = 'women';
