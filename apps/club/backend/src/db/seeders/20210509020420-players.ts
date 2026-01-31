@@ -67,42 +67,6 @@ export const up = async ({ context: queryInterface }: { context: QueryInterface 
                 isActive: 1,
             },
             {
-                id: 11,
-                userId: 1,
-                tournamentId: 9,
-                isActive: 1,
-            },
-            {
-                id: 12,
-                userId: 2,
-                tournamentId: 9,
-                isActive: 1,
-            },
-            {
-                id: 13,
-                userId: 5,
-                tournamentId: 9,
-                isActive: 1,
-            },
-            {
-                id: 14,
-                userId: 6,
-                tournamentId: 9,
-                isActive: 1,
-            },
-            {
-                id: 15,
-                userId: 7,
-                tournamentId: 9,
-                isActive: 0,
-            },
-            {
-                id: 16,
-                userId: 9,
-                tournamentId: 9,
-                isActive: 1,
-            },
-            {
                 id: 17,
                 userId: 1,
                 tournamentId: 4,
@@ -120,32 +84,6 @@ export const up = async ({ context: queryInterface }: { context: QueryInterface 
                 tournamentId: 4,
                 isActive: 1,
             },
-            // {
-            //     id: 20,
-            //     userId: 1,
-            //     tournamentId: 11,
-            //     isActive: 1,
-            // },
-            // {
-            //     id: 21,
-            //     userId: 2,
-            //     tournamentId: 11,
-            //     isActive: 1,
-            //     partnerId: 20,
-            // },
-            // {
-            //     id: 22,
-            //     userId: 5,
-            //     tournamentId: 11,
-            //     isActive: 1,
-            // },
-            // {
-            //     id: 23,
-            //     userId: 6,
-            //     tournamentId: 11,
-            //     isActive: 1,
-            //     partnerId: 22,
-            // },
         ],
         {}
     );

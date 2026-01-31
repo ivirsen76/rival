@@ -12,7 +12,6 @@ export const up = async ({ context: queryInterface }: { context: QueryInterface 
             { id: 6, seasonId: 3, levelId: 4, isFree: 0 },
             { id: 7, seasonId: 5, levelId: 2, isFree: 0 },
             { id: 8, seasonId: 5, levelId: 3, isFree: 0 },
-            { id: 9, seasonId: 1, levelId: 6, isFree: 0 },
             { id: 10, seasonId: 5, levelId: 1, isFree: 0 },
             { id: 11, seasonId: 1, levelId: 7, isFree: 0 },
             { id: 12, seasonId: 5, levelId: 7, isFree: 0 },
