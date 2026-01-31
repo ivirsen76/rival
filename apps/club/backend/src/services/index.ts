@@ -14,7 +14,6 @@ import news from './news/news.service';
 import utils from './utils/utils.service';
 import feedbacks from './feedbacks/feedbacks.service';
 import calendars from './calendars/calendars.service';
-import teams from './teams/teams.service';
 import complaints from './complaints/complaints.service';
 import messages from './messages/messages.service';
 import photos from './photos/photos.service';
@@ -41,7 +40,6 @@ export default function (app: Application) {
     app.configure(utils);
     app.configure(feedbacks);
     app.configure(calendars);
-    app.configure(teams);
     app.configure(complaints);
     app.configure(messages);
     app.configure(photos);

@@ -4,18 +4,12 @@ import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import commonValidate from './commonValidate';
 import _isEmpty from 'lodash/isEmpty';
-import _pick from 'lodash/pick';
 import _uniq from 'lodash/uniq';
-import _intersection from 'lodash/intersection';
 import dayjs from '../../utils/dayjs';
 import { getAge } from '../../utils/helpers';
 import { keep, disallow } from 'feathers-hooks-common';
 import { purgeTournamentCache, purgeMatchCache, logEvent, generateBadges } from '../commonHooks';
-import newProposalTemplate from '../../emailTemplates/newProposal';
 import acceptedProposalTemplate from '../../emailTemplates/acceptedProposal';
-import acceptedDoublesProposalTemplate from '../../emailTemplates/acceptedDoublesProposal';
-import unacceptedDoublesProposalTemplate from '../../emailTemplates/unacceptedDoublesProposal';
-import deletedDoublesProposalTemplate from '../../emailTemplates/deletedDoublesProposal';
 import getCustomEmail from '../../emailTemplates/getCustomEmail';
 import { getSchemaErrors, throwValidationErrors } from '../../helpers';
 import getMatchInfo from '../matches/getMatchInfo';
@@ -29,47 +23,6 @@ import {
 } from '../users/helpers';
 import sendProposalEmails from '../../utils/sendProposalEmails';
 import type { User } from '../../types';
-
-// It is not a hook, just a helper
-const sendAcceptedDoublesProposalEmail = ({
-    context,
-    players,
-    match,
-}: {
-    context: HookContext;
-    players: any;
-    match: any;
-}) => {
-    const challenger = players[match.challengerId || context.data.challengerId];
-    const challenger2 = players[match.challenger2Id || context.data.challenger2Id];
-    const acceptor = players[match.acceptorId || context.data.acceptorId];
-    const acceptor2 = players[match.acceptor2Id || context.data.acceptor2Id];
-
-    const playedAt = dayjs.tz(match.playedAt).format('ddd, MMM D, h:mm A');
-    const getName = (player) => `${player.firstName} ${player.lastName.slice(0, 1)}.`;
-
-    // We don't have to wait for the email sent
-    context.app.service('api/emails').create({
-        to: [challenger, challenger2, acceptor, acceptor2].map((item) => ({
-            name: getPlayerName(item),
-            email: item.email,
-        })),
-        subject: `Your upcoming match on ${playedAt}`,
-        html: acceptedDoublesProposalTemplate({
-            config: context.params.config,
-            challenger,
-            challenger2,
-            acceptor,
-            acceptor2,
-            level: challenger.levelName,
-            proposalDate: playedAt,
-            proposalLocation: match.place,
-            previewText: `${context.params.config.city}, ${challenger.levelName}, ${match.place}, ${getName(
-                challenger
-            )}/${getName(challenger2)} vs ${getName(acceptor)}/${getName(acceptor2)}`,
-        }),
-    });
-};
 
 const validateCreate = () => (context: HookContext) => {
     const errors = commonValidate(context.data);

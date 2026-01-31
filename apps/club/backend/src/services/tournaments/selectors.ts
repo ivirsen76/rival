@@ -1028,7 +1028,6 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
         topForm,
         prevTournament: getTournamentLinks(data.prevTournament),
         nextTournament: getTournamentLinks(data.nextTournament),
-        hasTeams,
         currentWeek: Math.ceil(currentDate.diff(startDate, 'week', true)),
         totalWeeks: Math.ceil(endDate.subtract(12, 'hour').diff(startDate, 'week', true)),
     };

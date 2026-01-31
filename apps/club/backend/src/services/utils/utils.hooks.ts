@@ -21,7 +21,7 @@ import md5 from 'md5';
 import { applyNewBadges } from '../../utils/applyNewBadges';
 import { getStatsMatches } from '../../utils/sqlConditions';
 import jwt from 'jsonwebtoken';
-import { getPlayerName, getEmailContact } from '../users/helpers';
+import { getPlayerName } from '../users/helpers';
 import writeXlsxFile from 'write-excel-file/node';
 import type { User } from '../../types';
 

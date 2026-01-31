@@ -24,9 +24,7 @@ const MatchPreview = (props: MatchPreviewProps) => {
         match.type === 'regular' && isPlayed && _isInteger(match.challengerPoints) && _isInteger(match.acceptorPoints);
 
     const challenger = players[match.challengerId];
-    const challenger2 = players[match.challenger2Id];
     const acceptor = players[match.acceptorId];
-    const acceptor2 = players[match.acceptor2Id];
 
     const defaultBadge = (
         <td>

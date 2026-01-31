@@ -6,7 +6,6 @@ import {
     getNumRecords,
     expectRecordToExist,
     overrideConfig,
-    expectNumRecords,
 } from '@rival/club.backend/src/db/helpers';
 import { imageRegex } from './helpers';
 import dayjs from '@rival/club.backend/src/utils/dayjs';
