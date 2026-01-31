@@ -10,7 +10,6 @@ import Winner from '@rival/common/components/Winner';
 import Modal from '@rival/common/components/Modal';
 import FormProposal from '@/components/FormProposal';
 import FormNewMatch from '@/components/FormNewMatch';
-import FormNewDoublesMatch from '@/components/FormNewDoublesMatch';
 import FormNewMatchByAdmin from '@/components/FormNewMatchByAdmin';
 import FormScheduleNewMatch from '@/components/FormScheduleNewMatch';
 import CancelMessage from '@/components/CancelMessage';
@@ -363,7 +362,7 @@ const Overview = (props: OverviewProps) => {
     const ActualFormNewMatch = FormNewMatch;
     const ActualFormProposal = FormProposal;
     const ActualProposal = Proposal;
-    const ActualFormNewMatchByAdmin = isDoubles ? FormNewDoublesMatch : FormNewMatchByAdmin;
+    const ActualFormNewMatchByAdmin = FormNewMatchByAdmin;
 
     const showRulesReminders = isMyTournament && isLive && !isDoublesTeamPlayerPool && !learnedTheRules;
 
@@ -465,7 +464,7 @@ const Overview = (props: OverviewProps) => {
                 />
             );
         }
-        if (isLive && !isDoubles) {
+        if (isLive) {
             otherActions.push(
                 <Modal
                     key="schedule"
@@ -934,31 +933,29 @@ const Overview = (props: OverviewProps) => {
                             />
                         )}
                     />
-                    {!isDoubles && (
-                        <Modal
-                            title="Schedule match"
-                            hasForm={false}
-                            renderTrigger={({ show }) => (
-                                <button type="button" className="btn btn-primary" onClick={show}>
-                                    Schedule match
-                                </button>
-                            )}
-                            size="sm"
-                            renderBody={({ hide }) => (
-                                <FormScheduleNewMatch
-                                    tournament={tournament}
-                                    onAdd={async () => {
-                                        await reloadTournament();
-                                        hide();
-                                        notification({
-                                            header: 'Success',
-                                            message: 'The match was successfuly scheduled.',
-                                        });
-                                    }}
-                                />
-                            )}
-                        />
-                    )}
+                    <Modal
+                        title="Schedule match"
+                        hasForm={false}
+                        renderTrigger={({ show }) => (
+                            <button type="button" className="btn btn-primary" onClick={show}>
+                                Schedule match
+                            </button>
+                        )}
+                        size="sm"
+                        renderBody={({ hide }) => (
+                            <FormScheduleNewMatch
+                                tournament={tournament}
+                                onAdd={async () => {
+                                    await reloadTournament();
+                                    hide();
+                                    notification({
+                                        header: 'Success',
+                                        message: 'The match was successfuly scheduled.',
+                                    });
+                                }}
+                            />
+                        )}
+                    />
                 </div>
             </Card>
         );
@@ -1077,7 +1074,7 @@ const Overview = (props: OverviewProps) => {
                                     <Link to="/scoring">match points gained</Link>. Updated every Monday.
                                 </div>
 
-                                {!isDoubles && !isDoublesTeam && (
+                                {!isDoublesTeam && (
                                     <>
                                         <h4 className="text-white">TLR</h4>
                                         <div>
@@ -1132,17 +1129,17 @@ const Overview = (props: OverviewProps) => {
                             <Card tooltip="Players with the most matches played including the tournament. Default matches don't count.">
                                 <MostMatches tournament={tournament} />
                             </Card>
-                            {!isDoubles && !isDoublesTeam && tournament.mostProgress.length > 0 && (
+                            {!isDoublesTeam && tournament.mostProgress.length > 0 && (
                                 <Card tooltip="Players who gained the most TLR points during the season.">
                                     <MostProgress tournament={tournament} />
                                 </Card>
                             )}
-                            {!isDoubles && !isDoublesTeam && tournament.topForm.length > 0 && (
+                            {!isDoublesTeam && tournament.topForm.length > 0 && (
                                 <Card tooltip="Players who achieved their highest TLR during the season. Player has to play at least two seasons to be in the list.">
                                     <TopForm tournament={tournament} />
                                 </Card>
                             )}
-                            {!isDoubles && !isDoublesTeam && topUpsetMatches.length > 0 && (
+                            {!isDoublesTeam && topUpsetMatches.length > 0 && (
                                 <Card tooltip="Matches where players overcame the greatest TLR disparity.">
                                     <h3 className="mb-6">Biggest Wins</h3>
                                     <div style={{ display: 'grid', gridGap: '2rem' }}>

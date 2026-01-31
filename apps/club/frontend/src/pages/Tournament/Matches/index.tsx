@@ -4,7 +4,6 @@ import Card from '@rival/common/components/Card';
 import Modal from '@rival/common/components/Modal';
 import classnames from 'classnames';
 import FormNewMatch from '@/components/FormNewMatch';
-import FormNewDoublesMatch from '@/components/FormNewDoublesMatch';
 import LazyLoad, { forceCheck } from 'react-lazyload';
 import usePlayerFilter from '../usePlayerFilter';
 import { useSelector } from 'react-redux';
