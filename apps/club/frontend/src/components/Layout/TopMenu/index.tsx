@@ -2,8 +2,6 @@ import _capitalize from 'lodash/capitalize';
 import { useSelector } from 'react-redux';
 import ExitIcon from '@rival/common/metronic/icons/duotune/arrows/arr043.svg?react';
 import SettingsIcon from '@rival/common/metronic/icons/duotone/Interface/Cog.svg?react';
-import DollarIcon from '@rival/common/metronic/icons/duotone/Shopping/Dollar.svg?react';
-import HornIcon from '@/assets/horn.svg?react';
 import BadgeIcon from '@/assets/badge.svg?react';
 import UserIcon from '@rival/common/metronic/icons/duotone/General/User.svg?react';
 import ArrowLeft from '@rival/common/metronic/icons/duotune/arrows/arr002.svg?react';
@@ -98,11 +96,6 @@ function TopMenu(props: TopMenuProps) {
                     template: regularLink,
                 },
                 {
-                    label: 'Pricing',
-                    url: '/pricing',
-                    template: regularLink,
-                },
-                {
                     label: 'Founders',
                     url: '/founders',
                     template: regularLink,
@@ -178,12 +171,6 @@ function TopMenu(props: TopMenuProps) {
                                         label: 'My Profile',
                                         icon: <UserIcon />,
                                         url: '/player/' + user.slug,
-                                        template: iconLink,
-                                    },
-                                    {
-                                        label: 'Wallet',
-                                        icon: <DollarIcon />,
-                                        url: '/user/wallet',
                                         template: iconLink,
                                     },
                                     {

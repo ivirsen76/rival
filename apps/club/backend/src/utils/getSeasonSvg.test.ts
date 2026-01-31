@@ -202,18 +202,11 @@ describe('getSeasonSvg()', () => {
             },
         ],
         config: {
-            singlesCost: 3500,
-            doublesCost: 2500,
-            additionalLadderDiscount: 1000,
-            earlyRegistrationDiscount: 500,
-            singlesChampionReward: 5000,
-            singlesRunnerUpReward: 2500,
             minMatchesToPay: 3,
         },
         currentDate: '2025-11-01 00:00:00',
         scale: 1,
         totalPlayers: 99,
-        creditAmount: 500,
         elo: 297,
         matchesPlayed: 13,
         gender: 'male',
@@ -229,8 +222,6 @@ describe('getSeasonSvg()', () => {
         expectBlocks(svg, [
             { title: 'Dec 8 - Mar 1', description: '10 weeks' },
             { title: 'Prizes', description: '$50 for Champion | $25 for Runner-Up' },
-            { title: 'Cost', description: 'Before the season begins: | $30 Singles | $20 Doubles' },
-            { title: '$5 Credit', description: 'Available for payment' },
             { title: 'TLR 2.97', description: 'You current rating' },
             { title: 'Ladders for You', description: "Men's 2.5 Singles | Men's 3.0 Singles | Men's 3.5/4.0 DBLS" },
         ]);
@@ -298,24 +289,6 @@ describe('getSeasonSvg()', () => {
         expectBlocks(svg, [
             { title: 'Dec 8 - Mar 1', description: '10 weeks' },
             { title: 'Prizes', description: '$50 for Champion | $25 for Runner-Up' },
-            { title: 'Cost', description: 'After the season begins: | $35 Singles | $25 Doubles' },
-            { title: '$5 Credit', description: 'Available for payment' },
-            { title: 'TLR 2.97', description: 'You current rating' },
-            { title: 'Ladders for You', description: "Men's 2.5 Singles | Men's 3.0 Singles | Men's 3.5/4.0 DBLS" },
-        ]);
-    });
-
-    it('Should return right svg for no credit', () => {
-        const adjustedParams = _cloneDeep(params);
-        adjustedParams.creditAmount = 0;
-
-        const svg = getSeasonSvg(adjustedParams);
-
-        expectBlocks(svg, [
-            { title: 'Dec 8 - Mar 1', description: '10 weeks' },
-            { title: 'Prizes', description: '$50 for Champion | $25 for Runner-Up' },
-            { title: 'Cost', description: 'Before the season begins: | $30 Singles | $20 Doubles' },
-            { title: '$10 Discount', description: 'For additional ladder' },
             { title: 'TLR 2.97', description: 'You current rating' },
             { title: 'Ladders for You', description: "Men's 2.5 Singles | Men's 3.0 Singles | Men's 3.5/4.0 DBLS" },
         ]);
@@ -330,8 +303,6 @@ describe('getSeasonSvg()', () => {
         expectBlocks(svg, [
             { title: 'Dec 8 - Mar 1', description: '10 weeks' },
             { title: 'Prizes', description: '$50 for Champion | $25 for Runner-Up' },
-            { title: 'Cost', description: 'Before the season begins: | $30 Singles | $20 Doubles' },
-            { title: '$5 Credit', description: 'Available for payment' },
             { title: 'TLR 2.97', description: 'You current rating' },
             {
                 title: 'Ladders for You',
@@ -350,8 +321,6 @@ describe('getSeasonSvg()', () => {
         expectBlocks(svg, [
             { title: 'Dec 8 - Mar 1', description: '10 weeks' },
             { title: 'Prizes', description: '$50 for Champion | $25 for Runner-Up' },
-            { title: 'Cost', description: 'Before the season begins: | $30 Singles | $20 Doubles' },
-            { title: '$5 Credit', description: 'Available for payment' },
             { title: 'TLR 1.45', description: 'You current rating' },
             {
                 title: 'Ladders for You',
@@ -370,8 +339,6 @@ describe('getSeasonSvg()', () => {
         expectBlocks(svg, [
             { title: 'Dec 8 - Mar 1', description: '10 weeks' },
             { title: 'Prizes', description: '$50 for Champion | $25 for Runner-Up' },
-            { title: 'Cost', description: 'Before the season begins: | $30 Singles | $20 Doubles' },
-            { title: '$5 Credit', description: 'Available for payment' },
             { title: 'TLR 1.55', description: 'You current rating' },
             {
                 title: 'Ladders for You',

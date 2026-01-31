@@ -129,18 +129,6 @@ test('Should get a new badge after playing a match and get an email notification
 
     const badgesTotal = emailSent.html.match(/<td width="100px"/g).length;
     expect(badgesTotal).toBe(3);
-
-    await expectRecordToExist(
-        'payments',
-        { userId: 1, description: 'Badge Credit (Tiebreaker: 1)', sql: 'badgeId IS NOT NULL' },
-        { type: 'discount', amount: 100 }
-    );
-
-    await expectRecordToExist(
-        'payments',
-        { userId: 1, description: 'Badge Credit (Die Hard)', sql: 'badgeId IS NOT NULL' },
-        { type: 'discount', amount: 100 }
-    );
 });
 
 test('Should get a new badge after proposing a match and get an email notification', async ({

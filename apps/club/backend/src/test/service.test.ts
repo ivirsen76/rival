@@ -12,13 +12,11 @@ import runActions, {
     remindForChoosingLadder,
     seasonIsOver,
     joinNextSeason,
-    remindForClaimingReward,
     sendFinalScheduleReminder,
     requestFeedbackForNoJoin,
     sendMissingTeammateReminder,
     sendHighProjectedTlrWarning,
 } from '../utils/runActions';
-import refundForCanceledTournaments from '../utils/refundForCanceledTournaments';
 import remindAboutLastOpenSlot from '../utils/remindAboutLastOpenSlot';
 import type { Server } from 'http';
 
@@ -35,7 +33,6 @@ import {
     overrideConfig,
     expectNumRecords,
 } from '../db/helpers';
-import type { Player } from '../types';
 
 let server: Server;
 let request: supertest.SuperTest<supertest.Test>;
@@ -673,20 +670,6 @@ describe('player', () => {
                 .expect(422);
             expect(result.body.message).toContain("You've already switched ladder before");
         });
-
-        it('Should throw when the user switching from singles to doubles if he is playing for free', async () => {
-            await runQuery(`
-                INSERT INTO payments (userId, type, description, amount)
-                     VALUES (1, 'product', 'For the product', 2000)`);
-
-            const token = await loginAsPlayer1();
-            const result = await request
-                .put('/api/players/0')
-                .set('Authorization', token)
-                .send({ action: 'switchTournament', from: 2, to: 9 })
-                .expect(422);
-            expect(result.body.message).toContain('You cannot switch from doubles to singles');
-        });
     });
 });
 
@@ -958,131 +941,6 @@ describe('season', () => {
     it('should not delete a season which is in use', async () => {
         const token = await loginAsAdmin();
         await request.delete('/api/seasons/1').set('Authorization', token).expect(400);
-    });
-});
-
-describe('order', () => {
-    describe('update', () => {
-        const sessionId = 'cs_test_a1Xo2fGSedaPXx4FBDPU1qdjHQEizZmiQWu2AnluWv23OevzuBUWdMEklL';
-        const incompleteSessionId = 'cs_test_a1pfDHTvBreow0utO259WxjxjiVuNRwAUUOTWv7l9RM7qII2lpKcP5TwXr';
-
-        const addTestOrder = async () => {
-            const payload = {
-                transactions: [
-                    { type: 'product', tournamentId: 8, description: 'Men 4.0 Ladder', cost: -3000 },
-                    { type: 'discount', description: 'Second ladder discount', cost: 1500 },
-                ],
-            };
-
-            await runQuery(`
-                INSERT INTO orders (id, userId, amount, payload, sessionId)
-                     VALUES (1, 1, 1500, '${JSON.stringify(payload)}', "${sessionId}")`);
-        };
-
-        it('Should process order', async () => {
-            await addTestOrder();
-            await request.put('/api/orders/0').send({ action: 'processStripeSession', sessionId }).expect(200);
-
-            const order = await expectRecordToExist('orders', { id: 1 });
-            expect(order.processedAt).toBeDefined();
-            await expectRecordToExist('players', { userId: 1, tournamentId: 8 });
-            await expectRecordToExist('payments', { userId: 1, type: 'payment' }, { amount: 1500 });
-        });
-
-        it('Should process order for inactive player', async () => {
-            await runQuery(`UPDATE players SET isActive=0`);
-            await runQuery(`INSERT INTO players (userId, tournamentId, isActive) VALUES (1, 8, 0)`);
-            await addTestOrder();
-            await request.put('/api/orders/0').send({ action: 'processStripeSession', sessionId }).expect(200);
-
-            const order = await expectRecordToExist('orders', { id: 1 });
-            expect(order.processedAt).toBeDefined();
-            await expectRecordToExist('players', { userId: 1, tournamentId: 8 }, { isActive: 1 });
-        });
-
-        it('Should process order and clean the redis cache for the paid tournament', async () => {
-            await addTestOrder();
-
-            // generate cache
-            const url = '/api/tournaments/1?year=2022&season=spring&level=men-40';
-            await request.get(url).expect(200);
-
-            await request.put('/api/orders/0').send({ action: 'processStripeSession', sessionId }).expect(200);
-
-            const newResult = await request.get(url).expect(200);
-            const players: Player[] = newResult.body.data.players;
-            expect(Object.values(players).some((item) => item.userSlug === 'ben-done')).toBe(true);
-        });
-
-        it('Should throw a validation error when sessionId is wrong', async () => {
-            await addTestOrder();
-            await request
-                .put('/api/orders/0')
-                .send({ action: 'processStripeSession', sessionId: 'wrong' })
-                .expect(422)
-                .expect((res) => {
-                    expect(res.body.message).toBe('Payment session is not found');
-                });
-        });
-
-        it('Should throw a validation error when sessionId is not from order', async () => {
-            await addTestOrder();
-            await runQuery(`UPDATE orders SET sessionId="another"`);
-
-            await request
-                .put('/api/orders/0')
-                .send({ action: 'processStripeSession', sessionId })
-                .expect(422)
-                .expect((res) => {
-                    expect(res.body.message).toBe('Wrong session');
-                });
-        });
-
-        it('Should throw a validation error when order is not found', async () => {
-            await request
-                .put('/api/orders/0')
-                .send({ action: 'processStripeSession', sessionId })
-                .expect(422)
-                .expect((res) => {
-                    expect(res.body.message).toBe('Order is not found');
-                });
-        });
-
-        it('Should throw a validation error when session is not complete', async () => {
-            await request
-                .put('/api/orders/0')
-                .send({ action: 'processStripeSession', sessionId: incompleteSessionId })
-                .expect(422)
-                .expect((res) => {
-                    expect(res.body.message).toBe('Session is not complete');
-                });
-        });
-
-        it('Should throw a validation error when amount is wrong', async () => {
-            await addTestOrder();
-            await runQuery(`UPDATE orders SET amount=4000`);
-
-            await request
-                .put('/api/orders/0')
-                .send({ action: 'processStripeSession', sessionId })
-                .expect(422)
-                .expect((res) => {
-                    expect(res.body.message).toBe('Wrong amount');
-                });
-        });
-
-        it('Should throw a validation error when order is already processed', async () => {
-            await addTestOrder();
-            await runQuery(`UPDATE orders SET processedAt="2021-01-01 00:00:00"`);
-
-            await request
-                .put('/api/orders/0')
-                .send({ action: 'processStripeSession', sessionId })
-                .expect(422)
-                .expect((res) => {
-                    expect(res.body.message).toBe('This order is already processed');
-                });
-        });
     });
 });
 
@@ -3487,130 +3345,6 @@ describe('cron jobs', () => {
         // TODO: Finish tests for other cases (different days etc.)
     });
 
-    describe('claimReward', () => {
-        it('Should send a reminder about claiming reward', async () => {
-            await runQuery(`UPDATE matches SET type="final", finalSpot=1 WHERE id=1`);
-
-            await remindForClaimingReward(app);
-
-            // runner-up email
-            const runnerUpEmail = await expectRecordToExist('emails', {
-                subject: 'Claim Your Reward!',
-                recipientEmail: 'player1@gmail.com',
-            });
-            expect(runnerUpEmail.html).toContain(
-                'Congratulations on winning the tournament in the Raleigh Rival Men 3.5 ladder!'
-            );
-            expect(runnerUpEmail.html).toContain('$50 gift card');
-            expect(runnerUpEmail.html).toContain('Champion Trophy');
-
-            // winner email
-            const winnerEmail = await expectRecordToExist('emails', {
-                subject: 'Claim Your Reward!',
-                recipientEmail: 'player2@gmail.com',
-            });
-            expect(winnerEmail.html).toContain(
-                'Congratulations on coming in Second Place in the Raleigh Rival Men 3.5 ladder!'
-            );
-            expect(winnerEmail.html).toContain('$25 gift card');
-            expect(winnerEmail.html).toContain('Runner-Up Trophy');
-
-            // Check that we are not sending email twice
-            await remindForClaimingReward(app);
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            expect(await getNumRecords('emails')).toBe(2);
-        }, 10000);
-
-        it('Should send a reminder about claiming reward for free season', async () => {
-            await runQuery(`UPDATE seasons SET isFree=1 WHERE id=1`);
-            await runQuery(`UPDATE matches SET type="final", finalSpot=1 WHERE id=1`);
-
-            await remindForClaimingReward(app);
-
-            // winner email
-            const winnerEmail = await expectRecordToExist('emails', {
-                subject: 'Claim Your Reward!',
-                recipientEmail: 'player1@gmail.com',
-            });
-            expect(winnerEmail.html).toContain(
-                'Congratulations on winning the tournament in the Raleigh Rival Men 3.5 ladder!'
-            );
-            expect(winnerEmail.html).toContain('Champion Trophy');
-            expect(winnerEmail.html).toContain('$25 gift card');
-
-            // runner-up email
-            const runnerUpEmail = await expectRecordToExist('emails', {
-                subject: 'Claim Your Reward!',
-                recipientEmail: 'player2@gmail.com',
-            });
-            expect(runnerUpEmail.html).toContain(
-                'Congratulations on coming in Second Place in the Raleigh Rival Men 3.5 ladder!'
-            );
-            expect(runnerUpEmail.html).toContain('Runner-Up Trophy');
-            expect(runnerUpEmail.html).not.toContain('gift card');
-
-            // Check that we are not sending email twice
-            await remindForClaimingReward(app);
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            expect(await getNumRecords('emails')).toBe(2);
-        }, 10000);
-
-        it('Should not send a reminder for runner-up who lost by default', async () => {
-            await runQuery(`UPDATE matches SET type="final", finalSpot=1, wonByDefault=1 WHERE id=1`);
-
-            await remindForClaimingReward(app);
-
-            // winner email
-            await expectRecordToExist('emails', {
-                subject: 'Claim Your Reward!',
-                recipientEmail: 'player1@gmail.com',
-            });
-
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            expect(await getNumRecords('emails')).toBe(1);
-        }, 10000);
-
-        it('Should send a reminder about claiming reward to only to doubles winner', async () => {
-            await runQuery('INSERT INTO players SET id=20, userId=1, tournamentId=11, teamName="Servebots"');
-            await runQuery('INSERT INTO players SET id=21, userId=2, tournamentId=11, partnerId=20');
-            await runQuery('INSERT INTO players SET id=23, userId=5, tournamentId=11, teamName="Game-Set-Match"');
-            await runQuery('INSERT INTO players SET id=22, userId=6, tournamentId=11, partnerId=23');
-
-            await runQuery(`INSERT INTO matches
-                SET id=53,
-                    initial=1,
-                    challengerId=21,
-                    challenger2Id=20,
-                    acceptorId=23,
-                    acceptor2Id=22,
-                    winner=21,
-                    type="final",
-                    finalSpot=1,
-                    playedAt="${dayjs.tz().add(12, 'hour').format('YYYY-MM-DD HH:mm:ss')}",
-                    score="6-1 6-1"`);
-
-            await remindForClaimingReward(app);
-
-            const email = await expectRecordToExist('emails', {
-                subject: 'Claim Your Reward!',
-                recipientEmail: 'player1@gmail.com',
-            });
-
-            expect(email.html).toContain(
-                'Congratulations on winning the tournament in the Raleigh Rival Men Team Doubles ladder!'
-            );
-            expect(email.html).toContain('$15 credit');
-            expect(email.html).toContain('Champion Trophy');
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            await expectNumRecords('emails', { subject: 'Claim Your Reward!' }, 1);
-
-            // Check that we are not sending email twice
-            await remindForClaimingReward(app);
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            await expectNumRecords('emails', { subject: 'Claim Your Reward!' }, 1);
-        }, 10000);
-    });
-
     describe('sendFinalScheduleReminder', () => {
         // TODO: write test when reminder is sent (have to set updatedAt somehow)
         it('Should not send any reminders to schedule a final match', async () => {
@@ -3636,44 +3370,6 @@ describe('cron jobs', () => {
 
             await new Promise((resolve) => setTimeout(resolve, 2000));
             expect(await getNumRecords('emails')).toBe(0);
-        }, 10000);
-    });
-
-    describe('refundForCanceledTournaments', () => {
-        it('Should issue the refund for canceled tournament', async () => {
-            const dateInSixDays = dayjs.tz().add(6, 'day').format('YYYY-MM-DD HH:mm:ss');
-            await runQuery(`UPDATE seasons SET endDate='${dateInSixDays}' WHERE id=1`);
-            await runQuery(`
-                INSERT INTO payments (id, userId, type, description, amount, tournamentId)
-                     VALUES (1, 1, 'product', '2022 Fall', -2500, 2)`);
-
-            await refundForCanceledTournaments(app);
-            await expectRecordToExist(
-                'payments',
-                { type: 'refund' },
-                {
-                    userId: 1,
-                    description: 'Credit for 2022 Fall',
-                    amount: 2500,
-                    refundForPaymentId: 1,
-                }
-            );
-
-            // Check that email notification is sent
-            {
-                const record = await expectRecordToExist('emails', {
-                    subject: "You've Been Given $25 in Rival Credit!",
-                });
-                expect(record.html).toContain('fewer than 20 matches were played');
-                expect(record.html).toContain('<b>credit to your account of $25</b>');
-                expect(record.html).not.toContain('undefined');
-                expect(record.recipientEmail).toBe('player1@gmail.com');
-            }
-
-            // Check that we are not issuing refund twice
-            await refundForCanceledTournaments(app);
-            await new Promise((resolve) => setTimeout(resolve, 500));
-            expect(await getNumRecords('payments')).toBe(2);
         }, 10000);
     });
 

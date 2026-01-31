@@ -26,7 +26,6 @@ import TopForm from '../TopForm';
 import Coach from '../Coach';
 import PlayerPool from '../PlayerPool';
 import FinalParticipation from '../FinalParticipation';
-import ClaimReward from '../ClaimReward';
 import notification from '@rival/common/components/notification';
 import { useSelector, useDispatch } from 'react-redux';
 import ClockIcon from '@rival/common/metronic/icons/duotone/Home/Clock.svg?react';
@@ -371,29 +370,6 @@ const Overview = (props: OverviewProps) => {
         }
 
         return currentPlayer.joinDoublesLink;
-    })();
-
-    const isClaimingReward = (() => {
-        if (!isChampion && !isRunnerUp) {
-            return false;
-        }
-        if (isRunnerUp && isFinalWonDefault) {
-            return false;
-        }
-        if (currentPlayer.address !== null) {
-            return false;
-        }
-        if (isDoublesTeam && !currentPlayer.isDoublesTeamCaptain) {
-            return false;
-        }
-        if (isDoublesTeam && currentPlayer.address) {
-            return false;
-        }
-        if (dayjs().diff(dayjs(tournament.endDate), 'week', true) > 10) {
-            return false;
-        }
-
-        return true;
     })();
 
     const canJoin = Boolean(
@@ -1097,11 +1073,6 @@ const Overview = (props: OverviewProps) => {
 
     return (
         <div className="position-relative d-grid gap-6" key={tournament.id}>
-            {isClaimingReward ? (
-                <Card>
-                    <ClaimReward isChampion={isChampion} tournament={tournament} reloadTournament={reloadTournament} />
-                </Card>
-            ) : null}
             {isMobile && renderOverview()}
             {isOver && winner && isMobile ? (
                 <Card>

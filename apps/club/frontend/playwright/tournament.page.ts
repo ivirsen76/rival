@@ -698,9 +698,6 @@ test('Do not show actions for not my tournament', async ({ page, common, login, 
     test('Should switch ladder during the season', async ({ page, common, login, overview }) => {
         await runQuery(`UPDATE settings SET changeLevelNotification="admin@gmail.com" WHERE id=1`);
         await runQuery(`UPDATE players SET readyForFinal=1 WHERE id=2`);
-        await runQuery(`
-            INSERT INTO payments (userId, type, description, amount)
-                 VALUES (1, 'product', 'For the product', 2000)`);
 
         await login.loginAsPlayer1();
         await page.goto('/season/2021/spring/men-35');

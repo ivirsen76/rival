@@ -76,8 +76,6 @@ export default function (app: Application) {
         users.belongsToMany(models.tournaments, {
             through: 'players',
         });
-        users.hasMany(models.payments);
-        users.hasMany(models.orders);
     };
 
     return users;

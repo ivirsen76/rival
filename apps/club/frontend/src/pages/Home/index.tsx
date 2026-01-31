@@ -211,18 +211,6 @@ const Home = (props) => {
     };
 
     const isLarge = ['xl', 'xxl', 'lg'].includes(size);
-    const getFreeMessage = (season) => {
-        if (!season.isFree) {
-            return null;
-        }
-
-        return (
-            <div className="mt-8">
-                <strong>The {season.name} season is free</strong> as we continue to build the community.{' '}
-                <Link to="/pricing">Learn more.</Link>
-            </div>
-        );
-    };
 
     const getLevelGroups = (levels) => {
         const result = levels.reduce((obj, level) => {
@@ -331,7 +319,6 @@ const Home = (props) => {
                                             ));
                                         })()}
                                     </div>
-                                    {getFreeMessage(data.nextTournament.season)}
                                 </Card>
                             )}
                             {data.latestTournament && (
@@ -392,8 +379,6 @@ const Home = (props) => {
                                             </div>
                                         );
                                     })()}
-                                    {data.latestTournament.season.usersCanRegister &&
-                                        getFreeMessage(data.latestTournament.season)}
                                 </Card>
                             )}
                         </div>

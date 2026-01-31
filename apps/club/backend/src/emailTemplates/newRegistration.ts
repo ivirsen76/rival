@@ -63,7 +63,6 @@ ${h2('Rival Tennis Ladder Resources')}
     <ul style="margin: 0 !important; padding-top: 0px; padding-bottom: 0px;">
         <li style="margin: 0 !important;">Who can I contact about questions: <a href="mailto:info@tennis-ladder.com">info@tennis-ladder.com</a></li>
         <li style="margin: 0 !important;"><a href="${TL_URL}/rules">What are the rules</a></li>
-        <li style="margin: 0 !important;"><a href="${TL_URL}/pricing">What is the pricing</a></li>
         <li style="margin: 0 !important;"><a href="${TL_URL}/scoring">How does scoring work</a></li>
         <li style="margin: 0 !important;"><a href="${TL_URL}/tlr">What is TLR</a></li>
     </ul>

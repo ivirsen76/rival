@@ -5,7 +5,6 @@ import { Login } from './poms/Login';
 import { Register } from './poms/Register';
 import { Overview } from './poms/Overview';
 import { Homepage } from './poms/Homepage';
-import { Wallet } from './poms/Wallet';
 import { Match } from './poms/Match';
 import { DoublesTeam } from './poms/DoublesTeam';
 import { TopMenu } from './poms/TopMenu';
@@ -26,7 +25,6 @@ type MyFixture = {
     register: Register;
     overview: Overview;
     homepage: Homepage;
-    wallet: Wallet;
     match: Match;
     doublesTeam: DoublesTeam;
     topMenu: TopMenu;
@@ -57,9 +55,6 @@ export const test = base.extend<MyFixture>({
     },
     homepage: async ({ page }, use) => {
         await use(new Homepage(page));
-    },
-    wallet: async ({ page }, use) => {
-        await use(new Wallet(page));
     },
     match: async ({ page }, use) => {
         await use(new Match(page));

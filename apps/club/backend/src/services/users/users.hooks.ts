@@ -2189,16 +2189,7 @@ const mergeUsers = () => async (context: HookContext) => {
         }
 
         // Change related tables
-        for (const table of [
-            'feedbacks',
-            'payments',
-            'orders',
-            'players',
-            'photos',
-            'reactions',
-            'comments',
-            'reports',
-        ]) {
+        for (const table of ['feedbacks', 'players', 'photos', 'reactions', 'comments', 'reports']) {
             await sequelize.query(`UPDATE ${table} SET userId=${userIdTo} WHERE userId=${userIdFrom}`);
         }
 
@@ -2297,16 +2288,6 @@ const mergeUsers = () => async (context: HookContext) => {
 
                 delete badgesFromMatch[badge.code];
 
-                const [[badgePayment]] = await sequelize.query(`SELECT * FROM payments WHERE badgeId=${badge.id}`);
-                const [[oldBadgePayment]] = await sequelize.query(
-                    `SELECT * FROM payments WHERE badgeId=${oldBadge.id}`
-                );
-                if (!badgePayment && oldBadgePayment) {
-                    await sequelize.query(
-                        `UPDATE payments SET userId=${userIdTo}, badgeId=${badge.id} WHERE badgeId=${oldBadge.id}`
-                    );
-                }
-
                 if (oldBadge.achievedAt >= badge.achievedAt) {
                     continue;
                 }
@@ -2319,11 +2300,8 @@ const mergeUsers = () => async (context: HookContext) => {
                 await sequelize.query(`UPDATE badges SET userId=${userIdTo} WHERE id=${badge.id}`);
             }
 
-            // remove old duplicated badges and payments related to them
+            // remove old duplicated badges
             {
-                await sequelize.query(
-                    `DELETE FROM payments WHERE badgeId IN (SELECT id FROM badges WHERE userId=${userIdFrom})`
-                );
                 await sequelize.query(`DELETE FROM badges WHERE userId=${userIdFrom}`);
             }
         }

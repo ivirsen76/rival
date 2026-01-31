@@ -1189,7 +1189,7 @@ const setPredictionWinner = () => async (context: HookContext) => {
 
     const { app } = context;
     const sequelize = app.get('sequelizeClient');
-    const { tournaments, payments } = sequelize.models;
+    const { tournaments } = sequelize.models;
 
     const [[info]] = await sequelize.query(
         `SELECT l.slug AS levelSlug,
@@ -1243,13 +1243,6 @@ const setPredictionWinner = () => async (context: HookContext) => {
         });
 
         if (!action) {
-            await payments.create({
-                userId: winner.userId,
-                type: 'discount',
-                description: `Bracket Battle Winner Award for ${tournamentInfo.data.level}`,
-                amount: 500,
-            });
-
             await sequelize.query(`INSERT INTO actions (tableId, name) VALUES (:playerId, :name)`, {
                 replacements: { playerId: winner.id, name: ACTION_NAME },
             });

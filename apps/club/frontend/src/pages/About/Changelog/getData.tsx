@@ -940,12 +940,6 @@ const getData = ({ config, lazyClass = '' } = {}) => [
                     Explore each badge to find special Badge Insights about your progress, when you achieved certain
                     levels, and how to reach the next level.
                 </p>
-
-                <h4 className="mt-12">Earn Rival Credit for Each Badge</h4>
-                <p>
-                    For every badge you achieve, you’ll receive <b>$1</b> in credit to your{' '}
-                    <Link to="/user/wallet">Rival Wallet</Link> for future seasons!
-                </p>
             </div>
         ),
     },

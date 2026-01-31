@@ -347,7 +347,7 @@ export const getUsersStats = async ({
 
 export const updateCurrentWeekUserBadges = async (app: Application, userId: number) => {
     const sequelize = app.get('sequelizeClient');
-    const { users, payments } = sequelize.models;
+    const { users } = sequelize.models;
     const config = await getCombinedConfig();
 
     const userStat = await getUsersStats({ sequelize, userId });
@@ -363,21 +363,10 @@ export const updateCurrentWeekUserBadges = async (app: Application, userId: numb
         } else {
             newBadges.push(badge);
 
-            const [newBadgeId] = await sequelize.query(
+            await sequelize.query(
                 `INSERT INTO badges (userId, code, achievedAt) VALUES (:userId, :code, :achievedAt)`,
                 { replacements: { userId, code: badge.code, achievedAt: badge.achievedAt } }
             );
-
-            const { code, amount } = getBadgeCode(badge);
-            const badgeInfo = allBadges[code];
-
-            await payments.create({
-                userId,
-                type: 'discount',
-                description: `Badge Credit (${badgeInfo.title}${amount ? `: ${_capitalize(amount)}` : ''})`,
-                amount: 100,
-                badgeId: newBadgeId,
-            });
         }
     }
 
@@ -435,7 +424,6 @@ export const updateCurrentWeekUserBadges = async (app: Application, userId: numb
 };
 
 export const applyNewBadges = async (sequelize: Sequelize, forceRecalculation: boolean = false) => {
-    const { payments } = sequelize.models;
     let startDate = '2000-01-01 00:00:00';
 
     if (forceRecalculation) {
@@ -470,30 +458,16 @@ export const applyNewBadges = async (sequelize: Sequelize, forceRecalculation: b
                 if (user.unverifiedBadges[badge.code]) {
                     delete user.unverifiedBadges[badge.code];
                 } else {
-                    const [newBadgeId] = await sequelize.query(
+                    await sequelize.query(
                         `INSERT INTO badges (userId, code, achievedAt) VALUES (:userId, :code, :achievedAt)`,
                         { replacements: { userId: user.id, code: badge.code, achievedAt: badge.achievedAt } }
                     );
-
-                    const { code, amount } = getBadgeCode(badge);
-                    const badgeInfo = allBadges[code];
-
-                    await payments.create({
-                        userId: user.id,
-                        type: 'discount',
-                        description: `Badge Credit (${badgeInfo.title}${amount ? `: ${_capitalize(amount)}` : ''})`,
-                        amount: 100,
-                        badgeId: newBadgeId,
-                    });
                 }
             }
 
             if (!forceRecalculation) {
                 for (const badge of Object.values(user.unverifiedBadges)) {
                     if (badge.achievedAt < endDate) {
-                        await sequelize.query(`DELETE FROM payments WHERE badgeId=:id`, {
-                            replacements: { id: badge.id },
-                        });
                         await sequelize.query(`DELETE FROM badges WHERE id=:id`, { replacements: { id: badge.id } });
                     }
                 }

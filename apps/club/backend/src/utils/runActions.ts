@@ -13,7 +13,6 @@ import activityReminderTemplate from '../emailTemplates/activityReminder';
 import noLadderChosenTemplate from '../emailTemplates/noLadderChosen';
 import seasonIsOverTemplate from '../emailTemplates/seasonIsOver';
 import joinNextSeasonTemplate from '../emailTemplates/joinNextSeason';
-import claimRewardTemplate from '../emailTemplates/claimReward';
 import finalMatchScheduleTemplate from '../emailTemplates/finalMatchSchedule';
 import feedbackRequestTemplate from '../emailTemplates/feedbackRequest';
 import getCustomEmail from '../emailTemplates/getCustomEmail';
@@ -1105,20 +1104,12 @@ export const joinNextSeason = async (app: Application) => {
         {
             ACTION_NAME: 'joinNextSeasonBetween',
             daysToNextSeason: 10,
-            getSubject: (isFree) => {
-                return isFree
-                    ? `Reminder: You Can Rejoin the Ladder for Free!`
-                    : `Don't Forget to Register Today for $${config.earlyRegistrationDiscount / 100} Off!`;
-            },
+            getSubject: (isFree) => `Reminder: You Can Rejoin the Ladder for Free!`,
         },
         {
             ACTION_NAME: 'joinNextSeasonLast',
             daysToNextSeason: 3,
-            getSubject: (isFree) => {
-                return isFree
-                    ? `You Can Rejoin the Ladder for Free!`
-                    : `Register Today for $${config.earlyRegistrationDiscount / 100} Off!`;
-            },
+            getSubject: (isFree) => `You Can Rejoin the Ladder for Free!`,
         },
     ];
 
@@ -1185,13 +1176,6 @@ export const joinNextSeason = async (app: Application) => {
     // get TLR
     const establishedEloAllUsers = await getEstablishedEloAllUsers({ config, sequelize });
 
-    // get credit
-    const [rows] = await sequelize.query(`SELECT userId, sum(amount) AS sum FROM payments GROUP BY userId`);
-    const availableCredit = rows.reduce((obj, item) => {
-        obj[item.userId] = item.sum;
-        return obj;
-    }, {});
-
     const commonParams = {
         season: {
             ...nextSeason,
@@ -1212,7 +1196,6 @@ export const joinNextSeason = async (app: Application) => {
     const svgs = affectedUsers.reduce((obj, user) => {
         const params = {
             ...commonParams,
-            creditAmount: availableCredit[user.id] || 0,
             elo: establishedEloAllUsers[user.id] || null,
             matchesPlayed: matches[user.id] || 0,
             gender: user.gender,
@@ -1256,154 +1239,6 @@ export const joinNextSeason = async (app: Application) => {
     await sequelize.query(`INSERT INTO actions (tableId, name) VALUES (:seasonId, :name)`, {
         replacements: { seasonId: nextSeason.id, name: reminder.ACTION_NAME },
     });
-};
-
-export const remindForClaimingReward = async (app: Application) => {
-    const sequelize = app.get('sequelizeClient');
-
-    const config = await getCombinedConfig();
-    if (config.isRaleigh) {
-        return;
-    }
-
-    const dateMonthAgo = dayjs.tz().subtract(1, 'month');
-    const [matches] = await sequelize.query(
-        `
-        SELECT uc.firstName AS challengerFirstName,
-               uc.lastName AS challengerLastName,
-               uc.email AS challengerEmail,
-               pc.address AS challengerAddress,
-               pc.partnerId AS challengerPartnerId,
-               ua.firstName AS acceptorFirstName,
-               ua.lastName AS acceptorLastName,
-               ua.email AS acceptorEmail,
-               pa.address AS acceptorAddress,
-               pa.partnerId AS acceptorPartnerId,
-               l.name AS levelName,
-               l.slug AS levelSlug,
-               l.type AS levelType,
-               s.year AS seasonYear,
-               s.season AS seasonSeason,
-               s.isFree AS seasonIsFree,
-               m.winner,
-               m.challengerId,
-               m.acceptorId,
-               m.wonByDefault
-          FROM matches AS m
-          JOIN players AS pc ON m.challengerId=pc.id
-          JOIN players AS pa ON m.acceptorId=pa.id
-          JOIN users AS uc ON pc.userId=uc.id
-          JOIN users AS ua ON pa.userId=ua.id
-          JOIN tournaments AS t ON pc.tournamentId=t.id
-          JOIN levels AS l ON t.levelId=l.id
-          JOIN seasons AS s ON t.seasonId=s.id
-         WHERE m.type="final" AND
-               m.finalSpot=1 AND
-               m.score IS NOT NULL AND
-               m.battleId IS NULL AND
-               m.createdAt>:date`,
-        { replacements: { date: dateMonthAgo.format('YYYY-MM-DD HH:mm:ss') } }
-    );
-
-    const users = [];
-    let isFree = false;
-    for (const match of matches) {
-        isFree = match.seasonIsFree === 1;
-
-        if (match.levelType === 'doubles-team') {
-            const winnerCaptainId =
-                match.winner === match.challengerId
-                    ? match.challengerPartnerId || match.challengerId
-                    : match.acceptorPartnerId || match.acceptorId;
-            const [[captain]] = await sequelize.query(
-                `SELECT u.firstName,
-                        u.lastName,
-                        u.email,
-                        p.address
-                   FROM players AS p,
-                        users AS u
-                  WHERE p.userId=u.id AND
-                        p.id=:playerId`,
-                { replacements: { playerId: winnerCaptainId } }
-            );
-
-            if (!captain.address) {
-                users.push({
-                    playerId: winnerCaptainId,
-                    firstName: captain.firstName,
-                    lastName: captain.lastName,
-                    email: captain.email,
-                    levelType: match.levelType,
-                    levelName: match.levelName,
-                    levelLink: `${process.env.TL_URL}/season/${match.seasonYear}/${match.seasonSeason}/${match.levelSlug}`,
-                    isWinner: true,
-                });
-            }
-
-            continue;
-        }
-
-        if (!match.challengerAddress) {
-            // Do not send reminder for runner-up who lost by default
-            if (!match.wonByDefault || match.challengerId === match.winner) {
-                users.push({
-                    playerId: match.challengerId,
-                    firstName: match.challengerFirstName,
-                    lastName: match.challengerLastName,
-                    email: match.challengerEmail,
-                    levelName: match.levelName,
-                    levelLink: `${process.env.TL_URL}/season/${match.seasonYear}/${match.seasonSeason}/${match.levelSlug}`,
-                    isWinner: match.challengerId === match.winner,
-                });
-            }
-        }
-        if (!match.acceptorAddress) {
-            // Do not send reminder for runner-up who lost by default
-            if (!match.wonByDefault || match.acceptorId === match.winner) {
-                users.push({
-                    playerId: match.acceptorId,
-                    firstName: match.acceptorFirstName,
-                    lastName: match.acceptorLastName,
-                    email: match.acceptorEmail,
-                    levelName: match.levelName,
-                    levelLink: `${process.env.TL_URL}/season/${match.seasonYear}/${match.seasonSeason}/${match.levelSlug}`,
-                    isWinner: match.acceptorId === match.winner,
-                });
-            }
-        }
-    }
-
-    const ACTION_NAME = 'claimReward';
-    let counter = 0;
-    for (const user of users) {
-        if (await isActionDone(sequelize, ACTION_NAME, user.playerId)) {
-            continue;
-        }
-
-        await app.service('api/emails').create({
-            to: [user].map(getEmailContact),
-            subject: `Claim your reward!`,
-            html: claimRewardTemplate({
-                config,
-                levelName: user.levelName,
-                levelLink: user.levelLink,
-                levelType: user.levelType,
-                isWinner: user.isWinner,
-                isFree,
-            }),
-            priority: 2,
-        });
-
-        await sequelize.query(`INSERT INTO actions (tableId, name) VALUES (:tableId, :name)`, {
-            replacements: { tableId: user.playerId, name: ACTION_NAME },
-        });
-
-        counter++;
-    }
-
-    if (counter > 0) {
-        logger.info(`The reminder to claim the reward sent to ${counter} users`);
-    }
 };
 
 export const sendFinalScheduleReminder = async (app: Application) => {
@@ -1966,7 +1801,6 @@ export default async (app: Application) => {
     await runAction(remindForChoosingLadder);
     await runAction(seasonIsOver);
     await runAction(joinNextSeason);
-    await runAction(remindForClaimingReward);
     await runAction(generateWordCloud);
     await runAction(sendFinalScheduleReminder);
     await runAction(requestFeedbackForNoJoin);

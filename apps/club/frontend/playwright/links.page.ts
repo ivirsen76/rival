@@ -21,7 +21,7 @@ test('Should follow links from home page', async ({ page, common, login }) => {
     await page.goto('/');
     await page.locator('a').getByText('Terms & Conditions').click();
     await expect(page.locator('h2').getByText('Terms & Conditions')).toBeVisible();
-    await expect(common.body).toContainText('Fees, Payments, and Refunds');
+    await expect(common.body).toContainText('Put some visible text here');
 
     await page.goto('/');
     await page.locator('a').getByText('Privacy Policy').click();

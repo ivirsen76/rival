@@ -19,7 +19,7 @@ export default ({ config, bracketImage, seasonName, levelName, topPlayers, hasBr
 
     <mj-text>Using our sophisticated tennis technology, <b>BracketBot</b> is also competing! BracketBot will make its picks for the tournament and attempt to beat everyone at creating the perfect bracket. <b>Can you beat the BracketBot?</b></mj-text>
 
-    <mj-text>Players who accumulate the most points at the end of the tournament will win the Rival Bracket Battle, earning them "<b>The Oracle</b>" badge and <b>$5</b> of credit. That's if they can beat the BracketBot!</mj-text>
+    <mj-text>Players who accumulate the most points at the end of the tournament will win the Rival Bracket Battle, earning them "<b>The Oracle</b>" badge. That's if they can beat the BracketBot!</mj-text>
 
     <mj-image src="${getImageUrl(
         __dirname + '/images/oracleBadge.png'

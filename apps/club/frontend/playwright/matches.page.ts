@@ -1341,17 +1341,6 @@ test.beforeEach(async ({ page, login }) => {
         await page.goto('/season/2021/spring/men-35');
         await expect(common.body).toContainText('No tournament is scheduled for the Men 3.5');
         await expect(common.body).toContainText('at least 4');
-        await expect(common.body).toContainText(match.REFUND_MESSAGE);
-    });
-
-    test('Should not show message about refund', async ({ page, common, login, match }) => {
-        const dateTwoDaysAgo = dayjs.tz().subtract(2, 'day').format('YYYY-MM-DD HH:mm:ss');
-        await runQuery(`UPDATE seasons SET isFree=1, endDate="${dateTwoDaysAgo}" WHERE id=1`);
-        await overrideConfig({ minMatchesToPlanTournament: 2 });
-
-        await page.goto('/season/2021/spring/men-35');
-        await expect(common.body).toContainText('No tournament is scheduled for the Men 3.5');
-        await expect(common.body).not.toContainText(match.REFUND_MESSAGE);
     });
 
     test('Should not show the message about not enough people if we have the final matches', async ({
@@ -1707,11 +1696,6 @@ test.beforeEach(async ({ page, login }) => {
 
         // Check that we have credit for winning the bracket battle
         await expectRecordToExist('actions', { name: 'bracketBattleWinner' }, { tableId: 2 });
-        await expectRecordToExist(
-            'payments',
-            { userId: 1, description: 'Bracket Battle Winner Award for Men 3.5' },
-            { type: 'discount', amount: 500 }
-        );
 
         await expectRecordToExist('emails', {
             subject: 'New Badge Earned!',
@@ -1763,7 +1747,6 @@ test.beforeEach(async ({ page, login }) => {
         await expectRecordToExist('tournaments', { id: 2 }, { predictionWinner: 99998 });
 
         expect(await getNumRecords('actions', { name: 'bracketBattleWinner' })).toBe(0);
-        expect(await getNumRecords('payments', { amount: 500 })).toBe(0);
     });
 
     test('Should set prediction and see error message when deadline is here', async ({
@@ -1978,9 +1961,6 @@ test.beforeEach(async ({ page, login }) => {
         expect(email.html).toContain('Champion');
         expect(email.html).toContain('player1@gmail.com');
         expect(email.html).toContain('Reward:</b> Gift Card');
-
-        // Check that there is no credits
-        expect(await getNumRecords('payments', { badgeId: null })).toBe(0);
     });
 
     test('Should claim the award as a runner-up and choose a credit for Raleigh', async ({
@@ -2027,12 +2007,6 @@ test.beforeEach(async ({ page, login }) => {
         expect(email.html).toContain('Runner-Up');
         expect(email.html).toContain('player1@gmail.com');
         expect(email.html).toContain('Reward:</b> Credit');
-
-        await expectRecordToExist(
-            'payments',
-            { userId: 1, badgeId: null },
-            { type: 'discount', description: 'Runner-Up award for Men 3.5', amount: 3000 }
-        );
     });
 
     test('Should claim the award as a winner and choose a gift', async ({ page, common, overview, match }) => {
@@ -2075,9 +2049,6 @@ test.beforeEach(async ({ page, login }) => {
         expect(email.html).toContain('player1@gmail.com');
         expect(email.html).toContain('908 Sutter Gate Ln, Morrisville, NC, 27560');
         expect(email.html).toContain('Reward:</b> Gift Card');
-
-        // Check that there is no credits
-        expect(await getNumRecords('payments', { badgeId: null })).toBe(0);
     });
 
     test('Should claim the award as a winner and get a credit', async ({ page, common, overview, match }) => {
@@ -2127,12 +2098,6 @@ test.beforeEach(async ({ page, login }) => {
         expect(email.html).toContain('player1@gmail.com');
         expect(email.html).toContain('908 Sutter Gate Ln, Morrisville, NC, 27560');
         expect(email.html).toContain('Reward:</b> Credit');
-
-        await expectRecordToExist(
-            'payments',
-            { userId: 1, badgeId: null },
-            { type: 'discount', description: 'Champion award for Men 3.5', amount: 5500 }
-        );
     });
 
     test('Should claim the award as a runner-up and get a credit', async ({ page, common, overview, match }) => {
@@ -2182,12 +2147,6 @@ test.beforeEach(async ({ page, login }) => {
         expect(email.html).toContain('player1@gmail.com');
         expect(email.html).toContain('908 Sutter Gate Ln, Morrisville, NC, 27560');
         expect(email.html).toContain('Reward:</b> Credit');
-
-        await expectRecordToExist(
-            'payments',
-            { userId: 1, badgeId: null },
-            { type: 'discount', description: 'Runner-Up award for Men 3.5', amount: 3000 }
-        );
     });
 
     test('Should not be able to claim the award if it was defaulted in the final match', async ({
@@ -2265,9 +2224,6 @@ test.beforeEach(async ({ page, login }) => {
         expect(email.html).toContain('player1@gmail.com');
         expect(email.html).toContain('908 Sutter Gate Ln, Morrisville, NC, 27560');
         expect(email.html).toContain('Reward:</b> Gift Card');
-
-        // Check that there is no credits
-        expect(await getNumRecords('payments', { badgeId: null })).toBe(0);
     });
 
     test('Should send the warning that opponent has changed', async ({ page, common, login, match }) => {

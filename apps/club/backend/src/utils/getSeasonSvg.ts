@@ -155,7 +155,6 @@ export type SeasonSvgParams = {
     season: Season & { name: string; dates: string; weeks: number };
     levels: Tournament[];
     config: Config;
-    creditAmount: number;
     elo: number | null;
     matchesPlayed: number;
     currentDate: string;
@@ -168,7 +167,6 @@ const getSeasonSvg = ({
     season,
     levels,
     config,
-    creditAmount,
     elo,
     matchesPlayed,
     currentDate,
@@ -178,7 +176,6 @@ const getSeasonSvg = ({
 }: SeasonSvgParams) => {
     const isFreeSeason = Boolean(season.isFree);
     const mustPay = !isFreeSeason && matchesPlayed >= config.minMatchesToPay;
-    const hasCredit = mustPay && creditAmount > 0;
     const hasElo = Boolean(elo);
     const isSeasonStarted = season.startDate < currentDate;
     const showTotalPlayers = totalPlayers >= 100;
@@ -213,24 +210,6 @@ const getSeasonSvg = ({
         return suitableLevels;
     })();
 
-    const costSettings = {
-        title: isFreeSeason ? ['Free to Join'] : mustPay ? ['Cost'] : ['Free for You'],
-        description: (() => {
-            if (isFreeSeason) {
-                return ['All fun, no fees'];
-            }
-            if (!mustPay) {
-                return ['Join anytime'];
-            }
-
-            const explanation = isSeasonStarted ? 'After the season begins:' : 'Before the season begins:';
-            const singlesCost = (config.singlesCost - (isSeasonStarted ? 0 : config.earlyRegistrationDiscount)) / 100;
-            const doublesCost = (config.doublesCost - (isSeasonStarted ? 0 : config.earlyRegistrationDiscount)) / 100;
-
-            return [explanation, `$${singlesCost} Singles`, `$${doublesCost} Doubles`];
-        })(),
-    };
-
     const blocks = [];
 
     // Dates
@@ -239,35 +218,12 @@ const getSeasonSvg = ({
         description: [`${season.weeks} weeks`],
     });
 
-    // Prizes
-    blocks.push({
-        title: ['Prizes'],
-        description: isFreeSeason
-            ? [`$${config.singlesChampionReward / 100 / 2} for Champion`]
-            : [
-                  `$${config.singlesChampionReward / 100} for Champion`,
-                  `$${config.singlesRunnerUpReward / 100} for Runner-Up`,
-              ],
-    });
-
     if (!mustPay && !hasElo) {
-        blocks.push(costSettings);
         blocks.push({
             title: ['Ladders'],
             description: suitableLadders,
         });
     } else {
-        blocks.push(costSettings);
-
-        if (mustPay) {
-            blocks.push({
-                title: hasCredit
-                    ? [`$${Math.floor(creditAmount / 100)} Credit`]
-                    : [`$${config.additionalLadderDiscount / 100} Discount`],
-                description: hasCredit ? ['Available for payment'] : ['For additional ladder'],
-            });
-        }
-
         if (hasElo) {
             blocks.push({
                 title: [`TLR ${formatElo(elo!)}`],

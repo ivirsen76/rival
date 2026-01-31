@@ -7,12 +7,7 @@ const getCombinedConfig = async () => {
     const override = process.env.TL_ENV !== 'production' && row.override ? JSON.parse(row.override) : {};
 
     const defaultValues = {
-        additionalLadderDiscount: 1000,
         addressZenKey: 'ak_mifh1nvwB0rBCMmlwtjQiTSpBAluu',
-        creditRewardBonus: 500,
-        doublesChampionReward: 1500,
-        doublesCost: 2500,
-        earlyRegistrationDiscount: 500,
         maxAgeCompatibleGap: 15,
         maxCommentsPerDay: 20,
         maxCompetitiveTlrGap: 25,
@@ -32,9 +27,6 @@ const getCombinedConfig = async () => {
         photosPerPage: 12,
         proposalEmailWaitTime: 2 * 60 * 1000, // 2 minutes
         registrationAheadWeeks: 3,
-        singlesChampionReward: 5000,
-        singlesCost: 3500,
-        singlesRunnerUpReward: 2500,
         teamNameMaxLength: 16,
         teamNameMinLength: 5,
         timeToViewPhoto: 5000, // 5s

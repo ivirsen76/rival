@@ -19,7 +19,6 @@ export class Match {
     readonly reasonField: Locator;
     readonly FINAL_SCHEDULE_TEXT: string;
     readonly REGULAR_RESCHEDULE_TEXT: string;
-    readonly REFUND_MESSAGE: string;
 
     constructor(page: Page) {
         const common = new Common(page);
@@ -41,7 +40,6 @@ export class Match {
         this.uploadStatsButton = page.locator('button').getByText('Upload statistics', { exact: true });
         this.FINAL_SCHEDULE_TEXT = 'After you both agree to a date and place';
         this.REGULAR_RESCHEDULE_TEXT = 'must agree to reschedule';
-        this.REFUND_MESSAGE = 'All players who paid an entry fee will receive a credit to their accounts.';
     }
 
     public async pickChallengerOption(name: string) {

@@ -173,19 +173,6 @@ const populateTournaments = () => async (context: HookContext) => {
         }
     }
 
-    // Get information if user is playing for free
-    {
-        const [result] = await sequelize.query(
-            `SELECT count(*) AS cnt
-               FROM payments
-              WHERE userId=:userId AND
-                    type="product"`,
-            { replacements: { userId } }
-        );
-
-        context.result.user.isPlayingForFree = result[0].cnt === 0;
-    }
-
     // Get avoided users
     {
         const avoidedUsers = new Set();

@@ -9,8 +9,6 @@ import actions from './actions/actions.service';
 import emails from './emails/emails.service';
 import passwords from './passwords/passwords.service';
 import settings from './settings/settings.service';
-import payments from './payments/payments.service';
-import orders from './orders/orders.service';
 import stats from './stats/stats.service';
 import news from './news/news.service';
 import utils from './utils/utils.service';
@@ -39,8 +37,6 @@ export default function (app: Application) {
     app.configure(emails);
     app.configure(passwords);
     app.configure(settings);
-    app.configure(payments);
-    app.configure(orders);
     app.configure(stats);
     app.configure(news);
     app.configure(utils);

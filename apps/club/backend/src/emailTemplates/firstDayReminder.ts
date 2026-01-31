@@ -19,7 +19,7 @@ export default ({ config, currentSeason, isFirstDay = true }: Params) => {
     ${gif}
 
     <mj-text>Remember, with the Rival Tennis Ladder, the more you play, the more points you can get. So, start off this first week on the right foot by playing as much as possible!</mj-text>`
-            : `<mj-text>We've received your payment for the ${config.city} Rival Tennis Ladder and added you to the ladder! That means you can start hitting the courts right now!</mj-text>
+            : `<mj-text>We've added you to the ladder! That means you can start hitting the courts right now!</mj-text>
 
     ${gif}
 
@@ -65,7 +65,6 @@ export default ({ config, currentSeason, isFirstDay = true }: Params) => {
             : `<a href="mailto:info@tennis-ladder.com">info@tennis-ladder.com</a>`
     }</li>
     <li style="margin: 0 !important;"><a href="${TL_URL}/rules">What are the rules</a></li>
-    <li style="margin: 0 !important;"><a href="${TL_URL}/pricing">What is the pricing</a></li>
     <li style="margin: 0 !important;"><a href="${TL_URL}/scoring">How does scoring work</a></li>
     <li style="margin: 0 !important;"><a href="${TL_URL}/tlr">What is TLR</a></li>
 </ul>

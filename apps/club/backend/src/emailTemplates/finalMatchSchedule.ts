@@ -72,12 +72,6 @@ ${h2('Hello, #firstName#!', 'padding-top="10px"')}
 ${h2('Please Schedule and Play Before the Deadline')}
 <mj-text>The deadline for finishing your match with ${opponentName} is <b>${formattedDate}</b>. Can you schedule your match and insert these details into the tournament bracket using the <b>Schedule</b> button? Doing so helps us ensure the match is set and ready!</mj-text>
 
-${
-    config.isRaleigh
-        ? `<mj-text>If you require a court reservation, you can request a free court by filling out the <a href="https://docs.google.com/forms/d/e/1FAIpQLSe6y12_k4l5Xjg5D4oscza7a8X0jlPXyHOv6oJYmT-XQ6CC_Q/viewform?embedded=true">Tennis Court Reservation Form</a> at least 24 hours before your match. Make sure to put "<b>ladder tournament match</b>" in the Comments/Questions section to avoid payment. Your court assignment location will depend on availability.</mj-text>`
-        : ''
-}
-
 ${signature({ config })}
 `,
         { config }

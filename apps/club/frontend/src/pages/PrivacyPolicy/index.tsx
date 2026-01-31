@@ -57,28 +57,13 @@ const Terms = (props) => {
                     <li>Any comments, feedback, or reports submitted via the Platform</li>
                 </ul>
 
-                <h3>C. Payment Information</h3>
-                <p>
-                    Payments are securely processed through <b>Stripe</b>. When you make a purchase or pay ladder fees:
-                </p>
-                <ul>
-                    <li>Stripe collects and processes your credit or debit card details directly.</li>
-                    <li>
-                        Rival <b>does not store</b> your complete card information.
-                    </li>
-                    <li>
-                        Stripe&apos;s privacy practices are governed by its own stipulations outlined in the{' '}
-                        <a href="https://stripe.com/privacy">Stripe Privacy Policy</a>.
-                    </li>
-                </ul>
-
-                <h3>D. Communication Data</h3>
+                <h3>C. Communication Data</h3>
                 <ul>
                     <li>Emails, notifications, and messages sent through the Platform</li>
                     <li>Correspondence with Rival support (including complaints or dispute submissions)</li>
                 </ul>
 
-                <h3>E. Technical and Usage Data</h3>
+                <h3>D. Technical and Usage Data</h3>
                 <ul>
                     <li>Browser type, device information, and IP address</li>
                     <li>Pages viewed and actions taken on the Platform</li>
@@ -97,7 +82,6 @@ const Terms = (props) => {
                 <h3>B. Account Management</h3>
                 <ul>
                     <li>To maintain your account and provide login authentication.</li>
-                    <li>To process payments and Rival Wallet credits.</li>
                 </ul>
 
                 <h3>C. Customer Support</h3>
@@ -142,9 +126,6 @@ const Terms = (props) => {
                 <h3>B. Third-Party Service Providers</h3>
                 <p>We use third parties for specific operational purposes, including:</p>
                 <ul>
-                    <li>
-                        <b>Stripe</b> for payment processing.
-                    </li>
                     <li>
                         <b>Google Analytics</b> for website performance measurement.
                     </li>

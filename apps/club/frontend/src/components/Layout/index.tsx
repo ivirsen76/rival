@@ -193,9 +193,6 @@ const Layout = (props: LayoutProps) => {
                             <Link to="/tlr">TLR</Link>
                         </div>
                         <div>
-                            <Link to="/pricing">Pricing</Link>
-                        </div>
-                        <div>
                             <Link to="/founders">Founders</Link>
                         </div>
                         <div>

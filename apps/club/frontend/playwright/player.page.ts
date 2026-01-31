@@ -515,19 +515,6 @@ test('Should see information that final tournament is canceled', async ({ page, 
     await expect(common.body).toContainText('Final Tournament');
     await expect(common.body).toContainText('No tournament is scheduled for the Men 3.5');
     await expect(common.body).toContainText('fewer than 20 matches');
-    await expect(common.body).toContainText(match.REFUND_MESSAGE);
-});
-
-test('Should not see information about refund', async ({ page, common, login, match }) => {
-    const dateOneWeekAgo = dayjs.tz().add(5, 'day').format('YYYY-MM-DD HH:mm:ss');
-    await runQuery(`UPDATE seasons SET endDate="${dateOneWeekAgo}" WHERE id=1`);
-    await runQuery(`UPDATE seasons SET isFree=1`);
-
-    await login.loginAsPlayer1();
-    await page.goto('/season/2021/spring/men-35');
-
-    await expect(common.body).toContainText('No tournament is scheduled');
-    await expect(common.body).not.toContainText(match.REFUND_MESSAGE);
 });
 
 test('Should not be able to participate in a ladder because of high TLR at the beginning of the season', async ({

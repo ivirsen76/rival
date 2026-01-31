@@ -635,8 +635,6 @@ test('We can register and join Doubles ladders (free and paid) paying from walle
     login,
     register,
 }) => {
-    await runQuery(`INSERT INTO payments (userId, type, description, amount) VALUES (5, 'discount', 'Credit', 10000)`);
-
     await closeCurrentSeason();
     await login.loginAsPlayer3();
 
@@ -2944,16 +2942,6 @@ test('Captain can change team name', async ({ page, common, login, overview, mat
             { id: 23 },
             { address: '908 Sutter Gate Ln, Morrisville, NC, 27560', rewardType: 'credit' }
         );
-        await expectRecordToExist(
-            'payments',
-            { userId: 5, badgeId: null },
-            { type: 'discount', description: 'Champion award for Men Team Doubles', amount: 1500 }
-        );
-        await expectRecordToExist(
-            'payments',
-            { userId: 6, badgeId: null },
-            { type: 'discount', description: 'Champion award for Men Team Doubles', amount: 1500 }
-        );
         const email = await expectRecordToExist(
             'emails',
             { subject: 'You Got $15 in Credit for Winning the Tournament!' },
@@ -2961,10 +2949,6 @@ test('Captain can change team name', async ({ page, common, login, overview, mat
         );
         expect(email.html).toContain('your Team Captain (Cristopher Hamiltonbeach)');
         expect(email.html).toContain('$15 credit');
-
-        // just to wait for all payments sent
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        await expectNumRecords('payments', { description: 'Champion award for Men Team Doubles' }, 2);
     });
 
     test('Generate tournament bracket, report the results, and claim the reward in Raleigh', async ({
@@ -3013,16 +2997,6 @@ test('Captain can change team name', async ({ page, common, login, overview, mat
         await expect(overview.claimAwardArea).toBeHidden();
 
         await expectRecordToExist('players', { id: 23 }, { address: '-', rewardType: 'credit' });
-        await expectRecordToExist(
-            'payments',
-            { userId: 5, badgeId: null },
-            { type: 'discount', description: 'Champion award for Men Team Doubles', amount: 1500 }
-        );
-        await expectRecordToExist(
-            'payments',
-            { userId: 6, badgeId: null },
-            { type: 'discount', description: 'Champion award for Men Team Doubles', amount: 1500 }
-        );
         const email = await expectRecordToExist(
             'emails',
             { subject: 'You Got $15 in Credit for Winning the Tournament!' },
@@ -3030,10 +3004,6 @@ test('Captain can change team name', async ({ page, common, login, overview, mat
         );
         expect(email.html).toContain('your Team Captain (Cristopher Hamiltonbeach)');
         expect(email.html).toContain('$15 credit');
-
-        // just to wait for all payments sent
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        await expectNumRecords('payments', { description: 'Champion award for Men Team Doubles' }, 2);
     });
 
     test('Teammate can add a friendly proposal and pick teammate to play', async ({

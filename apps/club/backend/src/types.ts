@@ -90,19 +90,12 @@ export type Config = {
     city: string;
     state: string;
     isRaleigh: number;
-    doublesChampionReward: number;
-    singlesChampionReward: number;
-    singlesRunnerUpReward: number;
     minMatchesToEstablishTlr: number;
     minMatchesToPlanTournament: number;
     tournamentReminderWeeks: number;
     minPlayersForActiveLadder: number;
     minMatchesForActiveLadder: number;
     minMatchesToPay: number;
-    singlesCost: number;
-    doublesCost: number;
-    earlyRegistrationDiscount: number;
-    additionalLadderDiscount: number;
     url: string;
 };
 
@@ -189,15 +182,6 @@ export type Option = {
 };
 
 export type Schedule = [number, number][];
-
-export type Payment = {
-    id: number;
-    type: string;
-    description: string;
-    amount: number;
-    createdAt: string;
-    orderPayload: any;
-};
 
 export type Reaction = {
     userId: number;

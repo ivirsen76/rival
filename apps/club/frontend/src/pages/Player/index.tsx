@@ -32,8 +32,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import hasAnyRole from '@rival/common/utils/hasAnyRole';
 import { formatCustom } from '@rival/common/dayjs';
 import Emails from './Emails';
-import AddTransactionForm from './AddTransactionForm';
-import Wallet from '@/components/Wallet';
 import PersonalNoteForm from './PersonalNoteForm';
 import PlayerAvatar from '@rival/common/components/PlayerAvatar';
 import PlayerName from '@rival/common/components/PlayerName';
@@ -145,33 +143,6 @@ const Player = (props: PlayerProps) => {
                                     </button>
                                 )}
                                 renderBody={() => <Emails user={obj} />}
-                            />
-                            <Modal
-                                title={
-                                    <div>
-                                        {obj.firstName} {obj.lastName}&apos;s Wallet
-                                    </div>
-                                }
-                                size="lg"
-                                renderTrigger={({ show }) => (
-                                    <button type="button" className="btn btn-primary btn-xs" onClick={show}>
-                                        Wallet
-                                    </button>
-                                )}
-                                renderBody={() => <Wallet userId={obj.id} isFullWidth />}
-                            />
-                            <Modal
-                                title={
-                                    <div>
-                                        Add transaction to {obj.firstName} {obj.lastName}
-                                    </div>
-                                }
-                                renderTrigger={({ show }) => (
-                                    <button type="button" className="btn btn-primary btn-xs" onClick={show}>
-                                        Add transaction
-                                    </button>
-                                )}
-                                renderBody={({ hide }) => <AddTransactionForm user={obj} onSubmit={hide} />}
                             />
                             {['player', 'partner'].includes(user.roles) && (
                                 <button

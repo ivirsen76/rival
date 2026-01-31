@@ -28,11 +28,9 @@ import Login from '@/pages/Login';
 import Logout from '@/pages/Logout';
 import ForgotPassword from '@/pages/ForgotPassword';
 import Settings from '@/pages/Settings';
-import Wallet from '@/pages/Wallet';
 import Contacts from '@/pages/About/Contacts';
 import ContactsRaleigh from '@/pages/About/ContactsRaleigh';
 import Founders from '@/pages/About/Founders';
-import Pricing from '@/pages/About/Pricing';
 import Rules from '@/pages/About/Rules';
 import Ladder from '@/pages/About/Ladder';
 import Scoring from '@/pages/About/Scoring';
@@ -41,7 +39,6 @@ import Player from '@/pages/Player';
 import Top from '@/pages/Top';
 import Tournament from '@/pages/Tournament';
 import Changelog from '@/pages/About/Changelog';
-import Register from '@/pages/Register';
 import RegisterSuccess from '@/pages/RegisterSuccess';
 import Badges from '@/pages/Badges';
 import Terms from '@/pages/Terms';
@@ -253,11 +250,8 @@ export default function App() {
                 <Route exact path="/terms-and-conditions" component={Terms} />
                 <Route exact path="/privacy-policy" component={PrivacyPolicy} />
                 <Route exact path="/top/:category?" component={Top} />
-                <Route exact path="/pricing" component={Pricing} />
                 <Route exact path="/rules" component={Rules} />
-                <Route exact path="/user/wallet" component={Wallet} />
                 <Route exact path="/register/success/:sessionId" component={RegisterSuccess} />
-                <Route exact path="/register" component={Register} />
                 <Route exact path="/a/:name/:code" component={ShortLink} />
                 <Route exact path="/action/:payload" component={Action} />
                 <Redirect exact from="/admin" to="/admin/stats" />

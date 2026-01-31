@@ -17,8 +17,6 @@ import { POOL_PARTNER_ID } from '../../constants';
 import { getEmailsFromList } from '../settings/helpers';
 import getCustomEmail from '../../emailTemplates/getCustomEmail';
 
-const WEEK_SHIFT = 3; // The payments for last weeks we count as for the next season
-
 const validateCreate = () => async (context: HookContext) => {
     const errors = commonValidate(context.data);
 
@@ -218,20 +216,12 @@ const getCurrentSeason = () => async (context: HookContext) => {
         const season = seasons[0];
         season.name = getSeasonName(season);
         season.usersCanRegister = true;
-        const startDate = dayjs.tz(season.startDate);
         const endDate = dayjs.tz(season.endDate);
         if (currentDate.isAfter(endDate)) {
             season.isFinished = true;
         }
         if (season.isFinished) {
             season.usersCanRegister = false;
-        }
-        season.singlesCost = config.singlesCost;
-        season.doublesCost = config.doublesCost;
-        if (currentDate.isBefore(startDate)) {
-            season.singlesCost -= config.earlyRegistrationDiscount;
-            season.doublesCost -= config.earlyRegistrationDiscount;
-            season.isEarlyRegistration = true;
         }
 
         const [levels] = await sequelize.query(
@@ -328,17 +318,8 @@ const getCurrentSeason = () => async (context: HookContext) => {
                 season: seasons[0],
             };
 
-            const startDate = dayjs.tz(nextTournament.season.startDate);
-
             nextTournament.season.name = getSeasonName(nextTournament.season);
             nextTournament.season.usersCanRegister = true;
-            nextTournament.season.singlesCost = config.singlesCost;
-            nextTournament.season.doublesCost = config.doublesCost;
-            if (currentDate.isBefore(startDate)) {
-                nextTournament.season.singlesCost -= config.earlyRegistrationDiscount;
-                nextTournament.season.doublesCost -= config.earlyRegistrationDiscount;
-                nextTournament.season.isEarlyRegistration = true;
-            }
 
             const [levels] = await sequelize.query(
                 `SELECT t.id AS tournamentId,
@@ -432,18 +413,6 @@ const getSeasonsToRegister = () => async (context: HookContext) => {
             );
 
             tournament.poolPlayers = poolPlayers;
-        }
-
-        {
-            const startDate = dayjs.tz(season.startDate);
-
-            season.singlesCost = config.singlesCost;
-            season.doublesCost = config.doublesCost;
-            if (currentDate.isBefore(startDate)) {
-                season.singlesCost -= config.earlyRegistrationDiscount;
-                season.doublesCost -= config.earlyRegistrationDiscount;
-                season.isEarlyRegistration = true;
-            }
         }
     }
 
@@ -920,57 +889,6 @@ const getSeasonStats = () => async (context: HookContext) => {
     return context;
 };
 
-const getSeasonPayments = () => async (context: HookContext) => {
-    await authenticate('jwt')(context);
-    hasAnyRole(['admin', 'manager'])(context);
-
-    const { config } = context.params;
-    if (!config.isRaleigh) {
-        throw new Unprocessable('The route is unaccessible.');
-    }
-
-    const seasonId = Number(context.id);
-    const sequelize = context.app.get('sequelizeClient');
-
-    const [[currentSeason, prevSeason]] = await sequelize.query(
-        `SELECT * FROM seasons WHERE id<=:seasonId ORDER BY id DESC LIMIT 0, 2`,
-        { replacements: { seasonId } }
-    );
-
-    const startDate = prevSeason
-        ? dayjs.tz(prevSeason.endDate).subtract(WEEK_SHIFT, 'week').format('YYYY-MM-DD HH:mm:ss')
-        : '2025-08-20';
-    const endDate = dayjs.tz(currentSeason.endDate).subtract(WEEK_SHIFT, 'week').format('YYYY-MM-DD HH:mm:ss');
-
-    const [payments] = await sequelize.query(
-        `SELECT p.*,
-                u.firstName,
-                u.lastName,
-                u.slug
-           FROM payments AS p
-           JOIN users AS u ON p.userId=u.id
-          WHERE p.type="payment" AND
-                p.createdAt>:startDate AND
-                p.createdAt<:endDate
-       ORDER BY p.createdAt`,
-        { replacements: { startDate, endDate } }
-    );
-
-    const data = payments.map((item) => ({
-        id: item.id,
-        createdAt: item.createdAt,
-        firstName: item.firstName,
-        lastName: item.lastName,
-        slug: item.slug,
-        amount: item.amount,
-        fee: Math.round(item.amount * 0.029 + 30), // 2.9% + 30¢
-    }));
-
-    context.result = { data };
-
-    return context;
-};
-
 const runCustomAction = () => async (context: HookContext) => {
     const { action } = context.data;
     delete context.data.action;
@@ -985,8 +903,6 @@ const runCustomAction = () => async (context: HookContext) => {
         await getSeasonStats()(context);
     } else if (action === 'getSeasonsToRegister') {
         await getSeasonsToRegister()(context);
-    } else if (action === 'getSeasonPayments') {
-        await getSeasonPayments()(context);
     } else {
         throw new NotFound();
     }

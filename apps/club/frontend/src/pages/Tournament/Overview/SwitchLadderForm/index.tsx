@@ -43,9 +43,6 @@ const SwitchLadderForm = (props: SwitchLadderFormProps) => {
 
         const _levelOptions = levels
             .filter((item) => {
-                if (!currentUser.isPlayingForFree && item.type !== tournament.levelType) {
-                    return false;
-                }
                 if (!_hasSuitableTournament) {
                     return true;
                 }

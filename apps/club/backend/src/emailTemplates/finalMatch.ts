@@ -103,12 +103,6 @@ ${(() => {
 ${h2('1. Schedule', 'padding-top="20px" padding-bottom="0px"')}
 <mj-text>Once you decide on a place and time with <b>${opponentName}</b>, please insert these details into the tournament bracket using the <b>Schedule</b> button. Doing so helps us ensure the match is set and ready!</mj-text>
 
-${
-    config.isRaleigh
-        ? `<mj-text>If you require a court reservation, you can request a free court by filling out the <a href="https://docs.google.com/forms/d/e/1FAIpQLSe6y12_k4l5Xjg5D4oscza7a8X0jlPXyHOv6oJYmT-XQ6CC_Q/viewform?embedded=true">Tennis Court Reservation Form</a> at least 24 hours before your match. Make sure to put "<b>ladder tournament match</b>" in the Comments/Questions section to avoid payment. Your court assignment location will depend on availability.</mj-text>`
-        : ''
-}
-
 ${h2('2. Play', 'padding-top="20px" padding-bottom="0px"')}
 <mj-text>You must complete your ${stage} match by the <b>end of the day on ${formattedDate}</b>${
             isRoundOf16 || isQuarterFinal

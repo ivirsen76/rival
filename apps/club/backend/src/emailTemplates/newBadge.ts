@@ -7,7 +7,6 @@ type Params = { config: Config; badges: Badge[] };
 
 export default ({ config, badges }: Params) => {
     const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
-    const walletUrl = `${process.env.TL_URL}/user/wallet`;
     const badgesUrl = `${process.env.TL_URL}/user/badges`;
 
     return normal(
@@ -29,9 +28,6 @@ export default ({ config, badges }: Params) => {
             )
             .join('')}
     </mj-table>
-    <mj-text>With ${badges.length === 1 ? 'this badge' : 'these badges'}, you earned <b>$${
-        badges.length
-    }</b> in your <a href="${walletUrl}">Rival Wallet</a>!</mj-text>
     <mj-text>See all your badge progress and more insights by visiting your <a href="${badgesUrl}">Rival Badges</a>.</mj-text>
 `,
         { config }

@@ -19,7 +19,6 @@ export default function (app: Application) {
             changedCount: Sequelize.INTEGER,
             address: Sequelize.STRING,
             addressVerification: Sequelize.STRING,
-            rewardType: Sequelize.STRING,
             joinAnyTeam: Sequelize.BOOLEAN,
             joinAnyTeamComment: Sequelize.STRING,
             joinReason: Sequelize.STRING,

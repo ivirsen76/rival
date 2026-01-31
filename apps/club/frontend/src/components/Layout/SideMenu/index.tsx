@@ -3,8 +3,6 @@ import { PanelMenu } from 'primereact/panelmenu';
 import LineIcon from '@rival/common/metronic/icons/duotune/abstract/abs015.svg?react';
 import ExitIcon from '@rival/common/metronic/icons/duotune/arrows/arr043.svg?react';
 import SettingsIcon from '@rival/common/metronic/icons/duotone/Interface/Cog.svg?react';
-import DollarIcon from '@rival/common/metronic/icons/duotone/Shopping/Dollar.svg?react';
-import HornIcon from '@/assets/horn.svg?react';
 import BadgeIcon from '@/assets/badge.svg?react';
 import UserIcon from '@rival/common/metronic/icons/duotone/General/User.svg?react';
 import EnterIcon from '@rival/common/metronic/icons/duotune/arrows/arr042.svg?react';
@@ -100,12 +98,6 @@ const SideMenu = (props: SideMenuProps) => {
                                         template: menuItem,
                                     },
                                     {
-                                        label: 'Wallet',
-                                        icon: <DollarIcon />,
-                                        command: () => goTo('/user/wallet'),
-                                        template: menuItem,
-                                    },
-                                    {
                                         label: 'Badges',
                                         icon: <BadgeIcon />,
                                         command: () => goTo('/user/badges'),
@@ -180,11 +172,6 @@ const SideMenu = (props: SideMenuProps) => {
                     label: 'TLR',
                     template: menuItem,
                     command: () => goTo('/tlr'),
-                },
-                {
-                    label: 'Pricing',
-                    template: menuItem,
-                    command: () => goTo('/pricing'),
                 },
                 {
                     label: 'Founders',
