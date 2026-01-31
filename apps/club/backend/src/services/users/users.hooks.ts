@@ -2114,7 +2114,6 @@ const mergeUsers = () => async (context: HookContext) => {
     }
 
     const { userIdTo, userIdFrom, decision } = context.data;
-    const allUserIds = [userIdTo, userIdFrom];
     const client = context.app.get('redisClient');
     const sequelize = context.app.get('sequelizeClient');
     const { users } = sequelize.models;

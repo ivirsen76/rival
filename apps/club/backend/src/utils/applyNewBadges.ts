@@ -6,7 +6,6 @@ import dayjs from './dayjs';
 import { getEmailContact, getWeekNumber, getDateByWeekNumber } from '../services/users/helpers';
 import { badges as allBadges } from './badges';
 import renderImage from './renderImage';
-import _capitalize from 'lodash/capitalize';
 import newBadgeTemplate from '../emailTemplates/newBadge';
 import logger from '@rival-tennis-ladder/logger';
 import { BRACKET_BOT_ID } from '../constants';

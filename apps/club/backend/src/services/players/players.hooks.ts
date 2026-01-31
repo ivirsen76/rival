@@ -12,7 +12,6 @@ import { hasAnyRole, purgeTournamentCache, sendWelcomeEmail, logEvent } from '..
 import yup from '../../packages/yup';
 import { getSchemaErrors } from '../../helpers';
 import changeLevelNotificationTemplate from '../../emailTemplates/changeLevelNotification';
-import arbitraryMessageTemplate from '../../emailTemplates/arbitraryMessage';
 import firstDayReminderTemplate from '../../emailTemplates/firstDayReminder';
 import { getEmailsFromList } from '../settings/helpers';
 import { getSeasonName } from '../seasons/helpers';
@@ -28,12 +27,10 @@ import {
     sendNewPoolPlayerMessage,
     formatTeamName,
     getPlayersUpdates,
-    splitAddress,
 } from './helpers';
 import { decodeAction } from '../../utils/action';
 import { POOL_PARTNER_ID } from '../../constants';
 import seedrandom from 'seedrandom';
-import axios from 'axios';
 import type { Match, User } from '../../types';
 
 const validatePatch = () => (context: HookContext) => {
@@ -728,8 +725,7 @@ const switchTournament = () => async (context: HookContext) => {
         `SELECT s.id,
                 s.startDate,
                 s.endDate,
-                l.name AS levelFrom,
-                l.type AS levelType
+                l.name AS levelFrom
            FROM tournaments AS t,
                 seasons AS s,
                 levels AS l
@@ -738,7 +734,7 @@ const switchTournament = () => async (context: HookContext) => {
                 t.id=:id`,
         { replacements: { id: from } }
     );
-    const { endDate, id: seasonId, levelFrom, levelType } = seasons[0];
+    const { endDate, id: seasonId, levelFrom } = seasons[0];
     const currentDate = dayjs.tz();
     if (currentDate.isAfter(dayjs.tz(endDate))) {
         throw new Unprocessable('The season is already over.');

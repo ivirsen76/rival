@@ -195,7 +195,6 @@ const getLevels = () => (context: HookContext) => {
 
 const getCurrentSeason = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
-    const { config } = context.params;
     const currentDate = dayjs.tz();
     const nowTz = currentDate.format('YYYY-MM-DD HH:mm:ss');
 

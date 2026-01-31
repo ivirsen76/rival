@@ -6,8 +6,6 @@ import _isEmpty from 'lodash/isEmpty';
 import { throwValidationErrors } from '../../helpers';
 import allBananas, { type Banana } from '../../bananas';
 import dayjs from '../../utils/dayjs';
-import type { User } from '../../types';
-import populateInformation from '../users/populateInformation';
 
 const validatePatch = () => (context: HookContext) => {
     const errors = validate(context.data);

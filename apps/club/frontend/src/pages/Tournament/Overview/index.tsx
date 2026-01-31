@@ -160,15 +160,12 @@ const Overview = (props: OverviewProps) => {
         allowChangeParticipationStatus,
         playedMatches,
         finalMatches,
-        isChampion,
-        isRunnerUp,
         todayMatches,
         yesterdayMatches,
         tomorrowMatches,
         proposals,
         upcomingMatches,
         totalPlayers,
-        isFinalWonDefault,
     } = useMemo(() => {
         const currentDate = dayjs.tz();
         const currentDateString = currentDate.format('YYYY-MM-DD HH:mm:ss');

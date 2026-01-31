@@ -5,7 +5,6 @@ import {
     runQuery,
     overrideConfig,
     getNumRecords,
-    expectNumRecords,
 } from '@rival/club.backend/src/db/helpers';
 import { getActionLink } from '@rival/club.backend/src/utils/action';
 import dayjs from '@rival/club.backend/src/utils/dayjs';

@@ -169,7 +169,6 @@ const getSeasonSvg = ({
     config,
     elo,
     matchesPlayed,
-    currentDate,
     scale = 1,
     totalPlayers = 0,
     gender = 'male',
@@ -177,7 +176,6 @@ const getSeasonSvg = ({
     const isFreeSeason = Boolean(season.isFree);
     const mustPay = !isFreeSeason && matchesPlayed >= config.minMatchesToPay;
     const hasElo = Boolean(elo);
-    const isSeasonStarted = season.startDate < currentDate;
     const showTotalPlayers = totalPlayers >= 100;
 
     const backgroundUrl = (() => {
