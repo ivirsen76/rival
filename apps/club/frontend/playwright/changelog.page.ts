@@ -121,7 +121,7 @@ test('Can see modal with new features and go to changelog', async ({ page, commo
     await expect(common.modal).toBeHidden();
 });
 
-test('Do not see modal with new features on register page', async ({ page, common, login, changelog, homepage }) => {
+test('Do not see modal with new features on register page', async ({ page, common, login }) => {
     await resetChangelogSeen();
     await setRecentLoggedAt();
 

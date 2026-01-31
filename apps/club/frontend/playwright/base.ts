@@ -3,6 +3,7 @@ import { test as base, expect, Page } from '@playwright/test';
 import { Common } from './poms/Common';
 import { Login } from './poms/Login';
 import { Overview } from './poms/Overview';
+import { Register } from './poms/Register';
 import { Homepage } from './poms/Homepage';
 import { Match } from './poms/Match';
 import { DoublesTeam } from './poms/DoublesTeam';
@@ -22,6 +23,7 @@ type MyFixture = {
     common: Common;
     login: Login;
     overview: Overview;
+    register: Register;
     homepage: Homepage;
     match: Match;
     doublesTeam: DoublesTeam;
@@ -47,6 +49,9 @@ export const test = base.extend<MyFixture>({
     },
     overview: async ({ page }, use) => {
         await use(new Overview(page));
+    },
+    register: async ({ page }, use) => {
+        await use(new Register(page));
     },
     homepage: async ({ page }, use) => {
         await use(new Homepage(page));

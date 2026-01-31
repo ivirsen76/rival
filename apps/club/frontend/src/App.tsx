@@ -36,6 +36,7 @@ import Ladder from '@/pages/About/Ladder';
 import Scoring from '@/pages/About/Scoring';
 import Rating from '@/pages/About/Rating';
 import Player from '@/pages/Player';
+import Register from '@/pages/Register';
 import Top from '@/pages/Top';
 import Tournament from '@/pages/Tournament';
 import Changelog from '@/pages/About/Changelog';
@@ -241,6 +242,7 @@ export default function App() {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/forgotPassword" component={ForgotPassword} />
                 <Route exact path="/logout" component={Logout} />
+                <Route exact path="/register" component={Register} />
                 <Route exact path="/contacts" component={settings.config.isRaleigh ? ContactsRaleigh : Contacts} />
                 <Route exact path="/founders" component={Founders} />
                 <Route exact path="/scoring" component={Scoring} />
