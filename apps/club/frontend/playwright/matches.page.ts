@@ -942,48 +942,6 @@ test.beforeEach(async ({ page, login }) => {
         expect(emailSent.html).toContain('123-456-7890');
         expect(emailSent.html).toContain('sms:1234567890');
     });
-
-    test('Should report the score and get referral bonus for the first match', async ({
-        page,
-        common,
-        login,
-        match,
-    }) => {
-        await page.goto('/season/2021/spring/men-35');
-        await match.scoreButton.click();
-
-        await match.pickChallengerPoints(3);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        await match.pickChallengerPoints(2);
-        await common.modalSubmitButton.click();
-
-        await expect(common.alert).toContainText('has been reported');
-
-        // Check email about the first referral match and the credit
-        {
-            const email = await expectRecordToExist(
-                'emails',
-                { subject: 'You Just Earned $5 in Rival Credit!' },
-                { recipientEmail: 'player1@gmail.com' }
-            );
-            expect(email.html).toContain('Gary Mill');
-            expect(email.html).toContain('<b>$5</b>');
-        }
-
-        // Check that we have referral credit
-        await expectRecordToExist(
-            'payments',
-            { userId: 1 },
-            {
-                type: 'discount',
-                description: 'Referral credit for Gary Mill (first match)',
-                amount: 500,
-            }
-        );
-
-        await expectRecordToExist('actions', { name: 'firstMatchCreditForUser2' }, { tableId: 1 });
-    });
 })();
 
 // Notification about established TLR

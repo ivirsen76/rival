@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 import formatPhone from '@rival/common/utils/formatPhone';
 import LockIcon from '@rival/common/metronic/icons/duotone/Interface/Lock.svg?react';
 import { formatDate } from '@rival/common/dayjs';
-import { comeFromOptions } from '@/components/Authentication/Register';
 import CheckIcon from '@rival/common/metronic/icons/duotone/Navigation/Check.svg?react';
 import CloseIcon from '@rival/common/metronic/icons/duotone/Navigation/Close.svg?react';
 import UpdateIcon from '@rival/common/metronic/icons/duotone/General/Update.svg?react';
@@ -192,23 +191,6 @@ const Players = () => {
             isSort: true,
         },
         { name: 'totalLadders', label: 'Ladders', className: 'text-center', isSort: true },
-        { name: 'totalReferrals', label: 'Referrals', className: 'text-center', isSort: true },
-        {
-            name: 'comeFrom',
-            label: 'Origin',
-            render: (value, row) => {
-                if (!row.comeFrom) {
-                    return '-';
-                }
-
-                const comeFromInfo = comeFromOptions.find((item) => item.value === row.comeFrom);
-                if (!comeFromInfo) {
-                    return '-';
-                }
-
-                return comeFromInfo.label + (row.comeFromOther ? ` (${row.comeFromOther})` : '');
-            },
-        },
         {
             name: 'createdAt',
             label: <span className="text-nowrap">Registered at</span>,

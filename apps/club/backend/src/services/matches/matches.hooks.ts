@@ -17,7 +17,6 @@ import renderImage from '../../utils/renderImage';
 import newMatchReportedTemplate from '../../emailTemplates/newMatchReported';
 import newMatchStatReportedTemplate from '../../emailTemplates/newMatchStatReported';
 import scheduleMatchTemplate from '../../emailTemplates/scheduleMatch';
-import referralFirstMatchTemplate from '../../emailTemplates/referralFirstMatch';
 import newRivalryStartedTemplate from '../../emailTemplates/newRivalryStarted';
 import deletedScheduledMatchTemplate from '../../emailTemplates/deletedScheduledMatch';
 import eloEstablishedTemplate from '../../emailTemplates/eloEstablished';
@@ -25,7 +24,6 @@ import getCustomEmail from '../../emailTemplates/getCustomEmail';
 import { reverseScore } from './calculateElo';
 import yup from '../../packages/yup';
 import sendFinalReminders from './sendFinalReminders';
-import publishStats from '../../utils/publishStats';
 import axios from 'axios';
 import getStat from './getStat';
 import getScore from './getScore';
@@ -39,7 +37,6 @@ import { getStatsMatches } from '../../utils/sqlConditions';
 import getMatchInfo from './getMatchInfo';
 import { getPlayerName, getEmailContact, getEmailLink, getPhoneLink } from '../users/helpers';
 import type { Level, Match, Player, User } from '../../types';
-import type { Transaction } from 'sequelize';
 
 const isAdmin = (user: User) => {
     const roles = user.roles.split(',');
@@ -174,79 +171,6 @@ const populateWinner = () => async (context: HookContext) => {
 
     data.acceptedAt = dayjs.tz().format('YYYY-MM-DD HH:mm:ss+00:00');
     data.initial = 3;
-
-    return context;
-};
-
-const sendReferralCredit = () => async (context: HookContext) => {
-    const sequelize = context.app.get('sequelizeClient');
-    const { payments, users, players, matches } = sequelize.models;
-    const { config } = context.params;
-    const matchId = Number(context.id);
-
-    const match = matchId ? await matches.findByPk(matchId) : context.data;
-
-    if (match.wonByDefault || match.unavailable) {
-        return context;
-    }
-    if (!match.score) {
-        return context;
-    }
-
-    const challenger = match.challengerId ? await players.findByPk(match.challengerId) : null;
-    const challenger2 = match.challenger2Id ? await players.findByPk(match.challenger2Id) : null;
-    const acceptor = match.acceptorId ? await players.findByPk(match.acceptorId) : null;
-    const acceptor2 = match.acceptor2Id ? await players.findByPk(match.acceptor2Id) : null;
-
-    for (const player of [challenger, challenger2, acceptor, acceptor2]) {
-        if (!player) {
-            continue;
-        }
-
-        const { userId } = player;
-        const user = await users.findByPk(userId);
-        if (!user.referrerUserId) {
-            continue;
-        }
-        const referrerUser = await users.findByPk(user.referrerUserId);
-        if (referrerUser.refPercent) {
-            continue;
-        }
-
-        const ACTION_NAME = `firstMatchCreditForUser${userId}`;
-        const [actions] = await sequelize.query(`SELECT * FROM actions WHERE tableId=:tableId AND name=:name`, {
-            replacements: { tableId: referrerUser.id, name: ACTION_NAME },
-        });
-
-        if (actions.length > 0) {
-            continue;
-        }
-
-        const userFullName = getPlayerName(user);
-        await sequelize.transaction(async (t: Transaction) => {
-            await payments.create(
-                {
-                    userId: referrerUser.id,
-                    type: 'discount',
-                    description: `Referral credit for ${userFullName} (first match)`,
-                    amount: config.referralFirstMatchCredit,
-                },
-                { transaction: t }
-            );
-
-            await sequelize.query(`INSERT INTO actions (tableId, name) VALUES (:tableId, :name)`, {
-                replacements: { tableId: referrerUser.id, name: ACTION_NAME },
-                transaction: t,
-            });
-
-            // don't wait for email sent
-            context.app.service('api/emails').create({
-                to: [getEmailContact(referrerUser)],
-                subject: `You Just Earned $${config.referralFirstMatchCredit / 100} in Rival Credit!`,
-                html: referralFirstMatchTemplate({ config, referralName: userFullName }),
-            });
-        });
-    }
 
     return context;
 };
@@ -452,10 +376,6 @@ const populateNextFinalMatch = async (context: HookContext, prevMatch: Match) =>
     }
 
     sendFinalReminders(context, tournamentId);
-
-    if (connectedMatch.finalSpot === 1) {
-        publishStats(context.app);
-    }
 };
 
 const populateWinnerForPatch = () => async (context: HookContext) => {
@@ -532,10 +452,6 @@ const populateWinnerForPatch = () => async (context: HookContext) => {
 
     if (match.type === 'final') {
         await populateNextFinalMatch(context, { ...match.dataValues, ...data });
-
-        if (match.finalSpot === 1) {
-            publishStats(context.app);
-        }
     }
 
     return context;
@@ -864,10 +780,6 @@ const clearResult = () => async (context: HookContext) => {
     // Update match variable
     match = await matches.findByPk(matchId);
     await populateNextFinalMatch(context, { ...match.dataValues });
-
-    if (match.finalSpot === 1) {
-        publishStats(context.app);
-    }
 
     await purgeTournamentCache({ tournamentId })(context);
 
@@ -1805,7 +1717,6 @@ export default {
             purgeTournamentCache(),
             sendMatchNotification(),
             sendNewRivalryNotification(),
-            sendReferralCredit(),
             sendEstablishedEloNotification(),
             setPredictionWinner(),
             generateMatchBadges(),
@@ -1819,7 +1730,6 @@ export default {
             purgeTournamentCache(),
             sendMatchNotification(),
             sendNewRivalryNotification(),
-            sendReferralCredit(),
             sendEstablishedEloNotification(),
             setPredictionWinner(),
             generateMatchBadges(),

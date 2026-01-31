@@ -187,12 +187,6 @@ function TopMenu(props: TopMenuProps) {
                                         template: iconLink,
                                     },
                                     {
-                                        label: 'Referral',
-                                        icon: <HornIcon />,
-                                        url: '/user/referral',
-                                        template: iconLink,
-                                    },
-                                    {
                                         label: 'Badges',
                                         icon: <BadgeIcon />,
                                         url: '/user/badges',

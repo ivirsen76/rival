@@ -18,7 +18,6 @@ import { Levels } from './poms/Levels';
 import { Seasons } from './poms/Seasons';
 import { User } from './poms/User';
 import { Team } from './poms/Team';
-import { Referral } from './poms/Referral';
 import { Form } from './poms/Form';
 
 type MyFixture = {
@@ -40,7 +39,6 @@ type MyFixture = {
     seasons: Seasons;
     user: User;
     team: Team;
-    referral: Referral;
     form: Form;
 };
 
@@ -98,9 +96,6 @@ export const test = base.extend<MyFixture>({
     },
     team: async ({ page }, use) => {
         await use(new Team(page));
-    },
-    referral: async ({ page }, use) => {
-        await use(new Referral(page));
     },
     form: async ({ page }, use) => {
         await use(new Form(page));

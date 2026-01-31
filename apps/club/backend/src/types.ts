@@ -21,11 +21,7 @@ export type User = {
     teamName?: string;
     birthday?: string;
     avatar?: string | object;
-    comeFrom?: string;
-    comeFromOther?: string;
-    referralCode?: string;
     information?: UserInformation;
-    referrerUserId?: number;
 };
 
 export type Player = {
@@ -94,8 +90,6 @@ export type Config = {
     city: string;
     state: string;
     isRaleigh: number;
-    referralFirstMatchCredit: number;
-    referralFirstPaymentCredit: number;
     doublesChampionReward: number;
     singlesChampionReward: number;
     singlesRunnerUpReward: number;
@@ -222,6 +216,4 @@ export type Comment = {
 export type Recipient = {
     email: string;
     variables: Record<string, string>;
-    trackingId: number;
-    trackingUrl: string;
 };

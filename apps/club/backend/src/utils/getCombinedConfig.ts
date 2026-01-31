@@ -31,8 +31,6 @@ const getCombinedConfig = async () => {
         minPlayersToRunTournament: 4,
         photosPerPage: 12,
         proposalEmailWaitTime: 2 * 60 * 1000, // 2 minutes
-        referralFirstMatchCredit: 500,
-        referralFirstPaymentCredit: 1000,
         registrationAheadWeeks: 3,
         singlesChampionReward: 5000,
         singlesCost: 3500,

@@ -2,7 +2,6 @@ import mjml2html from 'mjml';
 import fs from 'fs';
 import crypto from 'crypto';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { getEmailLink } from '../social';
 import { S3_BUCKET_NAME } from '../constants';
 import dayjs from '../utils/dayjs';
 import practiceTypeOptions from '../services/proposals/practiceTypeOptions';
@@ -21,34 +20,9 @@ export const h3 = (text: string, attributes = '') =>
 export const warning = (text: string) =>
     `<mj-text container-background-color="#fff3cd" color="#664d03">${text}</mj-text><mj-spacer height="10px" />`;
 
-export const socialLinks = ({ referralCode = '#referralCode#' } = {}) => {
-    const emailLink = getEmailLink(TL_URL!, referralCode);
-    const instagramLink = 'https://www.instagram.com/rivaltennisladder';
-    const facebookLink = 'https://www.facebook.com/rivaltennisladder';
-
-    return `<mj-social font-size="15px" icon-size="30px" mode="horizontal">
-  <mj-social-element href="${emailLink}" background-color="#666666" src="https://utl.nyc3.digitaloceanspaces.com/images/email.png" text-padding="4px 14px 4px 0">
-    Email
-  </mj-social-element>
-  <mj-social-element background-color="#ea1a5c" name="instagram-noshare" href="${instagramLink}" text-padding="4px 14px 4px 0">
-    Instagram
-  </mj-social-element>
-  <mj-social-element name="facebook-noshare" href="${facebookLink}" text-padding="4px 0 4px 0">
-    Facebook
-  </mj-social-element>
-</mj-social>`;
-};
-
-export const thankYou = ({ config, referralCode = '#referralCode#' }: { config: Config; referralCode?: string }) => {
-    const totalCredit = (config.referralFirstMatchCredit + config.referralFirstPaymentCredit) / 100;
-
+export const thankYou = ({ config }: { config: Config }) => {
     return `${h2('Thank You for Joining!')}
-<mj-text>Please <b>let your friends know about us</b> directly, via email, or by sharing our app with others on social media:</mj-text>
-
-${socialLinks({ referralCode })}
-
-<mj-text>For every person who plays on a ladder from your referral, you can <b>earn up to $${totalCredit}</b>! Learn more about the program on your <a href="${TL_URL}/user/referral">Referral Page</a>.</mj-text>
-`;
+<mj-text>Please <b>let your friends know about us</b> directly, via email, or by sharing our app with others on social media.</mj-text>`;
 };
 
 export const signature = ({ config }: { config: Config }) => {

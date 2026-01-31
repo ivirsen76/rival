@@ -9,8 +9,6 @@ import Stats from './Stats';
 import Merge from './Merge';
 import Actions from './Actions';
 import Complaints from './Complaints';
-import Income from './Income';
-import Tracking from './Tracking';
 import NotFound from '@/pages/NotFound';
 import { Switch, Route, NavLink, useRouteMatch } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -21,7 +19,6 @@ import style from './style.module.scss';
 const Tournament = () => {
     const { path, url } = useRouteMatch();
     const user = useSelector((state) => state.auth.user);
-    const config = useConfig();
 
     if (!hasAnyRole(user, ['admin', 'manager'])) {
         return <NotFound />;
@@ -36,9 +33,6 @@ const Tournament = () => {
         { url: `${url}/texts`, label: 'Settings', roles: ['admin', 'manager'] },
         { url: `${url}/players`, label: 'Players', roles: ['admin', 'manager'] },
         { url: `${url}/complaints`, label: 'Complaints', roles: ['admin', 'manager'] },
-        ...(config.isRaleigh
-            ? [{ url: `${url}/income`, label: 'Income', roles: ['admin', 'manager'] }]
-            : [{ url: `${url}/tracking`, label: 'Tracking', roles: ['superadmin'] }]),
         { url: `${url}/merge`, label: 'Merge', roles: ['superadmin'] },
         { url: `${url}/actions`, label: 'Actions', roles: ['superadmin'] },
         { url: `${url}/stats`, label: 'Stats', roles: ['admin', 'manager'] },
@@ -79,8 +73,6 @@ const Tournament = () => {
                 <Route exact path={`${path}/texts`} component={Settings} />
                 <Route exact path={`${path}/players`} component={Players} />
                 <Route exact path={`${path}/complaints`} component={Complaints} />
-                <Route exact path={`${path}/income`} component={Income} />
-                <Route exact path={`${path}/tracking`} component={Tracking} />
                 <Route exact path={`${path}/merge`} component={Merge} />
                 <Route exact path={`${path}/actions`} component={Actions} />
                 <Route exact path={`${path}/stats`} component={Stats} />

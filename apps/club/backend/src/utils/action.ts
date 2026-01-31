@@ -1,7 +1,7 @@
 import _omit from 'lodash/omit';
 import md5 from 'md5';
 import dayjs from './dayjs';
-import { generateReferralCode } from '../helpers';
+import { generateShortCode } from '../helpers';
 
 import 'dotenv/config';
 
@@ -76,7 +76,7 @@ export const getActionLink = async ({
 
     let code;
     while (!code) {
-        code = generateReferralCode();
+        code = generateShortCode();
         const [[existingCode]] = await sequelize.query(`SELECT id FROM shortlinks WHERE name=:name AND code=:code`, {
             replacements: { name: payload.name, code },
         });

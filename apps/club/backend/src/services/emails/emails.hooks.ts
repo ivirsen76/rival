@@ -50,7 +50,7 @@ const stripHeaderFooter = () => (context: HookContext) => {
 const sendEmail = () => async (context: HookContext) => {
     const { TL_SERVICE_URL, TL_SECRET_KEY, TL_SMTP_HOST, TL_SMTP_PORT, TL_SMTP_USER, TL_SMTP_PASS } = process.env;
 
-    const { subject, text, html, replyTo, priority, trackingCode } = context.data;
+    const { subject, text, html, replyTo, priority } = context.data;
     const to = context.data.to as Recipient[];
     const { config } = context.params;
     const noReply = { name: 'Rival Tennis Ladder', email: 'noreply@tennis-ladder.com' };
@@ -60,9 +60,7 @@ const sendEmail = () => async (context: HookContext) => {
     // get all users
     let allUsers;
     {
-        const [rows] = (await sequelize.query('SELECT id, email, firstName, lastName, referralCode FROM users')) as [
-            User[],
-        ];
+        const [rows] = (await sequelize.query('SELECT id, email, firstName, lastName FROM users')) as [User[]];
         allUsers = rows.reduce(
             (obj, row) => {
                 obj[row.email] = row;
@@ -76,7 +74,6 @@ const sendEmail = () => async (context: HookContext) => {
         const user = allUsers[email];
         return user
             ? {
-                  '#referralCode#': user.referralCode,
                   '#firstName#': user.firstName,
                   '#fullName#': getPlayerName(user),
               }
@@ -96,7 +93,7 @@ const sendEmail = () => async (context: HookContext) => {
         return `rival.unsubscribe.${config.url}.${user.id}.${currentDateString}.${hash}@tennis-ladder.com`;
     };
 
-    // get rabbits, disabled users, banned users, and users with wrong emails
+    // get disabled users, banned users, and users with wrong emails
     let blockedEmails;
     {
         const [rows] = (await sequelize.query(`
@@ -104,8 +101,9 @@ const sendEmail = () => async (context: HookContext) => {
               FROM users
              WHERE isWrongEmail=1 OR
                    deletedAt IS NOT NULL OR
-                   (banDate IS NOT NULL AND banDate>"${dayjs.tz().format('YYYY-MM-DD HH:mm:ss')}") OR
-                   (comeFrom=99 AND comeFromOther="Rabbit")`)) as [{ email: string }[]];
+                   banDate IS NOT NULL AND banDate>"${dayjs.tz().format('YYYY-MM-DD HH:mm:ss')}")`)) as [
+            { email: string }[],
+        ];
         blockedEmails = new Set(rows.map((row) => row.email));
     }
 
@@ -142,22 +140,6 @@ const sendEmail = () => async (context: HookContext) => {
             )}`;
         }
     });
-
-    // Populate tracking information
-    if (trackingCode) {
-        const getTrackingId = async () => {
-            const [id] = await sequelize.query(`INSERT INTO tracking SET code=:code`, {
-                replacements: { code: trackingCode },
-            });
-
-            return id;
-        };
-
-        await limitedPromiseAll(recipients, async (user: Recipient) => {
-            user.trackingId = await getTrackingId();
-            user.trackingUrl = process.env.TL_URL!;
-        });
-    }
 
     if (process.env.NODE_ENV !== 'test' || process.env.TL_EMAILS_AND_IMAGES) {
         if (process.env.TL_ENV === 'production') {

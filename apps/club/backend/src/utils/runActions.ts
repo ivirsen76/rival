@@ -16,7 +16,6 @@ import joinNextSeasonTemplate from '../emailTemplates/joinNextSeason';
 import claimRewardTemplate from '../emailTemplates/claimReward';
 import finalMatchScheduleTemplate from '../emailTemplates/finalMatchSchedule';
 import feedbackRequestTemplate from '../emailTemplates/feedbackRequest';
-import percentReferralTemplate from '../emailTemplates/percentReferral';
 import getCustomEmail from '../emailTemplates/getCustomEmail';
 import compareFields from './compareFields';
 import renderImage from './renderImage';
@@ -553,90 +552,6 @@ export const requestFeedbackForNoJoin = async (app: Application) => {
     }
 
     logger.info(`Feedback request sent to ${emails.length} users`);
-};
-
-export const switchToPercentReferral = async (app: Application) => {
-    const sequelize = app.get('sequelizeClient');
-
-    const config = await getCombinedConfig();
-    if (!['richmond', 'sanantonio'].includes(config.url)) {
-        return;
-    }
-
-    // check that we don't have any paid season
-    {
-        const [rows] = await sequelize.query(`SELECT id FROM seasons WHERE isFree=0`);
-        if (rows.length > 0) {
-            return;
-        }
-    }
-
-    const currentDate = dayjs.tz();
-
-    // check that we have current on next season
-    {
-        const [rows] = await sequelize.query(`SELECT id FROM seasons WHERE endDate>:date`, {
-            replacements: { date: currentDate.format('YYYY-MM-DD HH:mm:ss') },
-        });
-        if (rows.length === 0) {
-            return;
-        }
-    }
-
-    // get all players who already got a percent referral email
-    const ACTION_NAME = 'sendPercentReferralInfo';
-    const alreadySentIds = new Set();
-    {
-        const [rows] = await sequelize.query(`SELECT tableId FROM actions WHERE name=:actionName`, {
-            replacements: { actionName: ACTION_NAME },
-        });
-        for (const row of rows) {
-            alreadySentIds.add(row.tableId);
-        }
-    }
-
-    // Get users
-    const dateDayAgo = currentDate.subtract(1, 'day');
-    const [users] = await sequelize.query(
-        `
-        SELECT id,
-               email,
-               firstName,
-               lastName
-          FROM users
-         WHERE refPercent IS NULL AND
-               roles="player" AND
-               isVerified=1 AND
-               subscribeForNews=1 AND
-               createdAt<:date`,
-        { replacements: { date: dateDayAgo.format('YYYY-MM-DD HH:mm:ss') } }
-    );
-
-    const filteredUsers = users.filter((user) => !alreadySentIds.has(user.id));
-
-    const emails = filteredUsers.map(getEmailContact);
-    if (emails.length === 0) {
-        return;
-    }
-
-    // We don't have to wait for the email sent
-    app.service('api/emails').create({
-        to: emails,
-        subject: `Get Paid to Grow the ${config.city} Rival Tennis Ladder 🎾💸`,
-        html: percentReferralTemplate(config),
-        priority: 2,
-    });
-
-    for (const user of filteredUsers) {
-        await sequelize.query(`INSERT INTO actions (tableId, name) VALUES (:userId, :name)`, {
-            replacements: { userId: user.id, name: ACTION_NAME },
-        });
-        await sequelize.query(`UPDATE users SET refPercent=30, refYears=3, refStartedAt=createdAt WHERE id=:userId`, {
-            replacements: { userId: user.id },
-        });
-    }
-
-    logger.info(`Percent referral offer sent to ${emails.length} users`);
 };
 
 export const remindForActivity = async (app: Application) => {
@@ -2055,7 +1970,6 @@ export default async (app: Application) => {
     await runAction(generateWordCloud);
     await runAction(sendFinalScheduleReminder);
     await runAction(requestFeedbackForNoJoin);
-    await runAction(switchToPercentReferral);
     await runAction(sendMissingTeammateReminder);
     await runAction(sendHighProjectedTlrWarning);
 };

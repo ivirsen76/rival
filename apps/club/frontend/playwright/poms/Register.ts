@@ -26,8 +26,6 @@ export class Register {
     readonly signInLink: Locator;
     readonly strongReasonLink: Locator;
     readonly reasonField: Locator;
-    readonly comeFromSelect: Locator;
-    readonly comeFromOtherField: Locator;
     readonly resendEmailLink: Locator;
     readonly friendSpinner: Locator;
     readonly friendField: Locator;
@@ -85,8 +83,6 @@ export class Register {
         this.signInLink = this.area.locator('a').getByText('Sign in');
         this.strongReasonLink = page.getByRole('link', { name: 'Have a strong reason' });
         this.reasonField = page.locator('textarea[name="reason"]');
-        this.comeFromSelect = page.getByRole('combobox');
-        this.comeFromOtherField = page.locator('input[name="comeFromOther"]');
         this.resendEmailLink = page.getByRole('link', { name: 'Resend the email' });
         this.friendSpinner = page.locator('[data-spinner="friend"]');
         this.friendField = page.locator('input[name="friend"]');
@@ -130,10 +126,6 @@ export class Register {
 
     public getFreeLadderBadge(code: string) {
         return this.page.locator(`[data-free-level="${code}"]`);
-    }
-
-    public async pickComeFromOption(name: string) {
-        await this.comeFromSelect.selectOption(name);
     }
 
     public async submitCardCredentials() {

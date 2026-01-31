@@ -23,7 +23,6 @@ const badgeStats = {
     proposalsAccepted: 168,
     rivalries: 66,
     tiebreaks: 109,
-    referrals: 0,
     feedbacks: 1,
     isAvatarCreated: true,
     hasAbout: true,
@@ -240,30 +239,6 @@ const limitingLadderLevels = (season) => (
     </div>
 );
 
-const referralProgramContent = (config, lazyClass) => (
-    <div>
-        <p>
-            Players can now share referral links directly or through Facebook, Twitter, or email to get up to{' '}
-            <b>${(config.referralFirstMatchCredit + config.referralFirstPaymentCredit) / 100}</b> in referral credit per
-            person. Here&apos;s how the credit works:
-        </p>
-        <ul>
-            <li className="m-0">
-                <b>$5</b> when your friend finishes their first match
-            </li>
-            <li>
-                <b>$10</b> when your friend makes their first payment
-            </li>
-        </ul>
-        <p>
-            Players can get their referral link or click to share through social using the buttons on the{' '}
-            <Link to="/user/referral">Referral&nbsp;page</Link>:
-        </p>
-
-        <div className={classnames(style.referralInMenu, lazyClass)} />
-    </div>
-);
-
 const tournamentEligibilityContent = (config) => (
     <div>
         <p>
@@ -401,11 +376,6 @@ const getData = ({ config, lazyClass = '' } = {}) => [
                   date: '2025-08-19',
                   title: 'Updated Final Tournament Eligibility',
                   content: tournamentEligibilityContent(config),
-              },
-              {
-                  date: '2025-08-18',
-                  title: 'Referral Program',
-                  content: referralProgramContent(config, lazyClass),
               },
           ]
         : []),
@@ -1131,15 +1101,6 @@ const getData = ({ config, lazyClass = '' } = {}) => [
             </div>
         ),
     },
-    ...(config.isRaleigh
-        ? []
-        : [
-              {
-                  date: '2022-10-23',
-                  title: 'Referral Program',
-                  content: referralProgramContent(config, lazyClass),
-              },
-          ]),
     {
         date: '2022-09-28',
         title: 'Rescheduling Matches',

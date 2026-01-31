@@ -63,48 +63,6 @@ app.get('/', (req, res) => {
     res.send(indexContent);
 });
 
-// tracking routes
-app.get('/t/open', async (req, res) => {
-    const trackingId = Number(req.query.id);
-    if (!Number.isInteger(trackingId)) {
-        return res.status(400).send('Invalid ID');
-    }
-
-    await app.get('sequelizeClient').query(`UPDATE tracking SET opened=1 WHERE id=${trackingId}`);
-
-    // returning transparent 1x1 PNG image
-    const pixel = Buffer.from(
-        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAusB9yUOtG8AAAAASUVORK5CYII=',
-        'base64'
-    );
-
-    res.setHeader('Content-Type', 'image/png');
-    res.setHeader('Content-Length', pixel.length);
-    res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-    res.send(pixel);
-});
-app.get('/t/click', async (req, res) => {
-    const trackingId = Number(req.query.id);
-    if (!Number.isInteger(trackingId)) {
-        return res.status(400).send('Invalid ID');
-    }
-
-    const domain = `${req.protocol}://${req.get('host')}`;
-    let { url } = req.query;
-    try {
-        // if url starts with / it means it's using the same domain
-        url = (url as string).replace(/^\//, domain);
-
-        // eslint-disable-next-line no-new
-        new URL(url); // throws if invalid
-    } catch {
-        return res.status(400).send('Invalid URL');
-    }
-
-    await app.get('sequelizeClient').query(`UPDATE tracking SET clicked=1 WHERE id=${trackingId}`);
-    res.redirect(url);
-});
-
 // Host the public folder
 app.use('/', express.static('./build'));
 

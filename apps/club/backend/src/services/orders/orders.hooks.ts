@@ -3,12 +3,11 @@ import type { HookContext } from '@feathersjs/feathers';
 import { authenticate } from '@feathersjs/authentication/lib/hooks';
 import { disallow } from 'feathers-hooks-common';
 import { calculateNextOrder } from './helpers';
-import { getPlayerName, getEmailContact, getEstablishedElo } from '../users/helpers';
+import { getPlayerName, getEstablishedElo } from '../users/helpers';
 import Stripe from 'stripe';
 import dayjs from '../../utils/dayjs';
 import { NotFound, Unprocessable } from '@feathersjs/errors';
 import { purgeTournamentCache, sendWelcomeEmail } from '../commonHooks';
-import referralFirstPaymentTemplate from '../../emailTemplates/referralFirstPayment';
 import specialReasonNotificationTemplate from '../../emailTemplates/specialReasonNotification';
 import { getEmailsFromList } from '../settings/helpers';
 import { sendDoublesTeamInvitation, formatTeamName } from '../players/helpers';
@@ -34,52 +33,6 @@ const getProcessedOrders = () => async (context: HookContext) => {
     };
 
     return context;
-};
-
-const issueReferralCredit = async (context: HookContext, user: User) => {
-    const sequelize = context.app.get('sequelizeClient');
-    const { config } = context.params;
-    const { users, payments } = sequelize.models;
-
-    if (!user.referrerUserId) {
-        return;
-    }
-
-    const referrerUser = await users.findByPk(user.referrerUserId);
-    // TODO: check refYears and refStartedAt as well
-    if (referrerUser.refPercent) {
-        // TODO: issue referral percent
-        return;
-    }
-
-    const ACTION_NAME = `firstPaymentCreditForUser${user.id}`;
-
-    const [actions] = await sequelize.query(`SELECT * FROM actions WHERE tableId=:tableId AND name=:name`, {
-        replacements: { tableId: referrerUser.id, name: ACTION_NAME },
-    });
-    if (actions.length > 0) {
-        return;
-    }
-
-    const userFullName = getPlayerName(user);
-
-    await payments.create({
-        userId: referrerUser.id,
-        type: 'discount',
-        description: `Referral credit for ${userFullName} (first payment)`,
-        amount: config.referralFirstPaymentCredit,
-    });
-
-    await sequelize.query(`INSERT INTO actions (tableId, name) VALUES (:tableId, :name)`, {
-        replacements: { tableId: referrerUser.id, name: ACTION_NAME },
-    });
-
-    // don't wait for email sent
-    context.app.service('api/emails').create({
-        to: [getEmailContact(referrerUser)],
-        subject: `You Just Earned $${config.referralFirstPaymentCredit / 100} in Rival Credit!`,
-        html: referralFirstPaymentTemplate({ config, referralName: userFullName }),
-    });
 };
 
 // This is just a helper, not a hook
@@ -200,8 +153,6 @@ const processOrder = async (order, context: HookContext) => {
                 { userId: user.id, type: 'payment', description: 'Payment', amount: order.amount, orderId: order.id },
                 { transaction: t }
             );
-
-            await issueReferralCredit(context, user);
         }
 
         // mark order as processed

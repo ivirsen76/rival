@@ -106,12 +106,6 @@ const SideMenu = (props: SideMenuProps) => {
                                         template: menuItem,
                                     },
                                     {
-                                        label: 'Referral',
-                                        icon: <HornIcon />,
-                                        command: () => goTo('/user/referral'),
-                                        template: menuItem,
-                                    },
-                                    {
                                         label: 'Badges',
                                         icon: <BadgeIcon />,
                                         command: () => goTo('/user/badges'),

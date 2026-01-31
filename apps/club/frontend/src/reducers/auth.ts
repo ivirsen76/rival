@@ -5,40 +5,23 @@ import dayjs from '@rival/common/dayjs';
 import getPaw from '@rival/common/utils/getPaw';
 import type { Config, User } from '@rival/club.backend/src/types';
 
-const REGISTER_HISTORY_KEY = 'registerHistory';
-
 type AuthState = {
     user: (User & { totalMessagesThisWeek: number }) | null;
     ui: {
         showAllPlayersForTournaments: number[];
     };
     config: Config | null;
-    history: any;
 };
 
 const authSlice = createSlice({
     name: 'auth',
     initialState: () => {
-        const history = (() => {
-            try {
-                const saved = localStorage.getItem(REGISTER_HISTORY_KEY);
-                if (saved) {
-                    return JSON.parse(saved);
-                }
-            } catch {
-                // do nothing
-            }
-
-            return [];
-        })();
-
         return {
             user: null,
             ui: {
                 showAllPlayersForTournaments: [],
             },
             config: null,
-            history,
         } as AuthState;
     },
     reducers: {
@@ -56,13 +39,6 @@ const authSlice = createSlice({
         },
         setConfig: (state, action) => {
             state.config = action.payload;
-        },
-        addHistoryEvent: (state, action) => {
-            const time = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
-            state.history.push({ ...action.payload, time });
-        },
-        clearHistory: (state) => {
-            state.history = [];
         },
         incrementUserMessages: (state) => {
             state.user!.totalMessagesThisWeek++;
@@ -84,23 +60,6 @@ export const logout = () => async (dispatch: AppDispatch) => {
     }
 };
 
-export const addHistoryEventAndSave = (payload) => async (dispatch: AppDispatch, getState: () => RootState) => {
-    const { user } = getState().auth;
-    if (user) {
-        return;
-    }
-
-    dispatch(authSlice.actions.addHistoryEvent(payload));
-    const { history } = getState().auth;
-
-    localStorage.setItem(REGISTER_HISTORY_KEY, JSON.stringify(history));
-};
-
-export const clearHistoryAndSave = () => async (dispatch: AppDispatch) => {
-    dispatch(authSlice.actions.clearHistory());
-    localStorage.removeItem(REGISTER_HISTORY_KEY);
-};
-
 export const loadCurrentUser = () => async (dispatch: AppDispatch) => {
     const tokenName = localStorage.getItem('tokenLoginAs') ? 'tokenLoginAs' : 'token';
     const token = localStorage.getItem(tokenName);
@@ -109,7 +68,6 @@ export const loadCurrentUser = () => async (dispatch: AppDispatch) => {
             const result = await axios.post('/api/authentication', { strategy: 'jwt', accessToken: token });
             localStorage.setItem(tokenName, result.data.accessToken);
             dispatch(setCurrentUser({ user: result.data.user }));
-            dispatch(clearHistoryAndSave());
         } catch {
             dispatch(logout());
         }
@@ -151,7 +109,6 @@ export const authenticate = (email: string, password: string) => async (dispatch
         const result = await axios.post('/api/authentication', { strategy: 'local', email, password });
         localStorage.setItem('token', result.data.accessToken);
         dispatch(setCurrentUser({ user: result.data.user }));
-        dispatch(clearHistoryAndSave());
         dispatch(savePaw());
         return result.data.user;
     } catch (e) {

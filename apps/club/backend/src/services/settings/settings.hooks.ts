@@ -40,20 +40,6 @@ const populateConstants = () => async (context: HookContext) => {
 
     const [[settings]] = await sequelize.query('SELECT * FROM settings WHERE id=1');
 
-    const [partners] = (await sequelize.query(
-        'SELECT * FROM users WHERE roles LIKE "%partner%" AND information IS NOT NULL'
-    )) as [User[]];
-
-    const comeFromPartners = partners.map((item, index) => {
-        const information = populateInformation(item.information);
-
-        return {
-            value: 1000 + index,
-            label: information.partnerName,
-            referralCode: item.referralCode,
-        };
-    });
-
     const encode = (obj: any) => Buffer.from(JSON.stringify(obj)).toString('base64').split('').reverse().join('');
 
     const bananas = (() => {
@@ -103,7 +89,6 @@ const populateConstants = () => async (context: HookContext) => {
         levels: levelResult,
         config: encode(config),
         bananas,
-        comeFromPartners,
         settings: {
             ...settings,
             global: settings.global ? JSON.parse(settings.global) : {},

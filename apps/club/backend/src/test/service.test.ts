@@ -15,7 +15,6 @@ import runActions, {
     remindForClaimingReward,
     sendFinalScheduleReminder,
     requestFeedbackForNoJoin,
-    switchToPercentReferral,
     sendMissingTeammateReminder,
     sendHighProjectedTlrWarning,
 } from '../utils/runActions';
@@ -3742,47 +3741,6 @@ describe('cron jobs', () => {
             await new Promise((resolve) => setTimeout(resolve, 2000));
             expect(await getNumRecords('emails')).toBe(1);
         }, 10000);
-    });
-
-    describe('percentReferral', () => {
-        it('Should switch to percent referral program', async () => {
-            const dateTwoDaysAgo = dayjs.tz().subtract(2, 'day').format('YYYY-MM-DD HH:mm:ss');
-
-            await switchToPercentReferral(app);
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            expect(await getNumRecords('emails')).toBe(0);
-
-            await runQuery(`UPDATE seasons SET isFree=1`);
-            await switchToPercentReferral(app);
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            expect(await getNumRecords('emails')).toBe(0);
-
-            await runQuery(`UPDATE config SET url="richmond"`);
-            await runQuery(`UPDATE users SET createdAt='${dateTwoDaysAgo}' WHERE id=1`);
-            await runQuery(`UPDATE users SET createdAt='${dateTwoDaysAgo}', refPercent=55 WHERE id=2`);
-            await switchToPercentReferral(app);
-
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            expect(await getNumRecords('emails')).toBe(1);
-
-            // Check that email notification is sent
-            {
-                const record = await expectRecordToExist('emails', {
-                    recipientEmail: 'player1@gmail.com',
-                });
-                expect(record.subject).toContain('Get Paid to Grow the Raleigh Rival Tennis Ladder');
-                expect(record.html).toContain('30%');
-                expect(record.html).toContain('3 years');
-                expect(record.html).toContain('$180');
-            }
-
-            // check that we are not sending twice
-            await switchToPercentReferral(app);
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            expect(await getNumRecords('emails')).toBe(1);
-
-            await expectRecordToExist('users', { id: 1 }, { refPercent: 30, refYears: 3 });
-        }, 20000);
     });
 
     describe('sendNoTeammateReminder', () => {

@@ -31,9 +31,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import hasAnyRole from '@rival/common/utils/hasAnyRole';
 import { formatCustom } from '@rival/common/dayjs';
-import { comeFromOptions } from '@/components/Authentication/Register';
 import Emails from './Emails';
-import Tracking from './Tracking';
 import AddTransactionForm from './AddTransactionForm';
 import Wallet from '@/components/Wallet';
 import PersonalNoteForm from './PersonalNoteForm';
@@ -120,24 +118,6 @@ const Player = (props: PlayerProps) => {
             roles: ['superadmin'],
             list: [
                 {
-                    value: 'comeFrom',
-                    label: 'Came from:',
-                    getValue: (obj) => {
-                        if (!obj.comeFrom) {
-                            return null;
-                        }
-
-                        if (obj.comeFrom === 99) {
-                            return obj.comeFromOther ? `Other (${obj.comeFromOther})` : 'Other';
-                        }
-
-                        return (
-                            (comeFromOptions.find((item) => item.value === obj.comeFrom) || {}).label +
-                            (obj.comeFromOther ? ` (${obj.comeFromOther})` : '')
-                        );
-                    },
-                },
-                {
                     value: 'createdAt',
                     label: 'Registered at:',
                     getValue: (obj) => obj.createdAt && formatCustom(obj.createdAt, 'MM/DD/YYYY, h:mm A'),
@@ -179,20 +159,6 @@ const Player = (props: PlayerProps) => {
                                     </button>
                                 )}
                                 renderBody={() => <Wallet userId={obj.id} isFullWidth />}
-                            />
-                            <Modal
-                                title={
-                                    <div>
-                                        {obj.firstName} {obj.lastName}&apos;s pre-register tracking
-                                    </div>
-                                }
-                                size="lg"
-                                renderTrigger={({ show }) => (
-                                    <button type="button" className="btn btn-primary btn-xs" onClick={show}>
-                                        Tracking
-                                    </button>
-                                )}
-                                renderBody={() => <Tracking user={obj} />}
                             />
                             <Modal
                                 title={

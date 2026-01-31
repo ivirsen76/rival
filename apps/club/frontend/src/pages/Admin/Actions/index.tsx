@@ -4,9 +4,6 @@ import notification from '@rival/common/components/notification';
 import axios from '@rival/common/axios';
 import confirmation from '@rival/common/utils/confirmation';
 import showLoader from '@rival/common/utils/showLoader';
-import getAvatars from './getAvatars';
-import FormGeneratePartnerLink from './FormGeneratePartnerLink';
-import FormRosterMessage from './FormRosterMessage';
 import FormWeeklySchedule from './FormWeeklySchedule';
 import style from './style.module.scss';
 
@@ -43,40 +40,6 @@ const Actions = (props) => {
         });
     };
 
-    const syncGlobalState = async () => {
-        const confirm = await confirmation({ message: 'Do you really want to sync global state?' });
-        if (!confirm) {
-            return;
-        }
-
-        await showLoader(async () => {
-            await axios.put('/api/utils/0', { action: 'syncGlobalState' });
-        });
-
-        notification({
-            header: 'Success',
-            message: 'Global state has been synced.',
-        });
-    };
-
-    const generateRabbits = async () => {
-        const confirm = await confirmation({ message: 'Do you really want to generate rabbits?' });
-        if (!confirm) {
-            return;
-        }
-
-        const { maleAvatars, femaleAvatars } = getAvatars();
-
-        await showLoader(async () => {
-            await axios.put('/api/utils/0', { action: 'generateRabbits', maleAvatars, femaleAvatars });
-        });
-
-        notification({
-            header: 'Success',
-            message: 'Rabbits are successfuly generated.',
-        });
-    };
-
     const regenerateBadges = async () => {
         const confirm = await confirmation({ message: 'Do you really want to regenerate badges?' });
         if (!confirm) {
@@ -109,22 +72,6 @@ const Actions = (props) => {
         });
     };
 
-    const processRosters = async () => {
-        const confirm = await confirmation({ message: 'Do you really want to process rosters?' });
-        if (!confirm) {
-            return;
-        }
-
-        await showLoader(async () => {
-            await axios.put('/api/utils/0', { action: 'processRosters' });
-
-            notification({
-                header: 'Success',
-                message: `All rosters has been processed.`,
-            });
-        });
-    };
-
     return (
         <Card>
             <div className={style.wrapper}>
@@ -140,11 +87,6 @@ const Actions = (props) => {
                 </button>
                 <div className={style.description}>Send all reminders</div>
 
-                <button type="button" className="btn btn-primary" onClick={syncGlobalState}>
-                    Sync global state
-                </button>
-                <div className={style.description}>Get cities nearby and weather forecast</div>
-
                 <button type="button" className="btn btn-primary" onClick={recalculateElo}>
                     Recalculate TLR
                 </button>
@@ -154,38 +96,6 @@ const Actions = (props) => {
                     Regenerate badges
                 </button>
                 <div className={style.description}>It will take a while (30-60 seconds)</div>
-
-                <button type="button" className="btn btn-primary" onClick={generateRabbits}>
-                    Generate rabbits
-                </button>
-                <div className={style.description} />
-
-                <Modal
-                    title="Generate partner link"
-                    renderTrigger={({ show }) => (
-                        <button type="button" className="btn btn-primary" onClick={show}>
-                            Generate partner link
-                        </button>
-                    )}
-                    renderBody={({ hide }) => <FormGeneratePartnerLink hide={hide} />}
-                />
-                <div className={style.description}>Partner can register using this link.</div>
-
-                <button type="button" className="btn btn-primary" onClick={processRosters}>
-                    Process rosters
-                </button>
-                <div className={style.description} />
-
-                <Modal
-                    title="Send one roster message"
-                    renderTrigger={({ show }) => (
-                        <button type="button" className="btn btn-primary" onClick={show}>
-                            Send one roster message
-                        </button>
-                    )}
-                    renderBody={({ hide }) => <FormRosterMessage hide={hide} />}
-                />
-                <div className={style.description}>Send roster email to arbitrary email</div>
 
                 <Modal
                     title="Weekly schedule demo"

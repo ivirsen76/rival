@@ -1116,7 +1116,6 @@ CREATE TABLE `users` (
   `salt` varchar(255) DEFAULT NULL,
   `appearance` varchar(255) NOT NULL DEFAULT 'light',
   `isPhoneVerified` tinyint(1) NOT NULL DEFAULT '0',
-  `registerHistory` text,
   `deletedAt` datetime DEFAULT NULL,
   `refPercent` int(11) DEFAULT NULL,
   `refYears` int(11) DEFAULT NULL,

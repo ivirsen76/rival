@@ -920,67 +920,6 @@ const getSeasonStats = () => async (context: HookContext) => {
     return context;
 };
 
-const getSeasonIncomes = () => async (context: HookContext) => {
-    await authenticate('jwt')(context);
-    hasAnyRole(['admin', 'manager'])(context);
-
-    const { config } = context.params;
-    if (!config.isRaleigh) {
-        throw new Unprocessable('The route is unaccessible.');
-    }
-
-    const sequelize = context.app.get('sequelizeClient');
-    const startDate = '2025-07-20';
-
-    let [seasons] = await sequelize.query(`SELECT * FROM seasons WHERE startDate>:startDate ORDER BY startDate`, {
-        replacements: { startDate },
-    });
-
-    seasons = seasons.map((item) => ({
-        ...item,
-        endDate: dayjs.tz(item.endDate).subtract(WEEK_SHIFT, 'week').format('YYYY-MM-DD HH:mm:ss'),
-    }));
-
-    const [payments] = await sequelize.query(
-        `SELECT *
-           FROM payments
-          WHERE type="payment" AND
-                createdAt>:startDate
-       ORDER BY createdAt`,
-        { replacements: { startDate } }
-    );
-
-    let currentSeason = seasons.shift();
-    let data = {};
-    for (const payment of payments) {
-        if (payment.createdAt > currentSeason.endDate) {
-            if (seasons.length === 0) {
-                break;
-            }
-            currentSeason = seasons.shift();
-        }
-
-        data[currentSeason.id] ||= { ...currentSeason, payments: 0, fees: 0 };
-        const sum = payment.amount;
-        const fee = Math.round(sum * 0.029 + 30); // 2.9% + 30¢
-        data[currentSeason.id].payments += sum;
-        data[currentSeason.id].fees += fee;
-    }
-
-    data = Object.values(data)
-        .sort((a, b) => a.id - b.id)
-        .map((item) => ({
-            id: item.id,
-            name: getSeasonName(item),
-            payments: item.payments,
-            fees: item.fees,
-        }));
-
-    context.result = { data };
-
-    return context;
-};
-
 const getSeasonPayments = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     hasAnyRole(['admin', 'manager'])(context);
@@ -1046,8 +985,6 @@ const runCustomAction = () => async (context: HookContext) => {
         await getSeasonStats()(context);
     } else if (action === 'getSeasonsToRegister') {
         await getSeasonsToRegister()(context);
-    } else if (action === 'getSeasonIncomes') {
-        await getSeasonIncomes()(context);
     } else if (action === 'getSeasonPayments') {
         await getSeasonPayments()(context);
     } else {

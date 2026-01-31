@@ -7,7 +7,6 @@ import notification from '@rival/common/components/notification';
 import GoogleAnalytics from '@rival/common/components/GoogleAnalytics';
 import AppearanceChecker from '@/components/AppearanceChecker';
 import EmojiMultiplierCalculator from '@rival/common/components/EmojiMultiplierCalculator';
-import RouteChecker from '@/components/RouteChecker';
 import history from '@rival/common/history';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadCurrentUser, setConfig, savePaw } from '@/reducers/auth';
@@ -44,8 +43,6 @@ import Tournament from '@/pages/Tournament';
 import Changelog from '@/pages/About/Changelog';
 import Register from '@/pages/Register';
 import RegisterSuccess from '@/pages/RegisterSuccess';
-import Ref from '@/pages/Ref';
-import Referral from '@/pages/Referral';
 import Badges from '@/pages/Badges';
 import Terms from '@/pages/Terms';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
@@ -59,8 +56,6 @@ import Tlr from '@/pages/Image/Tlr';
 import Bracket from '@/pages/Image/Bracket';
 
 const Admin = loadable(() => import('@/pages/Admin'));
-const Partner = loadable(() => import('@/pages/Partner'));
-const Global = loadable(() => import('@/pages/Global'));
 const VisualTesting = loadable(() => import('@/pages/VisualTesting'));
 
 window.tl = window.tl || {};
@@ -246,7 +241,6 @@ export default function App() {
             <GoogleAnalytics />
             <AppearanceChecker />
             <EmojiMultiplierCalculator />
-            <RouteChecker />
             <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/forgotPassword" component={ForgotPassword} />
@@ -261,8 +255,6 @@ export default function App() {
                 <Route exact path="/top/:category?" component={Top} />
                 <Route exact path="/pricing" component={Pricing} />
                 <Route exact path="/rules" component={Rules} />
-                <Route exact path="/ref/:code" component={Ref} />
-                <Route exact path="/user/referral" component={Referral} />
                 <Route exact path="/user/wallet" component={Wallet} />
                 <Route exact path="/register/success/:sessionId" component={RegisterSuccess} />
                 <Route exact path="/register" component={Register} />
@@ -270,9 +262,6 @@ export default function App() {
                 <Route exact path="/action/:payload" component={Action} />
                 <Redirect exact from="/admin" to="/admin/stats" />
                 <Route path="/admin" component={Admin} />
-                <Route path="/partner" component={Partner} />
-                <Redirect exact from="/global" to="/global/photos" />
-                <Route path="/global" component={Global} />
                 <Route exact path="/user/settings" component={Settings} />
                 <Route exact path="/user/badges" component={Badges} />
                 <Route

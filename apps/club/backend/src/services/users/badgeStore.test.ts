@@ -662,43 +662,4 @@ describe('reducer', () => {
             expect(reducer(state, action)).toEqual(expectedState);
         });
     });
-
-    describe('REGISTER_USER', () => {
-        it('Should register user and change nothing', () => {
-            const state = {
-                users: {
-                    100: getUser(),
-                },
-            };
-            const action = {
-                type: 'REGISTER_USER',
-                payload: {
-                    id: 200,
-                    referrerUserId: 555,
-                },
-            };
-
-            expect(reducer(state, action)).toBe(state);
-        });
-
-        it('Should register user and increase referrals count', () => {
-            const state = {
-                users: {
-                    100: getUser(),
-                },
-            };
-            const action = {
-                type: 'REGISTER_USER',
-                payload: {
-                    id: 200,
-                    referrerUserId: 100,
-                    createdAt: '2022-04-02 20:52:56',
-                },
-            };
-
-            const resultedState = reducer(state, action);
-            expect(resultedState.users[100].stats.referrals).toBe(1);
-            expect(resultedState.users[100].updatedAt).toBe('2022-04-02 20:52:56');
-        });
-    });
 });

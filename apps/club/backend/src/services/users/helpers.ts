@@ -197,18 +197,3 @@ export const getEstablishedEloAllUsers = async ({ config, sequelize }: { config:
 
     return result;
 };
-
-export const comeFromOptions: Record<string, string> = {
-    2: 'Word of mouth',
-    6: 'Google search',
-    7: 'Facebook',
-    3: 'Flyer from a court',
-    4: 'Local stringer',
-    5: 'Local coach',
-    8: 'Email',
-    9: 'Referral from a friend',
-    10: 'Business card',
-    11: 'Instagram',
-    12: 'Social Media',
-    99: 'Other',
-};

@@ -14,7 +14,6 @@ export const initialUsersStats = {
     proposalsAccepted: 0,
     rivalries: 0,
     tiebreaks: 0,
-    referrals: 0,
     feedbacks: 0,
     predictionWins: 0,
     isAvatarCreated: false,
@@ -625,20 +624,6 @@ export const reducer = (state = initialState, action) => {
             state.users[userId].updatedAt = createdAt;
 
             applyBadges(state.users[userId]);
-
-            return state;
-        }
-        case 'REGISTER_USER': {
-            const { referrerUserId, createdAt } = action.payload;
-
-            if (!state.users[referrerUserId]) {
-                return state;
-            }
-
-            state.users[referrerUserId].stats.referrals++;
-            state.users[referrerUserId].updatedAt = createdAt;
-
-            applyBadges(state.users[referrerUserId]);
 
             return state;
         }

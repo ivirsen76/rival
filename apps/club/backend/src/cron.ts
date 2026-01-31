@@ -5,10 +5,6 @@ import removeUnverifiedAccounts from './utils/removeUnverifiedAccounts';
 import generateNextSeason from './utils/generateNextSeason';
 import removeOldEmails from './utils/removeOldEmails';
 import runActions from './utils/runActions';
-import processRosters from './utils/processRosters';
-import publishStats from './utils/publishStats';
-import syncGlobal from './utils/syncGlobal';
-import prepareDemo from './utils/prepareDemo';
 import refundForCanceledTournaments from './utils/refundForCanceledTournaments';
 import getWeatherForecast from './utils/getWeatherForecast';
 import generateNews from './services/news/generateNews';
@@ -59,15 +55,11 @@ export default (app: Application) => {
     scheduleNightTask(() => generateNextSeason(app));
     scheduleNightTask(() => removeOldEmails(app));
     scheduleNightTask(() => generateNews());
-    scheduleNightTask(() => publishStats(app));
-    scheduleNightTask(() => syncGlobal(app));
-    scheduleNightTask(() => prepareDemo(app));
     scheduleNightTask(() => applyNewBadges(sequelize));
 
     // Morning tasks
     scheduleMorningTask(() => runActions(app));
     scheduleMorningTask(() => refundForCanceledTournaments(app));
-    scheduleMorningTask(() => processRosters(app));
 
     // Every 3 hours
     schedule3HourTask(() => getWeatherForecast(app));

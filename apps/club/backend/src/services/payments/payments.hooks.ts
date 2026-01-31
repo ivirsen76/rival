@@ -17,7 +17,7 @@ const getPayments = () => async (context: HookContext) => {
 
     const user = await users.findByPk(userId);
 
-    if (currentUser.id !== userId && user.referrerUserId !== currentUser.id) {
+    if (currentUser.id !== userId) {
         hasAnyRole(['admin'])(context);
     }
 

@@ -16,7 +16,6 @@ import arbitraryMessageTemplate from '../../emailTemplates/arbitraryMessage';
 import firstDayReminderTemplate from '../../emailTemplates/firstDayReminder';
 import { getEmailsFromList } from '../settings/helpers';
 import { getSeasonName } from '../seasons/helpers';
-import publishStats from '../../utils/publishStats';
 import formatElo from '../../utils/formatElo';
 import { getEmailContact, getPlayerName, getEstablishedElo, getEmailLink, getPhoneLink } from '../users/helpers';
 import specialReasonNotificationTemplate from '../../emailTemplates/specialReasonNotification';
@@ -1043,8 +1042,6 @@ const claimReward = () => async (context: HookContext) => {
                 logEvent(`Wrong address verification: ${address}`)(context);
             }
         }
-
-        await publishStats(context.app);
     })();
 
     const user = await users.findByPk(player.userId);

@@ -307,28 +307,6 @@ export const getUsersStats = async ({
         );
     }
 
-    // Register users with referrals
-    {
-        const [rows] = await sequelize.query(
-            `
-            SELECT id,
-                   referrerUserId,
-                   createdAt,
-                   createdAt AS sortDate
-              FROM users
-             WHERE referrerUserId>0 AND
-                   createdAt>:startDate AND
-                   createdAt<=:endDate`,
-            { replacements: { startDate, endDate } }
-        );
-        actions.push(
-            ...rows.map((item) => ({
-                type: 'REGISTER_USER',
-                payload: item,
-            }))
-        );
-    }
-
     // Prediction winners
     {
         const [rows] = await sequelize.query(

@@ -7,7 +7,6 @@ import ApprovePhoto from '@/components/ApprovePhoto';
 import AcceptTeamMember from '@/components/AcceptTeamMember';
 import JoinDoubles from '@/components/JoinDoubles';
 import JoinTeam from '@/components/JoinTeam';
-import RegisterPartner from '@/components/RegisterPartner';
 import axios from '@rival/common/axios';
 
 const availableActions = {
@@ -18,7 +17,6 @@ const availableActions = {
     acceptTeamInvitation: { component: JoinTeam },
     approvePhoto: { component: ApprovePhoto },
     joinDoubles: { component: JoinDoubles },
-    registerPartner: { component: RegisterPartner },
 };
 
 type ActionProps = {

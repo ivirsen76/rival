@@ -11,7 +11,7 @@ import { getSeasonName } from '../seasons/helpers';
 import { revertScore } from '../matches/helpers';
 import { getEmailContact, getPlayerName, hideEmail, hidePhone } from './helpers';
 import commonValidate from './commonValidate';
-import { throwValidationErrors, getSchemaErrors, generateReferralCode } from '../../helpers';
+import { throwValidationErrors, getSchemaErrors } from '../../helpers';
 import { hasAnyRole, purgeUserCache, logEvent, trim, generateBadges, populateSalt } from '../commonHooks';
 import _isEmpty from 'lodash/isEmpty';
 import _uniq from 'lodash/uniq';
@@ -24,17 +24,15 @@ import { getAge } from '../../utils/helpers';
 import newEmailVerificationTemplate from '../../emailTemplates/newEmailVerification';
 import emailVerificationTemplate from '../../emailTemplates/emailVerification';
 import signUpNotificationTemplate from '../../emailTemplates/signUpNotification';
-import referralRegisteredTemplate from '../../emailTemplates/referralRegistered';
 import bcrypt from 'bcryptjs';
 import yup from '../../packages/yup';
-import { getVerificationCode, formatUserName, getTbStats, comeFromOptions } from './helpers';
+import { getVerificationCode, formatUserName, getTbStats } from './helpers';
 import { getEmailsFromList } from '../settings/helpers';
 import sharp from 'sharp';
 import DatauriParser from 'datauri/parser';
 import { decodeAction } from '../../utils/action';
 import { getUsersStats, applyNewBadges } from '../../utils/applyNewBadges';
 import { unless, isProvider } from 'feathers-hooks-common';
-import searchReferrer from './searchReferrer';
 import compareFields from '../../utils/compareFields';
 import checkEmail from './checkEmail';
 import { encrypt, decrypt } from '../../utils/crypt';
@@ -157,13 +155,6 @@ const validateCreate = () => async (context: HookContext) => {
         errors.birthday = 'Birth date is required';
     }
 
-    if (_isEmpty(errors) && context.data.comeFromOther !== 'Rabbit') {
-        const { isDeliverable, message } = await checkEmail(context.data.email);
-        if (!isDeliverable) {
-            errors.email = message;
-        }
-    }
-
     if (!_isEmpty(errors)) {
         throwValidationErrors(errors);
     }
@@ -275,10 +266,6 @@ const populateUser = () => async (context: HookContext) => {
             'banDate',
             'banReason',
             'birthday',
-            'comeFrom',
-            'comeFromOther',
-            'referralCode',
-            'referrerUserId',
             'createdAt',
             'isVerified',
             'loggedAt',
@@ -308,8 +295,6 @@ const populateUser = () => async (context: HookContext) => {
         };
 
         if (isLoggedIn && context.params.user!.roles.includes('admin')) {
-            data.comeFrom = result[0].comeFrom;
-            data.comeFromOther = result[0].comeFromOther;
             data.createdAt = result[0].createdAt;
             data.loggedAt = result[0].loggedAt;
         }
@@ -1207,18 +1192,6 @@ const stringifyInformation = () => async (context: HookContext) => {
     return context;
 };
 
-const populateRegisterHistory = () => async (context: HookContext) => {
-    const { data } = context;
-
-    try {
-        data.registerHistory = JSON.stringify(data.registerHistory);
-    } catch {
-        data.registerHistory = null;
-    }
-
-    return context;
-};
-
 const populateShowAge = () => async (context: HookContext) => {
     if ('showAge' in context.data) {
         context.data.showAge = Boolean(context.data.showAge);
@@ -1254,46 +1227,6 @@ const populateHistory = () => async (context: HookContext) => {
             date: dayjs.tz().format('YYYY-MM-DD HH:mm:ss'),
         });
     }
-
-    return context;
-};
-
-const populateReferral = () => async (context: HookContext) => {
-    const { data } = context;
-    const sequelize = context.app.get('sequelizeClient');
-    const { users } = sequelize.models;
-
-    const userReferralCode = data.referralCode;
-
-    // generate my own referralCode
-    while (true) {
-        data.referralCode = generateReferralCode();
-        const found = await users.findOne({ where: { referralCode: data.referralCode } });
-        if (!found) {
-            break;
-        }
-    }
-
-    if (!userReferralCode) {
-        return context;
-    }
-
-    const referrerUser = await users.findOne({ where: { referralCode: userReferralCode } });
-    if (!referrerUser) {
-        return context;
-    }
-    const partnerName = (() => {
-        if (!referrerUser.roles.includes('partner') || !referrerUser.information) {
-            return;
-        }
-
-        const info = JSON.parse(referrerUser.information);
-        return info.partnerName;
-    })();
-
-    data.referrerUserId = referrerUser.id;
-    data.comeFrom = 99;
-    data.comeFromOther = partnerName ? `Referral from ${partnerName}` : `Referral from ${getPlayerName(referrerUser)}`;
 
     return context;
 };
@@ -1337,12 +1270,10 @@ const verifyEmail = () => async (context: HookContext) => {
     const { TL_URL } = process.env;
     const { email, verificationCode } = context.data;
     const sequelize = context.app.get('sequelizeClient');
-    const { users } = sequelize.models;
-    const { config } = context.params;
 
     const [[user]] = await sequelize.query(
         `
-        SELECT id, firstName, lastName, email, phone, slug, comeFrom, comeFromOther, referrerUserId
+        SELECT id, firstName, lastName, email, phone, slug
           FROM users
          WHERE email=:email AND verificationCode=:verificationCode`,
         {
@@ -1416,14 +1347,6 @@ const verifyEmail = () => async (context: HookContext) => {
                 });
             }
 
-            const comeFromInfo = (() => {
-                if (!comeFromOptions[user.comeFrom]) {
-                    return '';
-                }
-
-                return `${comeFromOptions[user.comeFrom]}${user.comeFromOther ? ` (${user.comeFromOther})` : ''}`;
-            })();
-
             context.app.service('api/emails').create({
                 to: emails.map((item) => ({ email: item })),
                 subject: `${fullName}${duplicates.length > 0 ? ' (duplicate)' : ''} signed up to the system`,
@@ -1433,30 +1356,11 @@ const verifyEmail = () => async (context: HookContext) => {
                     userEmail: user.email,
                     userPhone: user.phone,
                     profileLink: `${TL_URL}/player/${user.slug}`,
-                    previewText: `${context.params.config.city}${comeFromInfo ? `, Origin: ${comeFromInfo}` : ''}`,
-                    comeFromInfo,
+                    previewText: `${context.params.config.city}`,
                     duplicates,
                 }),
             });
         }
-    }
-
-    // Send notification for referrer
-    if (user.referrerUserId) {
-        const referrerUser = await users.findByPk(user.referrerUserId);
-
-        const referralFullName = getPlayerName(user);
-        context.app.service('api/emails').create({
-            to: [getEmailContact(referrerUser)],
-            subject: `Your Friend ${referralFullName} Just Signed Up!`,
-            html: referralRegisteredTemplate({
-                config,
-                referralName: referralFullName,
-                referralLink: `${process.env.TL_URL}/player/${user.slug}`,
-                refPercent: referrerUser.refPercent,
-                refYears: referrerUser.refYears,
-            }),
-        });
     }
 
     return context;
@@ -1982,28 +1886,13 @@ const getAllUsers = () => async (context: HookContext) => {
                    u.isPhoneVerified,
                    u.createdAt,
                    u.loggedAt,
-                   u.comeFrom,
-                   u.comeFromOther,
-                   u.referrerUserId,
                    u.deletedAt,
-                   0 as totalReferrals,
                    COALESCE(p.count, 0) AS totalLadders
               FROM users AS u
          LEFT JOIN (SELECT userId, COUNT(*) AS count FROM players GROUP BY userId) AS p ON u.id=p.userId
              WHERE u.email NOT LIKE "fake%@gmail.com" AND
                    u.isVerified=1`
     );
-
-    const hash = rows.reduce((obj, item) => {
-        obj[item.id] = item;
-        return obj;
-    }, {});
-
-    for (const user of rows) {
-        if (user.referrerUserId && hash[user.referrerUserId]) {
-            hash[user.referrerUserId].totalReferrals++;
-        }
-    }
 
     context.result = { data: rows };
 
@@ -2446,14 +2335,6 @@ const mergeUsers = () => async (context: HookContext) => {
     // regenerate badges state
     await applyNewBadges(sequelize, true);
 
-    // Remove unachieved referral bonus
-    for (const user of [userTo, userFrom]) {
-        const bonusDescription = `Referral credit for ${getPlayerName(user)}`;
-        await sequelize.query(
-            `DELETE FROM payments WHERE userId=${userIdTo} AND description LIKE "${bonusDescription}%"`
-        );
-    }
-
     // Update createdAt and slug for new user
     const minCreatedAt = [userTo, userFrom].reduce(
         (min, user) => (user.createdAt < min ? user.createdAt : min),
@@ -2462,11 +2343,6 @@ const mergeUsers = () => async (context: HookContext) => {
     const newSlug = /\d/.test(userTo.slug)
         ? [userTo, userFrom].reduce((slug, user) => (user.slug.length < slug.length ? user.slug : slug), userTo.slug)
         : userTo.slug;
-
-    const referrerUserId =
-        [userTo, userFrom]
-            .map((user) => user.referrerUserId)
-            .find((userId) => userId > 0 && !allUserIds.includes(userId)) || 0;
 
     const avatar = [userTo, userFrom].reduce((result, user) => result || user.avatar, null);
     const avatarObject = [userTo, userFrom].reduce((result, user) => result || user.avatarObject, null);
@@ -2499,8 +2375,6 @@ const mergeUsers = () => async (context: HookContext) => {
         UPDATE users
            SET createdAt=:createdAt,
                slug=:slug,
-               referrerUserId=:referrerUserId,
-               comeFromOther=:comeFromOther,
                avatar=:avatar,
                avatarObject=:avatarObject,
                information=:information
@@ -2509,8 +2383,6 @@ const mergeUsers = () => async (context: HookContext) => {
             replacements: {
                 createdAt: minCreatedAt,
                 slug: newSlug,
-                referrerUserId,
-                comeFromOther: referrerUserId === 0 ? '' : userTo.comeFromOther,
                 avatar,
                 avatarObject,
                 id: userIdTo,
@@ -2658,128 +2530,6 @@ const getRecentEmails = () => async (context: HookContext) => {
     context.result = {
         data: emails,
     };
-
-    return context;
-};
-
-const getRegisterHistory = () => async (context: HookContext) => {
-    await authenticate('jwt')(context);
-    hasAnyRole(['superadmin'])(context);
-
-    const userId = Number(context.id);
-    const sequelize = context.app.get('sequelizeClient');
-
-    const [[row]] = await sequelize.query(`SELECT registerHistory FROM users WHERE id=:id`, {
-        replacements: { id: userId },
-    });
-
-    const list = row.registerHistory ? JSON.parse(row.registerHistory) : [];
-    context.result = { data: list.map((item, index) => ({ id: index + 1, ...item })) };
-
-    return context;
-};
-
-const getReferrals = () => async (context: HookContext) => {
-    await authenticate('jwt')(context);
-
-    const currentUser = context.params.user as User;
-    const sequelize = context.app.get('sequelizeClient');
-
-    const [users] = await sequelize.query(
-        `
-            SELECT id, firstName, lastName, slug, createdAt
-              FROM users
-             WHERE referrerUserId=:id
-          ORDER BY createdAt DESC`,
-        { replacements: { id: currentUser.id } }
-    );
-
-    if (users.length > 0) {
-        const userIds = users.map((user) => user.id);
-        const [matches] = await sequelize.query(
-            `
-                SELECT DISTINCT p.userId
-                  FROM matches AS m
-             LEFT JOIN players AS p ON (m.challengerId=p.id || m.acceptorId=p.id || m.challenger2Id=p.id || m.acceptor2Id=p.id)
-                 WHERE ${getStatsMatches('m')} AND
-                       p.userId IN (${userIds.join(',')})`
-        );
-        const usersWithMatch = new Set(matches.map((row) => row.userId));
-
-        const [payments] = await sequelize.query(
-            `
-                SELECT DISTINCT userId
-                  FROM payments
-                 WHERE type="payment" AND
-                       userId IN (${userIds.join(',')})`
-        );
-        const usersWithPayment = new Set(payments.map((row) => row.userId));
-
-        for (const user of users) {
-            if (usersWithMatch.has(user.id)) {
-                user.playedMatch = true;
-            }
-            if (usersWithPayment.has(user.id)) {
-                user.madePayment = true;
-            }
-        }
-    }
-
-    context.result = { data: users };
-
-    return context;
-};
-
-const getPartnerReferrals = () => async (context: HookContext) => {
-    await authenticate('jwt')(context);
-
-    const currentUser = context.params.user as User;
-    const sequelize = context.app.get('sequelizeClient');
-
-    if (!currentUser.refPercent) {
-        throw new Unprocessable('You are not using partner referral program.');
-    }
-
-    const [users] = await sequelize.query(
-        `
-            SELECT id, firstName, lastName, slug, createdAt
-              FROM users
-             WHERE referrerUserId=:id
-          ORDER BY createdAt DESC`,
-        { replacements: { id: currentUser.id } }
-    );
-
-    if (users.length > 0) {
-        const userIds = users.map((user) => user.id);
-        const [payments] = await sequelize.query(
-            `
-                SELECT userId,
-                       SUM(amount) AS sum
-                  FROM payments
-                 WHERE type="payment" AND
-                       userId IN (${userIds.join(',')})
-              GROUP BY userId`
-        );
-        const usersWithPayment = payments.reduce((obj, item) => {
-            obj[item.userId] = item.sum;
-            return obj;
-        }, {});
-
-        for (const user of users) {
-            user.payments = usersWithPayment[user.id] || 0;
-        }
-    }
-
-    const [payouts] = await sequelize.query(
-        `
-            SELECT id, amount, description, createdAt
-              FROM payouts
-             WHERE userId=:id
-          ORDER BY createdAt DESC`,
-        { replacements: { id: currentUser.id } }
-    );
-
-    context.result = { data: { referrals: users, payouts } };
 
     return context;
 };
@@ -2940,51 +2690,6 @@ const getMyBadgesStats = () => async (context: HookContext) => {
         data: await getUserBadgesStats(currentUser, context),
     };
 
-    return context;
-};
-
-const getReferrer = () => async (context: HookContext) => {
-    // check validation errors
-    {
-        const schema = yup.object().shape({
-            search: yup.string().required().min(1).max(200),
-        });
-        const errors = getSchemaErrors(schema, context.data);
-
-        if (!_isEmpty(errors)) {
-            // TODO: return no result
-            throwValidationErrors(errors);
-        }
-    }
-
-    if (context.data.search.length <= 3) {
-        context.result = {
-            status: 'fail',
-            message: 'Friend not found.',
-        };
-        return context;
-    }
-
-    const sequelize = context.app.get('sequelizeClient');
-    const [allUsers] = await sequelize.query('SELECT id, firstName, lastName, email, phone, referralCode FROM users');
-    const found = searchReferrer(allUsers, context.data.search);
-
-    if (found.length === 0) {
-        context.result = {
-            status: 'fail',
-            message: 'Friend not found.',
-        };
-    } else if (found.length > 1) {
-        context.result = {
-            status: 'fail',
-            message: 'More than 1 player is found. Could you use email, phone, or referral code to narrow your search?',
-        };
-    } else {
-        context.result = {
-            status: 'success',
-            player: _pick(found[0], ['firstName', 'lastName', 'referralCode']),
-        };
-    }
     return context;
 };
 
@@ -3188,72 +2893,6 @@ const avoidPlayers = () => async (context: HookContext) => {
             });
         }
     }
-
-    return context;
-};
-
-const registerPartner = () => async (context: HookContext) => {
-    let action;
-    try {
-        action = decodeAction(context.data.payload);
-    } catch (e) {
-        throw new Unprocessable((e as Error).message);
-    }
-
-    if (action.name !== 'registerPartner' || !action.percent || !action.years) {
-        throw new Unprocessable('The link is broken');
-    }
-
-    {
-        const errors = commonValidate(context.data);
-
-        if (!context.data.partnerName) {
-            errors.partnerName = 'Partner name is required';
-        }
-
-        if (!_isEmpty(errors)) {
-            throwValidationErrors(errors);
-        }
-    }
-
-    const sequelize = context.app.get('sequelizeClient');
-    const { users } = sequelize.models;
-
-    const ACTION_NAME = 'registerPartner';
-    const [actions] = await sequelize.query(`SELECT * FROM actions WHERE name=:name AND payload=:payload`, {
-        replacements: { name: ACTION_NAME, payload: action.code },
-    });
-    if (actions.length !== 0) {
-        return;
-    }
-
-    await trim('firstName', 'lastName', 'email')(context);
-    await capitalize('firstName', 'lastName')(context);
-    await hashPassword('password')(context);
-    await populateSlug()(context);
-    await populateChangelogSeenAt()(context);
-    await populateReferral()(context);
-
-    const user = await users.create({
-        firstName: context.data.firstName,
-        lastName: context.data.lastName,
-        email: context.data.email,
-        password: context.data.password,
-        slug: context.data.slug,
-        isVerified: 1,
-        roles: 'partner',
-        subscribeForNews: 0,
-        subscribeForReminders: 0,
-        information: JSON.stringify({ partnerName: context.data.partnerName }),
-        changelogSeenAt: context.data.changelogSeenAt,
-        referralCode: context.data.referralCode,
-        refPercent: action.percent,
-        refYears: action.years,
-    });
-
-    await sequelize.query(`UPDATE users SET refStartedAt=createdAt WHERE id=:id`, {
-        replacements: { id: user.dataValues.id },
-    });
 
     return context;
 };
@@ -3527,20 +3166,12 @@ const runCustomAction = () => async (context: HookContext) => {
         await updateChangelogSeenAt()(context);
     } else if (action === 'getRecentEmails') {
         await getRecentEmails()(context);
-    } else if (action === 'getRegisterHistory') {
-        await getRegisterHistory()(context);
-    } else if (action === 'getReferrals') {
-        await getReferrals()(context);
-    } else if (action === 'getPartnerReferrals') {
-        await getPartnerReferrals()(context);
     } else if (action === 'getUserSubscriptions') {
         await getUserSubscriptions()(context);
     } else if (action === 'updateUserSubscriptions') {
         await updateUserSubscriptions()(context);
     } else if (action === 'getMyBadgesStats') {
         await getMyBadgesStats()(context);
-    } else if (action === 'getReferrer') {
-        await getReferrer()(context);
     } else if (action === 'addPersonalNote') {
         await addPersonalNote()(context);
     } else if (action === 'validatePhone') {
@@ -3555,8 +3186,6 @@ const runCustomAction = () => async (context: HookContext) => {
         await getPhotos()(context);
     } else if (action === 'avoidPlayers') {
         await avoidPlayers()(context);
-    } else if (action === 'registerPartner') {
-        await registerPartner()(context);
     } else if (action === 'getUserMatches') {
         await getUserMatches()(context);
     } else if (action === 'savePaw') {
@@ -3582,26 +3211,12 @@ export default {
         create: [
             validateCreate(),
             validatePhone({ isExistingUser: false }),
-            populateRegisterHistory(),
-            keep(
-                'firstName',
-                'lastName',
-                'email',
-                'phone',
-                'password',
-                'comeFrom',
-                'comeFromOther',
-                'referralCode',
-                'registerHistory',
-                'zip',
-                'birthday'
-            ),
+            keep('firstName', 'lastName', 'email', 'phone', 'password', 'zip', 'birthday'),
             trim('firstName', 'lastName', 'email'),
             capitalize('firstName', 'lastName'),
             populateSalt(),
             hashPassword('password'),
             populateSlug(),
-            populateReferral(),
             populateChangelogSeenAt(),
             generateVerificationCode(),
         ],
@@ -3657,7 +3272,7 @@ export default {
         all: [
             // Make sure the password field is never sent to the client
             // Always must be the last hook
-            protect('password', 'salt', 'verificationCode', 'registerHistory'),
+            protect('password', 'salt', 'verificationCode'),
         ],
         find: [],
         get: [],

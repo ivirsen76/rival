@@ -46,7 +46,7 @@ export const getMedian = (values: number[]) => {
     return Math.round((values[half - 1] + values[half]) / 2);
 };
 
-export const generateReferralCode = () => {
+export const generateShortCode = () => {
     const letters = 'abcdefghijklmnopqrstuvwxyz0123456789';
     const length = 5;
 

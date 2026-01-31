@@ -36,11 +36,6 @@ export default (values) => {
         brand: yup.string().nullable().max(250),
         overgrip: yup.string().nullable().max(250),
         balls: yup.string().nullable().max(250),
-        referralCode: yup
-            .string()
-            .nullable()
-            .matches(/^[a-z0-9]{5}$/),
-        registerHistory: yup.array(),
         zip: yup
             .string()
             .nullable()

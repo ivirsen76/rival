@@ -635,9 +635,7 @@ test('We can register and join Doubles ladders (free and paid) paying from walle
     login,
     register,
 }) => {
-    await runQuery(
-        `INSERT INTO payments (userId, type, description, amount) VALUES (5, 'discount', 'Referral credit', 10000)`
-    );
+    await runQuery(`INSERT INTO payments (userId, type, description, amount) VALUES (5, 'discount', 'Credit', 10000)`);
 
     await closeCurrentSeason();
     await login.loginAsPlayer3();

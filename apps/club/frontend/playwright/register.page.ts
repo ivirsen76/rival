@@ -281,7 +281,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await runQuery(`UPDATE seasons SET endDate="${dateInThreeDays}" WHERE id=1`);
 
         await runQuery(
-            `INSERT INTO payments (userId, type, description, amount) VALUES (5, 'discount', 'Referral credit', 10000)`
+            `INSERT INTO payments (userId, type, description, amount) VALUES (5, 'discount', 'Credit', 10000)`
         );
 
         await login.loginAsPlayer3();
@@ -319,7 +319,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await runQuery(`UPDATE matches SET challengerElo=320, acceptorElo=320 WHERE score IS NOT NULL`);
         await runQuery(`
             INSERT INTO payments (userId, type, description, amount)
-                 VALUES (5, 'discount', 'Referral credit', 7500)`);
+                 VALUES (5, 'discount', 'Credit', 7500)`);
         await overrideConfig({
             minMatchesToEstablishTlr: 1,
             minPlayersForActiveLadder: 1,
@@ -352,7 +352,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await runQuery(`UPDATE seasons SET endDate="${dateInThreeDays}" WHERE id=1`);
         await runQuery(`
             INSERT INTO payments (userId, type, description, amount)
-                 VALUES (5, 'discount', 'Referral credit', 9000)`);
+                 VALUES (5, 'discount', 'Credit', 9000)`);
 
         await login.loginAsPlayer3();
         await register.goto();
@@ -682,7 +682,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await closeCurrentSeason();
         await runQuery(`
             INSERT INTO payments (userId, type, description, amount)
-                 VALUES (5, 'discount', 'Referral credit', 2000)`);
+                 VALUES (5, 'discount', 'Credit', 2000)`);
 
         await register.goto();
         await register.signInLink.click();
@@ -765,7 +765,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await runQuery(`UPDATE settings SET newFeedbackNotification="admin@gmail.com"`);
         await runQuery(`
             INSERT INTO payments (userId, type, description, amount)
-                 VALUES (1, 'discount', 'Referral credit', 10500)`);
+                 VALUES (1, 'discount', 'Credit', 10500)`);
         await overrideConfig({ minMatchesToEstablishTlr: 1, minPlayersForActiveLadder: 1 });
 
         await login.loginAsPlayer1();
@@ -992,7 +992,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await runQuery(`UPDATE matches SET challengerElo=370, acceptorElo=370 WHERE score IS NOT NULL`);
         await runQuery(`
             INSERT INTO payments (userId, type, description, amount)
-                 VALUES (5, 'discount', 'Referral credit', 3500)`);
+                 VALUES (5, 'discount', 'Credit', 3500)`);
         await overrideConfig({
             minMatchesToEstablishTlr: 1,
             minPlayersForActiveLadder: 1,
@@ -1128,7 +1128,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await closeCurrentSeason();
         await runQuery(`
             INSERT INTO payments (userId, type, description, amount)
-                 VALUES (5, 'discount', 'Referral credit', 10500)`);
+                 VALUES (5, 'discount', 'Credit', 10500)`);
 
         await register.goto();
         await register.signInLink.click();
@@ -1198,7 +1198,7 @@ test('We can see validation error during registration', async ({ page, common, r
         await closeCurrentSeason();
         await runQuery(`
             INSERT INTO payments (userId, type, description, amount)
-                 VALUES (5, 'discount', 'Referral credit', 7000)`);
+                 VALUES (5, 'discount', 'Credit', 7000)`);
 
         await register.goto();
         await register.signInLink.click();
@@ -1259,9 +1259,6 @@ test('We can see validation error during registration', async ({ page, common, r
         await register.passwordField.fill(login.password);
         await user.enterBirthday('1/1/2000');
 
-        await register.pickComeFromOption('Other');
-        await register.comeFromOtherField.fill('friend');
-
         await register.submitPlayerButton.click();
         await expect(register.area).toContainText('Phone number should contain exactly 10 digits.');
 
@@ -1278,7 +1275,7 @@ test('We can see validation error during registration', async ({ page, common, r
         const record = await expectRecordToExist(
             'users',
             { email: 'peter@gmail.com' },
-            { firstName: 'Peter', lastName: 'Allen', comeFrom: 99, comeFromOther: 'friend', isPhoneVerified: 0 }
+            { firstName: 'Peter', lastName: 'Allen', isPhoneVerified: 0 }
         );
         expect(record.changelogSeenAt).toBeDefined();
         expect(decrypt(record.salt)).toBe(login.password);
@@ -1373,19 +1370,11 @@ test('We can see validation error during registration', async ({ page, common, r
         await register.passwordField.fill(login.password);
         await user.enterBirthday('1/1/2000');
 
-        await register.pickComeFromOption('Flyer from a court');
-
-        await expect(common.body).toContainText('What location?');
-        await register.comeFromOtherField.fill('Pullen park');
         await register.submitPlayerButton.click();
         await expect(common.body).toContainText('Verify');
 
         // Check if record exists
-        await expectRecordToExist(
-            'users',
-            { email: 'peter@gmail.com' },
-            { firstName: 'Peter', lastName: 'Allen', comeFrom: 3, comeFromOther: 'Pullen park' }
-        );
+        await expectRecordToExist('users', { email: 'peter@gmail.com' }, { firstName: 'Peter', lastName: 'Allen' });
     });
 
     test('We can register for the season by creating a new account and with authorization failing', async ({
@@ -1682,49 +1671,6 @@ test('We can see validation error during registration', async ({ page, common, r
         await expect(register.area).toContainText('You cannot pick more than one Singles ladder.');
     });
 
-    test('We can register and find the referral player manually', async ({ common, register, login, user }) => {
-        await register.goto();
-        await register.firstNameField.fill('Peter');
-        await register.lastNameField.fill('Allen');
-        await register.emailField.fill('peter@gmail.com');
-        await register.phoneField.fill('9191234567');
-        await register.passwordField.fill(login.password);
-        await user.enterBirthday('1/1/2000');
-
-        await register.pickComeFromOption('Referral from a friend');
-
-        await expect(common.body).toContainText('Start typing');
-        await expect(register.friendSpinner).toBeHidden();
-        await register.friendField.fill('wrong');
-
-        await expect(register.friendSpinner).toBeVisible();
-        await expect(common.body).toContainText('Friend not found');
-        await expect(register.friendSpinner).toBeHidden();
-
-        await register.friendField.fill('eeeee');
-
-        await expect(register.friendSpinner).toBeVisible();
-        await expect(common.body).toContainText('Found!');
-        await expect(register.friendSpinner).toBeHidden();
-
-        await expect(register.friendField).toHaveValue('Matthew Burt');
-
-        await register.submitPlayerButton.click();
-
-        // Check if record exists
-        await expectRecordToExist(
-            'users',
-            { email: 'peter@gmail.com' },
-            {
-                firstName: 'Peter',
-                lastName: 'Allen',
-                comeFrom: 99,
-                comeFromOther: 'Referral from Matthew Burt',
-                referrerUserId: 6,
-            }
-        );
-    });
-
     test('We can register and do not try to find a friend', async ({ common, register, login, user }) => {
         await register.goto();
         await register.firstNameField.fill('Peter');
@@ -1733,203 +1679,10 @@ test('We can see validation error during registration', async ({ page, common, r
         await register.phoneField.fill('9191234567');
         await register.passwordField.fill(login.password);
         await user.enterBirthday('1/1/2000');
-
-        await register.pickComeFromOption('Referral from a friend');
         await register.submitPlayerButton.click();
 
         // Check if record exists
-        await expectRecordToExist(
-            'users',
-            { email: 'peter@gmail.com' },
-            {
-                firstName: 'Peter',
-                lastName: 'Allen',
-                comeFrom: 9,
-                comeFromOther: '',
-                referrerUserId: 0,
-            }
-        );
-    });
-
-    test('We can register and cannot find a friend', async ({ common, register, login, user }) => {
-        await register.goto();
-        await register.firstNameField.fill('Peter');
-        await register.lastNameField.fill('Allen');
-        await register.emailField.fill('peter@gmail.com');
-        await register.phoneField.fill('9191234567');
-        await register.passwordField.fill(login.password);
-        await user.enterBirthday('1/1/2000');
-
-        await register.pickComeFromOption('Referral from a friend');
-
-        await register.friendField.fill('wrong');
-        await expect(common.body).toContainText('Friend not found');
-
-        await register.submitPlayerButton.click();
-
-        // Check if record exists
-        await expectRecordToExist(
-            'users',
-            { email: 'peter@gmail.com' },
-            {
-                firstName: 'Peter',
-                lastName: 'Allen',
-                comeFrom: 9,
-                comeFromOther: '',
-                referrerUserId: 0,
-            }
-        );
-    });
-
-    test('We can register, found the friend and then change the comeFrom source', async ({
-        common,
-        register,
-        login,
-        user,
-    }) => {
-        await register.goto();
-        await register.firstNameField.fill('Peter');
-        await register.lastNameField.fill('Allen');
-        await register.emailField.fill('peter@gmail.com');
-        await register.phoneField.fill('9191234567');
-        await register.passwordField.fill(login.password);
-        await user.enterBirthday('1/1/2000');
-
-        await register.pickComeFromOption('Referral from a friend');
-
-        await register.friendField.fill('eeeee');
-        await expect(common.body).toContainText('Found!');
-        await expect(register.friendField).toHaveValue('Matthew Burt');
-
-        await register.pickComeFromOption('Social Media');
-
-        await register.submitPlayerButton.click();
-
-        // Check if record exists
-        await expectRecordToExist(
-            'users',
-            { email: 'peter@gmail.com' },
-            {
-                firstName: 'Peter',
-                lastName: 'Allen',
-                comeFrom: 12,
-                comeFromOther: '',
-                referrerUserId: 0,
-            }
-        );
-    });
-
-    test('We can register by using the referral link', async ({
-        common,
-        register,
-        login,
-        page,
-        overview,
-        match,
-        user,
-    }) => {
-        await page.goto('/ref/asdfg');
-        await register.globalRegisterButton.click();
-        await register.firstNameField.fill('Peter');
-        await register.lastNameField.fill('Allen');
-        await register.emailField.fill('peter@gmail.com');
-        await register.phoneField.fill('9191234567');
-        await register.passwordField.fill(login.password);
-        await user.enterBirthday('1/1/2000');
-
-        await expect(register.comeFromSelect).toBeHidden();
-
-        await register.submitPlayerButton.click();
-        await expect(common.body).toContainText('Verify');
-
-        // Check if record exists
-        const record = await expectRecordToExist(
-            'users',
-            { email: 'peter@gmail.com' },
-            {
-                firstName: 'Peter',
-                lastName: 'Allen',
-                comeFrom: 99,
-                comeFromOther: 'Referral from Ben Done',
-                referrerUserId: 1,
-            }
-        );
-        expect(record.referralCode).toMatch(/^[a-z0-9]{5}$/);
-
-        const emailSent = await getRecord('emails', { recipientEmail: 'peter@gmail.com' });
-        const emailVerificationCode = emailSent.subject.slice(0, 6);
-        await register.emailVerificationCodeField.fill(emailVerificationCode);
-        await expect(common.body).toContainText('successfully registered');
-        await register.pickLadderButton.click();
-
-        // Check email about referral registered
-        {
-            const email = await expectRecordToExist(
-                'emails',
-                { subject: 'Your Friend Peter Allen Just Signed Up!' },
-                { recipientEmail: 'player1@gmail.com' }
-            );
-            expect(email.html).toContain('Peter Allen');
-            expect(email.html).toContain('<b>$5</b>');
-            expect(email.html).toContain('<b>$10</b>');
-            expect(email.html).toContain('peter-allen');
-        }
-
-        await register.getLadderCheckbox('Men 3.5').click();
-        await register.agreeCheckbox.click();
-        await register.registerButton.click();
-        await register.goToLadderButton.click();
-
-        // Add match and check the referral credit
-        await overview.reportMatchButton.click();
-        await match.pickChallengerOption('Matthew Burt');
-
-        await match.nextButton.click();
-
-        await match.pickChallengerPoints(3);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        await match.pickChallengerPoints(2);
-        await match.submitMatchButton.click();
-        await expect(common.alert).toContainText('The match has been reported');
-
-        // Check email about the first referral match and the credit
-        {
-            const email = await expectRecordToExist(
-                'emails',
-                { subject: 'You Just Earned $5 in Rival Credit!' },
-                { recipientEmail: 'player1@gmail.com' }
-            );
-            expect(email.html).toContain('Peter Allen');
-            expect(email.html).toContain('<b>$5</b>');
-        }
-
-        // Check that we have referral credit
-        await expectRecordToExist(
-            'payments',
-            { userId: 1 },
-            {
-                type: 'discount',
-                description: 'Referral credit for Peter Allen (first match)',
-                amount: 500,
-            }
-        );
-
-        // Add another match and check if we are not paying referral credit twice
-        await overview.reportMatchButton.click();
-        await match.pickChallengerOption('Cristopher Hamiltonbeach');
-        await match.nextButton.click();
-
-        await match.pickChallengerPoints(3);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        await match.pickChallengerPoints(2);
-        await match.submitMatchButton.click();
-        await expect(common.alert).toContainText('The match has been reported');
-
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        expect(await getNumRecords('emails', { recipientEmail: 'player1@gmail.com' })).toBe(2);
-        expect(await getNumRecords('payments', { userId: 1 })).toBe(1);
+        await expectRecordToExist('users', { email: 'peter@gmail.com' }, { firstName: 'Peter', lastName: 'Allen' });
     });
 
     test('We can set gender after choosing ladder', async ({ common, register, login, user }) => {
@@ -1973,144 +1726,6 @@ test('We can see validation error during registration', async ({ page, common, r
         // check that gender is set
         await expectRecordToExist('users', { email: 'player5@gmail.com' }, { gender: 'female' });
     });
-
-    test('We can register for the season and referrer gets the credit', async ({
-        common,
-        register,
-        login,
-        page,
-        homepage,
-    }) => {
-        if (process.env.CI) {
-            return;
-        }
-
-        // emulate that player8 played in the previous season
-        await runQuery('UPDATE players SET userId=8 WHERE id=17');
-        await runQuery(`UPDATE users SET referrerUserId=6 WHERE id=8 OR id=9`);
-        await overrideConfig({ minMatchesToPay: 0 });
-
-        {
-            await register.goto();
-            await register.signInLink.click();
-            await register.emailField.fill('player9@gmail.com');
-            await register.passwordField.fill(login.password);
-            await login.signInButton.click();
-
-            await register.getLadderCheckbox('Men 3.5').click();
-            await register.agreeCheckbox.click();
-            await register.goToCheckoutButton.click();
-            await register.confirmOrderButton.click();
-
-            await register.submitCardCredentials();
-            await expect(common.modal).toContainText('Payment successful!', { timeout: 15000 });
-
-            await expectRecordToExist(
-                'payments',
-                { userId: 6 },
-                {
-                    type: 'discount',
-                    description: 'Referral credit for Doubles Player (first payment)',
-                    amount: 1000,
-                }
-            );
-
-            // Check email about the first referral payment and the credit
-            const email = await expectRecordToExist(
-                'emails',
-                { subject: 'You Just Earned $10 in Rival Credit!' },
-                { recipientEmail: 'player4@gmail.com' }
-            );
-            expect(email.html).toContain('Doubles Player');
-            expect(email.html).toContain('<b>$10</b>');
-        }
-
-        // Check that we have credit for another player
-        {
-            await page.goto('/logout');
-            await homepage.checkVisible();
-            await register.goto();
-            await register.signInLink.click();
-            await register.emailField.fill('player8@gmail.com');
-            await register.passwordField.fill(login.password);
-            await login.signInButton.click();
-
-            await register.getLadderCheckbox('Men 3.5').click();
-            await register.agreeCheckbox.click();
-            await register.goToCheckoutButton.click();
-            await register.confirmOrderButton.click();
-
-            await register.submitCardCredentials();
-            await expect(common.modal).toContainText('Payment successful!', { timeout: 15000 });
-
-            await expectRecordToExist(
-                'payments',
-                { userId: 6, description: 'Referral credit for Not Played User (first payment)' },
-                { type: 'discount', amount: 1000 }
-            );
-
-            expect(await getNumRecords('emails', { subject: 'You Just Earned $10 in Rival Credit!' })).toBe(2);
-        }
-    });
-
-    test("We don't have a referral with wrong format code", async ({ common, register, login, page, user }) => {
-        await page.goto('/ref/longcode');
-        await register.globalRegisterButton.click();
-        await register.firstNameField.fill('Peter');
-        await register.lastNameField.fill('Allen');
-        await register.emailField.fill('peter@gmail.com');
-        await register.phoneField.fill('9191234567');
-        await register.passwordField.fill(login.password);
-        await user.enterBirthday('1/1/2000');
-
-        await expect(register.comeFromSelect).toBeVisible();
-
-        await register.submitPlayerButton.click();
-        await expect(common.body).toContainText('Verify');
-
-        // Check if record exists
-        await expectRecordToExist(
-            'users',
-            { email: 'peter@gmail.com' },
-            {
-                firstName: 'Peter',
-                lastName: 'Allen',
-                comeFrom: 0,
-                comeFromOther: '',
-                referrerUserId: 0,
-            }
-        );
-    });
-
-    test("We don't have a referral with wrong code", async ({ common, register, login, page, user }) => {
-        await page.goto('/ref/wrong');
-        await register.globalRegisterButton.click();
-        await register.firstNameField.fill('Peter');
-        await register.lastNameField.fill('Allen');
-        await register.emailField.fill('peter@gmail.com');
-        await register.phoneField.fill('9191234567');
-        await register.passwordField.fill(login.password);
-        await user.enterBirthday('1/1/2000');
-
-        await expect(register.comeFromSelect).toBeVisible();
-        await expect(register.comeFromSelect).toHaveValue('0');
-
-        await register.submitPlayerButton.click();
-        await expect(common.body).toContainText('Verify');
-
-        // Check if record exists
-        await expectRecordToExist(
-            'users',
-            { email: 'peter@gmail.com' },
-            {
-                firstName: 'Peter',
-                lastName: 'Allen',
-                comeFrom: 0,
-                comeFromOther: '',
-                referrerUserId: 0,
-            }
-        );
-    });
 }
 
 {
@@ -2152,83 +1767,5 @@ test('We can see validation error during registration', async ({ page, common, r
         expect(welcomeEmail.html).toContain('Andrew Cole');
         expect(welcomeEmail.html).toContain('The Ladder Starts Soon');
         expect(welcomeEmail.html).toContain('2022 Spring');
-    });
-}
-
-{
-    const storageKey = 'registerHistory';
-    // const getLocalStorageValue = async page<Page> => page.evaluate(() => localStorage.getItem(storageKey));
-
-    // const getLocalStorageValue = ClientFunction(key => {
-    //     return localStorage.getItem(key);
-    // });
-
-    test('Save browsing history before registration', async ({ common, register, login, page, homepage, user }) => {
-        await page.goto('/');
-
-        await page.locator('a.btn').getByText('Scoring').click();
-        await expect(page.locator('h1').getByText('Scoring')).toBeVisible();
-        await common.logo.click();
-        await homepage.getCurrentSeasonLadder('Men 3.5').click();
-
-        // check that history persists in local storage
-        await common.reloadPage();
-
-        await register.globalRegisterButton.click();
-
-        expect(await page.evaluate((key) => localStorage.getItem(key), storageKey)).toBeTruthy();
-
-        await register.firstNameField.fill('Peter');
-        await register.lastNameField.fill('Allen');
-        await register.emailField.fill('peter@gmail.com');
-        await register.phoneField.fill('9191234567');
-        await register.passwordField.fill(login.password);
-        await user.enterBirthday('1/1/2000');
-
-        await register.submitPlayerButton.click();
-        await expect(common.body).toContainText('Verify');
-
-        const record = await expectRecordToExist('users', { email: 'peter@gmail.com' });
-
-        expect(record.registerHistory).toContain('"route"');
-        expect(record.registerHistory).toContain('"/"');
-        expect(record.registerHistory).toContain('"/season/2021/spring/men-35"');
-        expect(record.registerHistory).toContain('"/scoring"');
-        expect(record.registerHistory).toContain('"/register"');
-        expect(record.registerHistory).toContain('"clickFancyRegisterButton"');
-    });
-
-    test('Track clicking on Hero register button', async ({ common, page, homepage }) => {
-        await page.goto('/');
-        await homepage.heroRegisterButton.click();
-        await expect(common.body).toContainText('Create an Account');
-
-        const state = await page.evaluate(() => window.tl.store.getState());
-        const history = JSON.stringify(state.auth.history);
-
-        expect(history).toContain('"/"');
-        expect(history).toContain('"/register"');
-        expect(history).toContain('"clickHeroRegisterButton"');
-    });
-
-    test('Clear history after logging in', async ({ common, page, login, homepage }) => {
-        await page.goto('/');
-        await page.locator('a.btn').getByText('Scoring').click();
-        await expect(page.locator('h1').getByText('Scoring')).toBeVisible();
-        expect(await page.evaluate((key) => localStorage.getItem(key), storageKey)).toBeTruthy();
-
-        await page.locator('[data-top-menu] a').getByText('Sign in').click();
-        await login.emailField.fill('player1@gmail.com');
-        await login.passwordField.fill(login.password);
-        await login.signInButton.click();
-        await expect(common.body).toContainText('Ben Done');
-
-        await page.locator('[data-top-menu] a').getByText('Home').click();
-        await homepage.checkVisible();
-
-        const state = await page.evaluate(() => window.tl.store.getState());
-        expect(state.auth.history).toEqual([]);
-
-        expect(await page.evaluate((key) => localStorage.getItem(key), storageKey)).toBeFalsy();
     });
 }

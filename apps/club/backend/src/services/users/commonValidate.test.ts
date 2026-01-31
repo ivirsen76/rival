@@ -22,7 +22,6 @@ describe('validate()', () => {
         brand: 'Babolat',
         overgrip: 'Gamma',
         balls: 'Wilson',
-        referralCode: 'qwer1',
         birthday: '1990-01-01',
         information: {
             subscribeForProposals: {
@@ -91,7 +90,6 @@ describe('validate()', () => {
     checkForErrors('brand', [123, 'a'.repeat(251)]);
     checkForErrors('overgrip', [123, 'a'.repeat(251)]);
     checkForErrors('balls', [123, 'a'.repeat(251)]);
-    checkForErrors('referralCode', [123, 'a', 'aaaaaa', 'Aaaaa', 'aaaa*']);
     checkForErrors('information.subscribeForProposals.playFormats', [[3], ['string']]);
     checkForErrors('information.subscribeForProposals.onlyNotPlaying', [1, 'str', []]);
     checkForErrors('information.subscribeForProposals.onlyCompetitive', [1, 'str', []]);

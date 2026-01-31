@@ -10,7 +10,6 @@ test('We can see player actions', async ({ page, common, login }) => {
     await page.goto('/player/ben-done');
     await expect(page.locator('button').getByText('Emails')).toBeVisible();
     await expect(page.locator('button').getByText('Wallet')).toBeVisible();
-    await expect(page.locator('button').getByText('Tracking')).toBeVisible();
     await expect(page.locator('button').getByText('Add transaction')).toBeVisible();
 });
 

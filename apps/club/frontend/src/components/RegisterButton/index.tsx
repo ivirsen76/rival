@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { addHistoryEventAndSave } from '@/reducers/auth';
+import { useSelector } from 'react-redux';
 import style from './style.module.scss';
 
 const RegisterButton = (props) => {
@@ -10,7 +9,6 @@ const RegisterButton = (props) => {
     const history = useHistory();
     const location = useLocation();
     const currentUser = useSelector((state) => state.auth.user);
-    const dispatch = useDispatch();
 
     useEffect(() => {
         (async () => {
@@ -36,7 +34,6 @@ const RegisterButton = (props) => {
     }, []);
 
     const goToRegisterPage = () => {
-        dispatch(addHistoryEventAndSave({ type: 'clickFancyRegisterButton' }));
         history.push('/register');
     };
 

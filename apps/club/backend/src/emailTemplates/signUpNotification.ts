@@ -8,21 +8,11 @@ type Params = {
     userEmail: string;
     userPhone: string;
     profileLink: string;
-    comeFromInfo: string;
     duplicates: User[];
     previewText: string;
 };
 
-export default ({
-    config,
-    userName,
-    userEmail,
-    userPhone,
-    profileLink,
-    comeFromInfo,
-    duplicates,
-    previewText,
-}: Params) => {
+export default ({ config, userName, userEmail, userPhone, profileLink, duplicates, previewText }: Params) => {
     const { TL_URL } = process.env;
 
     return normal(
@@ -32,7 +22,6 @@ export default ({
   <mj-text>
     <b>Email:</b> <a href="mailto:${userEmail}">${userEmail}</a><br>
     <b>Phone:</b> <a href="sms:${userPhone}">${formatPhone(userPhone)}</a><br>
-    ${comeFromInfo ? `<b>Origin:</b> ${comeFromInfo}<br>` : ''}
     <b>Profile:</b> <a href="${profileLink}">${profileLink}</a>
   </mj-text>
   ${
