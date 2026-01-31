@@ -16,7 +16,6 @@ import { Complaint } from './poms/Complaint';
 import { Levels } from './poms/Levels';
 import { Seasons } from './poms/Seasons';
 import { User } from './poms/User';
-import { Team } from './poms/Team';
 import { Form } from './poms/Form';
 
 type MyFixture = {
@@ -36,7 +35,6 @@ type MyFixture = {
     levels: Levels;
     seasons: Seasons;
     user: User;
-    team: Team;
     form: Form;
 };
 
@@ -88,9 +86,6 @@ export const test = base.extend<MyFixture>({
     },
     user: async ({ page }, use) => {
         await use(new User(page));
-    },
-    team: async ({ page }, use) => {
-        await use(new Team(page));
     },
     form: async ({ page }, use) => {
         await use(new Form(page));
