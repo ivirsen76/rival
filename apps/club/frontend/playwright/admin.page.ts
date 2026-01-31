@@ -758,50 +758,6 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
         expect(email.html).toContain('permanent ban');
     });
 
-    test('Merge users based on cookie', async ({ page, common, login }) => {
-        await login.loginAsPlayer8();
-        const fingerprint8 = await expectRecordToExist('fingerprints', { userId: 8 });
-        const identification8 = await expectRecordToExist('identifications', { userId: 8 });
-
-        // just to have different updatedAt
-        await page.waitForTimeout(1000);
-
-        await login.loginAsPlayer9();
-        const fingerprint9 = await expectRecordToExist('fingerprints', { userId: 9 });
-        const identification9 = await expectRecordToExist('identifications', { userId: 9 });
-
-        expect(fingerprint8.whole).toBe(fingerprint9.whole);
-        expect(fingerprint8.updatedAt).not.toBe(fingerprint9.updatedAt);
-
-        expect(identification8.code).toBe(identification9.code);
-        expect(identification8.updatedAt).not.toBe(identification9.updatedAt);
-
-        await login.loginAsAdmin();
-        await page.goto('/admin/merge');
-        await expect(common.body).toContainText('cookie');
-
-        await page.locator('button[data-merge-to="8"]').click();
-        await expect(common.modal).toContainText('Not Played User');
-        await expect(common.modal).toContainText('Previous cheating attempts: 0');
-        await expect(common.modal).not.toContainText('Possible Cheater');
-        await expect(common.modal.locator('[data-radio-option="info"]')).toBeChecked();
-
-        await common.modal.locator('button').getByText('Merge').click();
-        await expect(common.alert).toContainText('The user has been merged.');
-        await expect(common.body).not.toContainText('player8@gmail.com');
-
-        await expectNumRecords('fingerprints', { userId: 8 }, 1);
-        await expectNumRecords('identifications', { userId: 8 }, 1);
-
-        await expectRecordToExist('fingerprints', { userId: 8, updatedAt: fingerprint9.updatedAt });
-        await expectRecordToExist('identifications', { userId: 8, updatedAt: identification9.updatedAt });
-
-        const email = await expectRecordToExist('emails', { subject: 'Merging Your Accounts' });
-        expect(email.recipientEmail).toBe('player8@gmail.com,player9@gmail.com');
-        expect(email.html).toContain('under the email <b>player8@gmail.com</b>');
-        expect(email.html).not.toContain('permanent ban');
-    });
-
     test('Merge users based on name and having prev cheating attempts', async ({ page, common, login }) => {
         await runQuery(`UPDATE users SET firstName="Ben", lastName="Done", cheatingAttempts=1 WHERE id=9`);
 

@@ -1,7 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { AppDispatch, RootState } from '../app/store';
 import axios from '@rival/common/axios';
-import getPaw from '@rival/common/utils/getPaw';
 import type { Config, User } from '@rival/club.backend/src/types';
 
 type AuthState = {
@@ -93,22 +92,11 @@ export const updateCurrentUser =
         }
     };
 
-export const savePaw = () => async (dispatch: AppDispatch) => {
-    try {
-        const paw = await getPaw();
-        await axios.put('/api/users/0', { action: 'savePaw', ...paw });
-        await dispatch(loadCurrentUser());
-    } catch {
-        // do nothing
-    }
-};
-
 export const authenticate = (email: string, password: string) => async (dispatch: AppDispatch) => {
     try {
         const result = await axios.post('/api/authentication', { strategy: 'local', email, password });
         localStorage.setItem('token', result.data.accessToken);
         dispatch(setCurrentUser({ user: result.data.user }));
-        dispatch(savePaw());
         return result.data.user;
     } catch (e) {
         throw { email: e.email || 'Your email or password is incorrect.' };

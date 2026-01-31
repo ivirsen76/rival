@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.7.44)
 # Database: tennisclub
-# Generation Time: 2026-01-31 19:56:10 +0000
+# Generation Time: 2026-01-31 20:26:33 +0000
 # ************************************************************
 
 
@@ -290,52 +290,6 @@ DELIMITER ;;
 /*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `feedbacks_OnUpdate` BEFORE UPDATE ON `feedbacks` FOR EACH ROW SET NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York') */;;
 DELIMITER ;
 /*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
-
-
-# Dump of table fingerprints
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `fingerprints`;
-
-CREATE TABLE `fingerprints` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userId` int(11) DEFAULT NULL,
-  `whole` varchar(255) NOT NULL,
-  `userAgent` varchar(255) NOT NULL,
-  `screen` varchar(255) NOT NULL,
-  `device` varchar(255) NOT NULL,
-  `canvas` varchar(255) NOT NULL,
-  `webgl` varchar(255) NOT NULL,
-  `createdAt` datetime NOT NULL,
-  `updatedAt` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `fingerprints_user_id_whole` (`userId`,`whole`),
-  CONSTRAINT `fingerprints_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-DELIMITER ;;
-/*!50003 SET SESSION SQL_MODE="IGNORE_SPACE,ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION" */;;
-/*!50003 CREATE */ /*!50017 DEFINER=`root`@`localhost` */ /*!50003 TRIGGER `fingerprints_OnInsert` BEFORE INSERT ON `fingerprints` FOR EACH ROW SET NEW.createdAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, 'America/New_York') */;;
-DELIMITER ;
-/*!50003 SET SESSION SQL_MODE=@OLD_SQL_MODE */;
-
-
-# Dump of table identifications
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `identifications`;
-
-CREATE TABLE `identifications` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `userId` int(11) DEFAULT NULL,
-  `code` varchar(255) NOT NULL,
-  `updatedAt` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `identifications_user_id_code` (`userId`,`code`),
-  CONSTRAINT `identifications_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 
 
 # Dump of table levels

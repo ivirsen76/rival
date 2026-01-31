@@ -9,14 +9,13 @@ import AppearanceChecker from '@/components/AppearanceChecker';
 import EmojiMultiplierCalculator from '@rival/common/components/EmojiMultiplierCalculator';
 import history from '@rival/common/history';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadCurrentUser, setConfig, savePaw } from '@/reducers/auth';
+import { loadCurrentUser, setConfig } from '@/reducers/auth';
 import useSettings from '@rival/common/utils/useSettings';
 import * as Sentry from '@sentry/react';
 import { Integrations } from '@sentry/tracing';
 import { getUnseenUpdates } from '@/selectors/auth';
 import NewUpdatesImage from '@/assets/newUpdates.svg?react';
 import { useQuery } from 'react-query';
-import saveIdentification from './utils/saveIdentification';
 import axios from '@rival/common/axios';
 import style from './style.module.scss';
 
@@ -109,30 +108,6 @@ export default function App() {
             }
         }
     }, [settings]);
-
-    // save paw
-    useEffect(() => {
-        if (!currentUser || currentUser.hasRecentPaw) {
-            return;
-        }
-
-        // do not wait for it
-        dispatch(savePaw());
-    }, [currentUser?.id]);
-
-    // save identification
-    useEffect(() => {
-        if (!currentUser) {
-            return;
-        }
-
-        saveIdentification();
-        const interval = setInterval(saveIdentification, 60 * 60 * 1000);
-
-        return () => {
-            clearInterval(interval);
-        };
-    }, [currentUser?.id]);
 
     // Show new features modal
     useEffect(() => {

@@ -1812,7 +1812,6 @@ const getDuplicatedUsers = () => async (context: HookContext) => {
             },
         },
         birthday: { data: {}, getConfidence: () => 0.5 },
-        cookie: { data: {}, getConfidence: () => 0.95 },
     };
 
     const addMetric = (code, userId: number, value) => {
@@ -1871,16 +1870,6 @@ const getDuplicatedUsers = () => async (context: HookContext) => {
         const nameHistory = information.history?.name || [];
         for (const item of nameHistory) {
             addMetric('name', user.id, item.value);
-        }
-    }
-
-    const dateThreeMonthsAgo = dayjs.tz().subtract(3, 'month');
-    const [rows] = await sequelize.query(`SELECT * FROM identifications WHERE updatedAt>:date`, {
-        replacements: { date: dateThreeMonthsAgo.format('YYYY-MM-DD HH:mm:ss') },
-    });
-    for (const row of rows) {
-        if (row.userId in userObj) {
-            addMetric('cookie', row.userId, row.code);
         }
     }
 
@@ -2130,37 +2119,6 @@ const mergeUsers = () => async (context: HookContext) => {
 
             await sequelize.query(`UPDATE userrelations SET userId=${userIdTo} WHERE userId=${userIdFrom}`);
             await sequelize.query(`UPDATE userrelations SET opponentId=${userIdTo} WHERE opponentId=${userIdFrom}`);
-        }
-
-        // fingerprints and identifications
-        {
-            const entities = [
-                { table: 'fingerprints', field: 'whole' },
-                { table: 'identifications', field: 'code' },
-            ];
-
-            for (const entity of entities) {
-                const { table, field } = entity;
-
-                const [rows] = await sequelize.query(
-                    `SELECT id, ${field}
-                       FROM ${table}
-                      WHERE userId=${userIdFrom} OR userId=${userIdTo}
-                   ORDER BY updatedAt DESC`
-                );
-
-                // Remove duplicates. Leave the latest one.
-                const processed = new Set();
-                for (const row of rows) {
-                    if (processed.has(row[field])) {
-                        await sequelize.query(`DELETE FROM ${table} WHERE id=${row.id}`);
-                    } else {
-                        processed.add(row[field]);
-                    }
-                }
-
-                await sequelize.query(`UPDATE ${table} SET userId=${userIdTo} WHERE userId=${userIdFrom}`);
-            }
         }
 
         // Badges
@@ -2844,105 +2802,6 @@ const getUserMatches = () => async (context: HookContext) => {
     return context;
 };
 
-const savePaw = () => async (context: HookContext) => {
-    try {
-        await authenticate('jwt')(context);
-    } catch {
-        // return if not logged in
-        return;
-    }
-
-    // skip if is loggedInAs
-    if (context.params.authentication.payload.loginAs) {
-        return;
-    }
-
-    {
-        const regex = /^[a-f0-9]{64}$/;
-        const schema = yup.object().shape({
-            whole: yup.string().matches(regex).required(),
-            canvas: yup.string().matches(regex).required(),
-            device: yup.string().matches(regex).required(),
-            screen: yup.string().matches(regex).required(),
-            userAgent: yup.string().matches(regex).required(),
-            webgl: yup.string().matches(regex).required(),
-        });
-        const errors = getSchemaErrors(schema, context.data);
-
-        if (!_isEmpty(errors)) {
-            throwValidationErrors(errors);
-        }
-    }
-
-    const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user as User;
-    const currentDateStr = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
-
-    const [[paw]] = await sequelize.query(`SELECT id FROM fingerprints WHERE userId=:userId AND whole=:whole`, {
-        replacements: { userId: currentUser.id, whole: context.data.whole },
-    });
-
-    if (paw) {
-        await sequelize.query(`UPDATE fingerprints SET updatedAt=:date WHERE id=:id`, {
-            replacements: { id: paw.id, date: currentDateStr },
-        });
-    } else {
-        await sequelize.query(
-            `INSERT INTO fingerprints
-                     SET userId=:userId,
-                         updatedAt=:date,
-                         whole=:whole,
-                         canvas=:canvas,
-                         device=:device,
-                         screen=:screen,
-                         userAgent=:userAgent,
-                         webgl=:webgl`,
-            { replacements: { userId: currentUser.id, date: currentDateStr, ...context.data } }
-        );
-    }
-
-    return context;
-};
-
-const saveIdentification = () => async (context: HookContext) => {
-    try {
-        await authenticate('jwt')(context);
-    } catch {
-        // return if not logged in
-        return;
-    }
-
-    // skip if is loggedInAs
-    if (context.params.authentication.payload.loginAs) {
-        return;
-    }
-
-    if (!/^[a-f0-9]{64}$/.test(context.data.code)) {
-        throw new Unprocessable('The code is incorrect');
-    }
-
-    const sequelize = context.app.get('sequelizeClient');
-    const currentUser = context.params.user as User;
-    const currentDateStr = dayjs.tz().format('YYYY-MM-DD HH:mm:ss');
-
-    const [[identification]] = await sequelize.query(
-        `SELECT id FROM identifications WHERE userId=:userId AND code=:code`,
-        { replacements: { userId: currentUser.id, code: context.data.code } }
-    );
-
-    if (identification) {
-        await sequelize.query(`UPDATE identifications SET updatedAt=:date WHERE id=:id`, {
-            replacements: { id: identification.id, date: currentDateStr },
-        });
-    } else {
-        await sequelize.query(`INSERT INTO identifications SET userId=:userId, updatedAt=:date, code=:code`, {
-            replacements: { userId: currentUser.id, date: currentDateStr, code: context.data.code },
-        });
-    }
-
-    return context;
-};
-
 const ignoreDuplicatedUsers = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     hasAnyRole(['admin', 'manager'])(context);
@@ -3060,10 +2919,6 @@ const runCustomAction = () => async (context: HookContext) => {
         await avoidPlayers()(context);
     } else if (action === 'getUserMatches') {
         await getUserMatches()(context);
-    } else if (action === 'savePaw') {
-        await savePaw()(context);
-    } else if (action === 'saveIdentification') {
-        await saveIdentification()(context);
     } else if (action === 'ignoreDuplicatedUsers') {
         await ignoreDuplicatedUsers()(context);
     } else {

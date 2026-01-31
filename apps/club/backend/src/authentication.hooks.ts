@@ -257,16 +257,6 @@ const populateTournaments = () => async (context: HookContext) => {
         context.result.user.totalCommentsToday = row.cnt;
     }
 
-    // Get recent paw
-    {
-        const dateWeekAgo = dayjs().subtract(1, 'week').format('YYYY-MM-DD HH:mm:ss');
-        const [rows] = await sequelize.query(`SELECT id FROM fingerprints WHERE userId=:userId AND updatedAt>:date`, {
-            replacements: { userId, date: dateWeekAgo },
-        });
-
-        context.result.user.hasRecentPaw = rows.length > 0;
-    }
-
     // Check if user is logged as
     {
         const tokenPayload = context.result.authentication.payload;

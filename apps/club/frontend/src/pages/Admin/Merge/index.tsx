@@ -220,7 +220,6 @@ const Merge = () => {
                                     metric === 'phone' && 'badge-warning',
                                     metric === 'name' && 'badge-success',
                                     metric === 'email' && 'badge-danger',
-                                    metric === 'cookie' && 'badge-danger',
                                     metric === 'birthday' && 'badge-info'
                                 )}
                             >

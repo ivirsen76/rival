@@ -28,8 +28,4 @@ test('We can login as another player', async ({ page, common, login, homepage })
 
     await expect(page.locator('[data-logged-user]')).toContainText('Super Admin');
     await homepage.checkVisible();
-
-    // check that fingerprints and identifications are not affected
-    await expectNumRecords('fingerprints', { userId: 1 }, 0);
-    await expectNumRecords('identifications', { userId: 1 }, 0);
 });

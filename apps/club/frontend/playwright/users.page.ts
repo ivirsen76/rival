@@ -65,48 +65,4 @@ test.beforeEach(async ({ page }) => {
         await expect(common.body).toContainText('Gary Mill');
         await expect(common.body).not.toContainText('Ben Done');
     });
-
-    test('Should save paw', async ({ page, login, common }) => {
-        await login.loginAsPlayer1();
-        await page.goto('/player/gary-mill');
-
-        const paw = await expectRecordToExist('fingerprints', { userId: 1 });
-
-        await page.goto('/player/gary-mill');
-        await expect(common.body).toContainText('My Notes About Gary');
-        await page.waitForTimeout(2000);
-
-        // check that paw is not updated
-        await expectRecordToExist('fingerprints', { userId: 1 }, { updatedAt: paw.updatedAt });
-
-        // check that paw is updated if it's been more than 1 week
-        const dateTenDaysAgo = dayjs.tz().subtract(8, 'day').format('YYYY-MM-DD HH:mm:ss');
-        await runQuery(`UPDATE fingerprints SET updatedAt="${dateTenDaysAgo}" WHERE id=${paw.id}`);
-
-        await page.goto('/player/gary-mill');
-        await expect(common.body).toContainText('My Notes About Gary');
-
-        const paw1 = await expectRecordToExist('fingerprints', { userId: 1 });
-        expect(paw1.updatedAt).not.toBe(dateTenDaysAgo);
-    });
-
-    test('Should update paw just after login', async ({ page, login, common }) => {
-        // generate initial paw and identification
-        await login.loginAsPlayer1();
-        await page.goto('/player/gary-mill');
-        const paw = await expectRecordToExist('fingerprints', { userId: 1 });
-        const identification = await expectRecordToExist('identifications', { userId: 1 });
-
-        // login again and check paw is updated
-        await login.loginAsPlayer1();
-        await page.goto('/player/gary-mill');
-        await expect(common.body).toContainText('My Notes About Gary');
-        await page.waitForTimeout(2000);
-
-        const paw1 = await expectRecordToExist('fingerprints', { userId: 1 });
-        expect(paw1.updatedAt).not.toBe(paw.updatedAt);
-
-        const identification1 = await expectRecordToExist('identifications', { userId: 1, code: identification.code });
-        expect(identification1.updatedAt).not.toBe(identification.updatedAt);
-    });
 }
