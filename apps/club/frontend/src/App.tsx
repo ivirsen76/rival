@@ -39,7 +39,6 @@ import Player from '@/pages/Player';
 import Top from '@/pages/Top';
 import Tournament from '@/pages/Tournament';
 import Changelog from '@/pages/About/Changelog';
-import RegisterSuccess from '@/pages/RegisterSuccess';
 import Badges from '@/pages/Badges';
 import Terms from '@/pages/Terms';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
@@ -251,7 +250,6 @@ export default function App() {
                 <Route exact path="/privacy-policy" component={PrivacyPolicy} />
                 <Route exact path="/top/:category?" component={Top} />
                 <Route exact path="/rules" component={Rules} />
-                <Route exact path="/register/success/:sessionId" component={RegisterSuccess} />
                 <Route exact path="/a/:name/:code" component={ShortLink} />
                 <Route exact path="/action/:payload" component={Action} />
                 <Redirect exact from="/admin" to="/admin/stats" />
