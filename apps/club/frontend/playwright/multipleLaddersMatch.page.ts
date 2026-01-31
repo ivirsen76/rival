@@ -52,17 +52,17 @@ test('Should add match result and it should be reported in two ladders', async (
     const firstMatch = await expectRecordToExist('matches', { id: 9 }, { score: '3-6 2-6' });
     const anotherMatch = await expectRecordToExist('matches', { sameAs: 9 }, { score: '3-6 2-6' });
 
-    await expect(anotherMatch.winner).toBe(anotherMatch.acceptorId);
-    await expect(firstMatch.playedAt).toBe(anotherMatch.playedAt);
-    await expect(firstMatch.createdAt).toBe(anotherMatch.createdAt);
-    await expect(firstMatch.challengerElo).toBe(anotherMatch.challengerElo);
-    await expect(firstMatch.acceptorElo).toBe(anotherMatch.acceptorElo);
-    await expect(firstMatch.challengerEloChange).toBe(anotherMatch.challengerEloChange);
-    await expect(firstMatch.acceptorEloChange).toBe(anotherMatch.acceptorEloChange);
-    await expect(firstMatch.challengerMatches).toBe(anotherMatch.challengerMatches);
-    await expect(firstMatch.acceptorMatches).toBe(anotherMatch.acceptorMatches);
-    await expect(firstMatch.challengerRd).toBe(anotherMatch.challengerRd);
-    await expect(firstMatch.acceptorRd).toBe(anotherMatch.acceptorRd);
+    expect(anotherMatch.winner).toBe(anotherMatch.acceptorId);
+    expect(firstMatch.playedAt).toBe(anotherMatch.playedAt);
+    expect(firstMatch.createdAt).toBe(anotherMatch.createdAt);
+    expect(firstMatch.challengerElo).toBe(anotherMatch.challengerElo);
+    expect(firstMatch.acceptorElo).toBe(anotherMatch.acceptorElo);
+    expect(firstMatch.challengerEloChange).toBe(anotherMatch.challengerEloChange);
+    expect(firstMatch.acceptorEloChange).toBe(anotherMatch.acceptorEloChange);
+    expect(firstMatch.challengerMatches).toBe(anotherMatch.challengerMatches);
+    expect(firstMatch.acceptorMatches).toBe(anotherMatch.acceptorMatches);
+    expect(firstMatch.challengerRd).toBe(anotherMatch.challengerRd);
+    expect(firstMatch.acceptorRd).toBe(anotherMatch.acceptorRd);
 
     // Check that an email is sent
     const emailSent = await expectRecordToExist('emails', {

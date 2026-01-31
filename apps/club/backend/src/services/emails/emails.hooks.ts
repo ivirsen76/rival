@@ -101,7 +101,7 @@ const sendEmail = () => async (context: HookContext) => {
               FROM users
              WHERE isWrongEmail=1 OR
                    deletedAt IS NOT NULL OR
-                   banDate IS NOT NULL AND banDate>"${dayjs.tz().format('YYYY-MM-DD HH:mm:ss')}")`)) as [
+                   banDate IS NOT NULL AND banDate>"${dayjs.tz().format('YYYY-MM-DD HH:mm:ss')}"`)) as [
             { email: string }[],
         ];
         blockedEmails = new Set(rows.map((row) => row.email));
