@@ -6,7 +6,7 @@ const CtaButton = () => {
     return (
         <Link to="/register" data-hero-register-button>
             <Squircle className={style.cta} cornerRadius={15}>
-                Register
+                Join Ladder
             </Squircle>
         </Link>
     );

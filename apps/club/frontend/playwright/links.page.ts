@@ -5,6 +5,11 @@ test.beforeEach(async ({ page }) => {
     restoreDb();
 });
 
+test('Should redirect to the association page when have just one association', async ({ page, common, login }) => {
+    await page.goto('/');
+    await expect(page).toHaveURL('/city/raleigh');
+});
+
 test('Should follow links from home page', async ({ page, common, login }) => {
     await page.goto('/');
     await page.locator('a[data-hero-register-button]').getByText('Register').click();

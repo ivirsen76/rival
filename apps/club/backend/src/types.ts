@@ -189,3 +189,42 @@ export type Recipient = {
     email: string;
     variables: Record<string, string>;
 };
+
+type BananaImage = {
+    src: string;
+    width: number;
+    height: number;
+};
+
+export type Banana = {
+    name: string;
+    keyword?: string;
+    link: string;
+    images: {
+        square?: BananaImage;
+        normal: BananaImage;
+    };
+    partner: string;
+    cities?: string[];
+    from?: string;
+    to?: string;
+};
+
+export type Club = {
+    id: number;
+    associationId: number;
+    name: string;
+    slug: string;
+    url: string;
+};
+
+export type Association = {
+    id: number;
+    name: string;
+    slug: string;
+};
+
+export type GlobalSettings = {
+    associations: Association[];
+    bananas: Banana[];
+};

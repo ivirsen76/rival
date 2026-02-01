@@ -49,6 +49,7 @@ import Badge from '@/pages/Image/Badge';
 import Rivalry from '@/pages/Image/Rivalry';
 import Tlr from '@/pages/Image/Tlr';
 import Bracket from '@/pages/Image/Bracket';
+import Association from '@/pages/Association';
 
 const Admin = loadable(() => import('@/pages/Admin'));
 const VisualTesting = loadable(() => import('@/pages/VisualTesting'));
@@ -228,6 +229,7 @@ export default function App() {
                 <Route exact path="/rules" component={Rules} />
                 <Route exact path="/a/:name/:code" component={ShortLink} />
                 <Route exact path="/action/:payload" component={Action} />
+                <Route exact path="/city/:slug" component={Association} />
                 <Redirect exact from="/admin" to="/admin/stats" />
                 <Route path="/admin" component={Admin} />
                 <Route exact path="/user/settings" component={Settings} />
