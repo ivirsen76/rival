@@ -29,15 +29,6 @@ test('Should follow links from home page', async ({ page, common, login }) => {
     await expect(common.body).toContainText('Data Retention and Security');
 });
 
-test('Should show different contact pages for Raleigh and other cities', async ({ page, common, login }) => {
-    await page.goto('/contacts');
-    await expect(common.body).toContainText('info@tennis-ladder.com');
-
-    await overrideConfig({ isRaleigh: 1 });
-    await page.goto('/contacts');
-    await expect(common.body).toContainText('Kenneth.Glanville@raleighnc.gov');
-});
-
 test('Should log event when clicking on banana', async ({ page, common, login, homepage }) => {
     await login.loginAsPlayer1();
     await page.goto('/');

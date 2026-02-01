@@ -88,7 +88,6 @@ export type Tournament = {
 export type Config = {
     city: string;
     state: string;
-    isRaleigh: number;
     minMatchesToEstablishTlr: number;
     minMatchesToPlanTournament: number;
     tournamentReminderWeeks: number;

@@ -354,29 +354,6 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
         await expectRecordToExist('users', { email: 'player4@gmail.com' }, { gender: 'male' });
     });
 
-    test('The message is not sent when adding player before the ladder starts', async ({ page, common, login }) => {
-        const dateInAnHour = dayjs.tz().add(1, 'hour').format('YYYY-MM-DD HH:mm:ss');
-        await runQuery(`UPDATE seasons SET startDate="${dateInAnHour}" WHERE id=1`);
-        await overrideConfig({ isRaleigh: 1 });
-
-        await login.loginAsAdmin();
-        await page.goto('/season/2021/spring/men-40');
-        await page.locator('.nav-link').getByText('Manage players').click();
-        await page.locator('button').getByText('Add players').click();
-        await page.locator('[data-select-player-input]').click();
-
-        await page.locator('input[name="search"]').fill('Matt');
-        await expect(common.modal).toContainText('Matthew Burt');
-        await page.keyboard.press('Enter');
-        await page.locator('[data-select-player-input]').click();
-
-        await common.modalSubmitButton.click();
-        await expect(common.alert).toContainText('1 players were added');
-
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        expect(await getNumRecords('emails')).toBe(0);
-    });
-
     test('Admin can remove players from the tournament', async ({ page, common, login }) => {
         await login.loginAsAdmin();
         await page.goto('/season/2021/spring/men-40');
@@ -512,17 +489,6 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
                 newComplaintNotification: 'more@gmail.com',
             }
         );
-    });
-
-    test('We do not see newFeedbackNotification for Raleigh', async ({ page, common, login }) => {
-        await overrideConfig({ isRaleigh: 1 });
-
-        await login.loginAsAdmin();
-        await page.goto('/admin/texts');
-        await expect(common.body).toContainText('Sign-up notification');
-        await expect(common.body).toContainText('Change level notification');
-        await expect(common.body).toContainText('New complaint notification');
-        await expect(common.body).not.toContainText('New feedback notification');
     });
 })();
 

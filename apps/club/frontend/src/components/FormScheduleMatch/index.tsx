@@ -6,7 +6,6 @@ import DateTimeWithWeather from '@rival/common/components/DateTimeWithWeather';
 import dayjs from '@rival/common/dayjs';
 import axios from '@rival/common/axios';
 import useConfig from '@rival/common/utils/useConfig';
-import style from './style.module.scss';
 
 type FormScheduleMatchProps = {
     match: object;
@@ -17,13 +16,7 @@ type FormScheduleMatchProps = {
 const FormScheduleMatch = (props: FormScheduleMatchProps) => {
     const { match, tournament, onSubmit } = props;
     const config = useConfig();
-    const [step, setStep] = useState(() => {
-        if (match.type !== 'final' || match.playedAt || !config.isRaleigh) {
-            return 'form';
-        }
-
-        return 'choice';
-    });
+    const [step, setStep] = useState('form');
     const isDoublesTeam = tournament.levelType === 'doubles-team';
 
     const maxDate = (() => {
@@ -40,19 +33,6 @@ const FormScheduleMatch = (props: FormScheduleMatchProps) => {
         await axios.put(`/api/matches/${match.id}`, { action: 'scheduleMatch', ...values });
         await onSubmit(values);
     };
-
-    if (step === 'choice') {
-        return (
-            <div className={style.buttons}>
-                <button type="button" className="btn btn-secondary" onClick={() => setStep('form')}>
-                    We have a court to play
-                </button>
-                <button type="button" className="btn btn-secondary" onClick={() => setStep('instructions')}>
-                    We need to reserve a court
-                </button>
-            </div>
-        );
-    }
 
     if (step === 'instructions') {
         return (

@@ -2950,61 +2950,6 @@ test('Captain can change team name', async ({ page, common, login, overview, mat
         expect(email.html).toContain('$15 credit');
     });
 
-    test('Generate tournament bracket, report the results, and claim the reward in Raleigh', async ({
-        page,
-        common,
-        login,
-        overview,
-        match,
-    }) => {
-        await generateThreeTeamBrackets();
-        await overrideConfig({ minMatchesToPlanTournament: 1, minPlayersToRunTournament: 2, isRaleigh: 1 });
-
-        await login.loginAsPlayer3();
-        await page.goto('/season/2021/spring/men-40-dbls-team');
-
-        await overview.finalTournamentArea.locator('a').getByText('Score').click();
-        await match.pickChallengerPoints(3);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        await match.pickChallengerPoints(2);
-        await common.modalSubmitButton.click();
-        await expect(common.modal).toBeHidden();
-
-        await overview.finalTournamentArea.locator('a').getByText('Score').click();
-        await match.pickChallengerPoints(3);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        await match.pickChallengerPoints(2);
-        await common.modalSubmitButton.click();
-        await expect(common.modal).toBeHidden();
-
-        await expect(overview.winnerArea).toContainText('Game-Set-Match');
-        await expect(overview.claimAwardArea).toContainText('Congratulations, Game-Set-Match!');
-        await expect(overview.claimAwardArea).toContainText('$15 credit and an engraved trophy');
-        await expect(overview.claimAwardArea).toContainText(
-            "You can pick up your team's trophies at Millbrook Exchange Tennis Center after"
-        );
-        await expect(overview.streetField).toBeHidden();
-
-        await page.locator('button').getByText('Claim reward').click();
-
-        await expect(common.modal).toContainText('Congratulations!');
-        await expect(common.modal).toContainText('awarded every teammate who played at least one match $15 credit.');
-        await expect(common.modal).toContainText(
-            "You can pick up your team's trophies at Millbrook Exchange Tennis Center after"
-        );
-        await expect(common.modal).not.toContainText('2-3 weeks.');
-        await expect(overview.claimAwardArea).toBeHidden();
-
-        await expectRecordToExist('players', { id: 23 }, { address: '-', rewardType: 'credit' });
-        const email = await expectRecordToExist(
-            'emails',
-            { subject: 'You Got $15 in Credit for Winning the Tournament!' },
-            { recipientEmail: 'player4@gmail.com' }
-        );
-        expect(email.html).toContain('your Team Captain (Cristopher Hamiltonbeach)');
-        expect(email.html).toContain('$15 credit');
-    });
-
     test('Teammate can add a friendly proposal and pick teammate to play', async ({
         page,
         common,

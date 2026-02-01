@@ -39,7 +39,7 @@ export default ({ config, bracketImage, seasonName, levelName, topPlayers, hasBr
     ${h2('Thanks for Playing')}
     <mj-text>As always, thank you for participating in Rival Tennis Ladder. We hope everyone had a great season, and we wish all the tournament players the best of luck in their matchups. Don't forget to fill out your brackets, and go ahead and sign up for next season!</mj-text>
 
-    ${signature({ config: { ...config, isRaleigh: 0 } })}`,
+    ${signature({ config })}`,
         { config }
     );
 };

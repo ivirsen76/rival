@@ -431,11 +431,7 @@ export const remindForFirstDay = async (app: Application) => {
 
 export const requestFeedbackForNoJoin = async (app: Application) => {
     const sequelize = app.get('sequelizeClient');
-
     const config = await getCombinedConfig();
-    if (config.isRaleigh) {
-        return;
-    }
 
     const [prevSeason, currentSeason] = await getCurrentSeasons(sequelize);
     if (!prevSeason || !currentSeason) {
@@ -559,9 +555,6 @@ export const remindForActivity = async (app: Application) => {
     const ACTION_NAME = 'activityReminder';
 
     const config = await getCombinedConfig();
-    if (config.isRaleigh) {
-        return;
-    }
 
     // users with matches
     const usersIgnored = new Set();
@@ -648,9 +641,6 @@ export const remindForChoosingLadder = async (app: Application) => {
     const ACTION_NAME = 'chooseLadderReminder';
 
     const config = await getCombinedConfig();
-    if (config.isRaleigh) {
-        return;
-    }
 
     // send reminder only if the current season is in progress and not coming to the end
     const currentDate = dayjs.tz();

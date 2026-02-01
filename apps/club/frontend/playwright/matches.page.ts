@@ -1920,44 +1920,4 @@ test.beforeEach(async ({ page, login }) => {
             expect(email.recipientEmail).toBe('player4@gmail.com');
         }
     });
-
-    test('Should schedule a final match for Raleigh and see the instructions how to reserve a court', async ({
-        common,
-        page,
-        overview,
-        proposal,
-    }) => {
-        const RescheduleButton = overview.matchActionsArea.locator('button').getByText('Reschedule match');
-
-        const dateTwoDaysAgo = dayjs.tz().subtract(2, 'day').format('YYYY-MM-DD HH:mm:ss');
-        await runQuery(`UPDATE players SET readyForFinal=1 WHERE userId!=2`);
-        await runQuery(`UPDATE seasons SET endDate="${dateTwoDaysAgo}" WHERE id=1`);
-        await overrideConfig({ isRaleigh: 1, minMatchesToPlanTournament: 2, minPlayersToRunTournament: 2 });
-
-        await page.goto('/season/2021/spring/men-35');
-
-        await expect(common.body).toContainText('Final Tournament');
-        await expect(page.locator('[data-final-match-location]')).toBeHidden();
-
-        await page.locator('[data-final-tournament-area]').locator('a').getByText('Schedule').click();
-        await page.locator('button').getByText('We need to reserve a court').click();
-        await expect(common.modal).toContainText('If you require a court reservation');
-
-        await page.goto('/season/2021/spring/men-35');
-        await page.locator('[data-final-tournament-area]').locator('a').getByText('Schedule').click();
-        await page.locator('button').getByText('We have a court to play').click();
-
-        await proposal.pickSundayNextWeek();
-        await proposal.placeField.fill('Bond park');
-        await common.modalSubmitButton.click();
-        await expect(common.alert).toContainText('The match was successfuly scheduled.');
-
-        await page.locator('[data-final-match-location]').hover();
-        await expect(common.body).toContainText('Bond park');
-
-        // Try to reschedule the match
-        await page.locator('[data-final-tournament-area]').locator('button[data-match-actions]').click();
-        await RescheduleButton.click();
-        await expect(proposal.placeField).toHaveValue('Bond park');
-    });
 })();

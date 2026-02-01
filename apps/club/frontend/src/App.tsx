@@ -28,7 +28,6 @@ import Logout from '@/pages/Logout';
 import ForgotPassword from '@/pages/ForgotPassword';
 import Settings from '@/pages/Settings';
 import Contacts from '@/pages/About/Contacts';
-import ContactsRaleigh from '@/pages/About/ContactsRaleigh';
 import Founders from '@/pages/About/Founders';
 import Rules from '@/pages/About/Rules';
 import Ladder from '@/pages/About/Ladder';
@@ -218,7 +217,7 @@ export default function App() {
                 <Route exact path="/forgotPassword" component={ForgotPassword} />
                 <Route exact path="/logout" component={Logout} />
                 <Route exact path="/register" component={Register} />
-                <Route exact path="/contacts" component={settings.config.isRaleigh ? ContactsRaleigh : Contacts} />
+                <Route exact path="/contacts" component={Contacts} />
                 <Route exact path="/founders" component={Founders} />
                 <Route exact path="/scoring" component={Scoring} />
                 <Route exact path="/about" component={Ladder} />

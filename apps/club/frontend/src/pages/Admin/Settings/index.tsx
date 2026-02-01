@@ -47,14 +47,12 @@ const Settings = (props) => {
                             component={Input}
                             description="These emails will receive a notification when a player switches to a different level. Separate emails with a semicolon."
                         />
-                        {!config.isRaleigh ? (
-                            <Field
-                                name="newFeedbackNotification"
-                                label="New feedback notification"
-                                component={Input}
-                                description="These emails will receive a notification when a player report a feedback. Separate emails with a semicolon."
-                            />
-                        ) : null}
+                        <Field
+                            name="newFeedbackNotification"
+                            label="New feedback notification"
+                            component={Input}
+                            description="These emails will receive a notification when a player report a feedback. Separate emails with a semicolon."
+                        />
                         <Field
                             name="newComplaintNotification"
                             label="New complaint notification"

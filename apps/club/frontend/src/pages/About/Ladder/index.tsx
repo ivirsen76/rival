@@ -57,38 +57,32 @@ const Contacts = (props) => {
                     is meant to be.
                 </p>
 
-                {!config.isRaleigh && (
-                    <>
-                        <h3>Our Start in Raleigh, North Carolina</h3>
-                        <p>
-                            The idea for the Rival Tennis Ladder started after both of the founders participated in the
-                            Tennis Challenge Ladder through the Millbrook Exchange Tennis Center in Raleigh, North
-                            Carolina. Players here were active and enticed by the ladder structure, points distribution,
-                            and final tournaments that the Raleigh Parks and Recreation Department offered. However, the
-                            software associated with this ladder was minimalistic and lacked the features of modern
-                            tennis ladders.
-                        </p>
-                        <p>
-                            Therefore, we created Rival Tennis Ladder to enhance the points system of the original
-                            ladder and create an all-encompassing tennis ladder for players interested in stats, profile
-                            customization, expertise tracking, and much more. Today, Raleigh utilizes Rival Tennis
-                            Ladder to carry out their multi-decade tennis ladder legacy. With hundreds of participants
-                            across multiple Men’s and Women’s ladders, Raleigh’s tennis ladder is more active than ever,
-                            and it’s a testament to how tennis ladders can function in cities all across the United
-                            States.
-                        </p>
-                        <p>
-                            Want to learn more about the Raleigh Tennis Ladder and see how Rival Tennis Ladder functions
-                            there? Visit the{' '}
-                            <a href="https://raleigh.tennis-ladder.com" target="_blank" rel="noreferrer">
-                                Raleigh Rival Tennis Ladder website
-                            </a>{' '}
-                            to see matches, proposals, and players having fun and exercising on one of the best tennis
-                            ladders in the nation.
-                        </p>
-                        <div className={style.example} />
-                    </>
-                )}
+                <h3>Our Start in Raleigh, North Carolina</h3>
+                <p>
+                    The idea for the Rival Tennis Ladder started after both of the founders participated in the Tennis
+                    Challenge Ladder through the Millbrook Exchange Tennis Center in Raleigh, North Carolina. Players
+                    here were active and enticed by the ladder structure, points distribution, and final tournaments
+                    that the Raleigh Parks and Recreation Department offered. However, the software associated with this
+                    ladder was minimalistic and lacked the features of modern tennis ladders.
+                </p>
+                <p>
+                    Therefore, we created Rival Tennis Ladder to enhance the points system of the original ladder and
+                    create an all-encompassing tennis ladder for players interested in stats, profile customization,
+                    expertise tracking, and much more. Today, Raleigh utilizes Rival Tennis Ladder to carry out their
+                    multi-decade tennis ladder legacy. With hundreds of participants across multiple Men’s and Women’s
+                    ladders, Raleigh’s tennis ladder is more active than ever, and it’s a testament to how tennis
+                    ladders can function in cities all across the United States.
+                </p>
+                <p>
+                    Want to learn more about the Raleigh Tennis Ladder and see how Rival Tennis Ladder functions there?
+                    Visit the{' '}
+                    <a href="https://raleigh.tennis-ladder.com" target="_blank" rel="noreferrer">
+                        Raleigh Rival Tennis Ladder website
+                    </a>{' '}
+                    to see matches, proposals, and players having fun and exercising on one of the best tennis ladders
+                    in the nation.
+                </p>
+                <div className={style.example} />
 
                 <h3>How Does It Work?</h3>
                 <p>

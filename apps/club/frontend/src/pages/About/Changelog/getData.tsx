@@ -365,29 +365,16 @@ const getData = ({ config, lazyClass = '' } = {}) => [
             </div>
         ),
     },
-    ...(config.isRaleigh
-        ? [
-              {
-                  date: '2025-09-24',
-                  title: 'Limiting Ladder Levels',
-                  content: limitingLadderLevels('2025 Winter'),
-              },
-              {
-                  date: '2025-08-19',
-                  title: 'Updated Final Tournament Eligibility',
-                  content: tournamentEligibilityContent(config),
-              },
-          ]
-        : []),
-    ...(!config.isRaleigh
-        ? [
-              {
-                  date: '2025-06-03',
-                  title: 'Updated Final Tournament Eligibility',
-                  content: tournamentEligibilityContent(config),
-              },
-          ]
-        : []),
+    {
+        date: '2025-09-24',
+        title: 'Limiting Ladder Levels',
+        content: limitingLadderLevels('2025 Winter'),
+    },
+    {
+        date: '2025-08-19',
+        title: 'Updated Final Tournament Eligibility',
+        content: tournamentEligibilityContent(config),
+    },
     {
         date: '2025-05-09',
         title: 'New Rival Logo',
@@ -517,15 +504,6 @@ const getData = ({ config, lazyClass = '' } = {}) => [
             </div>
         ),
     },
-    ...(!config.isRaleigh
-        ? [
-              {
-                  date: '2024-08-08',
-                  title: 'Limiting Ladder Levels',
-                  content: limitingLadderLevels('2024 Fall'),
-              },
-          ]
-        : []),
     {
         date: '2024-07-26',
         title: 'Rival Bracket Battle',
@@ -830,15 +808,6 @@ const getData = ({ config, lazyClass = '' } = {}) => [
             </div>
         ),
     },
-    ...(config.isRaleigh
-        ? [
-              {
-                  date: '2023-07-12',
-                  title: 'Final Tournament Structure',
-                  content: finalTournamentStructure,
-              },
-          ]
-        : []),
     {
         date: '2023-06-28',
         title: 'Competitive Proposals',
@@ -852,15 +821,11 @@ const getData = ({ config, lazyClass = '' } = {}) => [
             </div>
         ),
     },
-    ...(config.isRaleigh
-        ? []
-        : [
-              {
-                  date: '2023-05-24',
-                  title: 'Final Tournament Structure',
-                  content: finalTournamentStructure,
-              },
-          ]),
+    {
+        date: '2023-05-24',
+        title: 'Final Tournament Structure',
+        content: finalTournamentStructure,
+    },
     {
         date: '2023-04-19',
         title: 'Badges',

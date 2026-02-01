@@ -27,9 +27,7 @@ export const thankYou = ({ config }: { config: Config }) => {
 
 export const signature = ({ config }: { config: Config }) => {
     return `<mj-text>See you on the courts!</mj-text>
-     <mj-text font-style="italic">${
-         config.isRaleigh ? 'Ken Glanville, Raleigh Ladder Director' : 'Andrew Cole, Co-Founder of Rival Tennis Ladder'
-     }</mj-text>`;
+     <mj-text font-style="italic">Andrew Cole, Co-Founder of Rival Tennis Ladder</mj-text>`;
 };
 
 export const renderProposal = (proposal: Proposal) => {

@@ -616,18 +616,6 @@ test('Should see the tournament information', async ({ page, common, login }) =>
     await expect(common.body).not.toContainText('$sunday');
 });
 
-// check
-test('Should not see tournamentText for Raleigh', async ({ page, common, login }) => {
-    const dateOneWeekAgo = dayjs.tz().add(5, 'day').format('YYYY-MM-DD HH:mm:ss');
-    await runQuery(`UPDATE seasons SET endDate="${dateOneWeekAgo}" WHERE id=1`);
-    await overrideConfig({ isRaleigh: 1, minMatchesToPlanTournament: 2 });
-
-    await login.loginAsPlayer1();
-    await page.goto('/season/2021/spring/men-35');
-    await expect(common.body).toContainText('Are you available to play?');
-    await expect(common.body).toContainText('Tournament information');
-});
-
 test('Show see the message that the player cannot join two tournament finals', async ({ page, common, login }) => {
     const dateOneWeekAgo = dayjs.tz().add(1, 'week').format('YYYY-MM-DD HH:mm:ss');
     await runQuery(`UPDATE seasons SET endDate="${dateOneWeekAgo}" WHERE id=1`);
