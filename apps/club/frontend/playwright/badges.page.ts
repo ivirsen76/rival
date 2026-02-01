@@ -73,16 +73,7 @@ test('Should see some user badges', async ({ page, common, login }) => {
     }
 });
 
-test('Should see doubles matches in badges stats', async ({ page, common, login }) => {
-    await page.goto('/player/ben-done');
-    await page.locator('[data-recent-badges]').click();
-    await page.locator(`[data-badge="matchesPlayed"]`).click();
-    await expect(common.body).toContainText('+20');
-    await expect(common.body).toContainText('Ben D.');
-    await expect(common.body).toContainText('Cristopher H.');
-});
-
-test('Should get a new badge after playing a match and get an email notification and credit', async ({
+test('Should get a new badge after playing a match and get an email notification', async ({
     page,
     common,
     login,

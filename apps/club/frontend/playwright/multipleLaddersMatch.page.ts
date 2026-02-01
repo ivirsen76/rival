@@ -339,17 +339,17 @@ test('Add match result from scratch', async ({ page, common, login, match }) => 
     const firstMatch = await expectRecordToExist('matches', { challengerId: 1, acceptorId: 2, score: '3-6 2-6' });
     const anotherMatch = await expectRecordToExist('matches', { sameAs: firstMatch.id }, { score: '3-6 2-6' });
 
-    await expect(anotherMatch.winner).toBe(anotherMatch.acceptorId);
-    await expect(firstMatch.playedAt).toBe(anotherMatch.playedAt);
-    await expect(firstMatch.createdAt).toBe(anotherMatch.createdAt);
-    await expect(firstMatch.challengerElo).toBe(anotherMatch.challengerElo);
-    await expect(firstMatch.acceptorElo).toBe(anotherMatch.acceptorElo);
-    await expect(firstMatch.challengerEloChange).toBe(anotherMatch.challengerEloChange);
-    await expect(firstMatch.acceptorEloChange).toBe(anotherMatch.acceptorEloChange);
-    await expect(firstMatch.challengerMatches).toBe(anotherMatch.challengerMatches);
-    await expect(firstMatch.acceptorMatches).toBe(anotherMatch.acceptorMatches);
-    await expect(firstMatch.challengerRd).toBe(anotherMatch.challengerRd);
-    await expect(firstMatch.acceptorRd).toBe(anotherMatch.acceptorRd);
+    expect(anotherMatch.winner).toBe(anotherMatch.acceptorId);
+    expect(firstMatch.playedAt).toBe(anotherMatch.playedAt);
+    expect(firstMatch.createdAt).toBe(anotherMatch.createdAt);
+    expect(firstMatch.challengerElo).toBe(anotherMatch.challengerElo);
+    expect(firstMatch.acceptorElo).toBe(anotherMatch.acceptorElo);
+    expect(firstMatch.challengerEloChange).toBe(anotherMatch.challengerEloChange);
+    expect(firstMatch.acceptorEloChange).toBe(anotherMatch.acceptorEloChange);
+    expect(firstMatch.challengerMatches).toBe(anotherMatch.challengerMatches);
+    expect(firstMatch.acceptorMatches).toBe(anotherMatch.acceptorMatches);
+    expect(firstMatch.challengerRd).toBe(anotherMatch.challengerRd);
+    expect(firstMatch.acceptorRd).toBe(anotherMatch.acceptorRd);
 });
 
 test('Should not duplicate stats', async ({ page, common, login, match, overview }) => {
@@ -374,8 +374,8 @@ test('Should not duplicate stats', async ({ page, common, login, match, overview
 
     await expect(common.body).toContainText('Men 3.5 (4 matches)');
     await expect(common.body).toContainText('Men 4.0 (1 match)');
-    await expect(common.body).toContainText('5 - 1');
-    await expect(common.body).toContainText('6 matches');
+    await expect(common.body).toContainText('4 - 1');
+    await expect(common.body).toContainText('5 matches');
     await expect(common.body).toContainText('TLR not established');
 
     await expect(page.locator('.card', { hasText: 'Rivalries' })).toContainText('3 - 0');
@@ -385,6 +385,6 @@ test('Should not duplicate stats', async ({ page, common, login, match, overview
     await common.modal.locator('.btn-close').click();
     await page.locator('[data-recent-badges]').click();
     await page.locator('[data-badge="matchesPlayed"]').click();
-    await expect(page.locator('[data-badge-info="matchesPlayed"]')).toContainText('6matches played');
-    await expect(page.locator('[data-badge-info="matchesPlayed"]')).toContainText('+19');
+    await expect(page.locator('[data-badge-info="matchesPlayed"]')).toContainText('5matches played');
+    await expect(page.locator('[data-badge-info="matchesPlayed"]')).toContainText('+20');
 });

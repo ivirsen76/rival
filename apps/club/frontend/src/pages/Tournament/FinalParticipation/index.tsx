@@ -168,7 +168,7 @@ const FinalParticipation = (props: FinalParticipationProps) => {
                         <>
                             {tournamentRules}
                             <div>
-                                {isDoublesTeam ? 'Your team' : 'You'} must play at least one match to register for the
+                                {isDoublesTeam ? 'Your team ' : 'You '}must play at least one match to register for the
                                 tournament. It&apos;s not too late to play!
                             </div>
                         </>

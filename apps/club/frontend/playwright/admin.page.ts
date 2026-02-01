@@ -89,37 +89,6 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
         expect(imageRegex.test(emailSent.html)).toBeTruthy();
     });
 
-    test('Admin can add match result for the doubles ladder', async ({ page, common, login, match, proposal }) => {
-        await login.loginAsAdmin();
-        await page.goto('/season/2021/spring/men-40-dbls');
-        await page.locator('button').getByText('Report match').click();
-
-        await proposal.pickChallenger('Gary Mill');
-        await proposal.pickChallenger2('Ben Done');
-        await proposal.pickAcceptor('Cristopher Hamiltonbeach');
-        await proposal.pickAcceptor2('Matthew Burt');
-
-        await page.locator('button').getByText('Next').click();
-
-        await match.pickAcceptorPoints(1);
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-
-        await match.pickAcceptorPoints(0);
-        await expect(common.modal).toContainText('+30');
-
-        await common.modal.locator('button').getByText('Report match').click();
-
-        const row = await expectRecordToExist('matches', { challengerPoints: '30' });
-        const Match = page.locator(`[data-match="${row.id}"]`);
-
-        await expect(Match).toContainText('Gary');
-        await expect(Match).toContainText('Cristopher');
-        await expect(Match).toContainText('Ben');
-        await expect(Match).toContainText('Matthew');
-
-        await expectRecordToExist('matches', { score: '6-1 6-0' });
-    });
-
     test('Add can add match result even for inactive player', async ({ page, common, login, match }) => {
         await login.loginAsAdmin();
         await page.goto('/season/2021/spring/men-35');

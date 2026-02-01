@@ -218,7 +218,7 @@ test('Do not show actions for not my tournament', async ({ page, common, login, 
         await expect(common.body).toContainText('2020 Winter - 2022 Spring');
 
         await page.locator('h3').getByText('Men 3.5').click();
-        await page.locator('[data-all-matches-link]').getByText('5 matches').click();
+        await page.locator('[data-all-matches-link]').getByText('4 matches').click();
         await expect(common.modal).toContainText('Cristopher Hamiltonbeach');
     });
 

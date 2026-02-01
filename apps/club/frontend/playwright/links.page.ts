@@ -8,7 +8,7 @@ test.beforeEach(async ({ page }) => {
 test('Should follow links from home page', async ({ page, common, login }) => {
     await page.goto('/');
     await page.locator('a[data-hero-register-button]').getByText('Register').click();
-    await expect(common.body).toContainText('Create an Account');
+    await expect(common.body).toContainText('Register for 2021 Spring Season');
 
     await page.goto('/');
     await page.locator('a.btn').getByText('Scoring').click();
@@ -21,7 +21,7 @@ test('Should follow links from home page', async ({ page, common, login }) => {
     await page.goto('/');
     await page.locator('a').getByText('Terms & Conditions').click();
     await expect(page.locator('h2').getByText('Terms & Conditions')).toBeVisible();
-    await expect(common.body).toContainText('Put some visible text here');
+    await expect(common.body).toContainText('Season Structure and Participation');
 
     await page.goto('/');
     await page.locator('a').getByText('Privacy Policy').click();

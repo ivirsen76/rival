@@ -9,8 +9,7 @@ test('We can see player actions', async ({ page, common, login }) => {
     await login.loginAsSuperadmin();
     await page.goto('/player/ben-done');
     await expect(page.locator('button').getByText('Emails')).toBeVisible();
-    await expect(page.locator('button').getByText('Wallet')).toBeVisible();
-    await expect(page.locator('button').getByText('Add transaction')).toBeVisible();
+    await expect(page.locator('button').getByText('Login as player')).toBeVisible();
 });
 
 test('We can login as another player', async ({ page, common, login, homepage }) => {

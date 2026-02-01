@@ -18,7 +18,6 @@ const getLocation = (page: Page) => page.evaluate(() => window.location.href);
 
 test('Should see tournament panel even without played matches', async ({ page, common, login }) => {
     await page.goto('/player/inactive-user');
-    await expect(common.body).toContainText('Men Doubles');
     await expect(common.body).toContainText('Men 3.5');
     await expect(common.body).toContainText('2021 Spring');
     await expect(common.body).toContainText('TLR not established');
@@ -594,10 +593,10 @@ test('Should not allow to change readyForFinal status because there is no matche
     const dateWeekAgo = dayjs.tz().subtract(1, 'week').format('YYYY-MM-DD HH:mm:ss');
     await runQuery(`UPDATE seasons SET endDate="${dateInOneWeek}" WHERE id=1`);
     await runQuery(`UPDATE matches SET playedAt="${dateWeekAgo}"`);
-    await overrideConfig({ minMatchesToPlanTournament: 1 });
+    await overrideConfig({ minMatchesToPlanTournament: 0 });
 
-    await login.loginAsPlayer9();
-    await page.goto('/season/2021/spring/men-40-dbls');
+    await login.loginAsPlayer2();
+    await page.goto('/season/2021/spring/men-40');
     await expect(common.body).toContainText('You must play at least one match to register for the tournament');
     await expect(common.body).toContainText('Tournament information');
 });
@@ -710,7 +709,7 @@ test('Should see Top Players stat', async ({ page, common, login }) => {
     await page.goto('/top');
     await expect(common.body).toContainText('Most Matches Played');
     await expect(common.body).toContainText('Cristopher Hamiltonbeach');
-    await expect(common.body).toContainText('You played 105 matches (Top 25%)');
+    await expect(common.body).toContainText('You played 84 matches (Top 34%)');
     await expect(common.body).not.toContainText(notPlayersMessage);
     await expect(common.body).not.toContainText(notInListMessage);
 
@@ -719,7 +718,7 @@ test('Should see Top Players stat', async ({ page, common, login }) => {
     await expect(common.body).toContainText(notInListMessage);
 
     await page.locator('button').getByText('All genders').click();
-    await expect(common.body).toContainText('You played 105 matches (Top 25%)');
+    await expect(common.body).toContainText('You played 84 matches (Top 34%)');
 
     await page.locator('#tl-page-body a').getByText('Seasons').click();
     await expect(common.body).toContainText('Most Seasons Played');

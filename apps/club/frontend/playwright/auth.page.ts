@@ -36,7 +36,7 @@ test('Should sign in and redirect to the current tournament', async ({ page, com
 
     await expect(common.body).toContainText('Ben Done');
     await expect(common.body).toContainText('2021 Spring');
-    await expect(common.body).toContainText('Men Doubles');
+    await expect(common.body).toContainText('Men 3.5');
 });
 
 test('Should sign in and sign out using pages', async ({ page, common, login }) => {
