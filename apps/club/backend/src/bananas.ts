@@ -1,22 +1,4 @@
-type Image = {
-    src: string;
-    width: number;
-    height: number;
-};
-
-export type Banana = {
-    name: string;
-    keyword?: string;
-    link: string;
-    images: {
-        square?: Image;
-        normal: Image;
-    };
-    partner: string;
-    cities?: string[];
-    from?: string;
-    to?: string;
-};
+import type { Banana } from './types';
 
 const bananas: Banana[] = [
     {
