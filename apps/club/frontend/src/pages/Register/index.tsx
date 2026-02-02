@@ -1,7 +1,11 @@
 import Card from '@rival/common/components/Card';
 import ScrollToTop from '@rival/common/components/ScrollToTop';
+import { AssociationContext } from '@/contexts/AssociationContext';
+import { useContext } from 'react';
 
 const Register = (props) => {
+    const association = useContext(AssociationContext);
+
     return (
         <div className="tl-front">
             <h2 className="text-white mt-4">Register & Conditions</h2>

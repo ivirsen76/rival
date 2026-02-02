@@ -36,6 +36,7 @@ export default defineConfig([
             '@typescript-eslint/no-unsafe-function-type': 'warn',
             '@typescript-eslint/no-unused-expressions': 'off',
             '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
+            'no-console': ['error', { allow: ['warn', 'error', 'info'] }],
             'react-hooks/exhaustive-deps': 'off',
             'react-hooks/immutability': 'off',
             'react-hooks/preserve-manual-memoization': 'off',
