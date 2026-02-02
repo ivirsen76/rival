@@ -1,5 +1,5 @@
 import { test, expect } from './base';
-import { restoreDb, overrideConfig, expectRecordToExist } from '@rival/club.backend/src/db/helpers';
+import { restoreDb, expectRecordToExist } from '@rival/club.backend/src/db/helpers';
 
 test.beforeEach(async ({ page }) => {
     restoreDb();
@@ -8,6 +8,21 @@ test.beforeEach(async ({ page }) => {
 test('Should redirect to the association page when have just one association', async ({ page, common, login }) => {
     await page.goto('/');
     await expect(page).toHaveURL('/city/raleigh');
+});
+
+test('Should get to the club page', async ({ page, common, login }) => {
+    await page.goto('/city/raleigh/club/raleigh-racquet-club');
+    await expect(common.body).toContainText('Raleigh Racquet Club');
+});
+
+test('Should show error for the wrong association', async ({ page, common, login }) => {
+    await page.goto('/city/wrong');
+    await expect(common.body).toContainText('The association is not found');
+});
+
+test('Should show error for the wrong club', async ({ page, common, login }) => {
+    await page.goto('/city/raleigh/club/wrong');
+    await expect(common.body).toContainText('The club is not found');
 });
 
 test('Should follow links from home page', async ({ page, common, login }) => {

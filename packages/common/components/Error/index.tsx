@@ -2,9 +2,9 @@ import Card from '../Card';
 import { Link } from 'react-router-dom';
 
 type ErrorProps = {
-    title: React.ReactNode;
+    title?: React.ReactNode;
     message: React.ReactNode;
-    description: React.ReactNode;
+    description?: React.ReactNode;
 };
 
 const Error = (props: ErrorProps) => {
