@@ -6,7 +6,7 @@ import _isEmpty from 'lodash/isEmpty';
 import { throwValidationErrors } from '../../helpers';
 import allBananas from '../../bananas';
 import dayjs from '../../utils/dayjs';
-import type { Association, Banana, Club } from '../../types';
+import type { Banana, Club } from '../../types';
 
 const validatePatch = () => (context: HookContext) => {
     const errors = validate(context.data);
@@ -41,20 +41,6 @@ const populateConstants = () => async (context: HookContext) => {
     const encode = (obj: any) => Buffer.from(JSON.stringify(obj)).toString('base64').split('').reverse().join('');
 
     const [clubs] = (await sequelize.query('SELECT * FROM clubs')) as [Club[]];
-    const [associations] = (await sequelize.query('SELECT * FROM associations ORDER BY id')) as [Association[]];
-
-    const associationsWithClubs = (() => {
-        const clubMatch = clubs.reduce(
-            (obj, club) => {
-                obj[club.associationId] ||= [];
-                obj[club.associationId].push(club);
-                return obj;
-            },
-            {} as Record<number, Club[]>
-        );
-
-        return associations.map((item) => ({ ...item, clubs: clubMatch[item.id] || [] }));
-    })();
 
     const bananas = (() => {
         // change banana every 1.3 hours (weird number just to rotate through nights)
@@ -103,7 +89,7 @@ const populateConstants = () => async (context: HookContext) => {
         levels: levelResult,
         config: encode(config),
         bananas,
-        associations: associationsWithClubs,
+        clubs,
         settings: {
             ...settings,
             global: settings.global ? JSON.parse(settings.global) : {},

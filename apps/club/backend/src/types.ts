@@ -212,19 +212,11 @@ export type Banana = {
 
 export type Club = {
     id: number;
-    associationId: number;
     name: string;
     slug: string;
     url: string;
 };
 
-export type Association = {
-    id: number;
-    name: string;
-    slug: string;
-};
-
 export type GlobalSettings = {
-    associations: Association[];
     bananas: Banana[];
 };

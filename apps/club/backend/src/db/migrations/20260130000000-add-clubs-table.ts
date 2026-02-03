@@ -7,13 +7,6 @@ export const up = async ({ context: queryInterface }: { context: QueryInterface 
             primaryKey: true,
             autoIncrement: true,
         },
-        associationId: {
-            type: DataTypes.INTEGER,
-            references: {
-                model: 'associations',
-                key: 'id',
-            },
-        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,

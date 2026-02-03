@@ -10,7 +10,6 @@ export default function (app: Application) {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
             },
-            associationId: Sequelize.INTEGER,
             name: Sequelize.STRING,
             slug: Sequelize.STRING,
             url: Sequelize.STRING,

@@ -6,7 +6,6 @@ export const up = async ({ context: queryInterface }: { context: QueryInterface 
         [
             {
                 id: 1,
-                associationId: 1,
                 name: 'Raleigh Racquet Club',
                 slug: 'raleigh-racquet-club',
                 url: 'http://www.rrctennis.com',
