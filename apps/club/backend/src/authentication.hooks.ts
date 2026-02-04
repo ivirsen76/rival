@@ -282,10 +282,6 @@ const checkIfVerified = () => async (context: HookContext) => {
         });
     }
 
-    if (!user.isVerified) {
-        throw new Unprocessable('Invalid request', { errors: { email: 'Your email is not verified.' } });
-    }
-
     if (user.banDate && dayjs.tz().isBefore(dayjs.tz(user.banDate))) {
         throw new Unprocessable('Invalid request', {
             errors: {

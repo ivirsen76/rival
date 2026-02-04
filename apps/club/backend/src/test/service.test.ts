@@ -2,7 +2,6 @@ import path from 'path';
 import _memoize from 'lodash/memoize';
 import dayjs from '../utils/dayjs';
 import generateNews from '../services/news/generateNews';
-import removeUnverifiedAccounts from '../utils/removeUnverifiedAccounts';
 import runActions, {
     remindForActivity,
     remindForTournament,
@@ -1943,19 +1942,6 @@ describe('cron jobs', () => {
         });
     });
 
-    describe('removeUnverifiedAccounts', () => {
-        it('Should remove unverified accounts', async () => {
-            await runQuery(
-                `INSERT INTO users (email, password, slug) VALUES ('notverified@gmail.com', 'some', 'nonverified')`
-            );
-            await runQuery(`UPDATE users SET createdAt='2021-07-22 13:10:34' WHERE email='notverified@gmail.com'`);
-
-            expect(await getNumRecords('users', { email: 'notverified@gmail.com' })).toBe(1);
-            await removeUnverifiedAccounts(app);
-            expect(await getNumRecords('users', { email: 'notverified@gmail.com' })).toBe(0);
-        });
-    });
-
     describe('remindForActivity', () => {
         it('Should remind for activity', async () => {
             const dateFourWeeksAgo = dayjs.tz().subtract(4, 'week').format('YYYY-MM-DD 00:00:00');
@@ -2066,7 +2052,6 @@ describe('cron jobs', () => {
         it('Should remind for choosing ladder', async () => {
             const dateWeekAgo = dayjs.tz().subtract(1, 'week').format('YYYY-MM-DD HH:mm:ss');
             await runQuery(`UPDATE users SET createdAt='${dateWeekAgo}'`);
-            await runQuery(`UPDATE users SET isVerified=0 WHERE id=3`);
 
             await remindForChoosingLadder(app);
             await new Promise((resolve) => setTimeout(resolve, 500));

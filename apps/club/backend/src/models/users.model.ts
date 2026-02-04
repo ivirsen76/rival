@@ -8,8 +8,6 @@ export default function (app: Application) {
         {
             email: Sequelize.STRING,
             password: Sequelize.STRING,
-            isVerified: Sequelize.BOOLEAN,
-            verificationCode: Sequelize.STRING,
             roles: Sequelize.STRING,
             firstName: Sequelize.STRING,
             lastName: Sequelize.STRING,

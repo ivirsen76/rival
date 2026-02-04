@@ -11,7 +11,7 @@ import { getSeasonName } from '../seasons/helpers';
 import { revertScore } from '../matches/helpers';
 import { getEmailContact, getPlayerName, hideEmail, hidePhone } from './helpers';
 import commonValidate from './commonValidate';
-import { throwValidationErrors, getSchemaErrors } from '../../helpers';
+import { throwValidationErrors, getSchemaErrors, isEmail } from '../../helpers';
 import { hasAnyRole, purgeUserCache, logEvent, trim, generateBadges, populateSalt } from '../commonHooks';
 import _isEmpty from 'lodash/isEmpty';
 import _uniq from 'lodash/uniq';
@@ -23,11 +23,9 @@ import dayjs from '../../utils/dayjs';
 import { getAge } from '../../utils/helpers';
 import newEmailVerificationTemplate from '../../emailTemplates/newEmailVerification';
 import emailVerificationTemplate from '../../emailTemplates/emailVerification';
-import signUpNotificationTemplate from '../../emailTemplates/signUpNotification';
 import bcrypt from 'bcryptjs';
 import yup from '../../packages/yup';
 import { getVerificationCode, formatUserName, getTbStats } from './helpers';
-import { getEmailsFromList } from '../settings/helpers';
 import sharp from 'sharp';
 import DatauriParser from 'datauri/parser';
 import { decodeAction } from '../../utils/action';
@@ -51,6 +49,19 @@ const limitToUser = setField({
     from: 'params.user.id',
     as: 'params.query.id',
 });
+
+const getSavedEmailVerificationCode = async (email: string, context: HookContext) => {
+    const client = context.app.get('redisClient');
+    const key = `verificationCode:${email}`;
+
+    const code = await new Promise((resolve) => {
+        client.get(key, (err: any, reply: any) => {
+            resolve(reply);
+        });
+    });
+
+    return code;
+};
 
 // It's not a hook, just a helper
 const getUserBadgesStats = async (user: User, context: HookContext) => {
@@ -266,7 +277,6 @@ const populateUser = () => async (context: HookContext) => {
             'banReason',
             'birthday',
             'createdAt',
-            'isVerified',
             'loggedAt',
             'changelogSeenAt',
             'newEmail',
@@ -278,7 +288,6 @@ const populateUser = () => async (context: HookContext) => {
             'subscribeForNews',
             'subscribeForBadges',
             'updatedAt',
-            'verificationCode',
             'badgesStats',
             'showAge',
         ]);
@@ -1112,190 +1121,53 @@ const populateChangelogSeenAt = () => async (context: HookContext) => {
     return context;
 };
 
-const generateVerificationCode = () => async (context: HookContext) => {
-    context.data.verificationCode = getVerificationCode();
+const verifyEmail = () => async (context: HookContext) => {
+    const { email, verificationCode } = context.data;
+
+    if (!isEmail(email)) {
+        throw new Unprocessable('Wrong email format');
+    }
+
+    const code = await getSavedEmailVerificationCode(email, context);
+    if (!code || code !== verificationCode) {
+        throw new Unprocessable('Invalid request', { errors: { verificationCode: 'Confirmation code is wrong' } });
+    }
 
     return context;
 };
 
-const sendVerificationEmail =
-    (options = {}) =>
-    async (context: HookContext) => {
-        const sequelize = context.app.get('sequelizeClient');
-        const user = options.user || context.result;
+const sendEmailVerificationCode = () => async (context: HookContext) => {
+    const { email } = context.data;
 
-        const [[userData]] = await sequelize.query('SELECT verificationCode FROM users WHERE id=:id', {
-            replacements: { id: user.id },
-        });
-
-        // We don't have to wait for the email sent
-        context.app.service('api/emails').create({
-            to: [{ ...getEmailContact(user), force: true }],
-            subject: `${userData.verificationCode} is your confirmation code`,
-            html: emailVerificationTemplate({
-                config: context.params.config,
-                verificationCode: userData.verificationCode,
-            }),
-        });
-
-        return context;
-    };
-
-const verifyEmail = () => async (context: HookContext) => {
-    const { TL_URL } = process.env;
-    const { email, verificationCode } = context.data;
-    const sequelize = context.app.get('sequelizeClient');
-
-    const [[user]] = await sequelize.query(
-        `
-        SELECT id, firstName, lastName, email, phone, slug
-          FROM users
-         WHERE email=:email AND verificationCode=:verificationCode`,
-        {
-            replacements: { verificationCode, email },
-        }
-    );
-    if (!user) {
-        throw new Unprocessable('Invalid request', { errors: { verificationCode: 'Confirmation code is wrong' } });
+    if (!isEmail(email)) {
+        throw new Unprocessable('Wrong email format');
     }
 
-    await sequelize.query('UPDATE users SET isVerified=1, verificationCode=NULL WHERE id=:id', {
-        replacements: { id: user.id },
+    const client = context.app.get('redisClient');
+    const key = `verificationCode:${email}`;
+
+    let code = await getSavedEmailVerificationCode(email, context);
+    if (!code) {
+        code = getVerificationCode();
+        client.set(key, code);
+        client.expire(key, 3600 * 24);
+    }
+
+    // We don't have to wait for the email sent
+    context.app.service('api/emails').create({
+        to: [{ email, force: true }],
+        subject: `${code} is your confirmation code`,
+        html: emailVerificationTemplate({
+            config: context.params.config,
+            verificationCode: code,
+        }),
     });
-
-    // Send notification
-    {
-        const [[settings]] = await sequelize.query(`SELECT signUpNotification FROM settings WHERE id=1`);
-
-        const emails = getEmailsFromList(settings.signUpNotification);
-        if (emails.length > 0) {
-            const fullName = getPlayerName(user);
-
-            // Get duplicates
-            let duplicates;
-            {
-                const [candidates] = await sequelize.query(
-                    `
-                    SELECT id, firstName, lastName, slug, phone, email, information, isVerified
-                      FROM users
-                     WHERE (firstName=:firstName AND lastName=:lastName) OR
-                           phone=:phone OR
-                           information IS NOT NULL`,
-                    {
-                        replacements: {
-                            firstName: user.firstName,
-                            lastName: user.lastName,
-                            phone: user.phone,
-                        },
-                    }
-                );
-
-                duplicates = candidates.filter((candidate) => {
-                    if (candidate.isVerified !== 1) {
-                        return false;
-                    }
-                    if (candidate.id === user.id) {
-                        return false;
-                    }
-                    if (candidate.firstName === user.firstName && candidate.lastName === user.lastName) {
-                        return true;
-                    }
-                    if (candidate.phone === user.phone) {
-                        return true;
-                    }
-
-                    const information = populateInformation(candidate.information);
-                    const categories = [
-                        { value: 'phone', check: (value) => user.phone === value },
-                        { value: 'email', check: (value) => user.email === value },
-                        { value: 'name', check: (value) => getPlayerName(user) === value },
-                    ];
-
-                    return categories.some((category) => {
-                        const array = information?.history?.[category.value];
-                        if (!array) {
-                            return false;
-                        }
-
-                        return array.find((obj) => category.check(obj.value));
-                    });
-                });
-            }
-
-            context.app.service('api/emails').create({
-                to: emails.map((item) => ({ email: item })),
-                subject: `${fullName}${duplicates.length > 0 ? ' (duplicate)' : ''} signed up to the system`,
-                html: signUpNotificationTemplate({
-                    config: context.params.config,
-                    userName: fullName,
-                    userEmail: user.email,
-                    userPhone: user.phone,
-                    profileLink: `${TL_URL}/player/${user.slug}`,
-                    previewText: `${context.params.config.city}`,
-                    duplicates,
-                }),
-            });
-        }
-    }
 
     return context;
 };
 
 const verifyNewEmail = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
-
-    const currentUser = context.params.user as User;
-    const { email, verificationCode } = context.data;
-
-    const sequelize = context.app.get('sequelizeClient');
-    {
-        const [rows] = await sequelize.query(
-            `
-            SELECT id
-              FROM users
-             WHERE id=:id AND newEmail=:email AND newEmailCode=:verificationCode`,
-            {
-                replacements: { id: currentUser.id, verificationCode, email },
-            }
-        );
-        if (rows.length !== 1) {
-            throw new Unprocessable('Invalid request', { errors: { verificationCode: 'Confirmation code is wrong' } });
-        }
-    }
-
-    {
-        const [rows] = await sequelize.query('SELECT id FROM users WHERE email=:email', {
-            replacements: { email },
-        });
-        if (rows.length > 0) {
-            throw new Unprocessable('Invalid request', {
-                errors: { verificationCode: 'This email is already used by another player.' },
-            });
-        }
-    }
-
-    const information = populateInformation(currentUser.information);
-    if (email !== currentUser.email) {
-        if (!information.history?.email) {
-            _set(information, 'history.email', []);
-        }
-
-        information.history.email.push({
-            value: currentUser.email,
-            date: dayjs.tz().format('YYYY-MM-DD HH:mm:ss'),
-        });
-    }
-
-    await sequelize.query(
-        `UPDATE users
-            SET newEmail="",
-                newEmailCode="",
-                email=:email,
-                isWrongEmail=0,
-                information=:information
-          WHERE id=:id`,
-        { replacements: { id: currentUser.id, email, information: JSON.stringify(information) } }
-    );
 
     return context;
 };
@@ -1319,8 +1191,6 @@ const resendVerificationCode = () => async (context: HookContext) => {
     if (!(await bcrypt.compare(context.data.password, user.password))) {
         throw new Unprocessable('The user is not found');
     }
-
-    await sendVerificationEmail({ user })(context);
 
     return context;
 };
@@ -1500,8 +1370,7 @@ const searchUser = () => async (context: HookContext) => {
             `
             SELECT id, email, firstName, lastName, createdAt
               FROM users
-             WHERE isVerified=1 AND
-                   (CONCAT(firstName, ' ', lastName) LIKE :search OR
+             WHERE (CONCAT(firstName, ' ', lastName) LIKE :search OR
                    email LIKE :search)
           ORDER BY firstName, lastName`,
             { replacements: { search: `%${search}%` } }
@@ -1526,10 +1395,6 @@ const assignManagerRole = () => async (context: HookContext) => {
     const user = await users.findByPk(userId);
     if (!user) {
         throw new Unprocessable('The user is not found');
-    }
-
-    if (!user.isVerified) {
-        throw new Unprocessable('The user email is not verified');
     }
 
     const newRoles = _uniq(user.roles.split(',').concat(['manager'])).join(',');
@@ -1765,8 +1630,7 @@ const getAllUsers = () => async (context: HookContext) => {
                    COALESCE(p.count, 0) AS totalLadders
               FROM users AS u
          LEFT JOIN (SELECT userId, COUNT(*) AS count FROM players GROUP BY userId) AS p ON u.id=p.userId
-             WHERE u.email NOT LIKE "fake%@gmail.com" AND
-                   u.isVerified=1`
+             WHERE u.email NOT LIKE "fake%@gmail.com"`
     );
 
     context.result = { data: rows };
@@ -1819,7 +1683,7 @@ const getDuplicatedUsers = () => async (context: HookContext) => {
                 information,
                 cheatingAttempts
            FROM users
-          WHERE roles="player" AND isVerified=1`
+          WHERE roles="player"`
     );
 
     const userObj = users.reduce((obj, item) => {
@@ -2828,6 +2692,51 @@ const ignoreDuplicatedUsers = () => async (context: HookContext) => {
     return context;
 };
 
+const registerClubMember = () => async (context: HookContext) => {
+    const { email, password, verificationCode } = context.data;
+
+    const code = await getSavedEmailVerificationCode(email, context);
+    if (!code || code !== verificationCode) {
+        throw new Unprocessable('Wrong verification code');
+    }
+
+    const sequelize = context.app.get('sequelizeClient');
+    const { users } = sequelize.models;
+    const [[existingUser]] = await sequelize.query(`SELECT id FROM users WHERE email=:email`, {
+        replacements: { email },
+    });
+
+    const [members] = await sequelize.query(
+        `SELECT cm.*,
+                c.name AS clubName
+           FROM clubmembers AS cm,
+                clubs AS c
+          WHERE cm.email=:email`,
+        { replacements: { email } }
+    );
+
+    let newUser = {};
+    if (!existingUser && members.length > 0) {
+        const member = members[0];
+
+        const result = await context.app.service('api/users').create({
+            ..._pick(member, ['firstName', 'lastName', 'phone', 'birthday']),
+            email,
+            password,
+        });
+
+        console.log(result);
+    }
+
+    context.result = {
+        members,
+        isExistingUser: Boolean(existingUser),
+        newUser,
+    };
+
+    return context;
+};
+
 const parseInformation = () => async (context: HookContext) => {
     context.result.information = populateInformation(context.result.information);
     return context;
@@ -2839,6 +2748,8 @@ const runCustomAction = () => async (context: HookContext) => {
 
     if (action === 'getUserInfo') {
         await populateUser()(context);
+    } else if (action === 'sendEmailVerificationCode') {
+        await sendEmailVerificationCode()(context);
     } else if (action === 'verifyEmail') {
         await verifyEmail()(context);
     } else if (action === 'verifyNewEmail') {
@@ -2901,6 +2812,8 @@ const runCustomAction = () => async (context: HookContext) => {
         await getUserMatches()(context);
     } else if (action === 'ignoreDuplicatedUsers') {
         await ignoreDuplicatedUsers()(context);
+    } else if (action === 'registerClubMember') {
+        await registerClubMember()(context);
     } else {
         throw new NotFound();
     }
@@ -2925,7 +2838,6 @@ export default {
             hashPassword('password'),
             populateSlug(),
             populateChangelogSeenAt(),
-            generateVerificationCode(),
         ],
         update: [runCustomAction()],
         patch: [
@@ -2979,11 +2891,11 @@ export default {
         all: [
             // Make sure the password field is never sent to the client
             // Always must be the last hook
-            protect('password', 'salt', 'verificationCode'),
+            protect('password', 'salt'),
         ],
         find: [],
         get: [],
-        create: [unless(isProvider('server'), sendVerificationEmail())],
+        create: [unless(isProvider('server'))],
         update: [],
         patch: [purgeUserCache(), generateBadges(), parseInformation()],
         remove: [],

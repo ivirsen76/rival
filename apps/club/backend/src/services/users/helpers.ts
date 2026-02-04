@@ -78,7 +78,7 @@ export const hideEmail = (str: string) => {
 };
 
 export const getVerificationCode = () =>
-    Math.ceil(Math.random() * 900000 + 100000)
+    Math.ceil(Math.random() * 890000 + 100000)
         .toString()
         .slice(0, 6);
 

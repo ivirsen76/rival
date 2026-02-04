@@ -6,10 +6,21 @@ export class Register {
     readonly page: Page;
     readonly area: Locator;
 
+    // form locators
+    readonly emailField: Locator;
+    readonly passwordField: Locator;
+    readonly emailVerificationCodeField: Locator;
+    readonly submitButton: Locator;
+
     constructor(page: Page) {
         this.common = new Common(page);
         this.page = page;
         this.area = page.locator('[data-register-area]');
+
+        this.emailField = page.locator('input[name="email"]');
+        this.passwordField = page.locator('input[name="password"]');
+        this.emailVerificationCodeField = page.locator('input[name="code"]');
+        this.submitButton = page.getByRole('button', { name: 'Submit' });
     }
 
     public async goto() {

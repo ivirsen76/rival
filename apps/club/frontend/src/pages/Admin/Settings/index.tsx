@@ -36,12 +36,6 @@ const Settings = (props) => {
                 {({ isSubmitting }) => (
                     <Form noValidate>
                         <Field
-                            name="signUpNotification"
-                            label="Sign-up notification"
-                            component={Input}
-                            description="These emails will receive a notification when new players sign up. Separate emails with a semicolon."
-                        />
-                        <Field
                             name="changeLevelNotification"
                             label="Change level notification"
                             component={Input}

@@ -26,7 +26,6 @@ const checkEmailList = (list) => {
 
 export default (values) => {
     const schema = yup.object().shape({
-        signUpNotification: yup.string().max(200),
         changeLevelNotification: yup.string().max(200),
         newFeedbackNotification: yup.string().max(200),
         newComplaintNotification: yup.string().max(200),
@@ -34,9 +33,6 @@ export default (values) => {
 
     const errors = getSchemaErrors(schema, values);
     if (Object.keys(errors).length === 0) {
-        if (!checkEmailList(values.signUpNotification)) {
-            errors.signUpNotification = 'The email list is incorrect.';
-        }
         if (!checkEmailList(values.changeLevelNotification)) {
             errors.changeLevelNotification = 'The email list is incorrect.';
         }

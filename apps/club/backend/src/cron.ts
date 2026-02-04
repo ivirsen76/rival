@@ -1,7 +1,6 @@
 import type { Application } from '@feathersjs/feathers';
 import cron from 'node-cron';
 import seedrandom from 'seedrandom';
-import removeUnverifiedAccounts from './utils/removeUnverifiedAccounts';
 import generateNextSeason from './utils/generateNextSeason';
 import removeOldEmails from './utils/removeOldEmails';
 import runActions from './utils/runActions';
@@ -50,7 +49,6 @@ export default (app: Application) => {
     };
 
     // Night tasks
-    scheduleNightTask(() => removeUnverifiedAccounts(app));
     scheduleNightTask(() => generateNextSeason(app));
     scheduleNightTask(() => removeOldEmails(app));
     scheduleNightTask(() => generateNews());

@@ -53,21 +53,6 @@ test('Should sign in and sign out using pages', async ({ page, common, login }) 
     await expect(common.body).toContainText('Sign in');
 });
 
-test('Should not sign in for the user who is not verified', async ({ page, common, login }) => {
-    await runQuery(`UPDATE users SET isVerified=0, verificationCode="123456"`);
-    await page.goto('/login');
-
-    await login.emailField.fill('player1@gmail.com');
-    await login.passwordField.fill(login.password);
-    await login.signInButton.click();
-    await expect(common.body).toContainText('Your email is not verified');
-
-    await login.verifyEmailLink.click();
-    await login.verifyEmail('player1@gmail.com');
-
-    await expect(common.body).toContainText('Ben Done');
-});
-
 test('Should not sign in for the banned user', async ({ page, common, login }) => {
     const dateInWeek = dayjs.tz().add(1, 'week').format('YYYY-MM-DD HH:mm:ss');
     await runQuery(`UPDATE users SET banDate="${dateInWeek}", banReason="something" WHERE id=6`);

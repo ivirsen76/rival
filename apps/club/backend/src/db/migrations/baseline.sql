@@ -605,7 +605,6 @@ CREATE TABLE `settings` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `signUpNotification` varchar(255) NOT NULL DEFAULT '',
   `changeLevelNotification` varchar(255) NOT NULL DEFAULT '',
   `newFeedbackNotification` varchar(255) NOT NULL DEFAULT '',
   `global` text NOT NULL,
@@ -619,9 +618,9 @@ CREATE TABLE `settings` (
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
 
-INSERT INTO `settings` (`id`, `createdAt`, `updatedAt`, `signUpNotification`, `changeLevelNotification`, `newFeedbackNotification`, `global`, `weather`, `wordcloudUrl`, `wordcloudCreatedAt`, `newComplaintNotification`)
+INSERT INTO `settings` (`id`, `createdAt`, `updatedAt`, `changeLevelNotification`, `newFeedbackNotification`, `global`, `weather`, `wordcloudUrl`, `wordcloudCreatedAt`, `newComplaintNotification`)
 VALUES
-	(1,'2026-01-18 21:57:13','2026-01-18 21:57:19','','','','','',NULL,NULL,'');
+	(1,'2026-01-18 21:57:13','2026-01-18 21:57:19','','','','',NULL,NULL,'');
 
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -736,8 +735,6 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `isVerified` tinyint(1) NOT NULL DEFAULT '0',
-  `verificationCode` varchar(255) DEFAULT NULL,
   `roles` varchar(255) NOT NULL DEFAULT 'player',
   `firstName` varchar(255) DEFAULT NULL,
   `lastName` varchar(255) DEFAULT NULL,

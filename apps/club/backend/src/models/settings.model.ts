@@ -10,7 +10,6 @@ export default function (app: Application) {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
             },
-            signUpNotification: Sequelize.STRING,
             changeLevelNotification: Sequelize.STRING,
             newFeedbackNotification: Sequelize.STRING,
             newComplaintNotification: Sequelize.STRING,

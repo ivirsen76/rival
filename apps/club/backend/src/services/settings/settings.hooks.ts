@@ -110,12 +110,7 @@ export default {
         patch: [
             authenticate('jwt'),
             validatePatch(),
-            keep(
-                'signUpNotification',
-                'changeLevelNotification',
-                'newFeedbackNotification',
-                'newComplaintNotification'
-            ),
+            keep('changeLevelNotification', 'newFeedbackNotification', 'newComplaintNotification'),
         ],
         remove: [disallow()],
     },

@@ -109,7 +109,7 @@ const getActivityStats = () => async (context: HookContext) => {
 const getMotivationStats = () => async (context: HookContext) => {
     const sequelize = context.app.get('sequelizeClient');
 
-    const [[row]] = await sequelize.query(`SELECT count(*) AS cnt FROM users WHERE isVerified=1`);
+    const [[row]] = await sequelize.query(`SELECT count(*) AS cnt FROM users`);
     const playersTotal = row.cnt;
 
     const [avatars] = await sequelize.query(`

@@ -1,54 +1,189 @@
 import { Formik, Field, Form } from '@rival/common/components/formik';
 import Input from '@rival/common/components/formik/Input';
-import Birthday from '@rival/common/components/formik/Birthday';
-import PasswordInput from '@rival/common/components/formik/PasswordInput';
 import Button from '@rival/common/components/Button';
-import { Link, useHistory } from 'react-router-dom';
-import { IMaskInput } from 'react-imask';
-import FieldWrapper from '@rival/common/components/formik/FieldWrapper';
-import classnames from 'classnames';
-import useStatsigEvents from '@/utils/useStatsigEvents';
-import convertDate from '@rival/common/utils/convertDate';
+import notification from '@rival/common/components/notification';
+import EmailIcon from '@rival/common/metronic/icons/duotone/Communication/Mail-at.svg?react';
+import VerifyEmail from '@/components/VerifyEmail';
+import WrongIcon from '@rival/common/metronic/icons/duotune/arrows/arr015.svg?react';
+import axios from '@rival/common/axios';
+import PasswordInput from '@rival/common/components/formik/PasswordInput';
+import { isEmail } from '@rival/club.backend/src/helpers';
+
+const validate = (values) => {
+    const errors = {};
+
+    if (!values.email) {
+        errors.email = 'Email is required';
+    } else if (!isEmail(values.email)) {
+        errors.email = 'Wrong email format';
+    }
+
+    if (!values.password) {
+        errors.password = 'Password is required';
+    } else {
+        const length = values.password.length;
+        if (length < 8) {
+            errors.password = 'Password must be at least 8 characters';
+        } else if (length > 20) {
+            errors.password = 'Password must be not more than 20 characters';
+        }
+    }
+
+    return errors;
+};
 
 type RegisterFormProps = {
-    onSubmit: (...args: unknown[]) => unknown;
     goToLogin: (...args: unknown[]) => unknown;
-    showComeFrom: boolean;
 };
 
 const RegisterForm = (props: RegisterFormProps) => {
-    const history = useHistory();
-    const { onRegister } = useStatsigEvents();
-
-    const goToLogin = props.goToLogin
-        ? props.goToLogin
-        : () => {
-              history.push('/login');
-          };
+    const { goToLogin } = props;
 
     return (
         <Formik
-            initialValues={{
-                firstName: '',
-                lastName: '',
-                email: '',
-                phone: '',
-                password: '',
-                agree: false,
-                zip: '',
-            }}
-            onSubmit={async (values) => {
-                const additionalValues = {};
+            initialValues={{ email: '', password: '' }}
+            validate={validate}
+            onSubmit={async (values, form) => {
+                notification({
+                    inModal: true,
+                    render: ({ hide }) => (
+                        <>
+                            <span className="svg-icon svg-icon-primary svg-icon-5x">
+                                <EmailIcon />
+                            </span>
+                            <div className="mt-6">
+                                <VerifyEmail
+                                    email={values.email}
+                                    onSuccess={async (code) => {
+                                        const { data } = await axios.put('/api/users/0', {
+                                            action: 'registerClubMember',
+                                            email: values.email,
+                                            password: values.password,
+                                            verificationCode: code,
+                                        });
 
-                await props.onSubmit({
-                    ...values,
-                    ...additionalValues,
-                    birthday: convertDate(values.birthday),
+                                        hide();
+                                        if (data.isExistingUser) {
+                                            notification({
+                                                inModal: true,
+                                                render: ({ hide }) => (
+                                                    <>
+                                                        <span className="svg-icon svg-icon-danger svg-icon-5x">
+                                                            <WrongIcon />
+                                                        </span>
+                                                        <div className="mt-6 mb-8">
+                                                            <p style={{ textWrap: 'balance' }}>
+                                                                The user with the email <b>{values.email}</b> already
+                                                                exists in the ladder.
+                                                            </p>
+                                                            <div style={{ textWrap: 'balance' }}>
+                                                                You can sign in using this email or recover password if
+                                                                you don't remember that.
+                                                            </div>
+                                                        </div>
+                                                        <div className="d-flex gap-2 justify-content-center">
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-primary"
+                                                                onClick={() => {
+                                                                    hide();
+                                                                    goToLogin();
+                                                                }}
+                                                            >
+                                                                Sign In
+                                                            </button>
+                                                            <a className="btn btn-primary" href="/forgotPassword">
+                                                                Recover Password
+                                                            </a>
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-secondary"
+                                                                onClick={() => {
+                                                                    hide();
+                                                                    form.resetForm();
+                                                                }}
+                                                            >
+                                                                Close
+                                                            </button>
+                                                        </div>
+                                                    </>
+                                                ),
+                                            });
+                                        } else if (data.members.length === 0) {
+                                            notification({
+                                                inModal: true,
+                                                render: ({ hide }) => (
+                                                    <>
+                                                        <span className="svg-icon svg-icon-danger svg-icon-5x">
+                                                            <WrongIcon />
+                                                        </span>
+                                                        <div className="mt-6 mb-8">
+                                                            <p style={{ textWrap: 'balance' }}>
+                                                                The user with the email <b>{values.email}</b> doesn't
+                                                                belong to any club.
+                                                            </p>
+                                                            <div style={{ textWrap: 'balance' }}>
+                                                                If you just joined the club, wait for up to 24 hours
+                                                                till you will be able to register in Tennis Ladder.
+                                                            </div>
+                                                        </div>
+                                                        <div className="d-flex gap-2 justify-content-center">
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-primary"
+                                                                onClick={() => {
+                                                                    hide();
+                                                                    form.resetForm();
+                                                                }}
+                                                            >
+                                                                Use another email
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                className="btn btn-secondary"
+                                                                onClick={() => {
+                                                                    hide();
+                                                                    form.resetForm();
+                                                                }}
+                                                            >
+                                                                Close
+                                                            </button>
+                                                        </div>
+                                                    </>
+                                                ),
+                                            });
+                                        } else {
+                                            const member = data.members[0];
+
+                                            notification({
+                                                inModal: true,
+                                                message: (
+                                                    <div>
+                                                        <p style={{ textWrap: 'balance' }}>
+                                                            We found you! You are{' '}
+                                                            <b>
+                                                                {member.firstName} {member.lastName}
+                                                            </b>
+                                                            , the member of <b>{member.clubName}</b>.
+                                                        </p>
+                                                        <div style={{ textWrap: 'balance' }}>
+                                                            From now on, you can log in into Rival Tennis Ladder using
+                                                            your email and password.
+                                                        </div>
+                                                    </div>
+                                                ),
+                                                buttonTitle: 'Continue',
+                                            });
+                                        }
+                                    }}
+                                />
+                            </div>
+                        </>
+                    ),
                 });
-                onRegister();
             }}
         >
-            {({ isSubmitting, values }) => (
+            {({ isSubmitting }) => (
                 <Form noValidate>
                     <div className="mb-6">
                         <h3 className="mb-2">Create an Account</h3>
@@ -67,89 +202,28 @@ const RegisterForm = (props: RegisterFormProps) => {
                         </div>
                     </div>
 
-                    <div className="row">
-                        <div className="col">
-                            <Field name="firstName" label="First name" type="text" component={Input} autoFocus />
-                        </div>
-                        <div className="col">
-                            <Field name="lastName" label="Last name" type="text" component={Input} />
-                        </div>
-                    </div>
-
                     <Field
                         name="email"
                         label="Email"
-                        description="Only visible to your match opponents"
+                        description="Provide an email which you use in your tennis club."
                         type="email"
                         component={Input}
-                        renderError={(error) =>
-                            error.includes('unique') ? (
-                                <div>
-                                    This email is already used by another player.
-                                    <br />
-                                    You can{' '}
-                                    <a
-                                        href=""
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            goToLogin();
-                                        }}
-                                    >
-                                        sign in
-                                    </a>{' '}
-                                    or <Link to="/forgotPassword">reset password</Link> if you don&apos;t remember it.
-                                </div>
-                            ) : (
-                                error
-                            )
-                        }
                     />
-
-                    <Field name="phone">
-                        {({ field, form }) => (
-                            <FieldWrapper
-                                label="Phone"
-                                description="Only visible to your match opponents"
-                                field={field}
-                                form={form}
-                            >
-                                <IMaskInput
-                                    mask="000-000-0000"
-                                    value={field.value}
-                                    unmask
-                                    onAccept={(value, mask) => {
-                                        form.setFieldValue(field.name, value);
-                                    }}
-                                    name="phone"
-                                    className={classnames('form-control form-control-solid', {
-                                        'is-invalid': form.errors[field.name] && form.submitCount > 0,
-                                    })}
-                                    inputMode="numeric"
-                                />
-                            </FieldWrapper>
-                        )}
-                    </Field>
-
-                    <Field name="password" label="Password" component={PasswordInput} />
 
                     <Field
-                        name="birthday"
-                        description="Not visible to anyone — only used for age restrictions."
-                        label="Birth date"
-                        component={Birthday}
+                        name="password"
+                        label="Password"
+                        description="It could be different from your tennis club password"
+                        component={PasswordInput}
                     />
 
-                    <Button className="mt-4 btn btn-lg btn-primary w-100" isSubmitting={isSubmitting}>
+                    <Button className="btn btn-lg btn-primary w-100" isSubmitting={isSubmitting}>
                         Submit
                     </Button>
                 </Form>
             )}
         </Formik>
     );
-};
-
-RegisterForm.defaultProps = {
-    showComeFrom: true,
 };
 
 export default RegisterForm;

@@ -5,9 +5,6 @@ import { Formik, Field, Form } from '@rival/common/components/formik';
 import Input from '@rival/common/components/formik/Input';
 import PasswordInput from '@rival/common/components/formik/PasswordInput';
 import Button from '@rival/common/components/Button';
-import notification from '@rival/common/components/notification';
-import VerifyEmail from '@rival/common/components/VerifyEmail';
-import EmailIcon from '@rival/common/metronic/icons/duotone/Communication/Mail-at.svg?react';
 
 type LoginProps = {
     goToRegister: (...args: unknown[]) => unknown;
@@ -34,7 +31,7 @@ const Login = (props: LoginProps) => {
                 }
             }}
         >
-            {({ handleSubmit, isSubmitting, values }) => (
+            {({ isSubmitting }) => (
                 <Form noValidate>
                     <div className="mb-6">
                         <h3 className="mb-2">Sign in</h3>
@@ -53,52 +50,7 @@ const Login = (props: LoginProps) => {
                         </div>
                     </div>
 
-                    <Field
-                        name="email"
-                        label="Email"
-                        type="email"
-                        component={Input}
-                        autoFocus
-                        renderError={(error) =>
-                            error.includes('verified') ? (
-                                <div>
-                                    Your email is not verified.{' '}
-                                    <a
-                                        href=""
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            notification({
-                                                inModal: true,
-                                                render: ({ hide }) => (
-                                                    <>
-                                                        <span className="svg-icon svg-icon-primary svg-icon-5x">
-                                                            <EmailIcon />
-                                                        </span>
-                                                        <div className="mt-6">
-                                                            <VerifyEmail
-                                                                sendOnMount
-                                                                email={values.email}
-                                                                password={values.password}
-                                                                onSuccess={() => {
-                                                                    hide();
-                                                                    handleSubmit();
-                                                                }}
-                                                            />
-                                                        </div>
-                                                    </>
-                                                ),
-                                            });
-                                        }}
-                                    >
-                                        Verify email
-                                    </a>
-                                    .
-                                </div>
-                            ) : (
-                                error
-                            )
-                        }
-                    />
+                    <Field name="email" label="Email" type="email" component={Input} autoFocus />
 
                     <label className="form-label d-block">
                         <div className="d-flex justify-content-between w-100">

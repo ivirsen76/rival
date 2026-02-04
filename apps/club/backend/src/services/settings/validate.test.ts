@@ -21,7 +21,6 @@ describe('validate()', () => {
             Object.keys(
                 validate({
                     ...correctValues,
-                    signUpNotification: 'some@gmail.com',
                     changeLevelNotification: 'some@gmail.com;another@gmail.com; maybe@more.com',
                     newFeedbackNotification: 'more@more.com',
                     newComplaintNotification: 'more@more.com',
@@ -30,14 +29,6 @@ describe('validate()', () => {
         ).toBe(0);
     });
 
-    checkForErrors('signUpNotification', [
-        123,
-        'a'.repeat(201),
-        'some',
-        'some@good.com,wrong',
-        'some@gmail.com,',
-        ',some@gmail.com',
-    ]);
     checkForErrors('changeLevelNotification', [
         123,
         'a'.repeat(201),

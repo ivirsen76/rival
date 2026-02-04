@@ -465,8 +465,8 @@ const sendNewSeasonNotification = () => async (context: HookContext) => {
         return context;
     }
 
-    const [[settings]] = await sequelize.query(`SELECT signUpNotification FROM settings WHERE id=1`);
-    const emails = getEmailsFromList(settings.signUpNotification).map((item) => ({ email: item }));
+    const [[settings]] = await sequelize.query(`SELECT newFeedbackNotification FROM settings WHERE id=1`);
+    const emails = getEmailsFromList(settings.newFeedbackNotification).map((item) => ({ email: item }));
     const seasonName = getSeasonName(season);
 
     await context.app.service('api/emails').create({

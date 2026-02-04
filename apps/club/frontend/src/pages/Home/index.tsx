@@ -10,7 +10,6 @@ import court from './court.jpg?w=800;1200;1600;2400&format=webp&as=srcset';
 import courtSmall from './courtSmall.jpg?w=800;1200;1600;2400&format=webp&as=srcset';
 import formatNumber from '@rival/club.backend/src/utils/formatNumber';
 import gradualRound from '@rival/common/utils/gradualRound';
-import { Redirect } from 'react-router-dom';
 import CtaButton from './CtaButton';
 import log from '@/utils/log';
 import type { Banana } from '@rival/club.backend/src/types';
@@ -98,10 +97,6 @@ const Home = () => {
 
     if (isSettingsLoading) {
         return <Loader loading />;
-    }
-
-    if (settings.associations.length === 1) {
-        return <Redirect to={`/city/${settings.associations[0].slug}`} />;
     }
 
     const bananas = settings.bananas.filter((item) => item.images.normal) as Banana[];

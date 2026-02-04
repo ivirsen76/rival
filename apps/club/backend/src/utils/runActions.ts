@@ -678,7 +678,6 @@ export const remindForChoosingLadder = async (app: Application) => {
         SELECT id, firstName, lastName, email, roles
           FROM users
          WHERE id NOT IN (SELECT DISTINCT userId FROM players) AND
-               isVerified=1 AND
                createdAt>:minCreatedAt AND
                createdAt<:maxCreatedAt`,
         {
