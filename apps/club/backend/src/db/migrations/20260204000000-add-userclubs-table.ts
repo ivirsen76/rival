@@ -1,7 +1,7 @@
 import { QueryInterface, DataTypes } from 'sequelize';
 
 export const up = async ({ context: queryInterface }: { context: QueryInterface }) => {
-    await queryInterface.createTable('clubmembers', {
+    await queryInterface.createTable('userclubs', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -37,15 +37,15 @@ export const up = async ({ context: queryInterface }: { context: QueryInterface 
     });
 
     await queryInterface.sequelize.query(
-        `CREATE TRIGGER clubmembers_OnInsert BEFORE INSERT ON \`clubmembers\`
+        `CREATE TRIGGER userclubs_OnInsert BEFORE INSERT ON \`userclubs\`
             FOR EACH ROW SET NEW.createdAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, '${process.env.TL_TIMEZONE}'), NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, '${process.env.TL_TIMEZONE}');`
     );
     await queryInterface.sequelize.query(
-        `CREATE TRIGGER clubmembers_OnUpdate BEFORE UPDATE ON \`clubmembers\`
+        `CREATE TRIGGER userclubs_OnUpdate BEFORE UPDATE ON \`userclubs\`
             FOR EACH ROW SET NEW.updatedAt = CONVERT_TZ(NOW(), @@SESSION.time_zone, '${process.env.TL_TIMEZONE}');`
     );
 };
 
 export const down = async ({ context: queryInterface }: { context: QueryInterface }) => {
-    await queryInterface.dropTable('clubmembers');
+    await queryInterface.dropTable('userclubs');
 };

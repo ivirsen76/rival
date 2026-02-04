@@ -117,7 +117,7 @@ test(`Should register the user`, async ({ page, common, login, register }) => {
     await register.emailVerificationCodeField.fill(emailVerificationCode);
     await expect(common.modal).toContainText('We found you! You are David Trust, the member of Raleigh Racquet Club.');
 
-    await expectRecordToExist(
+    const user = await expectRecordToExist(
         'users',
         { email: 'david@rrclub.com' },
         {
@@ -128,10 +128,11 @@ test(`Should register the user`, async ({ page, common, login, register }) => {
             slug: 'david-trust',
         }
     );
+    await expectRecordToExist('userclubs', { userId: user.id }, { clubId: 1 });
 
-    return;
+    await expect(page.locator('[data-logged-user]')).toContainText('David Trust');
     await common.modal.locator('button').getByText('Continue').click();
     await expect(common.modal).toBeHidden();
 
-    await expect(common.body).toContainText('Forgot Password?');
+    await expect(common.body).toContainText('Pick one Singles ladder');
 });
