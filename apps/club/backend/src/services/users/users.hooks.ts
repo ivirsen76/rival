@@ -1172,29 +1172,6 @@ const verifyNewEmail = () => async (context: HookContext) => {
     return context;
 };
 
-const resendVerificationCode = () => async (context: HookContext) => {
-    const sequelize = context.app.get('sequelizeClient');
-
-    const [rows] = await sequelize.query(
-        `
-        SELECT id, password, email, firstName, lastName
-          FROM users
-         WHERE email=:email`,
-        {
-            replacements: { email: context.data.email },
-        }
-    );
-    if (rows.length !== 1) {
-        throw new Unprocessable('The user is not found');
-    }
-    const user = rows[0];
-    if (!(await bcrypt.compare(context.data.password, user.password))) {
-        throw new Unprocessable('The user is not found');
-    }
-
-    return context;
-};
-
 const sendPhoneVerificationCode = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
 
@@ -2756,8 +2733,6 @@ const runCustomAction = () => async (context: HookContext) => {
         await verifyEmail()(context);
     } else if (action === 'verifyNewEmail') {
         await verifyNewEmail()(context);
-    } else if (action === 'resendVerificationCode') {
-        await resendVerificationCode()(context);
     } else if (action === 'sendPhoneVerificationCode') {
         await sendPhoneVerificationCode()(context);
     } else if (action === 'verifyPhone') {
