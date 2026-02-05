@@ -9,8 +9,10 @@ test(`Should see the message that user doesn't belong to any club`, async ({ pag
     await page.goto('/register');
     await register.submitButton.click();
     await expect(common.body).toContainText('Email is required');
+    await expect(common.body).toContainText('Password is required');
 
     await register.emailField.fill('wrongsyntax');
+    await register.passwordField.fill('12345678');
     await register.submitButton.click();
     await expect(common.body).toContainText('Wrong email format');
 
@@ -34,6 +36,7 @@ test(`Should see the message that user doesn't belong to any club`, async ({ pag
 test(`Should use another email`, async ({ page, common, login, register }) => {
     await page.goto('/register');
     await register.emailField.fill('missed@gmail.com');
+    await register.passwordField.fill('12345678');
     await register.submitButton.click();
 
     const emailSent = await expectRecordToExist('emails', { recipientEmail: 'missed@gmail.com' });
@@ -46,6 +49,7 @@ test(`Should use another email`, async ({ page, common, login, register }) => {
 
     await expect(register.emailField).toHaveValue('');
     await register.emailField.fill('anothermissed@gmail.com');
+    await register.passwordField.fill('12345678');
     await register.submitButton.click();
 
     await expect(common.modal).toContainText('Verify your email');
@@ -54,6 +58,7 @@ test(`Should use another email`, async ({ page, common, login, register }) => {
 test(`Should see the message for existing user and close it`, async ({ page, common, login, register }) => {
     await page.goto('/register');
     await register.emailField.fill('player1@gmail.com');
+    await register.passwordField.fill('12345678');
     await register.submitButton.click();
 
     const emailSent = await expectRecordToExist('emails', { recipientEmail: 'player1@gmail.com' });
@@ -70,6 +75,7 @@ test(`Should see the message for existing user and close it`, async ({ page, com
 test(`Should see the message for existing user and try to sign in`, async ({ page, common, login, register }) => {
     await page.goto('/register');
     await register.emailField.fill('player1@gmail.com');
+    await register.passwordField.fill('12345678');
     await register.submitButton.click();
 
     const emailSent = await expectRecordToExist('emails', { recipientEmail: 'player1@gmail.com' });
@@ -80,8 +86,7 @@ test(`Should see the message for existing user and try to sign in`, async ({ pag
     await common.modal.locator('button').getByText('Sign in').click();
     await expect(common.modal).toBeHidden();
 
-    await expect(register.emailField).toBeVisible();
-    await expect(register.passwordField).toBeVisible();
+    await expect(common.body).toContainText('Forgot password?');
 });
 
 test(`Should see the message for existing user and try to recover password`, async ({
@@ -92,6 +97,7 @@ test(`Should see the message for existing user and try to recover password`, asy
 }) => {
     await page.goto('/register');
     await register.emailField.fill('player1@gmail.com');
+    await register.passwordField.fill('12345678');
     await register.submitButton.click();
 
     const emailSent = await expectRecordToExist('emails', { recipientEmail: 'player1@gmail.com' });
@@ -102,7 +108,7 @@ test(`Should see the message for existing user and try to recover password`, asy
     await common.modal.locator('a').getByText('Recover Password').click();
     await expect(common.modal).toBeHidden();
 
-    await expect(common.body).toContainText('Forgot Password?');
+    await expect(common.body).toContainText('We will send you an email to reset your password.');
 });
 
 test(`Should register the user`, async ({ page, common, login, register }) => {
