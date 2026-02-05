@@ -69,7 +69,6 @@
         "seedrandom": "^3.0.5",
         "sequelize": "6.6.2",
         "sharp": "^0.34.5",
-        "stripe": "^10.2.0",
         "striptags": "^3.2.0",
         "twilio": "^5.11.2",
         "umzug": "^3.8.2",
