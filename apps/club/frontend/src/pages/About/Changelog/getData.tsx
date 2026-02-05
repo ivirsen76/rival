@@ -248,9 +248,7 @@ const tournamentEligibilityContent = (config) => (
         <ol>
             <li>
                 Players who are <b>more than 0.5 TLR above their ladder level at the start of the season</b> will not be
-                eligible for that level&apos;s Final Tournament. These players will receive a $
-                {config.tooHighTlrDiscount / 100} discount due to this limitation since they can only play the regular
-                season.
+                eligible for that level&apos;s Final Tournament.
             </li>
             <li>
                 Players who establish an <b>initial TLR that&apos;s 0.5 TLR higher than their ladder level</b> will also
@@ -497,10 +495,6 @@ const getData = ({ config, lazyClass = '' } = {}) => [
                     of the singular match, and TLR will only be adjusted once.
                 </p>
                 <div className={classnames(style.multiLadderMatch, lazyClass)} />
-                <p className="mt-8">
-                    As an added bonus, we will now be providing a <b>$10 discount</b> each time a player signs up for an
-                    additional ladder!
-                </p>
             </div>
         ),
     },

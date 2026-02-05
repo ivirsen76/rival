@@ -155,7 +155,6 @@ test('We can register for the free ladder and partner will get an email', async 
     register,
     overview,
 }) => {
-    await overrideConfig({ minMatchesToPay: 0 });
     await login.loginAsPlayer9();
 
     await register.goto();
@@ -314,8 +313,6 @@ test('We can register and join the player Pool for paid season', async ({
     overview,
     doublesTeam,
 }) => {
-    await overrideConfig({ minMatchesToPay: 1 });
-
     // Captain without teammate should get an email.
     await runQuery('INSERT INTO players SET userId=8, tournamentId=13');
 
@@ -372,7 +369,7 @@ test('We can register and join the player Pool after getting back from payment',
     overview,
     doublesTeam,
 }) => {
-    await overrideConfig({ minMatchesToEstablishTlr: 1, minMatchesToPay: 0 });
+    await overrideConfig({ minMatchesToEstablishTlr: 1 });
 
     await login.loginAsPlayer1();
 
@@ -594,7 +591,7 @@ test('We can register for the free ladder when TLR is too high', async ({
     register,
     overview,
 }) => {
-    await overrideConfig({ minMatchesToEstablishTlr: 1, minMatchesToPay: 0 });
+    await overrideConfig({ minMatchesToEstablishTlr: 1 });
     await runQuery(`UPDATE matches SET challengerElo=550, acceptorElo=550`);
     await login.loginAsPlayer1();
 
@@ -690,7 +687,6 @@ test('We can register for Single ladder after registering for Doubles', async ({
 
 test('We can register for free if it is our first season', async ({ common, login, register }) => {
     await runQuery('INSERT INTO players SET userId=7, tournamentId=11');
-    await overrideConfig({ minMatchesToPay: 0 });
 
     await login.loginAsPlayer5();
     await register.goto();

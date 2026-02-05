@@ -6,7 +6,6 @@ import Ban from './Ban';
 import Settings from './Settings';
 import Players from './Players';
 import Stats from './Stats';
-import Merge from './Merge';
 import Actions from './Actions';
 import Complaints from './Complaints';
 import NotFound from '@/pages/NotFound';
@@ -32,7 +31,6 @@ const Tournament = () => {
         { url: `${url}/texts`, label: 'Settings', roles: ['admin', 'manager'] },
         { url: `${url}/players`, label: 'Players', roles: ['admin', 'manager'] },
         { url: `${url}/complaints`, label: 'Complaints', roles: ['admin', 'manager'] },
-        { url: `${url}/merge`, label: 'Merge', roles: ['superadmin'] },
         { url: `${url}/actions`, label: 'Actions', roles: ['superadmin'] },
         { url: `${url}/stats`, label: 'Stats', roles: ['admin', 'manager'] },
     ];
@@ -72,7 +70,6 @@ const Tournament = () => {
                 <Route exact path={`${path}/texts`} component={Settings} />
                 <Route exact path={`${path}/players`} component={Players} />
                 <Route exact path={`${path}/complaints`} component={Complaints} />
-                <Route exact path={`${path}/merge`} component={Merge} />
                 <Route exact path={`${path}/actions`} component={Actions} />
                 <Route exact path={`${path}/stats`} component={Stats} />
                 <Route component={NotFound} />

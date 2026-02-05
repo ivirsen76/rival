@@ -12,7 +12,6 @@ export default function (app: Application) {
             endDate: Sequelize.DATE,
             hasFinalTournament: Sequelize.BOOLEAN,
             closeReason: Sequelize.STRING,
-            isFree: Sequelize.BOOLEAN,
         },
         {
             hooks: {

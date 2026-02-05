@@ -18,7 +18,6 @@ const getCombinedConfig = async () => {
         minMatchesForActiveLadder: 50,
         minMatchesToAddPhotos: 10,
         minMatchesToEstablishTlr: 10,
-        minMatchesToPay: 3,
         minMatchesToPlanTournament: 20,
         minMatchesToSendMessages: 10,
         minPlayersForActiveLadder: 20,
@@ -30,7 +29,6 @@ const getCombinedConfig = async () => {
         teamNameMaxLength: 16,
         teamNameMinLength: 5,
         timeToViewPhoto: 5000, // 5s
-        tooHighTlrDiscount: 1000,
         tournamentReminderWeeks: 1,
     };
 

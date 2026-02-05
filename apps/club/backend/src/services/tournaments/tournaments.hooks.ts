@@ -97,15 +97,7 @@ const populateTournament =
                         },
                         {
                             model: seasons,
-                            attributes: [
-                                'year',
-                                'season',
-                                'startDate',
-                                'endDate',
-                                'hasFinalTournament',
-                                'closeReason',
-                                'isFree',
-                            ],
+                            attributes: ['year', 'season', 'startDate', 'endDate', 'hasFinalTournament', 'closeReason'],
                         },
                     ],
                 },

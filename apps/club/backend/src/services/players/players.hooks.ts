@@ -444,8 +444,7 @@ const registerForFree = () => async (context: HookContext) => {
         const [rows] = await sequelize.query(
             `
             SELECT s.id,
-                   s.endDate,
-                   s.isFree
+                   s.endDate
               FROM tournaments AS t,
                    seasons AS s
              WHERE t.seasonId=s.id AND
@@ -535,26 +534,6 @@ const registerForFree = () => async (context: HookContext) => {
             } else if (!/^[a-zA-Z0-9& -]+$/.test(teamName)) {
                 throw new Unprocessable('Only letters, digits, ampersand, dashes, and spaces are allowed.');
             }
-        }
-    }
-
-    const isUserFirstSeason = userTournamentIds.every((id) => seasonTournamentIds.includes(id));
-    if (!season.isFree && !isUserFirstSeason) {
-        // checking if the user played matches before
-        const [rows] = await sequelize.query(
-            `SELECT m.id
-               FROM matches AS m,
-                    players AS p
-              WHERE p.userId=:userId AND
-                    p.id NOT IN (${seasonTournamentIds.join(',')}) AND
-                    (m.challengerId=p.id OR m.acceptorId=p.id OR m.challenger2Id=p.id OR m.acceptor2Id=p.id) AND
-                    m.type="regular" AND
-                    ${getStatsMatches('m')}`,
-            { replacements: { userId: currentUser.id } }
-        );
-
-        if (rows.length >= context.params.config.minMatchesToPay) {
-            throw new Unprocessable('You cannot join ladder for free');
         }
     }
 

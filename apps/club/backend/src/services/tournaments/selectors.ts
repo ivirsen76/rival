@@ -981,11 +981,9 @@ export const getTournament = async ({ data, includeEmail, config, app }) => {
         season: getSeasonName(data),
         seasonYear: data['season.year'],
         seasonSeason: data['season.season'],
-        seasonIsFree: data['season.isFree'],
         seo: {
             title: `${getSeasonName(data)} ${data['level.name']}`,
         },
-        isFreeSeason: data['season.isFree'],
         allLevels: data.allLevels,
         startDate: data['season.startDate'],
         endDate: data['season.endDate'],

@@ -163,18 +163,7 @@ export type SeasonSvgParams = {
     gender: 'male' | 'female';
 };
 
-const getSeasonSvg = ({
-    season,
-    levels,
-    config,
-    elo,
-    matchesPlayed,
-    scale = 1,
-    totalPlayers = 0,
-    gender = 'male',
-}: SeasonSvgParams) => {
-    const isFreeSeason = Boolean(season.isFree);
-    const mustPay = !isFreeSeason && matchesPlayed >= config.minMatchesToPay;
+const getSeasonSvg = ({ season, levels, elo, scale = 1, totalPlayers = 0, gender = 'male' }: SeasonSvgParams) => {
     const hasElo = Boolean(elo);
     const showTotalPlayers = totalPlayers >= 100;
 
@@ -216,7 +205,7 @@ const getSeasonSvg = ({
         description: [`${season.weeks} weeks`],
     });
 
-    if (!mustPay && !hasElo) {
+    if (!hasElo) {
         blocks.push({
             title: ['Ladders'],
             description: suitableLadders,

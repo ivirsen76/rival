@@ -15,7 +15,6 @@ export default function (app: Application) {
             botPrediction: Sequelize.TEXT,
             predictionWinner: Sequelize.INTEGER,
             predictionWonAt: Sequelize.DATE,
-            isFree: Sequelize.INTEGER,
         },
         {
             hooks: {

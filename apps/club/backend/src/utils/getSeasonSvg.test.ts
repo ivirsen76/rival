@@ -43,7 +43,6 @@ describe('getSeasonSvg()', () => {
             startDate: '2025-12-08 00:00:00',
             dates: 'Dec 8 - Mar 1',
             weeks: 10,
-            isFree: 0,
         },
         levels: [
             {
@@ -201,9 +200,6 @@ describe('getSeasonSvg()', () => {
                 gender: 'female',
             },
         ],
-        config: {
-            minMatchesToPay: 3,
-        },
         currentDate: '2025-11-01 00:00:00',
         scale: 1,
         totalPlayers: 99,
@@ -237,7 +233,6 @@ describe('getSeasonSvg()', () => {
 
     it('Should return right svg for free season and no tlr', () => {
         const adjustedParams = _cloneDeep(params);
-        adjustedParams.season.isFree = 1;
         adjustedParams.elo = null;
 
         const svg = getSeasonSvg(adjustedParams);
@@ -267,8 +262,6 @@ describe('getSeasonSvg()', () => {
 
     it('Should return right svg for free season', () => {
         const adjustedParams = _cloneDeep(params);
-        adjustedParams.season.isFree = 1;
-
         const svg = getSeasonSvg(adjustedParams);
 
         expectBlocks(svg, [

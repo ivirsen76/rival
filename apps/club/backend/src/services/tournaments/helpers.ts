@@ -5,7 +5,6 @@ export const getSuitableTournaments = (
     tournaments: Tournament[],
     elo: number,
     gender: string,
-    registerForFree: boolean = false,
     userTournaments: number[] = []
 ) => {
     const orderedTournaments = tournaments
@@ -22,7 +21,6 @@ export const getSuitableTournaments = (
         all: new Set(),
         suitable: new Set(),
         additional: new Set(),
-        free: new Set(),
     };
 
     const hasActiveLadder = orderedTournaments.some((item) => item.levelType === 'single' && item.isActivePlay);
@@ -58,12 +56,10 @@ export const getSuitableTournaments = (
         all?: Tournament[];
         suitable?: Tournament[];
         additional?: Tournament[];
-        free?: Tournament[];
     } = {};
     result.all = tournaments.filter((item) => ladders.all.has(item.tournamentId));
     result.suitable = tournaments.filter((item) => ladders.suitable.has(item.tournamentId));
     result.additional = tournaments.filter((item) => ladders.additional.has(item.tournamentId));
-    result.free = registerForFree ? [] : result.all.filter((item) => !item.isActivePlay || item.isFree);
 
     const formatList = (list: Tournament[]) => {
         if (list.length === 1) {
@@ -93,13 +89,8 @@ export const getSuitableTournaments = (
     const text = (() => {
         const formattedElo = formatElo(elo);
 
-        const freeLadders =
-            result.free.filter((ladder) => !userTournaments.includes(ladder.tournamentId)).length === 0
-                ? ''
-                : ` Due to the low level of activity last season, you can join some ladders for free.`;
-
         if (result.additional.length === 0) {
-            return `Since your [TLR is ${formattedElo}], you're allowed to join only the following ladders. Other ladders are too weak or too strong for you.${freeLadders}`;
+            return `Since your [TLR is ${formattedElo}], you're allowed to join only the following ladders. Other ladders are too weak or too strong for you.}`;
         }
 
         const suitableLadders = `Since your [TLR is ${formattedElo}], you should play on ${suggestedLadders(
@@ -110,7 +101,7 @@ export const getSuitableTournaments = (
                 ? ''
                 : ` However, we will allow you to play on ${suggestedLadders(result.additional)} as well.`;
 
-        return `${suitableLadders}${additionalLadders}${freeLadders}`;
+        return `${suitableLadders}${additionalLadders}}`;
     })();
 
     const getTournamentId = (item: Tournament) => item.tournamentId;
@@ -119,7 +110,6 @@ export const getSuitableTournaments = (
         all: result.all.map(getTournamentId),
         suitable: result.suitable.map(getTournamentId),
         additional: result.additional.map(getTournamentId),
-        free: result.free.map(getTournamentId),
         text,
     };
 };

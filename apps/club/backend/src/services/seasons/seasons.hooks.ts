@@ -61,16 +61,6 @@ const populateDates = () => async (context: HookContext) => {
     return context;
 };
 
-const populateIsFree = () => async (context: HookContext) => {
-    const { data } = context;
-    const sequelize = context.app.get('sequelizeClient');
-
-    const [[lastSeason]] = await sequelize.query('SELECT * FROM seasons ORDER BY endDate DESC LIMIT 0, 1');
-    data.isFree = lastSeason ? lastSeason.isFree : true;
-
-    return context;
-};
-
 const validatePatch = () => async (context: HookContext) => {
     const seasonId = Number(context.id);
     const sequelize = context.app.get('sequelizeClient');
@@ -434,20 +424,11 @@ const populateLevelsBasedOnPrevSeason = () => async (context: HookContext) => {
         // just add levels with default values
         season.setLevels(levels);
     } else {
-        // add levels and preserve isFree status
-        const [rows] = await sequelize.query(`SELECT * FROM tournaments WHERE seasonId=:seasonId`, {
-            replacements: { seasonId: prevSeason.id },
-        });
-        const freeState = rows.reduce((obj, item) => {
-            obj[item.levelId] = item.isFree;
-            return obj;
-        }, {});
-
+        // add levels
         for (const id of levels) {
             await tournaments.create({
                 seasonId: season.id,
                 levelId: id,
-                isFree: id in freeState ? freeState[id] : 0,
             });
         }
     }
@@ -918,7 +899,7 @@ export default {
         all: [],
         find: [getLevels()],
         get: [getCurrentSeason()],
-        create: [restrictToManager(), validateCreate(), populateDates(), populateIsFree()],
+        create: [restrictToManager(), validateCreate(), populateDates()],
         update: [runCustomAction()],
         patch: [restrictToManager(), validatePatch(), populateDates()],
         remove: [restrictToManager()],

@@ -89,6 +89,5 @@ export default async (app: Application) => {
         startDate: startDate.format('YYYY-MM-DD'),
         weeks,
         levels,
-        isFree: latestSeason ? latestSeason.isFree : 1,
     });
 };

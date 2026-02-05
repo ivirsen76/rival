@@ -1082,21 +1082,17 @@ export const joinNextSeason = async (app: Application) => {
         {
             ACTION_NAME: 'joinNextSeasonFirst',
             daysToNextSeason: 20,
-            getSubject: (isFree) => {
-                return isFree
-                    ? `Rejoin the ${config.city} Tennis Ladder for Free!`
-                    : `Sign Up Today for the ${getSeasonName(nextSeason)} Season!`;
-            },
+            getSubject: () => `Sign Up Today for the ${getSeasonName(nextSeason)} Season!`,
         },
         {
             ACTION_NAME: 'joinNextSeasonBetween',
             daysToNextSeason: 10,
-            getSubject: (isFree) => `Reminder: You Can Rejoin the Ladder for Free!`,
+            getSubject: () => `Reminder: You Can Rejoin the Ladder for Free!`,
         },
         {
             ACTION_NAME: 'joinNextSeasonLast',
             daysToNextSeason: 3,
-            getSubject: (isFree) => `You Can Rejoin the Ladder for Free!`,
+            getSubject: () => `You Can Rejoin the Ladder for Free!`,
         },
     ];
 
@@ -1194,14 +1190,7 @@ export const joinNextSeason = async (app: Application) => {
 
     const images = await getImagesFromSvg(svgs);
 
-    const usersFree = affectedUsers.filter(
-        (user) => nextSeason.isFree || !matches[user.id] || matches[user.id] < config.minMatchesToPay
-    );
-    const usersPaid = affectedUsers.filter(
-        (user) => !nextSeason.isFree && matches[user.id] && matches[user.id] >= config.minMatchesToPay
-    );
-
-    const sendReminder = async (list, isFree) => {
+    const sendReminder = async (list) => {
         const emails = list.map((user) => ({
             ...getEmailContact(user),
             variables: {
@@ -1212,14 +1201,13 @@ export const joinNextSeason = async (app: Application) => {
 
         await app.service('api/emails').create({
             to: emails,
-            subject: reminder.getSubject(isFree),
+            subject: reminder.getSubject(),
             html: joinNextSeasonTemplate({ config, season: nextSeason }),
             priority: 2,
         });
     };
 
-    await sendReminder(usersFree, true);
-    await sendReminder(usersPaid, false);
+    await sendReminder(affectedUsers);
 
     logger.info(`The reminder to join next season sent to ${affectedUsers.length} users`);
 

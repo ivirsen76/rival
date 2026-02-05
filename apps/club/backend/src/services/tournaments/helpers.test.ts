@@ -60,7 +60,6 @@ describe('getSuitableTournaments()', () => {
                 all: [30],
                 suitable: [30],
                 additional: [],
-                free: [],
                 text: `Since your [TLR is 2.25], you're allowed to join only the following ladders. Other ladders are too weak or too strong for you.`,
             };
             const result = getSuitableTournaments(tournaments, 225, 'male');
@@ -73,7 +72,6 @@ describe('getSuitableTournaments()', () => {
                 all: [30],
                 suitable: [30],
                 additional: [],
-                free: [],
                 text: `Since your [TLR is 2.75], you're allowed to join only the following ladders. Other ladders are too weak or too strong for you.`,
             };
             const result = getSuitableTournaments(tournaments, 275, 'male');
@@ -86,7 +84,6 @@ describe('getSuitableTournaments()', () => {
                 all: [30, 35, 3540],
                 suitable: [30, 35],
                 additional: [],
-                free: [3540],
                 text: `Since your [TLR is 3.25], you're allowed to join only the following ladders. Other ladders are too weak or too strong for you. Due to the low level of activity last season, you can join some ladders for free.`,
             };
             const result = getSuitableTournaments(tournaments, 325, 'male');
@@ -99,7 +96,6 @@ describe('getSuitableTournaments()', () => {
                 all: [30, 35, 40, 3540],
                 suitable: [30, 35, 40],
                 additional: [],
-                free: [40, 3540],
                 text: `Since your [TLR is 3.50], you're allowed to join only the following ladders. Other ladders are too weak or too strong for you. Due to the low level of activity last season, you can join some ladders for free.`,
             };
             const result = getSuitableTournaments(tournaments, 350, 'male');
@@ -112,7 +108,6 @@ describe('getSuitableTournaments()', () => {
                 all: [35, 40, 3540],
                 suitable: [35, 40],
                 additional: [],
-                free: [40, 3540],
                 text: `Since your [TLR is 3.75], you're allowed to join only the following ladders. Other ladders are too weak or too strong for you. Due to the low level of activity last season, you can join some ladders for free.`,
             };
             const result = getSuitableTournaments(tournaments, 375, 'male');
@@ -125,7 +120,6 @@ describe('getSuitableTournaments()', () => {
                 all: [35, 40, 45, 3540],
                 suitable: [40, 45],
                 additional: [35],
-                free: [40, 45, 3540],
                 text: `Since your [TLR is 4.25], you should play on either the [Men's 4.0] or [Men's 4.5] ladders. However, we will allow you to play on the [Men's 3.5] ladder as well. Due to the low level of activity last season, you can join some ladders for free.`,
             };
             const result = getSuitableTournaments(tournaments, 425, 'male');
@@ -138,7 +132,6 @@ describe('getSuitableTournaments()', () => {
                 all: [35, 40, 45],
                 suitable: [45],
                 additional: [35, 40],
-                free: [40, 45],
                 text: `Since your [TLR is 4.75], you should play on the [Men's 4.5] ladder. However, we will allow you to play on either the [Men's 3.5] or [Men's 4.0] ladders as well. Due to the low level of activity last season, you can join some ladders for free.`,
             };
             const result = getSuitableTournaments(tournaments, 475, 'male');
@@ -151,7 +144,6 @@ describe('getSuitableTournaments()', () => {
                 all: [35, 40, 45],
                 suitable: [45],
                 additional: [35, 40],
-                free: [40, 45],
                 text: `Since your [TLR is 5.25], you should play on the [Men's 4.5] ladder. However, we will allow you to play on either the [Men's 3.5] or [Men's 4.0] ladders as well. Due to the low level of activity last season, you can join some ladders for free.`,
             };
             const result = getSuitableTournaments(tournaments, 525, 'male');
@@ -167,26 +159,9 @@ describe('getSuitableTournaments()', () => {
                 all: [30],
                 suitable: [30],
                 additional: [],
-                free: [30],
                 text: `Since your [TLR is 2.25], you're allowed to join only the following ladders. Other ladders are too weak or too strong for you. Due to the low level of activity last season, you can join some ladders for free.`,
             };
             const result = getSuitableTournaments(tournaments, 225, 'male');
-            expect(result).toEqual(expectedResult);
-        });
-    }
-
-    // do not show free message when user already registered for free ladders
-    {
-        it('Should not show free message as user already registered for all free ladders', () => {
-            const tournaments = [men30, men35, men40, men45, men3540].map((item) => ({ ...item, isActivePlay: false }));
-            const expectedResult = {
-                all: [30],
-                suitable: [30],
-                additional: [],
-                free: [30],
-                text: `Since your [TLR is 2.25], you're allowed to join only the following ladders. Other ladders are too weak or too strong for you.`,
-            };
-            const result = getSuitableTournaments(tournaments, 225, 'male', false, [30]);
             expect(result).toEqual(expectedResult);
         });
     }
@@ -199,7 +174,6 @@ describe('getSuitableTournaments()', () => {
                 all: [35, 40, 3540],
                 suitable: [35, 40],
                 additional: [],
-                free: [],
                 text: `Since your [TLR is 3.75], you're allowed to join only the following ladders. Other ladders are too weak or too strong for you.`,
             };
             const result = getSuitableTournaments(tournaments, 375, 'male', true);

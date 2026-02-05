@@ -31,7 +31,6 @@ export const getSeasonTournaments = async ({
 
     const [tournaments] = await sequelize.query(
         `SELECT t.id AS tournamentId,
-                t.isFree AS isFree,
                 l.id AS levelId,
                 l.slug AS levelSlug,
                 l.name AS levelName,

@@ -581,7 +581,6 @@ CREATE TABLE `seasons` (
   `closeReason` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `isFree` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `seasons_year_season` (`year`,`season`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -676,7 +675,6 @@ CREATE TABLE `tournaments` (
   `botPrediction` text,
   `predictionWinner` int(11) DEFAULT NULL,
   `predictionWonAt` datetime DEFAULT NULL,
-  `isFree` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `seasonId` (`seasonId`),
   KEY `levelId` (`levelId`),

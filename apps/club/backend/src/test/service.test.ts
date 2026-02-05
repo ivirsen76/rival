@@ -364,56 +364,6 @@ describe('user', () => {
         });
     });
 
-    describe('mergeUsers', () => {
-        it('should return 422 when user is the same', async () => {
-            const token = await loginAsManager();
-            await request
-                .put('/api/users/0')
-                .set('Authorization', token)
-                .send({ action: 'mergeUsers', userIdFrom: 2, userIdTo: 2, decision: 'nothing' })
-                .expect(422)
-                .expect((res) => {
-                    expect(res.body.message).toBe('The ids are the same');
-                });
-        });
-
-        it('should return 422 when users are not found', async () => {
-            const token = await loginAsManager();
-            await request
-                .put('/api/users/0')
-                .set('Authorization', token)
-                .send({ action: 'mergeUsers', userIdFrom: 2929, userIdTo: 2, decision: 'nothing' })
-                .expect(422)
-                .expect((res) => {
-                    expect(res.body.message).toBe('Users are not found');
-                });
-        });
-
-        it('should return 422 when users have the same ladders', async () => {
-            const token = await loginAsManager();
-            await request
-                .put('/api/users/0')
-                .set('Authorization', token)
-                .send({ action: 'mergeUsers', userIdFrom: 2, userIdTo: 1, decision: 'nothing' })
-                .expect(422)
-                .expect((res) => {
-                    expect(res.body.message).toBe('Users have the same active ladders');
-                });
-        });
-
-        it('should merge two users', async () => {
-            const token = await loginAsManager();
-            await request
-                .put('/api/users/0')
-                .set('Authorization', token)
-                .send({ action: 'mergeUsers', userIdFrom: 1, userIdTo: 8, decision: 'nothing' })
-                .expect(200);
-
-            expect(await getNumRecords('players', { userId: 8 })).toBe(5);
-            expect(await getNumRecords('users', { id: 1 })).toBe(0);
-        });
-    });
-
     describe('unsubscribe', () => {
         it('should return 422 when there is validation error', async () => {
             await request
@@ -726,20 +676,6 @@ describe('season', () => {
             const record = await expectRecordToExist('seasons', { year: nextYear, season: 'fall' });
             expect(dayjs.tz(monday).format('YYYY-MM-DD HH:mm:ss')).toBe(record.startDate);
             expect(dayjs.tz(monday).add(9, 'week').format('YYYY-MM-DD HH:mm:ss')).toBe(record.endDate);
-        });
-
-        it('Should preserve isFree status', async () => {
-            await finishAllSeasons();
-            await runQuery(`UPDATE seasons SET isFree=1`);
-
-            const token = await loginAsAdmin();
-            await request
-                .post('/api/seasons')
-                .set('Authorization', token)
-                .send({ year: nextYear, season: 'fall', startDate: monday, weeks: 9, levels: [1] })
-                .expect(201);
-
-            await expectRecordToExist('seasons', { year: nextYear, season: 'fall' }, { isFree: 1 });
         });
 
         it('Should throw a validation error when no levels selected', async () => {
@@ -2102,7 +2038,6 @@ describe('cron jobs', () => {
             const dateIn19Days = dayjs.tz().add(19, 'day').format('YYYY-MM-DD HH:mm:ss');
             await runQuery(`UPDATE seasons SET endDate='${dateTwoDaysAgo}' WHERE id=1`);
             await runQuery(`UPDATE seasons SET startDate='${dateIn19Days}' WHERE id=5`);
-            await runQuery(`UPDATE seasons SET isFree=1`);
             await runQuery(`UPDATE users SET createdAt='${dateMonthAgo}', loggedAt='${dateMonthAgo}'`);
             await runQuery(`UPDATE users SET subscribeForReminders=0 WHERE id=9`);
 
@@ -2129,7 +2064,6 @@ describe('cron jobs', () => {
             await runQuery(`UPDATE seasons SET startDate='${dateIn19Days}' WHERE id=5`);
             await runQuery(`UPDATE users SET createdAt='${dateMonthAgo}', loggedAt='${dateMonthAgo}' WHERE id<=9`);
             await runQuery(`UPDATE users SET subscribeForReminders=0 WHERE id=9`);
-            await overrideConfig({ minMatchesToPay: 4 });
 
             await joinNextSeason(app);
             await new Promise((resolve) => setTimeout(resolve, 5000));

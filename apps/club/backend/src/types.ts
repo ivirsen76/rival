@@ -82,7 +82,6 @@ export type Tournament = {
     levelName: string;
     gender?: string;
     isActivePlay: boolean;
-    isFree?: number;
 };
 
 export type Config = {
@@ -93,7 +92,6 @@ export type Config = {
     tournamentReminderWeeks: number;
     minPlayersForActiveLadder: number;
     minMatchesForActiveLadder: number;
-    minMatchesToPay: number;
     url: string;
 };
 
@@ -118,7 +116,6 @@ export type Season = {
     season: 'spring' | 'summer' | 'fall' | 'winter';
     startDate: string;
     endDate: string;
-    isFree: number;
 };
 
 export type Level = {

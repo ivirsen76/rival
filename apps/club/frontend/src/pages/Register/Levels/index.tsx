@@ -84,8 +84,6 @@ const Levels = (props: StepComponentProps) => {
     );
     const isNewPlayer = previousTournaments.length === 0;
     const matchesPlayedBefore = previousTournaments.reduce((sum, item) => sum + item.regularMatchesPlayed, 0);
-    const notPlayedEnoughToPay = matchesPlayedBefore < config.minMatchesToPay;
-    const registerForFree = Boolean(selectedSeason.isFree || isNewPlayer || notPlayedEnoughToPay);
 
     const {
         userTournaments,
@@ -107,9 +105,6 @@ const Levels = (props: StepComponentProps) => {
                 return {
                     all: [],
                     suitable: [],
-                    free: registerForFree
-                        ? []
-                        : selectedSeason.tournaments.filter((item) => item.isFree).map((item) => item.tournamentId),
                     text: '',
                 };
             }
@@ -118,7 +113,6 @@ const Levels = (props: StepComponentProps) => {
                 selectedSeason.tournaments,
                 savedUser.establishedElo,
                 savedUser.gender,
-                registerForFree,
                 _userTournaments
             );
         })();
@@ -147,31 +141,12 @@ const Levels = (props: StepComponentProps) => {
             })
             .map((item) => {
                 const alreadyRegistered = _userTournaments.includes(item.tournamentId);
-                const isFree = (() => {
-                    if (alreadyRegistered || registerForFree) {
-                        return false;
-                    }
-                    if (free.includes(item.tournamentId)) {
-                        return true;
-                    }
-                    return Boolean(item.isFree);
-                })();
 
                 return {
                     value: item.tournamentId,
-                    label: isFree ? (
-                        <div className="d-flex gap-2">
-                            <div className="text-nowrap">{item.levelName}</div>
-                            <div className="badge badge-warning" data-free-level={item.levelSlug}>
-                                Free
-                            </div>
-                        </div>
-                    ) : (
-                        item.levelName
-                    ),
+                    label: item.levelName,
                     disabled: alreadyRegistered,
                     description: alreadyRegistered ? "You've already registered." : null,
-                    isFree,
                     type: item.levelType,
                     maxTlr: item.levelMaxTlr,
                 };
@@ -187,7 +162,7 @@ const Levels = (props: StepComponentProps) => {
             ),
             hasSuitableTournament: _hasSuitableTournament,
         };
-    }, [savedUser, selectedSeason, reasonToJoinAnotherLadder, registerForFree]);
+    }, [savedUser, selectedSeason, reasonToJoinAnotherLadder]);
 
     const initialTournaments = (() => {
         const availableTournaments = selectedSeason.tournaments.map((item) => item.tournamentId);
@@ -213,7 +188,7 @@ const Levels = (props: StepComponentProps) => {
 
         if (newTournaments.length === 0) {
             errors.tournaments = 'You have to pick at least one ladder to play.';
-        } else if (registerForFree) {
+        } else {
             // Singles
             const hasNewSinglesTournament = newTournaments.some((id) =>
                 tournamentSinglesOptions.find((item) => item.value === id)
@@ -235,8 +210,6 @@ const Levels = (props: StepComponentProps) => {
             if (totalDoublesSelected > 1 && hasNewDoublesTournament) {
                 errors.doublesTournaments = 'You cannot pick more than one Doubles ladder.';
             }
-        } else if (values.tournaments.length > 4) {
-            errors.tournaments = 'You cannot pick more than four ladders to play.';
         }
 
         return errors;
@@ -255,36 +228,16 @@ const Levels = (props: StepComponentProps) => {
 
         return savedUser.establishedElo > option.maxTlr;
     };
-    const isTooHighTlrDiscount = (option) => {
-        if (!isTooHighTlr(option)) {
-            return false;
-        }
-        if (option.isFree) {
-            return false;
-        }
-        if (registerForFree) {
-            return false;
-        }
-
-        return true;
-    };
 
     const renderTlrWarning = (option) => {
         if (!isTooHighTlr(option)) {
             return null;
         }
 
-        const showDiscountInfo = isTooHighTlrDiscount(option);
-
         return (
             <div className="alert alert-warning pt-2 pb-2 mt-1">
                 Your <b>TLR {formatElo(savedUser.establishedElo)}</b> is too high for this level. You can still play in
                 the regular season, but you won&apos;t be able to play in the Final Tournament.
-                {showDiscountInfo && (
-                    <div className="mt-2">
-                        You will receive a <b>${config.tooHighTlrDiscount / 100}</b> discount due to this limitation.
-                    </div>
-                )}
             </div>
         );
     };
@@ -366,49 +319,32 @@ const Levels = (props: StepComponentProps) => {
             initialValues={{ tournaments: initialTournaments, partners: initialPartners }}
             validate={validate}
             onSubmit={async (values) => {
-                if (registerForFree) {
-                    await axios.put('/api/players/0', {
-                        action: 'registerForFree',
-                        tournaments: values.tournaments,
-                        partners: values.partners,
-                        joinReason: reasonToJoinAnotherLadder,
-                    });
-                    await dispatch(loadCurrentUser());
-                    await queryClient.invalidateQueries();
+                await axios.put('/api/players/0', {
+                    action: 'registerForFree',
+                    tournaments: values.tournaments,
+                    partners: values.partners,
+                    joinReason: reasonToJoinAnotherLadder,
+                });
+                await dispatch(loadCurrentUser());
+                await queryClient.invalidateQueries();
 
-                    const selectedLevel = selectedSeason.tournaments.find(
-                        (item) =>
-                            values.tournaments.includes(item.tournamentId) &&
-                            !userTournaments.includes(item.tournamentId)
-                    );
-                    const url = `/season/${selectedSeason.year}/${selectedSeason.season}/${selectedLevel.levelSlug}`;
-                    history.push(url);
+                const selectedLevel = selectedSeason.tournaments.find(
+                    (item) =>
+                        values.tournaments.includes(item.tournamentId) && !userTournaments.includes(item.tournamentId)
+                );
+                const url = `/season/${selectedSeason.year}/${selectedSeason.season}/${selectedLevel.levelSlug}`;
+                history.push(url);
 
-                    notification({
-                        inModal: true,
-                        ...getRegisterNotificationProps({
-                            message: 'You are successfully registered!',
-                            buttonTitle: 'Go to the Ladder',
-                            ladderUrl: url,
-                            season: selectedSeason,
-                        }),
-                    });
-                    onJoiningLadder();
-                } else {
-                    const list = _difference(values.tournaments, userTournaments);
-
-                    updateInfo({
-                        tournaments: {
-                            list,
-                            joinForFree: tournamentOptions
-                                .filter((item) => item.isFree && list.includes(item.value))
-                                .map((item) => item.value),
-                            joinReason: reasonToJoinAnotherLadder,
-                            partners: values.partners,
-                        },
-                    });
-                    goToNextStep();
-                }
+                notification({
+                    inModal: true,
+                    ...getRegisterNotificationProps({
+                        message: 'You are successfully registered!',
+                        buttonTitle: 'Go to the Ladder',
+                        ladderUrl: url,
+                        season: selectedSeason,
+                    }),
+                });
+                onJoiningLadder();
             }}
         >
             {({ isSubmitting, values, setFieldValue, errors }) => (
@@ -431,102 +367,44 @@ const Levels = (props: StepComponentProps) => {
                             backdrop: 'static',
                         },
                     })}
-                    {(() => {
-                        if (selectedSeason.isFree) {
-                            return (
-                                <div className="alert alert-primary">
-                                    This season is <strong>FREE</strong> as we continue to build the community to over
-                                    150 active players. <Link to="/pricing">Learn more.</Link>
-                                </div>
-                            );
-                        }
+                    <Field name="tournaments">
+                        {({ field, form }) => (
+                            <FieldWrapper field={field} form={form}>
+                                <>
+                                    <div className="mb-6">{guidanceText}</div>
 
-                        if (isNewPlayer) {
-                            return (
-                                <div className="alert alert-primary">
-                                    Play your first season for <strong>FREE</strong>!
-                                </div>
-                            );
-                        }
-
-                        if (notPlayedEnoughToPay) {
-                            return (
-                                <div className="alert alert-primary">
-                                    You can join this season for <strong>FREE</strong> because you played fewer than{' '}
-                                    {config.minMatchesToPay} matches before this season.
-                                </div>
-                            );
-                        }
-
-                        return (
-                            <div className="alert alert-primary">
-                                <div className="mb-2">
-                                    Prices {selectedSeason.isEarlyRegistration ? 'before' : 'after'} the season starts:
-                                </div>
-                                Singles - <strong>${selectedSeason.singlesCost / 100}</strong> per ladder
-                                <br />
-                                Doubles - <strong>${selectedSeason.doublesCost / 100}</strong> per ladder
-                                <div className="mt-2">
-                                    <b>$10 discount</b> when you register for an additional ladder.
-                                </div>
-                            </div>
-                        );
-                    })()}
-                    {registerForFree ? (
-                        <Field name="tournaments">
-                            {({ field, form }) => (
-                                <FieldWrapper field={field} form={form}>
-                                    <>
-                                        <div className="mb-6">{guidanceText}</div>
-
-                                        <div className="d-grid gap-6">
-                                            {tournamentSinglesOptions.length > 0 && (
-                                                <div>
-                                                    <div className="form-label">
-                                                        Pick one Singles ladder (or skip for now)
-                                                    </div>
-                                                    {tournamentSinglesOptions.map((option) =>
-                                                        renderTournamentOption({ field, form, values, option })
-                                                    )}
-                                                    {form.submitCount > 0 && errors.singlesTournaments ? (
-                                                        <div className="text-danger">{errors.singlesTournaments}</div>
-                                                    ) : null}
+                                    <div className="d-grid gap-6">
+                                        {tournamentSinglesOptions.length > 0 && (
+                                            <div>
+                                                <div className="form-label">
+                                                    Pick one Singles ladder (or skip for now)
                                                 </div>
-                                            )}
-                                            {tournamentDoublesOptions.length > 0 && (
-                                                <div>
-                                                    <div className="form-label">
-                                                        Pick one Doubles ladder (or skip for now)
-                                                    </div>
-                                                    {tournamentDoublesOptions.map((option) =>
-                                                        renderTournamentOption({ field, form, values, option })
-                                                    )}
-                                                    {form.submitCount > 0 && errors.doublesTournaments ? (
-                                                        <div className="text-danger">{errors.doublesTournaments}</div>
-                                                    ) : null}
+                                                {tournamentSinglesOptions.map((option) =>
+                                                    renderTournamentOption({ field, form, values, option })
+                                                )}
+                                                {form.submitCount > 0 && errors.singlesTournaments ? (
+                                                    <div className="text-danger">{errors.singlesTournaments}</div>
+                                                ) : null}
+                                            </div>
+                                        )}
+                                        {tournamentDoublesOptions.length > 0 && (
+                                            <div>
+                                                <div className="form-label">
+                                                    Pick one Doubles ladder (or skip for now)
                                                 </div>
-                                            )}
-                                        </div>
-                                    </>
-                                </FieldWrapper>
-                            )}
-                        </Field>
-                    ) : (
-                        <Field name="tournaments">
-                            {({ field, form }) => (
-                                <FieldWrapper
-                                    label="Choose ladders to play:"
-                                    field={field}
-                                    form={form}
-                                    description={guidanceText}
-                                >
-                                    {tournamentOptions.map((option) =>
-                                        renderTournamentOption({ field, form, values, option })
-                                    )}
-                                </FieldWrapper>
-                            )}
-                        </Field>
-                    )}
+                                                {tournamentDoublesOptions.map((option) =>
+                                                    renderTournamentOption({ field, form, values, option })
+                                                )}
+                                                {form.submitCount > 0 && errors.doublesTournaments ? (
+                                                    <div className="text-danger">{errors.doublesTournaments}</div>
+                                                ) : null}
+                                            </div>
+                                        )}
+                                    </div>
+                                </>
+                            </FieldWrapper>
+                        )}
+                    </Field>
 
                     <div className="form-label">Terms & Conditions</div>
                     <Field
@@ -564,7 +442,7 @@ const Levels = (props: StepComponentProps) => {
                     />
 
                     <Button className="btn btn-primary" isSubmitting={isSubmitting}>
-                        {registerForFree ? 'Register' : 'Go to checkout'}
+                        Register
                     </Button>
                 </Form>
             )}
