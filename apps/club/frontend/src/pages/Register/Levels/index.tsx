@@ -145,7 +145,7 @@ const Levels = (props: StepComponentProps) => {
             });
 
         return {
-            suggestionText: text.replace(/\[/g, '<span class="text-body">').replace(/\]/g, '</span>'),
+            suggestionText: text.replace(/\[/g, '<b>').replace(/\]/g, '</b>'),
             userTournaments: _userTournaments,
             tournamentOptions: _tournamentOptions,
             tournamentSinglesOptions: _tournamentOptions.filter((item) => item.type === 'single'),
@@ -228,7 +228,7 @@ const Levels = (props: StepComponentProps) => {
 
         return (
             <div className="alert alert-warning pt-2 pb-2 mt-1">
-                Your <b>TLR {formatElo(savedUser.establishedElo)}</b> is too high for this level. You can still play in
+                Your <b>TLR {formatElo(savedUser.establishedElo)} </b>is too high for this level. You can still play in
                 the regular season, but you won&apos;t be able to play in the Final Tournament.
             </div>
         );

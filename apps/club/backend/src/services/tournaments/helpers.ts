@@ -90,7 +90,7 @@ export const getSuitableTournaments = (
         const formattedElo = formatElo(elo);
 
         if (result.additional.length === 0) {
-            return `Since your [TLR is ${formattedElo}], you're allowed to join only the following ladders. Other ladders are too weak or too strong for you.}`;
+            return `Since your [TLR is ${formattedElo}], you're allowed to join only the following ladders. Other ladders are too weak or too strong for you.`;
         }
 
         const suitableLadders = `Since your [TLR is ${formattedElo}], you should play on ${suggestedLadders(
@@ -101,7 +101,7 @@ export const getSuitableTournaments = (
                 ? ''
                 : ` However, we will allow you to play on ${suggestedLadders(result.additional)} as well.`;
 
-        return `${suitableLadders}${additionalLadders}}`;
+        return `${suitableLadders}${additionalLadders}`;
     })();
 
     const getTournamentId = (item: Tournament) => item.tournamentId;

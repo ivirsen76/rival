@@ -7,6 +7,12 @@ import {
     overrideConfig,
     expectNumRecords,
 } from '@rival/club.backend/src/db/helpers';
+import { decrypt } from '@rival/club.backend/src/utils/crypt';
+
+const closeCurrentSeason = async () => {
+    const dateTwoDaysAgo = dayjs.tz().subtract(2, 'day').format('YYYY-MM-DD HH:mm:ss');
+    await runQuery(`UPDATE seasons SET endDate="${dateTwoDaysAgo}" WHERE id=1`);
+};
 
 test.beforeEach(async () => {
     restoreDb();
@@ -298,5 +304,411 @@ test(`Should register the user and get to the pick level step`, async ({ page, c
             recipientEmail: 'david@rrclub.com',
             subject: 'Welcome to the Raleigh Rival Tennis Ladder!',
         });
+    });
+}
+
+{
+    test('We can register till the end of the season', async ({ common, register, login, page }) => {
+        const dateInThreeDays = dayjs.tz().add(3, 'day').format('YYYY-MM-DD HH:mm:ss');
+        await runQuery(`UPDATE seasons SET endDate="${dateInThreeDays}" WHERE id=1`);
+        await page.goto('/');
+        await expect(register.globalRegisterButton).toBeVisible();
+
+        await register.goto();
+        await expect(common.body).toContainText('Create an Account');
+    });
+
+    test('We cannot register if there is no new season', async ({ common, register, page }) => {
+        const dateOneWeekAgo = dayjs.tz().subtract(1, 'week').format('YYYY-MM-DD HH:mm:ss');
+        const dateOneYearAgo = dayjs.tz().subtract(1, 'year').format('YYYY-MM-DD HH:mm:ss');
+        await runQuery(`UPDATE seasons SET endDate="${dateOneWeekAgo}" WHERE id=1`);
+        await runQuery(`UPDATE seasons SET startDate="${dateOneYearAgo}", endDate="${dateOneYearAgo}" WHERE id=5`);
+        await page.goto('/');
+        await expect(register.globalRegisterButton).toBeHidden();
+
+        await register.goto();
+        await expect(common.body).toContainText('There is no season to register');
+    });
+
+    test('We can register for the ladder where the user is not active', async ({ register, login, overview }) => {
+        await login.loginAsPlayer5();
+        await register.goto();
+        await register.getLadderCheckbox('Men 3.5').click();
+        await register.agreeCheckbox.click();
+        await register.registerButton.click();
+
+        await register.goToLadderButton.click();
+        await expect(overview.playerList).toContainText('Inactive User');
+        await expect(overview.getInactivePlayer(7)).toBeHidden();
+    });
+
+    test('We can register for the current season', async ({ common, register, login, page }) => {
+        // emulate that player5 played in the previous season
+        await runQuery('UPDATE players SET userId=7 WHERE id=17');
+
+        await login.loginAsPlayer5();
+        await page.goto('/');
+        await register.globalRegisterButton.click();
+
+        await expect(common.body).toContainText('2021 Spring');
+        await expect(common.body).toContainText('Mar 29');
+        await register.getLadderCheckbox('Men 3.5').click();
+        await register.agreeCheckbox.click();
+        await register.registerButton.click();
+        await expect(common.modal).toContainText(register.registerSuccessMessage);
+    });
+
+    test('We can see validation during registration', async ({ common, register, login }) => {
+        await closeCurrentSeason();
+
+        await register.goto();
+        await register.signInLink.click();
+        await login.signInButton.click();
+        await expect(common.body).toContainText('is incorrect');
+
+        await login.emailField.fill('player1@gmail.com');
+        await login.passwordField.fill(login.password);
+        await login.signInButton.click();
+
+        await register.agreeCheckbox.click();
+        await register.registerButton.click();
+        await expect(register.area).toContainText('You have to pick at least one ladder to play');
+    });
+
+    test('We can register for not suggested ladder', async ({ common, register, login }) => {
+        await closeCurrentSeason();
+        await runQuery(`UPDATE settings SET newFeedbackNotification="admin@gmail.com"`);
+        await overrideConfig({ minMatchesToEstablishTlr: 1, minPlayersForActiveLadder: 1 });
+
+        await login.loginAsPlayer3();
+        await register.goto();
+        await expect(register.area).toContainText('your TLR is 3.60');
+        await expect(register.area).toContainText('Men 4.0');
+        await expect(register.area).not.toContainText('Men 4.5');
+        await expect(register.area).not.toContainText('NTRP');
+
+        const reason = 'I got injured'.repeat(50); // long one to cover all cases
+        await register.playAnotherLadder(reason);
+
+        await expect(common.modal).toBeHidden();
+        await expect(common.body).toContainText('NTRP');
+
+        await register.getLadderCheckbox('Men 4.5').click();
+        await register.agreeCheckbox.click();
+        await register.registerButton.click();
+
+        await expectRecordToExist('players', { userId: 5, tournamentId: 10 }, { joinReason: reason });
+
+        // Check admin email
+        const email = await expectRecordToExist(
+            'emails',
+            { subject: 'The player joined wrong ladder because of special reason' },
+            { recipientEmail: 'admin@gmail.com' }
+        );
+        expect(email.html).toContain('Cristopher Hamiltonbeach');
+        expect(email.html).toContain('3.60');
+        expect(email.html).toContain(reason);
+        expect(email.html).toContain('Men 4.5');
+    });
+
+    test('Soft-banned player cannot regoster for not suggested ladder', async ({ common, register, login }) => {
+        await closeCurrentSeason();
+        await overrideConfig({ minMatchesToEstablishTlr: 1, minPlayersForActiveLadder: 1 });
+        await runQuery(`UPDATE users SET isSoftBan=1 WHERE id=1`);
+
+        await login.loginAsPlayer1();
+        await register.goto();
+        await expect(register.area).toContainText('your TLR is 3.70');
+        await expect(register.strongReasonLink).toBeHidden();
+    });
+
+    test('We can see warning about too high TLR', async ({ common, register, login }) => {
+        await closeCurrentSeason();
+        await overrideConfig({ minMatchesToEstablishTlr: 1, minPlayersForActiveLadder: 1 });
+        await runQuery(`UPDATE matches SET challengerElo=550, acceptorElo=550`);
+
+        await login.loginAsPlayer1();
+        await register.goto();
+
+        await expect(common.body).toContainText('TLR is 5.50');
+        await expect(common.body).not.toContainText(register.tooHighTlrMessage);
+
+        await register.getLadderCheckbox('Men 4.5').click();
+        await expect(common.body).toContainText(register.tooHighTlrMessage);
+
+        await register.playAnotherLadder('I got injured');
+
+        // check that we don't see the message for doubles
+        await register.getLadderCheckbox('Men Team Doubles').click();
+        await common.modal.locator('label', { hasText: 'Join the Player Pool' }).click();
+        await common.modal.locator('button').getByText('Submit').click();
+        await register.getLadderCheckbox('Men 4.5').click();
+        await expect(common.body).not.toContainText(register.tooHighTlrMessage);
+    });
+
+    test('We can see suggested ladders for TLR 5.25', async ({ common, register, login }) => {
+        await closeCurrentSeason();
+        await runQuery(`UPDATE matches SET challengerElo=525, acceptorElo=525 WHERE score IS NOT NULL`);
+        await overrideConfig({
+            minMatchesToEstablishTlr: 1,
+            minPlayersForActiveLadder: 1,
+            minMatchesForActiveLadder: 1,
+        });
+
+        await login.loginAsPlayer3();
+        await register.goto();
+        await expect(register.area).toContainText('your TLR is 5.25');
+        await expect(register.area).toContainText('Men 3.5');
+        await expect(register.area).toContainText('Men 4.0');
+        await expect(register.area).toContainText('Men 4.5');
+        await expect(register.area).not.toContainText('Men Doubles');
+        await expect(register.area).not.toContainText('NTRP');
+    });
+
+    test('We can see suggested ladders for TLR 3.75', async ({ common, register, login }) => {
+        await closeCurrentSeason();
+        await runQuery(`UPDATE matches SET challengerElo=375, acceptorElo=375 WHERE score IS NOT NULL`);
+        await overrideConfig({
+            minMatchesToEstablishTlr: 1,
+            minPlayersForActiveLadder: 1,
+            minMatchesForActiveLadder: 1,
+        });
+
+        await login.loginAsPlayer3();
+        await register.goto();
+        await expect(register.area).toContainText('your TLR is 3.75');
+        await expect(register.area).toContainText('Men 3.5');
+        await expect(register.area).toContainText('Men 4.0');
+        await expect(register.area).not.toContainText('Men 4.5');
+        await expect(register.area).not.toContainText('Men Doubles');
+        await expect(register.area).not.toContainText('NTRP');
+    });
+
+    test('We can register for the season by creating a new account', async ({ common, register, login, user }) => {
+        await closeCurrentSeason();
+
+        await register.goto();
+        await register.emailField.fill('david@rrclub.com');
+        await register.passwordField.fill(login.password);
+        await register.submitButton.click();
+
+        const emailSent = await expectRecordToExist('emails', { recipientEmail: 'david@rrclub.com' });
+        const emailVerificationCode = emailSent.subject.slice(0, 6);
+
+        // try to resend code
+        await register.resendEmailLink.click();
+        await expect(common.alert).toContainText('another email with the confirmation code');
+        await expectRecordToExist('emails', { id: 2 });
+        await expectNumRecords('emails', { recipientEmail: 'david@rrclub.com' }, 2);
+
+        await register.emailVerificationCodeField.fill(emailVerificationCode);
+        await register.pickLadderButton.click();
+
+        // Check if record exists
+        const record = await expectRecordToExist(
+            'users',
+            { email: 'david@rrclub.com' },
+            { firstName: 'David', lastName: 'Trust' }
+        );
+        expect(record.changelogSeenAt).toBeDefined();
+        expect(decrypt(record.salt)).toBe(login.password);
+
+        await register.getLadderCheckbox('Men 3.5').click();
+        await register.agreeCheckbox.click();
+        await register.registerButton.click();
+        await expect(common.modal).toContainText(register.registerSuccessMessage);
+    });
+
+    test('We can register for the season for two ladders one by one', async ({
+        common,
+        register,
+        login,
+        page,
+        overview,
+    }) => {
+        await closeCurrentSeason();
+        await runQuery(`UPDATE levels SET type="doubles" WHERE id=3`);
+        await login.loginAsPlayer8();
+
+        await register.goto();
+        await register.getLadderCheckbox('Men 3.5').click();
+        await register.agreeCheckbox.click();
+        await register.registerButton.click();
+        await expect(common.modal).toContainText('successfully registered');
+        await expect(common.modal).toContainText('The ladder officially begins');
+        await expect(overview.playerList).toContainText('Not Played User');
+        await register.goToLadderButton.click();
+
+        await expect(common.modal).toBeHidden();
+        await expect(overview.area).toBeVisible();
+
+        await page.goto('/season/2022/spring/men-35');
+        await expect(overview.playerList).toContainText('Not Played User');
+        await expect(common.body).toContainText('Men 3.5');
+
+        await register.goto();
+        await expect(register.area).toContainText('already registered');
+        await register.getLadderCheckbox('Men 4.0').click();
+        await register.agreeCheckbox.click();
+        await register.registerButton.click();
+        await expect(overview.playerList).toContainText('Not Played User');
+        await register.goToLadderButton.click();
+
+        await expect(common.modal).toBeHidden();
+        await expect(overview.area).toBeVisible();
+
+        await page.goto('/season/2022/spring/men-40');
+        await expect(overview.playerList).toContainText('Not Played User');
+        await expect(common.body).toContainText('Men 4.0');
+
+        await register.goto();
+        await register.getLadderCheckbox('Men 4.5').click();
+        await register.registerButton.click();
+        await expect(register.area).toContainText('You cannot pick more than one Singles ladder');
+    });
+
+    test('We can register for the season for two ladders at once', async ({
+        common,
+        register,
+        login,
+        page,
+        overview,
+    }) => {
+        await closeCurrentSeason();
+        await runQuery(`UPDATE levels SET type="doubles" WHERE id=3`);
+        await login.loginAsPlayer8();
+
+        await register.goto();
+        await register.getLadderCheckbox('Men 3.5').click();
+        await register.getLadderCheckbox('Men 4.0').click();
+        await register.agreeCheckbox.click();
+        await register.registerButton.click();
+        await expect(overview.playerList).toContainText('Not Played User');
+        await register.goToLadderButton.click();
+
+        await expect(common.modal).toBeHidden();
+        await expect(overview.area).toBeVisible();
+
+        await page.goto('/season/2022/spring/men-35');
+        await expect(overview.playerList).toContainText('Not Played User');
+        await expect(common.body).toContainText('Men 3.5');
+
+        await page.goto('/season/2022/spring/men-40');
+        await expect(common.body).toContainText('Men 4.0');
+        await expect(overview.playerList).toContainText('Not Played User');
+    });
+
+    // TODO: make it work
+    test.skip('We can register for the season and player numbers updated', async ({
+        common,
+        register,
+        login,
+        page,
+        overview,
+    }) => {
+        const playerCounter = page.locator('[data-latest-level="men-40-dbls"] div[title="Players"]');
+
+        await login.loginAsPlayer8();
+
+        await page.goto('/');
+        await expect(playerCounter).toContainText('6');
+
+        await register.globalRegisterButton.click();
+        await register.getLadderCheckbox('Men Doubles').click();
+        await register.agreeCheckbox.click();
+        await register.registerButton.click();
+        await expect(common.modal).toContainText('successfully registered');
+        await register.goToLadderButton.click();
+        await expect(overview.playerList).toContainText('Not Played User');
+
+        await common.logo.click();
+        await expect(playerCounter).toContainText('7');
+    });
+
+    test('We can redirect to the right ladder after registration', async ({
+        common,
+        register,
+        login,
+        page,
+        overview,
+    }) => {
+        await runQuery(`DELETE FROM players WHERE userId=8`);
+
+        await closeCurrentSeason();
+        await runQuery(`UPDATE players SET createdAt=NOW() WHERE userId=8`);
+        await login.loginAsPlayer8();
+
+        await register.goto();
+        await register.getLadderCheckbox('Men 4.0').click();
+        await register.agreeCheckbox.click();
+        await register.registerButton.click();
+        await expect(overview.playerList).toContainText('Not Played User');
+        await register.goToLadderButton.click();
+
+        await expect(common.modal).toBeHidden();
+        await expect(overview.area).toBeVisible();
+
+        await page.goto('/season/2022/spring/men-40');
+        await expect(overview.playerList).toContainText('Not Played User');
+        await expect(common.body).toContainText('Men 4.0');
+
+        await new Promise((resolve) => setTimeout(resolve, 500)); // to save emails in DB
+        const welcomeEmail = await expectRecordToExist('emails', {
+            subject: 'Welcome to the Raleigh Rival Tennis Ladder!',
+            recipientEmail: 'player8@gmail.com',
+        });
+        expect(welcomeEmail.html).toContain('Andrew Cole');
+        expect(welcomeEmail.html).toContain('The Ladder Starts Soon');
+        expect(welcomeEmail.html).toContain('2022 Spring');
+        expect(welcomeEmail.html).toContain('Monday,');
+    });
+
+    test('The user cannot register for three ladders', async ({ common, register, login }) => {
+        await closeCurrentSeason();
+        await login.loginAsPlayer8();
+
+        await register.goto();
+        await register.getLadderCheckbox('Men 3.5').click();
+        await register.getLadderCheckbox('Men 4.0').click();
+        await register.getLadderCheckbox('Men 4.5').click();
+        await register.registerButton.click();
+        await expect(register.area).toContainText('You cannot pick more than one Singles ladder.');
+    });
+
+    test('We can set gender after choosing ladder', async ({ common, register, login, user }) => {
+        await register.goto();
+        await register.emailField.fill('david@rrclub.com');
+        await register.passwordField.fill(login.password);
+        await register.submitButton.click();
+
+        const emailSent = await expectRecordToExist('emails', { recipientEmail: 'david@rrclub.com' });
+        const emailVerificationCode = emailSent.subject.slice(0, 6);
+        await register.emailVerificationCodeField.fill(emailVerificationCode);
+        await register.pickLadderButton.click();
+
+        // Check if record exists
+        await expectRecordToExist('users', { email: 'david@rrclub.com' }, { gender: '' });
+
+        await register.getLadderCheckbox('Men 3.5').click();
+        await register.agreeCheckbox.click();
+        await register.registerButton.click();
+        await register.goToLadderButton.click();
+
+        // check that gender is set
+        await expectRecordToExist('users', { email: 'david@rrclub.com' }, { gender: 'male' });
+    });
+
+    test('We do not change gender', async ({ common, register, login }) => {
+        await runQuery('UPDATE users SET gender="female" WHERE email="player5@gmail.com"');
+
+        await login.loginAsPlayer5();
+        await register.goto();
+        await register.getLadderCheckbox('Men 4.5').click();
+        await register.agreeCheckbox.click();
+        await register.registerButton.click();
+        await register.goToLadderButton.click();
+
+        // check that gender is set
+        await expectRecordToExist('users', { email: 'player5@gmail.com' }, { gender: 'female' });
     });
 }

@@ -414,7 +414,7 @@ const registerForTheSeason = () => async (context: HookContext) => {
     {
         const schema = yup.object().shape({
             tournaments: yup.array(yup.number().integer().min(1)).required().min(1),
-            joinReason: yup.string().max(500),
+            joinReason: yup.string().max(1000),
         });
 
         const errors = getSchemaErrors(schema, context.data);
