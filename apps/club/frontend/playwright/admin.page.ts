@@ -461,7 +461,7 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
     test('We can see settings validation', async ({ page, common, login }) => {
         await login.loginAsAdmin();
         await page.goto('/admin/texts');
-        await expect(common.body).toContainText('Sign-up notification');
+        await expect(common.body).toContainText('New feedback notification');
         await page.locator('input[name="changeLevelNotification"]').fill('wrong');
         await page.locator('button').getByText('Submit').click();
         await expect(common.body).toContainText('The email list is incorrect');
@@ -470,7 +470,7 @@ test('Should see additional info for supeadmins', async ({ page, common, login }
     test('We can change settings', async ({ page, common, login }) => {
         await login.loginAsAdmin();
         await page.goto('/admin/texts');
-        await expect(common.body).toContainText('Sign-up notification');
+        await expect(common.body).toContainText('New feedback notification');
         await page.locator('input[name="changeLevelNotification"]').fill('some@gmail.com; another@gmail.com');
         await page.locator('input[name="newFeedbackNotification"]').fill('more@gmail.com');
         await page.locator('input[name="newComplaintNotification"]').fill('more@gmail.com');
