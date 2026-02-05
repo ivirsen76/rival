@@ -20,6 +20,6 @@ export class Homepage {
     }
 
     public async checkVisible() {
-        await expect(this.page.locator('#rival-hero-section h1')).toContainText('Play Tennis in');
+        await expect(this.page.locator('#rival-hero-section h1')).toContainText('for Local Clubs');
     }
 }

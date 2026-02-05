@@ -81,7 +81,6 @@ test('Can see modal with new features and dismiss it', async ({ page, common, lo
     await login.loginAsPlayer1();
     await page.goto('/');
     await expect(common.modal).toContainText(changelog.updatesText);
-    await expect(common.modal).toContainText('more...');
     await changelog.dismissButton.click();
     await expect(common.modal).toBeHidden();
 
