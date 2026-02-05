@@ -111,7 +111,7 @@ test(`Should see the message for existing user and try to recover password`, asy
     await expect(common.body).toContainText('We will send you an email to reset your password.');
 });
 
-test(`Should register the user`, async ({ page, common, login, register }) => {
+test(`Should register the user and get to the pick level step`, async ({ page, common, login, register }) => {
     await page.goto('/register');
     await register.emailField.fill('david@rrclub.com');
     await register.passwordField.fill('12345678');
