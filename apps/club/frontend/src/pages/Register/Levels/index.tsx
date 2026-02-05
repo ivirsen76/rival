@@ -312,7 +312,7 @@ const Levels = (props: StepComponentProps) => {
             validate={validate}
             onSubmit={async (values) => {
                 await axios.put('/api/players/0', {
-                    action: 'registerForFree',
+                    action: 'registerForTheSeason',
                     tournaments: values.tournaments,
                     partners: values.partners,
                     joinReason: reasonToJoinAnotherLadder,
@@ -363,7 +363,7 @@ const Levels = (props: StepComponentProps) => {
                         {({ field, form }) => (
                             <FieldWrapper field={field} form={form}>
                                 <>
-                                    <div className="mb-6">{guidanceText}</div>
+                                    <div className="mb-6 alert alert-primary">{guidanceText}</div>
 
                                     <div className="d-grid gap-6">
                                         {tournamentSinglesOptions.length > 0 && (

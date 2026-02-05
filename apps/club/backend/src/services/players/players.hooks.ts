@@ -406,7 +406,7 @@ const batchAddPlayers = () => async (context: HookContext) => {
     return context;
 };
 
-const registerForFree = () => async (context: HookContext) => {
+const registerForTheSeason = () => async (context: HookContext) => {
     await authenticate('jwt')(context);
     hasAnyRole(['player'])(context);
 
@@ -1772,8 +1772,8 @@ const runCustomAction = () => async (context: HookContext) => {
         await getPossibleTournaments()(context);
     } else if (action === 'switchTournament') {
         await switchTournament()(context);
-    } else if (action === 'registerForFree') {
-        await registerForFree()(context);
+    } else if (action === 'registerForTheSeason') {
+        await registerForTheSeason()(context);
     } else if (action === 'activatePlayer') {
         await activatePlayer()(context);
     } else if (action === 'deactivatePlayer') {

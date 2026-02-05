@@ -170,9 +170,6 @@ importers:
       sharp:
         specifier: ^0.34.5
         version: 0.34.5
-      stripe:
-        specifier: ^10.2.0
-        version: 10.17.0
       striptags:
         specifier: ^3.2.0
         version: 3.2.0

@@ -268,7 +268,7 @@ export const expectRecordToExist = async (table: string, conditions: KeyValue, d
     }
 };
 
-export const expectNumRecords = async (table: string, conditions: KeyValue, num: number) => {
+export const expectNumRecords = async (table: string, conditions: KeyValue | undefined, num: number) => {
     checkPermissions();
 
     const before = Date.now();

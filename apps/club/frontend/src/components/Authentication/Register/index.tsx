@@ -176,7 +176,7 @@ const RegisterForm = (props: RegisterFormProps) => {
                                                         </div>
                                                     </div>
                                                 ),
-                                                buttonTitle: 'Continue',
+                                                buttonTitle: "Let's pick a ladder to play",
                                             });
                                         }
                                     }}
