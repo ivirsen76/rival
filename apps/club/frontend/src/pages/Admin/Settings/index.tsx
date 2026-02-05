@@ -6,11 +6,9 @@ import { Formik, Field, Form } from '@rival/common/components/formik';
 import Input from '@rival/common/components/formik/Input';
 import Button from '@rival/common/components/Button';
 import notification from '@rival/common/components/notification';
-import useConfig from '@rival/common/utils/useConfig';
 
 const Settings = (props) => {
     const queryClient = useQueryClient();
-    const config = useConfig();
 
     const { data: settings, isLoading } = useQuery('/api/settings/1', async () => {
         const response = await axios.get('/api/settings/1');

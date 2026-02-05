@@ -8,12 +8,11 @@ import _intersection from 'lodash/intersection';
 import _union from 'lodash/union';
 import _xor from 'lodash/xor';
 import _difference from 'lodash/difference';
-import useConfig from '@rival/common/utils/useConfig';
 import axios from '@rival/common/axios';
 import { loadCurrentUser } from '@/reducers/auth';
 import { useDispatch } from 'react-redux';
 import notification from '@rival/common/components/notification';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
 import TermsAndConditions from '@rival/common/components/TermsAndConditions';
 import { NtrpGuidelinesLink } from '@rival/common/components/NtrpGuidelines';
@@ -67,8 +66,7 @@ const renderTeammateDescription = (tournamentId: number, values) => {
 };
 
 const Levels = (props: StepComponentProps) => {
-    const { info, selectedSeason, updateInfo, goToNextStep, user } = props;
-    const config = useConfig();
+    const { info, selectedSeason, user } = props;
     const dispatch = useDispatch();
     const queryClient = useQueryClient();
     const [reasonToJoinAnotherLadder, setReasonToJoinAnotherLadder] = useState(info.tournaments.joinReason || '');
@@ -78,12 +76,6 @@ const Levels = (props: StepComponentProps) => {
 
     // just to not update ladder registered status
     const [savedUser] = useState(user);
-
-    const previousTournaments = Object.values(savedUser.tournaments).filter(
-        (item) => item.seasonId !== selectedSeason.id
-    );
-    const isNewPlayer = previousTournaments.length === 0;
-    const matchesPlayedBefore = previousTournaments.reduce((sum, item) => sum + item.regularMatchesPlayed, 0);
 
     const {
         userTournaments,
@@ -100,7 +92,7 @@ const Levels = (props: StepComponentProps) => {
             selectedSeason.tournaments.map((t) => t.tournamentId)
         );
 
-        const { all, suitable, free, text } = (() => {
+        const { all, suitable, text } = (() => {
             if (!savedUser.establishedElo) {
                 return {
                     all: [],

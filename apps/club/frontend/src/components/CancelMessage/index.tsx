@@ -5,7 +5,7 @@ type CancelMessageProps = {
 };
 
 const CancelMessage = (props: CancelMessageProps) => {
-    const { cancelFinalTournamentReason, level } = props.tournament;
+    const { cancelFinalTournamentReason } = props.tournament;
     const message =
         typeof cancelFinalTournamentReason === 'string' ? [cancelFinalTournamentReason] : cancelFinalTournamentReason;
 

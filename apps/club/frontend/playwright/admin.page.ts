@@ -3,7 +3,6 @@ import {
     runQuery,
     restoreDb,
     getRecord,
-    getNumRecords,
     expectRecordToExist,
     overrideConfig,
 } from '@rival/club.backend/src/db/helpers';

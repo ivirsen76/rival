@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { Formik, Field, Form } from '@rival/common/components/formik';
 import Input from '@rival/common/components/formik/Input';
 import Button from '@rival/common/components/Button';
 import DateTimeWithWeather from '@rival/common/components/DateTimeWithWeather';
 import dayjs from '@rival/common/dayjs';
 import axios from '@rival/common/axios';
-import useConfig from '@rival/common/utils/useConfig';
 
 type FormScheduleMatchProps = {
     match: object;
@@ -15,8 +13,6 @@ type FormScheduleMatchProps = {
 
 const FormScheduleMatch = (props: FormScheduleMatchProps) => {
     const { match, tournament, onSubmit } = props;
-    const config = useConfig();
-    const [step, setStep] = useState('form');
     const isDoublesTeam = tournament.levelType === 'doubles-team';
 
     const maxDate = (() => {
@@ -33,35 +29,6 @@ const FormScheduleMatch = (props: FormScheduleMatchProps) => {
         await axios.put(`/api/matches/${match.id}`, { action: 'scheduleMatch', ...values });
         await onSubmit(values);
     };
-
-    if (step === 'instructions') {
-        return (
-            <div>
-                <p>
-                    If you require a court reservation, you can fill out the{' '}
-                    <a
-                        href="https://docs.google.com/forms/d/e/1FAIpQLSe6y12_k4l5Xjg5D4oscza7a8X0jlPXyHOv6oJYmT-XQ6CC_Q/viewform?embedded=true"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        Tennis Court Reservation Form
-                    </a>{' '}
-                    to receive a free court for your tournament match.
-                </p>
-                <p>
-                    Be sure to put &quot;ladder tournament match&quot; in the Comment/Questions section to avoid being
-                    charged the normal rate of $5 per hour per court. If possible, please input your request at least 48
-                    hours ahead of your match.
-                </p>
-                <p>
-                    For a Millbrook court, please call our office at <a href="sms:9199964129">919-996-4129</a> or email{' '}
-                    <a href="mailto:tenniscourts@raleighnc.gov">tenniscourts@raleighnc.gov</a>.
-                </p>
-                After confirmation, make sure to fill out your confirmed time and place using the <b>Schedule</b> button
-                on your match.
-            </div>
-        );
-    }
 
     return (
         <Formik

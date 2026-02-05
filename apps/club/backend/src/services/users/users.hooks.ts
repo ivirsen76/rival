@@ -9,7 +9,7 @@ import { setField } from 'feathers-authentication-hooks';
 import { disallow, keep } from 'feathers-hooks-common';
 import { getSeasonName } from '../seasons/helpers';
 import { revertScore } from '../matches/helpers';
-import { getEmailContact, getPlayerName, hideEmail, hidePhone } from './helpers';
+import { getPlayerName, hideEmail, hidePhone } from './helpers';
 import commonValidate from './commonValidate';
 import { throwValidationErrors, getSchemaErrors, isEmail } from '../../helpers';
 import { hasAnyRole, purgeUserCache, logEvent, trim, generateBadges, populateSalt } from '../commonHooks';
@@ -29,7 +29,7 @@ import { getVerificationCode, formatUserName, getTbStats } from './helpers';
 import sharp from 'sharp';
 import DatauriParser from 'datauri/parser';
 import { decodeAction } from '../../utils/action';
-import { getUsersStats, applyNewBadges } from '../../utils/applyNewBadges';
+import { getUsersStats } from '../../utils/applyNewBadges';
 import { unless, isProvider } from 'feathers-hooks-common';
 import compareFields from '../../utils/compareFields';
 import checkEmail from './checkEmail';
@@ -39,8 +39,6 @@ import { BYE_ID, POOL_PARTNER_ID } from '../../constants';
 import isObsoleteBadge from './isObsoleteBadge';
 import { getStatsMatches } from '../../utils/sqlConditions';
 import populateInformation from './populateInformation';
-import getCustomEmail from '../../emailTemplates/getCustomEmail';
-import merge from 'deepmerge';
 import twilio from 'twilio';
 
 const { hashPassword, protect } = hooks;
@@ -2166,7 +2164,6 @@ const registerClubMember = () => async (context: HookContext) => {
     }
 
     const sequelize = context.app.get('sequelizeClient');
-    const { users } = sequelize.models;
     const [[existingUser]] = await sequelize.query(`SELECT id FROM users WHERE email=:email`, {
         replacements: { email },
     });
@@ -2180,7 +2177,6 @@ const registerClubMember = () => async (context: HookContext) => {
         { replacements: { email } }
     );
 
-    let newUser = {};
     if (!existingUser && members.length > 0) {
         const result = await context.app.service('api/users').create({
             ..._pick(members[0], ['firstName', 'lastName', 'phone', 'birthday']),
@@ -2198,7 +2194,6 @@ const registerClubMember = () => async (context: HookContext) => {
     context.result = {
         members,
         isExistingUser: Boolean(existingUser),
-        newUser,
     };
 
     return context;
