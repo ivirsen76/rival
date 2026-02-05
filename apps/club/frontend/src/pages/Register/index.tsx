@@ -34,6 +34,18 @@ type Step = {
     renderButton: (params: RenderButtonParams) => React.ReactNode;
 };
 
+export type Info = {
+    key: number;
+    step: string;
+    season: {
+        id: number;
+    };
+    tournaments: {
+        list: any[];
+        partners: any;
+    };
+};
+
 const steps: Step[] = [
     {
         value: 'season',
@@ -105,7 +117,7 @@ const steps: Step[] = [
 const Register = (props) => {
     const user = useSelector((state) => state.auth.user);
     const config = useConfig();
-    const [info, setInfo] = useState(() => ({
+    const [info, setInfo]: [Info, Function] = useState(() => ({
         key: 1,
         step: 'season',
         season: {
