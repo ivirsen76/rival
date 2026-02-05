@@ -10,6 +10,7 @@ import PasswordInput from '@rival/common/components/formik/PasswordInput';
 import { isEmail } from '@rival/club.backend/src/helpers';
 import { authenticate } from '@/reducers/auth';
 import { useDispatch } from 'react-redux';
+import useSettings from '@rival/common/utils/useSettings';
 
 const validate = (values) => {
     const errors = {};
@@ -41,6 +42,13 @@ type RegisterFormProps = {
 const RegisterForm = (props: RegisterFormProps) => {
     const { goToLogin } = props;
     const dispatch = useDispatch();
+    const { settings, isSettingsLoading } = useSettings();
+
+    if (isSettingsLoading) {
+        return null;
+    }
+
+    const { clubs } = settings;
 
     return (
         <Formik
@@ -204,6 +212,25 @@ const RegisterForm = (props: RegisterFormProps) => {
                                 Sign in
                             </a>
                         </div>
+                    </div>
+
+                    <div className="alert alert-primary">
+                        {clubs.length === 1 ? (
+                            <div>
+                                To be able to register you have to be the member of <b>{clubs[0].name}. </b>
+                            </div>
+                        ) : (
+                            <div>
+                                <p>To be able to register you have to be the member of one of these clubs:</p>
+                                <ul className="mb-0 ps-8">
+                                    {clubs.map((club) => (
+                                        <li className="mt-0 mb-0" key={club.slug}>
+                                            <b>{club.name}</b>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
                     </div>
 
                     <Field

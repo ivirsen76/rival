@@ -18,6 +18,24 @@ test.beforeEach(async () => {
     restoreDb();
 });
 
+test(`Should see the message about one tennis club`, async ({ page, common, login, register }) => {
+    await page.goto('/register');
+    await expect(common.body).toContainText(
+        'To be able to register you have to be the member of Raleigh Racquet Club.'
+    );
+});
+
+test(`Should see the message about many tennis clubs`, async ({ page, common, login, register }) => {
+    await runQuery(
+        `INSERT INTO clubs SET name="North Hills Club", slug="north-hills-club", url="https://northhillsclub.com"`
+    );
+
+    await page.goto('/register');
+    await expect(common.body).toContainText('To be able to register you have to be the member of one of these clubs:');
+    await expect(common.body).toContainText('Raleigh Racquet Club');
+    await expect(common.body).toContainText('North Hills Club');
+});
+
 test(`Should see the message that user doesn't belong to any club`, async ({ page, common, login, register }) => {
     await page.goto('/register');
     await register.submitButton.click();

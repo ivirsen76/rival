@@ -40,7 +40,7 @@ const populateConstants = () => async (context: HookContext) => {
 
     const encode = (obj: any) => Buffer.from(JSON.stringify(obj)).toString('base64').split('').reverse().join('');
 
-    const [clubs] = (await sequelize.query('SELECT * FROM clubs')) as [Club[]];
+    const [clubs] = (await sequelize.query('SELECT * FROM clubs ORDER BY name')) as [Club[]];
 
     const bananas = (() => {
         // change banana every 1.3 hours (weird number just to rotate through nights)
