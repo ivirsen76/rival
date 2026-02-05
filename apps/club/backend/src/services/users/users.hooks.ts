@@ -2717,15 +2717,17 @@ const registerClubMember = () => async (context: HookContext) => {
 
     let newUser = {};
     if (!existingUser && members.length > 0) {
-        const member = members[0];
-
         const result = await context.app.service('api/users').create({
-            ..._pick(member, ['firstName', 'lastName', 'phone', 'birthday']),
+            ..._pick(members[0], ['firstName', 'lastName', 'phone', 'birthday']),
             email,
             password,
         });
 
-        console.log(result);
+        for (const member of members) {
+            await sequelize.query(`INSERT INTO userclubs SET userId=:userId, clubId=:clubId`, {
+                replacements: { userId: result.id, clubId: member.clubId },
+            });
+        }
     }
 
     context.result = {

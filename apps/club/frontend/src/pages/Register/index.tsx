@@ -1,16 +1,218 @@
 import Card from '@rival/common/components/Card';
-import ScrollToTop from '@rival/common/components/ScrollToTop';
-import { AssociationContext } from '@/contexts/AssociationContext';
-import { useContext } from 'react';
+import { useState } from 'react';
+import SeasonIcon from '@/assets/season.svg?react';
+import Season from './Season';
+import Levels from './Levels';
+import dayjs from '@rival/common/dayjs';
+import { useSelector } from 'react-redux';
+import Authentication from '@/components/Authentication';
+import style from './style.module.scss';
+import Loader from '@rival/common/components/Loader';
+import axios from '@rival/common/axios';
+import { useQuery } from 'react-query';
+import Header from '@/components/Header';
+import hasAnyRole from '@rival/common/utils/hasAnyRole';
+import Error from '@rival/common/components/Error';
+import FlagIcon from '@rival/common/metronic/icons/duotune/maps/map001.svg?react';
+import type { User } from '@sentry/react';
+import useConfig from '@rival/common/utils/useConfig';
+
+const format = (date: string | dayjs.Dayjs) => dayjs.tz(date).format('MMM D');
+
+type RenderButtonParams = {
+    info: any;
+    currentUser: User;
+    goToStep: (params: string) => void;
+    selectedSeason: any;
+};
+
+type Step = {
+    value: string;
+    label: string;
+    component: any;
+    showButton?: (params: any) => boolean;
+    renderButton: (params: RenderButtonParams) => React.ReactNode;
+};
+
+const steps: Step[] = [
+    {
+        value: 'season',
+        label: 'Season',
+        component: Season,
+        showButton: ({ seasons }) => seasons.length > 1,
+        renderButton: ({ goToStep, selectedSeason }) => (
+            <div className={style.step}>
+                <div className={style.highlight}>
+                    <span className="svg-icon svg-icon-2x svg-icon-primary">
+                        <SeasonIcon />
+                    </span>
+                </div>
+                <div>
+                    <div className={style.title}>Season</div>
+                    <div>
+                        {selectedSeason.name} ({format(selectedSeason.startDate)} -{' '}
+                        {format(dayjs.tz(selectedSeason.endDate).subtract(1, 'minute'))}){' '}
+                        <a
+                            href=""
+                            className="ms-1"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                goToStep('season');
+                            }}
+                        >
+                            Change
+                        </a>
+                    </div>
+                </div>
+            </div>
+        ),
+    },
+    {
+        value: 'tournaments',
+        label: 'Levels',
+        component: Levels,
+        renderButton: ({ info, goToStep, selectedSeason }: RenderButtonParams) => (
+            <div className={style.step}>
+                <div className={style.highlight}>
+                    <span className="svg-icon svg-icon-2x svg-icon-primary">
+                        <FlagIcon />
+                    </span>
+                </div>
+                <div>
+                    <div className={style.title}>Ladders</div>
+                    <div>
+                        {selectedSeason.tournaments
+                            .filter((item) => info.tournaments.list.includes(item.tournamentId))
+                            .map((item) => item.levelName)
+                            .join(', ')}{' '}
+                        <a
+                            href=""
+                            className="ms-1"
+                            onClick={(e) => {
+                                e.preventDefault();
+                                goToStep('tournaments');
+                            }}
+                        >
+                            Change
+                        </a>
+                    </div>
+                </div>
+            </div>
+        ),
+    },
+];
 
 const Register = (props) => {
-    const association = useContext(AssociationContext);
+    const user = useSelector((state) => state.auth.user);
+    const config = useConfig();
+    const [info, setInfo] = useState(() => ({
+        key: 1,
+        step: 'season',
+        season: {
+            id: 0,
+        },
+        tournaments: {
+            list: [],
+            partners: {},
+        },
+    }));
+
+    const { data: seasons, isLoading } = useQuery(`getSeasonsToRegister`, async () => {
+        const response = await axios.put('/api/seasons/0', { action: 'getSeasonsToRegister' });
+        return response.data.data;
+    });
+
+    if (isLoading) {
+        return <Loader loading />;
+    }
+
+    if (user && !hasAnyRole(user, ['player'])) {
+        return <Error title="" message="Admin cannot register as a player" />;
+    }
+
+    if (!config.canRegister) {
+        return <Error title="" message="Registration is not available yet" />;
+    }
+
+    if (seasons.length === 0) {
+        return <Error title="" message="There is no season to register yet" />;
+    }
+
+    const updateInfo = (obj: any) => {
+        setInfo((prevInfo) => ({ ...prevInfo, ...obj }));
+    };
+
+    const goToNextStage = () => {
+        const index = steps.findIndex((item) => item.value === info.step);
+        if (index + 1 < steps.length) {
+            updateInfo({ step: steps[index + 1].value });
+        }
+    };
+
+    const goToStep = (step: string) => {
+        updateInfo({ step });
+    };
+
+    const prevSteps = [];
+    for (const item of steps) {
+        if (item.value === info.step) {
+            break;
+        }
+
+        prevSteps.push(item);
+    }
+
+    const currentStep = steps.find((item) => item.value === info.step)!;
+    const selectedSeason = seasons.find((item) => item.id === info.season.id);
 
     return (
-        <div className="tl-front">
-            <h2 className="text-white mt-4">Register & Conditions</h2>
-            <ScrollToTop />
-            <Card>Register for 2021 Spring Season</Card>
+        <div data-register-area className="tl-panel">
+            <Header
+                title="Register"
+                description="Register for your account and join at least one ladder to get started on the Rival Tennis Ladder."
+            />
+            <Card key={info.key}>
+                {seasons.length === 1 && selectedSeason ? (
+                    <>
+                        <h2>{selectedSeason ? `Register for ${selectedSeason.name} Season` : 'Register'}</h2>
+                        <div className="mb-6 mt-n2">
+                            {format(selectedSeason.startDate)} -{' '}
+                            {format(dayjs.tz(selectedSeason.endDate).subtract(1, 'minute'))}
+                        </div>
+                    </>
+                ) : (
+                    <h2>Register</h2>
+                )}
+                {prevSteps.length > 0 && (
+                    <div className="mb-6">
+                        {prevSteps
+                            .filter((item) => !item.showButton || item.showButton({ seasons }))
+                            .map((item) => (
+                                <div key={item.value} data-step={item.value}>
+                                    {item.renderButton({
+                                        info,
+                                        currentUser: user,
+                                        goToStep,
+                                        selectedSeason,
+                                    })}
+                                </div>
+                            ))}
+                    </div>
+                )}
+
+                {!user ? (
+                    <Authentication />
+                ) : (
+                    <currentStep.component
+                        info={info}
+                        updateInfo={updateInfo}
+                        user={user}
+                        selectedSeason={selectedSeason}
+                        seasons={seasons}
+                        onSubmit={goToNextStage}
+                    />
+                )}
+            </Card>
         </div>
     );
 };

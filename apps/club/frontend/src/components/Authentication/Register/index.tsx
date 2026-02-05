@@ -8,6 +8,8 @@ import WrongIcon from '@rival/common/metronic/icons/duotune/arrows/arr015.svg?re
 import axios from '@rival/common/axios';
 import PasswordInput from '@rival/common/components/formik/PasswordInput';
 import { isEmail } from '@rival/club.backend/src/helpers';
+import { authenticate } from '@/reducers/auth';
+import { useDispatch } from 'react-redux';
 
 const validate = (values) => {
     const errors = {};
@@ -38,6 +40,7 @@ type RegisterFormProps = {
 
 const RegisterForm = (props: RegisterFormProps) => {
     const { goToLogin } = props;
+    const dispatch = useDispatch();
 
     return (
         <Formik
@@ -154,6 +157,7 @@ const RegisterForm = (props: RegisterFormProps) => {
                                             });
                                         } else {
                                             const member = data.members[0];
+                                            dispatch(authenticate(values.email, values.password));
 
                                             notification({
                                                 inModal: true,
