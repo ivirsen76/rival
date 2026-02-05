@@ -11,7 +11,7 @@ import useConfig from '@rival/common/utils/useConfig';
 import useLazyImages from '@rival/common/utils/useLazyImages';
 import Header from '@/components/Header';
 
-const Changelog = (props) => {
+const Changelog = () => {
     const dispatch = useDispatch();
     const config = useConfig();
     const currentUser = useSelector((state) => state.auth.user);
