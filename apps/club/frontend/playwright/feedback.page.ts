@@ -44,8 +44,7 @@ test('We can report a bug', async ({ page, common, login, feedback, homepage }) 
     await expect(common.alert).toContainText('Thank you! We really appreciate your feedback.');
     await expectRecordToExist('feedbacks', { userId: 1 }, { type: 'bug', description: 'Something is wrong' });
 
-    const emailSent = await getRecord('emails');
-    expect(emailSent.to).toContain('ivirsen@gmail.com');
+    const emailSent = await expectRecordToExist('emails', { recipientEmail: 'ivirsen@gmail.com' });
     expect(emailSent.replyTo).toContain('Ben Done');
     expect(emailSent.replyTo).toContain('player1@gmail.com');
     expect(emailSent.subject).toContain('Feedback - bug');
@@ -67,8 +66,7 @@ test('We can ask a question', async ({ page, common, login, feedback, homepage }
     await expect(common.alert).toContainText('Thank you! We really appreciate your feedback.');
     await expectRecordToExist('feedbacks', { userId: 1 }, { type: 'question', description: 'What is up?' });
 
-    const emailSent = await getRecord('emails');
-    expect(emailSent.to).toContain('ivirsen@gmail.com');
+    const emailSent = await expectRecordToExist('emails', { recipientEmail: 'ivirsen@gmail.com' });
     expect(emailSent.replyTo).toContain('Ben Done');
     expect(emailSent.replyTo).toContain('player1@gmail.com');
     expect(emailSent.subject).toContain('Feedback - question');
