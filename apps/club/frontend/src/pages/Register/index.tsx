@@ -1,7 +1,7 @@
 import Card from '@rival/common/components/Card';
 import { useState } from 'react';
 import SeasonIcon from '@/assets/season.svg?react';
-import Season from './Season';
+import SeasonPicker from './SeasonPicker';
 import Levels from './Levels';
 import dayjs from '@rival/common/dayjs';
 import { useSelector } from 'react-redux';
@@ -14,8 +14,8 @@ import Header from '@/components/Header';
 import hasAnyRole from '@rival/common/utils/hasAnyRole';
 import Error from '@rival/common/components/Error';
 import FlagIcon from '@rival/common/metronic/icons/duotune/maps/map001.svg?react';
-import type { User } from '@sentry/react';
 import useConfig from '@rival/common/utils/useConfig';
+import type { Season, User } from '@rival/club.backend/src/types';
 
 const format = (date: string | dayjs.Dayjs) => dayjs.tz(date).format('MMM D');
 
@@ -26,31 +26,40 @@ type RenderButtonParams = {
     selectedSeason: any;
 };
 
-type Step = {
-    value: string;
-    label: string;
-    component: any;
-    showButton?: (params: any) => boolean;
-    renderButton: (params: RenderButtonParams) => React.ReactNode;
-};
-
-export type Info = {
+type Info = {
     key: number;
     step: string;
-    season: {
-        id: number;
-    };
+    seasonId: number;
     tournaments: {
         list: any[];
         partners: any;
     };
 };
 
+type CurrentSeason = Season & { name: string };
+
+export type StepComponentProps = {
+    info: Info;
+    updateInfo: (params: Partial<Info>) => void;
+    user: User;
+    selectedSeason: CurrentSeason;
+    seasons: CurrentSeason[];
+    goToNextStep: () => void;
+};
+
+type Step = {
+    value: string;
+    label: string;
+    component: (params: StepComponentProps) => React.ReactNode;
+    showButton?: (params: any) => boolean;
+    renderButton: (params: RenderButtonParams) => React.ReactNode;
+};
+
 const steps: Step[] = [
     {
         value: 'season',
         label: 'Season',
-        component: Season,
+        component: SeasonPicker,
         showButton: ({ seasons }) => seasons.length > 1,
         renderButton: ({ goToStep, selectedSeason }) => (
             <div className={style.step}>
@@ -114,15 +123,13 @@ const steps: Step[] = [
     },
 ];
 
-const Register = (props) => {
+const Register = () => {
     const user = useSelector((state) => state.auth.user);
     const config = useConfig();
     const [info, setInfo]: [Info, Function] = useState(() => ({
         key: 1,
         step: 'season',
-        season: {
-            id: 0,
-        },
+        seasonId: 0,
         tournaments: {
             list: [],
             partners: {},
@@ -132,7 +139,7 @@ const Register = (props) => {
     const { data: seasons, isLoading } = useQuery(`getSeasonsToRegister`, async () => {
         const response = await axios.put('/api/seasons/0', { action: 'getSeasonsToRegister' });
         return response.data.data;
-    });
+    }) as { data: CurrentSeason[]; isLoading: boolean };
 
     if (isLoading) {
         return <Loader loading />;
@@ -150,11 +157,11 @@ const Register = (props) => {
         return <Error title="" message="There is no season to register yet" />;
     }
 
-    const updateInfo = (obj: any) => {
-        setInfo((prevInfo) => ({ ...prevInfo, ...obj }));
+    const updateInfo = (obj: Partial<Info>) => {
+        setInfo((prevInfo: Info) => ({ ...prevInfo, ...obj }));
     };
 
-    const goToNextStage = () => {
+    const goToNextStep = () => {
         const index = steps.findIndex((item) => item.value === info.step);
         if (index + 1 < steps.length) {
             updateInfo({ step: steps[index + 1].value });
@@ -175,7 +182,7 @@ const Register = (props) => {
     }
 
     const currentStep = steps.find((item) => item.value === info.step)!;
-    const selectedSeason = seasons.find((item) => item.id === info.season.id);
+    const selectedSeason = seasons.find((item) => item.id === info.seasonId)!;
 
     return (
         <div data-register-area className="tl-panel">
@@ -221,7 +228,7 @@ const Register = (props) => {
                         user={user}
                         selectedSeason={selectedSeason}
                         seasons={seasons}
-                        onSubmit={goToNextStage}
+                        goToNextStep={goToNextStep}
                     />
                 )}
             </Card>

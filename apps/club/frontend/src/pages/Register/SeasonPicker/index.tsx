@@ -2,25 +2,17 @@ import { useMemo, useEffect } from 'react';
 import classnames from 'classnames';
 import dayjs from '@rival/common/dayjs';
 import style from './style.module.scss';
-import type { Season } from '@rival/club.backend/src/types';
-import type { Info } from '..';
+import type { StepComponentProps } from '..';
 
-type SeasonPickerProps = {
-    info: Info;
-    updateInfo: (...args: unknown[]) => unknown;
-    onSubmit: (...args: unknown[]) => unknown;
-    seasons: (Season & { name: string })[];
-};
-
-const SeasonPicker = (props: SeasonPickerProps) => {
-    const { info, updateInfo, onSubmit, seasons } = props;
+const SeasonPicker = (props: StepComponentProps) => {
+    const { info, updateInfo, goToNextStep, seasons } = props;
 
     useEffect(() => {
         if (seasons.length === 1) {
-            updateInfo({ season: { id: seasons[0].id } });
-            onSubmit();
+            updateInfo({ seasonId: seasons[0].id });
+            goToNextStep();
         } else if (seasons.length > 1) {
-            updateInfo({ season: { id: 0 } });
+            updateInfo({ seasonId: 0 });
         }
     }, [seasons]);
 
@@ -55,10 +47,10 @@ const SeasonPicker = (props: SeasonPickerProps) => {
                     <button
                         key={season.id}
                         type="button"
-                        className={classnames(style.season, 'p-2', info.season.id === season.id && style.active)}
+                        className={classnames(style.season, 'p-2', info.seasonId === season.id && style.active)}
                         onClick={() => {
-                            updateInfo({ id: season.id });
-                            onSubmit();
+                            updateInfo({ seasonId: season.id });
+                            goToNextStep();
                         }}
                     >
                         <div>{index === 0 ? 'Current season' : 'Next season'}</div>
