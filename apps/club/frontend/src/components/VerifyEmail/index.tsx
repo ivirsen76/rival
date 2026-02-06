@@ -100,8 +100,4 @@ const VerifyEmail = (props: VerifyEmailProps) => {
     );
 };
 
-VerifyEmail.defaultProps = {
-    allowResend: true,
-};
-
 export default VerifyEmail;

@@ -14,7 +14,6 @@ import TennisStyleForm, {
     shotOptions,
 } from './TennisStyleForm';
 import PasswordForm from './PasswordForm';
-import EmailForm from './EmailForm';
 import PhoneForm from './PhoneForm';
 import TennisEquipmentForm from './TennisEquipmentForm';
 import PersonalInfoForm, { genderOptions } from './PersonalInfoForm';
@@ -248,17 +247,6 @@ const Settings = (props) => {
                 <div>{user.birthday ? dayjs(user.birthday).format('MMM D, YYYY') : '-'}</div>
 
                 <div style={{ gridColumn: '1 / 3' }} className="mt-4">
-                    <Modal
-                        title="Change email"
-                        renderTrigger={({ show }) => (
-                            <div className="mb-2">
-                                <button className="btn btn-secondary w-100" onClick={show}>
-                                    Change email
-                                </button>
-                            </div>
-                        )}
-                        renderBody={({ hide }) => <EmailForm onSubmit={hide} />}
-                    />
                     <Modal
                         title="Change Your Phone Number"
                         renderTrigger={({ show }) => (

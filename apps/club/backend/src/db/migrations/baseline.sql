@@ -762,8 +762,6 @@ CREATE TABLE `users` (
   `subscribeForNews` tinyint(1) NOT NULL DEFAULT '1',
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `newEmail` varchar(255) NOT NULL DEFAULT '',
-  `newEmailCode` varchar(255) NOT NULL DEFAULT '',
   `loggedAt` datetime DEFAULT NULL,
   `subscribeForReminders` tinyint(1) NOT NULL DEFAULT '1',
   `personalInfo` text,

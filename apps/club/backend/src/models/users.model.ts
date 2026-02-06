@@ -38,8 +38,6 @@ export default function (app: Application) {
             subscribeForReminders: Sequelize.BOOLEAN,
             subscribeForNews: Sequelize.BOOLEAN,
             subscribeForBadges: Sequelize.BOOLEAN,
-            newEmail: Sequelize.STRING,
-            newEmailCode: Sequelize.STRING,
             isWrongEmail: Sequelize.BOOLEAN,
             loggedAt: Sequelize.DATE,
             changelogSeenAt: Sequelize.DATE,

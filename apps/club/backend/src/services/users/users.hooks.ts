@@ -21,7 +21,6 @@ import _pick from 'lodash/pick';
 import _set from 'lodash/set';
 import dayjs from '../../utils/dayjs';
 import { getAge } from '../../utils/helpers';
-import newEmailVerificationTemplate from '../../emailTemplates/newEmailVerification';
 import emailVerificationTemplate from '../../emailTemplates/emailVerification';
 import bcrypt from 'bcryptjs';
 import yup from '../../packages/yup';
@@ -217,34 +216,6 @@ const validatePatch = () => async (context: HookContext) => {
     return context;
 };
 
-const registerNewEmail = () => async (context: HookContext) => {
-    const currentUser = context.params.user as User;
-    const sequelize = context.app.get('sequelizeClient');
-    const { users } = sequelize.models;
-
-    if (currentUser.email !== context.data.email) {
-        const code = getVerificationCode();
-
-        await users.update(
-            {
-                newEmail: context.data.email,
-                newEmailCode: code,
-            },
-            { where: { id: currentUser.id } }
-        );
-
-        // We don't have to wait for the email sent
-        const fullName = getPlayerName(currentUser);
-        context.app.service('api/emails').create({
-            to: [{ name: fullName, email: context.data.email, force: true }],
-            subject: `${code} is your confirmation code`,
-            html: newEmailVerificationTemplate({ config: context.params.config, verificationCode: code }),
-        });
-    }
-
-    return context;
-};
-
 const populateUser = () => async (context: HookContext) => {
     const userSlug = context.data.slug;
     const sequelize = context.app.get('sequelizeClient');
@@ -277,8 +248,6 @@ const populateUser = () => async (context: HookContext) => {
             'createdAt',
             'loggedAt',
             'changelogSeenAt',
-            'newEmail',
-            'newEmailCode',
             'password',
             'salt',
             'subscribeForProposals',
@@ -1160,12 +1129,6 @@ const sendEmailVerificationCode = () => async (context: HookContext) => {
             verificationCode: code,
         }),
     });
-
-    return context;
-};
-
-const verifyNewEmail = () => async (context: HookContext) => {
-    await authenticate('jwt')(context);
 
     return context;
 };
@@ -2214,8 +2177,6 @@ const runCustomAction = () => async (context: HookContext) => {
         await sendEmailVerificationCode()(context);
     } else if (action === 'verifyEmail') {
         await verifyEmail()(context);
-    } else if (action === 'verifyNewEmail') {
-        await verifyNewEmail()(context);
     } else if (action === 'sendPhoneVerificationCode') {
         await sendPhoneVerificationCode()(context);
     } else if (action === 'verifyPhone') {
@@ -2301,7 +2262,6 @@ export default {
             limitToUser,
             populateShowAge(),
             validatePatch(),
-            registerNewEmail(),
             keep(
                 'appearance',
                 'firstName',

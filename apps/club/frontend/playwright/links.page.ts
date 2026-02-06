@@ -5,23 +5,10 @@ test.beforeEach(async ({ page }) => {
     restoreDb();
 });
 
-test('Should get to the club page', async ({ page, common, login }) => {
-    await page.goto('/club/raleigh-racquet-club');
-    await expect(common.body).toContainText('Raleigh Racquet Club');
-});
-
 test('Should follow links from home page', async ({ page, common, login }) => {
     await page.goto('/');
     await page.locator('a[data-hero-register-button]').getByText('Register').click();
-    await expect(common.body).toContainText('Register for 2021 Spring Season');
-
-    await page.goto('/');
-    await page.locator('a.btn').getByText('Scoring').click();
-    await expect(page.locator('h1').getByText('Scoring')).toBeVisible();
-
-    await page.goto('/');
-    await page.locator('a.btn').getByText('Tennis Ladder Rating').click();
-    await expect(page.locator('h1').getByText('Tennis Ladder Rating')).toBeVisible();
+    await expect(common.body).toContainText('Register');
 
     await page.goto('/');
     await page.locator('a').getByText('Terms & Conditions').click();

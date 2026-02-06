@@ -171,51 +171,6 @@ test('Should change player personal info', async ({ page, common, login, user })
     await expect(user.showAgeField).toBeChecked();
 });
 
-test('Should change player email', async ({ page, common, login, user }) => {
-    await runQuery('UPDATE users SET isWrongEmail=1 WHERE id=1');
-
-    await login.loginAsPlayer1();
-    await page.goto('/user/settings');
-    await page.locator('button').getByText('Change email').click();
-
-    await user.emailField.fill('player1@gmail.com');
-    await page.locator('button').getByText('Submit').click();
-    await expect(common.modal).toContainText("The email hasn't changed");
-
-    await user.emailField.fill('player2@gmail.com');
-    await page.locator('button').getByText('Submit').click();
-    await expect(common.modal).toContainText('already used');
-
-    await user.emailField.fill('new@gmail.com');
-    await page.locator('button').getByText('Submit').click();
-
-    await expect(common.modal).toContainText('Verify your new email');
-    const Area = page.locator('[data-personal-info-area]');
-    await expect(Area).toContainText('player1@gmail.com');
-
-    await expectRecordToExist('users', { id: 1 }, { newEmail: 'new@gmail.com' });
-
-    const emailSent = await getRecord('emails', { recipientEmail: 'new@gmail.com' });
-    const emailVerificationCode = emailSent.subject.slice(0, 6);
-    expect(emailVerificationCode).toMatch(/^\d{6}$/);
-    expect(emailSent.html).toContain(emailVerificationCode);
-
-    await page.locator('input[name="code"]').fill('0' + emailVerificationCode.slice(1));
-    await expect(common.body).toContainText('Confirmation code is wrong');
-
-    await page.locator('input[name="code"]').fill(emailVerificationCode);
-    await expect(common.body).toContainText('Email was successfully changed');
-    await expect(Area).toContainText('new@gmail.com');
-    await page.locator('button').getByText('Ok, got it!').click();
-
-    const { information } = await expectRecordToExist(
-        'users',
-        { id: 1 },
-        { email: 'new@gmail.com', newEmail: '', newEmailCode: '', isWrongEmail: 0 }
-    );
-    expect(information).toContain('"value":"player1@gmail.com"');
-});
-
 test('Should change player phone', async ({ page, common, login, user }) => {
     await runQuery(`UPDATE users SET isPhoneVerified=0 WHERE id=1`);
 
