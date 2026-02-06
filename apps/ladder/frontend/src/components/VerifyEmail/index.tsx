@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import axios from '../../axios';
-import WarningIcon from '../../metronic/icons/duotone/Code/Warning-2.svg?react';
-import notification from '../notification';
+import axios from '@rival/common/axios';
+import WarningIcon from '@rival/common/metronic/icons/duotone/Code/Warning-2.svg?react';
+import notification from '@rival/common/components/notification';
 import style from './style.module.scss';
 
 type VerifyEmailProps = {
@@ -19,7 +19,7 @@ const VerifyEmail = (props: VerifyEmailProps) => {
     const [code, setCode] = useState('');
     const [error, setError] = useState();
     const [loading, setLoading] = useState(false);
-    const inputRef = useRef();
+    const inputRef = useRef(null);
 
     useEffect(() => {
         if (sendOnMount) {

@@ -8,7 +8,7 @@ import notification from '@rival/common/components/notification';
 import { Link } from 'react-router-dom';
 import Button from '@rival/common/components/Button';
 import Register from '@/components/Authentication/Register';
-import VerifyEmail from '@rival/common/components/VerifyEmail';
+import VerifyEmail from '@/components/VerifyEmail';
 import EmailIcon from '@rival/common/metronic/icons/duotone/Communication/Mail-at.svg?react';
 import axios from '@rival/common/axios';
 

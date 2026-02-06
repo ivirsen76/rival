@@ -6,7 +6,7 @@ import Input from '@rival/common/components/formik/Input';
 import PasswordInput from '@rival/common/components/formik/PasswordInput';
 import Button from '@rival/common/components/Button';
 import notification from '@rival/common/components/notification';
-import VerifyEmail from '@rival/common/components/VerifyEmail';
+import VerifyEmail from '@/components/VerifyEmail';
 import EmailIcon from '@rival/common/metronic/icons/duotone/Communication/Mail-at.svg?react';
 
 type LoginProps = {

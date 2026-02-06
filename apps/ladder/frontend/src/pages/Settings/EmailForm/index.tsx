@@ -4,7 +4,7 @@ import Button from '@rival/common/components/Button';
 import axios from '@rival/common/axios';
 import notification from '@rival/common/components/notification';
 import { useSelector, useDispatch } from 'react-redux';
-import VerifyEmail from '@rival/common/components/VerifyEmail';
+import VerifyEmail from '@/components/VerifyEmail';
 import EmailIcon from '@rival/common/metronic/icons/duotone/Communication/Mail-at.svg?react';
 import NotFound from '@/pages/NotFound';
 import { loadCurrentUser, updateCurrentUser } from '@/reducers/auth';
