@@ -1,11 +1,24 @@
+import { useMemo } from 'react';
 import { useQuery } from 'react-query';
 import Loader from '@rival/common/components/Loader';
+import Card from '@rival/common/components/Card';
+import Html from '@rival/common/components/Html';
 import Header from '@/components/Header';
+import WeatherForecast from '@rival/common/components/WeatherForecast';
+import { Link } from 'react-router-dom';
+import dayjs, { formatDate } from '@rival/common/dayjs';
+import DateIcon from '@rival/common/metronic/icons/duotune/general/gen008.svg?react';
 import useSettings from '@rival/common/utils/useSettings';
 import style from './style.module.scss';
 import classnames from 'classnames';
+import useBreakpoints from '@rival/common/utils/useBreakpoints';
+import UserIcon from '@rival/common/metronic/icons/duotone/General/User.svg?react';
+import BattleIcon from '@/assets/battle.svg?react';
+import JoinAnytime from './joinAnytime.svg?react';
 import PlayerAvatar from '@rival/common/components/PlayerAvatar';
 import axios from '@rival/common/axios';
+import Shadow from './Shadow';
+import { Title } from '@rival/common/components/Statbox';
 import court from './court.jpg?w=800;1200;1600;2400&format=webp&as=srcset';
 import courtSmall from './courtSmall.jpg?w=800;1200;1600;2400&format=webp&as=srcset';
 import formatNumber from '@rival/club.backend/src/utils/formatNumber';
@@ -13,7 +26,6 @@ import gradualRound from '@rival/common/utils/gradualRound';
 import CtaButton from './CtaButton';
 import log from '@/utils/log';
 import type { Banana } from '@rival/club.backend/src/types';
-import Card from '@rival/common/components/Card';
 
 export const TopBlock = () => {
     const { data: stats } = useQuery(`/api/activity/motivation`, async () => {
@@ -93,11 +105,116 @@ export const TopBlock = () => {
 export const topBlockClassname = style.topBlock;
 
 const Home = () => {
+    const { data, isLoading } = useQuery('/api/seasons/0', {
+        keepPreviousData: true,
+        staleTime: 0,
+    });
+    const { data: news, isLoading: isNewsLoading } = useQuery(`/api/news`);
+    const { data: stats, isLoading: isStatsLoading } = useQuery(`/api/activity/stats`, async () => {
+        const response = await axios.put(`/api/utils/0`, { action: 'getActivityStats' });
+        return response.data.data;
+    });
     const { settings, isSettingsLoading } = useSettings();
+    const size = useBreakpoints();
 
-    if (isSettingsLoading) {
+    const hasWordcloud = useMemo(() => {
+        return (
+            !isStatsLoading &&
+            stats.players >= 150 &&
+            settings?.settings.wordcloudUrl &&
+            settings?.settings.wordcloudCreatedAt &&
+            dayjs.tz().diff(dayjs.tz(settings.settings.wordcloudCreatedAt), 'week', true) < 4
+        );
+    }, [settings, stats, isStatsLoading]);
+
+    if (isLoading || isSettingsLoading || isNewsLoading) {
         return <Loader loading />;
     }
+
+    const format = (date) => dayjs.tz(date).format('MMM D');
+    const getFinalTournamentDates = (tournament) => {
+        return `Starting ${format(dayjs.tz(tournament.endDate).isoWeekday(1))}`;
+    };
+
+    const showCanJoin = Boolean(data?.latestTournament?.season?.usersCanRegister);
+
+    const renderOverview = () => {
+        const tournament = data.latestTournament.season;
+        const isOver = tournament.isFinished;
+
+        let currentWeek;
+        let totalWeeks;
+        if (!isOver) {
+            currentWeek = Math.ceil(dayjs.tz().diff(dayjs.tz(tournament.startDate), 'week', true));
+            totalWeeks = Math.ceil(
+                dayjs.tz(tournament.endDate).subtract(12, 'hour').diff(dayjs.tz(tournament.startDate), 'week', true)
+            );
+        }
+
+        return (
+            <>
+                {isOver && (
+                    <div>
+                        <strong>The season has ended.</strong>
+                        {tournament.closeReason && <span className="ms-2">({tournament.closeReason})</span>}
+                    </div>
+                )}
+                {!isOver && (
+                    <div>
+                        <strong>Ongoing season:</strong> Week {currentWeek} of {totalWeeks}
+                    </div>
+                )}
+                <div>
+                    <strong>Dates:</strong> {format(tournament.startDate)} -{' '}
+                    {format(dayjs.tz(tournament.endDate).subtract(1, 'minute'))}
+                </div>
+                {tournament.hasFinalTournament ? (
+                    <div>
+                        <strong>Tournament:</strong> {getFinalTournamentDates(tournament)}
+                    </div>
+                ) : null}
+            </>
+        );
+    };
+
+    const isLarge = ['xl', 'xxl', 'lg'].includes(size);
+    const hasWeather = Boolean(settings.settings?.weather?.hours);
+
+    const getLevelGroups = (levels) => {
+        const result = levels.reduce((obj, level) => {
+            let key = 'men';
+            if (['doubles', 'doubles-team'].includes(level.levelType)) {
+                key = 'doubles';
+            } else if (level.levelName.includes('Women')) {
+                key = 'women';
+            }
+
+            obj[key] = obj[key] || [];
+            obj[key].push(level);
+            return obj;
+        }, {});
+
+        return [
+            ...(result.men ? [{ name: 'Men', slug: 'men', list: result.men }] : []),
+            ...(result.women ? [{ name: 'Women', slug: 'women', list: result.women }] : []),
+            ...(result.doubles ? [{ name: 'Doubles', slug: 'doubles', list: result.doubles }] : []),
+        ];
+    };
+
+    const addLineBreak = (text) => {
+        if (!/\sDBLS/.test(text)) {
+            return text;
+        }
+
+        const words = text.split(' ');
+        return (
+            <>
+                {words[0]}
+                <br />
+                {words.slice(1).join(' ')}
+            </>
+        );
+    };
 
     const bananas = settings.bananas.filter((item) => item.images.normal) as Banana[];
 
@@ -118,6 +235,176 @@ const Home = () => {
                     ],
                 }}
             />
+
+            {(data.nextTournament || data.latestTournament) && (
+                <>
+                    <div className={style.grid}>
+                        <div className={style.season}>
+                            {data.nextTournament && (
+                                <Card>
+                                    <h1>Upcoming {data.nextTournament.season.name} Season</h1>
+                                    <div>
+                                        <strong>Dates:</strong> {format(data.nextTournament.season.startDate)} -{' '}
+                                        {format(dayjs.tz(data.nextTournament.season.endDate).subtract(1, 'minute'))}
+                                    </div>
+                                    <div>
+                                        <strong>Tournament:</strong>{' '}
+                                        {getFinalTournamentDates(data.nextTournament.season)}
+                                    </div>
+                                    <div data-upcoming-season-levels className="mt-6">
+                                        {(() => {
+                                            const levelGroups = getLevelGroups(data.nextTournament.levels);
+
+                                            return levelGroups.map((group) => (
+                                                <div key={group.slug} className={style.levelWrapper}>
+                                                    {group.list.map((level) => (
+                                                        <Link
+                                                            key={level.levelSlug}
+                                                            to={`/season/${data.nextTournament.season.year}/${data.nextTournament.season.season}/${level.levelSlug}`}
+                                                            className={classnames(style.levelWidget, style[group.slug])}
+                                                            data-latest-level={level.levelSlug}
+                                                        >
+                                                            <h3 className="text-primary">
+                                                                {addLineBreak(level.levelName)}
+                                                            </h3>
+                                                            <div className={style.stats}>
+                                                                <span className="svg-icon svg-icon-1 svg-icon-white me-1">
+                                                                    <UserIcon />
+                                                                </span>
+                                                                <div>{level.totalPlayers}</div>
+                                                            </div>
+                                                            <Shadow />
+                                                        </Link>
+                                                    ))}
+                                                </div>
+                                            ));
+                                        })()}
+                                    </div>
+                                </Card>
+                            )}
+                            {data.latestTournament && (
+                                <Card id="latestTournament">
+                                    <div className="d-flex justify-content-between align-items-center mb-6">
+                                        <div>
+                                            <h1>{data.latestTournament.season.name}</h1>
+                                            <div>{renderOverview()}</div>
+                                        </div>
+                                        {showCanJoin && (
+                                            <Link to="/register" className={style.joinAnytime}>
+                                                <JoinAnytime />
+                                            </Link>
+                                        )}
+                                    </div>
+
+                                    {(() => {
+                                        const levelGroups = getLevelGroups(data.latestTournament.levels);
+
+                                        return (
+                                            <div>
+                                                {levelGroups.map((group) => (
+                                                    <div key={group.slug} className={style.levelWrapper}>
+                                                        {group.list.map((level) => (
+                                                            <Link
+                                                                key={level.levelSlug}
+                                                                to={`/season/${data.latestTournament.season.year}/${data.latestTournament.season.season}/${level.levelSlug}`}
+                                                                className={classnames(
+                                                                    style.levelWidget,
+                                                                    style[group.slug]
+                                                                )}
+                                                                data-latest-level={level.levelSlug}
+                                                            >
+                                                                <h3 className="text-primary">
+                                                                    {addLineBreak(level.levelName)}
+                                                                </h3>
+                                                                <div className={style.stats}>
+                                                                    <span
+                                                                        className="svg-icon svg-icon-1 svg-icon-white me-1"
+                                                                        title="Players"
+                                                                    >
+                                                                        <UserIcon />
+                                                                    </span>
+                                                                    <div title="Players">{level.totalPlayers}</div>
+                                                                    <span
+                                                                        className="svg-icon svg-icon-1 svg-icon-white ms-4 me-1"
+                                                                        title="Matches"
+                                                                    >
+                                                                        <BattleIcon />
+                                                                    </span>
+                                                                    <div title="Matches">{level.totalMatches}</div>
+                                                                </div>
+                                                                <Shadow />
+                                                            </Link>
+                                                        ))}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        );
+                                    })()}
+                                </Card>
+                            )}
+                        </div>
+                        <div className={style.news}>
+                            <Card className={isLarge ? style.newsCard : ''}>
+                                <h1>News</h1>
+                                <div className={style.newsWrapper}>
+                                    {(news || []).slice(0, 10).map((item) => (
+                                        <div key={item.id}>
+                                            <div className="text-gray-500 fw-bold mb-1">
+                                                <span className="svg-icon svg-icon-2 svg-icon-primary me-2">
+                                                    <DateIcon />
+                                                </span>
+                                                {formatDate(item.date)}
+                                            </div>
+                                            <div>
+                                                <Html content={item.content} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </Card>
+                        </div>
+                    </div>
+                    {hasWeather && (
+                        <>
+                            <h2 className={style.header}>Weather Forecast</h2>
+                            <Card className={'mt-6 ' + style.weatherCard}>
+                                <WeatherForecast isDelay />
+                            </Card>
+                        </>
+                    )}
+
+                    {hasWordcloud && (
+                        <>
+                            <h2 className={style.header}>Tennis Activity in the Last 12 Months</h2>
+                            <div id="chart" />
+                            <div className={style.cloudWrapper}>
+                                <div className={style.cloud}>
+                                    <img src={settings.settings.wordcloudUrl} alt="Rival Tennis Ladder activity" />
+                                </div>
+                                <div>
+                                    <div>
+                                        <Title className={style.statement} colorHue={217}>
+                                            {stats.ladders} Ladders
+                                        </Title>
+                                    </div>
+                                    <div>
+                                        <Title className={style.statement} colorHue={314}>
+                                            {formatNumber(stats.players)} Players
+                                        </Title>
+                                    </div>
+                                    <div>
+                                        <Title className={style.statement} colorHue={17}>
+                                            {formatNumber(stats.matches)} Matches
+                                        </Title>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    )}
+
+                    <h2 className={style.header}>Explore the Tennis Ladder</h2>
+                </>
+            )}
 
             <Card>
                 <h1>What do we do?</h1>
