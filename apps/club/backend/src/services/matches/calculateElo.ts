@@ -3,7 +3,7 @@ import NodeCache from 'node-cache';
 import { completeInjuryFullScore, completeInjuryFastScore, getOutcome } from './helpers';
 import dayjs from '../../utils/dayjs';
 import logger from '@rival-tennis-ladder/logger';
-import { runQuery, closeConnection } from '../../db/connection';
+import { runQuery } from '../../db/connection';
 
 const cache = new NodeCache();
 const CACHE_KEY = 'elo';
@@ -104,7 +104,6 @@ export const calculateElo = async () => {
     const levelIds = levels.map((level) => level.id);
 
     if (levelIds.length === 0) {
-        closeConnection();
         return;
     }
 
@@ -280,6 +279,4 @@ export const calculateElo = async () => {
     } catch (e) {
         logger.error((e as Error).message);
     }
-
-    closeConnection();
 };

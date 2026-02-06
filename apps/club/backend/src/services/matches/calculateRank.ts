@@ -1,7 +1,7 @@
 import dayjs from '../../utils/dayjs';
 import { getPoints } from './helpers';
 import logger from '@rival-tennis-ladder/logger';
-import { runQuery, closeConnection } from '../../db/connection';
+import { runQuery } from '../../db/connection';
 import type { Match } from '../../types';
 
 const calculateRank = async (tournamentId: number) => {
@@ -19,7 +19,6 @@ const calculateRank = async (tournamentId: number) => {
 
         // don't recalculate rank if the season has passed
         if (dayjs.tz().isAfter(dayjs.tz(endDate))) {
-            closeConnection();
             return;
         }
 
@@ -173,8 +172,6 @@ const calculateRank = async (tournamentId: number) => {
     } catch (e) {
         logger.error((e as Error).message);
     }
-
-    closeConnection();
 };
 
 export default calculateRank;

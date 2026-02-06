@@ -25,7 +25,7 @@ export const getConnection = () => {
     return connection;
 };
 
-export const closeConnection = () => {
+const closeConnection = () => {
     if (connection) {
         connection.end();
         connection = null;
