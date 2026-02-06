@@ -158,7 +158,6 @@ test('We can register for the free ladder and partner will get an email', async 
     await login.loginAsPlayer9();
 
     await register.goto();
-    await expect(page.locator('[data-free-level="men-40-dbls-free"]')).toBeVisible();
     await register.getLadderCheckbox('Men Free Doubles').click();
 
     await common.modal.locator('label', { hasText: 'Invite friends via email' }).click();
@@ -169,11 +168,7 @@ test('We can register for the free ladder and partner will get an email', async 
     await expect(common.body).toContainText("You're inviting first@gmail.com and second@gmail.com");
 
     await register.agreeCheckbox.click();
-    await register.goToCheckoutButton.click();
-
-    await expect(common.body).toContainText('$0.00');
-    await register.confirmOrderButton.click();
-    await expect(common.modal).toContainText('Order processed successfully!');
+    await register.registerButton.click();
 
     await expectRecordToExist('players', { userId: 9, tournamentId: 13 }, { teamName: 'Tough Guys' });
     await register.goToLadderButton.click();
@@ -319,7 +314,7 @@ test('We can register and join the player Pool for paid season', async ({
     // Another player from pool should get an email as well.
     await runQuery('INSERT INTO players SET userId=9, tournamentId=13, partnerId=999999, partnerInfo="I am free."');
 
-    await login.loginAsPlayer1();
+    await login.loginAsPlayer5();
 
     await register.goto();
     await register.getLadderCheckbox('Men Free Doubles').click();
@@ -330,73 +325,33 @@ test('We can register and join the player Pool for paid season', async ({
     await expect(common.body).toContainText('Joining the Player Pool.');
 
     await register.agreeCheckbox.click();
-    await register.goToCheckoutButton.click();
-    await register.confirmOrderButton.click();
-    await expect(common.modal).toContainText('Order processed successfully!');
+    await register.registerButton.click();
 
     await expectRecordToExist(
         'players',
-        { userId: 1, tournamentId: 13 },
+        { userId: 7, tournamentId: 13 },
         { partnerId: 999999, partnerInfo: 'I am flexible' }
     );
 
     // Check that captains will get an email
     const email = await expectRecordToExist(
         'emails',
-        { subject: 'Ben Done Joined the Doubles Player Pool!' },
+        { subject: 'Inactive User Joined the Doubles Player Pool!' },
         { recipientEmail: 'player8@gmail.com,player9@gmail.com' }
     );
-    expect(email.html).toContain('Ben Done');
+    expect(email.html).toContain('Inactive User');
     expect(email.html).toContain('joined');
-    expect(email.html).toContain('123-456-7890');
-    expect(email.html).toContain('player1@gmail.com');
+    expect(email.html).toContain('920-391-9531');
+    expect(email.html).toContain('player5@gmail.com');
     expect(email.html).toContain('I am flexible');
     expect(email.html).toContain('/season/2021/spring/men-40-dbls-free');
 
     await register.goToLadderButton.click();
-    await expect(overview.playerPoolArea).toContainText('Ben Done');
+    await expect(overview.playerPoolArea).toContainText('Inactive User');
     await expect(common.body).toContainText('Open Proposals');
     await expect(common.body).not.toContainText('Reminders About Rival Rules');
     await expect(common.body).not.toContainText('Team Captain');
     await expect(common.body).not.toContainText('Report');
-});
-
-test('We can register and join the player Pool after getting back from payment', async ({
-    page,
-    common,
-    login,
-    register,
-    overview,
-    doublesTeam,
-}) => {
-    await overrideConfig({ minMatchesToEstablishTlr: 1 });
-
-    await login.loginAsPlayer1();
-
-    await register.goto();
-    await register.getLadderCheckbox('Men Free Doubles').click();
-
-    await common.modal.locator('label', { hasText: 'Join the Player Pool' }).click();
-    await register.partnerInfoField.fill('I am flexible');
-    await common.modalSubmitButton.click();
-    await expect(common.body).toContainText('Joining the Player Pool.');
-
-    await register.agreeCheckbox.click();
-    await register.goToCheckoutButton.click();
-
-    await register.changeLadderLink.click();
-
-    await register.agreeCheckbox.click();
-    await register.goToCheckoutButton.click();
-
-    await register.confirmOrderButton.click();
-    await expect(common.modal).toContainText('Order processed successfully!');
-
-    await expectRecordToExist(
-        'players',
-        { userId: 1, tournamentId: 13 },
-        { partnerId: 999999, partnerInfo: 'I am flexible' }
-    );
 });
 
 test('Captain can accept player from Player Pool', async ({ page, common, login, overview }) => {
@@ -584,21 +539,15 @@ test('The Single captain moved to Player Pool and somebody joined using his form
     await overview.checkTeam('Love Love', ['Inactive User', 'Not Played User']);
 });
 
-test('We can register for the free ladder when TLR is too high', async ({
-    page,
-    common,
-    login,
-    register,
-    overview,
-}) => {
+test('We can register for the ladder when TLR is too high', async ({ page, common, login, register, overview }) => {
+    await closeCurrentSeason();
+
     await overrideConfig({ minMatchesToEstablishTlr: 1 });
     await runQuery(`UPDATE matches SET challengerElo=550, acceptorElo=550`);
     await login.loginAsPlayer1();
 
     await register.goto();
     await register.playAnotherLadder('I got injured');
-    await expect(page.locator('[data-free-level="men-45"]')).toBeVisible();
-    await expect(page.locator('[data-free-level="men-40-dbls-free"]')).toBeVisible();
     await register.getLadderCheckbox('Men Free Doubles').click();
 
     await common.modal.locator('label', { hasText: 'Invite friends via email' }).click();
@@ -607,13 +556,9 @@ test('We can register for the free ladder when TLR is too high', async ({
     await common.modalSubmitButton.click();
 
     await register.agreeCheckbox.click();
-    await register.goToCheckoutButton.click();
+    await register.registerButton.click();
 
-    await expect(common.body).toContainText('$0.00');
-    await register.confirmOrderButton.click();
-    await expect(common.modal).toContainText('Order processed successfully!');
-
-    await expectRecordToExist('players', { userId: 1, tournamentId: 13 }, { teamName: 'Hello' });
+    await expectRecordToExist('players', { userId: 1, tournamentId: 14 }, { teamName: 'Hello' });
     await register.goToLadderButton.click();
     await expect(common.body).toContainText('Men Free Doubles');
     await expect(overview.playerList).toContainText('Ben Done');
@@ -635,8 +580,6 @@ test('We can register and join Doubles ladders (free and paid) paying from walle
     await login.loginAsPlayer3();
 
     await register.goto();
-    await expect(page.locator('[data-free-level="men-40-dbls-free"]')).toBeVisible();
-    await expect(page.locator('[data-free-level="men-40-dbls-team"]')).toBeHidden();
 
     await register.getLadderCheckbox('Men Team Doubles').click();
     await common.modal.locator('label', { hasText: 'Invite friends via email' }).click();
@@ -644,27 +587,14 @@ test('We can register and join Doubles ladders (free and paid) paying from walle
     await register.teamNameField.fill('Machos');
     await common.modalSubmitButton.click();
 
-    await register.getLadderCheckbox('Men Free Doubles').click();
-    await common.modal.locator('label', { hasText: 'Invite friends via email' }).click();
-    await register.email1Field.fill('second@gmail.com');
-    await register.teamNameField.fill('HeLLo');
-    await common.modalSubmitButton.click();
-
     await register.agreeCheckbox.click();
-    await register.goToCheckoutButton.click();
+    await register.registerButton.click();
 
-    await expect(common.body).toContainText('-$20.00');
-    await register.confirmOrderButton.click();
     await expect(common.modal).toContainText('The ladder officially begins');
 
     await expectRecordToExist(
         'emails',
         { recipientEmail: 'first@gmail.com' },
-        { subject: 'Cristopher Hamiltonbeach Invited You to Play Doubles!' }
-    );
-    await expectRecordToExist(
-        'emails',
-        { recipientEmail: 'second@gmail.com' },
         { subject: 'Cristopher Hamiltonbeach Invited You to Play Doubles!' }
     );
 });

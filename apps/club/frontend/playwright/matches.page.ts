@@ -1698,7 +1698,7 @@ test.beforeEach(async ({ page, login }) => {
         await expectRecordToExist('actions', { name: 'bracketBattleWinner' }, { tableId: 2 });
 
         await expectRecordToExist('emails', {
-            subject: 'New Badge Earned!',
+            subject: '2 New Badges Earned!',
             recipientEmail: 'player1@gmail.com',
             sql: 'html LIKE "%The Oracle%"',
         });

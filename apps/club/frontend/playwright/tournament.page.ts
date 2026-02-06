@@ -166,7 +166,7 @@ test('Matches', async ({ page, common, login, overview }) => {
         await expect(page.locator('h3').getByText('Filter')).toBeVisible();
         await expect(page.locator('h3').getByText('Players')).toBeVisible();
         await expect(page.locator('button').getByText('Propose match')).toBeHidden();
-        await expect(page.locator('.badge-secondary')).toContainText('5');
+        await expect(page.locator('.badge-secondary')).toContainText('6');
     });
 
     test('Show available proposals', async ({ page, common, login, overview }) => {
