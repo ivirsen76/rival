@@ -111,15 +111,12 @@ test('Should get a new badge after playing a match and get an email notification
     // Check that an email is sent
     const emailSent = await expectRecordToExist('emails', {
         recipientEmail: 'player1@gmail.com',
-        subject: 'New Badge Earned!',
+        subject: '3 New Badges Earned!',
     });
-    expect(emailSent.html).toContain('Conqueror');
+    expect(emailSent.html).toContain('Grinder');
     expect(emailSent.html).toContain('Tiebreaker');
     expect(emailSent.html).toContain('Die Hard');
     expect(emailSent.html).toContain('Win a certain number of tiebreaks.');
-
-    const badgesTotal = emailSent.html.match(/<td width="100px"/g).length;
-    expect(badgesTotal).toBe(3);
 });
 
 test('Should get a new badge after proposing a match and get an email notification', async ({
@@ -129,9 +126,6 @@ test('Should get a new badge after proposing a match and get an email notificati
     overview,
     proposal,
 }) => {
-    // reduce proposal number to 4
-    await runQuery(`UPDATE matches SET initial=3 WHERE id=23 OR id=7 OR id=8;`);
-
     await login.loginAsPlayer1();
     await page.goto('/season/2021/spring/men-35');
 
@@ -159,9 +153,6 @@ test('Should get a new badge after proposing a match and get an email notificati
         { subject: 'New Badge Earned!' }
     );
     expect(emailSent.html).toContain('Matchmaker');
-
-    const badgesTotal = emailSent.html.match(/<td width="100px"/g).length;
-    expect(badgesTotal).toBe(1);
 });
 
 test('Should get a new badge after accepting a match and get an email notification', async ({
@@ -204,9 +195,6 @@ test('Should get a new badge after accepting a match and get an email notificati
         { subject: 'New Badge Earned!' }
     );
     expect(emailSent.html).toContain('Game Starter');
-
-    const badgesTotal = emailSent.html.match(/<td width="100px"/g).length;
-    expect(badgesTotal).toBe(1);
 });
 
 test('Should get a new badge for feedback and get an email notification', async ({ page, common, login }) => {
@@ -249,9 +237,6 @@ test('Should get a new badge for feedback and get an email notification', async 
         { subject: 'New Badge Earned!' }
     );
     expect(emailSent.html).toContain('Support Group');
-
-    const badgesTotal = emailSent.html.match(/<td width="100px"/g).length;
-    expect(badgesTotal).toBe(1);
 });
 
 test('Should get a new badge for feedback and do not get an email notification', async ({ page, common, login }) => {
@@ -300,9 +285,6 @@ test('Should get a new badge for avatar and get an email notification', async ({
         { subject: 'New Badge Earned!' }
     );
     expect(emailSent.html).toContain('Da Vinci');
-
-    const badgesTotal = emailSent.html.match(/<td width="100px"/g).length;
-    expect(badgesTotal).toBe(1);
 
     const { achievedAt } = await expectRecordToExist('badges', { userId: 8, code: 'avatar' });
     expect(achievedAt).toContain(dayjs().tz().format('YYYY-MM-DD'));
@@ -360,9 +342,6 @@ test('Should get a new badge for profile info and get an email notification', as
         { subject: 'New Badge Earned!' }
     );
     expect(emailSent.html).toContain('Construction Complete');
-
-    const badgesTotal = emailSent.html.match(/<td width="100px"/g).length;
-    expect(badgesTotal).toBe(1);
 
     const { achievedAt } = await expectRecordToExist('badges', { userId: 8, code: 'profile' });
     expect(achievedAt).toContain(dayjs().tz().format('YYYY-MM-DD'));

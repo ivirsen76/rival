@@ -409,7 +409,7 @@ export const updateCurrentWeekUserBadges = async (app: Application, userId: numb
             app.service('api/emails').create({
                 // add 1 minute delay just this email to be the last in the sequence (after match result email for example)
                 to: [{ ...getEmailContact(user), delay: 60 }],
-                subject: `New Badge Earned!`,
+                subject: badges.length === 1 ? `New Badge Earned!` : `${badges.length} New Badges Earned!`,
                 html: newBadgeTemplate({ config, badges }),
                 priority: 2,
             });
