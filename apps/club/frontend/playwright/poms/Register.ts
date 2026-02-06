@@ -16,6 +16,10 @@ export class Register {
     readonly strongReasonLink: Locator;
     readonly reasonField: Locator;
     readonly resendEmailLink: Locator;
+    readonly email1Field: Locator;
+    readonly email2Field: Locator;
+    readonly partnerInfoField: Locator;
+    readonly teamNameField: Locator;
 
     // form locators
     readonly emailField: Locator;
@@ -43,6 +47,10 @@ export class Register {
         this.strongReasonLink = page.getByRole('link', { name: 'Have a strong reason' });
         this.reasonField = page.locator('textarea[name="reason"]');
         this.resendEmailLink = page.getByRole('link', { name: 'Resend the email' });
+        this.email1Field = this.common.modal.locator('input[name="email1"]');
+        this.email2Field = this.common.modal.locator('input[name="email2"]');
+        this.partnerInfoField = this.common.modal.locator('textarea[name="partnerInfo"]');
+        this.teamNameField = this.common.modal.locator('input[name="teamName"]');
 
         this.emailField = page.locator('input[name="email"]');
         this.passwordField = page.locator('input[name="password"]');
