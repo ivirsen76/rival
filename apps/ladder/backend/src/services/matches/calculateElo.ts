@@ -3,7 +3,7 @@ import NodeCache from 'node-cache';
 import { completeInjuryFullScore, completeInjuryFastScore, getOutcome } from './helpers';
 import dayjs from '../../utils/dayjs';
 import logger from '@rival-tennis-ladder/logger';
-import { runQuery, closeConnection } from '../../db/connection';
+import { runQuery } from '../../db/connection';
 
 const cache = new NodeCache();
 const CACHE_KEY = 'elo';
