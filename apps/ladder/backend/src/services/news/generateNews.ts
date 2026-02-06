@@ -4,7 +4,7 @@ import { getStatsMatches } from '../../utils/sqlConditions';
 import getCombinedConfig from '../../utils/getCombinedConfig';
 import { getPlayerName } from '../users/helpers';
 import dayjs from '../../utils/dayjs';
-import { runQuery, closeConnection } from '../../db/connection';
+import { runQuery } from '../../db/connection';
 import type { User } from '../../types';
 
 const generateNews = async () => {
@@ -149,8 +149,6 @@ const generateNews = async () => {
             await runQuery(`INSERT INTO news (date, content) VALUES (?, ?)`, [date, content]);
         }
     }
-
-    closeConnection();
 };
 
 export default generateNews;
